@@ -1,0 +1,181 @@
+#loader {
+    position: relative;
+    margin-left:4px;
+    width:96%;
+    height:20px;
+    background-color: black;
+    border-radius: 13px;
+  /* (height of inner div) / 2 + padding */
+    padding: 3px;
+    box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+}
+
+#dwnloader{
+    background: white;
+    opacity: 0.6;
+    z-index: 100;
+    position: relative;
+    margin-left:4px;
+    width:96%;
+    height:20px;
+    background-color: black;
+    border-radius: 13px;
+  /* (height of inner div) / 2 + padding */
+    padding: 3px;
+    box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+}
+
+#dwnloader>div{
+    margin-bottom: 10px;
+    background-color: blue;
+    /*background-image: linear-gradient(to bottom, #f1a165, #f36d0a);*/
+    width: 100%;
+  /* Adjust with JavaScript */
+    height: 14px;
+    border-radius: 10px;
+    box-shadow: 
+        inset 0 2px 9px  rgba(255,255,255,0.3),
+        inset 0 -2px 6px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+#loader>div {
+    margin-bottom: 10px;
+    background-color: blue;
+    /*background-image: linear-gradient(to bottom, #f1a165, #f36d0a);*/
+    width: 1%;
+  /* Adjust with JavaScript */
+    height: 14px;
+    border-radius: 10px;
+    box-shadow: 
+        inset 0 2px 9px  rgba(255,255,255,0.3),
+        inset 0 -2px 6px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+ #loader>div:after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background-image: linear-gradient(
+    -45deg, 
+    rgba(255, 255, 255, .2) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 75%, 
+    transparent 65%, 
+    transparent
+  );
+  z-index: 1;
+  background-size: 50px 50px;
+  animation: move 2s linear infinite;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  overflow: hidden;
+}
+
+#dwnloader>div:after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background-image: linear-gradient(
+    -45deg, 
+    rgba(255, 255, 255, .2) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 75%, 
+    transparent 65%, 
+    transparent
+  );
+  z-index: 1;
+  background-size: 50px 50px;
+  animation: move 2s linear infinite;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  overflow: hidden;
+}
+
+@-webkit-keyframes move {
+		    0% {
+		       background-position: 0 0;
+		    }
+		    100% {
+		       background-position: 50px 50px;
+		    }
+		}
+
+ #loader>div:after, .animate > div > div {
+			content: "";
+			position: absolute;
+			top: 0; left: 0; bottom: 0; right: 0;
+			background-image: 
+			   -webkit-gradient(linear, 0 0, 100% 100%, 
+			      color-stop(.25, rgba(255, 255, 255, .2)), 
+			      color-stop(.25, transparent), color-stop(.5, transparent), 
+			      color-stop(.5, rgba(255, 255, 255, .2)), 
+			      color-stop(.75, rgba(255, 255, 255, .2)), 
+			      color-stop(.75, transparent), to(transparent)
+			   );
+}
+
+#dwnloader>div:after, .animate > div > div {
+			content: "";
+			position: absolute;
+			top: 0; left: 0; bottom: 0; right: 0;
+			background-image: 
+			   -webkit-gradient(linear, 0 0, 100% 100%, 
+			      color-stop(.25, rgba(255, 255, 255, .2)), 
+			      color-stop(.25, transparent), color-stop(.5, transparent), 
+			      color-stop(.5, rgba(255, 255, 255, .2)), 
+			      color-stop(.75, rgba(255, 255, 255, .2)), 
+			      color-stop(.75, transparent), to(transparent)
+			   );
+}
+
+#dwnloader #loader:empty:before {
+      content:attr(data-placeholder);
+  color:white;
+}
+
+/*#overlay {*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    background: white;*/
+/*    opacity: 0.6;*/
+/*    z-index: 100;*/
+/*}*/
+/* #loading2 {
+    display : none;
+	position : fixed;
+	z-index: 100;
+	background: url(../image/loader1.png);
+	opacity : 0.9;
+	background-repeat : no-repeat;
+	background-position : center;
+	left : 0;
+	bottom : 0;
+	right : 0;
+	top : 0;
+	width: 100%;
+    height: 100%;
+	background-size: 100px !important;
+	-webkit-animation:spin 2s linear infinite;
+    -moz-animation:spin 2s linear infinite;
+    animation:spin 2s linear infinite;
+    
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+*/

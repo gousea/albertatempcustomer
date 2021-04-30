@@ -1,0 +1,28 @@
+Alberta POS Version 3.0.7
+
+Bugs Resolved :- 
+
+1.  YES/NO Setting for Cashdrawer is fixed.
+2.  Bottle deposit qty update on parent item qty update isuue resolved.
+3.  X-Report heading changed from End of Shift Report to X-Report.
+4.  Fixed miscalculation for EBT Transactions in End of Shift Report.
+5.  House account customer Payments does not add in” Expected Cash” issue resolved.
+6.  Inventory issue resolved in hold/unhold transaction.
+7.  Resolved errors in NPL.
+8.  Fixed issue on NEXT button while enable PREVIOUS button click in KIOSK.
+9.  Hold order receipt issue resolved ,Tax amount is not showing.New Functionalities added.
+
+New Fetures Added :- 
+
+1.  End of Shift Report Format Changed.  
+2.  Bottle Deposit and Redeem Bottle Deposit added on Z/X Report.
+3.  Liability Details separated from Transactions in End of Shift Report/X-Report.
+4.  Label Printing: now can print multiple labels.
+5.  Tax will be calculated if the Bottle Deposit is a Taxable item.
+6.  Added new ID Check functionality for Manual entry !!!
+7.  Age Check: can override instead of scanning ID.
+8.  Added filter option on Receipt Print Screen.
+9.  Restriction for JUUL products added.
+10. Qty update buttons and Delete button with icons added against each Kiosk order.
+11. NPL Item: Using any item from NPL will automatically conform to the right UPC E/A.
+12. Can not log out or lock system while in middle of transaction.
