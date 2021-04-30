@@ -1,0 +1,804 @@
+@extends('layouts.master')
+@section('title', 'Receiving Order')
+@section('main-content')
+
+<div id="content">
+  
+    <div class="container-fluid">
+        @if ($data['error_warning'])
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        @endif
+        @if ($data['success'])
+        <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ $data['success'] }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        @endif
+        <br>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading head_title">
+                <h3 class="panel-title"><i class="fa fa-list"></i>Receiving Order</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="padding-bottom:15px;float: right;">
+                    <div class="col-md-12">
+                        <div class="">
+                            <a href="<?php echo $data['add']; ?>" title="Add" class="btn btn-primary add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>  
+                          
+                            <button class="btn btn-info" data-toggle="modal" data-target="#myModalImportNew"><i class="fa fa-file"></i>&nbsp;&nbsp;Import EDI Invoice</button>
+                          
+                            <button class="btn btn-info" data-toggle="modal" data-target="#myModalImportMissingItem"><i class="fa fa-gift"></i>&nbsp;&nbsp;Import Missing Items</button>
+                            <?php if(isset($error_import_barcode) && !empty($error_import_barcode)){ ?>
+                                <button class="btn btn-warning" data-toggle="modal" data-target="#error_import_modal"><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;Import Error Occurs</button>
+                            <?php } ?>
+                            <button class="btn btn-danger" id="delete_po_btn" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete RO</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="clear:both;">
+                    <form action="<?php echo $data['current_url'];?>" method="post" id="form_order_search">
+                        @csrf
+                        <div class="col-md-12">
+                            <div style="display: inline-block;width:92%;">
+                                <input type="text" name="searchbox" value="<?php echo isset($data['searchbox']) ? $data['searchbox']: ''; ?>" class="form-control" placeholder="Search..." autocomplete="off">
+                            </div>
+                            <div style="display: inline-block;">
+                                &nbsp;&nbsp;<input type="submit" name="Filter" value="Search" class="btn btn-info">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br>
+                
+                <form action="" method="post" enctype="multipart/form-data" id="form-purchase-order">
+                
+                    <div class="table-responsive">
+                        <table id="purchase_order" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1px;" class="text-center"><input type="checkbox" id="main_checkbox" /></th>
+                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_estatus'];?>">Status</a></th>
+                                    <th class="text-right"><a style="color: #fff;" href="<?php echo $data['sort_vponumber'];?>">PurchaseORD#</a></th>
+                                    <th class="text-left">Invoice#</th>
+                                    <th class="text-right sample">Total</th>
+                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vvendorname'];?>">Vendor Name</a></th>
+                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vordertype'];?>">Order Type</a></th>
+                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_dcreatedate'];?>">Date Created</a></th>
+                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_dreceiveddate'];?>">Date Received</a></th>
+                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th>
+                                    <th class="text-left">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if ($receiving_orders) { ?>
+                                    <?php $purchase_order_row = 1;$i=0; $bg = '#fff';?>
+                                    <?php foreach ($receiving_orders as $purchase_order) { ?>
+                                        
+                                        <?php 
+                                            if($purchase_order['estatus'] == 'Close'){
+                                                $bg = '#FCEBCF';
+                                            } else {
+                                                $bg = '#fff';
+                                            } 
+                                        ?>
+                                        
+                                        <tr id="purchase_order-row<?php echo $purchase_order_row; ?>">
+                                            <td data-order="<?php echo $purchase_order['iroid']; ?>" class="text-center" style="background:<?php echo $bg; ?>">
+                                                <span style="display:none;"><?php echo $purchase_order['iroid']; ?></span>
+                                                <input type="checkbox" name="selected[]" id="purchase_order[<?php echo $purchase_order_row; ?>][select]"  value="<?php echo $purchase_order['iroid']; ?>" <?php if($purchase_order['estatus'] == 'Close'){?> disabled <?php } ?> />
+                                             </td>
+                                                
+                                            <td class="text-left" style="background:<?php echo $bg; ?>">
+                                                <span><?php echo $purchase_order['estatus']; ?></span>
+                                            </td>
+                                            
+                                            <td class="text-right" style="background:<?php echo $bg; ?>">
+                                                <span><?php echo $purchase_order['vponumber']; ?></span>
+                                            </td>
+                                            
+                                            <td class="text-left" style="background:<?php echo $bg; ?>">
+                                                <span><?php echo $purchase_order['vinvoiceno']; ?></span>
+                                            </td>
+                                            
+                                            <td class="text-right" style="background:<?php echo $bg; ?>">
+                                                <span><?php echo $purchase_order['nnettotal']; ?></span>
+                                            </td>
+                                            
+                                            <td class="text-left" style="background:<?php echo $bg; ?>">
+                                                <span><?php echo $purchase_order['vvendorname']; ?></span>
+                                            </td>
+                                            
+                                            <td class="text-left" style="background:<?php echo $bg; ?>">
+                                                <span><?php echo $purchase_order['vordertype']; ?></span>
+                                            </td>
+                                            
+                                            <td class="text-left" style="background:<?php echo $bg; ?>">
+                                                <span><?php echo $purchase_order['dcreatedate']; ?></span>
+                                            </td>
+                                            
+                                            <td class="text-left" style="background:<?php echo $bg; ?>">
+                                                <span><?php echo $purchase_order['dreceiveddate']; ?></span>
+                                            </td>
+                                            
+                                            <td class="text-left" style="background:<?php echo $bg; ?>">
+                                                <span><?php echo $purchase_order['dlastupdate']; ?></span>
+                                            </td>
+                                            
+                                            <td class="text-left" style="background:<?php echo $bg; ?>">
+                                                <?php if($purchase_order['estatus'] == 'Close'){?>
+                                                    <a href="<?php echo $purchase_order['edit']; ?>" data-toggle="tooltip" title="View" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-eye"></i>&nbsp;&nbsp;View
+                                                    </a>
+                                                <?php } else {?>
+                                                    <a href="<?php echo $purchase_order['edit']; ?>" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit
+                                                    </a>
+                                                <?php } ?>
+                                            </td>
+                                        </tr>
+                                        <?php $purchase_order_row++; $i++;?>
+                                    <?php } ?>
+                                <?php } else { ?>
+                                    <tr>
+                                      <td colspan="7" class="text-center">Sorry no data found!</td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div class="row">
+                  {{$data['results']->links()}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<!-- changes in import EDI -->
+<div id="myModalImportNew" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Import Invoice</h4>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo $data['import_invoice_new'];?>" method="post" enctype="multipart/form-data" id="form_import_invoice_new">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="text-danger" style="font-size: 10px;">* After import, any items in this invoice that are inactive will become active.</p>
+                            <p class="text-danger" style="font-size: 10px;">* Only the first 100 items will be considered Per invoice.</p>
+                            <!--<a href="/view/template/administration/import-edi-invoice-multiple-barcode.txt" download id="edi_invoice_download"></a>-->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span style="display:inline-block;width:8%;">File: </span> <span style="display:inline-block;width:85%;"><input type="file" name="import_invoice_file" id="import_edi_file" class="form-control" required></span>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-12">
+                          <div class="form-group">
+                            <span style="display:inline-block;width:15%;">EDI Vendor: </span> <span style="display:inline-block;width:75%;">
+                            <select name="edi_predefined_vvendorid" class="form-control" id="edi_predefined_vvendors" required>
+                                <option></option>
+                              <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
+                                <?php foreach($data['vendors'] as $vendor){?>
+                                    <?php if($vendor['vcompanyname'] == 'ALLEN BROTHERS' || $vendor['vcompanyname'] == 'CORE MARK' || $vendor['vcompanyname'] == 'RESNICK' || $vendor['vcompanyname'] == 'FEDWAY' || $vendor['vcompanyname'] == 'fedway'){ ?>
+                                        <option value="<?php echo $vendor['isupplierid']; ?>"><?php echo $vendor['vcompanyname']; ?></option>
+                                    <?php }?>
+                                <?php } ?>
+                              <?php } ?>
+                            </select>
+                            </span>
+                          </div>
+                        </div>-->
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <span style="display:inline-block;width:15%;">Vendor: </span> <span style="display:inline-block;width:75%;">
+                            <select name="vvendorid" class="form-control" id="vvendors" required>
+                                <option></option>
+                              <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
+                                <?php foreach($data['vendors'] as $vendor){?>
+                                  <option value="<?php echo $vendor['isupplierid']; ?>"><?php echo $vendor['vcompanyname']; ?></option>
+                                <?php } ?>
+                              <?php } ?>
+                            </select>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-md-12" id="display_vendor_options">
+                            <!--<div class="col-md-offset-1 form-group checkdigitOptions">
+                                <div class="floatBlock">
+                                    <label for="remove_check_digit"> <input id="remove_check_digit" name="check_digit" type="radio" value="without_check_digit" checked /> Without Check Digit </label>
+                                </div>
+                                
+                                <div class="floatBlock">
+                                    <label for="add_check_digit"> <input id="add_check_digit" name="check_digit" type="radio" value="with_check_digit" />  With Check Digit  </label>
+                                </div>
+                                
+                                <div class="floatBlock">
+                                    <label for="remove_first_digit"> <input id="remove_first_digit" name="check_digit" type="radio" value="without_first_digit" /> Without First Digit </label>
+                                </div>
+                                
+                                 <div class="floatBlock">
+                                    <label for="upcAtoEconversion"> <input id="upc_conversion_a_e" name="check_digit" type="radio" value="upc_conversion" /> Upc A to Upc E conversion </label>
+                                </div> 
+                            </div> -->
+                          <!--<div class="form-group">
+                                <span>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="digit" value="add_check_dgigit">Add Check Digit 
+                                    </label>
+                                    
+                                    <input type="radio" name="digit" value="remove_check_dgigit"> Remove Check Digit
+                                    <input type="radio" name="digit" value="remove_first_dgigit"> Remove First Digit 
+                                </span>
+                          </div>-->
+                        </div>
+                        <div class="col-md-12 text-center">
+                          <div class="form-group">
+                            <input type="submit" class="btn btn-success" name="import_invoice" value="Import Invoice">&nbsp;<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                          </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+@endsection
+
+@section('scripts')
+
+<style>
+    .disabled, #item_ellipsis{
+        pointer-events:none;
+    }
+</style>
+
+<script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
+<script type="text/javascript">
+
+    $(document).on('submit', 'form#form_import_invoice_new', function(event) {
+        event.preventDefault();
+    
+        $("div#divLoading").addClass('show');
+        $('#myModalImportNew').modal('hide');
+    
+        var import_form_id = $('form#form_import_invoice_new');
+        var import_form_action = import_form_id.attr('action');
+        
+        var import_formdata = false;
+            
+        if (window.FormData){
+            import_formdata = new FormData(import_form_id[0]);
+        }
+
+        $.ajax({
+            url : import_form_action,
+            headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+            },
+            data : import_formdata ? import_formdata : import_form_id.serialize(),
+            cache : false,
+            contentType : false,
+            processData : false,
+            type : 'POST',
+        }).done(function(response){
+          
+          var  response = $.parseJSON(response); //decode the response array
+
+          if( response.code == 3 ) {//error
+            $("div#divLoading").removeClass('show');
+            // document.getElementById('edi_invoice_download').click();
+            // alert(response.error);
+            bootbox.alert({ 
+              size: 'small',
+              title: "Attention", 
+              message: response.error, 
+              callback: function(){}
+            });
+            
+            return;
+          }
+            
+          if( response.code == 1 ) {//success
+            
+            $("div#divLoading").removeClass('show');
+            $('#successModal').modal('show');
+            if(response.file_download == 1){
+            //   document.getElementById('edi_invoice_download').click();
+            //   document.getElementById('log_file_upc').click();
+            }
+            setTimeout(function(){
+              window.location.reload();
+              $("div#divLoading").addClass('show');
+            }, 3000);
+            
+          } else if( response.code == 0 ) {//error
+            $("div#divLoading").removeClass('show');
+            // alert(response.error);
+            bootbox.alert({ 
+              size: 'small',
+              title: "Attention", 
+              message: response.error, 
+              callback: function(){}
+            });
+            // return;
+            
+            setTimeout(function(){
+              window.location.reload();
+              $("div#divLoading").addClass('show');
+            }, 3000);
+          }
+      
+      });
+  });
+</script>
+
+<div class="modal fade" id="successModal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"><strong>Successfully Imported Invoice!</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="myModalImportMissingItem" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Import Missing Items</h4>
+      </div>
+      <div class="modal-body">
+        <form action="<?php echo $data['import_missing_items'];?>" method="post" enctype="multipart/form-data" id="form_import_missing_items">
+            @csrf
+          <div class="row">
+            <div class="col-md-10">
+              <input name="itemsort_search" id="itemsort_search" placeholder="Search Item..." type="text" class="form-control">
+            </div>
+            <div class="col-md-1 text-right">
+              <button class="btn btn-success" id="import_missing_item_btn">Import Items</button>
+            </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive" style="height:450px;">
+                <?php if(isset($missing_items) && count($missing_items) > 0){?>
+                  <table class="table table-bordered tabler-hover" id="missing_item_table">
+                    <thead>
+                      <tr>
+                        <th style="width: 1px; color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_missing_items\']').prop('checked', this.checked);" /></th>
+                        <th class="text-left">SKU#</th>
+                        <th class="text-left">Item Name</th>
+                        <th class="text-left">Invoice#</th>
+                        <th class="text-left">Vendor</th>
+                        <th class="text-left">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach($missing_items as $k => $missing_item){?>
+                        <tr>
+                          <td>
+                            <input type="checkbox" name="selected_missing_items[]" id="$missing_item[<?php echo $k; ?>][select]"  value="<?php echo $missing_item['imitemid']; ?>" />
+                          </td>
+                          <td class="text-left"><?php echo $missing_item['vbarcode']; ?></td>
+                          <td class="text-left"><?php echo $missing_item['vitemname']; ?></td>
+                          <td class="text-left"><?php echo $missing_item['vponumber']; ?></td>
+                          <td class="text-left"><?php echo $missing_item['vvendorname']; ?></td>
+                          <td class="text-left"><?php echo $missing_item['estatus']; ?></td>
+                        </tr>
+                      <?php } ?>
+                    </tbody>
+                  </table>
+                <?php }else{ ?>
+                  <div class="alert alert-info text-center">
+                    <strong>Sorry no data found!</strong>
+                  </div>
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="error_import_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">The following list of Barcodes items can not be import</h4>
+      </div>
+      <div class="modal-body">
+        
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive" >
+                <?php if(isset($error_import_barcode) && count($error_import_barcode) > 0){?>
+                  <table class="table table-bordered tabler-hover" id="missing_item_table">
+                    <thead>
+                      <tr>
+                        <th class="text-left">Invoice</th>
+                        <th class="text-left">SKU#</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($error_import_barcode as $k => $error_barcode){ ?>
+                            <?php if(!empty($error_barcode['error_barcode'])){ ?>
+                                <tr>
+                                    <td>{{ $error_barcode['invoice'] }}</td>
+                                    <td>{{ $error_barcode['error_barcode'] }}</td>
+                                </tr>
+                            <?php } ?>
+                        <?php } ?>
+                    </tbody>
+                  </table>
+                <?php }else{ ?>
+                  <div class="alert alert-info text-center">
+                    <strong>Sorry no data found!</strong>
+                  </div>
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() { $('input[name="searchbox"]').focus(); });
+
+  $(document).on('keyup', '#itemsort_search', function(event) {
+    event.preventDefault();
+    
+    $('#missing_item_table tbody tr').hide();
+    var txt = $(this).val();
+
+    if(txt != ''){
+      $('#missing_item_table tbody tr').each(function(){
+        if($(this).text().toUpperCase().indexOf(txt.toUpperCase()) != -1){
+          $(this).show();
+        }
+      });
+    }else{
+      $('#missing_item_table tbody tr').show();
+    }
+  });
+
+  $(document).on('click', '#import_missing_item_btn', function(event) {
+    event.preventDefault();
+
+    var url = $('form#form_import_missing_items').attr('action');
+    
+    if($("input[name='selected_missing_items[]']:checked").length == 0){
+      // alert('Please select items for import!');
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: "Please select items for import!", 
+        callback: function(){}
+      });
+      return false;
+    }
+
+    var data = {};
+    $("input[name='selected_missing_items[]']:checked").each(function (i){
+      data[i] = parseInt($(this).val());
+    });
+
+    $('#myModalImportMissingItem').modal('hide');
+    $("div#divLoading").addClass('show');
+
+    $.ajax({
+      url : url,
+      headers: {
+                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+            },
+      data : JSON.stringify(data),
+      type : 'POST',
+      contentType: "application/json",
+      dataType: 'json',
+    success: function(data) {
+      $('#myModalImportMissingItem').modal('hide');
+      $("div#divLoading").removeClass('show');
+      $('#success_msg').html('<strong>'+ data.success +'</strong>');
+      $('#successModal').modal('show');
+      setTimeout(function(){
+       window.location.reload();
+       $("div#divLoading").addClass('show');
+      }, 3000);
+      
+    },
+    error: function(xhr) { // if error occured
+      var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+      
+      var error_show = '';
+
+      if(response_error.error){
+        error_show = response_error.error;
+      }else if(response_error.validation_error){
+        error_show = response_error.validation_error[0];
+      }
+      $('#myModalImportMissingItem').modal('hide');
+      $("div#divLoading").removeClass('show');
+      $('#error_msg').html('<strong>'+ error_show +'</strong>');
+      $('#errorModal').modal('show');
+      return false;
+    }
+  });
+
+  });
+</script>
+
+
+<script type="text/javascript">
+  $(document).on('submit', '#form_order_search', function(event) {
+    $("div#divLoading").addClass('show');
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function($) {
+    $("div#divLoading").addClass('show');
+  });
+
+  $(window).load(function() {
+    $("div#divLoading").removeClass('show');
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).on('click', '#main_checkbox', function(event) {
+    if ($(this).prop('checked')==true){ 
+      $('input[name="selected[]"]').not(":disabled").prop('checked', true);
+    }else{
+      $('input[name="selected[]"]').not(":disabled").prop('checked', false);
+    }
+  });
+
+
+  $(document).on('click', '#delete_po_btn', function(event) {
+    event.preventDefault();
+    var delete_url = '<?php echo $data['delete']; ?>';
+    delete_url = delete_url.replace(/&amp;/g, '&');
+    var data = {};
+
+    if($("input[name='selected[]']:checked").length == 0){
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: 'Please Select PO to Delete!', 
+        callback: function(){}
+      });
+      return false;
+    }
+
+    $("input[name='selected[]']:checked").each(function (i)
+    {
+      data[i] = parseInt($(this).val());
+    });
+    
+    $("div#divLoading").addClass('show');
+
+    $.ajax({
+        url : delete_url,
+        headers: {
+                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+        },
+        data : JSON.stringify(data),
+        type : 'POST',
+        contentType: "application/json",
+        dataType: 'json',
+      success: function(data) {
+       
+        $('#success_msg').html('<strong>'+ data.success +'</strong>');
+        $("div#divLoading").removeClass('show');
+        $('#successModal').modal('show');
+
+        setTimeout(function(){
+         $('#successModal').modal('hide');
+         window.location.reload();
+        }, 3000);
+      },
+      error: function(xhr) { // if error occured
+        var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+        
+        var error_show = '';
+
+        if(response_error.error){
+          error_show = response_error.error;
+        }else if(response_error.validation_error){
+          error_show = response_error.validation_error[0];
+        }
+
+        $('#error_msg').html('<strong>'+ error_show +'</strong>');
+        $('#errorModal').modal('show');
+        return false;
+      }
+    });
+  });
+  
+    $(document).on('change', '#vvendors', function(){
+        var vendor = $('#vvendors').val();
+        var url = '<?php echo $data["get_vendor_data"] ; ?>';
+        url = url.replace(/&amp;/g, '&');
+        $.ajax({
+            url : url,
+            headers: {
+                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+            },
+            data : {vendor:vendor},
+            type : 'get',
+            contentType: "application/json",
+            dataType: 'json',
+            success: function(data) {
+                
+                let html =  "<h5>Selected Vendor Feture List</h5>";
+                                html += "<ul>";
+                                
+                                if(data.vendor_format == 'FEDWAY'){
+                                    html += "<li>FEDWAY</li>";
+                                    
+                                }else if(data.vendor_format == 'ALLEN BROTHERS'){
+                                    html += "<li>ALLEN BROTHERS</li>";
+                                    
+                                }else if(data.vendor_format == 'CORE MARK'){
+                                    html += "<li>CORE MARK</li>";
+                                    
+                                }else if(data.vendor_format == 'RESNICK'){
+                                    html += "<li>RESNICK</li>";
+                                }else{
+                                    html += "<li>OTHERS</li>";
+                                }
+                                
+                                if(data.upc_convert == 'A'){
+                                    
+                                    html += "<li>UPC-E to UPC-A</li>";
+                                    
+                                    if(data.remove_first_digit == 'Y'){
+                                        
+                                        html += "<li>Remove First Digit</li>";
+                                        
+                                    }
+                                    
+                                    if(data.remove_last_digit == 'Y'){
+                                        
+                                        html += "<li>Remove Last Digit</li>";
+                                        
+                                    }
+                                    
+                                }else if(data.upc_convert == 'E'){
+                                    
+                                    html += "<li>UPC-A to UPC-E</li>";
+                                    
+                                    if(data.check_digit == 'Y'){
+                                        
+                                        html += "<li>With Check Digit</li>";
+                                        
+                                    }
+                                    if(data.remove_first_digit == 'Y'){
+                                        
+                                        html += "<li>Remove First Digit</li>";
+                                        
+                                    }
+                                    
+                                    if(data.remove_last_digit == 'Y'){
+                                        
+                                        html += "<li>Remove Last Digit</li>";
+                                        
+                                    }
+                                    
+                                }else{
+                                    html += "<li>NONE</li>";
+                                    
+                                    if(data.check_digit == 'Y'){
+                                        
+                                        html += "<li>With Check Digit</li>";
+                                        
+                                    }
+                                    if(data.remove_first_digit == 'Y'){
+                                        
+                                        html += "<li>Remove First Digit</li>";
+                                        
+                                    }
+                                    
+                                    if(data.remove_last_digit == 'Y'){
+                                        
+                                        html += "<li>Remove Last Digit</li>";
+                                        
+                                    }
+                                }
+                                
+                             html += "</ul>";
+                if(vendor == ''){
+                    $('#display_vendor_options').html('');
+                }else{
+                    $('#display_vendor_options').html(html);
+                }
+            },
+            error: function(xhr) { // if error occured
+                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+                
+                var error_show = '';
+                
+                if(response_error.error){
+                  error_show = response_error.error;
+                }else if(response_error.validation_error){
+                  error_show = response_error.validation_error[0];
+                }
+                
+                $('#error_msg').html('<strong>'+ error_show +'</strong>');
+                $('#errorModal').modal('show');
+                return false;
+          }
+        });
+    });
+</script>
+
+
+  <div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="border-bottom:none;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger text-center">
+            <p id="error_msg"></p>
+          </div>
+        </div>
+        <div class="modal-footer" style="border-top: none;">
+        <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+      </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <style>
+      .floatBlock {
+          margin: 0 1.81em 0 0;
+        }
+        
+    .checkdigitOptions {
+    	border: none;
+    	display: flex;
+    	flex-direction: row;
+    	justify-content: flex-start;
+    	break-before: always;
+    }
+  </style>
+  
+@endsection
