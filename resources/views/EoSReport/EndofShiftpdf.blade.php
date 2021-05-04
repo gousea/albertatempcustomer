@@ -217,6 +217,12 @@
                                 <td class="text-right"><?php echo "$",$data['Coupon'];?></td>
                             </tr>
                              <?php } ?>
+                             <?php if($data['CreditCardTender'] !=0){?>
+                            <tr>
+                                <td>CREDIT CARD </td>
+                                <td class="text-right"><?php echo "$",$data['CreditCardTender'];?></td>
+                            </tr>
+                             <?php } ?>
                               
                                <?php if($data['CheckTender'] !=0){?>
                             <tr>
