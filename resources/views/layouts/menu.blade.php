@@ -23,10 +23,31 @@
             <li><a href="{{ route('customers') }}"><i class="fa fa-child fa-fw"></i> <span>Customer</span></a></li>
             @endif
     
-            @if (in_array('PER1004', session()->get('userPermsData')))
-                <li>
-                    <a href="{{ route('users') }}"><i class="fa fa-user fa-fw"></i> <span>Users</span></a>
+            @if(session()->get('version') == 310)
+                <!--//time clock start--->
+                  <li><a class="parent active"><i class="fa fa-clock-o  fa-fw"></i> <span>Time Clock</span></a>
+                    <ul>
+                         @if (in_array('PER1004', session()->get('userPermsData')))
+                            <li>
+                                <a href="{{ url(session()->get('version').'/users') }}">Employee</a>
+                            </li>
+                        @endif
+                        <li><a href="{{ route('time_clock') }}">Time Clock</a></li>
+                        <!--<li><a href="{{ route('time_sheet') }}">Time Sheet</a></li>
+                        <li><a href="{{ route('PayRoll') }}">PayRoll Report</a></li>
+                        <li><a href="{{ route('EmployeePerformance') }}">Employee Performance</a></li>-->
+                        
+                     </ul> 
                 </li>
+                
+               <!-- //time clock end--->
+            
+            @else
+                @if (in_array('PER1004', session()->get('userPermsData')))
+                    <li>
+                        <a href="{{ route('users') }}"><i class="fa fa-user fa-fw"></i> <span>Users</span></a>
+                    </li>
+                @endif
             @endif
             
             @if (in_array('PER1005', session()->get('userPermsData')))
@@ -37,7 +58,12 @@
        @if (in_array('PER1006', session()->get('userPermsData')))
             <li><a class="parent active"><i class="fa fa-gift fa-fw"></i> <span>Item</span></a>
                 <ul>
-                    <li><a href="{{ url('/item/item_list/Active/DESC') }}">Item</a></li>
+                    @if(session()->get('version') == 320)
+                        <li><a href="{{ url(session()->get('version').'/item/item_list/Active/DESC')  }}">Item</a></li>
+                    @else 
+                        <li><a href="{{ url('/item/item_list/Active/DESC') }}">Item</a></li>
+                    @endif
+                    
                     <li><a href="{{ url('/item/quick_item_list') }}">Quick Item</a></li>
                     <li><a href="{{ url('/item/parent_child_list') }}">Parent Child</a></li>
                     <li><a href="{{ route('itemgroup') }}"> Item Group </a></li>
@@ -48,15 +74,14 @@
                         <li  ><a href="{{ route('ItemAuditList') }}" >Item Audit </a></li>
                         <li><a href="{{ url('item/ItemMovement') }}">Item Movement</a></li>
                     @endif
-                    <!--<li><a href="{{ url('promotion') }}">Promotion</a></li>-->
+                    
                     
                     @if(session()->get('version') == 320)
                         <li><a href="{{ url(session()->get('version').'/promotion')  }}">Promotion</a></li>
                     @else 
                         <li><a href="{{ url('/promotion')  }}">Promotion</a></li>
                     @endif
-                    
-                    
+                    <!--<li><a href="{{ url(session()->get('version').'/promotion')  }}">Promotion</a></li>-->
                     <li><a href="{{ url('buydown') }}">Buy Down</a></li>
                 </ul>
             </li>
