@@ -1,57 +1,58 @@
-#login-container {
+#login-container{
     height: 100%;
     padding: 0;
+    
 }
 
-body {
+body{
     overflow: hidden;
 }
 
-.card-img-top {
+.card-img-top{
     width: 200px;
     margin: auto;
     margin-top: 110px;
 }
 
-.form-control {
+.form-control{
     width: 300px;
 }
 
-.bg-img {
-    background: url("../img/background_image.jpg");
+.bg-light{
+    background: url('../img/background_image.jpg');
 }
 
-.login-conts {
+.login-conts{
     font-size: 13px;
 }
 
 .login-content {
-    padding-top: 6rem;
+   padding-top: 6rem;
 }
 
-.login-btn {
+.login-btn{
     padding: 3px 30px;
     border: none;
     border-radius: 9px;
     width: 70%;
 }
 
-.login-btns {
+.login-btns{
     padding: 3px 30px;
     border: none;
     border-radius: 9px;
     width: 70%;
 }
 
-form {
+form{
     margin-left: 60px;
 }
 
-#card {
+#card{
     height: 100%;
 }
 
-.card-title {
+.card-title{
     margin: auto;
     font-size: 13px;
 }

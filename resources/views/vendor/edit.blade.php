@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <span class="font-weight-bold"> ADD EMPLOYEE</span>
+                <span class="font-weight-bold"> EDIT EMPLOYEE</span>
             </div>
             <div class="nav-submenu">
                 <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#"> SAVE

@@ -1,11 +1,5 @@
 @extends('layout')
 
-@section('title')
-
-Promotion Edit
-
-@endsection
-
 @section('main-content')
 
 <link rel="stylesheet" href="{{ asset('asset/css/promotion.css') }}">

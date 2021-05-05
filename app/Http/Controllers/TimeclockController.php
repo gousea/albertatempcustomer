@@ -16,6 +16,8 @@ class TimeclockController extends Controller
      */
     public function index(Request $request)
     {
+        // echo "time lock";
+        // die;
         $users = UserDynamic::orderBy('iuserid', 'DESC')->paginate(20);
         return view('timeclock.index', compact('users'));
     }

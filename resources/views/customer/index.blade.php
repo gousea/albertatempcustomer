@@ -10,8 +10,7 @@
                     <span class="font-weight-bold text-uppercase"> customer</span>
                 </div>
                 <div class="nav-submenu">
-                    <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#">
-                        ADD NEW
+                    <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#"> ADD NEW
                     </a>
                     <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> DELETE
                     </a>
@@ -68,7 +67,7 @@
                 <tbody class="table-body">
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Wheat</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Wheat</a></td>
                         <td>Good</td>
                         <td>200 Bags</td>
                         <td>Active</td>
@@ -76,7 +75,7 @@
                     </tr>
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Rice</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Rice</a></td>
                         <td>Good</td>
                         <td>100 Bags</td>
                         <td>Active</td>
@@ -84,7 +83,7 @@
                     </tr>
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Rice</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Rice</a></td>
                         <td>Good</td>
                         <td>100 Bags</td>
                         <td>Active</td>
@@ -92,7 +91,7 @@
                     </tr>
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Sugar</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Sugar</a></td>
                         <td>Prime</td>
                         <td>200 Bags</td>
                         <td>Active</td>
@@ -100,7 +99,7 @@
                     </tr>
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Maze</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Maze</a></td>
                         <td>Fine</td>
                         <td>10 Packs</td>
                         <td>Active</td>
@@ -108,7 +107,7 @@
                     </tr>
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Sugar</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Sugar</a></td>
                         <td>Prime</td>
                         <td>200 Bags</td>
                         <td>Active</td>
@@ -116,7 +115,7 @@
                     </tr>
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Sugar</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Sugar</a></td>
                         <td>Prime</td>
                         <td>200 Bags</td>
                         <td>Active</td>
@@ -124,7 +123,7 @@
                     </tr>
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Sugar</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Sugar</a></td>
                         <td>Prime</td>
                         <td>200 Bags</td>
                         <td>Active</td>
@@ -132,7 +131,7 @@
                     </tr>
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Sugar</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Sugar</a></td>
                         <td>Prime</td>
                         <td>200 Bags</td>
                         <td>Active</td>
@@ -140,7 +139,7 @@
                     </tr>
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Sugar</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Sugar</a></td>
                         <td>Prime</td>
                         <td>200 Bags</td>
                         <td>Active</td>
@@ -148,7 +147,7 @@
                     </tr>
                     <tr id="tr-id-2" class="tr-class-2">
                         <td></td>
-                        <td><a href="#">Sugar</a></td>
+                        <td><a href="{{ route('employee.edit') }}">Sugar</a></td>
                         <td>Prime</td>
                         <td>200 Bags</td>
                         <td>Active</td>
