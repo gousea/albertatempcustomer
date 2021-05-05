@@ -1,0 +1,129 @@
+.box {
+    background-color: #fff;
+    color: #286fb7;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+}
+
+.grid-item1,
+.grid-item2,
+.grid-item3,
+.grid-item4 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+}
+
+.grid-item5 {
+    font-size: 16px;
+}
+
+.view-more {
+    font-size: 15px;
+}
+
+.content {
+    gap: 1rem;
+}
+
+.p-text {
+    font-size: 14px !important;
+}
+
+.d-button-text {
+    border: none;
+    border-radius: 2rem;
+}
+
+.btn-sales {
+    border: 1px solid #ccc;
+    border-radius: 3rem;
+}
+
+.holder {
+    /* Clip edges, as some of the lines don't terminate nicely. */
+    overflow: hidden;
+    position: relative;
+    width: 200px;
+    height: 50px;
+}
+
+.ellipse {
+    position: absolute;
+    /* background: radial-gradient(ellipse, transparent, transparent 7px, black 7px, black 10px, transparent 11px); */
+    background: radial-gradient(
+        ellipse,
+        transparent,
+        transparent 8px,
+        black 7px,
+        black 1px,
+        transparent 10px
+    );
+    background-size: 36px 40px;
+    width: 140px;
+    height: 20px;
+}
+
+.ellipse2 {
+    top: 20px;
+    left: 18px;
+    background-position: 0px -20px;
+}
+
+.store-news {
+    /* display: flex; */
+}
+
+.transperent-icons {
+    opacity: 0.4;
+}
+
+.content {
+    background-color: #fff;
+    padding: 0.8rem;
+    width: 100%;
+}
+
+.buttons_menu {
+    color: #286fb7;
+}
+
+.background-main-color {
+    background-color: #286fb7;
+}
+
+.main-color {
+    background-color: #286fb7;
+}
+
+.employeeview {
+    border-collapse: separate;
+}
+
+.section-content {
+    padding-top: 11rem !important;
+}
+
+.grid-item5 {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+}
+
+.grid-container {
+    /* width: 100%;
+    display: grid;
+    grid-gap: 17px;
+    text-align: center;
+    grid-template-columns: 200px 250px 320px; */
+
+    width: 100%;
+    display: grid;
+    grid-gap: 10px;
+    text-align: center;
+    grid-template-columns: 289px 229px 371px;
+}
+}
