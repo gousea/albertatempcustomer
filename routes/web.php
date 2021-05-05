@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,9 @@ Route::get('/api/convertupce2upca', 'Admin\ProductController@convert_upce_2_upca
 // Route::get('/users', 'AllUserController@index' )->name('users');
 
 Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
+    
+    
+    
 	Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 	Route::post('/dashboard', 'HomeController@dashContent')->name('dashboard');
 	
@@ -51,19 +55,24 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
 
     /*================= Vendor Module Routes =========================*/
     Route::group(['middleware' => ['Permission:PER1002']], function(){
-        //vendor MOdel Route
-        Route::get('vendors', 'VendorController@index')->name('vendors');
-        Route::post('vendors', 'VendorController@search')->name('vendors');
-        Route::post('vendors/edit_list', 'VendorController@edit_list');
-        Route::get('vendors/create', 'VendorController@create')->name('vendors.create');
-        Route::post('vendors/store', 'VendorController@store')->name('vendors.store');
-        Route::post('vendors/remove', 'VendorController@remove')->name('vendors.remove');
-        Route::get('vendors/{isupplierid}/edit', 'VendorController@edit' )->name('vendors.edit');
-        Route::patch('vendors/update/{isupplierid}', 'VendorController@update' )->name('vendors.update');
+            // //vendor MOdel Route
+           
+            Route::get('vendors', 'VendorController@index')->name('vendors');
+            Route::post('vendors', 'VendorController@search')->name('vendors');
+            Route::post('vendors/edit_list', 'VendorController@edit_list');
+            Route::get('vendors/create', 'VendorController@create')->name('vendors.create');
+            Route::post('vendors/store', 'VendorController@store')->name('vendors.store');
+            Route::post('vendors/remove', 'VendorController@remove')->name('vendors.remove');
+            Route::get('vendors/{isupplierid}/edit', 'VendorController@edit' )->name('vendors.edit');
+            Route::patch('vendors/update/{isupplierid}', 'VendorController@update' )->name('vendors.update');
+            
+            // HeadQuaters Routes
+            Route::post('vendors/duplicatehqvendors', 'VendorController@hqVendors');
+            Route::post('vendors/dupilcateHQvendor', 'VendorController@dupilcateHQvendor');
+    
         
-        // HeadQuaters Routes
-        Route::post('vendors/duplicatehqvendors', 'VendorController@hqVendors');
-        Route::post('vendors/dupilcateHQvendor', 'VendorController@dupilcateHQvendor');
+        
+        
     });
     
     /*================= Customer Module Routes =========================*/  
@@ -80,6 +89,17 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
     
     /*================= User Module Routes =========================*/
     Route::group(['middleware' => ['Permission:PER1004']], function(){
+        
+        Route::group(['prefix' => '310', 'namespace' => '\App\_310\Http\Controllers'], function(){
+            
+            //User Module Routes 310
+        	Route::get('/users', 'AllUserController@index' )->name('users');
+            Route::get('/users/create', 'AllUserController@create' )->name('users.create');
+            Route::post('/users/store', 'AllUserController@store' )->name('users.store');
+            Route::get('/users/{iuserid}/edit', 'AllUserController@edit' )->name('users.edit');
+            Route::patch('/users/update/{iuserid}', 'AllUserController@update' )->name('users.update');
+            Route::post('/users/remove', 'AllUserController@remove')->name('users.remove');
+        });
         //User Module Routes
     	Route::get('/users', 'AllUserController@index' )->name('users');
         Route::get('/users/create', 'AllUserController@create' )->name('users.create');
@@ -113,9 +133,6 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
         Route::post('/item/duplicatehqlotdeleteitems', 'Item\ItemController@duplicatehqlotdeleteitems');
         Route::post('/item/duplicatehqlotedititems', 'Item\ItemController@duplicatehqlotedititems');
         Route::post('/item/duplicatehqaliasitems', 'Item\ItemController@duplicatehqaliasitems');
-        
-      
-        
         
         
          //=====ITEMS related routes========
@@ -169,6 +186,74 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
         Route::get('/item/get_status_import', 'Item\ItemController@get_status_import');
         Route::get('/item/checkforduplicateBarcode', 'Item\ItemController@checkforduplicateBarcode');
         
+        //===Item routes for 320=====
+        Route::group(['prefix' => '320', 'namespace' => '\App\_320\Http\Controllers'], function(){
+            
+            // this is for head quaters
+            Route::post('/item/duplicatehqitems', 'Item\ItemController@hqItems');
+            Route::post('/item/checkVendorExists','Item\ItemController@checkVendorExists');
+            Route::post('/item/addVendorsFromitems','Item\ItemController@addVendorsFromitems');
+            Route::post('/item/duplicatehqitemvendorassign','Item\ItemController@duplicatehqitemvendorassign');
+            Route::post('/item/checkVendorExistsFromlist', 'Item\ItemController@checkVendorExistsFromlist');
+            Route::post('/item/duplicatehqlotitems', 'Item\ItemController@duplicatehqlotitems');
+            Route::post('/item/duplicatehqlotdeleteitems', 'Item\ItemController@duplicatehqlotdeleteitems');
+            Route::post('/item/duplicatehqlotedititems', 'Item\ItemController@duplicatehqlotedititems');
+            Route::post('/item/duplicatehqaliasitems', 'Item\ItemController@duplicatehqaliasitems');
+            
+            
+             //=====ITEMS related routes========
+            Route::get('/item/item_list/{show_items}/{sort_items}', 'Item\ItemController@index');
+            Route::get('/item/add', 'Item\ItemController@add_form');
+            Route::post('/item/add', 'Item\ItemController@add');
+            Route::get('/item/edit/{iitemid}', 'Item\ItemController@edit_form');
+            Route::post('/item/edit/{iitemid}', 'Item\ItemController@edit');
+            Route::post('/item/delete', 'Item\ItemController@delete');
+            
+            Route::post('/item/search/{show_items}/{sort_items}', 'Item\ItemController@search');
+            
+            Route::post('/item/import_items', 'Item\ItemController@import_items');
+            Route::get('/item/get_barcode', 'Item\ItemController@get_barcode');
+            Route::post('/item/calculateROP', 'Item\ItemController@calculateROP');
+            Route::post('/item/get_department_categories', 'Item\ItemController@get_department_categories');
+            Route::get('/item/get_department_items', 'Item\ItemController@get_department_items');
+            Route::get('/item/clone_item/{iitemid}', 'Item\ItemController@clone_item_form');
+            Route::post('/item/clone_item', 'Item\ItemController@clone_item');
+        
+            Route::post('/item/unset_visited_below_zero', 'Item\ItemController@unset_visited_below_zero');
+            Route::post('/item/calculateReorderPointAjax', 'Item\ItemController@calculateReorderPointAjax');
+            Route::post('/item/action_vendor_editlist', 'Item\ItemController@action_vendor_editlist');
+            Route::post('/item/action_vendor', 'Item\ItemController@action_vendor');
+            Route::post('/item/delete_vendor_code', 'Item\ItemController@delete_vendor_code');
+            Route::post('/item/add_alias_code', 'Item\ItemController@add_alias_code');
+            Route::post('/item/delete_alias_code', 'Item\ItemController@delete_alias_code');
+            Route::post('/item/add_lot_matrix', 'Item\ItemController@add_lot_matrix');
+            Route::post('/item/lot_matrix_editlist', 'Item\ItemController@lot_matrix_editlist');
+            Route::post('/item/delete_lot_matrix', 'Item\ItemController@delete_lot_matrix');
+            Route::post('/item/check_vendor_item_code', 'Item\ItemController@check_vendor_item_code');
+            Route::post('/item/parent_child_search', 'Item\ItemController@parent_child_search');
+        
+            Route::post('/item/get_categories', 'Item\ItemController@get_categories');
+            Route::post('/item/get_subcategories', 'Item\ItemController@get_subcategories');
+        
+            Route::get('/item/getCategories', 'Item\ItemController@getCategories');
+            Route::post('/item/category/add', 'Item\ItemController@addCategory');
+            Route::post('/item/department/add', 'Item\ItemController@addDepartment');
+            Route::get('/item/department', 'Item\ItemController@getDepartments');
+            Route::post('/item/sub_category/add', 'Item\ItemController@addSubcategory');
+            Route::post('/item/size/add', 'Item\ItemController@addSize');
+            Route::get('/item/size', 'Item\ItemController@getSize');
+            // Route::post('/item/group/add', 'item\ItemController@get_categories');
+            // Route::post('/item/group', 'item\ItemController@get_subcategories');
+            Route::post('/item/supplier/add', 'Item\ItemController@addSupplier');
+            Route::get('/item/supplier', 'Item\ItemController@getSupplier');
+            Route::post('/item/manufacturer/add_manufacturer', 'Item\ItemController@addManufacturer');
+            Route::get('/item/manufacturer/get_manufacturer', 'Item\ItemController@getManufacturer');
+            
+            Route::get('/item/get_status_import', 'Item\ItemController@get_status_import');
+            Route::get('/item/checkforduplicateBarcode', 'Item\ItemController@checkforduplicateBarcode');
+            
+        });
+        
         //=====END ITEMS related routes========    
         
         //=======Quick Item==================
@@ -201,11 +286,13 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
     	Route::post('/savedata','ItemGroupController@savegroupname')->name('savegroupname');
     	Route::get('/edititem/{iitemgroupid}','ItemGroupController@editgroupdetail')->name('editgroupdetail');
     	Route::post('/updatedata','ItemGroupController@updategroupdetail')->name('updategroupdetail');
-
+    	
+    	
         // 	hq routes for duplicate item groups
         Route::post('/duplicatehqitemgroups','ItemGroupController@duplicatehqitemgroups')->name('duplicatehqitemgroups');
         Route::post('/duplicateitemgroup','ItemGroupController@duplicateitemgroup')->name('duplicateitemgroup');
         
+
     
         /* ************* Quick Update Items Mdoule ************* */
         
@@ -218,20 +305,6 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
 
     
         //=======Edit Multiple Item===============
-        // Route::get('/item/edit_multiple_item', 'Item\EditmultipleController@getList');
-        // Route::post('/item/edit_multiple_item/searchItems', 'Item\EditmultipleController@searchItems');
-        // Route::post('/item/edit_multiple_item/get_department_categories', 'Item\EditmultipleController@get_department_categories');
-        // Route::post('/item/edit_multiple_item/get_sub_categories_url', 'Item\EditmultipleController@get_sub_categories_url');
-        // Route::post('/item/edit_multiple_item/edit_list', 'Item\EditmultipleController@edit_list');
-        // Route::get('/item/edit_multiple_item/get_session_value', 'Item\EditmultipleController@get_session_value');
-        // Route::get('/item/edit_multiple_item/set_unset_session_value', 'Item\EditmultipleController@set_unset_session_value');
-        // Route::get('/item/edit_multiple_item/unset_session_value', 'Item\EditmultipleController@unset_session_value');
-        // Route::post('/item/edit_multiple_item/getCategories', 'Item\EditmultipleController@getCategories');
-        // Route::post('/item/edit_multiple_item/getSubcategories', 'Item\EditmultipleController@getSubcategories');
-        // Route::post('/item/edit_multiple_item/set_itemids_final', 'Item\EditmultipleController@set_itemids_final');
-        // Route::post('/item/edit_multiple_item/add_remove_ids', 'Item\EditmultipleController@add_remove_ids');
-        
-        
         Route::get('/item/edit_multiple_item', 'Item\EditmultipleController@getList');
         Route::post('/item/edit_multiple_item/searchItems', 'Item\EditmultipleController@searchItems');
         Route::post('/item/edit_multiple_item/get_department_categories', 'Item\EditmultipleController@get_department_categories');
@@ -265,40 +338,6 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
         Route::get('/item/item_movement_report/item_movement_print_data', 'Item\ItemMovementController@item_movement_print_data');
         Route::get('/item/item_movement_report/printpage', 'Item\ItemMovementController@printpage');
         
-        
-        //items/pramotions
-        Route::get('/promotion','PromotionController@promotion')->name('promotion');
-        Route::get('/addpromotion','PromotionController@getForm')->name('addpromotion');
-        Route::post('/savepromotion','PromotionController@savepromotion')->name('savepromotion');
-        Route::post('/deletepromotion','PromotionController@deletePromotions')->name('deletepromotion');
-        Route::get('/editpromotion','PromotionController@editForm')->name('editpromotion');
-        Route::post('/updatepromotion','PromotionController@updatepromotion')->name('updatepromotion');
-        Route::post('/searchpromotion','PromotionController@searchpromotion')->name('searchpromotion');
-        Route::post('/searchPromotionitems','PromotionController@searchPromotionitems')->name('searchPromotionitems');
-        
-        Route::post('/duplicatehqPermission','PromotionController@duplicatehqPermission');
-        Route::post('/checkItemExist','PromotionController@checkItemExist');
-        
-        Route::post('/checkPromoIdExists','PromotionController@checkPromoIdExists');
-        
-        Route::get('/promotion/check_promocode','PromotionController@check_promocode');
-        
-        Route::post('/promotion/get_item_categories','PromotionController@get_item_categories')->name('promotion.get_item_categories');
-        
-        Route::post('/promotion/get_items_url','PromotionController@get_items_url')->name('promotion.get_items');
-        Route::post('/promotion/get_customers_url','PromotionController@get_customers_url')->name('promotion.get_customers');
-        Route::post('/promotion/get_categories_url','PromotionController@get_categories_url')->name('promotion.get_item_categories');
-        Route::post('/promotion/get_sub_categories_url','PromotionController@get_sub_categories_url')->name('promotion.get_sub_categories_url');
-        Route::post('/promotion/get_department_items_url','PromotionController@get_department_items_url')->name('promotion.get_department_items');
-        Route::post('/promotion/get_category_items_url','PromotionController@get_category_items_url')->name('promotion.get_category_items');
-        Route::post('/promotion/get_sub_category_items_url','PromotionController@get_sub_category_items_url')->name('promotion.get_sub_category_items');
-        Route::post('/promotion/getSelectedBuyItems','PromotionController@getSelectedBuyItems')->name('promotion.getSelectedBuyItems');
-        Route::post('/promotion/getSavedItemsAjax','PromotionController@getSavedItemsAjax')->name('promotion.getSavedItemsAjax');
-        Route::post('/promotion/get_selected_discounted_items_url','PromotionController@get_selected_discounted_items_url')->name('promotion.getSelectedDiscountedItems');
-        Route::post('/promotion/get_saved_discounted_items_ajax_url','PromotionController@getSelectedDiscountedItemsAjax')->name('promotion.getSelectedDiscountedItemsAjax');
-        Route::post('/promotion/get_group_items_url','PromotionController@get_group_items_url')->name('promotion.get_group_items');
-        
-        //version 3.2.0 routes for promotion
         Route::group(['prefix' => '320', 'namespace' => '\App\_320\Http\Controllers'], function(){
             Route::get('/promotion','PromotionController@promotion')->name('promotion');
             Route::get('/addpromotion','PromotionController@getForm')->name('addpromotion');
@@ -336,6 +375,82 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
             
         });
         
+        // Route::group(['prefix' => '320', 'namespace' => '\App\_320\Http\Controllers'], function(){
+        //     Route::get('/promotion','PromotionController@promotion')->name('promotion');
+        //     Route::get('/addpromotion','PromotionController@getForm')->name('addpromotion');
+        //     Route::post('/savepromotion','PromotionController@savepromotion')->name('savepromotion');
+        //     Route::post('/deletepromotion','PromotionController@deletePromotions')->name('deletepromotion');
+        //     Route::get('/editpromotion','PromotionController@editForm')->name('editpromotion');
+        //     Route::post('/updatepromotion','PromotionController@updatepromotion')->name('updatepromotion');
+            
+        //     Route::post('/searchpromotion','PromotionController@searchpromotion')->name('searchpromotion');
+            
+        //     Route::post('/searchPromotionitems','PromotionController@searchPromotionitems')->name('searchPromotionitems');
+            
+        //     Route::post('/duplicatehqPermission','PromotionController@duplicatehqPermission');
+        //     Route::post('/checkItemExist','PromotionController@checkItemExist');
+            
+        //     Route::post('/checkPromoIdExists','PromotionController@checkPromoIdExists');
+            
+        //     Route::get('/promotion/check_promocode','PromotionController@check_promocode');
+            
+        //     Route::post('/promotion/get_item_categories','PromotionController@get_item_categories')->name('promotion.get_item_categories');
+            
+        //     Route::post('/promotion/get_items_url','PromotionController@get_items_url')->name('promotion.get_items');
+        //     Route::post('/promotion/get_customers_url','PromotionController@get_customers_url')->name('promotion.get_customers');
+        //     Route::post('/promotion/get_categories_url','PromotionController@get_categories_url')->name('promotion.get_item_categories');
+        //     Route::post('/promotion/get_sub_categories_url','PromotionController@get_sub_categories_url')->name('promotion.get_sub_categories_url');
+        //     Route::post('/promotion/get_department_items_url','PromotionController@get_department_items_url')->name('promotion.get_department_items');
+        //     Route::post('/promotion/get_category_items_url','PromotionController@get_category_items_url')->name('promotion.get_category_items');
+        //     Route::post('/promotion/get_sub_category_items_url','PromotionController@get_sub_category_items_url')->name('promotion.get_sub_category_items');
+        //     Route::post('/promotion/getSelectedBuyItems','PromotionController@getSelectedBuyItems')->name('promotion.getSelectedBuyItems');
+        //     Route::post('/promotion/getSavedItemsAjax','PromotionController@getSavedItemsAjax')->name('promotion.getSavedItemsAjax');
+        //     Route::post('/promotion/get_selected_discounted_items_url','PromotionController@get_selected_discounted_items_url')->name('promotion.getSelectedDiscountedItems');
+        //     Route::post('/promotion/get_saved_discounted_items_ajax_url','PromotionController@getSelectedDiscountedItemsAjax')->name('promotion.getSelectedDiscountedItemsAjax');
+        //     Route::post('/promotion/get_group_items_url','PromotionController@get_group_items_url')->name('promotion.get_group_items');
+            
+            
+        // });
+        
+            Route::get('/promotion','PromotionController@promotion')->name('promotion');
+            Route::get('/addpromotion','PromotionController@getForm')->name('addpromotion');
+            Route::post('/savepromotion','PromotionController@savepromotion')->name('savepromotion');
+            Route::post('/deletepromotion','PromotionController@deletePromotions')->name('deletepromotion');
+            Route::get('/editpromotion','PromotionController@editForm')->name('editpromotion');
+            Route::post('/updatepromotion','PromotionController@updatepromotion')->name('updatepromotion');
+            Route::post('/searchpromotion','PromotionController@searchpromotion')->name('searchpromotion');
+            Route::post('/searchPromotionitems','PromotionController@searchPromotionitems')->name('searchPromotionitems');
+            
+            Route::post('/duplicatehqPermission','PromotionController@duplicatehqPermission');
+            Route::post('/checkItemExist','PromotionController@checkItemExist');
+            
+            Route::post('/checkPromoIdExists','PromotionController@checkPromoIdExists');
+            
+            Route::get('/promotion/check_promocode','PromotionController@check_promocode');
+            
+            Route::post('/promotion/get_item_categories','PromotionController@get_item_categories')->name('promotion.get_item_categories');
+            
+            Route::post('/promotion/get_items_url','PromotionController@get_items_url')->name('promotion.get_items');
+            Route::post('/promotion/get_customers_url','PromotionController@get_customers_url')->name('promotion.get_customers');
+            Route::post('/promotion/get_categories_url','PromotionController@get_categories_url')->name('promotion.get_item_categories');
+            Route::post('/promotion/get_sub_categories_url','PromotionController@get_sub_categories_url')->name('promotion.get_sub_categories_url');
+            Route::post('/promotion/get_department_items_url','PromotionController@get_department_items_url')->name('promotion.get_department_items');
+            Route::post('/promotion/get_category_items_url','PromotionController@get_category_items_url')->name('promotion.get_category_items');
+            Route::post('/promotion/get_sub_category_items_url','PromotionController@get_sub_category_items_url')->name('promotion.get_sub_category_items');
+            Route::post('/promotion/getSelectedBuyItems','PromotionController@getSelectedBuyItems')->name('promotion.getSelectedBuyItems');
+            Route::post('/promotion/getSavedItemsAjax','PromotionController@getSavedItemsAjax')->name('promotion.getSavedItemsAjax');
+            Route::post('/promotion/get_selected_discounted_items_url','PromotionController@get_selected_discounted_items_url')->name('promotion.getSelectedDiscountedItems');
+            Route::post('/promotion/get_saved_discounted_items_ajax_url','PromotionController@getSelectedDiscountedItemsAjax')->name('promotion.getSelectedDiscountedItemsAjax');
+            Route::post('/promotion/get_group_items_url','PromotionController@get_group_items_url')->name('promotion.get_group_items');
+            
+       
+        
+        
+        
+        
+        
+        
+        
         //======================items/BuyDown modules routes===========================
         Route::get('/buydown','BuyDownController@buydown')->name('buydown');
         Route::post('/buydownsearch','BuyDownController@buydownsearch')->name('searchbuydown');
@@ -367,7 +482,6 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
         //Hq routes
         Route::post('/duplicatehqbuydown','BuyDownController@duplicatehqbuydown')->name('duplicatehqbuydown');
         Route::post('/editbuydownhqcheck','BuyDownController@editbuydownhqcheck')->name('editbuydownhqcheck');
-        
     });
     
     
@@ -465,6 +579,7 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
         Route::get('/ReceivingOrder/get_vendor_data', 'ReceivingOrderController@get_vendor_data');
         Route::post('/ReceivingOrder/get_search_item_history', 'ReceivingOrderController@get_search_item_history');
             
+        
             //==============Physical Inventroy Module Route==================
         Route::get('inventory/physicalInventroy', 'PhysicalInventroyController@index')->name('inventory.physicalInventroy');
         Route::post('inventory/physicalInventroy', 'PhysicalInventroyController@search_inventory_list');
@@ -487,6 +602,9 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
         Route::post('inventory/physicalInventroy/commit', 'PhysicalInventroyController@commit');
         Route::post('inventory/physicalInventroy/calculate_commit', 'PhysicalInventroyController@calculate_commit');
         Route::post('inventory/physicalInventroy/snapshot', 'PhysicalInventroyController@snapshot');
+        //delete physical inventory
+        Route::get('inventory/physicalInventroy/delete_physical', 'PhysicalInventroyController@delete_physical');
+        
         
         Route::get('inventory/physicalInventroy/selected_edit_calculate_redirect', 'PhysicalInventroyController@selected_edit_calculate');
         Route::post('inventory/physicalInventroy/selected_edit_calculate', 'PhysicalInventroyController@selected_edit_calculate');
@@ -507,8 +625,6 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
         Route::post('inventory/physicalInventroy/create_inventory_session', 'PhysicalInventroyController@create_inventory_session');
         Route::get('inventory/physicalInventroy/unset_session_inventory_count', 'PhysicalInventroyController@unset_session_inventory_count');
         Route::post('inventory/physicalInventroy/assign_inventory_users', 'PhysicalInventroyController@assign_inventory_users');
-        
-        Route::get('inventory/physicalInventroy/delete_physical', 'PhysicalInventroyController@delete_physical');
         //==============End Physical Inventroy Module Route==================
         
      });
@@ -657,6 +773,33 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
       Route::get('/item_audit_list/csv','ItemAuditListController@csv')->name('ItemAuditListcsv');
       Route::get('/item_audit_list/print','ItemAuditListController@print')->name('ItemAuditListprint');
       
+/*================= Time CLock Module Start  =========================*/ 
+   Route::group(['prefix' => '310', 'namespace' => '\App\_310\Http\Controllers'], function(){
+      
+        Route::get('/time_clock', 'TimeClockController@index')->name('time_clock');
+        Route::get('/time_update', 'TimeClockController@update')->name('time_clock_save');
+        Route::get('/time_clock_pdf','TimeClockController@time_clock_pdf')->name('time_clock_pdf');
+        Route::get('/time_clock_data_week','TimeClockController@time_clock_data_week')->name('time_clock_data_week');
+   });
+   
+    // Time Clock sheet Route 
+    Route::get('/time_sheet', 'TimeSheetController@index')->name('time_sheet');
+    Route::get('/time_sheet_data_week','TimeSheetController@time_sheet_data_week')->name('time_sheet_data_week');
+    Route::get('/time_sheet_data_week_publish','TimeSheetController@time_sheet_publish')->name('time_sheet_publish');
+    Route::get('/time_sheet_data_week_publish_pdf','TimeSheetController@time_sheet_pdf')->name('time_sheet_publish_pdf');
+    
+    //Time Clock EmployeePerformance
+    Route::get('/employeeperformancereport', 'TimeClock\EmployeePerformanceController@index')->name('EmployeePerformance');
+    Route::get('/employeeperformancereport_data', 'TimeClock\EmployeePerformanceController@Emp_data')->name('EmployeePerformance_Report');
+    
+     //Time Clock PayRoll Report
+    Route::get('/payrollreport', 'TimeClock\PayRollController@index')->name('PayRoll');
+    Route::get('/payrollreport_data', 'TimeClock\PayRollController@Emp_data')->name('PayRoll_Report');
+    
+    
+         
+/*================= Time CLock Module END =========================*/ 
+      
      
     /*================= Reports Module Routes =========================*/ 
     Route::group(['middleware' => ['Permission:PER1009']], function(){
@@ -675,6 +818,16 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
         Route::get('/eodshift/print','EndShiftController@print')->name('Eodshiftprint');
         Route::get('/eodshift/csv','EndShiftController@csv')->name('Eodshiftcsv');
         
+        //EOS Version #3.20
+        Route::group(['prefix' => '320', 'namespace' => '\App\_320\Http\Controllers'], function(){
+            Route::get('/eodshift', 'EndShiftController@index')->name('EodShift');
+            Route::get('/eodshift/batch', 'EndShiftController@batchdata')->name('EodBatch');
+            Route::post('/eodshift/getlist', 'EndShiftController@getlist')->name('ShiftForm');
+        
+            Route::get('/eodshift/print_pdf','EndShiftController@eodPdf')->name('Eodshiftpdf');
+            Route::get('/eodshift/print','EndShiftController@print')->name('Eodshiftprint');
+            Route::get('/eodshift/csv','EndShiftController@csv')->name('Eodshiftcsv');
+        });
         
         //CreditCardReport Routes start
         Route::get('/cardreport', 'CreditCardReportController@index')->name('CardReport');
@@ -682,11 +835,12 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
         Route::get('/saleid_card', 'CreditCardReportController@getsaleid')->name('Cardvalue');
         Route::get('/cardreport/print','CreditCardReportController@print')->name('Cardprint');
         Route::get('/cardreport/printview','CreditCardReportController@printpreview')->name('CardprintView');
-
+        
+        
+        //
         Route::get('/cardreport/print_pdf','CreditCardReportController@pdf')->name('ccpdf');
         Route::get('/cardreport/ccprint','CreditCardReportController@ccprint')->name('ccprint');
         Route::get('/cardreport/csv','CreditCardReportController@csv')->name('cccsv');
-        
         
     
         /* *************Scan Data Report ************* */
@@ -849,13 +1003,10 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
         Route::get('/saleshistoryreport_gettingCSV', 'SalesHistoryReportController@csv_export')->name('saleshistoryreport_gettingCSV');
         Route::get('/saleshistoryreport_savePDF', 'SalesHistoryReportController@pdf_save_page')->name('saleshistoryreport_savePDF');  
         Route::get('/saleshistoryreport_getprintpage', 'SalesHistoryReportController@print_page')->name('saleshistoryreport_getprintpage');
-        
-        
-        Route::get('/SalesHistoryReportController/csv','SalesHistoryReportController@csv')->name('salehistorycsv');
+    
+       Route::get('/SalesHistoryReportController/csv','SalesHistoryReportController@csv')->name('salehistorycsv');
        
-        Route::get('/SalesHistoryReportController/email','SalesHistoryReportController@send_email')->name('salehistoryemail');
-    
-    
+       Route::get('/SalesHistoryReportController/email','SalesHistoryReportController@send_email')->name('salehistoryemail');
     
         // Report/Salesanalytics Report
         Route::get('/salesanalyticsreport', 'SalesAnalyticsReportController@index')->name('salesanalyticsreport');
@@ -917,7 +1068,7 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']],function(){
     // Route::patch('customers/update/{icustomerid}', 'CustomerController@update' )->name('customers.update');
     
 });
-Route::get('whatsnew', 'WhatsnewController@index')->name('whatsnew');
+
 
 
 
