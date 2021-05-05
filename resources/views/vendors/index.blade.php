@@ -166,7 +166,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="editModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <!-- Modal content-->
@@ -206,7 +206,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Error Model</h4>
       </div>
-    
+
       <div class="modal-body">
         <h3>No vendor is selected </h3>
       </div>
@@ -234,7 +234,7 @@
 <script>
   $('#vender_delete').click(function(){
     var vendor_ids = [];
-    $.each($("input[name='selected[]']:checked"), function(){            
+    $.each($("input[name='selected[]']:checked"), function(){
         vendor_ids.push($(this).val());
     });
     console.log(vendor_ids);
@@ -261,7 +261,7 @@
                                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Vendor does not exist)</span></td>'+
                                                     '</tr>';
                                                 $('#selectAllCheckbox').attr('disabled', true);
-                                          
+
                                     } else {
                                         var data = '<tr>'+
                                                         '<td>'+
@@ -277,7 +277,7 @@
                         $('#data_stores').html(popup);
                     }
                 });
-                  
+
             <?php } else{ ?>
                 $.ajax({
                       url: "<?php echo url('vendors/remove'); ?>",
@@ -287,10 +287,10 @@
                       },
                       data: {vendor_ids},
                       success: function(result){
-                        bootbox.alert({ 
+                        bootbox.alert({
                             size: 'small',
-                            title: "Success", 
-                            message: result, 
+                            title: "Success",
+                            message: result,
                             callback: function(){
                                 location.reload();
                             }
@@ -305,7 +305,7 @@
   })
 </script>
 <script>
-    var stores = []; 
+    var stores = [];
     stores.push("{{ session()->get('sid') }}");
      $('#selectAllCheckbox').click(function(){
         if($('#selectAllCheckbox').is(":checked")){
@@ -314,13 +314,13 @@
             $( ".stores" ).prop("checked", false );
         }
     });
-    
+
     $("#save_btn").click(function(){
         var vendor_ids = [];
-        $.each($("input[name='selected[]']:checked"), function(){            
+        $.each($("input[name='selected[]']:checked"), function(){
             vendor_ids.push($(this).val());
         });
-        $.each($("input[name='stores']:checked"), function(){            
+        $.each($("input[name='stores']:checked"), function(){
             stores.push($(this).val());
         });
         $.ajax({
@@ -331,10 +331,10 @@
               },
               data: {vendor_ids, stores_hq: stores},
               success: function(result){
-                    bootbox.alert({ 
+                    bootbox.alert({
                         size: 'small',
-                        title: "Success", 
-                        message: result, 
+                        title: "Success",
+                        message: result,
                         callback: function(){
                             location.reload();
                         }
@@ -342,20 +342,20 @@
               }
         });
     });
-  
+
 </script>
 
 <script type="text/javascript">
     $(document).on('click', '#save_button', function(event) {
       event.preventDefault();
       var edit_url = '<?php echo $data['edit_list']; ?>';
-      
+
 
       edit_url = edit_url.replace(/&amp;/g, '&');
 
         var all_vendor = true;
         var vendor_ids = [];
-        $.each($("input[name='selected[]']:checked"), function(){            
+        $.each($("input[name='selected[]']:checked"), function(){
             vendor_ids.push($(this).val());
         });
 
@@ -368,10 +368,10 @@
           all_vendor = true;
         }
       });
-      
+
       var validNumerror = [];
       var emailerror = [];
-      
+
     $('.vendors_phone').each(function(){
         if($(this).val() != ''){
             var phone_num = getValidNumber($(this).val());
@@ -380,17 +380,17 @@
             }
         }
     })
-      
+
     $(".vendors_email").each(function(){
         if($(this).val() != ''){
             var ven_email = validateEmail($(this).val());
             if(ven_email === false){
                 emailerror.push("email is not valid")
-            }  
+            }
         }
     })
-      
-      
+
+
     if(emailerror.length > 0){
         alert("Please check the all the emails few are not valid");
         return false;
@@ -399,7 +399,7 @@
         alert("Please check the all the Phone numbers few are not valid");
         return false;
     }
-        
+
     if(vendor_ids.length > 0){
             <?php if(session()->get('hq_sid') == 1) { ?>
                 $.ajax({
@@ -422,7 +422,7 @@
                                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Vendor does not exist)</span></td>'+
                                                     '</tr>';
                                                 $('#editSelectAllCheckbox').attr('disabled', true);
-                                          
+
                                     } else {
                                         var data = '<tr>'+
                                                         '<td>'+
@@ -439,26 +439,26 @@
                     }
                 });
                 $('#editModal').modal('show');
-                  
+
             <?php } else{ ?>
                 // $('#form-vendor').submit();
                 $('#form-vendor').attr('action', edit_url);
-                
-                
+
+
                 $('#form-vendor').submit();
                 $("div#divLoading").addClass('show');
             <?php } ?>
     }else{
-        bootbox.alert({ 
+        bootbox.alert({
             size: 'small',
-            title: "Attension", 
-            message: "No vendor is selected to edit.", 
+            title: "Attension",
+            message: "No vendor is selected to edit.",
             callback: function(){}
         });
     }
 });
-    
-    
+
+
     function validateEmail($email) {
         var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
         return emailReg.test( $email );
@@ -478,7 +478,7 @@
 
 
     var edit_stores = [];
-    
+
     edit_stores.push("{{ session()->get('sid') }}");
      $('#editSelectAllCheckbox').click(function(){
         if($('#editSelectAllCheckbox').is(":checked")){
@@ -487,22 +487,23 @@
             $( ".editstores" ).prop("checked", false );
         }
     });
-    
+
     $("#update_btn").click(function(){
         var edit_url = '<?php echo $data['edit_list']; ?>';
         edit_url = edit_url.replace(/&amp;/g, '&');
-        
-        $.each($("input[name='editstores']:checked"), function(){            
+
+        $.each($("input[name='editstores']:checked"), function(){
             edit_stores.push($(this).val());
         });
-        
+
         $("#hidden_store_hq_val").val(edit_stores.join(","));
-        
+
         $('#form-vendor').attr('action', edit_url);
         $('#form-vendor').submit();
         $("div#divLoading").addClass('show');
     })
-    
+
   </script>
 
 @endsection
+rm -fr ".git/rebase-apply"
