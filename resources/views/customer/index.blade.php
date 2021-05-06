@@ -1,5 +1,11 @@
 @extends('layouts.layout')
 
+@section('title')
+    Customer
+@stop
+
+{{-- <link rel="stylesheet" href="{{ asset('../css/vendor.css') }}"> --}}
+
 @section('main-content')
 
 
@@ -158,4 +164,8 @@
         </div>
     </section>
 
+@endsection
+
+@section('page-script')
+    <script src=" {{ asset('javascript/bootbox.min.js') }}"></script>
 @endsection
