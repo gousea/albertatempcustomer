@@ -1,0 +1,36 @@
+.mytextdiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 1rem;
+}
+
+.mytexttitle {
+    flex-grow: 0;
+    padding-right: 20px;
+    color: #286fb7;
+}
+
+.divider {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #286fb7;
+}
+
+.checkbox-data{
+    display: inline-flex;
+    gap: 10rem;
+    width: 100%;
+    margin: 25px;
+    color: #286fb7;
+}
+
+table thead {
+    color: #286fb7 !important;
+}
+
+table tbody{
+    color: black;
+}
+
+

@@ -1,108 +1,82 @@
 <!DOCTYPE html>
 <html dir="" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
-    <title>Administration</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
-    <link href="{{ asset('stylesheet/bootstrap.css') }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset('javascript/font-awesome/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset('javascript/summernote/summernote.css') }}" rel="stylesheet" />
-    <link href="{{ asset('javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css') }}" type="text/css" rel="stylesheet" media="screen" />
-    <link type="text/css" href="{{ asset('stylesheet/stylesheet.css') }}" rel="stylesheet" media="screen" />
-    <link rel="stylesheet" href="{{ asset('stylesheet/jquery-ui.css') }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="htmlcss bootstrap menu, navbar, hover nav menu CSS examples" />
+    <meta name="description" content="Bootstrap navbar hover examples for any type of project, Bootstrap 4" />
 
 
-    <script type="text/javascript" src="{{ asset('javascript/jquery/jquery-2.1.1.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('javascript/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('javascript/summernote/summernote.js') }}"></script>
-    <!--<script src="{{ asset('javascript/jquery/datetimepicker/moment.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>-->
-    <script src="{{ asset('javascript/common.js') }}" type='text/javascript'></script>
-    <script src="{{ asset('javascript/jquery/jquery-ui.js') }}"></script>
+    <title>Administration | Login</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-<style>
 
-.dropbtn {
-    background-color: #f05a28;
-    color: white;
-    padding: 13px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
+    <link rel="stylesheet" href="{{ asset('asset/css/login.css') }}">
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    overflow-y: auto;
-    height: 150px;
-}
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-.dropdown-content span {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" type="text/javascript"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"
+        type="text/javascript"></script>
 
-.dropdown-content span:hover {background-color: #f05a28;cursor: pointer;color:#fff;}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown:hover .dropbtn {
-    background-color: #f05a28;
-}
-#header{
-    background-color:#03A9F4;
-}
-</style>
+    <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"></script>
 
 </head>
-<body style="background-color: #fff">
-    <div id="divLoading" class="show"></div>
-    <header id="header" class="navbar navbar-static-top">
-        <div class="navbar-header">
-            @guest
-            @else
-            <a type="button" id="button-menu" id="menu-toggle" class="pull-left"><i class="fa fa-indent fa-lg"></i></a>
-            @endguest
-            <a href="" class="navbar-brand" style="color: #fff; font-size: 20px; font-weight: bold;">{{ config('app.name') }}</a>
-        </div>
 
-            @guest
-            @else
-            <ul class="nav pull-right">
-                <li><a href="" title="Store"  class="di_store_name" style="border-left:none;"><i class="fa fa-chevron-down"></i></a></li>
-                <li><a href="" title="Reports" class="di_reports"><i class="fa fa-bar-chart"></i></a></li>
-                <li><a href="" title="Settings"><i class="fa fa-cog"></i></a></li>
-                <li><a href="" title="Quick Links"><i class="fa fa-external-link"></i></a></li>
-                <li><a href="{{ url('/logout') }}" title="Logout"><i class="fa fa-sign-out fa-lg"></i></a></li>
-            </ul>
-            @endguest
-        </header>
+<body>
+    <div class="bg-img">
+        <div id="divLoading" class="show"></div>
+        <div class="container-fluid " id="login-container">
+            <div class="row no-gutters">
+                <div class="col-md-7">
+                    <div class="login-content text-capitalize">
+                        <h3 class="text-white text-center">check out all our other products & services</h3>
+                    </div>
+                    <div class="icons-content-text text-center text-white">
+                        <i class="fa fa-cutlery fa-3x" aria-hidden="true"></i>
+                        <p class="text-capitalize login-texts">Card Processing</p>
+                        <p class="text-capitalize login-conts">we will meet or beat your current card processing rates!
+                        </p>
+                    </div>
+                    <div class="icons-content-text text-center text-white">
+                        <i class="fa fa-gift fa-3x" aria-hidden="true"></i>
+                        <p class="text-capitalize login-texts">food ordering kiosk</p>
+                        <p class="text-capitalize login-conts">running your business, not your wallet</p>
+                    </div>
+                    <div class="icons-content-text text-center text-white">
+                        <i class="fa fa-cutlery fa-3x" aria-hidden="true"></i>
+                        <p class="text-capitalize login-texts">atm</p>
+                        <p class="text-capitalize login-conts">easy, safe, secure</p>
+                    </div>
+                    <div class="icons-content-text text-center text-white">
+                        <i class="fa fa-cutlery fa-3x" aria-hidden="true"></i>
+                        <p class="text-capitalize login-texts">atm</p>
+                        <p class="text-capitalize login-conts">easy, safe, secure</p>
+                    </div>
 
-        <div id="content" style="margin-top: 34px ">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-offset-4 col-sm-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                        <h1 class="panel-title"><i class="fa fa-lock"></i> Please enter your login details.</h1>
-                        </div>
-                        <div class="panel-body">
+                    <div class="d-flex justify-content-center mb-5">
+                        <button
+                            class="login-btn text-capitalize bg-white text-primary text-center font-weight-bold">click
+                            here for more information</button>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="card" id="card">
+                        <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
+                        <div class="card-body text-center">
+                            <p class="card-title text-capitalize m-auto text-center">
+                                <span class="text-uppercase text-primary font-weight-bold">login</span>
+                                to your account to manage your back office
+                            </p>
                             @error('vemail')
                                 <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $message }}
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -113,74 +87,54 @@
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 </div>
                             @enderror
-                        <form  method="POST"  action="{{ route('login') }}">
-                            @csrf
-                            <div class="form-group">
-                            <label for="input-username">Username</label>
-                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                <input type="text" name="vemail" value="" placeholder="" id="input-username" class="form-control" />
-                            </div>
-                            </div>
-                            <div class="form-group">
-                            <label for="input-password">Password</label>
-                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                <input type="password" name="password" value="" placeholder="" id="input-password" class="form-control" />
-                            </div>
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
+                                <div class="form-group mt-5">
+                                    <input type="email" name="vemail" value="" placeholder="Email ID"
+                                        id="input-password" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" value="" placeholder="Password"
+                                        id="input-password" class="form-control" />
+                                </div>
 
-
-                            <span class="help-block" id="forgotten_link"><a href="">Forgot Password</a></span>
-
-                            </div>
-                            <div class="text-right">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-key"></i> Login</button>
-                            </div>
-
-                        </form>
+                                <button type="submit"
+                                    class="btn btn-primary btn-block login-btns text-white font-weight-bold text-capitalize">Login</button>
+                            </form>
+                            <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
                         </div>
                     </div>
-                    </div>
+
                 </div>
             </div>
         </div>
+    </div>
 
-        <footer id="footer">
-            &copy; 2020 All Rights Reserved.
-        </footer>
 
-        <script>
-            $("#menu-toggle").click(function(e) {
+    <script>
+        $("#menu-toggle").click(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
-            });
-            
-            $(document).on('click', '#forgotten_link', function(event) {
-                event.preventDefault();
-                $('#forgottenModal').modal('show');
-            });
-        </script>
-        <script type="text/javascript">
-            $(window).load(function() {
-              $("div#divLoading").removeClass('show');
-            });
+        });
 
-            $(window).on('beforeunload', function(){
-              $("div#divLoading").addClass('show');
-            });
-        </script>
-        
-        <div id="forgottenModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="col-md-12 text-center">
-                      <p style="font-size: 15px"><b>To Reset Your Password Call On :</b><a href="tel:+18885026650" style="font-size: 15px">&nbsp;&nbsp;1-888-502-6650</a></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
+        $(document).on('click', '#forgotten_link', function(event) {
+            event.preventDefault();
+            $('#forgottenModal').modal('show');
+        });
+
+    </script>
+    <script type="text/javascript">
+        $(window).load(function() {
+            $("div#divLoading").removeClass('show');
+        });
+
+        $(window).on('beforeunload', function() {
+            $("div#divLoading").addClass('show');
+        });
+
+    </script>
+
+
 </body>
+
 </html>

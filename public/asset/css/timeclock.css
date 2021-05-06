@@ -1,0 +1,53 @@
+.buttons_menu{
+    color: #286fb7;
+}
+
+.background-main-color{
+    background-color: #286fb7;
+}
+
+.main-color {
+    background-color: #286fb7;
+}
+
+#header-table{
+    min-height: 40px;
+    background-color: #286fb7;
+    text-align: center;
+}
+
+
+
+.week-header{
+    padding: 0px;
+    color: #fff;
+    font-weight: bold;
+    margin: 4px;
+}
+
+.header-color{
+    height: 55px;
+    width: 100%;
+}
+
+.caret{
+    color: #fff;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.list-group{
+    border-radius: 10px;
+}
+
+table{
+    font-size: 12px;
+}
+
+.week{
+    
+}
+
+.fa-2x{
+    
+}
