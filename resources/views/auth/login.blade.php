@@ -33,7 +33,7 @@
 </head>
 
 <body>
-    <div class="bg-img">
+    <div class="bg-light">
         <div id="divLoading" class="show"></div>
         <div class="container-fluid " id="login-container">
             <div class="row no-gutters">
