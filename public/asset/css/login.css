@@ -1,0 +1,58 @@
+#login-container{
+    height: 100%;
+    padding: 0;
+    
+}
+
+body{
+    overflow: hidden;
+}
+
+.card-img-top{
+    width: 200px;
+    margin: auto;
+    margin-top: 110px;
+}
+
+.form-control{
+    width: 300px;
+}
+
+.bg-light{
+    background: url('../img/background_image.jpg');
+}
+
+.login-conts{
+    font-size: 13px;
+}
+
+.login-content {
+   padding-top: 6rem;
+}
+
+.login-btn{
+    padding: 3px 30px;
+    border: none;
+    border-radius: 9px;
+    width: 70%;
+}
+
+.login-btns{
+    padding: 3px 30px;
+    border: none;
+    border-radius: 9px;
+    width: 70%;
+}
+
+form{
+    margin-left: 60px;
+}
+
+#card{
+    height: 100%;
+}
+
+.card-title{
+    margin: auto;
+    font-size: 13px;
+}

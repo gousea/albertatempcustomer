@@ -1,0 +1,18 @@
+.divider {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #286fb7;
+}
+
+.mytextdiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 1rem;
+}
+
+.mytexttitle {
+    flex-grow: 0;
+    padding-right: 20px;
+    color: #286fb7;
+}

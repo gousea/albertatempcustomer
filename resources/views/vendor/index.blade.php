@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <span class="font-weight-bold"> EMPLOYEES</span>
+                <span class="font-weight-bold text-uppercase"> Vendor</span>
             </div>
             <div class="nav-submenu">
                 <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{route('employee.create')}}"> ADD NEW
@@ -27,33 +27,33 @@
             <thead>
                 <tr class="header-color">
                     <th data-field="state" data-checkbox="true"></th>
-                    <th class="col-xs-1 headername" data-field="Product_Name">NAME
+                    <th class="col-xs-1 headername text-uppercase" data-field="supplier_code">Supplier Code
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
                         <div class="form-group has-search">
                             <span class="fa fa-search form-control-feedback"></span>
                             <input type="text" class="form-control table-heading-fields" placeholder="SEARCH">
                         </div>
                     </th>
-                    <th class="col-xs-1 headername" data-field="Quality">CELL NUMBER
+                    <th class="col-xs-1 headername text-uppercase" data-field="vendor_name">Vendor Name
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
                         <div class="form-group has-search">
                             <span class="fa fa-search form-control-feedback"></span>
                             <input type="text" class="form-control table-heading-fields" placeholder="SEARCH">
                         </div>
                     </th>
-                    <th class="col-xs-6 headername" data-field="Quantity">EMAIL
+                    <th class="col-xs-6 headername text-uppercase" data-field="phone">Phone
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
                         <div class="form-group has-search">
                             <span class="fa fa-search form-control-feedback"></span>
                             <input type="text" class="form-control table-heading-fields" placeholder="SEARCH">
                         </div>
                     </th>
-                    <th class="col-xs-6 headername" data-field="Quantity">STATUS
+                    <th class="col-xs-6 headername text-uppercase" data-field="eamil">email
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
-                        <!-- <div class="form-group has-search">
+                        <div class="form-group has-search">
                             <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div> -->
+                            <input type="text" class="form-control table-heading-fields" placeholder="SEARCH">
+                        </div>
                     </th>
                 </tr>
             </thead>
@@ -108,6 +108,7 @@
                     <td>Active</td>
                 </tr>
                 <tr id="tr-id-2" class="tr-class-2">
+                    <td></td>
                     <td><a href="{{route('employee.edit')}}">Sugar</a></td>
                     <td>Prime</td>
                     <td>200 Bags</td>
