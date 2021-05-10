@@ -1,77 +1,74 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title')
   Sales Report
 @endsection
 @section('main-content')
-
-<div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <!-- <h1><?php //echo $heading_title; ?></h1> -->
-      <ul class="breadcrumb">
-        <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-        <?php //} ?>
-      </ul>
-    </div>
-  </div>
-  <div class="container-fluid">    
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> Sales Report</h3>
-      </div>
-      <div class="panel-body">
-
-        <?php if(isset($p_start_date)){ ?>
-        <div class="row" style="padding-bottom: 15px;float: right;">
-          <div class="col-md-12">
-          <a onclick="exportTableToCSV('Sales_Report.csv')" class="pull-right" style="margin-right:10px;cursor: pointer; "><i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV</a>
-          <!--<a id="csv_export_btn" href="{{route('salesreportcsv_export')}}" class="pull-right" style="margin-right:10px;"><i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV</a>-->
-          <a href="{{route('salesreportprint_page')}}" id="btnPrint" class="pull-right" style="margin-right:10px;"><i class="fa fa-print" aria-hidden="true"></i> Print</a>
-          <a id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" class="pull-right" style="margin-right:10px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a>
-        
-         
-          </div>
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Sales Report</span>
+                </div>
+                <div class="nav-submenu">
+                   
+                </div>
+            </div> 
         </div>
-        <?php } ?>
-        <div class="clearfix"></div>
+    </nav>
 
-        <div class="row">
-          <form method="post" id="filter_form">
+  
+    <section class="section-content py-6">
+        <?php if(isset($p_start_date)){ ?>
+            <div class="row" style="padding-bottom: 15px;float: right;">
+              <div class="col-md-12">
+              <a onclick="exportTableToCSV('Sales_Report.csv')" class="pull-right" style="margin-right:10px;cursor: pointer; "><i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV</a>
+              <!--<a id="csv_export_btn" href="{{route('salesreportcsv_export')}}" class="pull-right" style="margin-right:10px;"><i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV</a>-->
+              <a href="{{route('salesreportprint_page')}}" id="btnPrint" class="pull-right" style="margin-right:10px;"><i class="fa fa-print" aria-hidden="true"></i> Print</a>
+              <a id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" class="pull-right" style="margin-right:10px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a>
+  
+              </div>
+            </div>
+            <?php } ?>
+   
+     
+          <form method="post" class="form-inline" style="padding-left:40px" id="filter_form">
               @csrf
               @method('post')
-              <div class="col-md-3">
+              <div class="form-group mx-sm-4 mb-2">
                 <input type="text" class="form-control" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Start Date" readonly>
               </div>
               
-            <div class="col-md-0">
+              <div class="form-group col-md-0">
               <input type="hidden" class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly>
-            </div>
-            <div class="col-md-0">
-              <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly>
-            </div>
+              </div>
+              <div class="form-group  col-md-0">
+                <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly>
+              </div>
            
-            <div class="col-md-2">
-              <input type="submit" class="btn btn-success" value="Generate">
-            </div>
-          </form>
+              <div class="form-group mx-sm-3 mb-2">
+                <input type="submit" class="btn btn-success" value="Generate">
+              </div>
+            </form>
         </div>
+
+
         <?php if(isset($reports) && count($reports) > 0){ ?>
-        <br><br><br>
-        <div class="row">
-          <div class="col-md-12">
-            <p><b>Date Range: </b><?php echo $p_start_date; ?> to <?php echo $p_end_date; ?></p>
-          </div>
-          
-          <div class="col-md-12">
-            <p style="font-size: 14px;"><b>Store Name: </b><?php echo $storename; ?></p>
-          </div>
-          <div class="col-md-12">
-            <p style="font-size: 14px;"><b>Store Address: </b><?php echo $storeaddress; ?></p>
-          </div>
-          <div class="col-md-12">
-            <p style="font-size: 14px;"><b>Store Phone: </b><?php echo $storephone; ?></p>
-          </div>
+       
+        <div class="row" style="padding-left: 60px">
+              <div class="col-md-12">
+                <p><b>Date Range: </b><?php echo $p_start_date; ?> to <?php echo $p_end_date; ?></p>
+              </div>
+              
+              <div class="col-md-12">
+                <p style="font-size: 14px;"><b>Store Name: </b><?php echo $storename; ?></p>
+              </div>
+              <div class="col-md-12">
+                <p style="font-size: 14px;"><b>Store Address: </b><?php echo $storeaddress; ?></p>
+              </div>
+              <div class="col-md-12">
+                <p style="font-size: 14px;"><b>Store Phone: </b><?php echo $storephone; ?></p>
+              </div>
+       </div>
          
           <div class="col-md-12 table-responsive">
           <br>
@@ -481,9 +478,10 @@
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css')}}" rel="stylesheet" />
 <script src="{{ asset('javascript/bootstrap-datepicker.js')}}"></script>
+
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
@@ -731,7 +729,8 @@ $(document).on('submit', '#filter_form', function(event) {
 //   }
   
   
-        var dates  = $("#dates").val();
+    var dates  = $("#dates").val();
+    
     dates_array =dates.split("-");
     start_date = dates_array[0];
     end_date = dates_array[1];   
@@ -745,7 +744,7 @@ $(document).on('submit', '#filter_form', function(event) {
     
     var y = formattedStartDate.getFullYear();
     
-     var formattedStartDate = new Date(end_date);
+    var formattedStartDate = new Date(end_date);
     var ed = formattedStartDate.getDate();
     var em =  formattedStartDate.getMonth();
     em += 1;  // JavaScript months are 0-11
@@ -768,7 +767,7 @@ $(document).on('submit', '#filter_form', function(event) {
     var ye = formattedStartDate.getFullYear();
     
     $('input[name="end_date"]').val(me+'-'+de+'-'+ye);
-
+     console.log(start_date);    
   $("div#divLoading").addClass('show');
   
 });
