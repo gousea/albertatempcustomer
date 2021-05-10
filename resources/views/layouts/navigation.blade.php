@@ -109,7 +109,7 @@
                         <ul class="dropdown-menu main-dropdown">
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> End of Day Report</a>
                             </li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> End of Shift Report </a>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('EodShift') }}"> End of Shift Report </a>
                             </li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Credit Card Report </a>
                             </li>
