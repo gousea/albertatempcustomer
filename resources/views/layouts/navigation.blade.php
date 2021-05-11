@@ -41,6 +41,7 @@
                         </a>
                         <ul class="dropdown-menu main-dropdown">
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Items</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('/item/parent_child_list') }}">Parent Child</a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Edit Multiple Items</a>
                             </li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Quick Update of Items</a>
