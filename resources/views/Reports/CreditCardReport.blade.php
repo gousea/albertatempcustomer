@@ -1,25 +1,28 @@
-@extends('layouts.master')
-
-@section('title', 'Credit Card Report')
+@extends('layouts.layout')
+@section('title')
+Credit Card Report
+@endsection
 @section('main-content')
-<div id="content">
-    <div class="page-header">
+
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase">Credit Card Report</span>
+                </div>
+                <div class="nav-submenu">
+                   
+                </div>
+            </div> 
         </div>
-    </div>
+    </nav>
+
+<section class="section-content py-6"> 
+<div id="content">
     
     <div class="container-fluid">
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>Credit Card Report</h3>
-            </div>
+           
                <?php if(isset($reports) && count($reports) > 0){ ?>
                     <div class="row" style="padding-bottom: 10px;float: right;">
                         <div class="col-md-12">
@@ -37,96 +40,98 @@
                     <br>
                 <?php } ?>
             <div class="panel-body">
-        <div class="row" style="margin: 10px;">
-          <form method="GET" id="filter_form"  action="{{ route('CardReportForm') }}">
-            <div class="col-md-2">
-                <input type='text' class="form-control" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Select Date Range" autocomplete="off" readonly/>
-                <input type='hidden' class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>                
-            </div>
-          <!--  <div class="col-md-2"> -->
-              <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" autocomplete="off">
-          <!--  </div> -->
-            <div class="col-md-2">
-              <input type="text" class="form-control" name="credit_card_number" value="<?php echo isset($credit_card_number) ? $credit_card_number : ''; ?>" id="credit_card_number" maxlength="4" placeholder="Credit Card Number" autocomplete="off" >
-            </div>
-            <div class="col-md-2">
-              <input type="text" class="form-control" name="credit_card_amount" value="<?php echo isset($credit_card_amount) ? $credit_card_amount : ''; ?>" id="credit_card_amount" placeholder="Credit Card Amount" autocomplete="off">
-            </div>
-            <div class="col-md-2">
-              <input type="submit" class="btn btn-success" value="Generate">
-            </div>
-          </form>
+        <div style="margin: 10px;">
+                <form method="GET" id="filter_form"  action="{{ route('CardReportForm') }}" class="form-inline">
+                  <div class="form-group mx-sm-4 mb-2">
+                      <input type='text' class="form-control" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Select Date Range" autocomplete="off" readonly/>
+                      <input type='hidden' class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>                
+                  </div>
+                <!--  <div class="col-md-2"> -->
+                    <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" autocomplete="off">
+                <!--  </div> -->
+                  <div class="form-group mx-sm-4 mb-2">
+                    <input type="text" class="form-control" name="credit_card_number" value="<?php echo isset($credit_card_number) ? $credit_card_number : ''; ?>" id="credit_card_number" maxlength="4" placeholder="Credit Card Number" autocomplete="off" >
+                  </div>
+                  <div class="form-group mx-sm-4 mb-2">
+                    <input type="text" class="form-control" name="credit_card_amount" value="<?php echo isset($credit_card_amount) ? $credit_card_amount : ''; ?>" id="credit_card_amount" placeholder="Credit Card Amount" autocomplete="off">
+                  </div>
+                  <div class="form-group mx-sm-4 mb-2"">
+                    <input type="submit" class="btn btn-success" value="Generate">
+                  </div>
+                </form>
         </div>
         <?php if(isset($reports) && count($reports) > 0){ ?>
-            <div class="row" style="margin: 10px;">
-           <div class="row" style="margin: 10px;">
-          <div class="col-md-12">
-            <p>From: <?php echo $p_start_date; ?> To <?php echo $p_end_date; ?></p>
-          </div>
-        </div>
-        
-        <div class="row" style="margin: 10px;">
-          <div class="col-md-12">
-            <p><b>Store Name: </b>{{ session()->get('storeName') }}</p>
-          </div>
-          <div class="col-md-12">
-            <p><b>Store Address: </b><?php echo $store[0]->vaddress1 ?></p>
-          </div>
-          <div class="col-md-12">
-            <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
-          </div>
-        </div>
-          <div class="col-md-12 table-responsive"style="margin: 10px;">
-          <br>
-          <?php 
-                  $grand_total_transaction_number= 0;
-                  $grand_total_nauthamount= 0;
+           
+         <div style="margin-left: 46px;">
+                  <div class="col-md-12">
+                    <p><b>From: <?php echo $p_start_date; ?> To <?php echo $p_end_date; ?></p>
+                  </div>
+              
+                  <div class="col-md-12">
+                    <p><b>Store Name: </b>{{ session()->get('storeName') }}</p>
+                  </div>
 
-                ?>
-          <?php foreach($reports as $report){ ?>
-                  <?php  $grand_total_transaction_number = $grand_total_transaction_number + $report->transaction_number;
-                  $grand_total_nauthamount = $grand_total_nauthamount + $report->nauthamount; ?>
-                  
-          <?php } ?>          
+                  <div class="col-md-12">
+                    <p><b>Store Address: </b><?php echo $store[0]->vaddress1 ?></p>
+                  </div>
+
+                  <div class="col-md-12">
+                    <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
+                  </div>
+          </div>
+
+
+    <div class="col-md-12 table-responsive "style="margin: 10px;">
+          <br>
+                      <?php 
+                              $grand_total_transaction_number= 0;
+                              $grand_total_nauthamount= 0;
+
+                            ?>
+                      <?php foreach($reports as $report){ ?>
+                              <?php  $grand_total_transaction_number = $grand_total_transaction_number + $report->transaction_number;
+                              $grand_total_nauthamount = $grand_total_nauthamount + $report->nauthamount; ?>
+                              
+                      <?php } ?>          
           
             <table class="table table-striped table-hover" style="width:100%;">
               
-                <thead>
-                <tr>
-                <th style="width: 50%;">Card Type</th>
-                <th class="text-right" style="width: 30%;">Transactions</th>
-                <th class="text-right" style="width: 20%;">Amount</th>
-                </tr>
-                
-                <tr>
-                <th style="width: 50%;">Grand Total</th>
-                <th class="text-right" style="width: 30%;"><?php echo $grand_total_transaction_number;?></th>
-                <th class="text-right" style="width: 20%;"><?php echo number_format((float)$grand_total_nauthamount, 2) ;?></th>
-                </tr>
-                </thead>
+                        <thead>
+                        <tr>
+                        <th style="width: 50%;">Card Type</th>
+                        <th class="text-right" style="width: 30%;">Transactions</th>
+                        <th class="text-right" style="width: 20%;">Amount</th>
+                        </tr>
+                        
+                        <tr>
+                        <th style="width: 50%;">Grand Total</th>
+                        <th class="text-right" style="width: 30%;"><?php echo $grand_total_transaction_number;?></th>
+                        <th class="text-right" style="width: 20%;"><?php echo number_format((float)$grand_total_nauthamount, 2) ;?></th>
+                        </tr>
+                        </thead>
               
-              <tbody>
+             
                 
                 
                 <?php foreach($reports as $report){ ?>
                 
                    
                   <tr >
-                    <td colspan="3" style="padding: 0px;">
-                      <table class="table" style="width: 100%;margin-bottom: 0px;">
-                        <thead>
-                            
-                          <tr class="search_header" style="cursor: pointer;" data-cardtype="<?php echo $report->vcardtype;?>">
-                            <th class="text-uppercase" style="width: 50%;"><?php echo $report->vcardtype;?> TOTAL</th>
-                            <th class="text-right" style="width: 30%;"><?php echo $report->transaction_number;?></th>
-                            <th class="text-right" style="width: 20%;">$<?php echo $report->nauthamount;?></th>
-                          </tr>
-                        </thead>
+                   
+                      <table class="table table-striped table-hover " style="width: 100%;margin-bottom: 0px;">
+                            <thead>
+                                
+                              <tr class="search_header" style="cursor: pointer;" data-cardtype="<?php echo $report->vcardtype;?>">
+                                <th class="text-uppercase" style="width: 50%;"><?php echo $report->vcardtype;?> TOTAL</th>
+                                <th class="text-right" style="width: 30%;"><?php echo $report->transaction_number;?></th>
+                                <th class="text-right" style="width: 20%;">$<?php echo $report->nauthamount;?></th>
+                              </tr>
+                            </thead>
                         <tbody>
                           
                         </tbody>
                       </table>
-                    </td>
+                
 
                   </tr>
                   <?php 
@@ -154,8 +159,9 @@
         </div>
   </div>
 </div>
+</section>
  @endsection
-@section('scripts')   
+ @section('page-script')
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>   -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>

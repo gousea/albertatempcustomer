@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title')
-  Sales Report
+End of Shift Report
 @endsection
 @section('main-content')
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
@@ -516,6 +516,20 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
+
+<!-- <style type="text/css">
+  .select2-container--default .select2-selection--single{
+    border-radius: 0px !important;
+    height: 35px !important;
+    width
+  }
+  .select2.select2-container.select2-container--default{
+    width: 100% !important;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height: 35px !important;
+  }
+  </style> -->
 
 <script>
 const saveData = (function () {
