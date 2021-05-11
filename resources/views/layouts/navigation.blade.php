@@ -74,7 +74,7 @@
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Manufacturer </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Physical </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Waste </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Adjustment </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('adjustment') }}"> Adjustment </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Transfer </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Location </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Reason </a></li>
