@@ -115,7 +115,7 @@ class EndShiftController extends Controller
         $data_row = '';
         
         $data_row .= PHP_EOL;
-
+        $p_batch_id= session()->get('session_batch') ;
 
         $data= session()->get('session_data') ;
         
@@ -123,6 +123,17 @@ class EndShiftController extends Controller
         $store= session()->get('session_store') ;
         $date= session()->get('session_date') ;
         $value = (array)$data[0];
+
+        $data_row .= 'Store Name'.',' .''.session()->get('storeName').PHP_EOL;
+        $data_row .= 'SID'.',' .''.session()->get('sid').PHP_EOL;
+
+        $data_row .= 'Batch  '.',' .''.$p_batch_id.PHP_EOL;
+        $data_row .= 'SHIFT START '.',' .''.$value['BatchStartTime'].PHP_EOL;
+        $data_row .= 'SHIFT END'.',' .''.$value['BatchEndTime'].PHP_EOL;
+        $data_row .= 'Register No'.',' .''.$value['TerminalId'].PHP_EOL;
+        $data_row .= PHP_EOL;
+
+        
         
         $data_row.='SALES TOTALS'.PHP_EOL;
               
