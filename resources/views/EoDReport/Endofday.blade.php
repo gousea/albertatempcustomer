@@ -1,83 +1,77 @@
-@extends('layouts.master')
-
-@section('title', 'End Of Day Report')
+@extends('layouts.layout')
+@section('title')
+  EOD Report
+@endsection
 @section('main-content')
 
-<div id="content">
-    <div class="page-header">
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> End Of Day Reportt</span>
+                </div>
+                <div class="nav-submenu">
+                   
+                </div>
+            </div> 
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> End Of Day Report</h3>
-        </div>
-    
-        <div class="row" style="padding-bottom: 10px;float: right;">
-          <div class="col-md-12">
-           
-            <a id="pdf_export_btn" href="" class="" style="margin-right:10px;">
-                <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
-            </a>
-            <a  id="btnPrint" href="" class="" style="margin-right:10px;">
-                <i class="fa fa-print" aria-hidden="true"></i> Print
-            </a>
-            <a id="csv_export_btn" href="" class="" style="margin-right:10px;">
-                <i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV
-            </a>
-            
+    </nav>
 
-           
-          </div>
-    </div>
-        <form method="post" action="{{ route('EodForm') }}" id="filter_form">
-          @csrf
-        <div class="row">
-            <div class='col-md-12'>
+<section class="section-content py-6"> 
+        <div class="row" style="padding-bottom: 10px;float: right;">
+            <div class="col-md-12">
+            
+                <a id="pdf_export_btn" href="" class="" style="margin-right:10px;">
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
+                </a>
+                <a  id="btnPrint" href="" class="" style="margin-right:10px;">
+                    <i class="fa fa-print" aria-hidden="true"></i> Print
+                </a>
+                <a id="csv_export_btn" href="" class="" style="margin-right:10px;">
+                    <i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV
+                </a>
                 
-                <div class="col-md-2">
+
+            
+            </div>
+        </div>
+
+    <form method="post" action="{{ route('EodForm') }}" id="filter_form" class="form-inline" style="padding-left:40px">
+          @csrf
+               <div class="form-group mx-sm-4 mb-2">
                     <input type="text" class="date form-control"  name="start_date" value="{{ $date ?? '' }}" id="start_date" placeholder="Date" autocomplete="off">
                 </div>
-                <!-- {{ session()->get('storeName') }}  -->
-                <div class="col-md-2">
+                
+                <div class="form-group mx-sm-4 mb-2">
                     <input type="submit" class="btn btn-success" value="Generate">
                 </div> 
-                
-            </div>
-        </div> 
+       
            
     </form>
         <br>
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row" style="padding-left:40px"">
               <div class="col-md-12">
                 <div class='col-md-6'>
                     <p><b>Store Name: </b>{{ session()->get('storeName') }}</p>
                 </div>
               </div>
         </div>
-        <div class="row">
+        <div class="row" style="padding-left:40px">
               <div class="col-md-12">
                 <div class='col-md-6'>
                     <p><b>Store Address: </b><?php echo $store[0]->vaddress1 ?></p>
                 </div>    
               </div>
         </div>
-        <div class="row">
+        <div class="row" style="padding-left:40px">
               <div class="col-md-12">
                 <div class='col-md-6'>
                     <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
                 </div>
               </div>
         </div>
-        <div class="row">
+        <div class="row" style="padding-left:40px">
               <div class="col-md-12">
                 <div class='col-md-6'>
                     <p><b>Date: </b>{{$date}}</p>
@@ -574,17 +568,15 @@
             
                     <?php
                         foreach($report_new_dept as $v){
-                          
-                            $totaqty=$totaqty+ (isset($v->qty)?$v->qty:0);
-                            $totalsale=$totalsale+(isset($v->saleamount)?$v->saleamount:0);
-                            $totalcost=$totalcost+(isset($v->cost)?$v->cost:0);
+                            //   dd($v);
+                            //   if($v->vdepatname === "BOTTLE DEPOSIT"){
+                            //              continue;
+                            //              }
+                            $totaqty=$totaqty+$v->qty;
+                            $totalsale=$totalsale+$v->saleamount;
+                            $totalcost=$totalcost+$v->cost;
                             // $totalgpp= $totalgpp+$v->gpp;
-                            if(isset($totalsale) && $totalsale!=0){
                             $totalgpp=(($totalsale-$totalcost)/$totalsale)*100;
-                            }
-                            else{
-                                $totalgpp=0;
-                            }
                         }
                     ?>
                     <div class='col-md-12'>
@@ -646,47 +638,19 @@
         
        </div> 
     </div>    
-    </div>
-</div>
+    
+</section>
 
 @endsection
-@section('scripts')
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+@section('page-script')
+
+   
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.min.js.map"></script>-->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.min.js.map" integrity="undefined" crossorigin="anonymous"></script>-->
-
+  
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.min.js"></script>
-
-
-
-<!-- <style>
-.panel-default {
-	border: 1px solid #e8e8e8;
-	border-top: 2px solid #bfbfbf;
-    margin: 10px;
-}
-
-.panel-default .panel-heading {
-	color: #595959;
-	/*border-color: #e8e8e8;*/
-	/*background: #fcfcfc;*/
-	border-color: #DCDCDC;
-	background: #DCDCDC;
-    
-}
-.panel-heading > h3.panel-title{
-	margin-left: 45%;
-}
-
-.panel-heading > h3.panel-title > i{
-	display: none;
-}
-</style> -->
-
 
 <script>
 

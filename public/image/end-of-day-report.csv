@@ -1,60 +1,31 @@
 
-Store Name: Carlisle Beer N Cigar
-Store Address: 770 South West Street
-Store Phone: 717-249-2434
+SALES TOTALS
+SALES(excluding Tax),$0.01
+TAXABLE SALES,$0.00
+NON-TAXABLE,$0.01
+TOTAL TAX,$0.00
+GRAND TOTAL,$0.01
 
-Department,Item,QOH,Cost Value,Total Cost Value,Retail Value,Total Retail Value
-Beer,Sam Adams Seasonal B 6pk,-6,8.00,-48.00,10.99,-65.94
-Beer,Mckenzies Seasonal  BTL  6/12oz  SIX Pack,-2,7.50,-15.00,10.99,-21.98
-Beer,Lite B 6pk,-5,5.07,-25.35,7.49,-37.45
-Beer,Heineken C 6pk,-1,6.24,-6.24,9.99,-9.99
-Beer,Grolsch Lager BTL  24/11.2oz  12 PACK,-1,12.75,-12.75,16.99,-16.99
-Beer,Bud Lt B 6pk,-9,4.30,-38.70,7.49,-67.41
-Beer,Troegs Perpetual 1/6 Keg,-1,67.00,-67.00,79.99,-79.99
-Beer,Pacifico Clara 6pk B,-1,6.75,-6.75,10.99,-10.99
-Beer,Redds Apple Ale B 6pk,-3,6.62,-19.86,8.99,-26.97
-Beer,Corona Familiar B 32oz Single,-21,2.79,-58.59,3.99,-83.79
-Beer,Victory Mighty/storm 6pk B,-2,9.55,-19.10,13.49,-26.98
-Beer,Blue Moon Winter B 6pk,-1,7.49,-7.49,9.99,-9.99
-Beer,Bud Lt Orange B pk,-1,5.56,-5.56,7.99,-7.99
-Beer,Troegs Seasonal C 6 Pk,-5,7.50,-37.50,10.99,-54.95
-Beer,Mikes Hard Black Rasp BTL  6/11.2oz  SIX Pack,-2,7.00,-14.00,9.99,-19.98
-Beer,Bud Platinum B 6pk,-3,5.63,-16.89,8.49,-25.47
-Beer,Victory Merry Monk B 6pk,-2,9.55,-19.10,13.49,-26.98
-Beer,Yuengling Porter B 6 Pk,-3,6.01,-18.03,8.49,-25.47
-Beer,Odouls   NA BTL  24/12oz,-1,22.45,-22.45,28.99,-28.99
-Beer,Yuengling Lager B 6pk,-12,4.20,-50.40,7.49,-89.88
-Beer,Moosehead 6pk B,-3,5.26,-15.78,7.99,-23.97
-Beer,Lions Head Lt CAN  24/12oz,-4,9.40,-37.60,11.99,-47.96
-Beer,Bud Lt C 6pk,-4,3.90,-15.60,6.60,-26.40
-Beer,BUD Lt LIME B 6pk,-1,6.00,-6.00,7.99,-7.99
-Beer,Guinness Draught BTL  6/11.2oz  SIX PACK,-2,7.31,-14.62,9.99,-19.98
-Beer,Blue Moon B 6pk,-3,7.25,-21.75,9.99,-29.97
-Beer,Bud Lt Seltzer Lemon Lime 25oz Single,-2,1.74,-3.48,2.49,-4.98
-Beer,Redds Blk Cherry B 6pk,-4,7.00,-28.00,9.99,-39.96
-Beer,Troegs Perpectual B 6pk,-4,8.00,-32.00,10.99,-43.96
-Beer,Coors Original B   6pk,-5,5.60,-28.00,7.99,-39.95
-Beer,Guinness Extra Stout BTL  6/11.2oz SIX Pack,-2,7.31,-14.62,9.99,-19.98
-Beer,Yuengling  Chesterfield B 6pk,-2,6.01,-12.02,7.99,-15.98
-Beer,Yuengling Choclater Porter B 6pk,-6,6.75,-40.50,9.99,-59.94
-Beer,Arnold Palmer Half&Half CAN  24oz Single,-3,0.00,0.00,2.79,-8.37
-Beer,Yuengling  Premium B 6pk,-2,4.24,-8.48,5.99,-11.98
-Beer,Slushy,-404,0.00,0.00,3.77,-1523.08
-Beer,Jack Daniels Watermelon B 6pk,-1,7.00,-7.00,9.99,-9.99
-Beer,Leinenkugel Season Sampl B 12pk,-4,14.70,-58.80,19.99,-79.96
-Beer,High Life BTL  6/12oz SIX Pack,-2,3.90,-7.80,6.49,-12.98
-Beer,Michelob Ultra B 6pk,-13,5.65,-73.45,7.49,-97.37
-Beer,Sam Adams Porch/Alpine B 6pk,-2,7.80,-15.60,10.99,-21.98
-Beer,Bud C 6pk,-3,3.90,-11.70,6.60,-19.80
-Beer,Michelob Ultra Seltzer Cucumber 25oz Single,-1,2.15,-2.15,2.99,-2.99
-Beer,Beer Taxable,-5,0.00,0.00,0.00,0.00
-Beer,Natural Light CAN  15/25oz,-1,11.50,-11.50,16.49,-16.49
-Beer,Becks B 6 Pk,-2,0.00,0.00,10.99,-21.98
-Beer,Warsteiner BTL  6/12oz SIX Pack,-1,6.41,-6.41,8.99,-8.99
-Beer,Troegs Trogonator Bock B 6pk,-2,8.13,-16.26,10.99,-21.98
-Beer,Molly Independence IPA 16oz C 4 Pk,-1,8.17,-8.17,10.99,-10.99
-Beer,Dos Equis Amber BTL  6/12oz SIX Pack,-1,5.88,-5.88,7.99,-7.99
-Beer,Rolling Rock B 6pk,-7,4.12,-28.84,5.99,-41.93
-Beer,Seagrams Variety B 24pk,-2,28.00,-56.00,34.99,-69.98
-,Total,-581,,$-1096.77,,$-3108.03
-,Grand Total,-581,,$-1096.77,,$-3108.03
+LOTTO SALES DETAILS
+
+TENDER DETAILS
+PERFORMANCE STATISTICS
+#OF TRANSACTION ,1
+#AVG TRANSACTIONS,$0.010000
+
+CASH COUNT
+OPENING CASH,$0.00
+CASH SALES,$0.00
+CASH ADD,$0.00
+CASH PAIDOUT,$0.00
+CASH  PICKUP,$0.00
+
+EXPECTED CASH,$0.00
+ACTUAL CASH,$0.00
+CASH SHORT,$0.00
+
+
+DEPARTMENT SALES SUMMARY    :,
+Department Name,Quantity,Sales,Cost,GP%
+General,1.00,0.01,0.00,1.000000
+
