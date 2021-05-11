@@ -28,7 +28,20 @@
     {{-- <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.24/datatables.min.css" /> --}}
 
+    <style>
+        /* .footerlinksdata {
+            height: 200px;
+            column-count: 3;
+        } */
 
+        /* .footerlinksdata {
+            height: 100px;
+            -moz-columns: 3 200px;
+            -webkit-columns: 3 200px;
+            columns: 3 50px;
+        } */
+
+    </style>
 
 </head>
 

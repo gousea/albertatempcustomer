@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
     Route::post('/dashboard', 'HomeController@dashContent')->name('dashboard');
     Route::get('/dashboardlayout', 'DashboardController@dashboard_layout')->name('dashboardlayout');
+    Route::get('/footerlinks', 'DashboardController@footer_links')->name('footerlinks');
     Route::post('/dashboardlayout', 'DashboardController@dashboard_menulist')->name('dashboardlayout');
 
     Route::get('/dashboard_quick_links', 'HomeController@dashboard_quick_links')->name('dashboard_quick_links');
