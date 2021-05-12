@@ -5077,6 +5077,7 @@
         },
         {
             "name": "facade/ignition",
+<<<<<<< HEAD
             "version": "2.4.2",
             "source": {
                 "type": "git",
@@ -5087,6 +5088,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/facade/ignition/zipball/2179568bdfddfa56c90c845a0be1a0b52adbf52a",
                 "reference": "2179568bdfddfa56c90c845a0be1a0b52adbf52a",
+=======
+            "version": "2.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facade/ignition.git",
+                "reference": "e7db3b601ce742568b92648818ef903904d20164"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/e7db3b601ce742568b92648818ef903904d20164",
+                "reference": "e7db3b601ce742568b92648818ef903904d20164",
+>>>>>>> 005364e1b55df9e443a05fde6d9dea4aa181fa89
                 "shasum": ""
             },
             "require": {
@@ -5151,7 +5164,11 @@
                 "issues": "https://github.com/facade/ignition/issues",
                 "source": "https://github.com/facade/ignition"
             },
+<<<<<<< HEAD
             "time": "2021-03-08T13:56:01+00:00"
+=======
+            "time": "2021-05-05T06:45:12+00:00"
+>>>>>>> 005364e1b55df9e443a05fde6d9dea4aa181fa89
         },
         {
             "name": "facade/ignition-contracts",

@@ -41,6 +41,7 @@
                         </a>
                         <ul class="dropdown-menu main-dropdown">
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Items</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('/item/parent_child_list') }}">Parent Child</a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Edit Multiple Items</a>
                             </li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Quick Update of Items</a>
@@ -109,7 +110,7 @@
                         <ul class="dropdown-menu main-dropdown">
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> End of Day Report</a>
                             </li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> End of Shift Report </a>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('EodShift') }}"> End of Shift Report </a>
                             </li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Credit Card Report </a>
                             </li>
