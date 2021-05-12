@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title')
-  Sales Report
+   Sales Report
 @endsection
 @section('main-content')
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">

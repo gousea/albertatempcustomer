@@ -130,7 +130,7 @@
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Paid Out Report </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Below Cost Report </a>
                             </li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Sales Report </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('salesreport') }}"> Sales Report </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Product Listing </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Employee Loss Prevention
                                     Report </a></li>
