@@ -469,7 +469,7 @@ $('#adding_btn').click(function(){
         <div class="modal-header" style="border-bottom:none;">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body alert-success">
           <div class="alert alert-success text-center">
             <p id="success_msg"></p>
           </div>
