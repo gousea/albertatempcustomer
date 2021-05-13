@@ -97,7 +97,7 @@ Parent Child
                                 <input type="hidden" name="Csearch_vbarcode" id="csearch_vbarcode" value="<?php echo isset($Csearch_vbarcode) ? $Csearch_vbarcode : ''; ?>">
                             </td>
                             <td class="text-left" style="background-color: #fff;"  style="width:37px;height:70px;background-color: #fff;" >
-                                <input type="button" class="btn btn-success float-right" value="Add New" id="addmore">
+                                <input type="button" class="btn btn-success float-right" value="Add New" id="addmore" >
                             </td>
                         </form>
                         
@@ -106,7 +106,7 @@ Parent Child
                         </td>
                         
                         <td style="background-color: #fff;">
-                            <button type="button" class="btn btn-primary float-right" id="save_button" title="Save" style="border-radius: 0px;"><i class="fa fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-primary float-right" id="save_button" title="Save" style="border-radius: 0px; margin-right:5px;"><i class="fa fa-save"></i> Save</button>
                         </td>
                     </tr>
                 </tbody>
@@ -317,7 +317,7 @@ Parent Child
 
 {{-- <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>--}}
 
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <br><br> 
 
 <script type="text/javascript">
