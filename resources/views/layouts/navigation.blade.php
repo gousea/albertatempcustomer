@@ -41,6 +41,7 @@
                         </a>
                         <ul class="dropdown-menu main-dropdown">
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Items</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('/item/parent_child_list') }}">Parent Child</a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Edit Multiple Items</a>
                             </li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Quick Update of Items</a>
@@ -73,7 +74,7 @@
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Manufacturer </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Physical </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Waste </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Adjustment </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('adjustment') }}"> Adjustment </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Transfer </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Location </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Reason </a></li>
@@ -86,18 +87,21 @@
                         <a class="nav-link  dropdown-toggle sub text-uppercase" href="#" data-toggle="dropdown">
                             ADMINISTRATION </a>
                         <ul class="dropdown-menu main-dropdown">
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Perform End of Day </a>
-                            </li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Item List Display</a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Store </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Paid Outs </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Aisle </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Shelf </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Shelving </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Tax </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Store Settings </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> POS Settings </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> FTP </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('end_of_day') }}"> End of Day </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('unit') }}"> Unit </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('department') }}">Department</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('category') }}">Category</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('subcategory') }}">Sub Category</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('manufacturer') }}"> Manufacturer </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('aisle') }}"> Aisle </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('shelf') }}"> Shelf </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('shelving') }}"> Shelving </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('size') }}"> Size </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('tax') }}"> Tax </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('paidout') }}"> Paid Out </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('store_setting') }}">Store Setting</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('ageverify') }}">Age Verification</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('eodsetting') }}">Manual Sales Entry</a></li>
                         </ul>
                     </li>
                 @endif
@@ -109,7 +113,7 @@
                         <ul class="dropdown-menu main-dropdown">
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> End of Day Report</a>
                             </li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> End of Shift Report </a>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('EodShift') }}"> End of Shift Report </a>
                             </li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Credit Card Report </a>
                             </li>
@@ -129,7 +133,7 @@
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Paid Out Report </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Below Cost Report </a>
                             </li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Sales Report </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('salesreport') }}"> Sales Report </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Product Listing </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Employee Loss Prevention
                                     Report </a></li>

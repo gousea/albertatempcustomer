@@ -1,51 +1,49 @@
-@extends('layouts.master')
-@section('title', 'End of Shift Report')
+@extends('layouts.layout')
+@section('title')
+End of Shift Report
+@endsection
 @section('main-content')
-
-<div id="content">
-    <div class="page-header">
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> End of Shift Report</span>
+                </div>
+                <div class="nav-submenu">
+                   
+                </div>
+            </div> 
         </div>
-    </div>
+    </nav>
+
+<section class="section-content py-6"> 
+
+
     <div class="container-fluid">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>End of Shift Report</h3>
-            </div>
-            <div class="panel-body">
-            <div class="clearfix"></div>
-            <div class="row">
-                <form method="post" action="{{ route('ShiftForm') }}" id="filter_form">
+           
+                <form method="post" action="{{ route('ShiftForm') }}" id="filter_form" class="form-inline">
                 @csrf
-                <div class="col-md-2">
-                    <div class="container">
-                        <div class="row">
-                            <div class='col-sm-3'>
-                            <div class="form-group">
-                                <div class='input-group date' id='start_date_container'>
-                                    
-                                    <input type='text' class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                            <div class="col-sm-3 form-group">
+              
+                            <div class="form-group mx-sm-4 mb-2">
+                                   
+                                                <div class='input-group date' id='start_date_container'>
+                                                    
+                                                    <input type='text' class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                  
+                           </div>
+                            <div class="form-group mx-sm-4 mb-3">
                            
-                            <select class="form-control" name="batch_id" id="batch_id"  placeholder="Select Batch..." required>
+                            <select class="form-control" name="batch_id" id="batch_id"  placeholder="Select Batch..." required  style="width:170px;">
                                 
                                 <option value="<?php echo isset($p_batch_id) ? $p_batch_id : ''; ?>" selected ></option>
                             </select>
-                        </div>
-                            <div class="col-md-2">
+                            </div>
+                            
+                            <div class="form-group mx-sm-4 mb-2">
                                 <input type="submit" class="btn btn-success" value="Generate">
                             </div>
                         </div>
@@ -53,6 +51,7 @@
                 </div>
             </form>
             </div>
+
             <?php if(isset($data) && count($data) > 0){ ?>
                 <div class="row" style="padding-bottom: 10px;float: right;">
                   <div class="col-md-12">
@@ -68,24 +67,26 @@
                     </a>
                
                   </div>
-    </div>
+               </div>
             <?php } ?>
+
+
             <?php if(isset($data) && count($data) > 0){ ?>
                 <div class="row" style="margin: 10px;">
                   <div class="col-md-12">
                     <p><b> Store Name: </b>{{ session()->get('storeName') }}</p>
                     </div>
-        </div>
+                </div>
                 <div class="row" style="margin: 10px;">
                   <div class="col-md-12">
                     <p><b> SID: </b> {{ session()->get('sid') }} </p>
                   </div>
-        </div>
+                </div>
                 <div class="row" style="margin: 10px;">
                     <div class="col-md-12">
                     <p><b> Batch :</b><?php echo $p_batch_id;?> </p>
                   </div>
-        </div>
+                </div>
                 <div class="row" style="margin: 10px;">
                 <?php 
                     if(isset($data[0]->BatchStartTime)){
@@ -117,7 +118,7 @@
                   </div>
     </div>
                 <div class="row" style="margin: 10px;">
-                    <div class="col-md-4 table-responsive">
+                    <div class="col-md-4 table-responsive table  table-striped table-hover">
                         <br>
                         
                         <table class="table" style="border:none;">
@@ -203,7 +204,7 @@
                     </div>
         </div>
                 <div class="row" style="margin: 10px;">
-                    <div class="col-md-4">
+                    <div class="col-md-4 table-responsive table  table-striped table-hover">
                         <table width="100%" style="border:none;">
                           <h4 style="text-align: center;"><b>LOTTO SALES DETAILS </b></h4>
                               
@@ -239,7 +240,7 @@
         </div>
                 <br/>
                  <div class="row" style="margin: 10px;">
-                    <div class="col-md-4">
+                    <div class="col-md-4 table-responsive table  table-striped table-hover">
                         <table width="100%" style="border:none;">
                             
                              <b> <h4 style="text-align: center;"><b>TENDER DETAILS</b></h4> </b>
@@ -310,7 +311,7 @@
         </div> 
                 <br>
                  <div class="row" style="margin: 10px;">
-                    <div class="col-md-4">
+                    <div class="col-md-4 table-responsive table  table-striped table-hover">
                         <table width="100%" style="border:none;">
                             <h4 style="text-align: center;"><b>PERFORMANCE STATISTICS</b></h4>
                             <tbody>
@@ -359,7 +360,7 @@
         </div> 
                 <br>
                  <div class="row" style="margin: 10px;">
-                    <div class="col-md-4">
+                    <div class="col-md-4 table-responsive table  table-striped table-hover">
                         <table width="100%" style="border:none;">
                             
                                <h4 style="text-align: center;"><b>CASH COUNT</b></h4>
@@ -403,7 +404,7 @@
                 </div>
         </div>
                 <div class="row" style="margin: 10px;">
-                    <div class="col-md-4">
+                    <div class="col-md-4 table-responsive table  table-striped table-hover">
                         <table width="100%" style="border:none;">
                           
                             <tbody>
@@ -446,7 +447,7 @@
                           
                           
                            }?>
-                        <div class='col-md-12'>
+                        
         
                             <table class="table table-bordered table-striped table-hover">
                                
@@ -460,14 +461,12 @@
                                 </tr>
                                  </table>
                        
-                          
-                            </table>
                         </div>
                     </div>
-                    <div class="collapse dept">
+                    <div class=" row collapse dept">
                      <div class='col-md-12' style=" margin-top: -20px;">
                         
-                        <div class='col-md-12' id="print_data">
+                        <div  id="print_data">
         
                             <table class="table table-bordered table-striped table-hover">
                                  <tr> 
@@ -502,24 +501,35 @@
         </div>
         </div> 
     </div>    
-</div>
+</section>
 @endsection
 
-@section('script_files')   
+@section('page-script')
 
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->  
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css')}}" rel="stylesheet" />
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+<script type="text/javascript" src="{{ asset('javascript/table-fixed-header.js') }}"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
-@endsection
 
-
-@section('scripts')
+<!-- <style type="text/css">
+  .select2-container--default .select2-selection--single{
+    border-radius: 0px !important;
+    height: 35px !important;
+    width
+  }
+  .select2.select2-container.select2-container--default{
+    width: 100% !important;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height: 35px !important;
+  }
+  </style> -->
 
 <script>
 const saveData = (function () {

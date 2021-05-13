@@ -1,242 +1,243 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'Item Adjustment')
+
 @section('main-content')
 
-<div id="content">
-    <div class="page-header">
-      <div class="container-fluid">
-        <!-- <h1><?php echo $heading_title; ?></h1> -->
-        <ul class="breadcrumb">
-          <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-          <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-          <?php } ?>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase"><?php echo $text_form; ?></span>
+            </div>
+            <div class="nav-submenu">
+                
+                <button id="save_button_adjustment_detail" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-gray headerblack  buttons_menu" <?php if(isset($estatus) && $estatus == 'Close'){?> disabled <?php } ?> ><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <button id="calculate_post_button" data-toggle="tooltip" title="Calculate/Post" class="btn btn-gray headerblack  buttons_menu" <?php if(isset($estatus) && $estatus == 'Close'){?> disabled <?php } ?> ><i class="fa fa-calculator"></i>&nbsp;&nbsp;Calculate/Post</button>
+                <a style="pointer-events:all;" href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
+</nav>
+
+
+<div id="content">
+    
     <div class="container-fluid">
       <?php if ($error_warning) { ?>
-      <div class="alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
+        <div class="alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
       <?php } ?>
-      <div class="panel panel-default">
-        <div class="panel-heading head_title">
-          <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
-        </div>
-        <div class="panel-body" <?php if(isset($estatus) && $estatus == 'Close'){?> style="pointer-events:none;" <?php } ?> >
-  
-          <div class="row" style="padding-bottom: 15px;float: right;">
-            <div class="col-md-12">
-              <div class="">
-                <button id="save_button_adjustment_detail" title="<?php echo $button_save; ?>" class="btn btn-primary" <?php if(isset($estatus) && $estatus == 'Close'){?> disabled <?php } ?> ><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <button id="calculate_post_button" title="Calculate/Post" class="btn btn-primary" <?php if(isset($estatus) && $estatus == 'Close'){?> disabled <?php } ?> ><i class="fa fa-calculator"></i>&nbsp;&nbsp;Calculate/Post</button>
-                <a style="pointer-events:all;" href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-  
-          <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-adjustment-detail" class="form-horizontal">
-            @csrf
-          <?php if(isset($ipiid)){?>
-          <input type="hidden" name="ipiid" value="<?php echo $ipiid;?>">
-          <?php } ?>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-sm-4 control-label" for="input-template"><?php echo $text_number; ?></label>
-                  <div class="col-sm-8">
-                    <input type="text" name="vrefnumber" maxlength="30" value="<?php echo isset($vrefnumber) ? $vrefnumber : ''; ?>" placeholder="<?php echo $text_number; ?>" class="form-control" required id="vrefnumber" readonly/>
-  
-                    <?php if ($error_vrefnumber) { ?>
-                      <div class="text-danger"><?php echo $error_vrefnumber; ?></div>
-                    <?php } ?>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group required">
-                  <label class="col-sm-4 control-label" for="input-template"><?php echo $text_created; ?></label>
-                  <?php
-                  if(isset($dcreatedate) && !empty($dcreatedate) && $dcreatedate != '0000-00-00 00:00:00'){
-                    $dcreatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $dcreatedate)->format('m-d-Y');
-                  }else{
-                    $dcreatedate = '';
-                  }
-                  
-                  ?>
-                  <div class="col-sm-8">
-                    <?php if(isset($ipiid) && $ipiid != ''){?>
-                      <input type="text" name="dcreatedate" value="<?php echo $dcreatedate;?>" placeholder="<?php echo $text_created; ?>" class="form-control" id="dcreatedate" readonly style="pointer-events: none;"/>
-                    <?php } else { ?>
-                      <input type="text" name="dcreatedate" value="<?php echo date('m-d-Y');?>" placeholder="<?php echo $text_created; ?>" class="form-control" id="dcreatedate" required/>
-                    <?php } ?>
+      
+        <div class="panel panel-default">
+        
+            <div class="clearfix"></div>
+            <div class="panel-body" <?php if(isset($estatus) && $estatus == 'Close'){?> style="pointer-events:none;" <?php } ?> >
+                <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-adjustment-detail" class="form-horizontal">
+                @csrf
+                  <?php if(isset($ipiid)){?>
+                  <input type="hidden" name="ipiid" value="<?php echo $ipiid;?>">
+                  <?php } ?>
                     
-  
-                    <?php if ($error_dcreatedate) { ?>
-                      <div class="text-danger"><?php echo $error_dcreatedate; ?></div>
-                    <?php } ?>
-  
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group required">
-                  <label class="col-sm-4 control-label" for="input-template"><?php echo $text_title; ?></label>
-                  <div class="col-sm-8">
-                    <input type="text" name="vordertitle" maxlength="50" value="<?php echo isset($vordertitle) ? $vordertitle : ''; ?>" placeholder="<?php echo $text_title; ?>" class="form-control" id="vordertitle" required/>
-  
-                    <?php if ($error_vordertitle) { ?>
-                      <div class="text-danger"><?php echo $error_vordertitle; ?></div>
-                    <?php } ?>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-sm-4 control-label" for="input-template"><?php echo $text_status; ?></label>
-                  <div class="col-sm-8">
-                    <input type="text" name="estatus" maxlength="10" value="<?php echo isset($estatus) ? $estatus : 'Open'; ?>" placeholder="<?php echo $text_status; ?>" class="form-control" readonly />
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-sm-4 control-label" for="input-template"><?php echo $text_notes; ?></label>
-                  <div class="col-sm-8">
-                    <textarea name="vnotes" maxlength="1000" placeholder="<?php echo $text_notes; ?>" class="form-control" ><?php echo isset($vnotes) ? $vnotes : ''; ?></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <br><br><br>
-            <div class="row">
-              <div class="col-md-4" style="pointer-events: all;">
-                <div class="table-responsive" >
-                  <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
-                    <thead>
-                      <tr>
-                        <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort1\']').prop('checked', this.checked);"/></td>
-                        <td style="width:185px;"><input type="text" class="form-control" id="itemsort1_search_sku" placeholder="SKU#" style="border:none;"></td>
-                        <td style="width:242px;"><input type="text" class="form-control" id="itemsort1_search_item_name" placeholder="Item Name" style="border:none;"></td>
-                      </tr>
-                    </thead>
-                  </table>
-                  <div class="div-table-content">
-                    <table class="table table-bordered table-hover" id="itemsort1" style="table-layout: fixed;">
-                      <tbody>
-                        
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-1 text-center" style="margin-top:12%;">
-                <a class="btn btn-primary" style="cursor:pointer" id="add_item_btn"><i class="fa fa-arrow-right fa-3x"></i></a><br><br>
-                <a class="btn btn-primary" style="cursor:pointer" id="remove_item_btn"><i class="fa fa-arrow-left fa-3x"></i></a>
-                
-              </div>
-              <div class="col-md-7" style="pointer-events: all;">
-                <div class="table-responsive" >
-                  <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
-                    <thead>
-                      <tr>
-                        <td style="width:1%" class="text-center"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort2\']').prop('checked', this.checked);"/></td>
-                        <td style="width:18%;"><input type="text" class="form-control itemsort2_search" placeholder="SKU#" style="border:none;"></td>
-                        <td style="width:21%;"><input type="text" class="form-control itemsort2_search" placeholder="Item Name" style="border:none;"></td>
-                        <td class="text-right" style="width:10%;">Unit Cost</td>
-                        <td class="text-right" style="width:10%;">Pack Qty</td>
-                        <td class="text-right" style="width:10%;">QOH</td>
-                        <td class="text-right" style="width:10%;">Adj.Qty</td>
-                        <td style="width:10%;">Reason</td>
-                        <td class="text-right" style="width:10%;">Total Unit</td>
-                        <td class="text-right" style="width:10%;">Total Amt</td>
-                      </tr>
-                    </thead>
-                  </table>
-                  <div class="div-table-content" style="">
-                    <table class="table table-bordered table-hover" id="itemsort2" style="table-layout: fixed;">
-                      <tbody>
-                        <?php if(isset($edit_right_items) && count($edit_right_items) > 0){?>
-                          <?php foreach($edit_right_items as $k => $edit_right_item){?>
-                            <tr>
+                    <div class="container section-content">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="col-sm-4 control-label" for="input-template"><?php echo $text_number; ?></label>
+                              <div class="col-sm-8">
+                                <input type="text" name="vrefnumber" maxlength="30" value="<?php echo isset($vrefnumber) ? $vrefnumber : ''; ?>" placeholder="<?php echo $text_number; ?>" class="form-control" required id="vrefnumber" readonly/>
+              
+                                <?php if ($error_vrefnumber) { ?>
+                                  <div class="text-danger"><?php echo $error_vrefnumber; ?></div>
+                                <?php } ?>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group required">
+                              <label class="col-sm-4 control-label" for="input-template"><?php echo $text_created; ?></label>
+                              <?php
+                              if(isset($dcreatedate) && !empty($dcreatedate) && $dcreatedate != '0000-00-00 00:00:00'){
+                                $dcreatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $dcreatedate)->format('m-d-Y');
+                              }else{
+                                $dcreatedate = '';
+                              }
+                              
+                              ?>
+                              <div class="col-sm-8">
+                                <?php if(isset($ipiid) && $ipiid != ''){?>
+                                  <input type="text" name="dcreatedate" value="<?php echo $dcreatedate;?>" placeholder="<?php echo $text_created; ?>" class="form-control" id="dcreatedate" readonly style="pointer-events: none;"/>
+                                <?php } else { ?>
+                                  <input type="text" name="dcreatedate" value="<?php echo date('m-d-Y');?>" placeholder="<?php echo $text_created; ?>" class="form-control" id="dcreatedate" required/>
+                                <?php } ?>
                                 
-                              <td class="text-center" style="width:1%;">
-                                <input type="checkbox" name="checkbox_itemsort2[]" value="<?php echo $edit_right_item['iitemid']; ?>"/>
-                                <input type="hidden" name="items[<?php echo $k; ?>][vitemid]" value="<?php echo $edit_right_item['iitemid']; ?>">
-                              </td>
-                              
-                              <td style="width:15%;">
-                              <?php echo $edit_right_item['vbarcode']; ?>
-                              <input type="hidden" name="items[<?php echo $k; ?>][vbarcode]" value="<?php echo $edit_right_item['vbarcode']; ?>">
-                              </td>
-                              
-                              <td style="width:18%;">
-                              <?php echo $edit_right_item['vitemname']; ?>
-                              <input type="hidden" name="items[<?php echo $k; ?>][vitemname]" value="<?php echo $edit_right_item['vitemname']; ?>">
-                              </td>
-                              
-                              <td class="text-right" style="width:9%;">
-                                <input type="text" class="editable nunitcost_class" name="items[<?php echo $k; ?>][nunitcost]" value="<?php echo $edit_right_item['nunitcost']; ?>" style="width:30px;text-align: right;">
-                              </td>
-                              
-                              <td class="text-right" style="width:9%;">
-                                <input type="text" class="editable npackqty_class" name="items[<?php echo $k; ?>][npackqty]" value="<?php echo $edit_right_item['npackqty']; ?>" style="width:30px;text-align: right;">
-                              </td>
-                              
-                               <td class="text-right" style="width:9%;">
-                                <input type="text" class="editable iqtyonhand_class" name="items[<?php echo $k; ?>][iqtyonhand]" value="<?php echo $edit_right_item['iqtyonhand']; ?>" style="width:30px;text-align: right;">
-                              </td>
-                              
-                              <td class="text-right" style="width:9%;">
-                                <input type="text" class="editable ndebitqty_class" name="items[<?php echo $k; ?>][ndebitqty]" value="<?php echo $edit_right_item['ndebitqty']; ?>" maxlength = "5" style="width:30px;text-align: right;">
-                              </td>
-                              
-                              <td style="width:9%;">
-                                  <select name="items[<?php echo $k; ?>][vreasoncode]" style="width:35px;">
-                                  <option value="">Reason</option>
-                                    <?php foreach($reasons as $reason){ ?>
-                                      <?php if(isset($edit_right_item['vreasoncode']) && $reason['vreasoncode'] == $edit_right_item['vreasoncode']){ ?>
-                                        <option value="<?php echo $reason['vreasoncode']; ?>" selected="selected"><?php echo $reason['vreasonename']; ?></option>
-                                      <?php }else{ ?>
-                                        <option value="<?php echo $reason['vreasoncode']; ?>" ><?php echo $reason['vreasonename']; ?></option>
-                                      <?php } ?>
-                                    <?php } ?>
-                                  </select>
-  
-                              </td>
-                              
-                              <td class="text-right" style="width:9%;">
-                                <input type="text" class="editable itotalunit_class" name="items[<?php echo $k; ?>][itotalunit]" value="<?php echo $edit_right_item['itotalunit']; ?>" style="width:30px;text-align: right;">
-                              </td>
-                              
-                              <td class="text-right" style="width:10%;">
-                                <span class="text_nnettotal_class"><?php echo $edit_right_item['nunitcost'] * $edit_right_item['itotalunit']; ?></span>
-                                <input type="hidden" class="nnettotal_class" name="items[<?php echo $k; ?>][nnettotal]" value="<?php echo $edit_right_item['nunitcost'] * $edit_right_item['itotalunit']; ?>">
-                              </td>
-                              
-                            </tr>
-                          <?php } ?>
-                        <?php } ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+              
+                                <?php if ($error_dcreatedate) { ?>
+                                  <div class="text-danger"><?php echo $error_dcreatedate; ?></div>
+                                <?php } ?>
+              
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+              
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group required">
+                              <label class="col-sm-4 control-label" for="input-template"><?php echo $text_title; ?></label>
+                              <div class="col-sm-8">
+                                <input type="text" name="vordertitle" maxlength="50" value="<?php echo isset($vordertitle) ? $vordertitle : ''; ?>" placeholder="<?php echo $text_title; ?>" class="form-control" id="vordertitle" required/>
+              
+                                <?php if ($error_vordertitle) { ?>
+                                  <div class="text-danger"><?php echo $error_vordertitle; ?></div>
+                                <?php } ?>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="col-sm-4 control-label" for="input-template"><?php echo $text_status; ?></label>
+                              <div class="col-sm-8">
+                                <input type="text" name="estatus" maxlength="10" value="<?php echo isset($estatus) ? $estatus : 'Open'; ?>" placeholder="<?php echo $text_status; ?>" class="form-control" readonly />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+              
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="col-sm-4 control-label" for="input-template"><?php echo $text_notes; ?></label>
+                              <div class="col-sm-8">
+                                <textarea name="vnotes" maxlength="1000" placeholder="<?php echo $text_notes; ?>" class="form-control" ><?php echo isset($vnotes) ? $vnotes : ''; ?></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    
+                    <br><br><br>
+                    <div class="row">
+                      <div class="col-md-4" style="pointer-events: all;">
+                        <div class="table-responsive" >
+                          <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
+                            <thead>
+                              <tr class="header-color">
+                                <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort1\']').prop('checked', this.checked);"/></td>
+                                <td style="width:185px;"><input type="text" class="form-control" id="itemsort1_search_sku" placeholder="SKU#" style="border:none;"></td>
+                                <td style="width:242px;"><input type="text" class="form-control" id="itemsort1_search_item_name" placeholder="Item Name" style="border:none;"></td>
+                              </tr>
+                            </thead>
+                          </table>
+                          <div class="div-table-content">
+                            <table class="table table-bordered table-hover" id="itemsort1" style="table-layout: fixed;">
+                              <tbody>
+                                
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-1 text-center" style="margin-top:12%;">
+                        <a class="btn btn-primary" style="cursor:pointer" id="add_item_btn"><i class="fa fa-arrow-right fa-3x"></i></a><br><br>
+                        <a class="btn btn-primary" style="cursor:pointer" id="remove_item_btn"><i class="fa fa-arrow-left fa-3x"></i></a>
+                        
+                      </div>
+                      <div class="col-md-7" style="pointer-events: all;">
+                        <div class="table-responsive" >
+                          <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
+                            <thead>
+                              <tr class="header-color">
+                                <td style="width:1%" class="text-center"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort2\']').prop('checked', this.checked);"/></td>
+                                <td style="width:18%;"><input type="text" class="form-control itemsort2_search" placeholder="SKU#" style="border:none;"></td>
+                                <td style="width:21%;"><input type="text" class="form-control itemsort2_search" placeholder="Item Name" style="border:none;"></td>
+                                <td class="text-right" style="width:10%;">Unit Cost</td>
+                                <td class="text-right" style="width:10%;">Pack Qty</td>
+                                <td class="text-right" style="width:10%;">QOH</td>
+                                <td class="text-right" style="width:10%;">Adj.Qty</td>
+                                <td style="width:10%;">Reason</td>
+                                <td class="text-right" style="width:10%;">Total Unit</td>
+                                <td class="text-right" style="width:10%;">Total Amt</td>
+                              </tr>
+                            </thead>
+                          </table>
+                          <div class="div-table-content" style="">
+                            <table class="table table-bordered table-hover" id="itemsort2" style="table-layout: fixed;">
+                              <tbody>
+                                <?php if(isset($edit_right_items) && count($edit_right_items) > 0){?>
+                                  <?php foreach($edit_right_items as $k => $edit_right_item){?>
+                                    <tr>
+                                        
+                                      <td class="text-center" style="width:1%;">
+                                        <input type="checkbox" name="checkbox_itemsort2[]" value="<?php echo $edit_right_item['iitemid']; ?>"/>
+                                        <input type="hidden" name="items[<?php echo $k; ?>][vitemid]" value="<?php echo $edit_right_item['iitemid']; ?>">
+                                      </td>
+                                      
+                                      <td style="width:15%;">
+                                      <?php echo $edit_right_item['vbarcode']; ?>
+                                      <input type="hidden" name="items[<?php echo $k; ?>][vbarcode]" value="<?php echo $edit_right_item['vbarcode']; ?>">
+                                      </td>
+                                      
+                                      <td style="width:18%;">
+                                      <?php echo $edit_right_item['vitemname']; ?>
+                                      <input type="hidden" name="items[<?php echo $k; ?>][vitemname]" value="<?php echo $edit_right_item['vitemname']; ?>">
+                                      </td>
+                                      
+                                      <td class="text-right" style="width:9%;">
+                                        <input type="text" class="editable nunitcost_class" name="items[<?php echo $k; ?>][nunitcost]" value="<?php echo $edit_right_item['nunitcost']; ?>" style="width:30px;text-align: right;">
+                                      </td>
+                                      
+                                      <td class="text-right" style="width:9%;">
+                                        <input type="text" class="editable npackqty_class" name="items[<?php echo $k; ?>][npackqty]" value="<?php echo $edit_right_item['npackqty']; ?>" style="width:30px;text-align: right;">
+                                      </td>
+                                      
+                                       <td class="text-right" style="width:9%;">
+                                        <input type="text" class="editable iqtyonhand_class" name="items[<?php echo $k; ?>][iqtyonhand]" value="<?php echo $edit_right_item['iqtyonhand']; ?>" style="width:30px;text-align: right;">
+                                      </td>
+                                      
+                                      <td class="text-right" style="width:9%;">
+                                        <input type="text" class="editable ndebitqty_class" name="items[<?php echo $k; ?>][ndebitqty]" value="<?php echo $edit_right_item['ndebitqty']; ?>" maxlength = "5" style="width:30px;text-align: right;">
+                                      </td>
+                                      
+                                      <td style="width:9%;">
+                                          <select name="items[<?php echo $k; ?>][vreasoncode]" style="width:35px;">
+                                          <option value="">Reason</option>
+                                            <?php foreach($reasons as $reason){ ?>
+                                              <?php if(isset($edit_right_item['vreasoncode']) && $reason['vreasoncode'] == $edit_right_item['vreasoncode']){ ?>
+                                                <option value="<?php echo $reason['vreasoncode']; ?>" selected="selected"><?php echo $reason['vreasonename']; ?></option>
+                                              <?php }else{ ?>
+                                                <option value="<?php echo $reason['vreasoncode']; ?>" ><?php echo $reason['vreasonename']; ?></option>
+                                              <?php } ?>
+                                            <?php } ?>
+                                          </select>
+          
+                                      </td>
+                                      
+                                      <td class="text-right" style="width:9%;">
+                                        <input type="text" class="editable itotalunit_class" name="items[<?php echo $k; ?>][itotalunit]" value="<?php echo $edit_right_item['itotalunit']; ?>" style="width:30px;text-align: right;">
+                                      </td>
+                                      
+                                      <td class="text-right" style="width:10%;">
+                                        <span class="text_nnettotal_class"><?php echo $edit_right_item['nunitcost'] * $edit_right_item['itotalunit']; ?></span>
+                                        <input type="hidden" class="nnettotal_class" name="items[<?php echo $k; ?>][nnettotal]" value="<?php echo $edit_right_item['nunitcost'] * $edit_right_item['itotalunit']; ?>">
+                                      </td>
+                                      
+                                    </tr>
+                                  <?php } ?>
+                                <?php } ?>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+           
+                </form>
             </div>
-   
-          </form>
         </div>
-      </div>
     </div>
+</div>
     
-  </div>
   
 <div class="modal fade" id="successModal" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -245,8 +246,8 @@
         <div class="modal-header" style="border-bottom:none;">
           <a href="<?php echo $cancel; ?>" class="close" >&times;</a>
         </div>
-        <div class="modal-body">
-          <div class="alert-success text-center">
+        <div class="modal-body alert-success ">
+          <div class="text-center">
             <p id="success_alias"></p>
           </div>
         </div>
@@ -254,7 +255,8 @@
       
     </div>
   </div>
-  <div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
+  
+ <div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog modal-sm">
       <!-- Modal content-->
       <div class="modal-content">
@@ -272,7 +274,7 @@
   </div>
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
 <script type="text/javascript">

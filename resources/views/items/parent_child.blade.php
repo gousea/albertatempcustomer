@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
 Parent Child
@@ -7,207 +7,202 @@ Parent Child
 @section('main-content')
 
 <div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
-        </div>
-    </div>
     
-    <div class="container-fluid">
-        <br>
-        @if (session()->has('message'))
-            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>      
-        @endif
-        
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        @if(!empty($error))
-                            <li>{{$error}}</li>
-                        @endif
-                    @endforeach
-                </ul>
-                
-            </div>
-            
-        @endif
-
-        @if (isset($data['error_warning']))
-            <div class="alert alert-warning">
-                <ul>
-                    <li>{{$data['error_warning']}}</li>
-                </ul>
-                
-            </div>
-            
-        @endif
-
-        <div class="panel panel-default">
-            <div class="panel-heading head_title">
-              <h3 class="panel-title"><i class="fa fa-list"></i>Parent Child</h3>
-            </div>
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Parent Child</span>
+                </div>
+            </div> <!-- navbar-collapse.// -->
         </div>
-        
-        <div class="panel-body">
-            <div>
-                <table class="table table-bordered table-hover" id="tab_logic">
-                    <thead>
-                        <tr >
+    </nav>
+      
+    <section class="section-content py-6">
+        <div class="container-fluid">
+            <br>
+            @if (session()->has('message'))
+                <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>      
+            @endif
+            
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            @if(!empty($error))
+                                <li>{{$error}}</li>
+                            @endif
+                        @endforeach
+                    </ul>
+                    
+                </div>
+                
+            @endif
+
+            @if (isset($data['error_warning']))
+                <div class="alert alert-warning">
+                    <ul>
+                        <li>{{$data['error_warning']}}</li>
+                    </ul>
+                    
+                </div>
+                
+            @endif
+            
+            <div class="panel-body">
+                <div>
+                    <table class="table table-bordered table-hover" id="tab_logic">
+                        <thead>
+                            <tr >
+                                    
+                                <th class="text-center text-uppercase text-white"  style="width:390px; background-color:grey;">
+                                    Parent Item
+                                </th>
                                 
-                            <th class="text-center"  style="width:390px;;">
-                                Parent Item
-                            </th>
+                                <th class="text-center text-uppercase text-white"  style="width:460px; background-color:grey;">
+                                    Child Item
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <table  style="width:100%;">
+                <tbody>
+                    <tr class="clearfix">
+                        <form action="{{ $dataUrl['add'] }}" method="post" id="filter_form">
+                            @csrf
+                            @if(session()->get('hq_sid') == 1)
+                                <input type="hidden" name="stores_hq" id="add_store_hq" value="">
+                            @endif
+                            <td class="text-left" style="width:455px;height:70px;background-color: #fff;">
+                                <input type="text" name="report_by_p" class="form-control" placeholder="Search parent item..." id="automplete-product" value="<?php echo isset($data['report_by_p']) ? $data['report_by_p'] : ''; ?>" required style="width:360px;height:35px;padding-left:10px;">
+                                
+                                <input type="hidden" name="Psearch_iitemid" id="search_iitemid" value="<?php echo isset($data['parent_item_id']) ? $data['parent_item_id'] : ''; ?>">
+                                <input type="hidden" name="Psearch_vbarcode" id="search_vbarcode" value="<?php echo isset($Psearch_vbarcode) ? $Psearch_vbarcode : ''; ?>">
+                                
+                            </td>  
                             
-                            <th class="text-center"  style="width:460px;">
-                                Child Item
-                            </th>
+                            <td style="width:120px;height:70px;background-color: #fff;">
+                                <input type="number" name="cpack" id="c_pack" class="form-control" value="<?php echo isset($data['cnpack']) ? $data['cnpack'] : ''; ?>" placeholder="Child pack" style="width:110px;height:35px;padding-left:4px;" required >
+                            </td>
                             
+                            <td style="width:330px;height:70px;background-color: #fff;">
+                                <input type="text" name="report_by_c" class="form-control" placeholder="Search child item..." id="automplete-product_child" value="<?php echo isset($data['report_by_c']) ? $data['report_by_c']: ''; ?>" required  style="width :320px;height:35px;padding-left:10px;">
+                                <input type="hidden" name="Csearch_iitemid" id="csearch_iitemid" value="<?php echo isset($data['child_item_id']) ? $data['child_item_id'] : ''; ?>">
+                                <input type="hidden" name="Csearch_vbarcode" id="csearch_vbarcode" value="<?php echo isset($Csearch_vbarcode) ? $Csearch_vbarcode : ''; ?>">
+                            </td>
+                            <td class="text-left" style="background-color: #fff;"  style="width:37px;height:70px;background-color: #fff;" >
+                                <input type="button" class="btn btn-success float-right" value="Add New" id="addmore" >
+                            </td>
+                        </form>
+                        
+                        <td style="background-color: #fff;">
+                            <button type="button" class="btn btn-danger float-right" id="parent_delete" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i> Delete</button>
+                        </td>
+                        
+                        <td style="background-color: #fff;">
+                            <button type="button" class="btn btn-primary float-right" id="save_button" title="Save" style="border-radius: 0px; margin-right:5px;"><i class="fa fa-save"></i> Save</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="table-responsive">
+                <table id="Parent_head" class="text-center table table-bordered table-hover" style="margin-bottom:0px;">
+                    <thead>
+                        <tr class="header-color">
+                            
+                            <td style="width: 1px;color:black;"class="text-left"><input type="checkbox"  onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                            
+                            <td style="width:200px;" class="text-left headername text-uppercase font-weight-bold"><?php echo "Parent Name"; ?></td>
+                            <td style="width:150px;" class="text-left headername text-uppercase font-weight-bold"><?php echo "SKU"; ?></td>
+                            <td style="width:100px" class="text-left headername text-uppercase font-weight-bold"><?php echo "Child Pack"; ?></td>
+                            <td style="width:200px"  class="text-left headername text-uppercase font-weight-bold"><?php echo "Child Name"; ?></td>
+                            <td style="width:150px"  class="text-left headername text-uppercase font-weight-bold"><?php echo "SKU"; ?></td>
+                        
+                        </tr>
+
+                        <tr class="header-color">
+
+                            <td style="width: 1px;"class="text-left">  
+                                <input type="hidden"   id="automplete-product_check">
+                            </td>
+
+                            <td style="width:200px;"class="text-left">
+                            <input style="color:#000000;" type="text" name="parent_item"  placeholder="Search parent item." id="parent-products">
+                            </td>
+
+                            <td style="width:150px;"class="text-left">
+                            <input type="hidden" style="color:#000000;;" type="text" name=""  >
+                            </td>
+
+                            <td tyle="width:100px;"class="text-left">  
+                                <input type="hidden"   id="automplete-product_check_qoh">
+                            </td>
+
+                            <td style="width:200px;"class="text-left">
+                                <input style="color:#000000; " type="text" name="child_item"  placeholder="Search child item." id="child-product">
+                            </td>
+                            
+                            <td style="width:150px;"class="text-left">
+                                <input type="hidden" style="color:#000000;" type="text" name=""  >
+                            </td>
+                                            
                         </tr>
                     </thead>
                 </table>
             </div>
-        </div>
 
-        <table  style="width:100%;">
-            <tbody>
-                <tr>
-                    <form action="{{ $dataUrl['add'] }}" method="post" id="filter_form">
-                        @csrf
-                         @if(session()->get('hq_sid') == 1)
-                            <input type="hidden" name="stores_hq" id="add_store_hq" value="">
-                        @endif
-                        <td class="text-left" style="width:400px;height:70px;background-color: #fff;">
-                            <input type="text" name="report_by_p" class="form-control" placeholder="Search parent item..." id="automplete-product" value="<?php echo isset($data['report_by_p']) ? $data['report_by_p'] : ''; ?>" required style="width:340px;height:35px;padding-left:10px;">
+            <form action="" method="post" enctype="multipart/form-data" id="form-cpack">
+                @csrf
+                <div class="table-responsive">
+                    <table id="Parent" class="text-center table table-bordered table-hover display" style="width:100%">
+                        <thead style='display:none;'> <th></th><th></th> <th></th> <th></th> <th></th><th></th>
+                        </thead>
                             
-                            <input type="hidden" name="Psearch_iitemid" id="search_iitemid" value="<?php echo isset($data['parent_item_id']) ? $data['parent_item_id'] : ''; ?>">
-                            <input type="hidden" name="Psearch_vbarcode" id="search_vbarcode" value="<?php echo isset($Psearch_vbarcode) ? $Psearch_vbarcode : ''; ?>">
+                        @foreach ($pitemncitem as $k=>$pitem)
+                        
+                            <tr>
+                                <td style="width:1px;"class="text-left">
+                                    <input type="checkbox" class="itemid" name="selected[]" id="pitem[<?php echo $k; ?>][select]"  value="<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" />
+                                </td>
+                                                    
+                                <td style="width:200px;"class="text-left">
+                                    <a href="<?php echo $pitem['item_link'];?>"><?php echo $pitem['pname']; ?></a>
+                                </td>
+
+                                <td style="width:150px;"class="text-left">
+                                    <span ><?php echo $pitem['psku']; ?></span>
+                                </td>
                             
-                        </td>  
-                        
-                        <td style="width:90px;height:70px;background-color: #fff;">
-                            <input type="number" name="cpack" id="c_pack" class="form-control" value="<?php echo isset($data['cnpack']) ? $data['cnpack'] : ''; ?>" placeholder="Child pack" style="width:80px;height:35px;padding-left:4px;" required >
-                        </td>
-                        
-                        <td style="width:330px;height:70px;background-color: #fff;">
-                            <input type="text" name="report_by_c" class="form-control" placeholder="Search child item..." id="automplete-product_child" value="<?php echo isset($data['report_by_c']) ? $data['report_by_c']: ''; ?>" required  style="width :320px;height:35px;padding-left:10px;">
-                            <input type="hidden" name="Csearch_iitemid" id="csearch_iitemid" value="<?php echo isset($data['child_item_id']) ? $data['child_item_id'] : ''; ?>">
-                            <input type="hidden" name="Csearch_vbarcode" id="csearch_vbarcode" value="<?php echo isset($Csearch_vbarcode) ? $Csearch_vbarcode : ''; ?>">
-                        </td>
-                        <td class="text-left" style="background-color: #fff;"  style="width:37px;height:70px;background-color: #fff;" >
-                            <input type="button" class="btn btn-success" value="Add New" id="addmore">
-                        </td>
-                    </form>
-                    
-                    <td style="background-color: #fff;">
-                        <button type="button" class="btn btn-danger" id="parent_delete" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i> Delete</button>
-                    </td>
-                       
-                    <td style="background-color: #fff;">
-                        <button type="button" class="btn btn-primary" id="save_button" title="Save" style="border-radius: 0px;"><i class="fa fa-save"></i> Save</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                                <td style="width:100px;" class="text-left">
+                                    <input style="width:70px;"type="text"  class="editable cpack" name="pitem[<?php echo $k; ?>][cpack]" id="cpack_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['cpack']; ?>" onclick='document.getElementById("pitem[<?php echo $k; ?>][select]").setAttribute("checked","checked");' />
+                                    <input type="hidden" name="pitem[<?php echo $k; ?>][cid]"  id="cid_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['cid']; ?>"/>
+                                    <input type="hidden" name="pitem2[<?php echo $k; ?>][pid]"  id="pid_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['pid']; ?>"/>
+                                </td>
 
-        <div class="table-responsive">
-            <table id="Parent_head" class="text-center table table-bordered table-hover" style="margin-bottom:0px;">
-                <thead>
-                    <tr bgcolor="#1e91cf">
-                        
-                        <td style="width: 1px;color:black;"class="text-left"><input type="checkbox"  onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                        
-                        <td style="width:200px;bg-color:#f9f9f9" class="text-left"><?php echo "Parent Name"; ?></td>
-                        <td style="width:150px;bg-color:#f9f9f9" class="text-left"><?php echo "SKU"; ?></td>
-                        <td style="width:100px" class="text-left"><?php echo "Child Pack"; ?></td>
-                        <td style="width:200px"  class="text-left"><?php echo "Child Name"; ?></td>
-                        <td style="width:150px"  class="text-left"><?php echo "SKU"; ?></td>
-                    
-                    </tr>
+                                <td style="width:200px;"class="text-left">
+                                    <a href="<?php echo $pitem['citem_link'];?>"><?php echo $pitem['cname']; ?></a>
+                                </td>
+                            
+                                <td style="width:150px;"class="text-left">
+                                    <span ><?php echo $pitem['csku']; ?></span>
+                                </td>
+        
+                            </tr>
 
-                    <tr bgcolor="#1e91cf">
+                        @endforeach
+                </table>
+                </div>
+            </form>
 
-                        <td style="width: 1px;"class="text-left">  
-                            <input type="hidden"   id="automplete-product_check">
-                        </td>
-
-                        <td style="width:200px;"class="text-left">
-                        <input style="color:#000000;" type="text" name="parent_item"  placeholder="Search parent item." id="parent-products">
-                        </td>
-
-                        <td style="width:150px;"class="text-left">
-                        <input type="hidden" style="color:#000000;;" type="text" name=""  >
-                        </td>
-
-                        <td tyle="width:100px;"class="text-left">  
-                            <input type="hidden"   id="automplete-product_check_qoh">
-                        </td>
-
-                        <td style="width:200px;"class="text-left">
-                            <input style="color:#000000; " type="text" name="child_item"  placeholder="Search child item." id="child-product">
-                        </td>
-                        
-                        <td style="width:150px;"class="text-left">
-                            <input type="hidden" style="color:#000000;" type="text" name=""  >
-                        </td>
-                                        
-                    </tr>
-                </thead>
-            </table>
         </div>
-
-        <form action="" method="post" enctype="multipart/form-data" id="form-cpack">
-            @csrf
-            <div class="table-responsive">
-                <table id="Parent" class="text-center table table-bordered table-hover">
-                    <thead style='display:none;'> <th></th><th></th> <th></th> <th></th> <th></th><th></th>
-                    </thead>
-                        
-                    @foreach ($pitemncitem as $k=>$pitem)
-                    
-                        <tr>
-                            <td style="width:1px;"class="text-left">
-                                <input type="checkbox" class="itemid" name="selected[]" id="pitem[<?php echo $k; ?>][select]"  value="<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" />
-                            </td>
-                                                
-                            <td style="width:200px;"class="text-left">
-                                <a href="<?php echo $pitem['item_link'];?>"><?php echo $pitem['pname']; ?></a>
-                            </td>
-
-                            <td style="width:150px;"class="text-left">
-                                <span ><?php echo $pitem['psku']; ?></span>
-                            </td>
-                        
-                            <td style="width:100px;" class="text-left">
-                                <input style="width:70px;"type="text"  class="editable cpack" name="pitem[<?php echo $k; ?>][cpack]" id="cpack_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['cpack']; ?>" onclick='document.getElementById("pitem[<?php echo $k; ?>][select]").setAttribute("checked","checked");' />
-                                <input type="hidden" name="pitem[<?php echo $k; ?>][cid]"  id="cid_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['cid']; ?>"/>
-                                <input type="hidden" name="pitem2[<?php echo $k; ?>][pid]"  id="pid_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['pid']; ?>"/>
-                            </td>
-
-                            <td style="width:200px;"class="text-left">
-                                <a href="<?php echo $pitem['citem_link'];?>"><?php echo $pitem['cname']; ?></a>
-                            </td>
-                        
-                            <td style="width:150px;"class="text-left">
-                                <span ><?php echo $pitem['csku']; ?></span>
-                            </td>
-    
-                        </tr>
-
-                    @endforeach
-               </table>
-            </div>
-        </form>
-
-    </div>
+    </section>
 </div>
 
 <?php if(session()->get('hq_sid') == 1){ ?>
@@ -310,21 +305,23 @@ Parent Child
     
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 <style>
     #Parent_filter{
         display:none;
     }
+
+    
 </style>
 
-<script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<br><br>
+{{-- <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>--}}
+
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<br><br> 
 
 <script type="text/javascript">
-  $(window).load(function() {
+  $(window).on(function() {
     $("div#divLoading").removeClass('show');
   });
 </script>
@@ -472,7 +469,7 @@ $('#adding_btn').click(function(){
         <div class="modal-header" style="border-bottom:none;">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body alert-success">
           <div class="alert alert-success text-center">
             <p id="success_msg"></p>
           </div>
@@ -541,23 +538,22 @@ $('#adding_btn').click(function(){
 </script>
 
 <!-- DataTables -->
-<script src="{{ asset('javascript/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+// <script src="{{ asset('javascript/jquery.dataTables.min.js') }}" type="text/javascript"></script>
 
-<script src="{{ asset('javascript/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('javascript/select2/js/select2.min.js') }}" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="http://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
     $(document).ready(function() {
         
       var table = $('#Parent').DataTable({
-        
+        "dom": 't<"bottom"i<"float-right"p>><"clear">',
         "searching":true,
         "destroy": true,
         "bLengthChange": false,
-        "pageLength":20
-        
+        "pageLength":20,
       });
-
+      
     
         $('#parent-products').on('input', function () {
             table.columns(1).search( this.value ).draw();
@@ -583,10 +579,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance:textfield;
 }
-.dataTables_paginate {
-  width: 100%;
-  text-align: right;
-}
+
 </style>           
 <script>
     $(document).ready(function(){

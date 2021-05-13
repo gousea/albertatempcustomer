@@ -814,15 +814,15 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::get('/eodshift/csv', 'EndShiftController@csv')->name('Eodshiftcsv');
 
         //EOS Version #3.20
-        Route::group(['prefix' => '320', 'namespace' => '\App\_320\Http\Controllers'], function () {
-            Route::get('/eodshift', 'EndShiftController@index')->name('EodShift');
-            Route::get('/eodshift/batch', 'EndShiftController@batchdata')->name('EodBatch');
-            Route::post('/eodshift/getlist', 'EndShiftController@getlist')->name('ShiftForm');
+        // Route::group(['prefix' => '320', 'namespace' => '\App\_320\Http\Controllers'], function () {
+        //     Route::get('/eodshift', 'EndShiftController@index')->name('EodShift');
+        //     Route::get('/eodshift/batch', 'EndShiftController@batchdata')->name('EodBatch');
+        //     Route::post('/eodshift/getlist', 'EndShiftController@getlist')->name('ShiftForm');
 
-            Route::get('/eodshift/print_pdf', 'EndShiftController@eodPdf')->name('Eodshiftpdf');
-            Route::get('/eodshift/print', 'EndShiftController@print')->name('Eodshiftprint');
-            Route::get('/eodshift/csv', 'EndShiftController@csv')->name('Eodshiftcsv');
-        });
+        //     Route::get('/eodshift/print_pdf', 'EndShiftController@eodPdf')->name('Eodshiftpdf');
+        //     Route::get('/eodshift/print', 'EndShiftController@print')->name('Eodshiftprint');
+        //     Route::get('/eodshift/csv', 'EndShiftController@csv')->name('Eodshiftcsv');
+        // });
 
         //CreditCardReport Routes start
         Route::get('/cardreport', 'CreditCardReportController@index')->name('CardReport');

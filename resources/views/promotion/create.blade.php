@@ -64,9 +64,9 @@
                                     placeholder="PROMOTION CATEGORY" name="p_category">
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </form>
-               
+
             </div>
         </div>
     </div>
@@ -100,9 +100,9 @@
                             </div>
                         </div>
                     </div>
-                                     
+
                 </form>
-               
+
             </div>
         </div>
     </div>
@@ -199,7 +199,11 @@
             </div>
         </div>
     </form>
-   
+
+    {{--  <div class="promotion-text">
+        <span id="promotion-texts">Choose items for Promotions</span><a type="button" class="btn btn-primary btn-sm"
+            href="#">HIDE</a>
+    </div>  --}}
 </div>
 
 <section class="section-content py-1">
@@ -416,7 +420,7 @@
                     <th class="col-xs-1"></th>
                     <th class="col-xs-1" colspan="2" style="text-align:center;">NEW PRICE</th>
                     <th class="col-xs-1" colspan="2" style="text-align:center;">PROMOTION</th>
-                
+
                     <tr class="header-color">
                         <th data-field="state" data-checkbox="true"></th>
                         <th class="col-xs-1" data-field="item_name">ITEM NAME</th>

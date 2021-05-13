@@ -329,71 +329,76 @@ class quickUpdateItem extends Model
                                 if(isset($getitem_id[0])){
                                     $item_id = $getitem_id[0]->iitemid;
                                 }
-                                $current_item = DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_item WHERE iitemid='" . (int)$item_id . "'");
-                                if ($current_item[0]->iqtyonhand != $value['iqtyonhand'] && $value['iqtyonhand'] != '') {
-                                    
-                                  if($current_item[0]->isparentchild==1)
-                                  {
-                                      $id=$current_item[0]->parentid;
-                                      $parent_item = DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_item WHERE iitemid='" . (int)$id. "'");
-                                      $newqoh=$parent_item[0]->iqtyonhand+$value['iqtyonhand'];
-                                      DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET iqtyonhand = '" .$newqoh. "' WHERE iitemid = '" . (int)$id . "'");
-                                      DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET iqtyonhand = 0 WHERE iitemid = '" . (int)$item_id  . "'");
-                                     
-                                        $sql="SELECT ipiid FROM u".$store.".trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
-                                        $query = DB::connection('mysql')->select($sql);
-                                        $ipid = $query[0]->ipiid;
-                                       
-                                        
-                                        $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
-                                        DB::connection('mysql_dynamic')->insert("INSERT INTO  u".$store.".trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)($store) . "'");
-                                        $ipiid = $vrefnumber;
-                                       
-                                        //$quickvalue = $value['iqtyonhand'] - $parent_item[0]->iqtyonhand;
-                                        $quickvalue=$value['iqtyonhand'];
-                                        DB::connection('mysql_dynamic')->insert("INSERT INTO  u".$store.".trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
-                                             vitemid = '" . $parent_item[0]->iitemid . "',
-                                             vitemname = '" . $parent_item[0]->vitemname. "',
-                                             vunitcode = '" . $parent_item[0]->vunitcode. "',
-                                             ndebitqty= '" . $quickvalue . "', 
-                                             beforeQOH = '". $parent_item[0]->iqtyonhand ."',
-                                             afterQOH = '". $newqoh ."',
-                                             vbarcode = '" . $parent_item[0]->vbarcode . "', 
-                                             SID = '" . (int)($store) . "'
-                                             ");
-                                          
-                                  }
-                                  else{
-                                    // $query = DB::connection('mysql_dynamic')->select("SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1");
-                                    
-                                    // $ipid = $query['ipiid'];
-                                    $sql="SELECT ipiid FROM u".$store.".trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
-                                    $query = DB::connection('mysql')->select($sql);
-                                    $ipid = $query[0]->ipiid;
-                                   
-                                    
-                                    $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
-                                    DB::connection('mysql_dynamic')->insert("INSERT INTO u".$store.".trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)($store) . "'");
-                                    
-                                    $ipiid = $vrefnumber;
-                                   
-                                    $quickvalue = $value['iqtyonhand'] - $current_item[0]->iqtyonhand;
-                                    DB::connection('mysql_dynamic')->insert("INSERT INTO u".$store.".trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
-                                         vitemid = '" . $current_item[0]->iitemid . "',
-                                         vitemname = '" . $current_item[0]->vitemname. "',
-                                         vunitcode = '" . $current_item[0]->vunitcode. "',
-                                         ndebitqty= '" . $quickvalue . "', 
-                                         beforeQOH = '". $current_item[0]->iqtyonhand ."',
-                                         afterQOH = '". $value['iqtyonhand'] ."',
-                                         vbarcode = '" . $current_item[0]->vbarcode . "', 
-                                         SID = '" . (int)($store) . "'
-                                         ");
-                                    DB::connection('mysql_dynamic')->update("UPDATE u".$store.".mst_item SET iqtyonhand = '" . ($value['iqtyonhand']) . "' WHERE iitemid = '" . (int)$item_id . "'");
                                 
-                                  }      
-                                }
+                                $current_item = DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_item WHERE iitemid='" . (int)$item_id . "'");
+                                
+                                // if ($current_item[0]->iqtyonhand != $value['iqtyonhand'] && $value['iqtyonhand'] != '') {
+                                    
+                                //   if($current_item[0]->isparentchild==1)
+                                //   {
+                                //         $id=$current_item[0]->parentid;
+                                //         $parent_item = DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_item WHERE iitemid='" . (int)$id. "'");
+                                //         $newqoh=$parent_item[0]->iqtyonhand+$value['iqtyonhand'];
+                                //         DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET iqtyonhand = '" .$newqoh. "' WHERE iitemid = '" . (int)$id . "'");
+                                //         DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET iqtyonhand = 0 WHERE iitemid = '" . (int)$item_id  . "'");
+                                        
+                                //         $sql="SELECT ipiid FROM u".$store.".trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
+                                //         $query = DB::connection('mysql')->select($sql);
+                                //         $ipid = $query[0]->ipiid;
+                                        
+                                        
+                                //         $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
+                                //         DB::connection('mysql_dynamic')->insert("INSERT INTO  u".$store.".trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)($store) . "'");
+                                //         $ipiid = $vrefnumber;
+                                       
+                                //         //$quickvalue = $value['iqtyonhand'] - $parent_item[0]->iqtyonhand;
+                                //         $quickvalue=$value['iqtyonhand'];
+                                //         DB::connection('mysql_dynamic')->insert("INSERT INTO  u".$store.".trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
+                                //              vitemid = '" . $parent_item[0]->iitemid . "',
+                                //              vitemname = '" . $parent_item[0]->vitemname. "',
+                                //              vunitcode = '" . $parent_item[0]->vunitcode. "',
+                                //              ndebitqty= '" . $quickvalue . "', 
+                                //              beforeQOH = '". $parent_item[0]->iqtyonhand ."',
+                                //              afterQOH = '". $newqoh ."',
+                                //              vbarcode = '" . $parent_item[0]->vbarcode . "', 
+                                //              SID = '" . (int)($store) . "'
+                                //              ");
+                                            
+                                //   } 
+                                //   else{
+                                //     // $query = DB::connection('mysql_dynamic')->select("SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1");
+                                    
+                                //     // $ipid = $query['ipiid'];
+                                //     $sql="SELECT ipiid FROM u".$store.".trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
+                                //     $query = DB::connection('mysql')->select($sql);
+                                //     $ipid = $query[0]->ipiid;
+                                    
+                                    
+                                //     $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
+                                //     DB::connection('mysql_dynamic')->insert("INSERT INTO u".$store.".trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)($store) . "'");
+                                    
+                                //     $ipiid = $vrefnumber;
+                                   
+                                //     $quickvalue = $value['iqtyonhand'] - $current_item[0]->iqtyonhand;
+                                //     DB::connection('mysql_dynamic')->insert("INSERT INTO u".$store.".trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
+                                //          vitemid = '" . $current_item[0]->iitemid . "',
+                                //          vitemname = '" . $current_item[0]->vitemname. "',
+                                //          vunitcode = '" . $current_item[0]->vunitcode. "',
+                                //          ndebitqty= '" . $quickvalue . "', 
+                                //          beforeQOH = '". $current_item[0]->iqtyonhand ."',
+                                //          afterQOH = '". $value['iqtyonhand'] ."',
+                                //          vbarcode = '" . $current_item[0]->vbarcode . "', 
+                                //          SID = '" . (int)($store) . "'
+                                //          ");
+                                //     DB::connection('mysql_dynamic')->update("UPDATE u".$store.".mst_item SET iqtyonhand = '" . ($value['iqtyonhand']) . "' WHERE iitemid = '" . (int)$item_id . "'");
+                                
+                                //   }      
+                                // }
+                                
                                 if ($current_item['nunitcost'] != $value['nunitcost'] && $value['nunitcost'] != '') {
-                                    DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET nunitcost = '" . ($value['nunitcost']) . "',
+                                    
+                                    DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET 
+                                    nunitcost = '" . ($value['nunitcost']) . "' ,
                                     new_costprice='" .($current_item[0]->nsellunit*$value['nunitcost']) . "' 
                                     WHERE iitemid = '" . (int)$item_id . "'");
                                 }
@@ -652,73 +657,77 @@ class quickUpdateItem extends Model
                             }
                             
                             
-                        }else{
+                        }else{ 
                             $current_item = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid='" . (int)$value['iitemid'] . "'");
-                            if ($current_item[0]->iqtyonhand != $value['iqtyonhand'] && $value['iqtyonhand'] != '') {
+                            
+                            // if ($current_item[0]->iqtyonhand != $value['iqtyonhand'] && $value['iqtyonhand'] != '') {
                                 
-                              if($current_item[0]->isparentchild==1)
-                              {
-                                  $id=$current_item[0]->parentid;
-                                  $parent_item = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid='" . (int)$id. "'");
-                                  $newqoh=$parent_item[0]->iqtyonhand+$value['iqtyonhand'];
-                                  DB::connection('mysql_dynamic')->update("UPDATE mst_item SET iqtyonhand = '" .$newqoh. "' WHERE iitemid = '" . (int)$id . "'");
-                                  DB::connection('mysql_dynamic')->update("UPDATE mst_item SET iqtyonhand = 0 WHERE iitemid = '" . (int)(int)$value['iitemid']  . "'");
+                            //   if($current_item[0]->isparentchild==1)
+                            //   {
+                            //       $id=$current_item[0]->parentid;
+                            //       $parent_item = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid='" . (int)$id. "'");
+                            //       $newqoh=$parent_item[0]->iqtyonhand+$value['iqtyonhand']; dd($newqoh);
+                            //       DB::connection('mysql_dynamic')->update("UPDATE mst_item SET iqtyonhand = '" .$newqoh. "' WHERE iitemid = '" . (int)$id . "'");
+                            //       DB::connection('mysql_dynamic')->update("UPDATE mst_item SET iqtyonhand = 0 WHERE iitemid = '" . (int)(int)$value['iitemid']  . "'");
                                  
-                                    $sql="SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
-                                    $query = DB::connection('mysql_dynamic')->select($sql);
-                                    $ipid = $query[0]->ipiid;
+                            //         $sql="SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
+                            //         $query = DB::connection('mysql_dynamic')->select($sql);
+                            //         $ipid = $query[0]->ipiid;
                                    
                                     
-                                    $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
-                                    DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)(session()->get('sid')) . "'");
-                                    // $ipiid = DB::getPdo()->lastInsertId();
-                                    $ipiid = $vrefnumber;
+                            //         $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
+                            //         DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)(session()->get('sid')) . "'");
+                            //         // $ipiid = DB::getPdo()->lastInsertId();
+                            //         $ipiid = $vrefnumber;
                                    
-                                    //$quickvalue = $value['iqtyonhand'] - $parent_item[0]->iqtyonhand;
-                                    $quickvalue=$value['iqtyonhand'];
-                                    DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
-                                         vitemid = '" . $parent_item[0]->iitemid . "',
-                                         vitemname = '" . $parent_item[0]->vitemname. "',
-                                         vunitcode = '" . $parent_item[0]->vunitcode. "',
-                                         ndebitqty= '" . $quickvalue . "', 
-                                         beforeQOH = '". $parent_item[0]->iqtyonhand ."',
-                                         afterQOH = '". $newqoh ."',
-                                         vbarcode = '" . $parent_item[0]->vbarcode . "', 
-                                         SID = '" . (int)(session()->get('sid')) . "'
-                                         ");
+                            //         //$quickvalue = $value['iqtyonhand'] - $parent_item[0]->iqtyonhand;
+                            //         $quickvalue=$value['iqtyonhand'];
+                            //         DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
+                            //              vitemid = '" . $parent_item[0]->iitemid . "',
+                            //              vitemname = '" . $parent_item[0]->vitemname. "',
+                            //              vunitcode = '" . $parent_item[0]->vunitcode. "',
+                            //              ndebitqty= '" . $quickvalue . "', 
+                            //              beforeQOH = '". $parent_item[0]->iqtyonhand ."',
+                            //              afterQOH = '". $newqoh ."',
+                            //              vbarcode = '" . $parent_item[0]->vbarcode . "', 
+                            //              SID = '" . (int)(session()->get('sid')) . "'
+                            //              ");
                                       
-                              }
-                              else{
-                                // $query = DB::connection('mysql_dynamic')->select("SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1");
+                            //   }
+                            //   else{
+                            //     // $query = DB::connection('mysql_dynamic')->select("SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1");
                                 
-                                // $ipid = $query['ipiid'];
-                                $sql="SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
-                                $query = DB::connection('mysql_dynamic')->select($sql);
-                                $ipid = $query[0]->ipiid;
-                               
+                            //     // $ipid = $query['ipiid'];
+                            //     $sql="SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
+                            //     $query = DB::connection('mysql_dynamic')->select($sql);
+                            //     $ipid = $query[0]->ipiid;
                                 
-                                $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
-                                DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)(session()->get('sid')) . "'");
-                                // $ipiid = DB::getPdo()->lastInsertId();
-                                $ipiid = $vrefnumber;
-                               
-                                $quickvalue = $value['iqtyonhand'] - $current_item[0]->iqtyonhand;
-                                DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
-                                     vitemid = '" . $current_item[0]->iitemid . "',
-                                     vitemname = '" . $current_item[0]->vitemname. "',
-                                     vunitcode = '" . $current_item[0]->vunitcode. "',
-                                     ndebitqty= '" . $quickvalue . "', 
-                                     beforeQOH = '". $current_item[0]->iqtyonhand ."',
-                                     afterQOH = '". $value['iqtyonhand'] ."',
-                                     vbarcode = '" . $current_item[0]->vbarcode . "', 
-                                     SID = '" . (int)(session()->get('sid')) . "'
-                                     ");
-                                DB::connection('mysql_dynamic')->update("UPDATE mst_item SET iqtyonhand = '" . ($value['iqtyonhand']) . "' WHERE iitemid = '" . (int)$value['iitemid'] . "'");
+                                
+                            //     $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
+                            //     DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)(session()->get('sid')) . "'");
+                            //     // $ipiid = DB::getPdo()->lastInsertId();
+                            //     $ipiid = $vrefnumber;
+                                
+                            //     $quickvalue = $value['iqtyonhand'] - $current_item[0]->iqtyonhand;
+                            //     DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
+                            //          vitemid = '" . $current_item[0]->iitemid . "',
+                            //          vitemname = '" . $current_item[0]->vitemname. "',
+                            //          vunitcode = '" . $current_item[0]->vunitcode. "',
+                            //          ndebitqty= '" . $quickvalue . "', 
+                            //          beforeQOH = '". $current_item[0]->iqtyonhand ."',
+                            //          afterQOH = '". $value['iqtyonhand'] ."',
+                            //          vbarcode = '" . $current_item[0]->vbarcode . "', 
+                            //          SID = '" . (int)(session()->get('sid')) . "'
+                            //          ");
+                                    
+                            //         DB::connection('mysql_dynamic')->update("UPDATE mst_item SET iqtyonhand = '" . ($value['iqtyonhand']) . "' WHERE iitemid = '" . (int)$value['iitemid'] . "'");
+                                
+                            //     }      
+                            // }
                             
-                              }      
-                            }
                             if ($current_item['nunitcost'] != $value['nunitcost'] && $value['nunitcost'] != '') {
-                                DB::connection('mysql_dynamic')->update("UPDATE mst_item SET nunitcost = '" . ($value['nunitcost']) . "',
+                                
+                                DB::connection('mysql_dynamic')->update("UPDATE mst_item SET nunitcost = '" . ($value['nunitcost']) . "' ,
                                 new_costprice='" .($current_item[0]->nsellunit*$value['nunitcost']) . "' 
                                 WHERE iitemid = '" . (int)$value['iitemid'] . "'");
                             }
