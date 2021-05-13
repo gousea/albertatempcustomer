@@ -50,7 +50,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary headermenublue top">
             <div class="container-fluid">
                 <div class="logo">
-                    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
+                    <img src="{{ asset('asset/img/albertalogo.png') }}" width="30" height="30" alt="">
                     <a href="#" class="logo-name">ALBERTA POS</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
