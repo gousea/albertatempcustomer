@@ -3,7 +3,7 @@
 @section('main-content')
 
     <link rel="stylesheet" href="{{ asset('asset/css/promotion.css') }}">
-
+ 
 
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container-fluid">
@@ -201,10 +201,10 @@
                 </div>
             </div>
         </form>
-        <div class="promotion-text">
-            <span id="promotion-texts">Choose items for Promotions</span><a type="button" class="btn btn-primary btn-sm"
-                href="#">HIDE</a>
-        </div>
+        <!--<div class="promotion-text">-->
+        <!--    <span id="promotion-texts">Choose items for Promotions</span><a type="button" class="btn btn-primary btn-sm"-->
+        <!--        href="#">HIDE</a>-->
+        <!--</div>-->
     </div>
 
     <section class="section-content py-1">

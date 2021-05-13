@@ -28,9 +28,25 @@
 
     {{-- <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.24/datatables.min.css" /> --}}
+
+
+    <style>
+        /* .footerlinksdata {
+            height: 200px;
+            column-count: 3;
+        } */
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" >
     <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" >
 
+        /* .footerlinksdata {
+            height: 100px;
+            -moz-columns: 3 200px;
+            -webkit-columns: 3 200px;
+            columns: 3 50px;
+        } */
+
+    </style>
 
 </head>
 
@@ -39,7 +55,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary headermenublue top">
             <div class="container-fluid">
                 <div class="logo">
-                    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
+                    <img src="{{ asset('asset/img/albertalogo.png') }}" width="30" height="30" alt="">
                     <a href="#" class="logo-name">ALBERTA POS</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
