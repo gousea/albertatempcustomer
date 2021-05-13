@@ -87,18 +87,21 @@
                         <a class="nav-link  dropdown-toggle sub text-uppercase" href="#" data-toggle="dropdown">
                             ADMINISTRATION </a>
                         <ul class="dropdown-menu main-dropdown">
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Perform End of Day </a>
-                            </li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Item List Display</a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Store </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Paid Outs </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Aisle </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Shelf </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Shelving </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Tax </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Store Settings </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> POS Settings </a></li>
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> FTP </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('end_of_day') }}"> End of Day </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('unit') }}"> Unit </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('department') }}">Department</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('category') }}">Category</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('subcategory') }}">Sub Category</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('manufacturer') }}"> Manufacturer </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('aisle') }}"> Aisle </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('shelf') }}"> Shelf </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('shelving') }}"> Shelving </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('size') }}"> Size </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('tax') }}"> Tax </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('paidout') }}"> Paid Out </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('store_setting') }}">Store Setting</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('ageverify') }}">Age Verification</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('eodsetting') }}">Manual Sales Entry</a></li>
                         </ul>
                     </li>
                 @endif
