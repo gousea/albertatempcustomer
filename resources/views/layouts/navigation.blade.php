@@ -40,7 +40,7 @@
                             href="{{ url('/item/item_list/Active/DESC') }}" data-toggle="dropdown"> PRODUCTS
                         </a>
                         <ul class="dropdown-menu main-dropdown">
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Items</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('/item/item_list/Active/DESC') }}">Items</a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('/item/parent_child_list') }}">Parent Child</a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Edit Multiple Items</a>
                             </li>

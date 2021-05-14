@@ -55,7 +55,7 @@
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields"
-                                            placeholder="Supplier Code">
+                                            placeholder="SUPPLIER CODE">
                                     </div>
                                 </th>
                                 <th class="col-xs-1 headername text-uppercase">Vendor Name
