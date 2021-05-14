@@ -18,7 +18,7 @@ class CustomerController extends Controller
         $customers = Customer::orderBy('icustomerid', 'DESC')->paginate(20);
         return view('customers.index', compact('customers'));
     }
-    
+
     public function search(Request $request)
     {
         $input = $request->all();
@@ -37,10 +37,11 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
+        // echo "test";die;
         $input = $request->all();
-        
+
         $duplicateCust = Customer::where('vphone', '=', $input['vphone'])->get();
-        
+
         if(count($duplicateCust) > 0){
             return redirect('customers/create')
                         ->withErrors("Customer is already exists.")
@@ -59,9 +60,9 @@ class CustomerController extends Controller
                 $birth_date = '';
             }
             $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_id FROM mst_version ORDER BY ver_id DESC LIMIT 1");
-            $version=$version_latest[0];   
+            $version=$version_latest[0];
             if($version->ver_id >=310){
-        
+
             Customer::create([
                 'vcustomername' => $input['vcustomername'],
                 'vaccountnumber' => $input['vaccountnumber'],
@@ -108,7 +109,7 @@ class CustomerController extends Controller
                 'note' => $input['note'],
                 'SID' => session()->get('sid')
         ]);
-    }    
+    }
 
             return redirect('customers')->with('message', 'customers created Successfully');
         }
@@ -118,10 +119,10 @@ class CustomerController extends Controller
     {
         $customers = Customer::where('icustomerid', '=', $icustomerid)->get();
         $customer = $customers[0];
-        
+
         $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_id FROM mst_version ORDER BY ver_id DESC LIMIT 1");
         $version=$version_latest[0];
-        
+
         return view('customers.edit', compact('customer','version'));
     }
 
@@ -141,7 +142,7 @@ class CustomerController extends Controller
             $birth_date = '';
         }
         $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_id FROM mst_version ORDER BY ver_id DESC LIMIT 1");
-        $version=$version_latest[0];   
+        $version=$version_latest[0];
         if($version->ver_id >=310){
         Customer::where('icustomerid', '=', $icustomerid)->update([
             'vcustomername' => $input['vcustomername'],
