@@ -25,6 +25,7 @@
 </nav>
 
 @section('main-content')
+
     <div id="content">
         <div class="page-header">
             <div class="container-fluid">
@@ -53,23 +54,9 @@
                 </div> --}}
                 <div class="panel-body">
 
-
-
                     <form action="{{ route('customers.store') }}" method="post" enctype="multipart/form-data"
                         id="customerForm" class="form-horizontal">
                         @csrf
-                        @method('post')
-                        {{-- <div class="row" style="padding-bottom: 9px;float: right;">
-                            <div class="col-md-12">
-                                <div class="">
-                                    <input type="submit" id="saveCustomer" class="btn btn-primary" value="Save"><i
-                                        class="fa fa-save"></i>&nbsp;&nbsp;
-                                    <a href="{{ route('customers') }}" data-toggle="tooltip"
-                                        class="btn btn-default cancel_btn_rotate"><i
-                                            class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
-                                </div>
-                            </div>
-                        </div> --}}
 
                         <div class="nav-submenu">
                             <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
@@ -79,11 +66,7 @@
                             </a>
                         </div>
 
-
-
-
                         <input type="hidden" name="estatus" value="Active">
-                        {{-- <input type="submit" style="display:none" /> --}}
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group required">
@@ -116,8 +99,7 @@
                                         <input type="text" name="vfname" maxlength="25" value="{{ old('vfname') }}"
                                             placeholder="" id="input-first-name" class="form-control"
                                             onkeypress="return (event.charCode > 64 &&
-                                                                                                                                                                                                                                                            event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"
-                                            required />
+                                                                        event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" required />
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +110,7 @@
                                         <input type="text" name="vlname" maxlength="25" value="{{ old('vlname') }}"
                                             placeholder="" id="input-last-name" class="form-control"
                                             onkeypress="return (event.charCode > 64 &&
-                                                                                                                                                                                                                                                            event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" />
+                                                                        event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" />
                                     </div>
                                 </div>
                             </div>
@@ -258,6 +240,53 @@
                             </div>
                         </div>
 
+                        <?php if ($version->ver_no == '3.1.0') { ?>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="input-id_type">Id Type</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="id_type" value="{{ old('id_type') }}" placeholder=""
+                                            id="id_type" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="input-id_number">Id Number</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="id_number" maxlength="25" value="{{ old('id_number') }}"
+                                            placeholder="" id="id_number" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="input-state">Id Expire Date</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="expire_dt" value="{{ old('expire_dt') }}"
+                                            autocomplete="off" placeholder="" id="expire_dt"
+                                            class="datetimepicker form-control" />
+                                        <span id="ex_dt" style="color: red"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="input-zip">Birth Date</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="birth_dt" value="{{ old('birth_dt') }}"
+                                            autocomplete="off" placeholder="" id="birth_dt"
+                                            class="datetimepicker form-control" />
+                                        <span id="br_dt" style="color: red"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -283,8 +312,19 @@
                                 </div>
                             </div>
                         </div>
-
+                        <?php if ($version->ver_no == '3.1.0') { ?>
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="input-zip">Account Pin</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="account_pin" value="" placeholder="" id="account_pin"
+                                            class="form-control" onkeypress="return isNumberKey(event);" />
+                                        <span id="ac_pin" style="color: red"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="input-taxable">&nbsp;</label>
@@ -301,21 +341,24 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
-
-
-
 @section('scripts')
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#myButton").click(function() {
-                $("#myForm").submit();
-            });
-        });
-
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
+        rel="stylesheet" />
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+        rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js" type="text/javascript"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js">
     </script>
+
+
     <script type="text/javascript">
         $(document).on('change', 'input[name="vcustomername"]', function(event) {
             event.preventDefault();
@@ -343,12 +386,26 @@
             });
             var us_phone_regex = '1?\W*([2-9][0-8][0-9])\W*([2-9][0-9]{2})\W*([0-9]{4})(\se?x?t?(\d*))?';
             $('#saveCustomer').click(function() {
-                alert('testing');
                 var vcustomername = $('#vcustomername').val();
                 var email = $("#email_field").val();
                 var vphone = $('#vphone').val();
+                var account_pin = $('#account_pin').val();
+                var birth_date = $('#birth_dt').val();
+                var expire_dt = $('#expire_dt').val();
                 if (vcustomername == '') {
                     $("#vcustomernameerror").text("Please enter Customer");
+                    return false;
+                }
+                if (account_pin == '') {
+                    $("#ac_pin").text("Please Enter Account Pin");
+                    return false;
+                }
+                if (expire_dt == '') {
+                    $("#ex_dt").text("Please Enter Expire Date");
+                    return false;
+                }
+                if (birth_date == '') {
+                    $("#br_dt").text("Please Enter Birth Date");
                     return false;
                 }
 
@@ -383,6 +440,25 @@
             } else {
                 return true;
             }
+        }
+
+        $(function() {
+            $("#expire_dt").datetimepicker({
+                format: 'MM-DD-YYYY'
+            });
+        });
+
+        $(function() {
+            $("#birth_dt").datetimepicker({
+                format: 'MM-DD-YYYY'
+            });
+        });
+
+    </script>
+    <script>
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            return !(charCode > 31 && (charCode < 48 || charCode > 57));
         }
 
     </script>
