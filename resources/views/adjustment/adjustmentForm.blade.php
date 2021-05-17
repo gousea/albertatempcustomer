@@ -131,7 +131,7 @@
                           </table>
                           <div class="div-table-content">
                             <table class="table table-bordered table-hover" id="itemsort1" style="table-layout: fixed;">
-                              <tbody>
+                              <tbody style="display: block; height:400px; overflow-y : scroll;">
                                 
                               </tbody>
                             </table>
@@ -163,7 +163,7 @@
                           </table>
                           <div class="div-table-content" style="">
                             <table class="table table-bordered table-hover" id="itemsort2" style="table-layout: fixed;">
-                              <tbody>
+                              <tbody style="display: block; height:400px; overflow-y : scroll;">
                                 <?php if(isset($edit_right_items) && count($edit_right_items) > 0){?>
                                   <?php foreach($edit_right_items as $k => $edit_right_item){?>
                                     <tr>
