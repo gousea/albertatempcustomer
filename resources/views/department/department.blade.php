@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('title')
-    Customer
+    Department
 @stop
 
 @section('main-content')
@@ -11,7 +11,7 @@
             <div class="menu">
                 <span class="font-weight-bold text-uppercase"> Department</span>
             </div>
-            <div class="nav-submenu"> 
+            <div class="nav-submenu">
                 <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
                 <button type="button" onclick="addDepartment();" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
                 <button type="button" id="delete_department_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
@@ -26,14 +26,14 @@
                 @if (session()->has('message'))
                   <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  </div>      
+                  </div>
                 @endif
                 @if (session()->has('error_message'))
                   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error_message')}}
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  </div>      
+                  </div>
                 @endif
-                
+
                 <div id='errorDiv'>
                     @if ($errors->any())
                       <div class="alert alert-danger">
@@ -41,7 +41,7 @@
                           <i class="fa fa-exclamation-circle"></i>{{$error}}
                         @endforeach
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                      </div> 
+                      </div>
                     @endif
                 </div>
                 <div class="panel-body">
@@ -64,7 +64,7 @@
                                 <!--    <span class="fa fa-search form-control-feedback"></span>-->
                                     <!--<input type="text" class="form-control table-heading-fields" placeholder="SEARCH">-->
                                 <!--</div>-->
-                                
+
                             </th>
                             <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Department Name
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
@@ -84,7 +84,7 @@
                         </tr>
                       </thead>
                       <tbody id="searchData">
-                        
+
                         <?php $department_row = 1;$i=0; ?>
                         <?php foreach ($departments as $department) { ?>
                         <tr id="department-row<?php echo $department_row; ?>">
@@ -95,20 +95,20 @@
                             <?php } else { ?>
                             <input type="checkbox" name="selected[]" id="department[<?php echo $department_row; ?>][select]"  value="<?php echo $department['idepartmentid']; ?>" />
                             <?php } ?></td>
-                          
+
                           <td class="text-left">
                             <span style="display:none;"><?php echo $department['vdepcode']; ?></span>
-                            <input type="text" maxlength="50" class="editable department_c" name="department[<?php echo $i; ?>][vdepcode]" id="department[<?php echo $i; ?>][vdepcode]" value="<?php echo $department['vdepcode']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
+                            <input type="text" maxlength="50" style="border:none;" class="editable department_c" name="department[<?php echo $i; ?>][vdepcode]" id="department[<?php echo $i; ?>][vdepcode]" value="<?php echo $department['vdepcode']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
                   			<input type="hidden" name="department[<?php echo $i; ?>][idepartmentid]" value="<?php echo $department['idepartmentid']; ?>"/>
                 		  </td>
-                          
+
                           <td class="text-left">
                             <span style="display:none;"><?php echo $department['vdepartmentname']; ?></span>
-                            <input type="text" maxlength="50" class="editable departmentname_c" name="department[<?php echo $i; ?>][vdepartmentname]" id="department[<?php echo $i; ?>][vdepartmentname]" value="<?php echo $department['vdepartmentname']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
+                            <input type="text" maxlength="50" style="border:none;" class="editable departmentname_c" name="department[<?php echo $i; ?>][vdepartmentname]" id="department[<?php echo $i; ?>][vdepartmentname]" value="<?php echo $department['vdepartmentname']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
                   			<input type="hidden" name="department[<?php echo $i; ?>][idepartmentid]" value="<?php echo $department['idepartmentid']; ?>"/>
                 		</td>
                           <td class="text-left">
-                            <textarea class="editable" maxlength="100" name="department[<?php echo $i; ?>][vdescription]" id="department[<?php echo $i; ?>][vdescription]" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");'><?php echo $department['vdescription']; ?></textarea>
+                            <textarea class="editable" style="border:none;" maxlength="100" name="department[<?php echo $i; ?>][vdescription]" id="department[<?php echo $i; ?>][vdescription]" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");'><?php echo $department['vdescription']; ?></textarea>
                           </td>
                           <td class="text-left">
                             <?php
@@ -120,7 +120,7 @@
                                 $start_hour = '';
                                 $start_minute = '';
                               }
-            
+
                               if(isset($department['endtime']) && !empty($department['endtime'])){
                                   $endtime_string = explode(':', $department['endtime']);
                                   $end_hour = $endtime_string[0];
@@ -129,9 +129,9 @@
                                   $end_hour = '';
                                   $end_minute = '';
                                 }
-            
+
                             ?>
-            
+
                             <select class="form-control" name="department[<?php echo $i; ?>][start_hour]" style="width:45%;display:inline-block;">
                               <option value="">hour</option>
                               <?php if(isset($hours) && count($hours) > 0) {?>
@@ -165,7 +165,7 @@
                                   <?php }else{ ?>
                                     <option value="<?php echo $k;?>"><?php echo $hour;?></option>
                                   <?php } ?>
-                                
+
                                 <?php } ?>
                               <?php } ?>
                             </select>
@@ -182,7 +182,7 @@
                           </td>
                           <td style="display:none;"><span class='view_categories' id='<?php echo $department['idepartmentid']; ?>'>View</span></td>
                           <td class="text-left" style="display:none;">
-                              <input type="text" class="editable department_s" name="department[<?php echo $i; ?>][isequence]" id="department[<?php echo $i; ?>][isequence]" value="<?php echo $department['isequence']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
+                              <input type="text" class="editable department_s"  style="border:none;" name="department[<?php echo $i; ?>][isequence]" id="department[<?php echo $i; ?>][isequence]" value="<?php echo $department['isequence']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
                             </td>
                         </tr>
                         <?php $department_row++; $i++;?>
@@ -196,7 +196,7 @@
                     </table>
                     {{ $departments->links() }}
                   </div>
-                </form>        
+                </form>
                 </div>
             </div>
         </div>
@@ -229,7 +229,7 @@
                     <div class="col-md-2">
                       <label>Name</label>
                     </div>
-                    <div class="col-md-10">  
+                    <div class="col-md-10">
                       <input type="text" maxlength="50" name="department[0][vdepartmentname]" id="add_vdepartmentname" class="form-control" required>
                     </div>
                   </div>
@@ -242,7 +242,7 @@
                     <div class="col-md-2">
                       <label>Description</label>
                     </div>
-                    <div class="col-md-10">  
+                    <div class="col-md-10">
                       <textarea maxlength="100" name="department[0][vdescription]" id="add_vdescription" class="form-control"></textarea>
                     </div>
                   </div>
@@ -255,7 +255,7 @@
                     <div class="col-md-2">
                       <label>Start Time</label>
                     </div>
-                    <div class="col-md-10">  
+                    <div class="col-md-10">
                       <select class="form-control" name="department[0][start_hour]" style="width:45%;display:inline-block;">
                         <option value="">hour</option>
                         <?php if(isset($hours) && count($hours) > 0) {?>
@@ -278,7 +278,7 @@
                     <div class="col-md-2">
                       <label>End Time</label>
                     </div>
-                    <div class="col-md-10">  
+                    <div class="col-md-10">
                       <select class="form-control" name="department[0][end_hour]" style="width:45%;display:inline-block;">
                         <option value="">hour</option>
                         <?php if(isset($hours) && count($hours) > 0) {?>
@@ -310,15 +310,12 @@
   </div>
 </div>
 
-
-
-
 <!-- Modal Add-->
 
 <!-- Modal Add -->
 <div class="modal fade" id="categoryListModal" role="dialog">
   <div class="modal-dialog">
-  
+
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -326,12 +323,12 @@
         <h4 class="modal-title">List of Categories under </h4>
       </div>
       <div class="modal-body">
-      
+
           Categories
-      
+
       </div>
     </div>
-    
+
   </div>
 </div>
 <!-- Modal Add-->
@@ -383,7 +380,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Select the stores in which you want to add the Department:</h4>
           </div>
-        
+
           <div class="modal-body">
              <table class="table table-bordered">
                 <thead id="table_green_header_tag">
@@ -415,10 +412,10 @@
             <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
           </div>
         </div>
-    
+
       </div>
     </div>
-    
+
     <div id="EditModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <!-- Modal content-->
@@ -428,7 +425,7 @@
             <h4 class="modal-title">Select the stores in which you want to Edit the Department:</h4>
             <span style="color: #03A9F4">(Please Note: If a Department not exists in any of the stores those department will be created)</span>
           </div>
-        
+
           <div class="modal-body">
              <table class="table table-bordered">
                 <thead id="table_green_header_tag">
@@ -460,10 +457,10 @@
             <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
           </div>
         </div>
-    
+
       </div>
     </div>
-    
+
     <div id="DeleteModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <!-- Modal content-->
@@ -472,7 +469,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Select the stores in which you want to delete the Department:</h4>
           </div>
-        
+
           <div class="modal-body">
              <table class="table table-bordered">
                 <thead id="table_green_header_tag">
@@ -495,7 +492,7 @@
         </div>
       </div>
     </div>
-    
+
 <?php } ?>
 
 @endsection
@@ -519,7 +516,6 @@ $(document).ready(function(){
            return false;
         }
     });
-    
 })
 
 $("#save_department").click(function(){
@@ -529,7 +525,7 @@ $("#save_department").click(function(){
     }else {
         <?php if(session()->get('hq_sid') == 1){ ?>
             $("#addModal").modal('hide');
-            $("#myModal").modal('show'); 
+            $("#myModal").modal('show');
         <?php } else { ?>
             $("#add_new_form").submit();
         <?php } ?>
@@ -545,9 +541,9 @@ $('#selectAllCheckbox').click(function(){
         $( ".stores" ).prop("checked", false );
     }
 });
-        
+
 $('#save_btn_department').click(function(){
-    $.each($("input[name='stores']:checked"), function(){            
+    $.each($("input[name='stores']:checked"), function(){
         stores_hq.push($(this).val());
     });
     $("#hidden_store_hq_val").val(stores_hq);
@@ -562,24 +558,24 @@ $("#closeBtn").click(function(){
 
 $('#button-filter').on('click', function() {
 	url = "{{route('department.search')}}";
-	
+
 	var filter_menuid = $('select[name=\'MenuId\']').val();
-	
+
 	if (filter_menuid) {
 		url += '&filter_menuid=' + encodeURIComponent(filter_menuid);
 	}
-	
+
 	location = url;
 });
 function filterpage(){
 	url = "{{route('department.search')}}";
-	
+
 	var filter_menuid = $('select[name=\'MenuId\']').val();
-	
+
 	if (filter_menuid) {
 		url += '&filter_menuid=' + encodeURIComponent(filter_menuid);
 	}
-	
+
 	location = url;
 }
 
@@ -591,49 +587,46 @@ function addDepartment() {
 
 
 $(document).on('submit', 'form#add_new_form', function(event) {
-    
     if($('form#add_new_form #add_vdepartmentname').val() == ''){
       // alert('Please enter name!');
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
         headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-        title: "Attention", 
-        message: "Please enter Department Name!", 
+        title: "Attention",
+        message: "Please enter Department Name!",
         callback: function(){}
       });
       return false;
     }
-
     $("div#divLoading").addClass('show');
-    
 });
 
 
 $(document).on('click', '#save_button', function(event) {
-     
+
     event.preventDefault();
 
     var edit_url = '{{route('department.edit_list')}}';
     edit_url = edit_url.replace(/&amp;/g, '&');
-    
+
     if($("input[name='selected[]']:checked").length == 0){
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
-        title: "Attention", 
-        message: 'Please Select Department to Edit!', 
+        title: "Attention",
+        message: 'Please Select Department to Edit!',
         callback: function(){}
       });
       return false;
     }
-    
+
     var all_department = true;
     $('.department_c').each(function(){
-        
+
       if($(this).val() == ''){
-        bootbox.alert({ 
+        bootbox.alert({
           size: 'small',
-          title: "Attention", 
-          message: "Please Enter Department Code", 
+          title: "Attention",
+          message: "Please Enter Department Code",
           callback: function(){}
         });
         all_department = false;
@@ -649,10 +642,10 @@ $(document).on('click', '#save_button', function(event) {
       $('.department_s').each(function(){
         if($(this).val() != ''){
           if(!numericReg.test($(this).val())){
-            bootbox.alert({ 
+            bootbox.alert({
               size: 'small',
-              title: "Attention", 
-              message: "Please Enter Only Number", 
+              title: "Attention",
+              message: "Please Enter Only Number",
               callback: function(){}
             });
             all_done = false;
@@ -676,7 +669,7 @@ $(document).on('click', '#save_button', function(event) {
         <?php } ?>
     }
   });
-  
+
 var edit_stores = [];
 edit_stores.push("{{ session()->get('sid') }}");
 $('#editSelectAllCheckbox').click(function(){
@@ -686,36 +679,36 @@ $('#editSelectAllCheckbox').click(function(){
         $( ".editstores" ).prop("checked", false );
     }
 });
-        
+
 $('#Edit_btn_department').click(function(){
-        $.each($("input[name='editstores']:checked"), function(){            
+        $.each($("input[name='editstores']:checked"), function(){
             edit_stores.push($(this).val());
         });
         $("#edit_hidden_store_hq_val").val(edit_stores);
-        
+
         var edit_url = '{{route('department.edit_list')}}';
-    
+
         edit_url = edit_url.replace(/&amp;/g, '&');
-        
+
         console.log(edit_stores);
         $('#form-department').attr('action', edit_url);
         $('#form-department').submit();
         $("div#divLoading").addClass('show');
     });
-    
-    
+
+
 // ============================= View Categories ===================================
-  
+
   $(document).on('click', '.view_categories', function(event) {
     event.preventDefault();
     var id = this.id;
    // console.log(id);
     //console.log('delete command');
-    
+
     get_categories_url = <?php ?>
-    
+
     $('#categoryListModal').modal('show');
-    
+
         $.ajax({
             url : delete_department_url,
             data : JSON.stringify(data),
@@ -723,64 +716,64 @@ $('#Edit_btn_department').click(function(){
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
-    
+
                 if(data.success){
                   $('#success_msg').html('<strong>'+ data.success +'</strong>');
                   $("div#divLoading").removeClass('show');
                   $('#successModal').modal('show');
-        
+
                   setTimeout(function(){
                    $('#successModal').modal('hide');
                    window.location.reload();
                   }, 3000);
                 }else{
-        
+
                   $('#error_msg').html('<strong>'+ data.error +'</strong>');
                   $("div#divLoading").removeClass('show');
                   $('#errorModal').modal('show');
-        
+
                 }
-    
-    
+
+
             },
             error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-                
+
                 var error_show = '';
-        
+
                 if(response_error.error){
                   error_show = response_error.error;
                 }else if(response_error.validation_error){
                   error_show = response_error.validation_error[0];
                 }
-        
+
                 $('#error_alias').html('<strong>'+ error_show +'</strong>');
                 $('#errorModal').modal('show');
                 return false;
             }
         });
 
-    
+
   });
-  
+
   // ====================== Search code ===============================================
-  
+
   $(document).on('submit', '#form_department_search', function (e) {
       e.preventDefault();
   });
-  
+
   $(document).on('keyup', '#autocomplete-product', function (e) {
       e.preventDefault();
 
       var q = $(this).val();
-      
+
       if(q.length == 0){
           window.location.reload();
       }
       console.log(q);
       if(q.length != 0){
           if(q.length < 2){
-               
+
           return false;
         }else{
           $('#divLoading').addClass('show');
@@ -797,40 +790,40 @@ $('#Edit_btn_department').click(function(){
           data: {
               q: q
           },
-          
+
          success: function (departmenT) {
               // Do some nice animation to show results
               //let ageVeri = data['ageveri'];
 
               let html = '';
               $.each(departmenT.department, function(k, v){
-                
+
                 console.log(v);
-                
+
               html +='<tr>';
               html +='<td class="text-center">';
               html +='<input type="checkbox" name="selected[]" id="department['+v.idepartmentid+'][select]" class="checkboxId" value="'+v.idepartmentid+'" >';
               html +='</td>';
               html +='<td class="text-left">';
-              html +='<span style="display:none;">'+v.vdepcode+'</span>';     
-              html +='<input type="text" maxlength="50" class="editable department_c" name="department['+v.idepartmentid+'][vdepcode]" id="department['+v.idepartmentid+'][vdepcode]" value="'+v.vdepcode+'">';
+              html +='<span style="display:none;">'+v.vdepcode+'</span>';
+              html +='<input type="text" maxlength="50"  style="border:none;" class="editable department_c" name="department['+v.idepartmentid+'][vdepcode]" id="department['+v.idepartmentid+'][vdepcode]" value="'+v.vdepcode+'">';
           	  html +='<input type="hidden" name="department['+v.idepartmentid+'][idepartmentid]" value="'+v.vdepcode+'">';
         	  html +='</td>';
 
               html +='<td class="text-left">';
               html +='<span style="display:none;">'+v.vdepartmentname+'</span>';
-              html += '<input type="text" maxlength="50" class="editable departmentname_c" name="department['+v.idepartmentid+'][vdepartmentname]" id="department['+v.idepartmentid+'][vdepartmentname]" value="'+v.vdepartmentname+'">';
+              html += '<input type="text" maxlength="50"  style="border:none;" class="editable departmentname_c" name="department['+v.idepartmentid+'][vdepartmentname]" id="department['+v.idepartmentid+'][vdepartmentname]" value="'+v.vdepartmentname+'">';
           	  html += '<input type="hidden" name="department['+v.idepartmentid+'][isequence]" value="'+v.isequence+'">';
-        	  html +='</td>';  
-        	  
+        	  html +='</td>';
+
               html +='<td class="text-left">';
-              html +='<textarea class="editable" maxlength="100" name="department['+v.idepartmentid+'][vdescription]" id="department['+v.idepartmentid+'][vdescription]" value="'+v.vdescription+'"></textarea>';
+              html +='<textarea class="editable"  style="border:none;" maxlength="100" name="department['+v.idepartmentid+'][vdescription]" id="department['+v.idepartmentid+'][vdescription]" value="'+v.vdescription+'"></textarea>';
               html +='</td>';
-              
+
               html +='<td class="text-left">';
-                   
+
             //   html +='if(isset($department[\'starttime\']) && !empty($department[\'starttime\'])){';
-              
+
             //   if(typeof(v.starttime) != "undefined" && v.starttime !== null && v.starttime !== '') {
             //       var starttime_string = split(':', $department['starttime']);
             //   // html +='$starttime_string = explode(':', $department['starttime'])';
@@ -840,8 +833,8 @@ $('#Edit_btn_department').click(function(){
             //     var $start_hour = '';
             //     var $start_minute = '';
             //   }
-           
-              
+
+
             //   if(typeof(v.endtime) != "undefined" && v.endtime !== null && v.endtime !== '') {
             //       var endtime_string = split(':', $department['endtime']);
             //       html +='$end_hour = $endtime_string[0]';
@@ -874,8 +867,8 @@ $('#Edit_btn_department').click(function(){
               html +='<?php } ?>';
               html +='</select>';
               html +='</td>';
-              
-              
+
+
               html +='<td class="text-left">';
               html +='<select class="form-control" name="department['+v.idepartmentid+'][end_hour]" style="width:45%;display:inline-block;">';
               html +='<option value="">hour</option>';
@@ -900,9 +893,9 @@ $('#Edit_btn_department').click(function(){
               html +='<?php } ?>';
               html +='</select>';
               html +='</td>';
-                  
+
               html +='</tr>';
-              
+
               });
 
               $('#searchData').html(html);
@@ -911,26 +904,26 @@ $('#Edit_btn_department').click(function(){
           },
           done: function(){
             $('#divLoading').removeClass('show');
-           
-            
-           
-            
+
+
+
+
           }
-          
+
       });
-      
+
   });
-  
+
 
 //  ================ Delete Code =======================
 
 $(document).on('click', '#delete_department_btn', function(event) {
     event.preventDefault();
     if($("input[name='selected[]']:checked").length == 0){
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
-        title: "Attention", 
-        message: 'Please Select Department to Delete!', 
+        title: "Attention",
+        message: 'Please Select Department to Delete!',
         callback: function(){}
       });
       return false;
@@ -966,7 +959,7 @@ $(document).on('click', '#delete_department_btn', function(event) {
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Department does not exist)</span></td>'+
                                             '</tr>';
                                         $('#deleteSelectAllCheckbox').attr('disabled', true);
-                                  
+
                             } else {
                                 var data = '<tr>'+
                                                 '<td>'+
@@ -987,9 +980,9 @@ $(document).on('click', '#delete_department_btn', function(event) {
         var delete_department_url = "{{route('department.delete')}}";
         delete_department_url = delete_department_url.replace(/&amp;/g, '&');
         var data = {};
-        
+
         $("div#divLoading").addClass('show');
-    
+
         $.ajax({
             url: "<?php echo url('/department/delete'); ?>",
             method: 'post',
@@ -1000,9 +993,9 @@ $(document).on('click', '#delete_department_btn', function(event) {
             success: function(data) {
                 if(data['success']){
                   setTimeout(function(){
-                    bootbox.alert({ 
+                    bootbox.alert({
                         size: 'small',
-                        title: "Attention", 
+                        title: "Attention",
                         message: 'Deleted Successfully',
                         callback: function(){}
                     });
@@ -1011,15 +1004,15 @@ $(document).on('click', '#delete_department_btn', function(event) {
                   }, 3000);
                 }else{
                   var errorMsg = '';
-                  
+
                   $.each(data.error_msg, function (k, v){
                       errorMsg += v+'<br/>';
                   });
-        
+
                   $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
                   $("div#divLoading").removeClass('show');
                   $('#errorModal').modal('show');
-                  
+
                   setTimeout(function(){
                       $('#errorModal').modal('hide');
                       window.location.reload();
@@ -1028,17 +1021,17 @@ $(document).on('click', '#delete_department_btn', function(event) {
             },
             error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-                
+
                 var error_show = '';
-        
+
                 if(response_error.error){
                   error_show = response_error.error;
-                  
-            
+
+
                 }else if(response_error.validation_error){
                   error_show = response_error.validation_error[0];
                 }
-        
+
                 $('#error_alias').html('<strong>'+ error_show +'</strong>');
                 $('#errorModal').modal('show');
                 return false;
@@ -1057,10 +1050,10 @@ $('#deleteSelectAllCheckbox').click(function(){
         $( ".deletestores" ).prop("checked", false );
     }
 });
-        
+
 $('#delete_btn_department').click(function(){
     var avArr = [];
-    $.each($("input[name='deletestores']:checked"), function(){            
+    $.each($("input[name='deletestores']:checked"), function(){
         deletestores.push($(this).val());
     });
     $("input[name='selected[]']:checked").each(function () {
@@ -1071,9 +1064,9 @@ $('#delete_btn_department').click(function(){
         vdepartmentname: name,
       });
     });
-        
+
         $("div#divLoading").addClass('show');
-    
+
         $.ajax({
             url: "<?php echo url('/department/delete'); ?>",
             method: 'post',
@@ -1084,9 +1077,9 @@ $('#delete_btn_department').click(function(){
             success: function(data) {
                 if(data['success']){
                   setTimeout(function(){
-                    bootbox.alert({ 
+                    bootbox.alert({
                         size: 'small',
-                        title: "Attention", 
+                        title: "Attention",
                         message: 'Deleted Successfully',
                         callback: function(){}
                     });
@@ -1095,15 +1088,15 @@ $('#delete_btn_department').click(function(){
                   }, 3000);
                 }else{
                   var errorMsg = '';
-                  
+
                   $.each(data.error_msg, function (k, v){
                       errorMsg += v+'<br/>';
                   });
-        
+
                   $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
                   $("div#divLoading").removeClass('show');
                   $('#errorModal').modal('show');
-                  
+
                   setTimeout(function(){
                       $('#errorModal').modal('hide');
                       window.location.reload();
@@ -1112,17 +1105,17 @@ $('#delete_btn_department').click(function(){
             },
             error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-                
+
                 var error_show = '';
-        
+
                 if(response_error.error){
                   error_show = response_error.error;
-                  
-            
+
+
                 }else if(response_error.validation_error){
                   error_show = response_error.validation_error[0];
                 }
-        
+
                 $('#error_alias').html('<strong>'+ error_show +'</strong>');
                 $('#errorModal').modal('show');
                 return false;
