@@ -68,6 +68,7 @@
                    $tot_CreditCardTender= 0;
                    $tot_EBTCash = 0;
                    $tot_EBT= 0;
+                   $tot_surchrges= 0;
                    
                  ?>
                  <?php foreach ($reports as $key => $value){ 
@@ -98,6 +99,7 @@
                    $tot_CreditCardTender= $tot_CreditCardTender+$value['CreditCardTender'];
                    $tot_EBTCash = $tot_EBTCash+$value['EBTCash'];
                    $tot_EBT= $tot_EBT+$value['EBT'];
+                   $tot_surchrges=$tot_surchrges+ $value['Surcharges'] ;
                    
                     
                    
@@ -187,9 +189,15 @@
                  <?php if($tot_EBTCash!=0){ ?>
                  <th style="font-size:6px;">EBT Cash</th>
                  <?php } ?>
+
+                 
                  
                  <?php if($tot_EBT!=0){ ?>
                  <th style="font-size:6px;">EBT</th>
+                 <?php } ?>
+
+                 <?php if($tot_surchrges!=0){ ?>
+                  <th style="font-size:6px;">Surcharges</th>
                  <?php } ?>
                  
                      
@@ -286,8 +294,14 @@
                    <?php if($tot_EBT!=0){ ?>
                    <td style="font-size:6px;"><b><?php echo "$",number_format((float)$tot_EBT, 2, '.', '') ;?></b></td>
                    <?php  } ?>
+                   
+                   <?php if($tot_surchrges!=0){ ?>
+                    <td style="font-size:6px;"><b><?php echo "$",number_format((float)$tot_surchrges, 2, '.', '') ;?></b></td>
+                    <?php  } ?>
+                    
                    </tr>
-                
+                   
+                    
                  <?php foreach ($reports as $key => $value){ ?>
                    <tr>
                     <td style="font-size:6px;"><?php echo $value['eoddate'];?></td>
@@ -376,7 +390,10 @@
                      <?php if($tot_EBT!=0){ ?>
                      <td style="font-size:6px;"><?php echo "$",number_format((float)$value['EBT'], 2, '.', '') ;?></td>
                       <?php  } ?>
-
+                       
+                      <?php if($tot_surchrges!=0){ ?>
+                      <td style="font-size:6px;"><?php echo "$",number_format((float)$value['Surcharges'], 2, '.', '') ;?></td>
+                       <?php  } ?>  
                      
                    </tr>
                  <?php } ?>

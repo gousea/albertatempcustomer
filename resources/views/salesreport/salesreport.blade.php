@@ -444,12 +444,13 @@
                      
                       <?php if($tot_surchrges!=0){ ?>
                       <td class="text-right"><?php echo "$",number_format((float)$value['Surcharges'], 2, '.', '') ;?></td>
-                       <?php  } ?>
+                      <?php  } ?>
 
                      
-                     <?php if($tot_EBT_exampted!=0){ ?>
+                       <?php if($tot_EBT_exampted!=0){ ?>
                       <td class="text-right"><?php echo "$",number_format((float)$value['EbtTaxExempted'], 2, '.', '') ;?></td>
-                       <?php  } ?>
+                       <?php  } ?>  
+                       
                     </tr>
                   <?php } ?>
                   
