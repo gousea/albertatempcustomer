@@ -113,7 +113,7 @@ Parent Child
             </table>
 
             <div class="table-responsive">
-                <table id="Parent_head" class="text-center table"  data-classes="table table-hover table-condensed" style="margin-bottom:0px;">
+                <table id="Parent_head" class="text-center table"  data-classes="table table-hover table-condensed promotionview" style="margin-bottom:0px;">
                     <thead>
                         <tr class="header-color">
                             

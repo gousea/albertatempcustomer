@@ -61,14 +61,14 @@
                 <table id="adjustment_detail" class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
                 data-row-style="rowColors" data-striped="true" data-pagination="true" data-click-to-select="true">
                 <?php if ($adjustment_details) { ?>
-                  <thead >
+                  <thead>
                     <tr class="header-color">
-                      <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                      <th class="text-left headername text-uppercase"><?php echo $text_number; ?></th>
-                      <th class="text-left headername text-uppercase"><?php echo $text_created; ?></th>
-                      <th class="text-left headername text-uppercase"><?php echo $text_title; ?></th>
-                      <th class="text-left headername text-uppercase"><?php echo $text_status; ?></th>
-                      <th class="text-left headername text-uppercase">Action</th>
+                      <th class="text-center" ><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                      <th class="text-left text-uppercase"><?php echo $text_number; ?></th>
+                      <th class="text-left text-uppercase"><?php echo $text_created; ?></th>
+                      <th class="text-left text-uppercase"><?php echo $text_title; ?></th>
+                      <th class="text-left text-uppercase"><?php echo $text_status; ?></th>
+                      <th class="text-left text-uppercase">Action</th>
                     </tr>
                   </thead>
                   <tbody>
