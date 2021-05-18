@@ -58,12 +58,13 @@
             <br>
             
               <div class="table-responsive">
-                <table id="adjustment_detail" class="table table-bordered table-hover" style="">
+                <table id="adjustment_detail" class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                data-row-style="rowColors" data-striped="true" data-pagination="true" data-click-to-select="true">
                 <?php if ($adjustment_details) { ?>
-                  <thead>
+                  <thead >
                     <tr class="header-color">
                       <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                      <th class="text-right headername text-uppercase"><?php echo $text_number; ?></th>
+                      <th class="text-left headername text-uppercase"><?php echo $text_number; ?></th>
                       <th class="text-left headername text-uppercase"><?php echo $text_created; ?></th>
                       <th class="text-left headername text-uppercase"><?php echo $text_title; ?></th>
                       <th class="text-left headername text-uppercase"><?php echo $text_status; ?></th>
@@ -79,7 +80,7 @@
                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                       </td>
                       
-                      <td class="text-right">
+                      <td class="text-left">
                         <span><?php echo $adjustment_detail['vrefnumber']; ?></span>
                       </td>
     
@@ -182,9 +183,9 @@
     $("div#divLoading").addClass('show');
   });
 
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
+  // $(window).load(function() {
+  //   $("div#divLoading").removeClass('show');
+  // });
 </script>
 
 @endsection
