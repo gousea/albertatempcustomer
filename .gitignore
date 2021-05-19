@@ -4,8 +4,6 @@
 /public/TempDebug.log
 /storage/*.key
 /vendor
-.env
-.env.backup
 .phpunit.result.cache
 docker-compose.override.yml
 Homestead.json
@@ -16,7 +14,9 @@ yarn-error.log
 app/Http/Controllers/HomeController.php
 resources/views/dashboard.blade.php
 
+app\Http\Controllers\HomeController.php
+resources\views\dashboard.blade.php
 resources/.DS_Store
 .DS_Store
-
 public/asset/.DS_Store
+public/.DS_Store

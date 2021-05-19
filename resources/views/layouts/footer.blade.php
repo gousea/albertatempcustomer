@@ -195,7 +195,13 @@
 {{-- @yield('page-script') --}}
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> --}}
+{{-- <script src="{{ asset('javascript/jquery-3.3.1.min.js') }}"></script> --}}
+
+{{-- <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script> --}}
+
+{{-- Orginal Script  --}}
+<script src="{{ asset('javascript/bootstrap-datetimepicker.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"
     type="text/javascript"></script>
 <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"></script>
