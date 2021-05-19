@@ -6,6 +6,8 @@ Parent Child
 
 @section('main-content')
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+
 <div id="content">
     
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
@@ -53,7 +55,7 @@ Parent Child
             
             <div class="panel-body">
                 <div>
-                    <table class="table table-bordered table-hover" id="tab_logic" >
+                    <table class="table table-hover" id="tab_logic" >
                         <thead style="border-radius: 6px;">
                             <tr >
                                     
@@ -161,9 +163,9 @@ Parent Child
             <form action="" method="post" enctype="multipart/form-data" id="form-cpack">
                 @csrf
                 <div class="table-responsive">
-                    <table id="Parent" class="text-center table table-hover display" data-toggle="table" data-classes="table table-hover table-condensed"
+                    <table id="Parent" class="text-center table table-hover display" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
                     data-row-style="rowColors" data-striped="true" data-pagination="true" data-click-to-select="true" style="width:100%">
-                        <thead style='display:none;'> <th></th><th></th> <th></th> <th></th> <th></th><th></th>
+                        <thead style='display:none; border:0;'> <th></th><th></th> <th></th> <th></th> <th></th><th></th>
                         </thead>
                             
                         @foreach ($pitemncitem as $k=>$pitem)
