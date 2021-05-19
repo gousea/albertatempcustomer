@@ -1,0 +1,28 @@
+table th:first-child {
+    border-radius: 9px 0px 0px 9px !important;
+    -moz-border-radius: 9px 0px 0px 9px;
+    -webkit-border-radius: 9px 0px 0px 9px;
+}
+
+table th:last-child {
+    border-radius: 0px 9px 9px 0px !important;
+    -moz-border-radius: 0px 9px 9px 0px;
+    -webkit-border-radius: 0px 9px 9px 0px;
+}
+
+table tr td:first-child {
+    border-radius: 9px 0px 0px 9px !important;
+    -moz-border-radius: 9px 0 0 9px;
+    -webkit-border-radius: 9px 0 0 9px;
+}
+
+tr:nth-child() {
+    background-color: #f2f2f2;
+    border-radius: 9px ;
+}
+
+ table tr td:last-child {
+    border-top-left-radius: 0 9px 9px 0 !important;
+    -moz-border-radius: 0 9px 9px 0;
+    -webkit-border-radius: 0 9px 9px 0;
+} 

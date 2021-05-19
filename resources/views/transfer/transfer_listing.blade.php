@@ -2,6 +2,8 @@
 @section('title', 'Item Adjustment')
 @section('main-content')
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+
 <div id="content">
     
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
