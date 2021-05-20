@@ -79,7 +79,7 @@
                     <tr>
                       <td data-order="<?php echo $adjustment_detail['ipiid']; ?>" class="text-center">
                         <span style="display:none;"><?php echo $adjustment_detail['ipiid']; ?></span>
-                        <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                        <input type="checkbox" name="selected[]" value = <?php echo $adjustment_detail['ipiid']; ?> />
                       </td>
                       
                       <td class="text-left">

@@ -354,6 +354,14 @@ footer p {
     font-size: 13px;
 }
 
+.basic-button-medium{
+    font-weight: bold;
+    color: #fff;
+    width: 207px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
 .basic-button-large{
     font-weight: bold;
     color: #fff;

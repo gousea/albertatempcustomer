@@ -1,9 +1,32 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'Receiving Order')
 @section('main-content')
 
 <div id="content">
+
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase"> Receiving Orders</span>
+            </div>
+            <div class="nav-submenu">
+              
+              <a type="button" href="<?php echo $data['add']; ?>" title="Add" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>  
+                          
+              <button class="btn btn-dark headerwhite buttons_menu basic-button-small" data-toggle="modal" data-target="#myModalImportNew"><i class="fa fa-file"></i>&nbsp;&nbsp;Import EDI Invoice</button>
+            
+              <button class="btn btn-dark headerwhite buttons_menu basic-button-medium" data-toggle="modal" data-target="#myModalImportMissingItem"><i class="fa fa-gift"></i>&nbsp;Import Missing Items</button>
+              <?php if(isset($error_import_barcode) && !empty($error_import_barcode)){ ?>
+                  <button class="btn btn-warning buttonred buttons_menu basic-button-small" data-toggle="modal" data-target="#error_import_modal"><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;Import Error Occurs</button>
+              <?php } ?>
+              <button class="btn btn-danger buttonred buttons_menu basic-button-small" id="delete_po_btn" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete RO</button>
+            </div>
+        </div> <!-- navbar-collapse.// -->
+    </div>
+  </nav>
   
+  <section class="section-content py-6">
     <div class="container-fluid">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
@@ -15,54 +38,39 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         @endif
-        <br>
-        <br>
+        
         <div class="panel panel-default">
-            <div class="panel-heading head_title">
-                <h3 class="panel-title"><i class="fa fa-list"></i>Receiving Order</h3>
-            </div>
+            
             <div class="panel-body">
-                <div class="row" style="padding-bottom:15px;float: right;">
-                    <div class="col-md-12">
-                        <div class="">
-                            <a href="<?php echo $data['add']; ?>" title="Add" class="btn btn-primary add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>  
-                          
-                            <button class="btn btn-info" data-toggle="modal" data-target="#myModalImportNew"><i class="fa fa-file"></i>&nbsp;&nbsp;Import EDI Invoice</button>
-                          
-                            <button class="btn btn-info" data-toggle="modal" data-target="#myModalImportMissingItem"><i class="fa fa-gift"></i>&nbsp;&nbsp;Import Missing Items</button>
-                            <?php if(isset($error_import_barcode) && !empty($error_import_barcode)){ ?>
-                                <button class="btn btn-warning" data-toggle="modal" data-target="#error_import_modal"><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;Import Error Occurs</button>
-                            <?php } ?>
-                            <button class="btn btn-danger" id="delete_po_btn" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete RO</button>
-                        </div>
+                
+                
+              <form action="<?php echo $data['current_url'];?>" method="post" id="form_order_search">
+                  @csrf
+                  <div class="row">
+                    <div class="col-md-12 form-inline" style="justify-content: flex-end; margin-left:-28px;">
+                        
+                            <input type="text" name="searchbox" value="<?php echo isset($data['searchbox']) ? $data['searchbox']: ''; ?>" class="form-control" placeholder="Search..." autocomplete="off">
+                        
+                            &nbsp;&nbsp;<input type="submit" name="Filter" value="Search" class="btn btn-info buttons_menu">
+                        
                     </div>
-                </div>
-                <div class="row" style="clear:both;">
-                    <form action="<?php echo $data['current_url'];?>" method="post" id="form_order_search">
-                        @csrf
-                        <div class="col-md-12">
-                            <div style="display: inline-block;width:92%;">
-                                <input type="text" name="searchbox" value="<?php echo isset($data['searchbox']) ? $data['searchbox']: ''; ?>" class="form-control" placeholder="Search..." autocomplete="off">
-                            </div>
-                            <div style="display: inline-block;">
-                                &nbsp;&nbsp;<input type="submit" name="Filter" value="Search" class="btn btn-info">
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                  </div>
+              </form>
+                
                 <br>
                 
                 <form action="" method="post" enctype="multipart/form-data" id="form-purchase-order">
                 
                     <div class="table-responsive">
-                        <table id="purchase_order" class="table table-bordered table-hover">
-                            <thead>
+                        <table id="purchase_order" class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                        data-row-style="rowColors" data-striped="true" data-pagination="true" data-click-to-select="true">
+                            <thead class="header-color">
                                 <tr>
                                     <th style="width: 1px;" class="text-center"><input type="checkbox" id="main_checkbox" /></th>
                                     <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_estatus'];?>">Status</a></th>
-                                    <th class="text-right"><a style="color: #fff;" href="<?php echo $data['sort_vponumber'];?>">PurchaseORD#</a></th>
+                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vponumber'];?>">PurchaseORD#</a></th>
                                     <th class="text-left">Invoice#</th>
-                                    <th class="text-right sample">Total</th>
+                                    <th class="text-left sample">Total</th>
                                     <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vvendorname'];?>">Vendor Name</a></th>
                                     <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vordertype'];?>">Order Type</a></th>
                                     <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_dcreatedate'];?>">Date Created</a></th>
@@ -94,7 +102,7 @@
                                                 <span><?php echo $purchase_order['estatus']; ?></span>
                                             </td>
                                             
-                                            <td class="text-right" style="background:<?php echo $bg; ?>">
+                                            <td class="text-left" style="background:<?php echo $bg; ?>">
                                                 <span><?php echo $purchase_order['vponumber']; ?></span>
                                             </td>
                                             
@@ -102,7 +110,7 @@
                                                 <span><?php echo $purchase_order['vinvoiceno']; ?></span>
                                             </td>
                                             
-                                            <td class="text-right" style="background:<?php echo $bg; ?>">
+                                            <td class="text-left" style="background:<?php echo $bg; ?>">
                                                 <span><?php echo $purchase_order['nnettotal']; ?></span>
                                             </td>
                                             
@@ -153,6 +161,7 @@
             </div>
         </div>
     </div>
+  </section>
 </div>
 
 <!-- Modal -->
@@ -253,13 +262,14 @@
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 <style>
     .disabled, #item_ellipsis{
         pointer-events:none;
     }
 </style>
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
 <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
 <script type="text/javascript">
@@ -572,9 +582,9 @@
     $("div#divLoading").addClass('show');
   });
 
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
+  // $(window).load(function() {
+  //   $("div#divLoading").removeClass('show');
+  // });
 </script>
 
 <script type="text/javascript">

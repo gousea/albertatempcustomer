@@ -64,7 +64,7 @@
                         <a class="nav-link  dropdown-toggle sub text-uppercase" href="#" data-toggle="dropdown">
                             INVENTORY </a>
                         <ul class="dropdown-menu main-dropdown">
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Receiving Order</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('ReceivingOrder') }}"> Receiving Order</a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Purchase Order </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Department </a></li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Category </a></li>
