@@ -74,7 +74,7 @@
                                     <div class="col-sm-8">
                                         <input type="text" name="vcustomername" maxlength="50"
                                             value="{{ old('vcustomername') }}" placeholder="" id="vcustomername"
-                                            class="form-control" />
+                                            class="form-control" required />
                                         <span id="vcustomernameerror" style="color: red"></span>
                                     </div>
                                 </div>
@@ -99,7 +99,8 @@
                                         <input type="text" name="vfname" maxlength="25" value="{{ old('vfname') }}"
                                             placeholder="" id="input-first-name" class="form-control"
                                             onkeypress="return (event.charCode > 64 &&
-                                                                        event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" required />
+                                                                                                                event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"
+                                            required />
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +111,7 @@
                                         <input type="text" name="vlname" maxlength="25" value="{{ old('vlname') }}"
                                             placeholder="" id="input-last-name" class="form-control"
                                             onkeypress="return (event.charCode > 64 &&
-                                                                        event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" />
+                                                                                                                event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" />
                                     </div>
                                 </div>
                             </div>
@@ -182,8 +183,8 @@
                                     <div class="col-sm-8">
                                         <input type="text" name="vphone" maxlength="20"
                                             onkeyup="this.value=this.value.replace(/[^\d]/,'')"
-                                            value="{{ old('vphone') }}" placeholder="" id="vphone"
-                                            class="form-control" />
+                                            value="{{ old('vphone') }}" placeholder="" id="vphone" class="form-control"
+                                            required />
                                         <span id="vphoneerror" style="color: red"></span>
                                     </div>
                                 </div>
@@ -319,7 +320,7 @@
                                     <label class="col-sm-4 control-label" for="input-zip">Account Pin</label>
                                     <div class="col-sm-8">
                                         <input type="text" name="account_pin" value="" placeholder="" id="account_pin"
-                                            class="form-control" onkeypress="return isNumberKey(event);" />
+                                            class="form-control" onkeypress="return isNumberKey(event);" required />
                                         <span id="ac_pin" style="color: red"></span>
                                     </div>
                                 </div>
@@ -343,21 +344,48 @@
         </div>
     </div>
 @endsection
-@section('scripts')
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css"
-        rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
-        rel="stylesheet" />
-    <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
-        rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js" type="text/javascript"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js">
-    </script>
+@section('page-script')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
+<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+{{-- <script src="{{ asset('javascript/bootstrap-datepicker.js')}}"></script> --}}
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(function() {
+            $('#expire_dt').datepicker({
+                dateFormat: 'yy-mm-dd',
+                todayHighlight: true,
+                autoclose: true,
+            });
+        });
+
+        $(function() {
+            $('#birth_dt').datepicker({
+                dateFormat: 'yy-mm-dd',
+                todayHighlight: true,
+                autoclose: true,
+            });
+        });
+        // $(".form_datetime").datetimepicker({
+        //     format: "dd MM yyyy - hh:ii",
+        //     autoclose: true,
+        //     todayBtn: true,
+        //     pickerPosition: "bottom-left"
+        // });
+
+        // $(".datetimepicker").datetimepicker({
+        //     format: "dd MM yyyy - hh:ii",
+        //     autoclose: true,
+        //     todayBtn: true,
+        //     startDate: "2013-02-14 10:00",
+        //     minuteStep: 10
+        // });
+
+    </script>
 
     <script type="text/javascript">
         $(document).on('change', 'input[name="vcustomername"]', function(event) {
@@ -442,17 +470,17 @@
             }
         }
 
-        $(function() {
-            $("#expire_dt").datetimepicker({
-                format: 'MM-DD-YYYY'
-            });
-        });
+        // $(function() {
+        //     $("#expire_dt").datetimepicker({
+        //         format: 'MM-DD-YYYY'
+        //     });
+        // });
 
-        $(function() {
-            $("#birth_dt").datetimepicker({
-                format: 'MM-DD-YYYY'
-            });
-        });
+        // $(function() {
+        //     $("#birth_dt").datetimepicker({
+        //         format: 'MM-DD-YYYY'
+        //     });
+        // });
 
     </script>
     <script>

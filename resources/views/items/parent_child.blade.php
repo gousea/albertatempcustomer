@@ -6,6 +6,8 @@ Parent Child
 
 @section('main-content')
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+
 <div id="content">
     
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
@@ -20,7 +22,7 @@ Parent Child
       
     <section class="section-content py-6">
         <div class="container-fluid">
-            <br>
+            
             @if (session()->has('message'))
                 <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -53,8 +55,8 @@ Parent Child
             
             <div class="panel-body">
                 <div>
-                    <table class="table table-bordered table-hover" id="tab_logic">
-                        <thead>
+                    <table class="table table-hover" id="tab_logic" >
+                        <thead style="border-radius: 6px;">
                             <tr >
                                     
                                 <th class="text-center text-uppercase text-white"  style="width:390px; background-color:grey;">
@@ -97,23 +99,23 @@ Parent Child
                                 <input type="hidden" name="Csearch_vbarcode" id="csearch_vbarcode" value="<?php echo isset($Csearch_vbarcode) ? $Csearch_vbarcode : ''; ?>">
                             </td>
                             <td class="text-left" style="background-color: #fff;"  style="width:37px;height:70px;background-color: #fff;" >
-                                <input type="button" class="btn btn-success float-right" value="Add New" id="addmore" >
+                                <input type="button" class="btn btn-success float-right" value="Add New" id="addmore" style="border-radius: 6px;">
                             </td>
                         </form>
                         
                         <td style="background-color: #fff;">
-                            <button type="button" class="btn btn-danger float-right" id="parent_delete" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i> Delete</button>
+                            <button type="button" class="btn btn-danger float-right" id="parent_delete" title="Delete" style="border-radius: 6px;"><i class="fa fa-trash"></i> Delete</button>
                         </td>
                         
                         <td style="background-color: #fff;">
-                            <button type="button" class="btn btn-primary float-right" id="save_button" title="Save" style="border-radius: 0px; margin-right:5px;"><i class="fa fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-primary float-right" id="save_button" title="Save" style="border-radius: 6px; margin-right:5px;"><i class="fa fa-save"></i> Save</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="table-responsive">
-                <table id="Parent_head" class="text-center table table-bordered table-hover" style="margin-bottom:0px;">
+                <table id="Parent_head" class="text-center table"  data-classes="table table-hover table-condensed promotionview" style="margin-bottom:0px;">
                     <thead>
                         <tr class="header-color">
                             
@@ -134,7 +136,7 @@ Parent Child
                             </td>
 
                             <td style="width:200px;"class="text-left">
-                            <input style="color:#000000;" type="text" name="parent_item"  placeholder="Search parent item." id="parent-products">
+                            <input style="color:#000000;" type="text" name="parent_item"  placeholder="Search parent item." id="parent-products" class="form-control table-heading-fields">
                             </td>
 
                             <td style="width:150px;"class="text-left">
@@ -146,7 +148,7 @@ Parent Child
                             </td>
 
                             <td style="width:200px;"class="text-left">
-                                <input style="color:#000000; " type="text" name="child_item"  placeholder="Search child item." id="child-product">
+                                <input style="color:#000000; " type="text" name="child_item"  placeholder="Search child item." id="child-product" class="form-control table-heading-fields">
                             </td>
                             
                             <td style="width:150px;"class="text-left">
@@ -161,8 +163,9 @@ Parent Child
             <form action="" method="post" enctype="multipart/form-data" id="form-cpack">
                 @csrf
                 <div class="table-responsive">
-                    <table id="Parent" class="text-center table table-bordered table-hover display" style="width:100%">
-                        <thead style='display:none;'> <th></th><th></th> <th></th> <th></th> <th></th><th></th>
+                    <table id="Parent" class="text-center table table-hover display" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-pagination="true" data-click-to-select="true" style="width:100%">
+                        <thead style='display:none; border:0;'> <th></th><th></th> <th></th> <th></th> <th></th><th></th>
                         </thead>
                             
                         @foreach ($pitemncitem as $k=>$pitem)
@@ -181,7 +184,7 @@ Parent Child
                                 </td>
                             
                                 <td style="width:100px;" class="text-left">
-                                    <input style="width:70px;"type="text"  class="editable cpack" name="pitem[<?php echo $k; ?>][cpack]" id="cpack_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['cpack']; ?>" onclick='document.getElementById("pitem[<?php echo $k; ?>][select]").setAttribute("checked","checked");' />
+                                    <input style="width:70px;"type="text"  class="form-control editable cpack" name="pitem[<?php echo $k; ?>][cpack]" id="cpack_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['cpack']; ?>" onclick='document.getElementById("pitem[<?php echo $k; ?>][select]").setAttribute("checked","checked");' />
                                     <input type="hidden" name="pitem[<?php echo $k; ?>][cid]"  id="cid_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['cid']; ?>"/>
                                     <input type="hidden" name="pitem2[<?php echo $k; ?>][pid]"  id="pid_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['pid']; ?>"/>
                                 </td>
@@ -547,11 +550,12 @@ $('#adding_btn').click(function(){
     $(document).ready(function() {
         
       var table = $('#Parent').DataTable({
-        "dom": 't<"bottom"i<"float-right"p>><"clear">',
+        "dom": 't<<"float-right"p>><"clear">',
         "searching":true,
         "destroy": true,
-        "bLengthChange": false,
-        "pageLength":20,
+        // "bLengthChange": false,
+        // "pageLength":20,
+        "paging": false,
       });
       
     

@@ -1,17 +1,22 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'Item Adjustment')
 @section('main-content')
 <div id="content">
-    <div class="page-header">
-      <div class="container-fluid">
-        <!-- <h1><?php echo $heading_title; ?></h1> -->
-        <ul class="breadcrumb">
-          <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-          <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-          <?php } ?>
-        </ul>
-      </div>
+  
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase"><?php echo $text_list; ?></span>
+            </div>
+            <div class="nav-submenu">
+                <button id="save_button_transfer" title="<?php echo $button_save; ?>" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu" ><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <a style="pointer-events:all;" href="<?php echo $cancel; ?>" data-toggle="tooltip" title="Cancel" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
+  </nav>
+
     <div class="container-fluid">
       <?php if ($error_warning) { ?>
       <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
@@ -28,84 +33,78 @@
           <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_list; ?></h3>
         </div>
         <div class="panel-body">
-  
-          <div class="row" style="padding-bottom: 15px; float: right;">
-            <div class="col-md-12">
-              <div class="">
-                <button id="save_button_transfer" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="Cancel" class="btn btn-default cancel_btn_rotate" ><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
-              </div>
-            </div>
-          </div>
+          
           <div class="clearfix"></div>
   
           <form action="<?php echo $edit; ?>" method="post" enctype="multipart/form-data" id="form-transfer" class="form-horizontal">
             @csrf
-          <input type="hidden" name="transfer[vvendortype]" value="Vendor">
-          <input type="hidden" name="transfer[estatus]" value="Open">
-          <input type="hidden" name="transfer[vwhcode]" value="WH101">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-sm-4 control-label" for="input-transfer"><?php echo $text_transfer_type; ?></label>
-                  <div class="col-sm-8">
-                    <select name="transfer[vtransfertype]" id="transfer_vtransfertype" class="form-control" >
-                      <?php foreach($transfer_types as $transfer_type){ ?>
-                        <?php if(isset($vtransfertype) && $vtransfertype == $transfer_type['value_transfer']){ ?>
-                          <option value="<?php echo $transfer_type['value_transfer']; ?>" selected="selected"><?php echo $transfer_type['text_transfer']; ?></option>
-                        <?php }else{ ?>
-                          <option value="<?php echo $transfer_type['value_transfer']; ?>" ><?php echo $transfer_type['text_transfer']; ?></option>
+            <input type="hidden" name="transfer[vvendortype]" value="Vendor">
+            <input type="hidden" name="transfer[estatus]" value="Open">
+            <input type="hidden" name="transfer[vwhcode]" value="WH101">
+
+            <div class="container section-content">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input-transfer"><?php echo $text_transfer_type; ?></label>
+                    <div class="col-sm-8">
+                      <select name="transfer[vtransfertype]" id="transfer_vtransfertype" class="form-control" >
+                        <?php foreach($transfer_types as $transfer_type){ ?>
+                          <?php if(isset($vtransfertype) && $vtransfertype == $transfer_type['value_transfer']){ ?>
+                            <option value="<?php echo $transfer_type['value_transfer']; ?>" selected="selected"><?php echo $transfer_type['text_transfer']; ?></option>
+                          <?php }else{ ?>
+                            <option value="<?php echo $transfer_type['value_transfer']; ?>" ><?php echo $transfer_type['text_transfer']; ?></option>
+                          <?php } ?>
                         <?php } ?>
-                      <?php } ?>
-                    </select>
-  
+                      </select>
+    
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input-transfer"><?php echo $text_transfer_date; ?></label>
+                    <div class="col-sm-8">
+                      <input type="text" name="transfer[dreceivedate]" value="<?php echo date('m-d-Y');?>" placeholder="<?php echo $text_transfer_date; ?>" class="form-control" id="transfer_date"/>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-sm-4 control-label" for="input-transfer"><?php echo $text_transfer_date; ?></label>
-                  <div class="col-sm-8">
-                    <input type="text" name="transfer[dreceivedate]" value="<?php echo date('m-d-Y');?>" placeholder="<?php echo $text_transfer_date; ?>" class="form-control" id="transfer_date"/>
+    
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input-template"><?php echo $text_vendor; ?></label>
+                    <div class="col-sm-8">
+                      <select name="transfer[vvendorid]" id="transfer_vvendorid" class="form-control" >
+                        <?php foreach($vendors as $vendor){ ?>
+                        <?php if(isset($vendor_id) && $vendor_id == $vendor['isupplierid']){?>
+                        <option value="<?php echo $vendor['isupplierid']; ?>" selected="selected"><?php echo $vendor['vcompanyname']; ?></option>
+                        <?php }else{ ?>
+                          <option value="<?php echo $vendor['isupplierid']; ?>"><?php echo $vendor['vcompanyname']; ?></option>
+                        <?php } ?>
+                        <?php } ?>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group required" id="invoice_id">
+                    <label class="col-sm-4 control-label" for="input-template"><?php echo $text_invoice; ?></label>
+                    <div class="col-sm-8">
+                      <input type="text" maxlength="50" name="transfer[vinvnum]" value="<?php echo isset($vinvnum) ? $vinvnum : ''; ?>" placeholder="<?php echo $text_invoice; ?>" class="form-control" id="transfer_vinvnum"/>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-  
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-sm-4 control-label" for="input-template"><?php echo $text_vendor; ?></label>
-                  <div class="col-sm-8">
-                    <select name="transfer[vvendorid]" id="transfer_vvendorid" class="form-control" >
-                      <?php foreach($vendors as $vendor){ ?>
-                      <?php if(isset($vendor_id) && $vendor_id == $vendor['isupplierid']){?>
-                       <option value="<?php echo $vendor['isupplierid']; ?>" selected="selected"><?php echo $vendor['vcompanyname']; ?></option>
-                       <?php }else{ ?>
-                        <option value="<?php echo $vendor['isupplierid']; ?>"><?php echo $vendor['vcompanyname']; ?></option>
-                       <?php } ?>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group required" id="invoice_id">
-                  <label class="col-sm-4 control-label" for="input-template"><?php echo $text_invoice; ?></label>
-                  <div class="col-sm-8">
-                    <input type="text" maxlength="50" name="transfer[vinvnum]" value="<?php echo isset($vinvnum) ? $vinvnum : ''; ?>" placeholder="<?php echo $text_invoice; ?>" class="form-control" id="transfer_vinvnum"/>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
             <br><br>
             <div class="row">
               <div class="col-md-4" id="table_list_items_left">
                 <div class="table-responsive" >
                   <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
                     <thead>
-                      <tr>
+                      <tr class="header-color">
                         <td style="width: 1px;" class="text-center"><input type="checkbox" id="selectAll"/></td>
                         <td style="width:150px;"><input type="text" class="form-control itemsort1_search" placeholder="SKU#" style="border:none;"></td>
                         <td style="width:242px;"><input type="text" class="form-control itemsort1_search" placeholder="Item Name" style="border:none;"></td>
@@ -114,7 +113,7 @@
                   </table>
                   <div class="div-table-content">
                     <table class="table table-bordered table-hover" id="itemsort1" style="table-layout: fixed;">
-                      <tbody>
+                      <tbody style="display: block; height:400px; overflow-y : scroll;">
                         
                       </tbody>
                     </table>
@@ -130,7 +129,7 @@
                 <div class="table-responsive" >
                   <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
                     <thead>
-                      <tr>
+                      <tr class="header-color">
                         <td style="width:1%" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" id="selectedcheck"/></td>
                         <td style="width:25%;"><input type="text" class="form-control itemsort2_search" placeholder="SKU#" style="border:none;width:100px;"></td>
                         <td style="width:35%;"><input type="text" class="form-control itemsort2_search" placeholder="Item Name" style="border:none;width:100px;"></td>
@@ -143,7 +142,7 @@
                   </table>
                   <div class="div-table-content" style="">
                     <table class="table table-bordered table-hover" id="itemsort2">
-                      <tbody>
+                      <tbody style="display: block; height:400px; overflow-y : scroll;">
                         
                       </tbody>
                     </table>
@@ -197,14 +196,17 @@
   </div>
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-   
+<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css')}}" rel="stylesheet" />
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+{{-- <script src="{{ asset('javascript/bootstrap-datepicker.js')}}"></script> --}}
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script type="text/javascript">
 $.ajaxSetup({
     headers: {
@@ -535,7 +537,7 @@ $(document).on('submit', 'form#form-transfer', function(event) {
 
     $('#transfer_date').each(function(){
         $(this).datepicker({
-          format: 'mm-dd-yyyy',
+          dateFormat: 'mm-dd-yy',
           todayHighlight: true,
           autoclose: true,
         });

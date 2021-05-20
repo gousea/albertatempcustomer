@@ -64,9 +64,9 @@
                               }
                               
                               ?>
-                              <div class="col-sm-8">
+                              <div class="col-sm-8" >
                                 <?php if(isset($ipiid) && $ipiid != ''){?>
-                                  <input type="text" name="dcreatedate" value="<?php echo $dcreatedate;?>" placeholder="<?php echo $text_created; ?>" class="form-control" id="dcreatedate" readonly style="pointer-events: none;"/>
+                                  <input type="text" name="dcreatedate" value="<?php echo $dcreatedate;?>" placeholder="<?php echo $text_created; ?>" class="form-control" id="dcreatedate" readonly style="pointer-events: none;" data-provide="datepicker"/>
                                 <?php } else { ?>
                                   <input type="text" name="dcreatedate" value="<?php echo date('m-d-Y');?>" placeholder="<?php echo $text_created; ?>" class="form-control" id="dcreatedate" required/>
                                 <?php } ?>
@@ -277,12 +277,39 @@
 @section('page-script')
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
+<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css')}}" rel="stylesheet" />
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+{{--<script src="{{ asset('javascript/bootstrap-datepicker.js')}}"></script> --}}
+
+ <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+     --}}
+
 <script type="text/javascript">
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    }
-});
+  $(function(){
+
+    // $('#dcreatedate').each(function(){
+        $('#dcreatedate').datepicker({
+          dateFormat: 'mm-dd-yy',
+          todayHighlight: true,
+          autoclose: true,
+        });
+    // });
+  
+  });
+  
+</script>
+
+
+<script type="text/javascript">
+  $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': "{{ csrf_token() }}"
+      }
+  });
 //Item Filter
   $(document).on('keyup', '#itemsort1_search_sku', function(event) {
     event.preventDefault();
@@ -388,192 +415,182 @@ $.ajaxSetup({
   });
 //Item Filter
 
-//Items add and remove
-
-$(document).on('click', '#add_item_btn', function(event) {
-  event.preventDefault();
-
-  // window.checked_items2 = []; 
-
-  var data = {};
-
-  var add_items_url = '<?php echo $add_items; ?>';
-    
-  add_items_url = add_items_url.replace(/&amp;/g, '&');
-
-  if($("[name='checkbox_itemsort1[]']:checked").length == 0) {
-    bootbox.alert({ 
-      size: 'small',
-      title: "Attention", 
-      message: "Please select item to add", 
-      callback: function(){}
-    });
-    return false;
-  }
-
-  $("div#divLoading").addClass('show');
-
-  $("[name='checkbox_itemsort1[]']:checked").each(function (i) {
-      data[i] = parseInt($(this).val());
-  });
-
-  if(data){
-    $.ajax({
-        url : add_items_url,
-        data : {checkbox_itemsort1:data},
-        type : 'POST',
-    }).done(function(response){
-
-      // var  response = $.parseJSON(response); //decode the response array
-      
-      if(response.right_items_arr){
-        var right_items_html = '';
-        $.each(response.right_items_arr, function(i, v) {
-
-          window.checked_items2.push(v.iitemid);
-            
-          right_items_html += '<tr>';
-          right_items_html += '<td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort2[]" value="'+v.iitemid+'"/><input type="hidden" name="items['+window.index_item+'][vitemid]" value="'+v.iitemid+'"></td>';
-          right_items_html += '<td style="width:16%px;">'+v.vbarcode+'<input type="hidden" name="items['+window.index_item+'][vbarcode]" value="'+v.vbarcode+'"></td>';
-          right_items_html += '<td style="width:15%;">'+v.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+v.vitemname+'"></td>';
-          right_items_html += '<td class="text-right" style="width:9%;">'+v.nunitcost+'<input type="hidden" class="editable nunitcost_class" name="items['+window.index_item+'][nunitcost]" value="'+v.nunitcost+'" id="" style="width:40px;text-align:right;"></td>';
-          right_items_html += '<td class="text-right" style="width:9%;">'+v.npack+'<input type="hidden" class="editable npackqty_class" name="items['+window.index_item+'][npackqty]" id="" value="'+v.npack+'" style="width:40px;text-align:right;"></td>';
-          right_items_html += '<td class="text-right" style="width:9%;">'+v.iqtyonhand+'<input type="hidden" class="editable iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]" value="'+v.iqtyonhand+'" id="" style="width:30px;text-align: right;"></td>';
-          right_items_html += '<td class="text-right" style="width:11%;"><input type="text" class="editable_all_selected ndebitqty_class" name="items['+window.index_item+'][ndebitqty]" id="" style="width:40px;text-align:right;" maxlength = "5" value="0.00"></td>';
-          
-          right_items_html += '<td style="width:9%;">';
-          
-          right_items_html += '<select name="items['+window.index_item+'][vreasoncode]" style="width:40px;">';
-          right_items_html += '<option value="">Reason</option>';
-          
-          <?php if(isset($reasons) && count($reasons) > 0){?>
-            <?php foreach($reasons as $reason){?>
-              right_items_html += '<option value="<?php echo $reason['vreasoncode'];?>"><?php echo $reason['vreasonename'];?></option>';
-            <?php } ?>
-          <?php } ?>
-          right_items_html += '</select>';
-          right_items_html += '</td>';
-          right_items_html += '<td class="text-right" style="width:9%;"><span class="text_itotalunit_class">0.00</span><input type="hidden" class="editable itotalunit_class" name="items['+window.index_item+'][itotalunit]" id="" value="0.00" style="width:40px;text-align:right;"></td>';
-          
-          right_items_html += '<td class="text-right" style="width:9%;">';
-          right_items_html += '<span class="text_nnettotal_class">0.00</span><input type="hidden" class="nnettotal_class" name="items['+window.index_item+'][nnettotal]" id="" value="0.00" >';
-          right_items_html += '</td>';
-         // right_items_html += '<td><input type="hidden" class="iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]"  value="'+v.iqtyonhand+'"></td>';
-          right_items_html += '</tr>';
-          window.index_item++;
-        });
-
-        $('#itemsort2 tbody').append(right_items_html);
-      }
-
-
-      $('#itemsort1 tbody').html('');
-
-      $("div#divLoading").removeClass('show');
-      
-    });
-  }
-});
-
-$(document).on('click', '#remove_item_btn', function(event) {
-  event.preventDefault();
-  
-  var remove_items_url = '<?php echo $remove_items; ?>';
-    
-  remove_items_url = remove_items_url.replace(/&amp;/g, '&');
-
-  if($("[name='checkbox_itemsort2[]']:checked").length == 0) {
-    bootbox.alert({ 
-      size: 'small',
-      title: "Attention", 
-      message: "Please select item to remove", 
-      callback: function(){}
-    });
-    return false;
-  }
-
-  $("div#divLoading").addClass('show');
-
-  $("[name='checkbox_itemsort2[]']:checked").each(function (i) {
-   
-      if($.inArray( parseInt($(this).val()), window.checked_items2) !== -1){
-        window.checked_items2.splice( $.inArray($(this).val(), window.checked_items2), 1 );
-        $(this).closest('tr').remove();
-        
-      }
-
-  });
-
-    $.ajax({
-        url : remove_items_url,
-        data : {checkbox_itemsort1:window.checked_items1},
-        type : 'POST',
-    }).done(function(response){
-
-
-      $('#itemsort1 tbody').html('');
-
-      $("div#divLoading").removeClass('show');
-      
-    });
-
-});
-
-//form submit
-$(document).on('click', '#save_button_adjustment_detail', function(event) {
-  if($('form#form-adjustment-detail #vrefnumber').val() == ''){
-    // alert('please enter Number');
-    bootbox.alert({ 
-      size: 'small',
-      title: "Attention", 
-      message: "please enter number", 
-      callback: function(){}
-    });
-    $('form#form-adjustment-detail #vrefnumber').focus();
-    return false;
-  }else if($('form#form-adjustment-detail #dcreatedate').val() == ''){
-    // alert('please select Date');
-    bootbox.alert({ 
-      size: 'small',
-      title: "Attention", 
-      message: "please select date", 
-      callback: function(){}
-    });
-    $('form#form-adjustment-detail #dcreatedate').focus();
-    return false;
-  }else if($('form#form-adjustment-detail #vordertitle').val() == ''){
-    // alert('please enter title');
-    bootbox.alert({ 
-      size: 'small',
-      title: "Attention", 
-      message: "please enter title", 
-      callback: function(){}
-    });
-    $('form#form-adjustment-detail #vordertitle').focus();
-    return false;
-  }else{
-    $("div#divLoading").addClass('show');
-    $('form#form-adjustment-detail').submit();
-  }
-});
 </script>
-
-<link type="text/css" href="/javascript/bootstrap-datepicker.css" rel="stylesheet" />
-<script src="/javascript/bootstrap-datepicker.js" defer></script>
 
 <script type="text/javascript">
-  $(function(){
+//Items add and remove
 
-    $('#dcreatedate').each(function(){
-        $(this).datepicker({
-          format: 'mm-dd-yyyy',
-          todayHighlight: true,
-          autoclose: true,
-        });
+  $(document).on('click', '#add_item_btn', function(event) {
+    event.preventDefault();
+
+    // window.checked_items2 = []; 
+
+    var data = {};
+
+    var add_items_url = '<?php echo $add_items; ?>';
+      
+    add_items_url = add_items_url.replace(/&amp;/g, '&');
+
+    if($("[name='checkbox_itemsort1[]']:checked").length == 0) {
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: "Please select item to add", 
+        callback: function(){}
+      });
+      return false;
+    }
+
+    $("div#divLoading").addClass('show');
+
+    $("[name='checkbox_itemsort1[]']:checked").each(function (i) {
+        data[i] = parseInt($(this).val());
     });
-  
+
+    if(data){
+      $.ajax({
+          url : add_items_url,
+          data : {checkbox_itemsort1:data},
+          type : 'POST',
+      }).done(function(response){
+
+        // var  response = $.parseJSON(response); //decode the response array
+        
+        if(response.right_items_arr){
+          var right_items_html = '';
+          $.each(response.right_items_arr, function(i, v) {
+
+            window.checked_items2.push(v.iitemid);
+              
+            right_items_html += '<tr>';
+            right_items_html += '<td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort2[]" value="'+v.iitemid+'"/><input type="hidden" name="items['+window.index_item+'][vitemid]" value="'+v.iitemid+'"></td>';
+            right_items_html += '<td style="width:16%px;">'+v.vbarcode+'<input type="hidden" name="items['+window.index_item+'][vbarcode]" value="'+v.vbarcode+'"></td>';
+            right_items_html += '<td style="width:15%;">'+v.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+v.vitemname+'"></td>';
+            right_items_html += '<td class="text-right" style="width:9%;">'+v.nunitcost+'<input type="hidden" class="editable nunitcost_class" name="items['+window.index_item+'][nunitcost]" value="'+v.nunitcost+'" id="" style="width:40px;text-align:right;"></td>';
+            right_items_html += '<td class="text-right" style="width:9%;">'+v.npack+'<input type="hidden" class="editable npackqty_class" name="items['+window.index_item+'][npackqty]" id="" value="'+v.npack+'" style="width:40px;text-align:right;"></td>';
+            right_items_html += '<td class="text-right" style="width:9%;">'+v.iqtyonhand+'<input type="hidden" class="editable iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]" value="'+v.iqtyonhand+'" id="" style="width:30px;text-align: right;"></td>';
+            right_items_html += '<td class="text-right" style="width:11%;"><input type="text" class="editable_all_selected ndebitqty_class" name="items['+window.index_item+'][ndebitqty]" id="" style="width:40px;text-align:right;" maxlength = "5" value="0.00"></td>';
+            
+            right_items_html += '<td style="width:9%;">';
+            
+            right_items_html += '<select name="items['+window.index_item+'][vreasoncode]" style="width:40px;">';
+            right_items_html += '<option value="">Reason</option>';
+            
+            <?php if(isset($reasons) && count($reasons) > 0){?>
+              <?php foreach($reasons as $reason){?>
+                right_items_html += '<option value="<?php echo $reason['vreasoncode'];?>"><?php echo $reason['vreasonename'];?></option>';
+              <?php } ?>
+            <?php } ?>
+            right_items_html += '</select>';
+            right_items_html += '</td>';
+            right_items_html += '<td class="text-right" style="width:9%;"><span class="text_itotalunit_class">0.00</span><input type="hidden" class="editable itotalunit_class" name="items['+window.index_item+'][itotalunit]" id="" value="0.00" style="width:40px;text-align:right;"></td>';
+            
+            right_items_html += '<td class="text-right" style="width:9%;">';
+            right_items_html += '<span class="text_nnettotal_class">0.00</span><input type="hidden" class="nnettotal_class" name="items['+window.index_item+'][nnettotal]" id="" value="0.00" >';
+            right_items_html += '</td>';
+          // right_items_html += '<td><input type="hidden" class="iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]"  value="'+v.iqtyonhand+'"></td>';
+            right_items_html += '</tr>';
+            window.index_item++;
+          });
+
+          $('#itemsort2 tbody').append(right_items_html);
+        }
+
+
+        $('#itemsort1 tbody').html('');
+
+        $("div#divLoading").removeClass('show');
+        
+      });
+    }
   });
 </script>
+
+<script type="text/javascript">
+  $(document).on('click', '#remove_item_btn', function(event) {
+    event.preventDefault();
+    
+    var remove_items_url = '<?php echo $remove_items; ?>';
+      
+    remove_items_url = remove_items_url.replace(/&amp;/g, '&');
+
+    if($("[name='checkbox_itemsort2[]']:checked").length == 0) {
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: "Please select item to remove", 
+        callback: function(){}
+      });
+      return false;
+    }
+
+    $("div#divLoading").addClass('show');
+
+    $("[name='checkbox_itemsort2[]']:checked").each(function (i) {
+    
+        if($.inArray( parseInt($(this).val()), window.checked_items2) !== -1){
+          window.checked_items2.splice( $.inArray($(this).val(), window.checked_items2), 1 );
+          $(this).closest('tr').remove();
+          
+        }
+
+    });
+
+      $.ajax({
+          url : remove_items_url,
+          data : {checkbox_itemsort1:window.checked_items1},
+          type : 'POST',
+      }).done(function(response){
+
+
+        $('#itemsort1 tbody').html('');
+
+        $("div#divLoading").removeClass('show');
+        
+      });
+
+  });
+
+//form submit
+  $(document).on('click', '#save_button_adjustment_detail', function(event) {
+    if($('form#form-adjustment-detail #vrefnumber').val() == ''){
+      // alert('please enter Number');
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: "please enter number", 
+        callback: function(){}
+      });
+      $('form#form-adjustment-detail #vrefnumber').focus();
+      return false;
+    }else if($('form#form-adjustment-detail #dcreatedate').val() == ''){
+      // alert('please select Date');
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: "please select date", 
+        callback: function(){}
+      });
+      $('form#form-adjustment-detail #dcreatedate').focus();
+      return false;
+    }else if($('form#form-adjustment-detail #vordertitle').val() == ''){
+      // alert('please enter title');
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: "please enter title", 
+        callback: function(){}
+      });
+      $('form#form-adjustment-detail #vordertitle').focus();
+      return false;
+    }else{
+      $("div#divLoading").addClass('show');
+      $('form#form-adjustment-detail').submit();
+    }
+  });
+</script>
+
+
 
 <script type="text/javascript">
   $(document).on('keyup', '.itotalunit_class', function(event) {

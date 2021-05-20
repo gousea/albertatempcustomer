@@ -3,7 +3,6 @@
 @section('title')
     Vendor Edit
 @stop
-
 <link rel="stylesheet" href="{{ asset('asset/css/vendor.css') }}">
 
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
@@ -12,9 +11,9 @@
             <div class="menu">
                 <span class="font-weight-bold text-uppercase">Vendor Edit</span>
             </div>
-            <div class="nav-submenu">
-                <button type="button" id="form-vendor" data-toggle="tooltip" title="" class="btn btn-gray headerblack  buttons_menu"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <a href="{{ route('vendors') }}" data-toggle="tooltip" title="" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+            {{-- <div class="nav-submenu"> --}}
+                {{-- <button type="button" id="form-vendor" data-toggle="tooltip" title="" class="btn btn-gray headerblack  buttons_menu"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <a href="{{ route('vendors') }}" data-toggle="tooltip" title="" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a> --}}
 
                 {{-- <button type="submit" id="form-vendor" title="" class="btn btn-gray headerblack  buttons_menu"><i
                         class="fa fa-save"></i>&nbsp;&nbsp;Save</button> --}}
@@ -22,7 +21,7 @@
                 {{-- <a href="{{ route('vendors') }}" data-toggle="tooltip" title=""
                     class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"><i
                         class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a> --}}
-            </div>
+            {{-- </div> --}}
         </div> <!-- navbar-collapse.// -->
     </div>
 </nav>
@@ -30,11 +29,11 @@
 @section('main-content')
 <div id="content">
     <div class="page-header">
-        <div class="container-fluid">
-            <ul class="breadcrumb">
-                <li><a href="">Vendor</a></li>
-            </ul>
-        </div>
+      <div class="container-fluid">
+        <ul class="breadcrumb">
+          <li><a href="">Vendor Edit</a></li>
+        </ul>
+      </div>
     </div>
     <div class="container section-content">
         @if ($errors->any())
@@ -49,23 +48,19 @@
         @endif
 
       <div class="panel panel-default">
-        {{-- <div class="panel-heading head_title">
-          <h3 class="panel-title"><i class="fa fa-pencil"></i>Vendor Edit</h3>
-        </div> --}}
         <div class="panel-body">
-          <div class="row" style="padding-bottom: 9px;float: right;">
-            <div class="col-md-12">
-              {{-- <div class="">
-                <button type="button" id="form-vendor" data-toggle="tooltip" title="" class="btn btn-primary save_btn_rotate"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <a href="{{ route('vendors') }}" data-toggle="tooltip" title="" class="btn btn-default cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
-              </div> --}}
-            </div>
-          </div>
           <div class="clearfix"></div>
 
           <form action="{{ route('vendors.update', $vendor->isupplierid) }}" method="post" enctype="multipart/form-data" id="vendorForm" class="form-horizontal">
             @csrf
             @method('PATCH')
+            <div class="nav-submenu">
+                <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
+                        class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
+                <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"
+                    href="{{ route('vendors') }}"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel
+                </a>
+            </div>
             <input type="hidden" name="estatus" value="Active">
             @if(session()->get('hq_sid') == 1)
                 <input type="hidden" id="hidden_store_hq_val" name="stores_hq" value="">

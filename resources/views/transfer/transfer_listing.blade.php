@@ -2,6 +2,8 @@
 @section('title', 'Item Adjustment')
 @section('main-content')
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+
 <div id="content">
     
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
@@ -40,7 +42,8 @@
               <form action="" method="post" enctype="multipart/form-data" id="form-transfer-list">
                 
                 <div class="table-responsive">
-                  <table id="transfer_listing" class="table table-bordered table-hover" style="">
+                  <table id="transfer_listing" class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                  data-row-style="rowColors" data-striped="true" data-pagination="true" data-click-to-select="true">
                   <?php if ($transfers) { ?>
                     <thead>
                       <tr class="header-color">
