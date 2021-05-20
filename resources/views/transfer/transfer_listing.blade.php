@@ -43,16 +43,41 @@
                 
                 <div class="table-responsive">
                   <table id="transfer_listing" class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
-                  data-row-style="rowColors" data-striped="true" data-pagination="true" data-click-to-select="true">
+                  data-row-style="rowColors" data-striped="true" data-click-to-select="true">
                   <?php if ($transfers) { ?>
                     <thead>
                       <tr class="header-color">
                         <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                        <th class="text-left">Invoice#</th>
-                        <th class="text-left">Store Name</th>
-                        <th class="text-left">Vendor Name</th>
-                        <th class="text-left">Date Invoice</th>
-                        <th class="text-left">Type</th>
+                        <th class="text-left">Invoice#
+                          <div class="form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no">
+                          </div>
+                        </th>
+                        <th class="text-left">Store Name
+                          <div class="form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no">
+                          </div>
+                        </th>
+                        <th class="text-left">Vendor Name
+                          <div class="form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no">
+                          </div>
+                        </th>
+                        <th class="text-left">Date Invoice
+                          <div class="form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no">
+                          </div>
+                        </th>
+                        <th class="text-left">Type
+                          <div class="form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no">
+                          </div>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -110,13 +135,13 @@
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 <script type="text/javascript">
     $(document).ready(function($) {
       $("div#divLoading").addClass('show');
     });
   
-    $(window).load(function() {
+    $(window).on('load',function() {
       $("div#divLoading").removeClass('show');
     });
   </script>
