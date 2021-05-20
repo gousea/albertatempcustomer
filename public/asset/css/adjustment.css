@@ -26,3 +26,23 @@ tr:nth-child() {
     -moz-border-radius: 0 9px 9px 0;
     -webkit-border-radius: 0 9px 9px 0;
 } 
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.custom-select-sm{
+    width:60px;
+}

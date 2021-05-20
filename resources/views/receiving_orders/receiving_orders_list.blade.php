@@ -63,7 +63,7 @@
                 
                     <div class="table-responsive">
                         <table id="purchase_order" class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
-                        data-row-style="rowColors" data-striped="true" data-pagination="true" data-click-to-select="true">
+                        data-row-style="rowColors" data-striped="true" data-click-to-select="true">
                             <thead class="header-color">
                                 <tr>
                                     <th style="width: 1px;" class="text-center"><input type="checkbox" id="main_checkbox" /></th>
