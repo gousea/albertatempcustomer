@@ -1,8 +1,9 @@
 @extends('layouts.layout')
 @section('title')
-   Sales Report
+   Sales  Report
 @endsection
 @section('main-content')
+
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
@@ -23,7 +24,6 @@
         </div>
     </nav>
 
-  
     <section class="section-content py-6">
        
             <div class="row">
@@ -58,8 +58,6 @@
                            
                            <?php $date = \DateTime::createFromFormat('m-d-Y' , $p_end_date);
                            $endtdate=$date->format('d-m-Y'); ?>
-                           
-                           
                            <h6 style="text-transform: uppercase;"><span> <?php  echo date(' l F d,Y', strtotime($startdate));?> - <?php  echo date(' l F d,Y', strtotime($endtdate));?></span></h6>
                     </div>   
                <?php } ?>
@@ -172,7 +170,7 @@
                   
                 <tr style="border-top: 1px solid #ddd;text-transform: uppercase;" class="th_color" >
                   <th class="text-center "> Date</th>
-                  <th class="text-left " style="width:50px;" >Store Sales (Excluded Tax)</th>
+                  <th class="text-left " >Store Sales (Excluded Tax)</th>
                   <th class="text-left">Non-Taxable Sales</th>
                   <th class="text-left">Taxable Sales</th>
                   <?php if($tot_Tax1Sales!=0){ ?>
@@ -517,6 +515,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script type="text/javascript" src="{{ asset('javascript/table-fixed-header.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
 <style type="text/css">
   .table.table-b.table-striped.table-hover thead > tr {
@@ -948,14 +947,10 @@ function downloadCSV(csv, filename) {
 }
 </script>
 <style>
-.rcorner {
-  border-radius:9px;
-}
 .th_color{
     background-color: #474c53 !important;
     color: #fff;
-    
-  
+
 }
 h6 {
    width: 100%; 
@@ -970,6 +965,9 @@ h6 span {
     background:#f8f9fa!important; 
     padding:0 10px; 
     color:#286fb7;
+}
+.rcorner {
+  border-radius:9px;
 }
 </style>
 
