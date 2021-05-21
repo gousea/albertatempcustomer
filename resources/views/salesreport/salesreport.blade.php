@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold text-uppercase"> Sales Report</span>
+                    <span class="font-weight-bold text-uppercase" style="font-size:15px"> Sales Report</span>
                 </div>
                  <div class="nav-submenu">
                      <?php if(isset($p_start_date)){ ?> 
