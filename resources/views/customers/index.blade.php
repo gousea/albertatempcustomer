@@ -36,10 +36,10 @@
             @csrf
             <input type="hidden" name="MenuId" value="$filter_menuid;" />
             <div class="table-responsive">
-                <table id="customer" class="table table-bordered table-hover employeeview">
+                <table id="customer" class="table table-hover employeeview">
                     <thead>
                         <tr class="header-color">
-                            <th style="width: 1px; color:black;" class="text-center"><input type="checkbox"
+                            <th class="text-center"><input type="checkbox"
                                     onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
                             <th class="col-xs-1 headername text-uppercase">Customer
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
