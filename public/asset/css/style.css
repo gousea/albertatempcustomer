@@ -166,6 +166,13 @@ table tr td:last-child {
     -webkit-border-radius: 9px 9px 9px 9px;
 }
 
+.customer-row{
+    border-bottom: 10px solid #f8f9fa;
+    border-radius: 9px 9px 9px 9px;
+    -moz-border-radius: 9px 9px 9px 9px;
+    -webkit-border-radius: 9px 9px 9px 9px;
+}
+
 tr:nth-child() {
     background-color: #f2f2f2;
     border-radius: 9px ;

@@ -89,7 +89,7 @@
                             $selected = [];
                             ?>
                             @foreach ($vendors as $vendor)
-                                <tr id="vendor-row{{ $vendor_row }}">
+                                <tr id="vendor-row{{ $vendor_row }}" class="customer-row">
                                     <td data-order="" class="text-center">
                                         <input type="checkbox" name="selected[]" id=""
                                             value="{{ $vendor->isupplierid }}" />
