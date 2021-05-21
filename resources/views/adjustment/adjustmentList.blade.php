@@ -2,7 +2,6 @@
 @section('title', 'Item Adjustment')
 @section('main-content')
 
-<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
 <div id="content">
 
@@ -48,7 +47,7 @@
             
             <div class="clearfix"></div>
     
-            <form action="<?php echo $current_url;?>" method="post" id="form_adjustment_search">
+            {{-- <form action="<?php echo $current_url;?>" method="post" id="form_adjustment_search">
                 @csrf
               <input type="hidden" name="searchbox" id="vordertitle">
               <div class="row">
@@ -56,20 +55,44 @@
                       <input type="text" name="automplete-product" class="form-control" placeholder="Search Adjustment Inventory..." id="automplete-product">
                   </div>
               </div>
-            </form>
-            <br>
+            </form> --}}
+            
             
               <div class="table-responsive">
                 <table id="adjustment_detail" class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
-                data-row-style="rowColors" data-striped="true" data-pagination="true" data-click-to-select="true">
+                data-row-style="rowColors" data-striped="true" data-click-to-select="true">
                 <?php if ($adjustment_details) { ?>
                   <thead>
                     <tr class="header-color">
                       <th class="text-center" ><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                      <th class="text-left text-uppercase"><?php echo $text_number; ?></th>
-                      <th class="text-left text-uppercase"><?php echo $text_created; ?></th>
-                      <th class="text-left text-uppercase"><?php echo $text_title; ?></th>
-                      <th class="text-left text-uppercase"><?php echo $text_status; ?></th>
+                      <th class="text-left text-uppercase"><?php echo $text_number; ?>
+                        
+                            <div class="form-group adjustment-has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no">
+                            </div>
+                      </th>
+                      <th class="text-left text-uppercase" ><?php echo $text_created; ?>
+                        
+                            <div class="form-group adjustment-has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_created">
+                            </div>
+                      </th>
+                      <th class="text-left text-uppercase" ><?php echo $text_title; ?>
+                        
+                            <div class="form-group adjustment-has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_title">
+                            </div>
+                      </th>
+                      <th class="text-left text-uppercase" ><?php echo $text_status; ?>
+                        
+                            <div class="form-group adjustment-has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_status">
+                            </div>
+                      </th>
                       <th class="text-left text-uppercase">Action</th>
                     </tr>
                   </thead>
@@ -79,10 +102,10 @@
                     <tr>
                       <td data-order="<?php echo $adjustment_detail['ipiid']; ?>" class="text-center">
                         <span style="display:none;"><?php echo $adjustment_detail['ipiid']; ?></span>
-                        <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                        <input type="checkbox" name="selected[]" value = <?php echo $adjustment_detail['ipiid']; ?> />
                       </td>
                       
-                      <td class="text-left">
+                      <td class="text-left adjustment_no">
                         <span><?php echo $adjustment_detail['vrefnumber']; ?></span>
                       </td>
     
@@ -123,11 +146,11 @@
                 </table>
               </div>
               <?php if ($adjustment_details) { ?>
-              <div class="row">
+              <!--<div class="row">
                 <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
                 <div class="col-sm-6 text-right"><?php echo $results; ?></div>
-                {{$adjustment_details->links()}}
-              </div>
+                {{-- {{$adjustment_details->links()}} --}}
+              </div>-->
               <?php } ?>
           </div>
         </div>
@@ -139,10 +162,11 @@
 
 @section('page-script')
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
 <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
 <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+{{-- <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> --}}
 <script>
     $(function() {
         
@@ -189,5 +213,39 @@
   //   $("div#divLoading").removeClass('show');
   // });
 </script>
+
+<script>
+  // $(document).ready(function(){
+  //   $("#adjustment_no").on("keyup", function() {
+  //     var input, filter, table, tr, td, i, txtValue;
+  //     input = $(this).val();
+  //     filter = input.toUpperCase();
+  //     table = document.getElementById("adjustment_detail");
+  //     tr = table.getElementsByTagName("tr");
+      
+  //     for (i = 0; i < tr.length; i++) {
+  //       td = tr[i].getElementsByTagName("td")[0];
+        
+  //       if (td) {
+  //         txtValue = td.textContent || td.innerText;
+  //         if (txtValue.toUpperCase().indexOf(filter) > -1) {
+  //           tr[i].style.display = "";
+  //         } else {
+  //           tr[i].style.display = "none";
+  //         }
+  //       }       
+  //     }
+  //   });
+  // });
+
+
+    var table = $('#adjustment_detail').DataTable({
+        "dom": 't<"bottom"li<"float-right"p>><"clear">',
+        "searching":false,
+        "ordering": false,
+        
+        "pageLength":20,
+      });
+  </script>
 
 @endsection

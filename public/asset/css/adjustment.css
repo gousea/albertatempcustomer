@@ -16,13 +16,36 @@ table tr td:first-child {
     -webkit-border-radius: 9px 0 0 9px;
 }
 
+table tr td:last-child {
+    border-top-left-radius: 0 9px 9px 0 !important;
+    -moz-border-radius: 0 9px 9px 0;
+    -webkit-border-radius: 0 9px 9px 0;
+} 
+
 tr:nth-child() {
     background-color: #f2f2f2;
     border-radius: 9px ;
 }
 
- table tr td:last-child {
-    border-top-left-radius: 0 9px 9px 0 !important;
-    -moz-border-radius: 0 9px 9px 0;
-    -webkit-border-radius: 0 9px 9px 0;
-} 
+ 
+
+.adjustment-has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+    /* padding-left: 6px; */
+}
+
+.adjustment-has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.custom-select-sm{
+    width:60px;
+}

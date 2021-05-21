@@ -1,5 +1,5 @@
 body{
-    font-size: 13px !important;
+    font-size: 13px;
     margin-top: 0px;
     padding: 0px;
     background-color: #cccccc;
@@ -23,11 +23,11 @@ body{
 .promotionview{
     border-collapse: separate;
     border-spacing: 0px 5px;
-    border-color: #fff !important;
+    border-color: #fff;
 }
 
 .promotionview th{
-    border-top: 0px solid #fff !important;
+    border-top: 0px solid #fff;
 }
 
 .table-body{
@@ -35,11 +35,12 @@ body{
 }
 
 .buttons_menu{
-    border-radius: 6px !important;
+    border-radius: 6px;
 }
 
 .menu{
-    padding-left: 7px;
+    padding-left: 45px;
+    padding-right: 20px;
 }
 
 .headerwhite{
@@ -80,7 +81,7 @@ body{
 }
 
 .sub-dropdown:focus, .sub-dropdown:hover{
-    background-color: #396897 !important;
+    background-color: #396897;
     font-size: 13px;
 }
 
@@ -133,15 +134,43 @@ body{
 
 
 table th:first-child {
-    border-radius: 9px 9px 9px 9px;
-    -moz-border-radius: 9px 0px 0px 0px;
-    -webkit-border-radius: 9px 0px 0px 0px;
+    border-radius: 9px 0px 0px 9px;
+    -moz-border-radius: 9px 0px 0px 9px;
+    -webkit-border-radius: 9px 0px 0px 9px;
+
+}
+table th:last-child {
+    border-radius: 0px 9px 9px 0px;
+    -moz-border-radius: 0px 9px 9px 0px;
+    -webkit-border-radius: 0px 9px 9px 0px;
+
+
 }
 
 table tr td:first-child {
-    border-radius: 9px 0px 0px 0px !important;
-    -moz-border-radius: 9px 0 0 0;
-    -webkit-border-radius: 9px 0 0 0;
+    border-radius: 9px 0px 0px 9px;
+    -moz-border-radius: 9px 0px 0px 9px;
+    -webkit-border-radius: 9px 0px 0px 9px;
+}
+
+table tr td:last-child {
+    border-radius: 0px 9px 9px 0px;
+    -moz-border-radius: 0px 9px 9px 0px;
+    -webkit-border-radius: 0px 9px 9px 0px;
+}
+
+#customer-row{
+    border-bottom: 10px solid #f8f9fa;
+    border-radius: 9px 9px 9px 9px;
+    -moz-border-radius: 9px 9px 9px 9px;
+    -webkit-border-radius: 9px 9px 9px 9px;
+}
+
+.customer-row{
+    border-bottom: 10px solid #f8f9fa;
+    border-radius: 9px 9px 9px 9px;
+    -moz-border-radius: 9px 9px 9px 9px;
+    -webkit-border-radius: 9px 9px 9px 9px;
 }
 
 tr:nth-child() {
@@ -162,15 +191,15 @@ table th:last-child {
 }
 
 table, .fixed-table-pagination{
-    width: 85% !important;
+    width: 85%;
     position: relative;
-    left: 7%;
+    /* left: 7%; */
 }
 
 table, .promotionview{
-    width: 95% !important;
+    width: 95%;
     position: relative;
-    left: 3%;
+    /* left: 3%; */
 }
 
 table tbody{
@@ -237,7 +266,7 @@ footer p {
 } */
 
 .headername{
-    vertical-align: text-top !important;
+    vertical-align: text-top;
 }
 
 .has-search {
@@ -253,13 +282,13 @@ footer p {
     width: 2.375rem;
     height: 2.375rem;
     line-height: 2.375rem;
-    padding-left: 6px;
+    /* padding-left: 6px; */
     pointer-events: none;
     color: #aaa;
 }
 
 .p-form{
-    display: flex !important;
+    display: flex;
 }
 
 .center{
@@ -288,7 +317,7 @@ footer p {
 }
 
 .section-content{
-    padding-top: 11rem;
+    padding-top: 11rem !important;
 }
 
 .nav-submenu{
@@ -302,6 +331,7 @@ footer p {
 
 .logo{
     padding-right: 40px;
+    padding-left: 32px;
 }
 
 .sub{
@@ -321,13 +351,12 @@ footer p {
 }
 
 .headermenublue, .header-color{
-    background-color: #286fb7!important;
+    background-color: #286fb7 !important;
     color: #fff;
-    padding: .5rem 1rem !important;
 }
 
 .icons{
-    color: #fff !important;
+    color: #fff;
 }
 .fa-cog{
     padding-top: 10px;
@@ -339,7 +368,7 @@ footer p {
 }
 
 .stores-menu{
-    padding-right: 10px !important;
+    padding-right: 10px;
 }
 
 #promotion-texts{
@@ -350,6 +379,14 @@ footer p {
     font-weight: bold;
     color: #fff;
     width: 157px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.basic-button-medium{
+    font-weight: bold;
+    color: #fff;
+    width: 207px;
     border-radius: 8px;
     font-size: 13px;
 }
@@ -368,7 +405,7 @@ footer p {
 .sub-navigation-bar{
     /* background-color: #343a40e6!important; */
     background-color: #474d53!important;
-    padding: .1rem 1rem !important;
+    padding: .1rem 1rem;
     max-height: 45px;
     z-index: 299;
     top: 55px;
@@ -395,13 +432,13 @@ footer p {
     color: #fff;
 }
 .navbar{
-    padding: 0px;
+
 }
 .form-inline .form-group{
     margin-bottom: 20px;
 }
 .pagination{
-    margin-bottom: 20px !important;
+    margin-bottom: 20px;
     margin-left: 35px;
 }
 
@@ -556,7 +593,7 @@ footer p {
         padding-right: 0.5rem;
     }
     .sub-navigation-bar{
-        padding: .5rem 1rem !important;
+        padding: .5rem 1rem;
     }
 
 }
