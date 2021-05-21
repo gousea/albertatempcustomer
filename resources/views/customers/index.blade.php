@@ -6,11 +6,11 @@
 
 @section('main-content')
 
-    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue menu">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
-                <div class="menu">
-                    <span class="font-weight-bold text-uppercase">Customer</span>
+                <div>
+                    <h6 class="font-weight-bold text-uppercase">Customer</h6>
                 </div>
                 <div class="nav-submenu">
                     <a type="button" class="btn btn-gray headerblack buttons_menu "
@@ -25,98 +25,184 @@
     </nav>
     {{-- <input type="button" id="customer_delete"> --}}
 
-    <section class="section-content py-6">
+    <section class="section-content menu">
         @if (session()->has('message'))
             <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i>
                 {{ session()->get('message') }}
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
         @endif
-        <form action="{{ route('customers.remove') }}" method="post" enctype="multipart/form-data" id="form-customer">
-            @csrf
-            <input type="hidden" name="MenuId" value="$filter_menuid;" />
-            <div class="table-responsive">
-                <table id="customer" class="table table-hover employeeview">
-                    <thead>
-                        <tr class="header-color">
-                            <th class="text-center"><input type="checkbox"
-                                    onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                            <th class="col-xs-1 headername text-uppercase">Customer
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control table-heading-fields" placeholder="CUSTOMER">
-                                </div>
-                            </th>
-                            <th class="col-xs-1 headername text-uppercase">First Name
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control table-heading-fields" placeholder="FIRST NAME">
-                                </div>
-                            </th>
-                            <th class="col-xs-1 headername text-uppercase">Last Name
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control table-heading-fields" placeholder="LAST NAME">
-                                </div>
-                            </th>
-                            <th class="col-xs-1 headername text-uppercase">Phone
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control table-heading-fields" placeholder="PHONE">
-                                </div>
-                            </th>
-                            <th class="col-xs-1 headername text-uppercase">Status
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control table-heading-fields" placeholder="STATUS">
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($customers as $customer)
-                            <tr id="customer-row">
-                                <td data-order="" class="text-center">
-                                    <input type="checkbox" name="selected[]" id="" value="{{ $customer->icustomerid }}" />
-                                </td>
-
-                                <td class="text-left">
-                                    <a href="{{ route('customers.edit', $customer->icustomerid) }}" data-toggle="tooltip"
-                                        title="Edit"><span>{{ $customer->vcustomername }}</span>
-                                    </a>
-                                </td>
-
-                                <td class="text-left">
-                                    <span>{{ $customer->vfname }}</span>
-                                </td>
-
-                                <td class="text-left">
-                                    <span>{{ $customer->vlname }} </span>
-                                </td>
-
-                                <td class="text-right">
-                                    <span>{{ $customer->vphone }}</span>
-                                </td>
-
-                                <td class="text-left">
-                                    <span>{{ $customer->estatus }}</span>
-                                </td>
+        <div class="container-fluid">
+            <form action="{{ route('customers.remove') }}" method="post" enctype="multipart/form-data" id="form-customer">
+                @csrf
+                <input type="hidden" name="MenuId" value="$filter_menuid;" />
+                <div class="table-responsive">
+                    {{-- <table id="customer" class="table table-hover employeeview">
+                        <thead>
+                            <tr class="header-color">
+                                <th class="text-center"><input type="checkbox"
+                                        onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                                <th class="col-xs-1 headername text-uppercase">Customer
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="CUSTOMER">
+                                    </div>
+                                </th>
+                                <th class="col-xs-1 headername text-uppercase">First Name
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="FIRST NAME">
+                                    </div>
+                                </th>
+                                <th class="col-xs-1 headername text-uppercase">Last Name
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="LAST NAME">
+                                    </div>
+                                </th>
+                                <th class="col-xs-1 headername text-uppercase">Phone
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="PHONE">
+                                    </div>
+                                </th>
+                                <th class="col-xs-1 headername text-uppercase">Status
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="STATUS">
+                                    </div>
+                                </th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </form>
-        <div class="row">
-            <div class="col-sm-6 text-left">{{ $customers->links() }}</div>
-            <div class="col-sm-6 text-right"></div>
-        </div>
+                        </thead>
+                        <tbody>
+                            @foreach ($customers as $customer)
+                                <tr id="customer-row">
+                                    <td data-order="" class="text-center">
+                                        <input type="checkbox" name="selected[]" id="" value="{{ $customer->icustomerid }}" />
+                                    </td>
 
+                                    <td class="text-left">
+                                        <a href="{{ route('customers.edit', $customer->icustomerid) }}" data-toggle="tooltip"
+                                            title="Edit"><span>{{ $customer->vcustomername }}</span>
+                                        </a>
+                                    </td>
+
+                                    <td class="text-left">
+                                        <span>{{ $customer->vfname }}</span>
+                                    </td>
+
+                                    <td class="text-left">
+                                        <span>{{ $customer->vlname }} </span>
+                                    </td>
+
+                                    <td class="text-left">
+                                        <span>{{ $customer->vphone }}</span>
+                                    </td>
+
+                                    <td class="text-left">
+                                        <span>{{ $customer->estatus }}</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table> --}}
+                    <table id="vendor" class="table table-hover employeeview">
+                        <thead>
+                            <tr class="header-color">
+                                <th class="text-center"><input type="checkbox"
+                                    onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+
+                                <th class="col-xs-1 headername text-uppercase">Customer
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="CUSTOMER">
+                                    </div>
+                                </th>
+
+                                <th class="col-xs-1 headername text-uppercase">First Name
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="FIRST NAME">
+                                    </div>
+                                </th>
+                                <th class="col-xs-1 headername text-uppercase">Last Name
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="LAST NAME">
+                                    </div>
+                                </th>
+                                <th class="col-xs-1 headername text-uppercase">Phone
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="PHONE">
+                                    </div>
+                                </th>
+                                <th class="col-xs-1 headername text-uppercase">Status
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="STATUS">
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($customers as $customer)
+                                <tr id="customer-row">
+                                    <td data-order="" class="text-center">
+                                        <input type="checkbox" name="selected[]" id="" value="{{ $customer->icustomerid }}" />
+                                    </td>
+
+                                    <td class="text-left">
+                                        <a href="{{ route('customers.edit', $customer->icustomerid) }}" data-toggle="tooltip"
+                                            title="Edit"><span>{{ $customer->vcustomername }}</span>
+                                        </a>
+                                    </td>
+
+                                    <td class="text-left">
+                                        <a href="{{ route('customers.edit', $customer->icustomerid) }}" data-toggle="tooltip"
+                                            title="Edit"><span>{{ $customer->vfname }}</span>
+                                        </a>
+
+                                    </td>
+
+                                    <td class="text-left">
+                                        <a href="{{ route('customers.edit', $customer->icustomerid) }}" data-toggle="tooltip"
+                                            title="Edit"><span>{{ $customer->vlname }} </span>
+                                        </a>
+                                    </td>
+
+                                    <td class="text-left">
+                                        <a href="{{ route('customers.edit', $customer->icustomerid) }}" data-toggle="tooltip"
+                                            title="Edit"><span>{{ $customer->vphone }}</span>
+                                        </a>
+                                    </td>
+
+                                    <td class="text-left">
+                                        <a href="{{ route('customers.edit', $customer->icustomerid) }}" data-toggle="tooltip"
+                                            title="Edit"><span>{{ $customer->estatus }}</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-sm-6 text-left">{{ $customers->links() }}</div>
+                <div class="col-sm-6 text-right"></div>
+            </div>
+        </div>
     </section>
 
 @endsection
