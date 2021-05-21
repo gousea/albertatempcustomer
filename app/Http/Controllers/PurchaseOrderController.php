@@ -138,95 +138,148 @@ class PurchaseOrderController extends Controller
 		}else{
 		    $order = 'DESC';
 		}
+
+        $search_value = $input['columns'];
         
-		$data['current_url'] = url('/PurchaseOrder');
-		$data['add'] = url('/PurchaseOrder/add');
-		$data['edit'] = url('/PurchaseOrder/edit');
-		$data['delete'] = url('/PurchaseOrder/delete');
-		$data['po_sales_history'] = url('/PurchaseOrder/add_po_sales_history');
-		$data['po_par_level'] = url('/PurchaseOrder/add_po_par_level');
-		$data['edit_list'] = url('/PurchaseOrder/edit_list');
-		
-        if($order == 'DESC'){
-            $data['sort_estatus'] = url('/PurchaseOrder?sort=estatus&order=ASC');
-            $data['sort_vponumber'] = url('/PurchaseOrder?sort=vponumber&order=ASC');
-            $data['sort_vvendorname'] = url('/PurchaseOrder?sort=vvendorname&order=ASC');
-            $data['sort_vordertype'] = url('/PurchaseOrder?sort=vordertype&order=ASC');
-            $data['sort_dcreatedate'] = url('/PurchaseOrder?sort=dcreatedate&order=ASC');
-            $data['sort_dreceiveddate'] = url('/PurchaseOrder?sort=dreceiveddate&order=ASC');
-            $data['sort_LastUpdate'] = url('/PurchaseOrder?sort=LastUpdate&order=ASC');
-        }else{
-            $data['sort_estatus'] = url('/PurchaseOrder');
-            $data['sort_vponumber'] = url('/PurchaseOrder');
-            $data['sort_vvendorname'] = url('/PurchaseOrder');
-            $data['sort_vordertype'] = url('/PurchaseOrder');
-            $data['sort_dcreatedate'] = url('/PurchaseOrder');
-            $data['sort_dreceiveddate'] = url('/PurchaseOrder');
-            $data['sort_LastUpdate'] = url('/PurchaseOrder');
+        $search_items = [];
+        foreach($search_value as $value)
+        {
+            if($value["data"] == "estatus")
+            {
+                $search_items['estatus'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vponumber")
+            {
+                $search_items['vponumber'] = $value['search']['value'];
+            }
+            else if($value["data"] == "nnettotal")
+            {
+                $search_items['nnettotal'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vinvoiceno")
+            {
+                $search_items['vinvoiceno'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vvendorname")
+            {
+                $search_items['vvendorname'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vordertype")
+            {
+                $search_items['vordertype'] = $value['search']['value'];
+            }
+            
         }
-		
+
+        if(empty(trim($search_items['estatus'])) && empty(trim($search_items['vponumber'])) && empty(trim($search_items['nnettotal'])) && empty(trim($search_items['vinvoiceno'])) &&  empty(trim($search_items['vvendorname'])) && empty(trim($search_items['vordertype']))  )
+        {
+            $limit = 20;
+            
+            $start_from = ($input['start']);
+
+            $select_query = "SELECT * FROM trn_purchaseorder LIMIT ". $input['start'].", ".$limit;
+
+            $count_select_query = "SELECT COUNT(distinct ipoid) as count FROM trn_purchaseorder";
+            $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
+            $count_query = isset($count_query[0])?(array)$count_query[0]:[];
+            
+            $count_records = $count_total = (int)$count_query['count'];
+
+        }else{
+            $limit = 20;
+            
+            $start_from = ($input['start']);
+            
+            $offset = $input['start']+$input['length']; 
+            $condition = "WHERE ";
+            $check_condition = 0;
+            
+            if(isset($search_items['estatus']) && !empty(trim($search_items['estatus']))){
+                $search = ($search_items['estatus']);
+                $condition .= " AND estatus LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vponumber']) && !empty(trim($search_items['vponumber']))){
+                $search = ($search_items['vponumber']);
+                $condition .= " AND vponumber LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+
+            if(isset($search_items['nnettotal']) && !empty(trim($search_items['nnettotal']))){
+                $search = ($search_items['nnettotal']);
+                $condition .= " AND nnettotal LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vinvoiceno']) && !empty(trim($search_items['vinvoiceno']))){
+                $search = ($search_items['vinvoiceno']);
+                $condition .= " AND vinvoiceno LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+
+            if(isset($search_items['vvendorname']) && !empty(trim($search_items['vvendorname']))){
+                $search = ($search_items['vvendorname']);
+                $condition .= " AND vvendorname LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vordertype']) && !empty(trim($search_items['vordertype']))){
+                $search = ($search_items['vordertype']);
+                $condition .= " AND vordertype LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            $select_query = "SELECT * FROM trn_purchaseorder ".$condition." LIMIT ". $input['start'].", ".$limit;
+
+            $count_select_query = "SELECT COUNT(distinct ipoid) as count FROM trn_purchaseorder ".$condition;
+            $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
+            $count_query = isset($count_query[0])?(array)$count_query[0]:[];
+            
+            $count_records = $count_total = (int)$count_query['count'];
+        }
+        
+        $query = DB::connection('mysql_dynamic')->select($select_query);
+        
 		$data['SID'] = session()->get('sid');
 		$purchase_orders = array();
         
-        if(isset($input['searchbox'])){
-            
-            $search = $input['searchbox'];
-            
-            $results = PurchaseOrder::where(function($query) use ($search) {
-                                     
-                                            $query->where('vponumber', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('vordertitle', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('vvendorname', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('vinvoiceno', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('estatus', 'LIKE', '%'.$search.'%');
-                                        })
-                                        ->orderBy($sort, $order)
-                                        ->paginate(20);
-        }else{
-            $results = PurchaseOrder::orderBy($sort, $order)->paginate(20);
+        if(count($query) > 0){
+            foreach ($query as $key => $value) {
+
+                if($value->estatus == 'Close'){
+                    $view_edit = url('/PurchaseOrder/info' . '?ipoid=' . $value->ipoid );
+                }else{
+                    $view_edit = url('/PurchaseOrder/edit' . '?ipoid=' . $value->ipoid );
+                }
+                $temp = array();
+                $temp['ipoid']          = $value->ipoid;
+                $temp['estatus']        = $value->estatus;
+                $temp['vponumber']      = $value->vponumber;
+                $temp['nnettotal']      = $value->nnettotal;
+                $temp['vinvoiceno']     = $value->vinvoiceno;
+                $temp['vvendorname']    = $value->vvendorname;
+                $temp['vordertype']     = $value->vordertype;
+                $temp['dcreatedate']    = $value->dcreatedate;
+                $temp['dreceiveddate']  = $value->dreceiveddate;
+                $temp['LastUpdate']     = $value->LastUpdate;
+                $temp['view_edit']      = $view_edit;
+				$temp['delete']         = url('/PurchaseOrder/delete' . '?ipoid=' . $value->ipoid );
+
+                $datas[]                = $temp;
+            }
         }
 		
-		foreach ($results as $result) {
-			
-			$purchase_orders[] = array(
-				'ipoid'  		=> $result->ipoid,
-				'estatus'     	=> $result->estatus,
-				'vponumber' 	=> $result->vponumber,
-				'nnettotal' 	=> $result->nnettotal,
-				'vinvoiceno' 	=> $result->vinvoiceno,
-				'vvendorname'   => $result->vvendorname,
-				'vordertype'  	=> $result->vordertype,
-				'dcreatedate'  	=> $result->dcreatedate,
-				'dreceiveddate' => $result->dreceiveddate,
-				'dlastupdate'  	=> $result->LastUpdate,
-				'view'          => url('/PurchaseOrder/info' . '?ipoid=' . $result->ipoid ),
-				'edit'          => url('/PurchaseOrder/edit' . '?ipoid=' . $result->ipoid ),
-				'delete'        => url('/PurchaseOrder/delete' . '?ipoid=' . $result->ipoid )
-			);
-		}
+		$return = [];
+        $return['draw'] = (int)$input['draw'];
+        $return['recordsTotal'] = $count_total;
+        $return['recordsFiltered'] = $count_records;
+        $return['data'] = $datas;
         
-		$data['results'] = $results;
-		
-		$error_warning = session()->get('warning');
-        if (isset($error_warning)) {
-            $data['error_warning'] = session()->get('warning');
-
-            session()->forget('warning');
-        } else {
-            $data['error_warning'] = '';
-        }
-        
-        $success = session()->get('success');
-        if (isset($success)) {
-            $data['success'] = session()->get('success');
-
-            session()->forget('success');
-        } else {
-            $data['success'] = '';
-        }
+        return response(json_encode($return), 200)
+                  ->header('Content-Type', 'application/json');
         
         
-		return view('purchase_order.purchase_order_list',compact('data', 'purchase_orders'));
 	}
 	
 	public function edit_form(Request $request) 

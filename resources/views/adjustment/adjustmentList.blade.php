@@ -67,28 +67,28 @@
                       <th class="text-center" ><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
                       <th class="text-left text-uppercase"><?php echo $text_number; ?>
                         
-                            <div class="form-group has-search">
+                            <div class="form-group adjustment-has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no">
                             </div>
                       </th>
                       <th class="text-left text-uppercase" ><?php echo $text_created; ?>
                         
-                            <div class="form-group has-search">
+                            <div class="form-group adjustment-has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_created">
                             </div>
                       </th>
                       <th class="text-left text-uppercase" ><?php echo $text_title; ?>
                         
-                            <div class="form-group has-search">
+                            <div class="form-group adjustment-has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_title">
                             </div>
                       </th>
                       <th class="text-left text-uppercase" ><?php echo $text_status; ?>
                         
-                            <div class="form-group has-search">
+                            <div class="form-group adjustment-has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_status">
                             </div>

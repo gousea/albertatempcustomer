@@ -27,7 +27,7 @@ tr:nth-child() {
     -webkit-border-radius: 0 9px 9px 0;
 } 
 
-.has-search .form-control-feedback {
+.adjustment-has-search .form-control-feedback {
     position: absolute;
     z-index: 2;
     display: block;
@@ -37,9 +37,10 @@ tr:nth-child() {
     text-align: center;
     pointer-events: none;
     color: #aaa;
+    /* padding-left: 6px; */
 }
 
-.has-search .form-control {
+.adjustment-has-search .form-control {
     padding-left: 2.375rem;
 }
 

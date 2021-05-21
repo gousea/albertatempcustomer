@@ -253,7 +253,7 @@ footer p {
     width: 2.375rem;
     height: 2.375rem;
     line-height: 2.375rem;
-    padding-left: 6px;
+    /* padding-left: 6px; */
     pointer-events: none;
     color: #aaa;
 }
