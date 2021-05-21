@@ -8,11 +8,11 @@
 
 @section('main-content')
 
-    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue menu">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
-                <div class="menu">
-                    <span class="font-weight-bold text-uppercase"> Vendor</span>
+                <div>
+                    <h6 class="font-weight-bold text-uppercase"> Vendor</h6>
                 </div>
                 <div class="nav-submenu">
                     <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{ route('vendors.create') }}">
@@ -28,7 +28,7 @@
         </div>
     </nav>
 
-    <section class="section-content py-6">
+    <section class="section-content menu">
         @if (session()->has('message'))
             <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i>
                 {{ session()->get('message') }}
@@ -43,7 +43,7 @@
                 @endif
                 <input type="hidden" name="MenuId" value="" />
                 <div class="table-responsive">
-                    <table id="vendor" class="table table-bordered table-hover employeeview">
+                    <table id="vendor" class="table table-hover employeeview">
                         <thead>
                             <tr class="header-color">
                                 <th style="width: 1px; color:black;" class="text-center"><input type="checkbox"
@@ -113,7 +113,7 @@
                                         </a>
                                     </td>
 
-                                    <td class="text-right">
+                                    <td class="text-left">
                                         <a href="{{ route('vendors.edit', $vendor->isupplierid) }}" data-toggle="tooltip"
                                             title="Edit"><span>{{ $vendor->vemail }}</span>
                                         </a>

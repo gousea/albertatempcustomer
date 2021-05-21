@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold"> PROMOTIONS</span>
+                    <h6 class="font-weight-bold text-uppercase"> PROMOTIONS</h6>
                 </div>
                 <div class="nav-submenu">
                     <a type="button" class="btn btn-dark headerwhite buttons_menu basic-button-small" href="#"> PRINT
