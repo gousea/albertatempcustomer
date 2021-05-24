@@ -76,30 +76,7 @@ class PurchaseOrderController extends Controller
         }
 		
 		$data['SID'] = session()->get('sid');
-		$purchase_orders = array();
-        
-		$results = PurchaseOrder::orderBy($sort, $order)->paginate(20);
 		
-		foreach ($results as $result) {
-			
-			$purchase_orders[] = array(
-				'ipoid'  		=> $result->ipoid,
-				'estatus'     	=> $result->estatus,
-				'vponumber' 	=> $result->vponumber,
-				'nnettotal' 	=> $result->nnettotal,
-				'vinvoiceno' 	=> $result->vinvoiceno,
-				'vvendorname'   => $result->vvendorname,
-				'vordertype'  	=> $result->vordertype,
-				'dcreatedate'  	=> $result->dcreatedate,
-				'dreceiveddate' => $result->dreceiveddate,
-				'dlastupdate'  	=> $result->LastUpdate,
-				'view'          => url('/PurchaseOrder/info' . '?ipoid=' . $result->ipoid ),
-				'edit'          => url('/PurchaseOrder/edit' . '?ipoid=' . $result->ipoid ),
-				'delete'        => url('/PurchaseOrder/delete' . '?ipoid=' . $result->ipoid )
-			);
-		}
-        
-		$data['results'] = $results;
 		
 		$error_warning = session()->get('warning');
         if (isset($error_warning)) {
@@ -120,7 +97,7 @@ class PurchaseOrderController extends Controller
         }
         
         
-		return view('purchase_order.purchase_order_list',compact('data', 'purchase_orders'));
+		return view('purchase_order.purchase_order_list',compact('data'));
 	}
 	
 	protected function getSearchList(Request $request) 
@@ -191,7 +168,7 @@ class PurchaseOrderController extends Controller
             $start_from = ($input['start']);
             
             $offset = $input['start']+$input['length']; 
-            $condition = "WHERE ";
+            $condition = "WHERE 1=1";
             $check_condition = 0;
             
             if(isset($search_items['estatus']) && !empty(trim($search_items['estatus']))){

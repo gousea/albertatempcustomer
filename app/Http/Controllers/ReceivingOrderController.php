@@ -250,7 +250,7 @@ class ReceivingOrderController extends Controller
             $start_from = ($input['start']);
             
             $offset = $input['start']+$input['length']; 
-            $condition = "WHERE ";
+            $condition = "WHERE 1=1 ";
             $check_condition = 0;
             
             if(isset($search_items['estatus']) && !empty(trim($search_items['estatus']))){

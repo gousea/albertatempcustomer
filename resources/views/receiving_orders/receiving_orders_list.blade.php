@@ -20,7 +20,7 @@
               <?php if(isset($error_import_barcode) && !empty($error_import_barcode)){ ?>
                   <button class="btn btn-warning buttonred buttons_menu basic-button-small" data-toggle="modal" data-target="#error_import_modal"><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;Import Error Occurs</button>
               <?php } ?>
-              <button class="btn btn-danger buttonred buttons_menu basic-button-small" id="delete_po_btn" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete RO</button>
+              <button class="btn btn-danger buttonred buttons_menu basic-button-small" id="delete_po_btn"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete RO</button>
             </div>
         </div> <!-- navbar-collapse.// -->
     </div>
@@ -54,12 +54,42 @@
                             <thead>
                                 <tr class="header-color">
                                     <th style="width: 1px;" class="text-center"><input type="checkbox" id="main_checkbox" /></th>
-                                    <th class="text-left">Status</th>
-                                    <th class="text-left">PurchaseORD#</th>
-                                    <th class="text-left">Invoice#</th>
-                                    <th class="text-left sample">Total</th>
-                                    <th class="text-left">Vendor Name</th>
-                                    <th class="text-left">Order Type</th>
+                                    <th class="text-left">Status
+                                      <div class="form-group po-has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                      </div>
+                                    </th>
+                                    <th class="text-left">PurchaseORD#
+                                      <div class="form-group po-has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                      </div>
+                                    </th>
+                                    <th class="text-left">Invoice#
+                                      <div class="form-group po-has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                      </div>
+                                    </th>
+                                    <th class="text-left sample">Total
+                                      <div class="form-group po-has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                      </div>
+                                    </th>
+                                    <th class="text-left">Vendor Name
+                                      <div class="form-group po-has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                      </div>
+                                    </th>
+                                    <th class="text-left">Order Type
+                                      <div class="form-group po-has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                      </div>
+                                    </th>
                                     <th class="text-left">Date Created</th>
                                     {{-- <th class="text-left">Date Received</th> --}}
                                     {{-- <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th> --}}
@@ -730,50 +760,27 @@
 <script>
   var url = "<?php echo $data['current_url'];?>";
 
-  $('#receiving_order thead tr').clone(true).removeAttr('style').appendTo( '#receiving_order thead' );
-  $('#receiving_order thead tr:eq(1) th').each( function (i) {
+  $('#receiving_order thead tr th').each( function (i) {
       
-      var title = $(this).text();
-      
-      // console.log(title);
-      if(i == 0)
-      {
-          $(this).html( '' );
-      }
-      
-      else if(title == "Status")
-      {
-          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" ></div>')
-      }
-      else if(title == "PurchaseORD#")
-      {
-          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
-      }
-      else if(title == "Invoice#")
-      {
-          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
-      }
-      else if(title == 'Total')
-      {
-          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
-      }
-      else if(title == 'Vendor Name')
-      {
-          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
-      }
-      else if(title == 'Order Type')
-      {
-          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
-      } 
-      else
-      {
-          $(this).html( '' );
-      }
-      
-      
+      $( this ).on( 'keyup', '.table-heading-fields', function () {
+
+            var self = this;
+            if ( table.column(i).search() !== self.value ) {
+                
+                
+                table
+                    .column(i)
+                    .search( self.value )
+                    .draw();
+                    
+                $("div#divLoading").addClass('show');
+                
+            }
+      });
       
   });
 
+  
 
   var showPaginationPrevNextButtons = false;
   var table =   $("#receiving_order").DataTable({
