@@ -159,9 +159,9 @@
                      
                     
                   } ?>
-             <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+             <table data-toggle="table" data-classes="table table-hover table-condensed promotionview "
                     data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
-                    data-pagination="true" data-click-to-select="true">
+                    data-pagination="true" data-click-to-select="true" style="padding-left: 40px;">
               <thead class='header'>
                   <tr style="display: none;"><th> Date Range: <?php echo $p_start_date; ?> to <?php echo $p_end_date; ?></th></tr>
                   <tr style="display: none;"><th> Store Name: <?php echo $storename; ?></th></tr>
