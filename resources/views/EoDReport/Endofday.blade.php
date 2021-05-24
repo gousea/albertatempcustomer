@@ -18,7 +18,7 @@
     </nav>
 
 <section class="section-content py-6"> 
-        <div class="row" style="padding-bottom: 10px;float: right;">
+        <div class="row" style="padding-bottom: 10px;float: right;display:none;">
             <div class="col-md-12">
             
                 <a id="pdf_export_btn" href="" class="" style="margin-right:10px;">
@@ -36,14 +36,42 @@
             </div>
         </div>
 
+      
+        <div class="row" style="padding-left: 60px;padding-right: 60px">
+                <div class="col-md-3" >
+                    <button  class="form-control headermenublue rcorner"style="height: 60px; "> <b> $100000 <br>YEAR TO DATE SALES </b></button>
+
+                </div>  
+                <div class="col-md-3" >
+                    <button  class="form-control headermenublue rcorner"style="height: 60px; "> <b> $100000 <br>MONTH TO DATE SALES </b></button>
+
+                </div>    
+                <div class="col-md-3" >
+                    <button  class="form-control headermenublue rcorner"style="height: 60px; "> <b> $100000 <br>WEEK TO DATE SALES </b></button>
+
+                </div>    
+                <div class="col-md-3" >
+                    <button  class="form-control headermenublue rcorner"style="height: 60px; "> <b> $100000 <br>TODAYS TO DATE SALES </b></button>
+
+                </div>      
+        </div>
+        <br>
+            
+
+        <div class="row" style="padding-left: 60px;padding-right: 60px">
+                <div class="col-md-12" >
+                    <h6><span>DATE SELECTION </span></h6>
+                </div>    
+        </div>
+
     <form method="post" action="{{ route('EodForm') }}" id="filter_form" class="form-inline" style="padding-left:40px">
           @csrf
                <div class="form-group mx-sm-4 mb-2">
-                    <input type="text" class="date form-control"  name="start_date" value="{{ $date ?? '' }}" id="start_date" placeholder="Date" autocomplete="off">
+                    <input type="text" class="date form-control rcorner"  name="start_date" value="{{ $date ?? '' }}" id="start_date" placeholder="Date" autocomplete="off">
                 </div>
                 
                 <div class="form-group mx-sm-4 mb-2">
-                    <input type="submit" class="btn btn-success" value="Generate">
+                    <input type="submit" class="btn btn-success rcorner" value="Generate">
                 </div> 
        
            
@@ -856,6 +884,29 @@ function myFunction(x) {
 
 </script>
 
+<style>
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
 
+}
+h6 {
+   width: 100%; 
+   text-align: left; 
+   border-bottom: 2px solid; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+   color:#286fb7;
+} 
+
+h6 span { 
+    background:#f8f9fa!important; 
+    padding:0 10px; 
+    color:#286fb7;
+}
+.rcorner {
+  border-radius:9px;
+}
+</style>
 @endsection
 
