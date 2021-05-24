@@ -48,37 +48,37 @@
                                     <thead>
                                         <tr class="header-color">
                                             <th style="width: 1px;" class="text-center"><input type="checkbox" id="main_checkbox" /></th>
-                                            <th class="text-left">Status
+                                            <th class="text-left">&nbsp;&nbsp;Status
                                               <div class="form-group po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                               </div>
                                             </th>
-                                            <th class="text-left">PurchaseORD#
+                                            <th class="text-left">&nbsp;&nbsp;PurchaseORD#
                                               <div class="form-group po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                               </div>
                                             </th>
-                                            <th class="text-left">Invoice#
+                                            <th class="text-left">&nbsp;&nbsp;Invoice#
                                               <div class="form-group po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                               </div>
                                             </th>
-                                            <th class="text-left sample">Total
+                                            <th class="text-left sample">&nbsp;&nbsp;Total
                                               <div class="form-group po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                               </div>
                                             </th>
-                                            <th class="text-left">Vendor Name
+                                            <th class="text-left">&nbsp;&nbsp;Vendor Name
                                               <div class="form-group po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                               </div>
                                             </th>
-                                            <th class="text-left">Order Type
+                                            <th class="text-left">&nbsp;&nbsp;Order Type
                                               <div class="form-group po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
