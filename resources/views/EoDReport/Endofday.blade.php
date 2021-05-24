@@ -66,7 +66,7 @@
 
     <form method="post" action="{{ route('EodForm') }}" id="filter_form" class="form-inline" style="padding-left:40px">
           @csrf
-               <div class="form-group mx-sm-4 mb-2">
+               <div class="form-group mx-sm-4 mb-2 " >
                     <input type="text" class="date form-control rcorner"  name="start_date" value="{{ $date ?? '' }}" id="start_date" placeholder="Date" autocomplete="off">
                 </div>
                 
@@ -110,7 +110,7 @@
         <divs class="row" style="padding-left: 40px;padding-right: 60px">
                              <div class="col-md-4  text-uppercase">
                                   <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>SALES DETAIL </span></h6>
-                                  <table class="tcolor">
+                                  <table class"tcolor">
                                       <tr >
                                           <td class="text-right">Store Sales ( Excluding Tax)</td> 
                                           <td class="text-right"> <button  class="data_list"style="height: 30px;width:150px "><?php echo "$",$data[0]->StoreSalesExclTax; ?> </button></td>
@@ -128,7 +128,7 @@
                                     
                                        <tr>
                                        
-                                      <td class="text-right">Total  Tax &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                      <td class="text-right">Total  Tax </td>
                                       <td class="text-right"> <button  class="data_list"style="height: 30px;width:150px ">{{'$'}}{{$data[0]->TotalTax}} </button></td>
                                        
                                    </tr>
@@ -194,61 +194,62 @@
                                         <tr>
                                            <td class="text-right">Grand Total</td>
                                            <td class="text-right"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->GrandTotal}} </button></td>
-                                 
+                                        </tr> 
                                   </table>
                              </div>
                              
                              
-                             <div class="col-md-4">
+                             <div class="col-md-4 text-uppercase">
                                   <h6><span> <i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>TENDER DETAIL </span></h6>
                                   
                                     @if($data[0]->CashTender !=0)
+                                    <table class"tcolor">
                                         <tr>
-                                            <td class="text-right">CASH </td>
-                                            <td class="text-right"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CashTender}}</button></td>
+                                            <td class="text-right">  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;CASH  </td>
+                                            <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CashTender}}</button></td>
                                         </tr>
                                     @endif
                                         
                                     @if($data[0]->CouponTender !=0)
                                         <tr>
                                             <td class="text-right">COUPON</td>
-                                            <td class="text-right"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CouponTender}}</button></td>
+                                            <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CouponTender}}</button></td>
                                         </tr>
                                     @endif
                                     @if($data[0]->CreditCardTender !=0)
                                         <tr>
                                             <td class="text-right">CREDIT CARD </td>
-                                            <td class="text-right"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CreditCardTender}}</button></td>
+                                            <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CreditCardTender}}</button></td>
                                         </tr>
                                     @endif
                                     @if($data[0]->CheckTender !=0)
                                         <tr>
                                             <td class="text-right">CHECK </td>
-                                            <td class="text-right"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CheckTender}}</button></td>
+                                            <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CheckTender}}</button></td>
                                         </tr>
                                     @endif
                                     @if($data[0]->EbtTender !=0)
                                         <tr>
                                             <td class="text-right">EBT </td>
-                                           <td class="text-right"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->EbtTender}}</button></td>
+                                           <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->EbtTender}}</button></td>
                                         </tr>
                                     @endif
                                     @if($data[0]->HouseAcctCharged !=0)
                                         <tr>
                                             <td class="text-right"> HOUSE ACCTOUNT CHARGED </td>
-                                            <td class="text-right"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCharged}}</button></td>
+                                            <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCharged}}</button></td>
                                         </tr>
                                     @endif
                                     @if($data[0]->HouseAcctCash !=0)
                                         <tr>
                                             <td class="text-right"> HOUSE ACCT PAYMENT CASH  </td>
-                                            <td class="text-right"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCash}}</button></td>
+                                            <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCash}}</button></td>
                                         </tr>
                                     @endif
                                     @if($data[0]->HouseAcctCard !=0)
                                         <tr>
                                             <td class="text-right">HOUSE ACCT PAYMENT CREDITCARD</td>
-                                            <td class="text-right"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCard}}</button></td>
+                                            <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCard}}</button></td>
                                         </tr>
                                     @endif
                                     @if($data[0]->HouseAcctCheck !=0)
@@ -257,276 +258,138 @@
                                             <td class="text-right"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCheck}}</button></td>
                                         </tr>
                                     @endif
-                                   
+                                   </table>
                              </div>
                              
                              
-                             <div class="col-md-4">
+                             <div class="col-md-4 text-uppercase">
                                   <h6><span> <i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>PERFORMANCE STATISTICS</span></h6>
+                                  <table class"tcolor">
+                                    @if($data[0]->Paidouts!=0)
+                                  
+                                    <tr>
+                                      <td class="text-right">Total Paidout</td>
+                                     <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->Paidouts}}</button></td>
+                                        
+                                    </tr>
+                                    @endif
+                                    @if($data[0]->Discounted_Amount!=0)
+                                        <tr>
+                                      <td class="text-right">Discounted Amount </td>
+                                        <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->Discounted_Amount}}</button></td>
+                                        
+                                    </tr>
+                                    @endif
+                                    @if($data[0]->Discounted_Trns!=0)
+                                        <tr>
+                                      <td class="text-right">Discounted Transactions</td>
+                                         <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->Discounted_Trns}}</button></td>
+                                        
+                                    </tr>
+                                    @endif
+                                    @if($data[0]->Void_Trns!=0)
+                                        <tr>
+                                      <td class="text-right">Voided Transactions</td>
+                                        <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{$data[0]->Void_Trns}}</button></td>
+                                    </tr>
+                                    @endif
+                                    @if($data[0]->Void_Amount!=0) 
+                                        <tr>
+                                      <td class="text-right">Voided Amount</td>
+                                        <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->Void_Amount}}</button></td>
+                                    </tr>
+                                    @endif
+                                    @if($data[0]->Deleted_Trns!=0)
+                                        <tr>
+                                      <td class="text-right">Deleted Transactions</td>
+                                         <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{$data[0]->Deleted_Trns}}</button></td>
+                                        
+                                    </tr>
+                                    @endif
+                                    @if($data[0]->Deleted_Amount!=0)
+                                        <tr>
+                                        <td class="text-right">Deleted Total  </td>
+                                        <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->Deleted_Amount}}</button></td>
+                                        
+                                    </tr>
+                                    @endif
+                                    
+                                        <tr>
+                                        <td class="text-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Return Transactions</td>
+                                        <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{$data[0]->Return_Trns}}</button></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                      <td class="text-right">Return Amount </td>
+                                      <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->Return_Amount}}</button></td>
+                                        
+                                    </tr>
+                                    @if($data[0]->NoSale_Count!=0)
+                                        <tr>
+                                      <td class="text-right">No Sale Transactions</td>
+                                        <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->NoSale_Count}}</button></td>
+                                    </tr>
+                                    @endif
+                                    @if(isset($data[0]->Surcharges) && $data[0]->Surcharges!=0)
+                                        <tr>
+                                      <td class="text-right">Surcharges Collected</td>
+                                        <td class="text-right"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->Surcharges}}</button></td>
+                                    </tr>
+                                    @endif
+                                    @if(isset($data[0]->EbtTaxExempted) && $data[0]->EbtTaxExempted!=0)
+                                        <tr>
+                                      <td class="text-right">EBT Tax Exempted</td>
+                                        <td class="text-right"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->EbtTaxExempted}}</button></td>
+                                    </tr>
+                                    @endif
+                                  </table>
                              </div>
+                             
+                             
         </div>      
         
         
-        <div class="row">
-              <div class="table-responsive">
-                <div class="col-md-12">
-                    <div class="col-md-6">
-                    <table class="table table-bordered table-striped table-hover">
-                          
-                        
-                        @if($data[0]->LotterySales!=0 || $data[0]->instantSales!=0 || $data[0]->LotteryRedeem!=0 || $data[0]->InstantRedeem!=0)
-                            <tr > 
-                            <th style=" text-align:center;border-style: none;background-color:white;"> LOTTERY SALES DETAILS </th>
-                            <td style=" text-align:center;border-left: none;background-color:white;"></td>
-                        </tr>
-                        @if($data[0]->LotterySales!=0)
-                            <tr>
-                                    <td>Lottery Sales</td>
-                                    <td class="text-right">{{'$'}}{{$data[0]->LotterySales}}</td>
-                                </tr>
-                        @endif   
-                        @if($data[0]->instantSales!=0)
-                            <tr >
-                                    <td>Instant Sales</td>
-                                    <td class="text-right">{{'$'}}{{$data[0]->instantSales}}</td>
-                                </tr>
-                        @endif   
-                        @if($data[0]->LotteryRedeem!=0)
-                            <tr >
-                                    <td>Lottery Redeem </td>
-                                   <td class="text-right">{{'$'}}{{$data[0]->LotteryRedeem}}</td>
-                                </tr>
-                        @endif  
-                        @if($data[0]->InstantRedeem!=0)
-                            <tr >
-                                    <td>Instant Redeem</td>
-                                    <td class="text-right">{{'$'}}{{$data[0]->InstantRedeem}}</td>
-                                    
-                                 </tr>
-                        @endif 
-                        @endif 
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                        @if($data[0]->bottledeposit!=0 || $data[0]->bottledepositredeem!=0 || $data[0]->bottledeposittax!=0||  $data[0]->bottledepositredeemtax!=0)
-                            <tr > 
-                                <th style=" text-align:center;border-style: none;background-color:white;"> BOTTLE DEPOSIT </th>
-                                <td style=" text-align:center;border-left: none;background-color:white;"></td>
-                            </tr>
+        <divs class="row" style="padding-left: 40px;padding-right: 60px">
+                            <div class="col-md-4  text-uppercase">
+                                  <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>Productivity</span></h6>
+                                        <table class"tcolor">
+                                          <tr>
+                                           
+                                            <td class="text-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transaction Count</td>
+                                            <td class="text-right"><button  class="data_list" style="height: 30px;width:150px ">{{$data[0]->Trns_Count}}</button></td>
+                                            
+                                        </tr>
+                                            <tr>
+                                            <td class="text-right">Average Sales: </td>
+                                           <td class="text-right"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->Avg_Sales}}</button></td>
+                                            
+                                        </tr>
+                                            <tr>
+                                            <td class="text-right">Gross Cost: </td>
+                                           <td class="text-right"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->Gross_Cost}}</button></td>
+                                        </tr>
+                                            <tr>
+                                            <td class="text-right">Gross Profit: </td>
+                                            <td class="text-right"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->Gross_Profit}}</button></td>
+                                        </tr>
+                                            <tr>
+                                            <td class="text-right">Gross Profit(%): </td>
+                                            <td class="text-right"><button  class="data_list" style="height: 30px;width:150px ">{{$data[0]->Gross_Profit_Per}}</button></td>
+                                            
+                                        </tr>
+                                       
+                                        </table> 
+                            </div>
                             
-                        @if($data[0]->bottledeposit!=0)
-                            <tr >
-                            <td>Bottle Deposit</td>
-                             <td class="text-right">{{'$'}}{{$data[0]->bottledeposit}}</td>
-                            
-                        </tr>
-                        @endif 
-                        @if($data[0]->bottledepositredeem!=0)
-                            <tr >
-                            <td>Bottle Deposit Redeem</td>
-                             <td class="text-right">{{'$'}}{{$data[0]->bottledepositredeem}}</td>
-                        </tr>  
-                        @endif 
-                        @if($data[0]->bottledeposittax!=0)
-                            <tr>
-                            <td>Bottle Deposit Tax</td>
-                             <td class="text-right">{{'$'}}{{$data[0]->bottledeposittax}}</td>
-                        </tr>  
-                        @endif 
-                         @if($data[0]->bottledepositredeemtax!=0)
-                            <tr >
-                            <td>Bottle Deposit Redeem Tax</td>
-                             <td class="text-right">{{'$'}}{{$data[0]->bottledepositredeemtax}}</td>
-                        </tr>  
-                        @endif 
-                          <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                     @endif 
-                          
-                          
-                    @if($data[0]->CashTender !=0 || $data[0]->CouponTender !=0 || $data[0]->CreditCardTender !=0 || $data[0]->CheckTender !=0 || $data[0]->EbtTender !=0 || $data[0]->HouseAcctCharged !=0 || $data[0]->HouseAcctCash !=0 || $data[0]->HouseAcctCard !=0 || $data[0]->HouseAcctCheck !=0)  
-                            <tr > 
-                                <th style=" text-align:center;border-style: none;background-color:white;"> TENDER DETAILS </th>
-                                <td style=" text-align:center;border-left: none;background-color:white;"></td>
-                            </tr>
-                        
-                        @if($data[0]->CashTender !=0)
-                            <tr>
-                                <td>CASH </td>
-                                <td class="text-right">{{'$'}}{{$data[0]->CashTender}}</td>
-                            </tr>
-                        @endif
-                            
-                        @if($data[0]->CouponTender !=0)
-                            <tr>
-                                <td>COUPON</td>
-                                <td class="text-right">{{'$'}}{{$data[0]->CouponTender}}</td>
-                            </tr>
-                        @endif
-                        @if($data[0]->CreditCardTender !=0)
-                            <tr>
-                                <td>CREDIT CARD </td>
-                                <td class="text-right">{{'$'}}{{$data[0]->CreditCardTender}}</td>
-                            </tr>
-                        @endif
-                        @if($data[0]->CheckTender !=0)
-                            <tr>
-                                <td>CHECK </td>
-                                <td class="text-right">{{'$'}}{{$data[0]->CheckTender}}</td>
-                            </tr>
-                        @endif
-                        @if($data[0]->EbtTender !=0)
-                            <tr>
-                                <td>EBT </td>
-                                <td class="text-right">{{'$'}}{{$data[0]->EbtTender}}</td>
-                            </tr>
-                        @endif
-                        @if($data[0]->HouseAcctCharged !=0)
-                            <tr>
-                                <td> HOUSE ACCTOUNT CHARGED </td>
-                                <td class="text-right">{{'$'}}{{$data[0]->HouseAcctCharged}}</td>
-                            </tr>
-                        @endif
-                        @if($data[0]->HouseAcctCash !=0)
-                            <tr>
-                                <td> HOUSE ACCT PAYMENT CASH  </td>
-                                <td class="text-right">{{'$'}}{{$data[0]->HouseAcctCash}}</td>
-                            </tr>
-                        @endif
-                        @if($data[0]->HouseAcctCard !=0)
-                            <tr>
-                                <td>HOUSE ACCT PAYMENT CREDITCARD</td>
-                                <td class="text-right">{{'$'}}{{$data[0]->HouseAcctCard}}</td>
-                            </tr>
-                        @endif
-                        @if($data[0]->HouseAcctCheck !=0)
-                            <tr>
-                                <td>  HOUSE ACCT PAYMENT CHECK </td>
-                                <td class="text-right">{{'$'}}{{$data[0]->HouseAcctCheck}}</td>
-                            </tr>
-                        @endif
-                            <tr>
-                            <td>&nbsp;</td>
-                            <td><?php echo ""; ?></td>
-                            
-                       @endif        
-                        </tr>
-                            <tr > 
-                            <th style=" text-align:center;border-style: none;background-color:white;"> Performance Statstic </th>
-                            <td style=" text-align:center;border-left: none;background-color:white;"></td>
-                        </tr>
-                        @if($data[0]->Paidouts!=0)
-                            <tr>
-                            <td>Total Paidout</td>
-                            <td class="text-right">{{'$'}}{{$data[0]->Paidouts}}</td>
-                            
-                        </tr>
-                        @endif
-                        @if($data[0]->Discounted_Amount!=0)
-                            <tr>
-                            <td>Discounted Amount </td>
-                           <td class="text-right">{{'$'}}{{$data[0]->Discounted_Amount}}</td>
-                            
-                        </tr>
-                        @endif
-                        @if($data[0]->Discounted_Trns!=0)
-                            <tr>
-                            <td>Discounted Transactions</td>
-                            <td class="text-right">{{'$'}}{{$data[0]->Discounted_Trns}}</td>
-                            
-                        </tr>
-                        @endif
-                        @if($data[0]->Void_Trns!=0)
-                            <tr>
-                            <td>Voided Transactions</td>
-                           <td class="text-right">{{$data[0]->Void_Trns}}</td>
-                        </tr>
-                        @endif
-                        @if($data[0]->Void_Amount!=0) 
-                            <tr>
-                            <td>Voided Amount</td>
-                           <td class="text-right">{{'$'}}{{$data[0]->Void_Amount}}</td>
-                        </tr>
-                        @endif
-                        @if($data[0]->Deleted_Trns!=0)
-                            <tr>
-                            <td>Deleted Transactions</td>
-                            <td class="text-right">{{$data[0]->Deleted_Trns}}</td>
-                            
-                        </tr>
-                        @endif
-                        @if($data[0]->Deleted_Amount!=0)
-                            <tr>
-                            <td>Deleted Total  </td>
-                           <td class="text-right">{{'$'}}{{$data[0]->Deleted_Amount}}</td>
-                            
-                        </tr>
-                        @endif
-                            <tr>
-                            <td>Return Transactions</td>
-                           <td class="text-right">{{$data[0]->Return_Trns}}</td>
-                        </tr>
-                            <tr>
-                            <td>Return Amount </td>
-                            <td class="text-right">{{'$'}}{{$data[0]->Return_Amount}}</td>
-                            
-                        </tr>
-                        @if($data[0]->NoSale_Count!=0)
-                            <tr>
-                            <td>No Sale Transactions</td>
-                           <td class="text-right">{{'$'}}{{$data[0]->NoSale_Count}}</td>
-                        </tr>
-                        @endif
-                        @if(isset($data[0]->Surcharges) && $data[0]->Surcharges!=0)
-                            <tr>
-                            <td>Surcharges Collected</td>
-                           <td class="text-right">{{'$'}}{{$data[0]->Surcharges}}</td>
-                        </tr>
-                        @endif
-                        @if(isset($data[0]->EbtTaxExempted) && $data[0]->EbtTaxExempted!=0)
-                            <tr>
-                            <td>EBT Tax Exempted</td>
-                           <td class="text-right">{{'$'}}{{$data[0]->EbtTaxExempted}}</td>
-                        </tr>
-                        @endif
-                            <tr>
-                            <td>&nbsp;</td>
-                            <td><?php echo ""; ?></td>
-                        </tr>
-                            <tr > 
-                            <th style=" text-align:center;border-style: none;background-color:white;">Productivity </th>
-                            <td style=" text-align:center;border-left: none;background-color:white;"></td>
-                        </tr>
-                            <tr>
-                            <td>Transaction Count</td>
-                            <td class="text-right">{{$data[0]->Trns_Count}}</td>
-                            
-                        </tr>
-                            <tr>
-                            <td>Average Sales: </td>
-                           <td class="text-right">{{'$'}}{{$data[0]->Avg_Sales}}</td>
-                            
-                        </tr>
-                            <tr>
-                            <td>Gross Cost: </td>
-                           <td class="text-right">{{'$'}}{{$data[0]->Gross_Cost}}</td>
-                        </tr>
-                            <tr>
-                            <td>Gross Profit: </td>
-                           <td class="text-right">{{'$'}}{{$data[0]->Gross_Profit}}</td>
-                        </tr>
-                            <tr>
-                            <td>Gross Profit(%): </td>
-                            <td class="text-right">{{$data[0]->Gross_Profit_Per}}</td>
-                            
-                        </tr>
-                    </table>                
-                </div> 
-                </div> 
-             </div>
+                             <div class="col-md-8  text-uppercase">
+                                  <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i> PAID OUT</span></h6>
+                                        <table class"tcolor">
+                                          <tr>
+                                              
+                                          </tr>
+                                        </table> 
+                            </div>
+        </div>               
         </div>  
                     <!--  Paid out section -->
         <div class="row">
@@ -750,12 +613,17 @@
 @section('page-script')
 
    
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+    
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+    
+
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.js"></script>
   
-    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.min.js"></script>
-
 
 <script>
 
@@ -779,6 +647,10 @@ const saveData = (function () {
       format: 'mm-dd-yyyy',
       todayHighlight: true,
       autoclose: true,
+         widgetPositioning:{
+                                horizontal: 'auto',
+                                vertical: 'bottom'
+                            }
       
       
     });
