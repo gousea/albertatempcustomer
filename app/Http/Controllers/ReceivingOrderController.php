@@ -195,117 +195,149 @@ class ReceivingOrderController extends Controller
 		    $order = 'DESC';
 		}
         
-		$data['current_url'] = url('/ReceivingOrder');
-		$data['add'] = url('/ReceivingOrder/add');
-		$data['edit'] = url('/ReceivingOrder/edit');
-		$data['delete'] = url('/ReceivingOrder/delete');
-		$data['edit_list'] = url('/ReceivingOrder/edit_list');
+		$search_value = $input['columns'];
         
-		$data['import_invoice_new'] = url('/ReceivingOrder/import_invoice_new');
-		$data['import_missing_items'] = url('/ReceivingOrder/import_missing_items');
-		$data['get_vendor_data'] = url('/ReceivingOrder/get_vendor_data');
-		
-        if($order == 'DESC'){
-            $data['sort_estatus'] = url('/ReceivingOrder?sort=estatus&order=ASC');
-            $data['sort_vponumber'] = url('/ReceivingOrder?sort=vponumber&order=ASC');
-            $data['sort_vvendorname'] = url('/ReceivingOrder?sort=vvendorname&order=ASC');
-            $data['sort_vordertype'] = url('/ReceivingOrder?sort=vordertype&order=ASC');
-            $data['sort_dcreatedate'] = url('/ReceivingOrder?sort=dcreatedate&order=ASC');
-            $data['sort_dreceiveddate'] = url('/ReceivingOrder?sort=dreceiveddate&order=ASC');
-            $data['sort_LastUpdate'] = url('/ReceivingOrder?sort=LastUpdate&order=ASC');
-        }else{
-            $data['sort_estatus'] = url('/ReceivingOrder');
-            $data['sort_vponumber'] = url('/ReceivingOrder');
-            $data['sort_vvendorname'] = url('/ReceivingOrder');
-            $data['sort_vordertype'] = url('/ReceivingOrder');
-            $data['sort_dcreatedate'] = url('/ReceivingOrder');
-            $data['sort_dreceiveddate'] = url('/ReceivingOrder');
-            $data['sort_LastUpdate'] = url('/ReceivingOrder');
+        $search_items = [];
+        foreach($search_value as $value)
+        {
+            if($value["data"] == "estatus")
+            {
+                $search_items['estatus'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vponumber")
+            {
+                $search_items['vponumber'] = $value['search']['value'];
+            }
+            else if($value["data"] == "nnettotal")
+            {
+                $search_items['nnettotal'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vinvoiceno")
+            {
+                $search_items['vinvoiceno'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vvendorname")
+            {
+                $search_items['vvendorname'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vordertype")
+            {
+                $search_items['vordertype'] = $value['search']['value'];
+            }
+            
         }
 		
 		$data['SID'] = session()->get('sid');
-		$receiving_orders = array();
+		
         
-        if(isset($input['searchbox'])){
+        if(empty(trim($search_items['estatus'])) && empty(trim($search_items['vponumber'])) && empty(trim($search_items['nnettotal'])) && empty(trim($search_items['vinvoiceno'])) &&  empty(trim($search_items['vvendorname'])) && empty(trim($search_items['vordertype']))  )
+        {
+            $limit = 20;
             
-            $data['searchbox'] = $search = $input['searchbox'];
+            $start_from = ($input['start']);
+
+            $select_query = "SELECT * FROM trn_receivingorder LIMIT ". $input['start'].", ".$limit;
+
+            $count_select_query = "SELECT COUNT(distinct iroid) as count FROM trn_receivingorder";
+            $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
+            $count_query = isset($count_query[0])?(array)$count_query[0]:[];
             
-            $results = ReceivingOrder::where(function($query) use ($search) {
-                                     
-                                            $query->where('vponumber', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('vordertitle', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('vvendorname', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('vinvoiceno', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('estatus', 'LIKE', '%'.$search.'%');
-                                        })
-                                        ->orderBy($sort, $order)
-                                        ->paginate(20);
+            $count_records = $count_total = (int)$count_query['count'];
+
         }else{
-            $results = ReceivingOrder::orderBy($sort, $order)->paginate(20);
-        }
-		
-		foreach ($results as $result) {
-			
-			$receiving_orders[] = array(
-				'iroid'  		=> $result->iroid,
-				'estatus'     	=> $result->estatus,
-				'vponumber' 	=> $result->vponumber,
-				'nnettotal' 	=> $result->nnettotal,
-				'vinvoiceno' 	=> $result->vinvoiceno,
-				'vvendorname'   => $result->vvendorname,
-				'vordertype'  	=> $result->vordertype,
-				'dcreatedate'  	=> $result->dcreatedate,
-				'dreceiveddate' => $result->dreceiveddate,
-				'dlastupdate'  	=> $result->LastUpdate,
-				'view'          => url('/ReceivingOrder/info' . '?iroid=' . $result->iroid ),
-				'edit'          => url('/ReceivingOrder/edit' . '?iroid=' . $result->iroid ),
-				'delete'        => url('/ReceivingOrder/delete' . '?iroid=' . $result->iroid )
-			);
-		}
-        
-		$data['results'] = $results;
-		
-		$ReceivingOrder = new ReceivingOrder;
-		$missing_item_results = $ReceivingOrder->getMissingItems();
-        
-		$missing_items = array();
-        
-		if(count($missing_item_results) > 0){
-			foreach ($missing_item_results as $missing_item_result) {
-			
-				$missing_items[] = array(
-					'imitemid'  		=> $missing_item_result['imitemid'],
-					'estatus'     	=> $missing_item_result['estatus'],
-					'vbarcode' 	=> $missing_item_result['vbarcode'],
-					'vitemname' 	=> $missing_item_result['vitemname'],
-					'vvendorname' 	=> $missing_item_result['vvendorname'],
-					'vponumber'   => $missing_item_result['vponumber']
-				);
-			}
-		}
-		
-		$data['vendors'] = $suppliers = Supplier::where('edi', '1')->orderBy('vcompanyname', 'ASC')->get()->toArray();
-		
-		$error_warning = session()->get('warning');
-        if (isset($error_warning)) {
-            $data['error_warning'] = session()->get('warning');
+            $limit = 20;
+            
+            $start_from = ($input['start']);
+            
+            $offset = $input['start']+$input['length']; 
+            $condition = "WHERE ";
+            $check_condition = 0;
+            
+            if(isset($search_items['estatus']) && !empty(trim($search_items['estatus']))){
+                $search = ($search_items['estatus']);
+                $condition .= " AND estatus LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vponumber']) && !empty(trim($search_items['vponumber']))){
+                $search = ($search_items['vponumber']);
+                $condition .= " AND vponumber LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
 
-            session()->forget('warning');
-        } else {
-            $data['error_warning'] = '';
-        }
-        
-        $success = session()->get('success');
-        if (isset($success)) {
-            $data['success'] = session()->get('success');
+            if(isset($search_items['nnettotal']) && !empty(trim($search_items['nnettotal']))){
+                $search = ($search_items['nnettotal']);
+                $condition .= " AND nnettotal LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vinvoiceno']) && !empty(trim($search_items['vinvoiceno']))){
+                $search = ($search_items['vinvoiceno']);
+                $condition .= " AND vinvoiceno LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
 
-            session()->forget('success');
-        } else {
-            $data['success'] = '';
+            if(isset($search_items['vvendorname']) && !empty(trim($search_items['vvendorname']))){
+                $search = ($search_items['vvendorname']);
+                $condition .= " AND vvendorname LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vordertype']) && !empty(trim($search_items['vordertype']))){
+                $search = ($search_items['vordertype']);
+                $condition .= " AND vordertype LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            $select_query = "SELECT * FROM trn_receivingorder ".$condition." LIMIT ". $input['start'].", ".$limit;
+
+            $count_select_query = "SELECT COUNT(distinct iroid) as count FROM trn_receivingorder ".$condition;
+            $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
+            $count_query = isset($count_query[0])?(array)$count_query[0]:[];
+            
+            $count_records = $count_total = (int)$count_query['count'];
         }
+        // dd($select_query);
+        $query = DB::connection('mysql_dynamic')->select($select_query);
         
-		return view('receiving_orders.receiving_orders_list',compact('data', 'receiving_orders', 'missing_items'));
-	}
+		$data['SID'] = session()->get('sid');
+		$purchase_orders = array();
+        
+        if(count($query) > 0){
+            foreach ($query as $key => $value) {
+
+                if($value->estatus == 'Close'){
+                    $view_edit = url('/ReceivingOrder/info' . '?iroid=' . $value->ipoid );
+                }else{
+                    $view_edit = url('/ReceivingOrder/edit' . '?iroid=' . $value->ipoid );
+                }
+                $temp = array();
+                $temp['iroid']          = $value->ipoid;
+                $temp['estatus']        = $value->estatus;
+                $temp['vponumber']      = $value->vponumber;
+                $temp['nnettotal']      = $value->nnettotal;
+                $temp['vinvoiceno']     = $value->vinvoiceno;
+                $temp['vvendorname']    = $value->vvendorname;
+                $temp['vordertype']     = $value->vordertype;
+                $temp['dcreatedate']    = $value->dcreatedate;
+                $temp['dreceiveddate']  = $value->dreceiveddate;
+                $temp['LastUpdate']     = $value->LastUpdate;
+                $temp['view_edit']      = $view_edit;
+				$temp['delete']         = url('/ReceivingOrder/delete' . '?ipoid=' . $value->ipoid );
+
+                $datas[]                = $temp;
+            }
+        }
+		
+		$return = [];
+        $return['draw'] = (int)$input['draw'];
+        $return['recordsTotal'] = $count_total;
+        $return['recordsFiltered'] = $count_records;
+        $return['data'] = $datas;
+        
+        return response(json_encode($return), 200)
+                  ->header('Content-Type', 'application/json');
+    }
 	
 	public function edit_form(Request $request) 
 	{

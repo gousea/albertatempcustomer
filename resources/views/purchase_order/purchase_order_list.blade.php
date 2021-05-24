@@ -43,7 +43,7 @@
                         
                             <div class="table-responsive">
                                 <table id="purchase_order" class="table table-hover" data-classes="table table-hover table-condensed promotionview"
-                                data-row-style="rowColors" data-striped="true" data-click-to-select="true">
+                                    data-row-style="rowColors" data-striped="true" data-click-to-select="true">
                                 
                                     <thead>
                                         <tr class="header-color">
@@ -158,6 +158,7 @@
 
 <script type="text/javascript">
     $(document).on('click', '#main_checkbox', function(event) {
+        console.log($(this).prop('checked')+"jhjh")
         if ($(this).prop('checked')==true){ 
             $('input[name="selected[]"]').not(":disabled").prop('checked', true);
         }else{
@@ -284,23 +285,23 @@
             }
             else if(title == "PurchaseORD#")
             {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no"></div>')
+                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
             }
             else if(title == "Invoice#")
             {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no"></div>')
+                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
             }
             else if(title == 'Total')
             {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no"></div>')
+                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
             }
             else if(title == 'Vendor Name')
             {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no"></div>')
+                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
             }
             else if(title == 'Order Type')
             {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no"></div>')
+                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
             } 
             else
             {
@@ -337,7 +338,7 @@
             //     main_checkbox = $('#main_checkbox').is(":checked");
         
             // },
-            "dom": 't<"bottom"i<"float-right"p>>',
+            "dom": 't<"bottom col-md-12 row"<"col-md-3"i><"col-md-9"p>>',
             "ajax": {
             url: url,
             headers: {
@@ -371,7 +372,7 @@
                                         type: 'checkbox',
                                         class: "ipoid",
                                         value: data,
-                                        name: "selected_items_id[]",
+                                        name: "selected[]",
                                         "data-order": data,
                                 })[0].outerHTML;
                                 
@@ -400,7 +401,7 @@
                         $(this).find('.dataTables_empty').hide();
                     }
                     
-                    
+                    $(this).addClass('promotionview');
                     
             }
         }).on('draw', function(){
@@ -416,6 +417,8 @@
                 }
                 $("div#divLoading").removeClass('show');
         });
+
+        $("#purchase_order_paginate").addClass("pull-right");
     </script>
   
   @endsection

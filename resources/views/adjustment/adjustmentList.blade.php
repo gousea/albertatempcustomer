@@ -240,12 +240,15 @@
 
 
     var table = $('#adjustment_detail').DataTable({
-        "dom": 't<"bottom"li<"float-right"p>><"clear">',
+        "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
         "searching":false,
         "ordering": false,
         
         "pageLength":20,
       });
+
+      $("#adjustment_detail_paginate").addClass("pull-right");
+
   </script>
 
 @endsection

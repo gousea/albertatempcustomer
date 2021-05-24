@@ -42,122 +42,37 @@
         <div class="panel panel-default">
             
             <div class="panel-body">
-                
-                
-              <form action="<?php echo $data['current_url'];?>" method="post" id="form_order_search">
-                  @csrf
-                  <div class="row">
-                    <div class="col-md-12 form-inline" style="justify-content: flex-end; margin-left:-28px;">
-                        
-                            <input type="text" name="searchbox" value="<?php echo isset($data['searchbox']) ? $data['searchbox']: ''; ?>" class="form-control" placeholder="Search..." autocomplete="off">
-                        
-                            &nbsp;&nbsp;<input type="submit" name="Filter" value="Search" class="btn btn-info buttons_menu">
-                        
-                    </div>
-                  </div>
-              </form>
-                
-                <br>
+            
                 
                 <form action="" method="post" enctype="multipart/form-data" id="form-purchase-order">
                 
                     <div class="table-responsive">
-                        <table id="purchase_order" class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
-                        data-row-style="rowColors" data-striped="true" data-click-to-select="true">
-                            <thead class="header-color">
-                                <tr>
+                      <div class="table-responsive">
+                        <table id="receiving_order" class="table table-hover" data-classes="table table-hover table-condensed promotionview"
+                            data-row-style="rowColors" data-striped="true" data-click-to-select="true">
+                        
+                            <thead>
+                                <tr class="header-color">
                                     <th style="width: 1px;" class="text-center"><input type="checkbox" id="main_checkbox" /></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_estatus'];?>">Status</a></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vponumber'];?>">PurchaseORD#</a></th>
+                                    <th class="text-left">Status</th>
+                                    <th class="text-left">PurchaseORD#</th>
                                     <th class="text-left">Invoice#</th>
                                     <th class="text-left sample">Total</th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vvendorname'];?>">Vendor Name</a></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vordertype'];?>">Order Type</a></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_dcreatedate'];?>">Date Created</a></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_dreceiveddate'];?>">Date Received</a></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th>
+                                    <th class="text-left">Vendor Name</th>
+                                    <th class="text-left">Order Type</th>
+                                    <th class="text-left">Date Created</th>
+                                    {{-- <th class="text-left">Date Received</th> --}}
+                                    {{-- <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th> --}}
                                     <th class="text-left">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php if ($receiving_orders) { ?>
-                                    <?php $purchase_order_row = 1;$i=0; $bg = '#fff';?>
-                                    <?php foreach ($receiving_orders as $purchase_order) { ?>
-                                        
-                                        <?php 
-                                            if($purchase_order['estatus'] == 'Close'){
-                                                $bg = '#FCEBCF';
-                                            } else {
-                                                $bg = '#fff';
-                                            } 
-                                        ?>
-                                        
-                                        <tr id="purchase_order-row<?php echo $purchase_order_row; ?>">
-                                            <td data-order="<?php echo $purchase_order['iroid']; ?>" class="text-center" style="background:<?php echo $bg; ?>">
-                                                <span style="display:none;"><?php echo $purchase_order['iroid']; ?></span>
-                                                <input type="checkbox" name="selected[]" id="purchase_order[<?php echo $purchase_order_row; ?>][select]"  value="<?php echo $purchase_order['iroid']; ?>" <?php if($purchase_order['estatus'] == 'Close'){?> disabled <?php } ?> />
-                                             </td>
-                                                
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['estatus']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['vponumber']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['vinvoiceno']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['nnettotal']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['vvendorname']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['vordertype']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['dcreatedate']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['dreceiveddate']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['dlastupdate']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <?php if($purchase_order['estatus'] == 'Close'){?>
-                                                    <a href="<?php echo $purchase_order['edit']; ?>" data-toggle="tooltip" title="View" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-eye"></i>&nbsp;&nbsp;View
-                                                    </a>
-                                                <?php } else {?>
-                                                    <a href="<?php echo $purchase_order['edit']; ?>" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit
-                                                    </a>
-                                                <?php } ?>
-                                            </td>
-                                        </tr>
-                                        <?php $purchase_order_row++; $i++;?>
-                                    <?php } ?>
-                                <?php } else { ?>
-                                    <tr>
-                                      <td colspan="7" class="text-center">Sorry no data found!</td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
+                        
+                        
                         </table>
                     </div>
+                    </div>
                 </form>
-                <div class="row">
-                  {{$data['results']->links()}}
-                </div>
+                
             </div>
         </div>
     </div>
@@ -270,6 +185,7 @@
     }
 </style>
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">
 
 <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
 <script type="text/javascript">
@@ -810,5 +726,162 @@
     	break-before: always;
     }
   </style>
+
+<script>
+  var url = "<?php echo $data['current_url'];?>";
+
+  $('#receiving_order thead tr').clone(true).removeAttr('style').appendTo( '#receiving_order thead' );
+  $('#receiving_order thead tr:eq(1) th').each( function (i) {
+      
+      var title = $(this).text();
+      
+      // console.log(title);
+      if(i == 0)
+      {
+          $(this).html( '' );
+      }
+      
+      else if(title == "Status")
+      {
+          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" ></div>')
+      }
+      else if(title == "PurchaseORD#")
+      {
+          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
+      }
+      else if(title == "Invoice#")
+      {
+          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
+      }
+      else if(title == 'Total')
+      {
+          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
+      }
+      else if(title == 'Vendor Name')
+      {
+          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
+      }
+      else if(title == 'Order Type')
+      {
+          $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no"></div>')
+      } 
+      else
+      {
+          $(this).html( '' );
+      }
+      
+      
+      
+  });
+
+
+  var showPaginationPrevNextButtons = false;
+  var table =   $("#receiving_order").DataTable({
+      "bSort": false,
+      // "scrollY":"300px",
+      // "autoWidth": true,
+      "fixedHeader": true,
+      "processing": true,
+      "iDisplayLength": 20,
+      "serverSide": true,
+      "bLengthChange": false,
+      "aoColumnDefs": [
+          { "sWidth": "190px", "aTargets": [ 7 ] },
+          
+      ],
+      //"autoWidth": true,
+
+      "language": {
+          search: "_INPUT_",
+          searchPlaceholder: "Search..."
+      },
+      // "fnPreDrawCallback": function( oSettings ) {
+      
+      //     main_checkbox = $('#main_checkbox').is(":checked");
+  
+      // },
+      "dom": 't<"bottom col-md-12 row"<"col-md-3"i><"col-md-9"p>>',
+      "ajax": {
+      url: url,
+      headers: {
+              'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+      },
+      "data": function(d){
+          d["m_check"] = $('#main_checkbox').is(":checked");
+          
+      },
+      type: 'POST',
+      "dataSrc": function ( json ) {
+              
+              if(json.data.length != 0){
+              $(".bottom").show();  
+              
+              } else {
+              $(".bottom").hide(); 
+              
+              }
+              
+              return json.data;
+          } 
+      },
+      
+      columns :  [
+                  {
+                      data: "ipoid", render: function(data, type, row){
+                          
+                          return $("<input>").attr({
+                                  // checked: !uncheckedBoxes[data],
+                                  type: 'checkbox',
+                                  class: "ipoid",
+                                  value: data,
+                                  name: "selected[]",
+                                  "data-order": data,
+                          })[0].outerHTML;
+                          
+                      }
+                  },
+                  { "data": "estatus"},
+                  
+                  { "data": "vponumber"},
+                  { "data": "vinvoiceno"},
+                  { "data": "nnettotal"},
+                  { "data": "vvendorname"},
+                  {"data": "vordertype"},
+                  {"data": "dcreatedate"},
+                  
+                  { "data": "view_edit", render: function(data, type, row){
+                          return "<a href="+data+" data-toggle='tooltip' title='View' class='btn btn-sm btn-info edit_btn_rotate' ><i class='fa fa-eye'></i>&nbsp;&nbsp;View</a>";
+                    }
+                },
+                  
+          ],
+          rowCallback: function(row, data, index){
+              
+      },
+      fnDrawCallback : function() {
+              if ($(this).find('tbody tr').length<=1) {
+                  $(this).find('.dataTables_empty').hide();
+              }
+              
+              // $(this).removeClass('promotionview');
+              $(this).addClass('promotionview');
+              console.log("check")
+      }
+  }).on('draw', function(){
+              if($('#main_checkbox').prop("checked") == true){
+                  
+                  $('.iitemid').prop('checked', true);
+              } else{ 
+                  $('.iitemid').prop('checked', false);   
+              }
+              // console.log($(this).find('tbody tr .iitemid').length);
+          if ($(this).find('tbody tr .iitemid').length>0) {
+              $('#buttonEditMultipleItems').prop('disabled', false);
+          }
+          $("div#divLoading").removeClass('show');
+  });
+
+  $("#receiving_order_paginate").addClass("pull-right");
+</script>
   
 @endsection
