@@ -68,13 +68,8 @@
                                     <thead>
                                         <tr style="background-color: #286fb7!important;" >
                                             <th style="width: 1px;color:black; border-bottom-left-radius: 9px" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                                            <th class="col-xs-1 headername text-uppercase text-light">Category Code
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
-                                            </th>
-                                            <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Category Name
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
-
-                                            </th>
+                                            <th class="col-xs-1 headername text-uppercase text-light">Category Code</th>
+                                            <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Category Name</th>
                                             <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Description</th>
                                             <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Category Type</th>
                                             <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Department</th>
@@ -107,7 +102,7 @@
                                     				        <input type="hidden" name="category[<?php echo $i; ?>][icategoryid]" value="<?php echo $category->icategoryid; ?>"/>
                                     			      </td>
 
-                                                <td class="text-left"><textarea style="height: 33px" maxlength="100" style="border:none;"  class="editable" name="category[<?php echo $i; ?>][vdescription]" id="category[<?php echo $i; ?>][vdescription]" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'><?php echo $category->vdescription; ?></textarea></td>
+                                                <td class="text-left"><textarea maxlength="100" style="border:none; height: 33px;"  class="editable" name="category[<?php echo $i; ?>][vdescription]" id="category[<?php echo $i; ?>][vdescription]" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'><?php echo $category->vdescription; ?></textarea></td>
 
                                                 <td class="text-left">
                                                     <select style="height: 33px" name="category[<?php echo $i; ?>][vcategorttype]" id="category[<?php echo $i; ?>][vcategorttype]" class="form-control" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
