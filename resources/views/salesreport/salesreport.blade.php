@@ -907,7 +907,7 @@ $(window).load(function() {
     var csv = [];
     var rows = document.querySelectorAll("table tr");
     
-    for (var i = 0; i < rows.length-5; i++) {
+    for (var i = 0; i < rows.length-1; i++) {
         var row = [], cols = rows[i].querySelectorAll("td, th");
         
         for (var j = 0; j < cols.length; j++) 
@@ -968,6 +968,9 @@ h6 span {
 }
 .rcorner {
   border-radius:9px;
+}
+th{
+  padding-right:10px !important;;
 }
 </style>
 
