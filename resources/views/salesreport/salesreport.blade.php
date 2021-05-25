@@ -170,96 +170,96 @@
                   
                 <tr style="border-top: 1px solid #ddd;text-transform: uppercase;" class="th_color" >
                   <th class="text-center "> Date</th>
-                  <th class="text-left " >Store Sales (Excluded Tax)</th>
-                  <th class="text-left">Non-Taxable Sales</th>
-                  <th class="text-left">Taxable Sales</th>
+                  <th class="text-center " style="width: 146px;">Store Sales (Excluded Tax)</th>
+                  <th class="text-center">Non-Taxable Sales</th>
+                  <th class="text-center">Taxable Sales</th>
                   <?php if($tot_Tax1Sales!=0){ ?>
-                      <th class="text-left">Tax1  Sales</th>
+                      <th class="text-center">Tax1  Sales</th>
                   <?php } ?>
                   <?php if($tot_Tax2Sales!=0){ ?>
-                       <th class="text-left">Tax2  Sales</th>
+                       <th class="text-center">Tax2  Sales</th>
                   <?php } ?>
                   
                   <?php if($tot_Tax3Sales!=0){ ?>
-                    <th class="text-left">Tax3  Sales</th>
+                    <th class="text-center">Tax3  Sales</th>
                   <?php } ?>
                   
-                  <th class="text-left">Sales Tax </th>
+                  <th class="text-center">Sales Tax </th>
                   
                   <?php if($tot_Tax1!=0){ ?>
-                    <th class="text-left">Tax1</th>
+                    <th class="text-center">Tax1</th>
                   <?php } ?>
                   
                   <?php if($tot_Tax2!=0){ ?>
-                    <th class="text-left">Tax2</th>
+                    <th class="text-center">Tax2</th>
                   <?php } ?>
                   
                   <?php if($tot_Tax3!=0){ ?>
-                     <th class="text-left">Tax3</th>
+                     <th class="text-center">Tax3</th>
                   <?php } ?>
                   
-                  <th class="text-left">Total Store Sales:</th>
+                  <th class="text-center">Total Store Sales</th>
                   
                   <?php if($tot_TotalFuelSales!=0){ ?>
-                     <th class="text-left">Fuel Sales</th>
+                     <th class="text-center">Fuel Sales</th>
                   <?php } ?>
                   
                   <?php if($tot_TotalLottorySales!=0){ ?>
-                    <th class="text-left">Lotto Sales</th>
+                    <th class="text-center">Lotto Sales</th>
                   <?php } ?>
                   
                   <?php if($tot_TotalLiabilitySales!=0){ ?>
-                     <th class="text-left">Liablity Sales</th>
+                     <th class="text-center">Liablity Sales</th>
                   <?php } ?>
                   
-                  <th class="text-left">Total Sales</th>
+                  <th class="text-center">Total Sales</th>
                    
                   <?php if($tot_HouseCharged!=0){ ?>
-                  <th class="text-left">House Charged</th>
+                  <th class="text-center">House Charged</th>
                   <?php } ?>
                   
                   <?php if($tot_HouseChargePayments!=0){ ?>
-                  <th class="text-left">House Charge Payments</th>
+                  <th class="text-center">House Charge Payments</th>
                   <?php  } ?>
                   
                   <?php if($tot_BottleDeposit!=0){ ?>
-                    <th class="text-left">Bottle Deposit</th>
+                    <th class="text-center">Bottle Deposit</th>
                   <?php } ?>
                   
                   <?php if($tot_BottleDepositRedeem!=0){ ?>
-                     <th class="text-left">Bottle Deposit Redeem</th>
+                     <th class="text-center">Bottle Deposit Redeem</th>
                   <?php } ?>
                   
                   <?php if($tot_TotalPaidout!=0){ ?>
-                    <th class="text-left">Total Paid out</th>
+                    <th class="text-center">Total Paid out</th>
                   <?php } ?>
                   
-                  <th class="text-left">Cash</th>
+                  <th class="text-center">&nbsp;&nbsp;&nbsp;Cash</th>
                   
                   <?php if($tot_CouponTender!=0){ ?>
-                  <th class="text-left">Coupon</th>
+                  <th class="text-center">Coupon</th>
                   <?php } ?>
                   
                   <?php if($tot_CheckTender!=0){ ?>
-                  <th class="text-left">Check</th>
+                  <th class="text-center">Check</th>
                   <?php } ?>
                   
-                  <th class="text-left">Credit Card Total</th>
+                  <th class="text-center">Credit Card Total</th>
                   
                   <?php if($tot_EBTCash!=0){ ?>
-                  <th class="text-left">EBT Cash</th>
+                  <th class="text-center">EBT Cash</th>
                   <?php } ?>
                   
                   <?php if($tot_EBT!=0){ ?>
-                  <th class="text-left">EBT</th>
+                  <th class="text-center">EBT</th>
                   <?php } ?>
                   
                   <?php if($tot_surchrges!=0){ ?>
-                  <th class="text-left">Surcharges</th>
+                  <th class="text-center">Surcharges</th>
                   <?php } ?>
                   
                   <?php if($tot_EBT_exampted!=0){ ?>
-                  <th class="text-left">EBT Tax Exempted</th>
+                  <th class="text-center">EBT Tax Exempted</th>
                   <?php } ?>
                   
                   
@@ -272,100 +272,100 @@
                   
                     <tr class="header-color">
                     <td ><b style="padding: 18px;">TOTALS</b> </td>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_StoreSalesExclTax, 2, '.', '') ;?></b></td>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_NonTaxableSales, 2, '.', '') ;?></b></td>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_TaxableSales, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_StoreSalesExclTax, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_NonTaxableSales, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_TaxableSales, 2, '.', '') ;?></b></td>
                     <?php if($tot_Tax1Sales!=0){ ?>
-                      <td class="text-left"><b><?php echo "$",number_format((float)$tot_Tax1Sales, 2, '.', '') ;?></b></td>
+                      <td class="text-center"><b><?php echo "$",number_format((float)$tot_Tax1Sales, 2, '.', '') ;?></b></td>
                     <?php } ?>
                     <?php if($tot_Tax2Sales!=0){ ?>
-                      <td class="text-left"><b><?php echo "$",number_format((float)$tot_Tax2Sales, 2, '.', '') ;?></b></td>
+                      <td class="text-center"><b><?php echo "$",number_format((float)$tot_Tax2Sales, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                     <?php if($tot_Tax3Sales!=0){ ?>
-                       <td class="text-left"><b><?php echo "$",number_format((float)$tot_Tax3Sales, 2, '.', '') ;?></b></td>
+                       <td class="text-center"><b><?php echo "$",number_format((float)$tot_Tax3Sales, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_TotalTax, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_TotalTax, 2, '.', '') ;?></b></td>
                     
                     <?php if($tot_Tax1!=0){ ?>
-                      <td class="text-left"><b><?php echo "$",number_format((float)$tot_Tax1, 2, '.', '') ;?></b></td>
+                      <td class="text-center"><b><?php echo "$",number_format((float)$tot_Tax1, 2, '.', '') ;?></b></td>
                     <?php  } ?> 
                     
                     <?php if($tot_Tax2!=0){ ?>  
-                       <td class="text-left"><b><?php echo "$",number_format((float)$tot_Tax2, 2, '.', '') ;?></b></td>
+                       <td class="text-center"><b><?php echo "$",number_format((float)$tot_Tax2, 2, '.', '') ;?></b></td>
                      
                     <?php  } ?>
                     
                     <?php if($tot_Tax3!=0){ ?>
-                       <td class="text-left"><b><?php echo "$",number_format((float)$tot_Tax3, 2, '.', '') ;?></b></td>
+                       <td class="text-center"><b><?php echo "$",number_format((float)$tot_Tax3, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_TotalStoreSales, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_TotalStoreSales, 2, '.', '') ;?></b></td>
                     
                     <?php if($tot_TotalFuelSales!=0){ ?>
-                      <td class="text-left"><b><?php echo "$",number_format((float)$tot_TotalFuelSales, 2, '.', '') ;?></b></td>
+                      <td class="text-center"><b><?php echo "$",number_format((float)$tot_TotalFuelSales, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                     <?php if($tot_TotalLottorySales!=0){ ?>  
-                      <td class="text-left"><b><?php echo "$",number_format((float)$tot_TotalLottorySales, 2, '.', '') ;?></b></td>
+                      <td class="text-center"><b><?php echo "$",number_format((float)$tot_TotalLottorySales, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                     <?php if($tot_TotalLiabilitySales!=0){ ?>
-                      <td class="text-left"><b><?php echo "$",number_format((float)$tot_TotalLiabilitySales, 2, '.', '') ;?></b></td>
+                      <td class="text-center"><b><?php echo "$",number_format((float)$tot_TotalLiabilitySales, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_TotalSales, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_TotalSales, 2, '.', '') ;?></b></td>
                     
                     <?php if($tot_HouseCharged!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_HouseCharged, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_HouseCharged, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                    
                     <?php if( $tot_HouseChargePayments!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_HouseChargePayments, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_HouseChargePayments, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                     <?php if($tot_BottleDeposit!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_BottleDeposit, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_BottleDeposit, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                     <?php if($tot_BottleDepositRedeem!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_BottleDepositRedeem, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_BottleDepositRedeem, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                     <?php if($tot_TotalPaidout!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_TotalPaidout, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_TotalPaidout, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_CashTender, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_CashTender, 2, '.', '') ;?></b></td>
                     
                     <?php if($tot_CouponTender!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_CouponTender, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_CouponTender, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                     <?php if($tot_CheckTender!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_CheckTender, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_CheckTender, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_CreditCardTender, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_CreditCardTender, 2, '.', '') ;?></b></td>
                     
                     
                     <?php if($tot_EBTCash!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_EBTCash, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_EBTCash, 2, '.', '') ;?></b></td>
                      <?php  } ?>
                      
                     <?php if($tot_EBT!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_EBT, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_EBT, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                     <?php if($tot_surchrges!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_surchrges, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_surchrges, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                     
                     <?php if($tot_EBT_exampted!=0){ ?>
-                    <td class="text-left"><b><?php echo "$",number_format((float)$tot_EBT_exampted, 2, '.', '') ;?></b></td>
+                    <td class="text-center"><b><?php echo "$",number_format((float)$tot_EBT_exampted, 2, '.', '') ;?></b></td>
                     <?php  } ?>
                     
                     </tr>
@@ -377,100 +377,100 @@
                    
                     <tr>
                       <td><?php echo $value['eoddate'];?></td>
-                      <td class="text-left"><?php echo "$", number_format((float)$value['StoreSalesExclTax'], 2, '.', '') ;?></td>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['NonTaxableSales'], 2, '.', '') ;?></td>
-                      <td class="text-left"><?php echo "$", number_format((float)$value['TaxableSales'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$", number_format((float)$value['StoreSalesExclTax'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['NonTaxableSales'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$", number_format((float)$value['TaxableSales'], 2, '.', '') ;?></td>
                       
                       <?php if($tot_Tax1Sales!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['Tax1Sales'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['Tax1Sales'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       <?php if($tot_Tax2Sales!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['Tax2Sales'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['Tax2Sales'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       <?php if($tot_Tax3Sales!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['Tax3Sales'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['Tax3Sales'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
-                      <td class="text-left"><?php echo "$",number_format((float)$value['TotalTax'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['TotalTax'], 2, '.', '') ;?></td>
                       
                       <?php if($tot_Tax1!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['Tax1'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['Tax1'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       <?php if($tot_Tax2!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['Tax2'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['Tax2'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       <?php if($tot_Tax3!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['Tax3'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['Tax3'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       
-                      <td class="text-left"><?php echo "$",number_format((float)$value['TotalStoreSales'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['TotalStoreSales'], 2, '.', '') ;?></td>
                       <?php if($tot_TotalFuelSales!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['TotalFuelSales'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['TotalFuelSales'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       <?php if($tot_TotalLottorySales!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['TotalLottorySales'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['TotalLottorySales'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       <?php if($tot_TotalLiabilitySales!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['TotalLiabilitySales'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['TotalLiabilitySales'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
-                      <td class="text-left"><?php echo "$",number_format((float)$value['TotalSales'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['TotalSales'], 2, '.', '') ;?></td>
                       
                       <?php if($tot_HouseCharged!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['HouseCharged'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['HouseCharged'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       <?php if( $tot_HouseChargePayments!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['HouseChargePayments'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['HouseChargePayments'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       <?php if($tot_BottleDeposit!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['bottledeposit'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['bottledeposit'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       <?php if($tot_BottleDepositRedeem!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['bottledepositredeem'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['bottledepositredeem'], 2, '.', '') ;?></td>
                       <?php  } ?>
                       
                       <?php if($tot_TotalPaidout!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['TotalPaidout'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['TotalPaidout'], 2, '.', '') ;?></td>
                        <?php  } ?>
                        
-                      <td class="text-left"><?php echo "$",number_format((float)$value['CashTender'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['CashTender'], 2, '.', '') ;?></td>
                       
                       <?php if($tot_CouponTender!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['CouponTender'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['CouponTender'], 2, '.', '') ;?></td>
                        <?php  } ?>
                        
                       <?php if($tot_CheckTender!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['CheckTender'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['CheckTender'], 2, '.', '') ;?></td>
                        <?php  } ?>
                        
-                      <td class="text-left"><?php echo "$",number_format((float)$value['CreditCardTender'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['CreditCardTender'], 2, '.', '') ;?></td>
                       
                       <?php if($tot_EBTCash!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['EBTCash'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['EBTCash'], 2, '.', '') ;?></td>
                        <?php  } ?>
                        
                       <?php if($tot_EBT!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['EBT'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['EBT'], 2, '.', '') ;?></td>
                        <?php  } ?>
 
                      
                       <?php if($tot_surchrges!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['Surcharges'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['Surcharges'], 2, '.', '') ;?></td>
                       <?php  } ?>
 
                      
                        <?php if($tot_EBT_exampted!=0){ ?>
-                      <td class="text-left"><?php echo "$",number_format((float)$value['EbtTaxExempted'], 2, '.', '') ;?></td>
+                      <td class="text-center"><?php echo "$",number_format((float)$value['EbtTaxExempted'], 2, '.', '') ;?></td>
                        <?php  } ?>  
                        
                     </tr>
