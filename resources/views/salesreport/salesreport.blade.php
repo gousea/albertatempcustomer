@@ -969,6 +969,9 @@ h6 span {
 .rcorner {
   border-radius:9px;
 }
+th{
+  padding-right:10px !important;;
+}
 </style>
 
 @endsection
