@@ -221,6 +221,7 @@ class PurchaseOrderController extends Controller
 		$data['SID'] = session()->get('sid');
 		$purchase_orders = array();
         
+        $datas = array();
         if(count($query) > 0){
             foreach ($query as $key => $value) {
 

@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <span class="font-weight-bold text-uppercase"> <?php echo $text_list; ?></span>
+                <h6><span class="font-weight-bold text-uppercase"> <?php echo $text_list; ?></span></h6>
             </div>
             <div class="nav-submenu">
               <a type="button" href="<?php echo $add; ?>" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>
@@ -58,7 +58,7 @@
             </form> --}}
             
             
-              <div class="table-responsive">
+              <div class="table-responsive col-xl-12 col-md-12">
                 <table id="adjustment_detail" class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
                 data-row-style="rowColors" data-striped="true" data-click-to-select="true">
                 <?php if ($adjustment_details) { ?>
