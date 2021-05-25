@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <span class="font-weight-bold text-uppercase"> Department</span>
+                <span class="font-weight-bold text-uppercase" style="font-size: 22px"> Department</span>
             </div>
             <div class="nav-submenu">
                 <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
@@ -53,148 +53,146 @@
                     @endif
                   <input type="hidden" name="MenuId" value="<?php echo $filter_menuid; ?>"/>
                   <div class="table-responsive">
-                    <table id="department" class="table table-bordered table-hover" style="width:100%;">
-                    <?php if ($departments) { ?>
-                      <thead>
-                        <tr style="background-color: #286fb7!important;" >
-                            <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                            <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Department Code
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
-                                <!--<div class="form-group has-search">-->
-                                <!--    <span class="fa fa-search form-control-feedback"></span>-->
-                                    <!--<input type="text" class="form-control table-heading-fields" placeholder="SEARCH">-->
-                                <!--</div>-->
-
-                            </th>
-                            <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Department Name
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
-                                <form action="/departmentsearch" method="post" id="form_department_search">
-                                    @csrf
-                                    <input type="hidden" name="searchbox" id="idepartmentid">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <input type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Department..." id="autocomplete-product" autocomplete="off">
+                        <table id="department" class="table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                        <?php if ($departments) { ?>
+                          <thead>
+                            <tr style="background-color: #286fb7!important;" >
+                                <th style="width: 1px;color:black; border-bottom-left-radius: 9px" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                                <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Department Code        </th>
+                                <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Department Name
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    <form action="/departmentsearch" method="post" id="form_department_search">
+                                        @csrf
+                                        <input type="hidden" name="searchbox" id="idepartmentid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input type="text" style="height: 33px !important;" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Department..." id="autocomplete-product" autocomplete="off">
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </th>
-                            <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Description</th>
-                            <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Start Time </th>
-                            <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">End Time</th>
-                        </tr>
-                      </thead>
-                      <tbody id="searchData">
+                                    </form>
+                                </th>
+                                <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Description</th>
+                                <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Start Time </th>
+                                <th style="border-bottom-right-radius: 9px" class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">End Time</th>
+                            </tr>
+                          </thead>
+                          <tbody id="searchData">
 
-                        <?php $department_row = 1;$i=0; ?>
-                        <?php foreach ($departments as $department) { ?>
-                        <tr id="department-row<?php echo $department_row; ?>">
-                          <td data-order="<?php echo $department['idepartmentid']; ?>" class="text-center">
-                          <span style="display:none;"><?php echo $department['idepartmentid']; ?></span>
-                          <?php if (in_array($department['idepartmentid'], $selected)) { ?>
-                            <input type="checkbox" name="selected[]" id="department[<?php echo $department_row; ?>][select]" value="<?php echo $department['idepartmentid']; ?>" checked="checked" />
+                            <?php $department_row = 1;$i=0; ?>
+                            <?php foreach ($departments as $department) { ?>
+                              <tr id="department-row<?php echo $department_row; ?>">
+                                  <td style="border-bottom-left-radius: 9px !important;"  data-order="<?php echo $department['idepartmentid']; ?>" class="text-center">
+                                    <span style="display:none;"><?php echo $department['idepartmentid']; ?></span>
+                                    <?php if (in_array($department['idepartmentid'], $selected)) { ?>
+                                      <input type="checkbox" name="selected[]" id="department[<?php echo $department_row; ?>][select]" value="<?php echo $department['idepartmentid']; ?>" checked="checked" />
+                                    <?php } else { ?>
+                                      <input type="checkbox" name="selected[]" id="department[<?php echo $department_row; ?>][select]"  value="<?php echo $department['idepartmentid']; ?>" />
+                                    <?php } ?>
+                                  </td>
+
+                                  <td class="text-left">
+                                    <span style="display:none;"><?php echo $department['vdepcode']; ?></span>
+                                    <input type="text" maxlength="50" style="border:none;" class="editable department_c" name="department[<?php echo $i; ?>][vdepcode]" id="department[<?php echo $i; ?>][vdepcode]" value="<?php echo $department['vdepcode']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
+                                    <input type="hidden" name="department[<?php echo $i; ?>][idepartmentid]" value="<?php echo $department['idepartmentid']; ?>"/>
+                                  </td>
+
+                                  <td class="text-left">
+                                      <span style="display:none;"><?php echo $department['vdepartmentname']; ?></span>
+                                      <input type="text" maxlength="50" style="border:none;" class="editable departmentname_c" name="department[<?php echo $i; ?>][vdepartmentname]" id="department[<?php echo $i; ?>][vdepartmentname]" value="<?php echo $department['vdepartmentname']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
+                                      <input type="hidden" name="department[<?php echo $i; ?>][idepartmentid]" value="<?php echo $department['idepartmentid']; ?>"/>
+                                  </td>
+
+                                  <td class="text-left">
+                                    <textarea class="editable" style="border:none;" maxlength="100" name="department[<?php echo $i; ?>][vdescription]" id="department[<?php echo $i; ?>][vdescription]" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");'><?php echo $department['vdescription']; ?></textarea>
+                                  </td>
+
+                                  <td class="text-left">
+                                      <?php
+                                        if(isset($department['starttime']) && !empty($department['starttime'])){
+                                          $starttime_string = explode(':', $department['starttime']);
+                                          $start_hour = $starttime_string[0];
+                                          $start_minute = $starttime_string[1];
+                                        }else{
+                                          $start_hour = '';
+                                          $start_minute = '';
+                                        }
+
+                                        if(isset($department['endtime']) && !empty($department['endtime'])){
+                                            $endtime_string = explode(':', $department['endtime']);
+                                            $end_hour = $endtime_string[0];
+                                            $end_minute = $endtime_string[1];
+                                          }else{
+                                            $end_hour = '';
+                                            $end_minute = '';
+                                          }
+
+                                      ?>
+
+                                      <select class="form-control" name="department[<?php echo $i; ?>][start_hour]" style="width:45%;display:inline-block;">
+                                        <option value="">hour</option>
+                                        <?php if(isset($hours) && count($hours) > 0) {?>
+                                          <?php foreach($hours as $k => $hour) { ?>
+                                            <?php if($start_hour == $k){?>
+                                              <option value="<?php echo $k;?>" selected="selected"><?php echo $hour;?></option>
+                                            <?php }else{ ?>
+                                              <option value="<?php echo $k;?>"><?php echo $hour;?></option>
+                                            <?php } ?>
+                                          <?php } ?>
+                                        <?php } ?>
+                                      </select>
+                                      <select class="form-control" name="department[<?php echo $i; ?>][start_minute]" style="width:45%;display:inline-block;">
+                                        <option value="">minute</option>
+                                        <?php for($m=0;$m<60;$m++) { ?>
+                                          <?php if($start_minute == str_pad($m,2,"0",STR_PAD_LEFT)){ ?>
+                                            <option selected="selected" value="<?php echo str_pad($m,2,"0",STR_PAD_LEFT);?>"><?php echo str_pad($m,2,"0",STR_PAD_LEFT);?></option>
+                                          <?php }else{ ?>
+                                            <option value="<?php echo str_pad($m,2,"0",STR_PAD_LEFT);?>"><?php echo str_pad($m,2,"0",STR_PAD_LEFT);?></option>
+                                          <?php } ?>
+                                        <?php } ?>
+                                      </select>
+                                  </td>
+                                  <td class="text-left" style="border-top-right-radius: 9px; border-bottom-right-radius: 9px">
+                                      <select class="form-control" name="department[<?php echo $i; ?>][end_hour]" style="width:45%;display:inline-block;">
+                                        <option value="">hour</option>
+                                        <?php if(isset($hours) && count($hours) > 0) {?>
+                                          <?php foreach($hours as $k => $hour) { ?>
+                                            <?php if($end_hour == $k){ ?>
+                                              <option value="<?php echo $k;?>" selected="selected"><?php echo $hour;?></option>
+                                            <?php }else{ ?>
+                                              <option value="<?php echo $k;?>"><?php echo $hour;?></option>
+                                            <?php } ?>
+
+                                          <?php } ?>
+                                        <?php } ?>
+                                      </select>
+                                      <select class="form-control" name="department[<?php echo $i; ?>][end_minute]" style="width:45%;display:inline-block;">
+                                        <option value="">minute</option>
+                                        <?php for($m=0;$m<60;$m++) { ?>
+                                          <?php if($end_minute == str_pad($m,2,"0",STR_PAD_LEFT)){ ?>
+                                            <option value="<?php echo str_pad($m,2,"0",STR_PAD_LEFT);?>" selected="selected"><?php echo str_pad($m,2,"0",STR_PAD_LEFT);?></option>
+                                          <?php }else{ ?>
+                                            <option value="<?php echo str_pad($m,2,"0",STR_PAD_LEFT);?>"><?php echo str_pad($m,2,"0",STR_PAD_LEFT);?></option>
+                                          <?php } ?>
+                                        <?php } ?>
+                                      </select>
+                                  </td>
+                                  <td style="display:none;"><span class='view_categories' id='<?php echo $department['idepartmentid']; ?>'>View</span></td>
+                                  <td class="text-left" style="display:none;">
+                                    <input type="text" class="editable department_s" name="department[<?php echo $i; ?>][isequence]" id="department[<?php echo $i; ?>][isequence]" value="<?php echo $department['isequence']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
+                                  </td>
+                              </tr>
+                              <?php $department_row++; $i++;?>
+                            <?php } ?>
                             <?php } else { ?>
-                            <input type="checkbox" name="selected[]" id="department[<?php echo $department_row; ?>][select]"  value="<?php echo $department['idepartmentid']; ?>" />
-                            <?php } ?></td>
-
-                          <td class="text-left">
-                            <span style="display:none;"><?php echo $department['vdepcode']; ?></span>
-                            <input type="text" maxlength="50" style="border:none;" class="editable department_c" name="department[<?php echo $i; ?>][vdepcode]" id="department[<?php echo $i; ?>][vdepcode]" value="<?php echo $department['vdepcode']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
-                  			<input type="hidden" name="department[<?php echo $i; ?>][idepartmentid]" value="<?php echo $department['idepartmentid']; ?>"/>
-                		  </td>
-
-                          <td class="text-left">
-                            <span style="display:none;"><?php echo $department['vdepartmentname']; ?></span>
-                            <input type="text" maxlength="50" style="border:none;" class="editable departmentname_c" name="department[<?php echo $i; ?>][vdepartmentname]" id="department[<?php echo $i; ?>][vdepartmentname]" value="<?php echo $department['vdepartmentname']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
-                  			<input type="hidden" name="department[<?php echo $i; ?>][idepartmentid]" value="<?php echo $department['idepartmentid']; ?>"/>
-                		</td>
-                          <td class="text-left">
-                            <textarea class="editable" style="border:none;" maxlength="100" name="department[<?php echo $i; ?>][vdescription]" id="department[<?php echo $i; ?>][vdescription]" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");'><?php echo $department['vdescription']; ?></textarea>
-                          </td>
-                          <td class="text-left">
-                            <?php
-                              if(isset($department['starttime']) && !empty($department['starttime'])){
-                                $starttime_string = explode(':', $department['starttime']);
-                                $start_hour = $starttime_string[0];
-                                $start_minute = $starttime_string[1];
-                              }else{
-                                $start_hour = '';
-                                $start_minute = '';
-                              }
-
-                              if(isset($department['endtime']) && !empty($department['endtime'])){
-                                  $endtime_string = explode(':', $department['endtime']);
-                                  $end_hour = $endtime_string[0];
-                                  $end_minute = $endtime_string[1];
-                                }else{
-                                  $end_hour = '';
-                                  $end_minute = '';
-                                }
-
-                            ?>
-
-                            <select class="form-control" name="department[<?php echo $i; ?>][start_hour]" style="width:45%;display:inline-block;">
-                              <option value="">hour</option>
-                              <?php if(isset($hours) && count($hours) > 0) {?>
-                                <?php foreach($hours as $k => $hour) { ?>
-                                  <?php if($start_hour == $k){?>
-                                    <option value="<?php echo $k;?>" selected="selected"><?php echo $hour;?></option>
-                                  <?php }else{ ?>
-                                    <option value="<?php echo $k;?>"><?php echo $hour;?></option>
-                                  <?php } ?>
-                                <?php } ?>
-                              <?php } ?>
-                            </select>
-                            <select class="form-control" name="department[<?php echo $i; ?>][start_minute]" style="width:45%;display:inline-block;">
-                              <option value="">minute</option>
-                              <?php for($m=0;$m<60;$m++) { ?>
-                                <?php if($start_minute == str_pad($m,2,"0",STR_PAD_LEFT)){ ?>
-                                  <option selected="selected" value="<?php echo str_pad($m,2,"0",STR_PAD_LEFT);?>"><?php echo str_pad($m,2,"0",STR_PAD_LEFT);?></option>
-                                <?php }else{ ?>
-                                  <option value="<?php echo str_pad($m,2,"0",STR_PAD_LEFT);?>"><?php echo str_pad($m,2,"0",STR_PAD_LEFT);?></option>
-                                <?php } ?>
-                              <?php } ?>
-                            </select>
-                          </td>
-                          <td class="text-left">
-                            <select class="form-control" name="department[<?php echo $i; ?>][end_hour]" style="width:45%;display:inline-block;">
-                              <option value="">hour</option>
-                              <?php if(isset($hours) && count($hours) > 0) {?>
-                                <?php foreach($hours as $k => $hour) { ?>
-                                  <?php if($end_hour == $k){ ?>
-                                    <option value="<?php echo $k;?>" selected="selected"><?php echo $hour;?></option>
-                                  <?php }else{ ?>
-                                    <option value="<?php echo $k;?>"><?php echo $hour;?></option>
-                                  <?php } ?>
-
-                                <?php } ?>
-                              <?php } ?>
-                            </select>
-                            <select class="form-control" name="department[<?php echo $i; ?>][end_minute]" style="width:45%;display:inline-block;">
-                              <option value="">minute</option>
-                              <?php for($m=0;$m<60;$m++) { ?>
-                                <?php if($end_minute == str_pad($m,2,"0",STR_PAD_LEFT)){ ?>
-                                  <option value="<?php echo str_pad($m,2,"0",STR_PAD_LEFT);?>" selected="selected"><?php echo str_pad($m,2,"0",STR_PAD_LEFT);?></option>
-                                <?php }else{ ?>
-                                  <option value="<?php echo str_pad($m,2,"0",STR_PAD_LEFT);?>"><?php echo str_pad($m,2,"0",STR_PAD_LEFT);?></option>
-                                <?php } ?>
-                              <?php } ?>
-                            </select>
-                          </td>
-                          <td style="display:none;"><span class='view_categories' id='<?php echo $department['idepartmentid']; ?>'>View</span></td>
-                          <td class="text-left" style="display:none;">
-                              <input type="text" class="editable department_s"  style="border:none;" name="department[<?php echo $i; ?>][isequence]" id="department[<?php echo $i; ?>][isequence]" value="<?php echo $department['isequence']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
-                            </td>
-                        </tr>
-                        <?php $department_row++; $i++;?>
-                        <?php } ?>
-                        <?php } else { ?>
-                          <tr>
-                          <td colspan="7" class="text-center"><?php //echo $text_no_results;?></td>
-                        </tr>
-                        <?php } ?>
-                      </tbody>
-                    </table>
-                    {{ $departments->links() }}
+                              <tr>
+                              <td colspan="7" class="text-center"><?php //echo $text_no_results;?></td>
+                            </tr>
+                            <?php } ?>
+                          </tbody>
+                        </table>
+                        <div class="pull-right" style="margin-right: 29px">
+                          {{ $departments->links() }}
+                        </div>
                   </div>
                 </form>
                 </div>
@@ -297,16 +295,14 @@
                   </div>
                 </div>
               </div>
-              <br>
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <button type="button" class="btn btn-success" id="save_department" >Save</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-              </div>
             </form>
           </div>
+          <div class="modal-footer" style="justify-content: flex-center !important;">
+            <button type="button" class="btn btn-success" id="save_department" >Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
         </div>
+        
   </div>
 </div>
 
@@ -991,33 +987,29 @@ $(document).on('click', '#delete_department_btn', function(event) {
             },
             data: {data:avArr },
             success: function(data) {
-                if(data['success']){
+
+              if(data.success){
+                  $('#success_msg').html('<strong>Deleted Successfully</strong>');
+                  $("div#divLoading").removeClass('show');
+                  $('#successModal').modal('show');
+
                   setTimeout(function(){
-                    bootbox.alert({
-                        size: 'small',
-                        title: "Attention",
-                        message: 'Deleted Successfully',
-                        callback: function(){}
-                    });
                    $('#successModal').modal('hide');
                    window.location.reload();
                   }, 3000);
-                }else{
+              }else{
                   var errorMsg = '';
-
                   $.each(data.error_msg, function (k, v){
                       errorMsg += v+'<br/>';
                   });
-
                   $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
                   $("div#divLoading").removeClass('show');
                   $('#errorModal').modal('show');
-
                   setTimeout(function(){
                       $('#errorModal').modal('hide');
                       window.location.reload();
-                      }, 4000);
-                }
+                  }, 4000);
+              }
             },
             error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array

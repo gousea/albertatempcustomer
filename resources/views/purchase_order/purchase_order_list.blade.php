@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold text-uppercase"> Purchase Orders</span>
+                    <h6><span class="font-weight-bold text-uppercase"> Purchase Orders</span></h6>
                 </div>
                 <div class="nav-submenu">
                     
@@ -41,19 +41,49 @@
                         
                         <form action="" method="post" enctype="multipart/form-data" id="form-purchase-order">
                         
-                            <div class="table-responsive">
+                            <div class="table-responsive col-xl-12 col-md-12">
                                 <table id="purchase_order" class="table table-hover" data-classes="table table-hover table-condensed promotionview"
-                                data-row-style="rowColors" data-striped="true" data-click-to-select="true">
+                                    data-row-style="rowColors" data-striped="true" data-click-to-select="true">
                                 
                                     <thead>
                                         <tr class="header-color">
                                             <th style="width: 1px;" class="text-center"><input type="checkbox" id="main_checkbox" /></th>
-                                            <th class="text-left">Status</th>
-                                            <th class="text-left">PurchaseORD#</th>
-                                            <th class="text-left">Invoice#</th>
-                                            <th class="text-left sample">Total</th>
-                                            <th class="text-left">Vendor Name</th>
-                                            <th class="text-left">Order Type</th>
+                                            <th class="text-left">&nbsp;&nbsp;Status
+                                              <div class="form-group po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                              </div>
+                                            </th>
+                                            <th class="text-left">&nbsp;&nbsp;PurchaseORD#
+                                              <div class="form-group po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                              </div>
+                                            </th>
+                                            <th class="text-left">&nbsp;&nbsp;Invoice#
+                                              <div class="form-group po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                              </div>
+                                            </th>
+                                            <th class="text-left sample">&nbsp;&nbsp;Total
+                                              <div class="form-group po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                              </div>
+                                            </th>
+                                            <th class="text-left">&nbsp;&nbsp;Vendor Name
+                                              <div class="form-group po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                              </div>
+                                            </th>
+                                            <th class="text-left">&nbsp;&nbsp;Order Type
+                                              <div class="form-group po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                              </div>
+                                            </th>
                                             <th class="text-left">Date Created</th>
                                             {{-- <th class="text-left">Date Received</th> --}}
                                             {{-- <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th> --}}
@@ -158,6 +188,7 @@
 
 <script type="text/javascript">
     $(document).on('click', '#main_checkbox', function(event) {
+        console.log($(this).prop('checked')+"jhjh")
         if ($(this).prop('checked')==true){ 
             $('input[name="selected[]"]').not(":disabled").prop('checked', true);
         }else{
@@ -267,47 +298,24 @@
     <script>
         var url = "<?php echo $data['current_url'];?>";
 
-        $('#purchase_order thead tr').clone(true).removeAttr('style').appendTo( '#purchase_order thead' );
-        $('#purchase_order thead tr:eq(1) th').each( function (i) {
+        
+        $('#purchase_order thead tr th').each( function (i) {
             
-            var title = $(this).text();
-            
-            // console.log(title);
-            if(i == 0)
-            {
-                $(this).html( '' );
-            }
-            
-            else if(title == "Status")
-            {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" ></div>')
-            }
-            else if(title == "PurchaseORD#")
-            {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no"></div>')
-            }
-            else if(title == "Invoice#")
-            {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no"></div>')
-            }
-            else if(title == 'Total')
-            {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no"></div>')
-            }
-            else if(title == 'Vendor Name')
-            {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no"></div>')
-            }
-            else if(title == 'Order Type')
-            {
-                $(this).html('<div class="form-group po-has-search"><span class="fa fa-search form-control-feedback"></span><input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no"></div>')
-            } 
-            else
-            {
-                $(this).html( '' );
-            }
-            
-            
+            $( this ).on( 'keyup', '.table-heading-fields', function () {
+
+                var self = this;
+                if ( table.column(i).search() !== self.value ) {
+                    
+                    
+                    table
+                        .column(i)
+                        .search( self.value )
+                        .draw();
+                        
+                    $("div#divLoading").addClass('show');
+                    
+                }
+            });                  
             
         });
     
@@ -337,7 +345,7 @@
             //     main_checkbox = $('#main_checkbox').is(":checked");
         
             // },
-            "dom": 't<"bottom"i<"float-right"p>>',
+            "dom": 't<"bottom col-md-12 row"<"col-md-3"i><"col-md-9"p>>',
             "ajax": {
             url: url,
             headers: {
@@ -371,7 +379,7 @@
                                         type: 'checkbox',
                                         class: "ipoid",
                                         value: data,
-                                        name: "selected_items_id[]",
+                                        name: "selected[]",
                                         "data-order": data,
                                 })[0].outerHTML;
                                 
@@ -400,7 +408,7 @@
                         $(this).find('.dataTables_empty').hide();
                     }
                     
-                    
+                    $(this).addClass('promotionview');
                     
             }
         }).on('draw', function(){
@@ -416,6 +424,8 @@
                 }
                 $("div#divLoading").removeClass('show');
         });
+
+        $("#purchase_order_paginate").addClass("pull-right");
     </script>
   
   @endsection
