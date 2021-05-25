@@ -63,7 +63,7 @@
                         @endif
                         <input type="hidden" name="MenuId" value="<?php //echo $filter_menuid; ?>"/>
                         <div class="table-responsive">
-                            <table id="category" class="table  table-hover" style="width:60%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;">
+                            <table id="category" class="table  table-hover" style="width:100%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;">
                                 <?php if ($data['categories']) { ?>
                                     <thead>
                                         <tr style="background-color: #286fb7!important;" >
