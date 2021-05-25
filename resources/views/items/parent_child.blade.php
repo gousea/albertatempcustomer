@@ -14,7 +14,7 @@ Parent Child
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold text-uppercase"> Parent Child</span>
+                    <h6><span class="font-weight-bold text-uppercase"> Parent Child</span></h6>
                 </div>
             </div> <!-- navbar-collapse.// -->
         </div>

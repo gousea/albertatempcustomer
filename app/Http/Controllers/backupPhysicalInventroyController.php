@@ -16,7 +16,7 @@ use Pagination;
 use PDF;
 use PDO;
 
-class PhysicalInventroyController extends Controller
+class backupPhysicalInventroyController extends Controller
 {
     public function index()
     {

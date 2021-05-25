@@ -176,6 +176,10 @@
                                         <?php } ?>
                                       </select>
                                   </td>
+                                  <td style="display:none;"><span class='view_categories' id='<?php echo $department['idepartmentid']; ?>'>View</span></td>
+                                  <td class="text-left" style="display:none;">
+                                    <input type="text" class="editable department_s" name="department[<?php echo $i; ?>][isequence]" id="department[<?php echo $i; ?>][isequence]" value="<?php echo $department['isequence']; ?>" onclick='document.getElementById("department[<?php echo $department_row; ?>][select]").setAttribute("checked","checked");' />
+                                  </td>
                               </tr>
                               <?php $department_row++; $i++;?>
                             <?php } ?>
@@ -291,16 +295,14 @@
                   </div>
                 </div>
               </div>
-              <br>
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <button type="button" class="btn btn-success" id="save_department" >Save</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-              </div>
             </form>
           </div>
+          <div class="modal-footer" style="justify-content: flex-center !important;">
+            <button type="button" class="btn btn-success" id="save_department" >Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
         </div>
+        
   </div>
 </div>
 
@@ -985,33 +987,29 @@ $(document).on('click', '#delete_department_btn', function(event) {
             },
             data: {data:avArr },
             success: function(data) {
-                if(data['success']){
+
+              if(data.success){
+                  $('#success_msg').html('<strong>Deleted Successfully</strong>');
+                  $("div#divLoading").removeClass('show');
+                  $('#successModal').modal('show');
+
                   setTimeout(function(){
-                    bootbox.alert({
-                        size: 'small',
-                        title: "Attention",
-                        message: 'Deleted Successfully',
-                        callback: function(){}
-                    });
                    $('#successModal').modal('hide');
                    window.location.reload();
                   }, 3000);
-                }else{
+              }else{
                   var errorMsg = '';
-
                   $.each(data.error_msg, function (k, v){
                       errorMsg += v+'<br/>';
                   });
-
                   $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
                   $("div#divLoading").removeClass('show');
                   $('#errorModal').modal('show');
-
                   setTimeout(function(){
                       $('#errorModal').modal('hide');
                       window.location.reload();
-                      }, 4000);
-                }
+                  }, 4000);
+              }
             },
             error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
