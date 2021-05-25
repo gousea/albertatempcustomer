@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <span class="font-weight-bold text-uppercase"> Receiving Orders</span>
+                <h6><span class="font-weight-bold text-uppercase"> Receiving Orders</span></h6>
             </div>
             <div class="nav-submenu">
               
@@ -46,8 +46,8 @@
                 
                 <form action="" method="post" enctype="multipart/form-data" id="form-purchase-order">
                 
-                    <div class="table-responsive">
-                      <div class="table-responsive">
+                    <div class="table-responsive col-xl-12 col-md-12">
+                      
                         <table id="receiving_order" class="table table-hover" data-classes="table table-hover table-condensed promotionview"
                             data-row-style="rowColors" data-striped="true" data-click-to-select="true">
                         
@@ -99,7 +99,7 @@
                         
                         
                         </table>
-                    </div>
+                    
                     </div>
                 </form>
                 

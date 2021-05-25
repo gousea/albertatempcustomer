@@ -19,7 +19,7 @@ use Session;
 class PhysicalInventroyController extends Controller
 {
     public function index()
-    {
+    { 
         $physicalInventrorylists = PhysicalInventory::where('vtype', 'Physical')->orderBy('ipiid', 'Desc')->paginate(25);
         return view('inventory.physicalInventroy.index', compact('physicalInventrorylists'));
     }
@@ -27,11 +27,144 @@ class PhysicalInventroyController extends Controller
     public function search_inventory_list(Request $request)
     {
         $input = $request->all();
-        $physicalInventrorylists = PhysicalInventory::where('vtype', '=' ,'Physical')
-                                                        ->where('vrefnumber', 'like', '%'.$input['automplete-product'].'%')
-                                                        ->orderBy('ipiid', 'Desc')
-                                                        ->paginate(25);
-        return view('inventory.physicalInventroy.index', compact('physicalInventrorylists'));
+        $search_value = $input['columns'];
+        
+        $search_items = [];
+        foreach($search_value as $value)
+        {
+            if($value["data"] == "vrefnumber")
+            {
+                $search_items['vrefnumber'] = $value['search']['value'];
+            }
+            else if($value["data"] == "dcreatedate")
+            {
+                $search_items['dcreatedate'] = $value['search']['value'];
+            }
+            else if($value["data"] == "dcalculatedate")
+            {
+                $search_items['dcalculatedate'] = $value['search']['value'];
+            }
+            else if($value["data"] == "dclosedate")
+            {
+                $search_items['dclosedate'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vordertitle")
+            {
+                $search_items['vordertitle'] = $value['search']['value'];
+            }
+            else if($value["data"] == "estatus")
+            {
+                $search_items['estatus'] = $value['search']['value'];
+            }
+            
+        }
+
+        if(empty(trim($search_items['estatus'])) && empty(trim($search_items['vrefnumber'])) && empty(trim($search_items['dcreatedate'])) && empty(trim($search_items['dcalculatedate'])) &&  empty(trim($search_items['dclosedate'])) && empty(trim($search_items['vordertitle']))  )
+        {
+            $limit = 20;
+            
+            $start_from = ($input['start']);
+
+            $select_query = "SELECT * FROM trn_physicalinventory LIMIT ". $input['start'].", ".$limit;
+
+            $count_select_query = "SELECT COUNT(distinct ipiid) as count FROM trn_physicalinventory";
+            $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
+            $count_query = isset($count_query[0])?(array)$count_query[0]:[];
+            
+            $count_records = $count_total = (int)$count_query['count'];
+
+        }else{
+            $limit = 20;
+            
+            $start_from = ($input['start']);
+            
+            $offset = $input['start']+$input['length']; 
+            $condition = "WHERE 1=1";
+            $check_condition = 0;
+            
+            if(isset($search_items['estatus']) && !empty(trim($search_items['estatus']))){
+                $search = ($search_items['estatus']);
+                $condition .= " AND estatus LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vrefnumber']) && !empty(trim($search_items['vrefnumber']))){
+                $search = ($search_items['vrefnumber']);
+                $condition .= " AND vrefnumber LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+
+            if(isset($search_items['dcreatedate']) && !empty(trim($search_items['dcreatedate']))){
+                $search = ($search_items['dcreatedate']);
+                $condition .= " AND dcreatedate LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['dcalculatedate']) && !empty(trim($search_items['dcalculatedate']))){
+                $search = ($search_items['dcalculatedate']);
+                $condition .= " AND dcalculatedate LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+
+            if(isset($search_items['dclosedate']) && !empty(trim($search_items['dclosedate']))){
+                $search = ($search_items['dclosedate']);
+                $condition .= " AND dclosedate LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vordertitle']) && !empty(trim($search_items['vordertitle']))){
+                $search = ($search_items['vordertitle']);
+                $condition .= " AND vordertitle LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            $select_query = "SELECT * FROM trn_physicalinventory ".$condition." LIMIT ". $input['start'].", ".$limit;
+
+            $count_select_query = "SELECT COUNT(distinct ipiid) as count FROM trn_physicalinventory ".$condition;
+            $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
+            $count_query = isset($count_query[0])?(array)$count_query[0]:[];
+            
+            $count_records = $count_total = (int)$count_query['count'];
+        }
+        
+        $query = DB::connection('mysql_dynamic')->select($select_query);
+        
+		$data['SID'] = session()->get('sid');
+		$purchase_orders = array();
+        
+        $datas = array();
+        if(count($query) > 0){
+            foreach ($query as $key => $value) {
+
+                if($value->estatus == 'Open'){
+                    $view_edit = url('/inventory/physicalInventroy/edit_open/' . '?ipiid=' . $value->ipiid );
+                }else{
+                    $view_edit = url('/inventory/physicalInventroy/show/' . '?ipiid=' . $value->ipiid );
+                }
+
+                $temp = array();
+                $temp['ipiid']          = $value->ipiid;
+                $temp['estatus']        = $value->estatus;
+                $temp['vrefnumber']      = $value->vrefnumber;
+                $temp['dcreatedate']    = $value->dcreatedate;
+                $temp['dcalculatedate'] = $value->dcalculatedate;
+                $temp['dclosedate']     = $value->dclosedate;
+                $temp['vordertitle']    = $value->vordertitle;                
+                $temp['view_edit']      = $view_edit;
+				$temp['delete_inventory']         = url('/inventory/physicalInventroy/delete_physical/' . '?ipoid=' . $value->ipiid );
+
+                $datas[]                = $temp;
+            }
+        }
+		
+		$return = [];
+        $return['draw'] = (int)$input['draw'];
+        $return['recordsTotal'] = $count_total;
+        $return['recordsFiltered'] = $count_records;
+        $return['data'] = $datas;
+        
+        return response(json_encode($return), 200)
+                  ->header('Content-Type', 'application/json');
     }
 
     public function create()
@@ -630,7 +763,9 @@ class PhysicalInventroyController extends Controller
                 $selected_itemid[$k] = $itemid['iitemid'];
             }
             
-            $result = PhysicalInventory::first()->snapshot($selected_itemid);
+            $PhysicalInventory = new PhysicalInventory;
+            $result = $PhysicalInventory->snapshot($selected_itemid);
+            // $result = PhysicalInventory::first()->snapshot($selected_itemid);
             if (isset($result)) {
                 $data = $this->get_details_of_selected_data($result);
                 
@@ -643,7 +778,10 @@ class PhysicalInventroyController extends Controller
             
             $scanned_selected_itemid = $scanned_selected_itemid;
             $ids = join("','", $scanned_selected_itemid);
-            $result = PhysicalInventory::first()->snapshot($scanned_selected_itemid);
+
+            $PhysicalInventory = new PhysicalInventory;
+            $result = $PhysicalInventory->snapshot($scanned_selected_itemid);
+            // $result = PhysicalInventory::first()->snapshot($scanned_selected_itemid);
                 
             if (isset($result)) {
                 
@@ -656,7 +794,10 @@ class PhysicalInventroyController extends Controller
             
             $selected_itemid = $selected_itemid;
             $ids = join("','", $selected_itemid);
-            $result = PhysicalInventory::first()->snapshot($selected_itemid);
+
+            $PhysicalInventory = new PhysicalInventory;
+            $result = $PhysicalInventory->snapshot($selected_itemid);
+            // $result = PhysicalInventory::first()->snapshot($selected_itemid);
             // dd($result);
             if (isset($result)) {
                 
@@ -754,7 +895,9 @@ class PhysicalInventroyController extends Controller
                 $selected_itemid[$k] = $itemid['iitemid'];
             }
             
-            $result = PhysicalInventory::first()->snapshot($selected_itemid);
+            $PhysicalInventory = new PhysicalInventory;
+            $result = $PhysicalInventory->snapshot($selected_itemid);
+            // $result = PhysicalInventory::first()->snapshot($selected_itemid);
             
             if (isset($result)) {
                 
