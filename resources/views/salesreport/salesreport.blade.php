@@ -234,7 +234,7 @@
                     <th class="text-center">Total Paid out</th>
                   <?php } ?>
                   
-                  <th class="text-center">&nbsp;&nbsp;&nbsp;Cash</th>
+                  <th class="text-center">Cash</th>
                   
                   <?php if($tot_CouponTender!=0){ ?>
                   <th class="text-center">Coupon</th>

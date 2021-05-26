@@ -420,7 +420,7 @@
                            
                                   <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>HOURLY SALES</span></h6>
                                    <div class="col-md-4  text-uppercase">
-                                            <table class"tcolor">
+                                            <table class="tcolor">
                                               @foreach($hourly as $v)    
                                               <tr>
                                                
@@ -511,6 +511,7 @@
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.js"></script>
     
     <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}"/>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 <script>
 
@@ -767,5 +768,8 @@ ul.b {list-style-type: square;}
 }
 
 </style>
+
+
+
 @endsection
 
