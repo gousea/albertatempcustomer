@@ -111,7 +111,7 @@
                         <a class="nav-link  dropdown-toggle sub text-uppercase" href="#" data-toggle="dropdown"> REPORTS
                         </a>
                         <ul class="dropdown-menu main-dropdown">
-                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> End of Day Report</a>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('EodReport') }}"> End of Day Report</a>
                             </li>
                             <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('EodShift') }}"> End of Shift Report </a>
                             </li>
