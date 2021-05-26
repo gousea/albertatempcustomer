@@ -8,10 +8,19 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold text-uppercase"> End Of Day Reportt</span>
+                    <span class="font-weight-bold text-uppercase"  style="font-size:15px"> End Of Day Reportt</span>
                 </div>
                 <div class="nav-submenu">
+                    
                    
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="btnPrint" >PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="#" > PDF
+                            </a>
+                       
+                
                 </div>
             </div> 
         </div>
@@ -73,6 +82,16 @@
                 <div class="form-group mx-sm-4 mb-2">
                     <input type="submit" class="btn btn-success rcorner" value="Generate">
                 </div> 
+                
+                <div class="form-group mx-sm-2 mb-2">
+                 
+                         <?php 
+                              $date_eod = \DateTime::createFromFormat('m-d-Y' , $date);
+                              $startdate=$date_eod->format('d-m-Y'); 
+                          ?>
+
+                         <h6 style="text-transform: uppercase;"><span> <?php  echo date(' l F d,Y', strtotime($startdate));?></span></h6>   
+                </div>  
        
            
     </form>
@@ -215,7 +234,7 @@
                                             <td class="text-right bg_table">COUPON</td>
                                             <td class="text-right bg_table"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CouponTender}}</button></td>
                                         </tr>
-                                    @endif
+                                    @endif  
                                     @if($data[0]->CreditCardTender !=0)
                                         <tr>
                                             <td class="text-right bg_table">CREDIT CARD </td>
@@ -258,6 +277,10 @@
                                             <td class="text-right bg_table"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCheck}}</button></td>
                                         </tr>
                                     @endif
+                                      <tr>
+                                           <td class="text-right bg_table">TENDER Total</td>
+                                           <td class="text-right bg_table"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CashTender+$data[0]->CouponTender+$data[0]->CreditCardTender}} </button></td>
+                                        </tr> 
                                    </table>
                              </div>
                              
@@ -420,7 +443,7 @@
                            
                                   <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>HOURLY SALES</span></h6>
                                    <div class="col-md-4  text-uppercase">
-                                            <table class="tcolor">
+                                            <table class"tcolor">
                                               @foreach($hourly as $v)    
                                               <tr>
                                                
@@ -509,9 +532,7 @@
     
 
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.js"></script>
-    
-    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}"/>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  
 
 <script>
 
@@ -629,6 +650,7 @@ function myFunction(x) {
 <script>  
 
     $(document).on("click", "#pdf_export_btn", function (event) {
+       
 
         event.preventDefault();
 
@@ -766,10 +788,10 @@ ul.b {list-style-type: square;}
 .bg_table{
  background-color:#f8f9fa!important;
 }
+.no-records-found{
+    display:none;
+}
 
 </style>
-
-
-
 @endsection
 
