@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <h6><span class="font-weight-bold text-uppercase"> <?php echo $text_list; ?></span></h6>
+                <span class="font-weight-bold text-uppercase"> <?php echo $text_list; ?></span>
             </div>
             <div class="nav-submenu">
               <a type="button" href="<?php echo $add; ?>" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>

@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <h6><span class="font-weight-bold text-uppercase"> Purchase Orders</span></h6>
+                    <span class="font-weight-bold text-uppercase"> Purchase Order</span>
                 </div>
                 <div class="nav-submenu">
                     

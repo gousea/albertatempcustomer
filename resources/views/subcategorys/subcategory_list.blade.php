@@ -1,7 +1,9 @@
 @extends('layouts.layout')
+
 @section('title')
   Sub Category
 @endsection
+
 @section('main-content')
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
     <div class="container-fluid">
@@ -67,7 +69,7 @@
           <input type="hidden" name="MenuId" value="<?php //echo $filter_menuid; ?>"/>
             <div class="table-responsive">
               
-            <table id="category" class="table  table-hover" style="width:100%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;">
+            <table id="subcategory" class="table  table-hover" style="width:100%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;">
               <?php if ($data['categories']) { ?>
                 <thead style="background-color: #286fb7!important;">
                   <tr>
@@ -153,7 +155,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-          <h5 class="modal-title">Add New Category</h5>
+          <h5 class="modal-title">Add New Sub Category</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -218,11 +220,19 @@
 <!-- Modal Add-->
 
 
-<div class="modal fade" id="successModal" role="dialog">
-  <div class="modal-dialog modal-sm">
-  
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
     <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
           <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
@@ -802,18 +812,13 @@ $(document).ready(function($) {
             dataType: 'json',
             success: function(data) {
                 if(data['success_msg']){
-                  setTimeout(function(){
+                  $('#success_msg').html('<strong>Sub category Deleted successfully</strong>');
                     $("div#divLoading").removeClass('show');
                     $('#successModal').modal('show');
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Attention", 
-                        message:  data['success_msg'],
-                        callback: function(){}
-                    });
-                   $('#successModal').modal('hide');
-                  window.location.reload();
-                  }, 3000);
+                    setTimeout(function(){
+                    $('#successModal').modal('hide');
+                    window.location.reload();
+                    }, 3000);
                 }else{
                   var errorMsg = '';
                   
@@ -852,59 +857,6 @@ $(document).ready(function($) {
     <?php } ?>
 
 
-    // $("input[name='selected[]']:checked").each(function (i)
-    // {
-    //   data[i] = parseInt($(this).val());
-    // });
-    // $("div#divLoading").addClass('show');
-    // $.ajax({
-    //     url : delete_category_url,
-    //     data : data,
-    //     type : 'get',
-    //     contentType: "application/json",
-    //     dataType: 'json',
-    //   success: function(data) {
-    //     var success_mess = data.success;
-        
-    //     if(success_mess){
-    //       // $('#success_msg').html('<strong>'+ data.success +'</strong>');
-    //       bootbox.alert({ 
-    //         size: 'small',
-    //         title: "Attention", 
-    //         message: 'Category Deleted!', 
-    //         callback: function(){}
-    //       });
-          
-    //       setTimeout(function(){
-    //       //  $('#successModal').modal('hide');
-    //       window.location.reload();
-    //       }, 3000);
-    //     }else{
-
-    //       $('#error_msg').html('<strong>'+ data.error +'</strong>');
-    //       $("div#divLoading").removeClass('show');
-    //       $('#errorModal').modal('show');
-
-    //     }
-
-
-    //   },
-    //   error: function(xhr) { // if error occured
-    //     var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-        
-    //     var error_show = '';
-
-    //     if(response_error.error){
-    //       error_show = response_error.error;
-    //     }else if(response_error.validation_error){
-    //       error_show = response_error.validation_error[0];
-    //     }
-
-    //     $('#error_alias').html('<strong>'+ error_show +'</strong>');
-    //     $('#errorModal').modal('show');
-    //     return false;
-    //   }
-    // });
     
   });
   
@@ -931,7 +883,7 @@ $('#delete_btn_category').click(function(){
     $.each($("input[name='deletestores']:checked"), function(){            
         deletestores.push($(this).val());
     });
-    $("#category input[name='selected[]']:checked").each(function () {
+    $("#subcategory input[name='selected[]']:checked").each(function () {
       var id =$(this).val();
       var name = $(this).closest('tr').find('.subcategories_c').val();
       avArr.push({
@@ -952,32 +904,27 @@ $('#delete_btn_category').click(function(){
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
-                if(data['success_msg']){
-                    var successMsg ='';
-                    // $('#success_msg').html('<strong>'+ data['success_msg'] +'</strong>');
+                if(data.success){
+                  var successMsg ='';
+                    $('#success_msg').html('<strong>Sub category Deleted successfully</strong>');
                     $("div#divLoading").removeClass('show');
                     $('#successModal').modal('show');
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Attention", 
-                        message:  data['success_msg'],
-                        callback: function(){window.location.reload()}
-                    });
-                }else{
-                  var errorMsg = '';
-                  
-                  $.each(data.error_msg, function (k, v){
-                      errorMsg += v+'<br/>';
-                  });
-        
-                  $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
-                  $("div#divLoading").removeClass('show');
-                  $('#errorModal').modal('show');
-                  
-                  setTimeout(function(){
-                      $('#errorModal').modal('hide');
+                    setTimeout(function(){
+                      $('#successModal').modal('hide');
                       window.location.reload();
-                      }, 4000);
+                    }, 3000);
+                }else{
+                    var errorMsg = '';
+                    $.each(data.error_msg, function (k, v){
+                        errorMsg += v+'<br/>';
+                    });
+                    $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#errorModal').modal('show');
+                    setTimeout(function(){
+                        $('#errorModal').modal('hide');
+                        window.location.reload();
+                    }, 4000);
                 }
             },
             error: function(xhr) { // if error occured

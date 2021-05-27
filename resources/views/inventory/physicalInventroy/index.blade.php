@@ -12,7 +12,7 @@
       <div class="container-fluid">
           <div class="collapse navbar-collapse" id="main_nav">
               <div class="menu">
-                  <h6><span class="font-weight-bold text-uppercase"> Physical Inventory</span><h6>
+                  <span class="font-weight-bold text-uppercase"> Physical Inventory</span>
               </div>
               <div class="nav-submenu">
                 
@@ -37,7 +37,7 @@
           <div class="panel-body">
                  
               <div class="table-responsive col-xl-12 col-md-12">
-                <table id="physical_inventory_detail" class="table table-bordered table-hover" style="">
+                <table id="physical_inventory_detail" class="table table-hover" style="">
                   <thead>
                     <tr class="header-color">
                       <th class="text-left">Ref.Number
@@ -48,31 +48,31 @@
                       </th>
                       <th class="text-left">Created
                         <div class="form-group has-search">
-                          <span class="fa fa-search form-control-feedback" padding-left: 6px;></span>
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
                       <th class="text-left">Calculated
                         <div class="form-group has-search">
-                          <span class="fa fa-search form-control-feedback" padding-left: 6px;></span>
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
                       <th class="text-left">Commited
                         <div class="form-group has-search">
-                          <span class="fa fa-search form-control-feedback" padding-left: 6px;></span>
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
                       <th class="text-left">Title
                         <div class="form-group has-search">
-                          <span class="fa fa-search form-control-feedback" padding-left: 6px;></span>
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
                       <th class="text-left">Status
                         <div class="form-group has-search">
-                          <span class="fa fa-search form-control-feedback" padding-left: 6px;></span>
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
