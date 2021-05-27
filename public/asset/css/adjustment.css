@@ -49,3 +49,42 @@ tr:nth-child() {
 .custom-select-sm{
     width:60px;
 }
+
+.divider {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #286fb7;
+}
+
+.mytextdiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 1rem;
+}
+
+.mytexttitle {
+    flex-grow: 0;
+    padding-right: 20px;
+    color: #286fb7;
+}
+
+.adjustment-fields {
+    border-radius: 7px;
+    width: 100%;
+    height: 33px;
+}
+.adjustment-fields, .adjustment-fields::-webkit-input-placeholder {
+    font-size: 13px;
+}
+
+.scroller{
+     display: block; 
+     background-color: #f8f9fa;
+    }
+
+.scroller{
+    height: 400px;    
+    overflow-y: auto;  
+    overflow-x: hidden;
+}
