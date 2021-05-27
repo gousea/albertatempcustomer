@@ -149,7 +149,7 @@
 
                   <thead>
                     <tr class="header-color">
-                      <th class="text-center" style="width:30px;"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort1\']').prop('checked', this.checked);" /></th>
+                      <th class="text-center no-filter-checkbox" style="width:30px;"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort1\']').prop('checked', this.checked);" /></th>
                       <th class="text-left text-uppercase " style="width:242px;">Item Name
                         
                             <div class="form-group adjustment-has-search">
@@ -164,11 +164,11 @@
                                 <input type="text" class="form-control table-heading-fields" id="itemsort1_search_sku" placeholder="SKU#" >
                             </div>
                       </th>
-                      <th class="text-left text-uppercase" >QTY ON HAND</th>
-                      <th class="text-left text-uppercase" >Department</th>
-                      <th class="text-left text-uppercase">Category</th>
-                      <th class="text-left text-uppercase">Subcategory</th>
-                      <th class="text-left text-uppercase">Supplier</th>
+                      <th class="text-left text-uppercase no-filter" >QTY ON HAND</th>
+                      <th class="text-left text-uppercase no-filter" >Department</th>
+                      <th class="text-left text-uppercase no-filter">Category</th>
+                      <th class="text-left text-uppercase no-filter">Subcategory</th>
+                      <th class="text-left text-uppercase no-filter">Supplier</th>
                     </tr>
                   </thead>
                   
@@ -507,7 +507,7 @@
 </script>
 
 <script type="text/javascript">
-//Items add and remove
+  //Items add and remove
 
   $(document).on('click', '#add_item_btn', function(event) {
     event.preventDefault();
@@ -979,15 +979,12 @@
 </script>
 
 <style>
-  td {
+  .no-filter{
+      padding-bottom: 55px !important;
+  }
 
-/* css-3 */
-white-space: -o-pre-wrap; 
-word-wrap: break-word;
-white-space: pre-wrap; 
-white-space: -moz-pre-wrap; 
-white-space: -pre-wrap; 
-
-}
-  </style>
+  .no-filter-checkbox{
+      padding-bottom: 30px !important;
+  }
+</style>
 @endsection
