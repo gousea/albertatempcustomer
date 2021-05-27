@@ -1,19 +1,27 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title')
   Manufaturer
 @endsection
-@section('main-content')
 
-<div id="content">
-  <div class="page-header">
+@section('main-content')
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
     <div class="container-fluid">
-      <!-- <h1>Manufacturer</h1> -->
-      <ul class="breadcrumb">
-        <li><a href="https://customer.albertapayments.com/index.php?route=common/dashboard&amp;token=jmgaNjzjMEqu2hUXpd1x5TiaxI9n1lt2">Home</a></li>
-        <li><a href="https://customer.albertapayments.com/index.php?route=administration/manufacturer&amp;token=jmgaNjzjMEqu2hUXpd1x5TiaxI9n1lt2">Manufacturer</a></li>
-      </ul>
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase" style="font-size: 22px"> Manufacturer</span>
+            </div>
+            <div class="nav-submenu">
+                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <button type="button" onclick="addManufacturer();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                <button type="button" id="delete_manufacturer_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
-  </div>
+</nav>
+
+<section class="section-content py-6">
+<div id="content">
+ 
   
   <div class="container-fluid">
     @if (session()->has('message'))
@@ -34,22 +42,8 @@
     @endif
 
     <div class="panel panel-default">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title"><i class="fa fa-list"></i> Manufacturer</h3>
-      </div>
 
       <div class="panel-body">
-        <div class="row" style="padding-bottom: 15px;float: right;">
-          <div class="col-md-12">
-            <div class="">
-              <a id="save_button" class="btn btn-primary" title="Save"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</a>
-              <button type="button" onclick="addManufacturer();" data-toggle="tooltip" title="Add New" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</button>        
-              <button type="button" class="btn btn-danger" id="delete_manufacturer_btn"  title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>        
-            </div>
-          </div>
-        </div>
-        <div class="clearfix"></div>
-
         <form action="/manufacturersearch" method="post" id="form_category_search">
           @csrf
           <input type="hidden" name="searchbox" id="icategoryid">
@@ -71,14 +65,15 @@
             @endif
           <input type="hidden" name="MenuId" value="">
             <div class="table-responsive">
-              <table id="manufacturer" class="table table-bordered table-hover" style="width:50%;">
-                <thead>
+              <table id="manufacturer" class="table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead style="background-color: #286fb7!important;" >
                   <tr>
+
                     <th style="width: 1px;" class="text-center">
                       <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                     </th>
-                    <th style="width:1px;" class="text-left">Manufacturer Code</th>
-                    <th style="width:1px;" class="text-left">Manufacturer Name</th>
+                    <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Manufacturer Code</th>
+                    <th class="col-xs-1 headername text-uppercase text-light" style="border-bottom-right-radius: 9px; border-top-right-radius: 9px" >Manufacturer Name</th>
                     <th class="text-left" style="display:none;">Sequence</th>
                   </tr>
                 </thead>
@@ -91,13 +86,13 @@
                     </td>
                     <td class="text-left">
                       <span style="display:none;">{{$manufacturers->mfr_code}}</span>
-                      <input type="text" maxlength="50" class="editable mfrCode" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" value="{{$manufacturers->mfr_code}}" onclick="">
+                      <input type="text" style="border:none;" maxlength="50" class="editable mfrCode" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" value="{{$manufacturers->mfr_code}}" onclick="">
                       <input type="hidden" name="manufacturer[{{$manufacturers->mfr_code}}][mfr_id]" value="{{$manufacturers->mfr_id}}">
                     </td>
                 
                     <td class="text-left">
                       <span style="display:none;">{{$manufacturers->mfr_name}}</span>
-                      <input type="text" maxlength="50" class="editable mfrName" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" value="{{$manufacturers->mfr_name}}" onclick="">
+                      <input type="text" style="border:none;"  maxlength="50" class="editable mfrName" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" value="{{$manufacturers->mfr_name}}" onclick="">
                       <input type="hidden" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_id]" value="{{$manufacturers->mfr_id}}">
                     </td>
                   </tr>
@@ -110,33 +105,20 @@
     </div>
   </div>
 </div>
-
-@endsection
-
-
-@section('scripts')
-
-<!-- Add Manufacturer -->
-
-
-<script type="text/javascript">
-
-    function addManufacturer() {
-      $('#addModal').modal('show');
-    }
-</script>
+</section>
 
 <!-- Add New form -->
 
 <div class="modal fade in" id="addModal" role="dialog">
   <div class="modal-dialog">
-    
-       Modal content
+       <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Add New Manufacturer</h4>
-      </div>
+            <h5 class="modal-title">Add New Manufacturer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
       <div class="modal-body">
         <form action="/addmanufacturer" method="post" id="add_new_form">
           @csrf
@@ -298,6 +280,32 @@
     
 <?php } ?>
 
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@endsection
+
+
+@section('page-script')
+ 
+<script type="text/javascript">
+    function addManufacturer() {
+      $('#addModal').modal('show');
+    }
+</script>
 <script src="/javascript/bootbox.min.js" defer=""></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
@@ -340,12 +348,9 @@ $('#selectAllCheckbox').click(function(){
     }
 });
 
-console.log();
-
 $('#save_btn_manufacturer').click(function(){
     $.each($("input[name='stores']:checked"), function(){            
         stores_hq.push($(this).val());
-        console.log(stores_hq);
     });
     $("#hidden_store_hq_val").val(stores_hq.join(','));
     $("#add_new_form").submit();
@@ -361,26 +366,10 @@ $("#closeBtn").click(function(){
   $(document).ready(function($) {
     $("div#divLoading").addClass('show');
   });
-
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
 </script>
 <!-- save data -->
 
 <script type="text/javascript">
-
-//   $(document).on('click', '.mfrCode, .mfrName', function(e){
-//     e.preventDefault();
-//     let selectId = $(this).attr('id').replace("mfr_code", "select");
-//   // console.log(selectId);
-//     let selectcode = $(this).attr('id').replace("mfr_name", "select");
-//   //  console.log(selectcode);
-//     document.getElementById(selectId).setAttribute('checked','checked');
-//     document.getElementById(selectcode).setAttribute('checked','checked');
-
-//   });
- 
   $(document).on('click','#save_button', function(e){
     e.preventDefault();
     $('.mfrName').each(function(){
@@ -416,7 +405,6 @@ $("#closeBtn").click(function(){
             
       });
     });
-    console.log(avArr);
     if(avArr.length < 1){
         bootbox.alert({ 
             size: 'small',
@@ -485,12 +473,9 @@ $("#closeBtn").click(function(){
              
             request.fail(function( msg ) {
               let mssg = '<div class="alert alert-danger">';
-                //console.log(msg);
                 let errors = msg.responseJSON;
                 $.each(errors, function(k, err){
-                //   console.log(err);
                   $.each(err, function(key, error){
-                    // console.log(error);
                     mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
                   });
                 });
@@ -556,12 +541,9 @@ $("#closeBtn").click(function(){
              
             request.fail(function( msg ) {
               let mssg = '<div class="alert alert-danger">';
-                //console.log(msg);
                 let errors = msg.responseJSON;
                 $.each(errors, function(k, err){
-                //   console.log(err);
                   $.each(err, function(key, error){
-                    // console.log(error);
                     mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
                   });
                 });
@@ -587,9 +569,7 @@ $("#closeBtn").click(function(){
 
   $(document).on('keyup', '#autocomplete-product', function (e) {
       e.preventDefault();
-
       var q = $(this).val();
-      //console.log(q);
       if(q.length != 0){
           if(q.length < 3){
           return false;
@@ -611,13 +591,11 @@ $("#closeBtn").click(function(){
           success: function (shelF) {
               // Do some nice animation to show results
               //let ageVeri = data['ageveri'];
-
               let html = '';
               $.each(shelF.manufacturer, function(k, v){
-               // console.log(v);
+            
               html +='<tr id="category-row1">';
               html +='<td data-order="1" class="text-center">';
-              // html +='<span style="display:none;">'+v.+'</span>';
               html +='<input type="checkbox" name="selected[]" id="manufacturer['+v.mfr_id+'][\'select\']" class="checkbox_c" value="'+v.mfr_id+'">';
               html +='</td>';
               html +='<td class="text-left">';
@@ -673,7 +651,6 @@ $("#closeBtn").click(function(){
             mfr_code:code
           });
         });
-        console.log(avArr);
         
         <?php if(session()->get('hq_sid') == 1){ ?>
             $.ajax({
@@ -726,14 +703,13 @@ $("#closeBtn").click(function(){
                 contentType: "application/json",
                 dataType: 'json',
                 success: function(data) {
+
                     if(data['success']){
+                      $('#success_msg').html('<strong>Manufacturer Deleted Successfully</strong>');
+                      $("div#divLoading").removeClass('show');
+                      $('#successModal').modal('show');
+
                       setTimeout(function(){
-                        bootbox.alert({ 
-                            size: 'small',
-                            title: "Attention", 
-                            message: 'Deleted Successfully',
-                            callback: function(){}
-                        });
                       $('#successModal').modal('hide');
                       window.location.reload();
                       }, 3000);
@@ -852,7 +828,6 @@ $('#delete_btn_manufacturer').click(function(){
           mfr_code:code,
         });
     });
-    console.log(avArr);
     $.ajax({
         url : "<?php echo url('/deletemanufacturer'); ?>",
         headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
