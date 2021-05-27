@@ -295,7 +295,7 @@
 
               <div class="container">
                 <div class="center">
-                    <a type="button" class="btn btn-danger basic-button-large" href="#">REMOVE FROM
+                    <a type="button" class="btn btn-danger basic-button-large" id="remove_item_btn" href="#">REMOVE FROM
                         ADJUSTMENT</a>
                 </div>
               </div>
