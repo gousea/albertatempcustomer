@@ -43,7 +43,7 @@ body{
     padding-right: 20px;
     font-size:15px;
 }
-
+    
 .headerwhite{
     background-color: #343a40e6;
     margin-right: 10px;
@@ -185,11 +185,11 @@ tr:nth-child() {
     -webkit-border-radius: 9px 0 0 0;
 }  */
 
-table th:last-child {
+/* table th:last-child {
     border-radius: 0 9px 0 0;
     -moz-border-radius: 0 9px 0 0;
     -webkit-border-radius: 0 9px 0 0;
-}
+} */
 
 table, .fixed-table-pagination{
     width: 85%;
