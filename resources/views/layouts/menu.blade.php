@@ -95,7 +95,7 @@
                         <li><a href="{{ route('adjustment') }}">Adjustment</a></li>
                         <li><a href="{{ route('transfer') }}">Transfer</a></li>
                         
-                        <li><a href="{{ route('inventory.physicalInventroy') }}"> Physical </a></li>
+                        <li><a href="{{ url('inventory/physicalInventroy') }}"> Physical </a></li>
                         
                         <li><a href="{{ route('reason') }}"> Reason </a></li>
                         <li><a href="{{ route('PurchaseOrder') }}"> Purchase Order </a></li>

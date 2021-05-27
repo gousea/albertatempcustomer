@@ -12,7 +12,7 @@
       <div class="container-fluid">
           <div class="collapse navbar-collapse" id="main_nav">
               <div class="menu">
-                  <h6><span class="font-weight-bold text-uppercase"> Physical Inventory</span><h6>
+                  <span class="font-weight-bold text-uppercase"> Physical Inventory</span>
               </div>
               <div class="nav-submenu">
                 

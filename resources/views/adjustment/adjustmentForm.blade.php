@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <h6><span class="font-weight-bold text-uppercase"><?php echo $text_form; ?></span></h6>
+                <span class="font-weight-bold text-uppercase"><?php echo $text_form; ?></span>
             </div>
             <div class="nav-submenu">
                 
@@ -139,7 +139,8 @@
                 <div class="mytexttitle font-weight-bold text-uppercase">
                     ADD ITEMS
                 </div>
-                <span class="text-center" style="height:15px; width:100px; border-radius:6px; background-color:grey;"><small class="text-white">SEARCH ADD ITEMS</small></span>
+                <span class="text-center" style="height:20px; width:100px; border-radius:6px; background-color:grey;"><small class="text-white">SEARCH ADD ITEMS</small></span>
+                &nbsp;
                 <div class="divider font-weight-bold"></div>
               </div>
               <br>
@@ -463,7 +464,7 @@
 
             for(var i=0;i<response.items.length;i++){
 
-              left_items_html[i] ='<tr style="background-color:#fff;"><td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort1[]" value="'+response.items[i]['iitemid']+'"/></td><td style="width:242px !important;">'+response.items[i]['vitemname']+'</td><td style="width:219px;">'+response.items[i]['vbarcode']+'</td><td style="width:163px;">'+response.items[i]['iqtyonhand']+'</td><td style="width:154px;">'+response.items[i]['vdepartmentname']+'</td><td style="width:128px;">'+response.items[i]['vcategoryname']+'</td><td style="width:163px;">'+response.items[i]['subcat_name']+'</td><td style="width:118px;">'+response.items[i]['vcompanyname']+'</td></tr>';
+              left_items_html[i] ='<tr style="background-color:#fff;"><td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort1[]" value="'+response.items[i]['iitemid']+'"/></td><td style="word-wrap:break-word; width:242px; !important;">'+response.items[i]['vitemname']+'</td><td style="width:219px;">'+response.items[i]['vbarcode']+'</td><td style="width:163px;">'+response.items[i]['iqtyonhand']+'</td><td style="width:154px;">'+response.items[i]['vdepartmentname']+'</td><td style="width:128px;">'+response.items[i]['vcategoryname']+'</td><td style="width:163px;">'+response.items[i]['subcat_name']+'</td><td style="width:118px;">'+response.items[i]['vcompanyname']+'</td></tr>';
             }
 
             $('#itemsort1 tbody').addClass('scroller');
@@ -976,4 +977,17 @@
     });
   });
 </script>
+
+<style>
+  td {
+
+/* css-3 */
+white-space: -o-pre-wrap; 
+word-wrap: break-word;
+white-space: pre-wrap; 
+white-space: -moz-pre-wrap; 
+white-space: -pre-wrap; 
+
+}
+  </style>
 @endsection
