@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold text-uppercase"  style="font-size:15px"> End Of Day Reportt</span>
+                    <span class="font-weight-bold text-uppercase"  style="font-size:15px"> End Of Day Report</span>
                 </div>
                 <div class="nav-submenu">
                     

@@ -81,7 +81,7 @@ Credit Card Report
           </div>
 
 
-    <div class="col-md-12 table-responsive "style="margin: 10px;">
+    <div class="col-md-12 "style="margin: 10px;">
           <br>
                       <?php 
                               $grand_total_transaction_number= 0;
@@ -94,7 +94,9 @@ Credit Card Report
                               
                       <?php } ?>          
           
-            <table class="table table-striped table-hover" style="width:100%;">
+                      <table data-toggle="table" data-classes="table table-hover table-condensed promotionview "
+                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
+                    data-pagination="true" data-click-to-select="true" style="padding-left: 40px;">
               
                         <thead>
                         <tr>
