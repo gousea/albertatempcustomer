@@ -19,7 +19,7 @@
                 </div>
             </div> <!-- navbar-collapse.// -->
         </div>
-      </nav>
+    </nav>
 
         <section class="section-content py-6">
             <div class="container-fluid">
@@ -33,8 +33,7 @@
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 </div>
                 @endif
-                <br>
-                <br>
+                
                 <div class="panel panel-default">
                     
                     <div class="panel-body">
