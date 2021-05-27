@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <span class="font-weight-bold text-uppercase"> Department</span>
+                <span class="font-weight-bold text-uppercase" style="font-size: 22px"> Category</span>
             </div>
             <div class="nav-submenu">
                 <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
@@ -279,13 +279,24 @@
     </div>
   </div>
 
- <div class="modal fade" id="successModal" role="dialog">
-    <div class="modal-dialog modal-sm">
+ 
 
+  <div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
       <!-- Modal content-->
-        <p id="success_msg"></p>
+      <div class="modal-content">
+        <div class="modal-header" style="border-bottom:none;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-success text-center">
+            <p id="success_msg"></p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
   <div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog">
 
@@ -782,36 +793,63 @@ $(document).on('click', '#save_button', function(event) {
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
+                // if(data['success_msg']){
+                //   setTimeout(function(){
+                //     var successMsg ='';
+                //     // $('#success_msg').html('<strong>'+ data['success_msg'] +'</strong>');
+                //     $("div#divLoading").removeClass('show');
+                //     $('#successModal').modal('show');
+                //     bootbox.alert({
+                //         size: 'small',
+                //         title: "Attention",
+                //         message:  data['success_msg'],
+                //         callback: function(){window.location.reload()}
+                //     });
+                //    $('#successModal').modal('hide');
+                //    window.location.reload();
+                //   }, 4000);
+                // }else{
+                //   var errorMsg = '';
+
+                //   $.each(data.error_msg, function (k, v){
+                //       errorMsg += v+'<br/>';
+                //   });
+
+                //   $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
+                //   $("div#divLoading").removeClass('show');
+                //   $('#errorModal').modal('show');
+
+                //   setTimeout(function(){
+                //       $('#errorModal').modal('hide');
+                //       window.location.reload();
+                //       }, 4000);
+                // }
+
+
                 if(data['success_msg']){
-                  setTimeout(function(){
-                    var successMsg ='';
-                    // $('#success_msg').html('<strong>'+ data['success_msg'] +'</strong>');
+                    $('#success_msg').html('<strong>Deleted Successfully</strong>');
                     $("div#divLoading").removeClass('show');
                     $('#successModal').modal('show');
-                    bootbox.alert({
-                        size: 'small',
-                        title: "Attention",
-                        message:  data['success_msg'],
-                        callback: function(){window.location.reload()}
-                    });
-                   $('#successModal').modal('hide');
-                   window.location.reload();
-                  }, 4000);
+
+                    setTimeout(function(){
+                    $('#successModal').modal('hide');
+                    window.location.reload();
+                    }, 3000);
                 }else{
-                  var errorMsg = '';
+                    var errorMsg = '';
 
-                  $.each(data.error_msg, function (k, v){
-                      errorMsg += v+'<br/>';
-                  });
+                    $.each(data.error_msg, function (k, v){
+                        errorMsg += v+'<br/>';
+                    });
 
-                  $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
-                  $("div#divLoading").removeClass('show');
-                  $('#errorModal').modal('show');
+                    $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#errorModal').modal('show');
 
-                  setTimeout(function(){
-                      $('#errorModal').modal('hide');
-                      window.location.reload();
-                      }, 4000);
+                    setTimeout(function(){
+                        $('#errorModal').modal('hide');
+                        window.location.reload();
+                    }, 4000);
                 }
             },
             error: function(xhr) { // if error occured

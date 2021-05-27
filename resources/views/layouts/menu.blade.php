@@ -115,7 +115,7 @@
                     @endif
                     <li><a href="{{ route('unit') }}"> Unit </a></li>
                     <li><a href="{{ route('department') }}">Department</a></li>
-                    <li><a href="{{ route('category') }}">Category</a></li>   
+                    <li><a href="{{ route('category') }}">Categories</a></li>   
                     <li><a href="{{ route('subcategory') }}">Sub Category</a></li>
                     <li><a href="{{ route('manufacturer') }}"> Manufacturer </a></li>
                     @if(session()->get('hq_sid') != 1)

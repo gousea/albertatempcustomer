@@ -3,10 +3,6 @@
     padding: 0;
 }
 
-body {
-    overflow: hidden;
-}
-
 .card-img-top {
     width: 200px;
     margin: auto;
@@ -35,6 +31,7 @@ body {
     border-radius: 9px;
     width: 70%;
 }
+
 
 .login-btns {
     padding: 3px 30px;

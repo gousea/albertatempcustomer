@@ -8,10 +8,19 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold text-uppercase"> End Of Day Reportt</span>
+                    <span class="font-weight-bold text-uppercase"  style="font-size:15px"> End Of Day Reportt</span>
                 </div>
                 <div class="nav-submenu">
+                    
                    
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="btnPrint" >PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="#" > PDF
+                            </a>
+                       
+                
                 </div>
             </div> 
         </div>
@@ -73,6 +82,16 @@
                 <div class="form-group mx-sm-4 mb-2">
                     <input type="submit" class="btn btn-success rcorner" value="Generate">
                 </div> 
+                
+                <div class="form-group mx-sm-2 mb-2">
+                 
+                         <?php 
+                              $date_eod = \DateTime::createFromFormat('m-d-Y' , $date);
+                              $startdate=$date_eod->format('d-m-Y'); 
+                          ?>
+
+                         <h6 style="text-transform: uppercase;"><span> <?php  echo date(' l F d,Y', strtotime($startdate));?></span></h6>   
+                </div>  
        
            
     </form>
@@ -203,7 +222,7 @@
                                   <h6><span> <i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>TENDER DETAIL </span></h6>
                                   
                                     @if($data[0]->CashTender !=0)
-                                    <table class"tcolor">
+                                    <table class="tcolor">
                                         <tr>
                                             <td class="text-right bg_table">  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;CASH  </td>
                                             <td class="text-right bg_table"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CashTender}}</button></td>
@@ -215,7 +234,7 @@
                                             <td class="text-right bg_table">COUPON</td>
                                             <td class="text-right bg_table"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CouponTender}}</button></td>
                                         </tr>
-                                    @endif
+                                    @endif  
                                     @if($data[0]->CreditCardTender !=0)
                                         <tr>
                                             <td class="text-right bg_table">CREDIT CARD </td>
@@ -258,13 +277,19 @@
                                             <td class="text-right bg_table"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCheck}}</button></td>
                                         </tr>
                                     @endif
+                                    @if($data[0]->CashTender+$data[0]->CouponTender+$data[0]->CreditCardTender !=0)
+                                      <tr>
+                                           <td class="text-right bg_table"> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;TENDER TOTAL</td>
+                                           <td class="text-right bg_table"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CashTender+$data[0]->CouponTender+$data[0]->CreditCardTender}} </button></td>
+                                        </tr> 
+                                     @endif    
                                    </table>
                              </div>
                              
                              
                              <div class="col-md-4 text-uppercase">
                                   <h6><span> <i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>PERFORMANCE STATISTICS</span></h6>
-                                  <table class"tcolor">
+                                  <table class="tcolor">
                                     @if($data[0]->Paidouts!=0)
                                   
                                     <tr>
@@ -497,20 +522,13 @@
 @endsection
 
 @section('page-script')
-
-   
-    
-
     <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
-    
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-    
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
-    
-
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.js"></script>
-    
-    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}"/>
+
+    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+
 
 <script>
 
@@ -628,6 +646,7 @@ function myFunction(x) {
 <script>  
 
     $(document).on("click", "#pdf_export_btn", function (event) {
+       
 
         event.preventDefault();
 
@@ -761,9 +780,14 @@ ul.b {list-style-type: square;}
     background-color: #474c53 !important;
     border-radius:9px;
     color: #fff;
+    padding-bottom:1px;
 }
 .bg_table{
  background-color:#f8f9fa!important;
+ padding-bottom:10px;
+}
+.no-records-found{
+    display:none;
 }
 
 </style>
