@@ -60,86 +60,86 @@ rel="stylesheet" /> --}}
 
 <body class="bg-light">
     <header class="section-header">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary headermenublue top">
+        <div class="navbar navbar-expand-lg navbar-dark bg-primary headermenublue top">
             <div class="container-fluid">
-                <div class="logo">
-                    <img src="{{ asset('asset/img/albertalogo.png') }}" width="30" height="30" alt="">
-                    <a href="#" class="logo-name">ALBERTA POS</a>
+                <div class="row" style="width: 100%;">
+                    <div class="col logo">
+                        <img src="{{ asset('asset/img/albertalogo.png') }}" width="30" height="30" alt="">
+                        <a href="#" class="logo-name">ALBERTA POS</a>
+                    </div>
+                    <div class="col date-username">
+                        <p class="nav-item text-items"><?php echo date('l jS \of F Y h:i:s A'); ?></p>
+                        <p class="nav-item text-items" style="margin-top:-15px; margin-bottom: 0px;">
+                            {{ Auth::user()->fname . ' ' . Auth::user()->lname }}</p>
+                    </div>
+                    <div class="col store">
+                        <ul class="navbar-nav ml-auto col-sm-7 nav-items-list">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link  dropdown-toggle stores-menu" href="#" id="storename"
+                                    data-toggle="dropdown"> {{ session()->get('storeName') }}
+                                    [{{ session()->get('sid') }}] </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><input type="text" name="" placeholder="search store" class="form-control"
+                                            id="store_search"></li>
+                                    @if (session()->has('stores'))
+                                        @foreach (session()->get('stores') as $store)
+                                            <li class="nav-item" id="nav-item">
+                                                <a class="change_store dropdown-item"
+                                                    style="font-size: 13px; margin-bottom: -5px"
+                                                    href="{{ route('dashboard') }}"
+                                                    onclick="event.preventDefault();
+                                                    document.getElementById('store-form{{ $store->id }}').submit();">
+                                                    <?php if ($store->hq_sid == 1) { ?>
+                                                    {{ $store->name }} [{{ $store->id }}] [HQ]
+                                                    <?php } else { ?>
+                                                    {{ $store->name }} [{{ $store->id }}]
+                                                    <?php } ?>
+
+                                                </a>
+                                            </li>
+                                            <form id="store-form{{ $store->id }}"
+                                                action="{{ route('dashboard') }}" method="POST"
+                                                style="display: none;">
+                                                @csrf
+                                                <input type="hidden" name="sid" id="sid_{{ $store->id }}"
+                                                    value="{{ $store->id }}">
+                                            </form>
+                                        @endforeach
+                                    @endif
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a href="" title="Settings" class="icons"><i class="fa fa-cog"></i></a>
+                            </li>
+                            <li class="nav-item"><a href="" title="Notification" class="icons"><i class="fa fa-bell"
+                                        aria-hidden="true"></i></a></li>
+                            <li class="nav-item">
+                                <a style="color: #fff !important;" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-sign-out fa-lg"></i>
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+
+                        </ul>
+                    </div>
                 </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="main_nav">
-                    <ul class="header_date_text">
-                        <li class="nav-item text-items"><?php echo date('l jS \of F Y h:i:s A'); ?></li>
-                        <li class="nav-item text-items"> {{ Auth::user()->fname . ' ' . Auth::user()->lname }}</li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link  dropdown-toggle stores-menu" href="#" id="storename"
-                                data-toggle="dropdown"> {{ session()->get('storeName') }}
-                                [{{ session()->get('sid') }}] </a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><input type="text" name="" placeholder="search store" class="form-control"
-                                        id="store_search"></li>
-                                @if (session()->has('stores'))
-                                    @foreach (session()->get('stores') as $store)
-                                        <li class="nav-item" id="nav-item">
-                                            <a class="change_store dropdown-item"
-                                                style="font-size: 13px; margin-bottom: -5px"
-                                                href="{{ route('dashboard') }}"
-                                                onclick="event.preventDefault();
-                                                        document.getElementById('store-form{{ $store->id }}').submit();">
-                                                <?php if ($store->hq_sid == 1) { ?>
-                                                {{ $store->name }} [{{ $store->id }}] [HQ]
-                                                <?php } else { ?>
-                                                {{ $store->name }} [{{ $store->id }}]
-                                                <?php } ?>
-
-                                            </a>
-                                        </li>
-                                        <form id="store-form{{ $store->id }}" action="{{ route('dashboard') }}"
-                                            method="POST" style="display: none;">
-                                            @csrf
-                                            <input type="hidden" name="sid" id="sid_{{ $store->id }}"
-                                                value="{{ $store->id }}">
-                                        </form>
-                                    @endforeach
-                                @endif
-                            </ul>
-
-
-
-
-                        </li>
-                        <li class="nav-item"><a href="" title="Settings" class="icons"><i class="fa fa-cog"></i></a>
-                        </li>
-                        <li class="nav-item"><a href="" title="Notification" class="icons"><i class="fa fa-bell"
-                                    aria-hidden="true"></i></a></li>
-                        <li class="nav-item">
-                            <a style="color: #fff !important;" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                                <i class="fa fa-sign-out fa-lg"></i>
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                            </form>
-                        </li>
-
-                    </ul>
-                </div> <!-- navbar-collapse.// -->
             </div>
-        </nav>
+        </div>
 
+        {{-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button> --}}
     </header> <!-- section-header.// -->
 
     <!-- ========================= SECTION CONTENT ========================= -->
 
-    @include('layouts.navigation')
 
+    @include('layouts.navigation')
 
     @section('main-content')
 

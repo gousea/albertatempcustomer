@@ -87,7 +87,7 @@
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 </div>
                             @enderror
-                            <form method="POST" action="{{ route('login') }}">
+                            <form method="POST" action="{{ route('login') }}" class="login-form">
                                 @csrf
                                 <div class="form-group mt-5">
                                     <input type="email" name="vemail" value="" placeholder="Email ID"

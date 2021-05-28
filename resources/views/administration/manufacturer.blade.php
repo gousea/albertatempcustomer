@@ -50,7 +50,7 @@
           <div class="row">
             <div class="col-md-12">
               <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-              <input type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Manufacturer..." id="autocomplete-product" autocomplete="off">
+              <input style="height: 33px; font-size: 12px !important; font-weight: 600;" type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Manufacturer..." id="autocomplete-product" autocomplete="off">
             </div>
           </div>
         </form>

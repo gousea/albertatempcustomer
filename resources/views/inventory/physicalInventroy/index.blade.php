@@ -76,7 +76,7 @@
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
-                      <th class="text-left">Action</th>
+                      <th class="text-left no-filter">Action</th>
                     </tr>
                   </thead>
                   
@@ -270,4 +270,14 @@
   
     $("#physical_inventory_detail_paginate").addClass("pull-right");
   </script>
+
+<style>
+  .no-filter{
+      padding-bottom: 45px !important;
+  }
+
+  .no-filter-checkbox{
+      padding-bottom: 20px !important;
+  }
+</style>
 @endsection

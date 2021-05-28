@@ -60,11 +60,11 @@
             
               <div class="table-responsive col-xl-12 col-md-12">
                 <table id="adjustment_detail" class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
-                data-row-style="rowColors" data-striped="true" data-click-to-select="true">
+                  data-row-style="rowColors" data-striped="true" data-click-to-select="true">
                 <?php if ($adjustment_details) { ?>
                   <thead>
                     <tr class="header-color">
-                      <th class="text-center" ><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                      <th class="text-center no-filter-checkbox" ><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
                       <th class="text-left text-uppercase"><?php echo $text_number; ?>
                         
                             <div class="form-group adjustment-has-search">
@@ -93,7 +93,7 @@
                                 <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_status">
                             </div>
                       </th>
-                      <th class="text-left text-uppercase">Action</th>
+                      <th class="text-left text-uppercase no-filter">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -249,6 +249,16 @@
 
       $("#adjustment_detail_paginate").addClass("pull-right");
 
-  </script>
+</script>
+
+  <style>
+    .no-filter{
+        padding-bottom: 45px !important;
+    }
+
+    .no-filter-checkbox{
+        padding-bottom: 20px !important;
+    }
+  </style>
 
 @endsection

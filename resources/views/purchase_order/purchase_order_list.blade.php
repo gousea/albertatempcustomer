@@ -19,7 +19,7 @@
                 </div>
             </div> <!-- navbar-collapse.// -->
         </div>
-      </nav>
+    </nav>
 
         <section class="section-content py-6">
             <div class="container-fluid">
@@ -33,8 +33,7 @@
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 </div>
                 @endif
-                <br>
-                <br>
+                
                 <div class="panel panel-default">
                     
                     <div class="panel-body">
@@ -47,7 +46,7 @@
                                 
                                     <thead>
                                         <tr class="header-color">
-                                            <th style="width: 1px;" class="text-center"><input type="checkbox" id="main_checkbox" /></th>
+                                            <th style="width: 1px;" class="text-center no-filter-checkbox"><input type="checkbox" id="main_checkbox" /></th>
                                             <th class="text-left">&nbsp;&nbsp;Status
                                               <div class="form-group po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
@@ -84,10 +83,10 @@
                                                 <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                               </div>
                                             </th>
-                                            <th class="text-left">Date Created</th>
+                                            <th class="text-left no-filter">Date Created</th>
                                             {{-- <th class="text-left">Date Received</th> --}}
                                             {{-- <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th> --}}
-                                            <th class="text-left">Action</th>
+                                            <th class="text-left no-filter">Action</th>
                                         </tr>
                                     </thead>
                                 
@@ -294,6 +293,16 @@
     	break-before: always;
     }
   </style>
+
+    <style>
+        .no-filter{
+            padding-bottom: 55px !important;
+        }
+
+        .no-filter-checkbox{
+            padding-bottom: 30px !important;
+        }
+    </style>
 
     <script>
         var url = "<?php echo $data['current_url'];?>";
