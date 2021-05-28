@@ -1998,6 +1998,9 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
             <p id="error_alias"></p>
           </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
       </div>
       
     </div>

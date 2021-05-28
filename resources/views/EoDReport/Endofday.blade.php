@@ -128,7 +128,7 @@
         
                     <div class="row" style="padding-left: 40px;padding-right: 60px">
                              <div class="col-md-4  text-uppercase">
-                                  <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>SALES DETAIL </span></h6>
+                                  <h6><span><i class="far fa-square "> &nbsp;&nbsp;&nbsp;</i>SALES DETAIL </span></h6>
                                   <table class"tcolor">
                                       <tr >
                                           <td class="text-right bg_table">Store Sales ( Excluding Tax)</td> 
@@ -412,9 +412,9 @@
                                         data-row-style="rowColors" data-striped="true">
                                         <thead>
                                              <tr class="th_color" >
-                                             <th>VENDPR</th>
+                                             <th>VENDOR</th>
                                              <th>AMOUNT</th>
-                                             <th>REGISTER</th>
+                                             <th>REGISTER#</th>
                                              <th>TIME STAMP</th>
                                              <th>USER</th>
                                          </tr>  
@@ -788,6 +788,11 @@ ul.b {list-style-type: square;}
 }
 .no-records-found{
     display:none;
+}
+.fa-square {
+  color: black;
+ 
+  
 }
 
 </style>
