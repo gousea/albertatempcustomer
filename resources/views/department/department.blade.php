@@ -66,7 +66,7 @@
                                         <input type="hidden" name="searchbox" id="idepartmentid">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <input type="text" style="height: 33px !important;" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Department..." id="autocomplete-product" autocomplete="off">
+                                                <input type="text"style="height: 33px !important; font-size: 12px !important; font-weight: 600;" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Department..." id="autocomplete-product" autocomplete="off">
                                             </div>
                                         </div>
                                     </form>
@@ -128,7 +128,7 @@
 
                                       ?>
 
-                                      <select class="form-control" name="department[<?php echo $i; ?>][start_hour]" style="width:45%;display:inline-block;">
+                                      <select class="form-control" name="department[<?php echo $i; ?>][start_hour]" style="width:45%;display:inline-block; font-size: 12px !important; font-weight: 600;">
                                         <option value="">hour</option>
                                         <?php if(isset($hours) && count($hours) > 0) {?>
                                           <?php foreach($hours as $k => $hour) { ?>
@@ -140,7 +140,7 @@
                                           <?php } ?>
                                         <?php } ?>
                                       </select>
-                                      <select class="form-control" name="department[<?php echo $i; ?>][start_minute]" style="width:45%;display:inline-block;">
+                                      <select class="form-control" name="department[<?php echo $i; ?>][start_minute]" style="width:45%;display:inline-block; font-size: 12px !important; font-weight: 600;">
                                         <option value="">minute</option>
                                         <?php for($m=0;$m<60;$m++) { ?>
                                           <?php if($start_minute == str_pad($m,2,"0",STR_PAD_LEFT)){ ?>
@@ -152,7 +152,7 @@
                                       </select>
                                   </td>
                                   <td class="text-left" style="border-top-right-radius: 9px; border-bottom-right-radius: 9px">
-                                      <select class="form-control" name="department[<?php echo $i; ?>][end_hour]" style="width:45%;display:inline-block;">
+                                      <select class="form-control" name="department[<?php echo $i; ?>][end_hour]" style="width:45%;display:inline-block; font-size: 12px !important; font-weight: 600;">
                                         <option value="">hour</option>
                                         <?php if(isset($hours) && count($hours) > 0) {?>
                                           <?php foreach($hours as $k => $hour) { ?>
@@ -165,7 +165,7 @@
                                           <?php } ?>
                                         <?php } ?>
                                       </select>
-                                      <select class="form-control" name="department[<?php echo $i; ?>][end_minute]" style="width:45%;display:inline-block;">
+                                      <select class="form-control" name="department[<?php echo $i; ?>][end_minute]" style="width:45%;display:inline-block; font-size: 12px !important; font-weight: 600;">
                                         <option value="">minute</option>
                                         <?php for($m=0;$m<60;$m++) { ?>
                                           <?php if($end_minute == str_pad($m,2,"0",STR_PAD_LEFT)){ ?>

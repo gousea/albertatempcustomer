@@ -50,7 +50,7 @@
                     <input type="hidden" name="searchbox" id="icategoryid">
                     <div class="row">
                         <div class="col-md-12">
-                            <input style="height: 33px" type="text" name="automplete-product"  class="form-control" placeholder="Search Category..." id="automplete-product">
+                            <input style="height: 33px; font-size: 12px !important; font-weight: 600;" type="text" name="automplete-product"  class="form-control" placeholder="Search Category..." id="automplete-product">
                         </div>
                     </div>
                 </form>

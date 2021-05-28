@@ -52,7 +52,7 @@
           <input type="hidden" name="searchbox" id="subcat_id">
           <div class="row">
               <div class="col-md-12">
-                  <input type="text" name="automplete-product" class="form-control" placeholder="Search SubCategory..." id="automplete-product">
+                  <input type="text" style="height: 33px !important; font-size: 12px !important; font-weight: 600;" name="automplete-product" class="form-control" placeholder="Search SubCategory..." id="automplete-product">
               </div>
           </div>
         </form>
@@ -100,7 +100,7 @@
                     
                     <td class="text-left">
                       <span style="display:none;"><?php echo $subcategory->subcat_name; ?></span>
-                      <input type="text" style="height: 33px; border:none;" maxlength="50" class="editable subcategories_c" name="subcategory[<?php echo $i; ?>][subcat_name]" id="category[<?php echo $i; ?>][vcategoryname]" value="<?php echo $subcategory->subcat_name; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
+                      <input type="text" style="height: 33px; border:none; font-size: 12px !important; font-weight: 600;" maxlength="50" class="editable subcategories_c" name="subcategory[<?php echo $i; ?>][subcat_name]" id="category[<?php echo $i; ?>][vcategoryname]" value="<?php echo $subcategory->subcat_name; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
                       <input type="hidden" name="subcategory[<?php echo $i; ?>][subcat_id]" value="<?php echo $subcategory->subcat_id; ?>"/>
                     </td>
                     <?php 
@@ -109,7 +109,7 @@
                     // die;
                     ?>
                       <td style="border-bottom-right-radius: 9px; border-top-right-radius: 9px "> 
-                          <select style="height: 33px" name="subcategory[<?php echo $i; ?>][cat_id]" id="category[<?php echo $i; ?>][dept_code]" class="form-control categories_c" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
+                          <select style="height: 33px; font-size: 12px !important; font-weight: 600;" name="subcategory[<?php echo $i; ?>][cat_id]" id="category[<?php echo $i; ?>][dept_code]" class="form-control categories_c" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
                               <option value="">--Select Category--</option>
                               <?php if(isset($data['categories']) && count($data['categories']) > 0){?>
                                   <?php foreach($data['categories'] as $category){ ?>
