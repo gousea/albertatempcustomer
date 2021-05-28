@@ -796,7 +796,7 @@
         $('#success_alias').html('<strong>'+ data.success +'</strong>');
         $('#successModal').modal('show');
         setTimeout(function(){
-            // window.location = '<?php echo $cancel;  ?>'; 
+            window.location = '<?php echo $cancel;  ?>'; 
         }, 3000);
         
      
