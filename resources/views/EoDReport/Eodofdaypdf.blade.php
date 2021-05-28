@@ -374,7 +374,6 @@
                            <td class="text-right">{{'$'}}{{$data['NoSale_Count']}}</td>
                         </tr>
                           @endif
-                          
                            @if(isset($data['Surcharges']) && $data['Surcharges']!=0)
                         <tr>
                             <th>Surcharges Collected</th>
@@ -520,7 +519,8 @@
                            $QUANTITY=+$QUANTITY+$v->qty;
                            $SALES=+$SALES+$v->saleamount;
                            $COST=+$COST+$v->cost;
-                           $GP=+$GP+$v->gpp;
+                        //   $GP=+$GP+$v->gpp;
+                        $totalgpp=(($COST-$SALES)/$SALES)*100;
                            
                            
                       }?>
@@ -531,7 +531,7 @@
                           <th><?php echo isset($QUANTITY) ? $QUANTITY: 0.00; ?></th>
                           <th><?php echo  "$",isset($SALES) ? $SALES: 0.00; ?></th>
                           <th><?php echo "$",isset($COST) ? $COST: 0.00; ?></th>
-                          <th><?php echo  isset($GP) ? number_format($GP,2): 0.00; ?></th>
+                          <th><?php echo  isset($totalgpp) ? number_format(abs($totalgpp),2): 0.00 ,"%"; ?></th>
                             
                             
                         </tr>
@@ -555,7 +555,7 @@
                            <td><?php echo isset($v->qty) ? $v->qty: 0.00; ?></td>
                            <td><?php echo '$', isset($v->saleamount) ? $v->saleamount: 0.00; ?></td>
                            <td><?php echo'$',  isset($v->cost) ? $v->cost: 0.00; ?></td>
-                           <td><?php echo isset($v->gpp) ? number_format($v->gpp,2): 0.00; ?></td>
+                           <td><?php echo isset($v->gpp) ? number_format($v->gpp*100,2): 0.00,"%"; ?></td>
                        </tr>
                        <?php }?>
                     </table>
