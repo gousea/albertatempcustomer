@@ -266,9 +266,11 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="font-size:17px;">List of Sub Categories under <span id="cat_name"></span></h4>
-        </div>
+            <h5 class="modal-title">List of Sub Categories under </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         <div class="modal-body">
             <!--<h4><label id="cat_name"></label></h4>-->
           <div class="alert" id="subcat">
