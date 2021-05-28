@@ -1,39 +1,40 @@
 
-Store Name,Krauszers Food and Liquor
-SID,100229
-Batch  ,2010211011
-SHIFT START ,2020-10-21 18:34:41
-SHIFT END,2021-05-04 22:01:53
-Register No,101
+Store Name : ,LU-CO TOBACCO Outlet
+Store Address:: ,204 North Hampton St
+Store Phone ,610-258-3561
+Date: ,05-28-2021
+SALES DETAIL: ,
 
-SALES TOTALS
-SALES(excluding Tax),$3.49
-TAXABLE SALES,$3.49
-NON-TAXABLE,$0.00
-TOTAL TAX,$0.23
-GRAND TOTAL,$3.72
+Store Sales ( Excluding Tax): ,$0.00
+Taxable Sales: ,$0.00
+Non-Taxable Sales: ,$0.00
+Total  Tax: ,$0.00
+Total Store Sales: ,$0.00
+Grand Total: ,$0.00
 
-LOTTO SALES DETAILS
+LOTTERY SALES DETAILS: ,
 
-TENDER DETAILS
-CASH,$3.72
-PERFORMANCE STATISTICS
-#OF TRANSACTION ,1
-#AVG TRANSACTIONS,$3.720000
+BOTTLE DEPOSIT DETAILS: ,
 
-CASH COUNT
-OPENING CASH,$0.00
-CASH SALES,$3.72
-CASH ADD,$0.00
-CASH PAIDOUT,$407.25
-CASH  PICKUP,$0.00
+Tender Summary: ,
 
-EXPECTED CASH,$-403.53
-ACTUAL CASH,$0.00
-CASH SHORT,$403.53
+Performance Statstic: ,
+Return Transactions: ,0
+Return Total: ,$0.00
 
+Productivity,
+Transaction Count: ,0
+Average Sales: ,$0.00
+Gross Cost: ,$0.00
+Gross Profit: ,$0.00
+Gross Profit(%):,0.00
 
-DEPARTMENT SALES SUMMARY    :,
+Payouts Total:,$0
+Vendor Name,Amount,Register No	,Time,User ID
+
+Hourly Sales :,$0,0
+Hourly Sales,Amount,Sales Transactions
+
+DEPARTMENT SALES SUMMARY    :,0,$0,$0,0.00
 Department Name,Quantity,Sales,Cost,GP%
-GROCERY,1.00,3.49,1.99,0.429799
 
