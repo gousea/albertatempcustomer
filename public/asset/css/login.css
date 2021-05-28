@@ -34,7 +34,7 @@
 } */
 
 form {
-    margin-left: 60px;
+    /* margin-left: 60px; */
 }
 
 #card {
@@ -53,10 +53,25 @@ form {
     }
 }
 
+@media all and (max-width: 992px) {
+
+    .login-content {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+
 /* ============ desktop view ============ */
 @media all and (min-width: 992px) {
     .form-control {
-        width: 100%;
+        width: 70%;
+        margin: auto;
+    }
+    .login-content {
+        padding-top: 6rem;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     /* .form-control {
@@ -67,7 +82,11 @@ form {
 
 @media all and (min-width: 1366px) {
     .login-btns {
-        width: 100%;
+        width: 70%;
+    }
+
+    form{
+        margin-left: 140px;
     }
 }
 
@@ -75,7 +94,8 @@ form {
 
 @media all and (min-width: 1024px) {
     .login-btns {
-        width: 100%;
+        width: 70%;
+        margin: auto;
     }
 }
 
