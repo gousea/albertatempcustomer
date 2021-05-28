@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <span class="font-weight-bold text-uppercase" style="font-size: 22px"> Department</span>
+                <span class="font-weight-bold text-uppercase fontvalue"> Department</span>
             </div>
             <div class="nav-submenu">
                 <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
@@ -53,13 +53,13 @@
                     @endif
                   <input type="hidden" name="MenuId" value="<?php echo $filter_menuid; ?>"/>
                   <div class="table-responsive">
-                        <table id="department" class="table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                        <table id="department" class="table table-hover employeeview" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                         <?php if ($departments) { ?>
                           <thead>
                             <tr style="background-color: #286fb7!important;" >
                                 <th style="width: 1px;color:black; border-bottom-left-radius: 9px" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                                <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Department Code        </th>
-                                <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Department Name
+                                <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Department Code   <div class="row"><div class="col-md-12" style="height: 33px"></div></div>     </th>
+                                <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Department Name 
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
                                     <form action="/departmentsearch" method="post" id="form_department_search">
                                         @csrf
@@ -71,9 +71,9 @@
                                         </div>
                                     </form>
                                 </th>
-                                <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Description</th>
-                                <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Start Time </th>
-                                <th style="border-bottom-right-radius: 9px" class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">End Time</th>
+                                <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Description <div class="row"><div class="col-md-12" style="height: 33px"></div></div>   </th>
+                                <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Start Time  <div class="row"><div class="col-md-12" style="height: 33px"></div></div>    </th>
+                                <th style="border-bottom-right-radius: 9px" class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">End Time  <div class="row"><div class="col-md-12" style="height: 33px"></div></div>   </th>
                             </tr>
                           </thead>
                           <tbody id="searchData">

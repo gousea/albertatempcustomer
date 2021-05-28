@@ -44,13 +44,13 @@
                     </ul>
                   </div>
                 @endif
-                <form action="{{route('category')}}" method="get" id="form_category_search">
+                <form action="{{route('category')}}" method="get" id="form_category_search" style="width: 100%">
                     @csrf
                     @method('get')
                     <input type="hidden" name="searchbox" id="icategoryid">
-                    <div class="row" style="margin-right: 30px; margin-left: 30px">
+                    <div class="row">
                         <div class="col-md-12">
-                            <input type="text" name="automplete-product"  class="form-control" placeholder="Search Category..." id="automplete-product">
+                            <input style="height: 33px" type="text" name="automplete-product"  class="form-control" placeholder="Search Category..." id="automplete-product">
                         </div>
                     </div>
                 </form>
@@ -105,7 +105,7 @@
                                                 <td class="text-left"><textarea maxlength="100" style="border:none; height: 33px;"  class="editable" name="category[<?php echo $i; ?>][vdescription]" id="category[<?php echo $i; ?>][vdescription]" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'><?php echo $category->vdescription; ?></textarea></td>
 
                                                 <td class="text-left">
-                                                    <select style="height: 33px" name="category[<?php echo $i; ?>][vcategorttype]" id="category[<?php echo $i; ?>][vcategorttype]" class="form-control" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
+                                                    <select style="height: 33px; font-size: 12px !important; font-weight: 600" name="category[<?php echo $i; ?>][vcategorttype]" id="category[<?php echo $i; ?>][vcategorttype]" class="form-control" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
                                                         <?php  if ($category->vcategorttype=="Sales") { ?>
                                                         <option value="<?php echo "Sales"; ?>" selected="selected"><?php echo "Sales"; ?></option>
                                                         <option value="<?php echo "MISC"; ?>" ><?php echo "MISC"; ?></option>
@@ -117,7 +117,7 @@
                                                </td>
 
                                                <td>
-                                                    <select style="height: 33px" name="category[<?php echo $i; ?>][dept_code]" id="category[<?php echo $i; ?>][dept_code]" class="form-control" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
+                                                    <select style="height: 33px; font-size: 12px !important; font-weight: 600" name="category[<?php echo $i; ?>][dept_code]" id="category[<?php echo $i; ?>][dept_code]" class="form-control" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
                                                         <option value="0">--Select Department--</option>
                                                         <?php if(isset($data['department']) && count($data['department']) > 0){?>
                                                             <?php foreach($data['department'] as $department){ ?>
