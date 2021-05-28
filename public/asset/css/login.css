@@ -33,10 +33,6 @@
     width: 78%;
 } */
 
-form {
-    /* margin-left: 60px; */
-}
-
 #card {
     height: 100%;
 }
@@ -47,25 +43,22 @@ form {
 }
 
 @media all and (min-width: 768) {
-
     .login-btns {
         width: 100%;
     }
 }
 
 @media all and (max-width: 992px) {
-
     .login-content {
         padding-left: 10px;
         padding-right: 10px;
     }
 }
 
-
 /* ============ desktop view ============ */
 @media all and (min-width: 992px) {
     .form-control {
-        width: 70%;
+        width: 60%;
         margin: auto;
     }
     .login-content {
@@ -80,13 +73,19 @@ form {
 }
 /* ============ desktop view .end// ============ */
 
+@media only screen and (min-device-width: 992px) and (max-device-width: 1024px) {
+    .login-form {
+        margin-left: 10px;
+    }
+}
+
 @media all and (min-width: 1366px) {
     .login-btns {
-        width: 70%;
+        width: 60%;
     }
 
-    form{
-        margin-left: 140px;
+    .login-form {
+        margin-left: 10px;
     }
 }
 
@@ -94,7 +93,7 @@ form {
 
 @media all and (min-width: 1024px) {
     .login-btns {
-        width: 70%;
+        width: 60%;
         margin: auto;
     }
 }
