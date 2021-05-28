@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
 
@@ -8,102 +8,101 @@ Buy Down
 
 @section('main-content')
 
-<div id="content" style="background-color=#ccc">
-    <div class="page-header">
+<div id="content" >
+
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container-fluid">
-        <!-- <div class="pull-right"><a href="https://customer.albertapayments.com/index.php?route=administration/buydown&amp;token=UhkFgeQo4wrAEsHIwWsWwlhZ53sjW5XX" data-toggle="tooltip" title="Add New" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-            <button type="button" data-toggle="tooltip" title="Delete" class="btn btn-danger" onclick="confirm('Are you sure?') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i></button>
-        </div> -->
-            <ul class="breadcrumb">
-                <li><a href="">Home</a></li>
-                <li><a href="">Buy Down</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="container-fluid">
-        
-    @if (session()->has('message'))
-      <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>      
-    @endif
-
-    @if (session()->has('error'))
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>      
-    @endif
-
-    <div id='errorDiv'>
-    </div>
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-          <i class="fa fa-exclamation-circle"></i>{{$error}}
-        @endforeach
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div> 
-    @endif
-        
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i> Buy Down</h3>
-            </div>
-            <div class="panel-body">
-            <div class="row" style="padding-bottom: 15px;">
-                
-                <div class="col-md-3 pull-right">
-                   
-                    <a href="/buydownadd" title="Add New" class="btn btn-primary add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a> 
-                    <button type="submit" class="btn btn-danger" id="buydown_delete" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>
-
-                    <!--<button type="button" class="btn btn-danger" id="delete_btn" style="border-radius: 0px;"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Delete</button>-->
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Buy Down</span>
                 </div>
-            </div>
-
-      
-            <div class="box-body table-responsive">
-                
-                <div id="table_bydown_wrapper" class="dataTables_wrapper no-footer">
+                <div class="nav-submenu">
+                    <a type="button" href="/buydownadd" title="Add New" class="btn btn-gray headerblack buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a> 
+                    <button type="submit" class="btn btn-danger buttonred buttons_menu basic-button-small" id="buydown_delete" title="Delete"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>
                     
-                    <div class="dataTables_scroll">
+                </div>
+            </div> <!-- navbar-collapse.// -->
+        </div>
+    </nav>
+    
+    <section class="section-content py-6">
+        <div class="container-fluid">
+            
+            @if (session()->has('message'))
+            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+            @endif
+
+            @if (session()->has('error'))
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+            @endif
+
+            <div id='errorDiv'>
+            </div>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                <i class="fa fa-exclamation-circle"></i>{{$error}}
+                @endforeach
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div> 
+            @endif
+            
+            <div class="panel panel-default">
+                
+                <div class="panel-body">
                         
-                        <div class="dataTables_scrollHead" style="">
-                            <div class="dataTables_scrollHeadInner" style="">
+                    <div class="box-body table-responsive col-xl-12 col-md-12">                  
+                                        
+                        <form action="<?php echo $data['delete_buydown']; ?>" method="post"  id="buydown_search">
+                            @csrf
+                            <?php if(session()->get('hq_sid') == 1){ ?>
+                                <input type="hidden" name="stores_hq" id="hidden_stores_hq" value=""/>
+                            <?php } ?>
+                            <input type="hidden" name="MenuId" value=""/>
+                            <table id="table_bydown" class="table table-hover" data-classes="table table-hover table-condensed promotionview"
+                                data-row-style="rowColors" data-striped="true" data-click-to-select="true">
+                                <thead>
+                                    <tr role="row" class="header-color">
+                                        <th class="text-center no-filter-checkbox">
+                                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                                        </th>
+                                        <th class="text-left text-uppercase">BuyDown Name
+                                            <div class="form-group adjustment-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
+                                            </div>
+                                        </th>
+                                        <th class="text-left text-uppercase">Code
+                                            <div class="form-group adjustment-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
+                                            </div>
+                                        </th>
+                                        <th class="text-left text-uppercase">Amount
+                                            <div class="form-group adjustment-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
+                                            </div>
+                                        </th>
+                                        <th class="text-left text-uppercase no-filter">Start Date</th>
+                                        <th class="text-left text-uppercase no-filter">End Date</th>
+                                        <th class="text-left text-uppercase no-filter">Status</th>
+                                    </tr>
+                                    
+                                </thead>
                                 
-                                <form action="<?php echo $data['delete_buydown']; ?>" method="post"  id="buydown_search">
-                                    @csrf
-                                    <?php if(session()->get('hq_sid') == 1){ ?>
-                                        <input type="hidden" name="stores_hq" id="hidden_stores_hq" value=""/>
-                                    <?php } ?>
-                                    <input type="hidden" name="MenuId" value=""/>
-                                    <table id="table_bydown" class="table table-bordered table-striped table-hover display dataTable no-footer" style="" role="grid">
-                                        <thead>
-                                            <tr role="row">
-                                                <th style="width: 1px;color:black;" class="text-center" rowspan="1" colspan="1">
-                                                    <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                                                </th>
-                                                <th rowspan="1" colspan="1">BuyDown Name</th>
-                                                <th rowspan="1" colspan="1">Code</th>
-                                                <th rowspan="1" colspan="1">Amount</th>
-                                                <th rowspan="1" colspan="1">Start Date</th>
-                                                <th rowspan="1" colspan="1">End Date</th>
-                                                <th rowspan="1" colspan="1">Status</th>
-                                            </tr>
-                                            
-                                        </thead>
-                                        <tbody id="searchdata">
-                                            
-                                        </tbody>
-                                    </table>
-                                </form>
-                            </div>
-                        </div>
-                    
+                            </table>
+                        </form>
+                                    
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>
 
 <?php if(session()->get('hq_sid') == 1){ ?>
@@ -138,53 +137,11 @@ Buy Down
     </div>
 <?php } ?>
 
-<style>
-    
-     span.select2-container{
-        width: 100% !important;  
-        min-width:125px; !important;
-    }
-     #items_status + span.select2-container{
-        max-width: 20%;  
-    }
-    thead input {
-        width: 100%;
-    }
-    
-    
-     .table.table-bordered.table-striped.table-hover thead > tr{
-     	background: #03a9f4 none repeat scroll 0 0 !important;
-     }
-     
-     table tbody tr:nth-child(even) td{
-    	background-color: #f05a2814;
-    }
-    /*table tbody tr:nth-child(even) td{*/
-    /*	background-color: #f05a2814;*/
-    /*}*/
-    table.dataTable tbody td {
-        padding: 5px 10px;
-    }
-    table.dataTable thead th{
-        padding: 8px 10px;
-    }
-    
-    
-</style>
+
 @endsection
 
 
-@section('script_files')
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/datatables.min.css">
- 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/datatables.min.js"></script>
-<link type="text/css" href="view/stylesheet/select2/css/select2.min.css" rel="stylesheet">
-<script src="view/javascript/select2/js/select2.min.js"></script> -->
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/datatables.min.css"/>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/datatables.min.js"></script>
+@section('page-script')
 
 <link type="text/css" href="/stylesheet/select2/css/select2.min.css" rel="stylesheet" />
 <script src="/javascript/select2/js/select2.min.js"></script>
@@ -192,16 +149,24 @@ Buy Down
 <link type="text/css" href="/javascript/bootstrap-datepicker.css" rel="stylesheet">
 <script src="/javascript/bootstrap-datepicker.js" defer=""></script>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/datatables.min.css"/>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/datatables.min.js"></script>
 <link type="text/css" href="/stylesheet/select2/css/select2.min.css" rel="stylesheet" />
 <script src="/javascript/select2/js/select2.min.js"></script>
 
 <script src="/javascript/bootbox.min.js" defer=""></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-@endsection
 
-@section('scripts')
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">
+
+<style>
+    .no-filter{
+        padding-bottom: 55px !important;
+    }
+  
+    .no-filter-checkbox{
+        padding-bottom: 30px !important;
+    }
+  </style>
 
 <script>
     $(document).on('click', '#buydown_delete', function(event) {
@@ -214,7 +179,7 @@ Buy Down
 
 
 <script type="text/javascript">
-  $(window).load(function() {
+  $(window).on('load', function() {
     $("div#divLoading").removeClass('show');
   });
   
@@ -229,31 +194,9 @@ Buy Down
         // var promotion_types = null;
         // var types_length  = Object.keys(promotion_types).length;
         
-        $('#table_bydown thead tr').clone(true).appendTo( '#table_bydown thead' );
-        $('#table_bydown thead tr:eq(1) th').each( function (i) {
+        $('#table_bydown thead tr th').each( function (i) {
             
             var title = $(this).text();
-            if(title == "Start")
-            {
-                $(this).html('<input type="text" name="buydown_name" class="search_text_box" placeholder="Search" style="color:black;border-radius: 4px;height:28px;"/>' );
-            }
-            else if(title == "BuyDown Name")
-            {
-                $(this).html( '<input type="text" name="buydown_name" class="search_text_box" placeholder="Search" style="color:black;border-radius: 4px;height:28px;"/>' );
-            }
-            else if(title == "Code")
-            {
-                $(this).html( '<input type="text" name="buydown_code" class="search_text_box" placeholder="Search" style="color:black;border-radius: 4px;height:28px;"/>' );
-            }
-            else if(title == "Amount")
-            {
-              $(this).html( '<input type="number" name="buydown_amt" class="search_text_box" placeholder="Search" style="color:black;border-radius: 4px;height:28px;"/>');
-            } 
-            
-            else
-            {
-                $(this).html('');
-            }
             
      
             $( '.search_text_box', this ).on( 'keyup change', function () {
@@ -281,11 +224,11 @@ Buy Down
                 "serverSide": true,
                 "iDisplayLength": 20,
                 "ordering": false,
-                "scrollX": true,
+                // "scrollX": true,
                 // "searching": false,
-                "autoWidth": false,
+                // "autoWidth": false,
                 // "aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0,1,2, 3,4,5 ] }],
-                "dom": '<"mysearch"lf>rt<"bottom"ip>',
+                "dom": 't<"bottom col-md-12 row"<"col-md-3"i><"col-md-9"p>>',
                 "ajax": {
                   url: search_url,
                   headers: {
@@ -320,16 +263,24 @@ Buy Down
                       { "data": "start_date"},
                       { "data": "end_date"},
                       { "data": "status" },
-                    ],
+                ],
+                 
+                fnDrawCallback : function() {
+                        if ($(this).find('tbody tr').length<=1) {
+                            $(this).find('.dataTables_empty').hide();
+                        }
+                          
+                        $(this).addClass('promotionview');
+                }
                     
-                    
-            });
+        });
         
             $("#items_status").select2();
             $("#prom_type").select2();
             $("#prom_category").select2();
             $("#prom_status").select2();
             $("#table_bydown_filter").hide();
+            $("#table_bydown_paginate").addClass("pull-right");
     });
     var dataItemOrders = [];
     
@@ -407,9 +358,7 @@ Buy Down
         $("#buydown_search").submit();
     })
     
-    
-    
-    
+          
  
 </script>
 
