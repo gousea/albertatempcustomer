@@ -145,7 +145,7 @@
               </div>
               <br>
               <div class="table-responsive">
-                <table class="table table-hover" style="padding:0px; margin:0px;">
+                <table class="table table-hover" style="padding:0px; margin:0px; width:100%;">
 
                   <thead>
                     <tr class="header-color">
@@ -206,7 +206,7 @@
               
               <div class="table-responsive">
                 <table class="table table-hover" data-classes="table table-hover table-condensed promotionview"
-                    data-row-style="rowColors" data-striped="true" data-click-to-select="true" id="itemsort2" ">
+                    data-row-style="rowColors" data-striped="true" data-click-to-select="true" id="itemsort2" style="width: 100%;">
                   
 
                   <thead>
@@ -224,67 +224,8 @@
                     </tr>
                   </thead>
 
-                  <tbody style="height:400px; overflow-y : scroll;">
-                    <?php if(isset($edit_right_items) && count($edit_right_items) > 0){?>
-                      <?php foreach($edit_right_items as $k => $edit_right_item){?>
-                        <tr>
-                            
-                          <td class="text-center">
-                            <input type="checkbox" name="checkbox_itemsort2[]" value="<?php echo $edit_right_item['iitemid']; ?>"/>
-                            <input type="hidden" name="items[<?php echo $k; ?>][vitemid]" value="<?php echo $edit_right_item['iitemid']; ?>">
-                          </td>
-                          
-                          <td class="text-left">
-                            <?php echo $edit_right_item['vitemname']; ?>
-                            <input type="hidden" name="items[<?php echo $k; ?>][vitemname]" value="<?php echo $edit_right_item['vitemname']; ?>">
-                          </td>
-                          
-                          <td class="text-left" ?>
-                            <input type="hidden" name="items[<?php echo $k; ?>][vbarcode]" value="<?php echo $edit_right_item['vbarcode']; ?>">
-                          </td>
-                                                      
-                          <td class="text-left">
-                            <input type="text" class="editable nunitcost_class" name="items[<?php echo $k; ?>][nunitcost]" value="<?php echo $edit_right_item['nunitcost']; ?>" style="width:30px;text-align: right;">
-                          </td>
-                          
-                          <td class="text-left">
-                            <input type="text" class="editable npackqty_class" name="items[<?php echo $k; ?>][npackqty]" value="<?php echo $edit_right_item['npackqty']; ?>" style="width:30px;text-align: right;">
-                          </td>
-                          
-                           <td class="text-left">
-                            <input type="text" class="editable iqtyonhand_class" name="items[<?php echo $k; ?>][iqtyonhand]" value="<?php echo $edit_right_item['iqtyonhand']; ?>" style="width:30px;text-align: right;">
-                          </td>
-                          
-                          <td class="text-left">
-                            <input type="text" class="editable ndebitqty_class" name="items[<?php echo $k; ?>][ndebitqty]" value="<?php echo $edit_right_item['ndebitqty']; ?>" maxlength = "5" style="width:30px;text-align: right;">
-                          </td>
-                          
-                          <td class="text-left">
-                              <select name="items[<?php echo $k; ?>][vreasoncode]" style="width:35px;">
-                              <option value="">Reason</option>
-                                <?php foreach($reasons as $reason){ ?>
-                                  <?php if(isset($edit_right_item['vreasoncode']) && $reason['vreasoncode'] == $edit_right_item['vreasoncode']){ ?>
-                                    <option value="<?php echo $reason['vreasoncode']; ?>" selected="selected"><?php echo $reason['vreasonename']; ?></option>
-                                  <?php }else{ ?>
-                                    <option value="<?php echo $reason['vreasoncode']; ?>" ><?php echo $reason['vreasonename']; ?></option>
-                                  <?php } ?>
-                                <?php } ?>
-                              </select>
-
-                          </td>
-                          
-                          <td class="text-left">
-                            <input type="text" class="editable itotalunit_class" name="items[<?php echo $k; ?>][itotalunit]" value="<?php echo $edit_right_item['itotalunit']; ?>" style="width:30px;text-align: right;">
-                          </td>
-                          
-                          <td class="text-left" >
-                            <span class="text_nnettotal_class"><?php echo $edit_right_item['nunitcost'] * $edit_right_item['itotalunit']; ?></span>
-                            <input type="hidden" class="nnettotal_class" name="items[<?php echo $k; ?>][nnettotal]" value="<?php echo $edit_right_item['nunitcost'] * $edit_right_item['itotalunit']; ?>">
-                          </td>
-                          
-                        </tr>
-                      <?php } ?>
-                    <?php } ?>
+                  <tbody >
+                    
                   </tbody>
 
                 </table>
@@ -329,6 +270,9 @@
           <div class="text-center">
             <p id="success_alias"></p>
           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
       </div>
       
@@ -391,7 +335,7 @@
           'X-CSRF-TOKEN': "{{ csrf_token() }}"
       }
   });
-//Item Filter
+  //Item Filter
   $(document).on('keyup', '#itemsort1_search_sku', function(event) {
     event.preventDefault();
     $('#itemsort1_search_item_name').val('');
@@ -416,7 +360,7 @@
 
             for(var i=0;i<response.items.length;i++){
 
-              left_items_html[i] ='<tr style="background-color:#fff;"><td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort1[]" value="'+response.items[i]['iitemid']+'"/></td><td style="width:242px;">'+response.items[i]['vitemname']+'</td><td style="width:219px;">'+response.items[i]['vbarcode']+'</td><td style="width:163px;">'+response.items[i]['iqtyonhand']+'</td><td style="width:154px;">'+response.items[i]['vdepartmentname']+'</td><td style="width:128px;">'+response.items[i]['vcategoryname']+'</td><td style="width:163px;">'+response.items[i]['subcat_name']+'</td><td style="width:118px;">'+response.items[i]['vcompanyname']+'</td></tr>';
+              left_items_html[i] ='<tr style="background-color:#fff;"><td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort1[]" value="'+response.items[i]['iitemid']+'"/></td><td style="word-wrap:break-word; width:242px; !important;">'+response.items[i]['vitemname']+'</td><td style="width:219px;">'+response.items[i]['vbarcode']+'</td><td style="width:177px;">'+response.items[i]['iqtyonhand']+'</td><td style="width:170px;">'+response.items[i]['vdepartmentname']+'</td><td style="width:140px;">'+response.items[i]['vcategoryname']+'</td><td style="width:177px;">'+response.items[i]['subcat_name']+'</td><td style="width:118px;">'+response.items[i]['vcompanyname']+'</td></tr>';
             }
 
             $('#itemsort1 tbody').addClass('scroller');
@@ -464,7 +408,7 @@
 
             for(var i=0;i<response.items.length;i++){
 
-              left_items_html[i] ='<tr style="background-color:#fff;"><td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort1[]" value="'+response.items[i]['iitemid']+'"/></td><td style="word-wrap:break-word; width:242px; !important;">'+response.items[i]['vitemname']+'</td><td style="width:219px;">'+response.items[i]['vbarcode']+'</td><td style="width:163px;">'+response.items[i]['iqtyonhand']+'</td><td style="width:154px;">'+response.items[i]['vdepartmentname']+'</td><td style="width:128px;">'+response.items[i]['vcategoryname']+'</td><td style="width:163px;">'+response.items[i]['subcat_name']+'</td><td style="width:118px;">'+response.items[i]['vcompanyname']+'</td></tr>';
+              left_items_html[i] ='<tr style="background-color:#fff;"><td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort1[]" value="'+response.items[i]['iitemid']+'"/></td><td style="word-wrap:break-word; width:242px; !important;">'+response.items[i]['vitemname']+'</td><td style="width:219px;">'+response.items[i]['vbarcode']+'</td><td style="width:177px;">'+response.items[i]['iqtyonhand']+'</td><td style="width:170px;">'+response.items[i]['vdepartmentname']+'</td><td style="width:140px;">'+response.items[i]['vcategoryname']+'</td><td style="width:177px;">'+response.items[i]['subcat_name']+'</td><td style="width:118px;">'+response.items[i]['vcompanyname']+'</td></tr>';
             }
 
             $('#itemsort1 tbody').addClass('scroller');
@@ -543,7 +487,7 @@
           type : 'POST',
       }).done(function(response){
 
-        // var  response = $.parseJSON(response); //decode the response array
+          // var  response = $.parseJSON(response); //decode the response array
         
         if(response.right_items_arr){
           var right_items_html = '';
@@ -577,7 +521,7 @@
             right_items_html += '<td class="text-left">';
             right_items_html += '<span class="text_nnettotal_class">0.00</span><input type="hidden" class="nnettotal_class" name="items['+window.index_item+'][nnettotal]" id="" value="0.00" >';
             right_items_html += '</td>';
-          // right_items_html += '<td><input type="hidden" class="iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]"  value="'+v.iqtyonhand+'"></td>';
+            // right_items_html += '<td><input type="hidden" class="iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]"  value="'+v.iqtyonhand+'"></td>';
             right_items_html += '</tr>';
             window.index_item++;
           });
@@ -594,91 +538,6 @@
     }
   });
 </script>
-
-<script type="text/javascript">
-  $(document).on('click', '#remove_item_btn', function(event) {
-    event.preventDefault();
-    
-    var remove_items_url = '<?php echo $remove_items; ?>';
-      
-    remove_items_url = remove_items_url.replace(/&amp;/g, '&');
-
-    if($("[name='checkbox_itemsort2[]']:checked").length == 0) {
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: "Please select item to remove", 
-        callback: function(){}
-      });
-      return false;
-    }
-
-    $("div#divLoading").addClass('show');
-
-    $("[name='checkbox_itemsort2[]']:checked").each(function (i) {
-    
-        if($.inArray( parseInt($(this).val()), window.checked_items2) !== -1){
-          window.checked_items2.splice( $.inArray($(this).val(), window.checked_items2), 1 );
-          $(this).closest('tr').remove();
-          
-        }
-
-    });
-
-      $.ajax({
-          url : remove_items_url,
-          data : {checkbox_itemsort1:window.checked_items1},
-          type : 'POST',
-      }).done(function(response){
-
-
-        $('#itemsort1 tbody').html('');
-
-        $("div#divLoading").removeClass('show');
-        
-      });
-
-  });
-
-//form submit
-  $(document).on('click', '#save_button_adjustment_detail', function(event) {
-    if($('form#form-adjustment-detail #vrefnumber').val() == ''){
-      // alert('please enter Number');
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: "please enter number", 
-        callback: function(){}
-      });
-      $('form#form-adjustment-detail #vrefnumber').focus();
-      return false;
-    }else if($('form#form-adjustment-detail #dcreatedate').val() == ''){
-      // alert('please select Date');
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: "please select date", 
-        callback: function(){}
-      });
-      $('form#form-adjustment-detail #dcreatedate').focus();
-      return false;
-    }else if($('form#form-adjustment-detail #vordertitle').val() == ''){
-      // alert('please enter title');
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: "please enter title", 
-        callback: function(){}
-      });
-      $('form#form-adjustment-detail #vordertitle').focus();
-      return false;
-    }else{
-      $("div#divLoading").addClass('show');
-      $('form#form-adjustment-detail').submit();
-    }
-  });
-</script>
-
 
 
 <script type="text/javascript">
@@ -793,6 +652,8 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
+
+    $('.table').addClass('promotionview');
 
     window.reasons = $.parseJSON('<?php echo json_encode($reasons); ?>');
 
@@ -935,7 +796,7 @@
         $('#success_alias').html('<strong>'+ data.success +'</strong>');
         $('#successModal').modal('show');
         setTimeout(function(){
-            window.location = '<?php echo $cancel;  ?>'; 
+            // window.location = '<?php echo $cancel;  ?>'; 
         }, 3000);
         
      
@@ -975,6 +836,90 @@
         return false;
       }
     });
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).on('click', '#remove_item_btn', function(event) {
+    event.preventDefault();
+    
+    var remove_items_url = '<?php echo $remove_items; ?>';
+      
+    remove_items_url = remove_items_url.replace(/&amp;/g, '&');
+
+    if($("[name='checkbox_itemsort2[]']:checked").length == 0) {
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: "Please select item to remove", 
+        callback: function(){}
+      });
+      return false;
+    }
+
+    $("div#divLoading").addClass('show');
+
+    $("[name='checkbox_itemsort2[]']:checked").each(function (i) {
+      
+        if($.inArray( parseInt($(this).val()), window.checked_items2) !== -1){
+          window.checked_items2.splice( $.inArray($(this).val(), window.checked_items2), 1 );
+          $(this).closest('tr').remove();
+          
+        }
+
+    });
+
+      $.ajax({
+          url : remove_items_url,
+          data : {checkbox_itemsort1:window.checked_items1},
+          type : 'POST',
+      }).done(function(response){
+
+
+        $('#itemsort1 tbody').html('');
+
+        $("div#divLoading").removeClass('show');
+        
+      });
+
+  });
+
+    //form submit
+  $(document).on('click', '#save_button_adjustment_detail', function(event) {
+    if($('form#form-adjustment-detail #vrefnumber').val() == ''){
+      // alert('please enter Number');
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: "please enter number", 
+        callback: function(){}
+      });
+      $('form#form-adjustment-detail #vrefnumber').focus();
+      return false;
+    }else if($('form#form-adjustment-detail #dcreatedate').val() == ''){
+      // alert('please select Date');
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: "please select date", 
+        callback: function(){}
+      });
+      $('form#form-adjustment-detail #dcreatedate').focus();
+      return false;
+    }else if($('form#form-adjustment-detail #vordertitle').val() == ''){
+      // alert('please enter title');
+      bootbox.alert({ 
+        size: 'small',
+        title: "Attention", 
+        message: "please enter title", 
+        callback: function(){}
+      });
+      $('form#form-adjustment-detail #vordertitle').focus();
+      return false;
+    }else{
+      $("div#divLoading").addClass('show');
+      $('form#form-adjustment-detail').submit();
+    }
   });
 </script>
 

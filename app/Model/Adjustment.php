@@ -109,7 +109,7 @@ class Adjustment extends Model
 
     	if(isset($data['search_by']) && $data['search_by'] == 'vbarcode'){
     		if($item_ids != ''){
-    			$sql_query = "SELECT mi.iitemid,mi.vbarcode,mi.vitemname, mi.iqtyonhand, md.vdepartmentname vdepartmentname, mc.vcategoryname vcategoryname, msupp.vcompanyname vcompanyname, msc.subcat_name subcat_name FROM mst_item mi FORCE INDEX (idx_item_vbarcode) LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode) 
+    			$sql_query = "SELECT mi.iitemid,mi.vbarcode,mi.vitemname, mi.iqtyonhand, md.vdepartmentname vdepartmentname, mc.vcategoryname vcategoryname, msupp.vcompanyname vcompanyname, msc.subcat_name subcat_name FROM mst_item mi FORCE INDEX (idx_item_vbarcode) 
 				LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode)
 				LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
 				LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) 
