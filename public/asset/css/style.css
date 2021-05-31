@@ -616,6 +616,10 @@ and (max-device-width : 1024px){
         padding-right: 13px;
     }
 
+    .nav-submenu{
+        right: 40px;
+    }
+
 }
 
 /* ============ desktop view ============ */
@@ -669,6 +673,9 @@ and (max-device-width : 1024px){
         padding-right: 37px;
         font-weight: 500;
         padding-top: 5px;
+    }
+    .nav-submenu{
+        right: 160px;
     }
 }
 

@@ -6,23 +6,30 @@
 {{-- <link rel="stylesheet" href="{{ asset('asset/css/vendor.css') }}"> --}}
 
 
+@section('main-content')
+
+
+<form action="{{ route('customers.store') }}" method="post" enctype="multipart/form-data" id="customerForm"
+class="form-horizontal">
+@csrf
+
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
+    <div class="container">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <span class="font-weight-bold text-uppercase"><?php echo $text_form; ?></span>
+                <span class="font-weight-bold text-uppercase"><?php echo 'Customer Create'; ?></span>
             </div>
             <div class="nav-submenu">
                 <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
-                    class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
-                {{-- <button id="save_button_adjustment_detail" data-toggle="tooltip" title="<?php //echo $button_save; ?>" class="btn btn-gray headerblack  buttons_menu" <?php if(isset($estatus) && $estatus == 'Close'){?> disabled <?php } ?> ><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button> --}}
-                <a style="pointer-events:all;" href="{{ route('customers') }}" data-toggle="tooltip" title="<?php //echo $button_cancel; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+                        class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
+                <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"
+                    href="{{ route('customers') }}"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel
+                </a>
             </div>
         </div> <!-- navbar-collapse.// -->
     </div>
 </nav>
 
-@section('main-content')
 
     <div id="content" class="section-content">
         @if ($errors->any())
@@ -35,7 +42,7 @@
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
         @endif
-        <div class="container-fluid">
+        <div class="container">
             <div class="mytextdiv">
                 <div class="mytexttitle font-weight-bold text-uppercase menu">
                     GENERAL INFO
@@ -43,24 +50,10 @@
                 <div class="divider font-weight-bold"></div>
             </div>
         </div>
-        <form action="{{ route('customers.store') }}" method="post" enctype="multipart/form-data" id="customerForm"
-            class="form-horizontal">
-            @csrf
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 mx-auto">
-
-
-                        {{-- <div class="nav-submenu">
-                            <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
-                                    class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
-                            <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"
-                                href="{{ route('customers') }}"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel
-                            </a>
-                        </div> --}}
-
                         <input type="hidden" name="estatus" value="Active">
-
                         <div class="form-group row">
                             <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
@@ -270,20 +263,20 @@
             </div>
 
             <?php if ($version->ver_no == '3.1.0') { ?>
+
             <div class="container-fluid">
+                <div class="mytextdiv">
+                    <div class="mytexttitle font-weight-bold text-uppercase menu">
+                        GENERAL INFO
+                    </div>
+                    <div class="divider font-weight-bold"></div>
+                </div>
+            </div>
+            <div class="container">
                 <div class="row">
                     <div class="col-md-12 mx-auto">
-                        <div class="container-fluid">
-                            <div class="mytextdiv">
-                                <div class="mytexttitle font-weight-bold text-uppercase menu">
-                                    GENERAL INFO
-                                </div>
-                                <div class="divider font-weight-bold"></div>
-                            </div>
-                        </div>
-
                         <div class="form-group row">
-                            <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                            <div class="col-md-4 col-sm-2 col-lg-4 p-form">
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <label class="p-2 float-left text-uppercase" for="input-id_type">Id
                                         Type</label>
@@ -293,7 +286,7 @@
                                         id="id_type" class="form-control" />
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                            <div class="col-md-4 col-sm-2 col-lg-4 p-form">
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <label class="p-2 float-left text-uppercase" for="input-id_number">Id
                                         Number</label>
@@ -303,7 +296,7 @@
                                         placeholder="" id="id_number" class="form-control" />
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                            <div class="col-md-4 col-sm-2 col-lg-4 p-form">
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <label class="p-2 float-left text-uppercase" for="input-state">Id Expire
                                         Date</label>
@@ -317,7 +310,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                            <div class="col-md-4 col-sm-2 col-lg-4 p-form">
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <label class="p-2 float-left text-uppercase" for="input-zip">Birth
                                         Date</label>
@@ -328,15 +321,13 @@
                                     <span id="br_dt" style="color: red"></span>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-            </div>
             <?php } ?>
-        </form>
+        </div>
     </div>
-    </div>
+</form>
 @endsection
 @section('page-script')
 
