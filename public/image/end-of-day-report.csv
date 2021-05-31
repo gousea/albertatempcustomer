@@ -2,6 +2,7 @@
 Store Name : ,LU-CO TOBACCO Outlet
 Store Address:: ,204 North Hampton St
 Store Phone ,610-258-3561
+<<<<<<< HEAD
 Date: ,05-28-2021
 SALES DETAIL: ,
 
@@ -11,30 +12,101 @@ Non-Taxable Sales: ,$0.00
 Total  Tax: ,$0.00
 Total Store Sales: ,$0.00
 Grand Total: ,$0.00
+=======
+Date: ,04-14-2021
+SALES DETAIL: ,
+
+Store Sales ( Excluding Tax): ,$6697.49
+Taxable Sales: ,$5191.99
+Non-Taxable Sales: ,$1505.50
+Total  Tax: ,$311.59
+Tax1: ,$311.52
+Total Store Sales: ,$7009.08
+Total Bottle Deposit: ,$94.81
+Grand Total: ,$7103.89
+>>>>>>> 1cd35e536427da6311479ae0b0637d0e09b2df47
 
 LOTTERY SALES DETAILS: ,
 
 BOTTLE DEPOSIT DETAILS: ,
+<<<<<<< HEAD
 
 Tender Summary: ,
 
 Performance Statstic: ,
+=======
+Bottle Deposit Redeem: ,$94.81
+
+Tender Summary: ,
+Cash: ,$2973.50
+Coupon: ,$8.80
+Credit Card: ,$4121.59
+
+Performance Statstic: ,
+Voided Transactions: ,$4
+Voided  Amount: ,$25.10
+Deleted Transactions: ,$20
+Deleted Total: ,$235.74
+>>>>>>> 1cd35e536427da6311479ae0b0637d0e09b2df47
 Return Transactions: ,0
 Return Total: ,$0.00
 
 Productivity,
+<<<<<<< HEAD
 Transaction Count: ,0
 Average Sales: ,$0.00
 Gross Cost: ,$0.00
 Gross Profit: ,$0.00
 Gross Profit(%):,0.00
+=======
+Transaction Count: ,368
+Average Sales: ,$18.18
+Gross Cost: ,$1944.79
+Gross Profit: ,$4743.90
+Gross Profit(%):,70.92
+>>>>>>> 1cd35e536427da6311479ae0b0637d0e09b2df47
 
 Payouts Total:,$0
 Vendor Name,Amount,Register No	,Time,User ID
 
+<<<<<<< HEAD
 Hourly Sales :,$0,0
 Hourly Sales,Amount,Sales Transactions
 
 DEPARTMENT SALES SUMMARY    :,0,$0,$0,0.00
 Department Name,Quantity,Sales,Cost,GP%
+=======
+Hourly Sales :,$6697.49,360
+Hourly Sales,Amount,Sales Transactions
+08:00 AM to 09:00 AM,39.80,7
+09:00 AM to 10:00 AM,81.78,9
+10:00 AM to 11:00 AM,704.21,25
+11:00 AM to 12:00 PM,313.36,18
+12:00 PM to 01:00 PM,919.24,34
+01:00 PM to 02:00 PM,571.50,36
+02:00 PM to 03:00 PM,677.33,40
+03:00 PM to 04:00 PM,790.18,57
+04:00 PM to 05:00 PM,1002.36,40
+05:00 PM to 06:00 PM,1117.09,63
+06:00 PM to 07:00 PM,404.00,26
+07:00 PM to 08:00 PM,76.64,5
+
+DEPARTMENT SALES SUMMARY    :,906,$360,$1936.79,9.61
+Department Name,Quantity,Sales,Cost,GP%
+0CIGS,190.00,3582.46,355.69,90.07
+0MOIST SNUFF,4.00,82.77,67.42,18.55
+BEER,388.00,1361.20,852.75,37.35
+CIGARS,14.00,78.44,21.00,73.23
+DRINKS,29.00,50.21,19.07,62.02
+E-CIGS,11.00,219.89,118.25,46.22
+General,105.00,335.48,21.57,93.57
+GROCERY TAX,8.00,8.00,0.00,100.00
+PREMIUM CIGARS,12.00,100.88,69.05,31.55
+SNACKS,14.00,17.87,1.00,94.40
+TOB,79.00,571.31,265.56,53.52
+TUBES,19.00,40.29,27.72,31.20
+VAPE,1.00,29.99,0.00,100.00
+Wine,14.00,191.88,114.91,40.11
+WRAP,18.00,26.82,2.80,89.56
+>>>>>>> 1cd35e536427da6311479ae0b0637d0e09b2df47
 

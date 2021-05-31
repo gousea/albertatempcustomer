@@ -6,6 +6,8 @@
 
 <link rel="stylesheet" href="{{ asset('asset/css/vendor.css') }}">
 
+@section('main-content')
+
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
     <div class="container-fluid">
         <div class="row">
@@ -29,7 +31,7 @@
     </div>
 </nav>
 
-@section('main-content')
+
 <div id="content" class="section-content">
     @if ($errors->any())
     <div class="alert alert-danger">

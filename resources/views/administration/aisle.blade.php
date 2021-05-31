@@ -1,23 +1,27 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
   Aisle
 @endsection
 
 @section('main-content')
-
-<div id="content">
-  <div class="page-header">
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
     <div class="container-fluid">
-    <!-- <h1>Aisle</h1> -->
-      <ul class="breadcrumb">
-        <li><a href="https://customer.albertapayments.com/index.php?route=common/dashboard&amp;token=o1CTLChcNCo8wR6SPp07nGTodd0jOOez">Home</a></li>
-        <li><a href="https://customer.albertapayments.com/index.php?route=administration/aisle&amp;token=o1CTLChcNCo8wR6SPp07nGTodd0jOOez">Aisle</a></li>
-      </ul>
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase" > Manufacturer</span>
+            </div>
+            <div class="nav-submenu">
+                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <button type="button" onclick="addAisle();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                <button type="button" id="aisle_delete" onclick="myFunction()"  class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
-  </div>
+</nav>
 
-
+<section class="section-content py-6">
+  <div id="content">
     <div class="container-fluid">
       @if (session()->has('message'))
       <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
@@ -43,21 +47,8 @@
     @endif
 
       <div class="panel panel-default">
-        <div class="panel-heading head_title">
-          <h3 class="panel-title"><i class="fa fa-list"></i> Aisle</h3>
-        </div>
-
+        
         <div class="panel-body">
-          <div class="row" style="padding-bottom: 15px;float: right;">
-            <div class="col-md-12">
-              <div class="">
-                <a id="save_button" class="btn btn-primary" title="Save"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</a>
-                <button type="button" onclick="addAisle();" data-toggle="tooltip" title="Add New" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</button>   
-                <button type="button" class="btn btn-danger" id="aisle_delete" onclick="myFunction()" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
 
           <form action="/aislesearch" method="post" id="form_aisle_search">
             @csrf
@@ -65,7 +56,7 @@
             <div class="row">
               <div class="col-md-12">
                 <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-                <input type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Aisle..." id="autocomplete-product" autocomplete="off">
+                <input type="text" style="height: 33px; font-size: 12 !important; font-weight: 600" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Aisle..." id="autocomplete-product" autocomplete="off">
               </div>
             </div>
           </form>
@@ -74,15 +65,16 @@
           <form action="" method="post" enctype="multipart/form-data" id="form-aisle">
             @csrf
             <div class="table-responsive">
-              <table id="aisleTable" class="text-center table table-bordered table-hover" style="width:50%;">
-                <thead>
+              <table id="aisleTable" class="text-center table  table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead style="background-color: #286fb7!important;">
                   <tr>
                     <td style="width: 1px;color:black;" class="text-center">
                       <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                     </td>
                     <!-- previous code <td style="width: 1px;" class="text-center">
                     <input type="checkbox"  onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td> -->
-                      <td style="" class="text-left">Name</td>
+                      <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
+
                     <!-- <td class="text-center">Action</td> -->
                   </tr>
                 </thead>
@@ -95,7 +87,7 @@
                       </td>
                       <td class="text-left">
                         <span style="display:none;">{{$aisles->aislename}}</span>
-                        <input type="text" maxlength="45" class="editable aisle_c" name="aisle[{{$aisles->Id}}][{{$aisles->aislename}}]" id="aisle[{{$aisles->Id}}][aislename]" value="{{$aisles->aislename}}" onclick="">
+                        <input type="text" style="border:none;" maxlength="45" class="editable aisle_c" name="aisle[{{$aisles->Id}}][{{$aisles->aislename}}]" id="aisle[{{$aisles->Id}}][aislename]" value="{{$aisles->aislename}}" onclick="">
                         <input type="hidden" name="aisle[{{$aisles->Id}}][Id]" value="{{$aisles->Id}}">
                       </td>
                     </tr>
@@ -114,10 +106,27 @@
     </div>
   </div>
 </div>
+</section>
+
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 <script type="text/javascript">
   function addAisle(){
@@ -130,8 +139,10 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Add New Aisle</h4>
+            <h5 class="modal-title">Add New Aisle</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
       </div>
       <div class="modal-body">
         <form action="/addaisle" method="post" id="add_new_form">
@@ -297,7 +308,7 @@
                     
                     html +=  '<td class="text-left">';
                     html +=  '<span style="display:none;">'+v.aislename+'</span>';
-                    html +=  '<input type="text" maxlength="45" class="editable aisle_c" name="aisle['+v.Id+'][\'aislename\']" id="aisle['+v.Id+'][\'aislename\']" value="'+v.aislename+'" onclick="document.getElementById(\'aisle['+v.Id+'][\'select\']\').setAttribute(\'checked\',\'checked\');">';
+                    html +=  '<input type="text" style="border:none;" maxlength="45" class="editable aisle_c" name="aisle['+v.Id+'][\'aislename\']" id="aisle['+v.Id+'][\'aislename\']" value="'+v.aislename+'" onclick="document.getElementById(\'aisle['+v.Id+'][\'select\']\').setAttribute(\'checked\',\'checked\');">';
                     html +=  '<input type="hidden" name="aisle['+v.Id+'][\'Id\']" value="'+v.Id+'">';
                     html +=  '</td>';
     
@@ -396,7 +407,7 @@
           success: function(data) {
 
             if(data.status == 0){
-              $('#success_msg').html('<strong>'+ data.success +'</strong>');
+              $('#success_msg').html('<strong>Asile Deleted successfully</strong>');
               $("div#divLoading").removeClass('show');
               $('#successModal').modal('show');
 

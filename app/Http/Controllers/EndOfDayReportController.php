@@ -528,7 +528,7 @@ class EndOfDayReportController extends Controller
         foreach($report_new_dept as $val){     
            
           
-            $data_row .=$val->vdepatname.','.$val->qty.','.$val->saleamount.','.$val->cost.','.$val->gpp.PHP_EOL;
+            $data_row .=$val->vdepatname.','.$val->qty.','.$val->saleamount.','.$val->cost.','.number_format($val->gpp*100,2).PHP_EOL;
         }
         
         
