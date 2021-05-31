@@ -13,7 +13,7 @@
 
                 @if (in_array('PER1002', session()->get('userPermsData')))
                     <li class="nav-item sub-nav"><a class="nav-link sub text-uppercase" href="{{ route('vendors') }}">
-                            VENDORS </a></li>
+                            VENDOR </a></li>
                 @endif
 
                 @if (in_array('PER1003', session()->get('userPermsData')))

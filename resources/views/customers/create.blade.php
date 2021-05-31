@@ -3,23 +3,21 @@
 @section('title')
     Customer Create
 @stop
-<link rel="stylesheet" href="{{ asset('asset/css/vendor.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('asset/css/vendor.css') }}"> --}}
+
 
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <h6 class="font-weight-bold text-uppercase">Customer Create</h6>
+                <span class="font-weight-bold text-uppercase"><?php echo $text_form; ?></span>
             </div>
-            {{-- <div class="nav-submenu">
+            <div class="nav-submenu">
                 <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
-                        class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
-                <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"
-                    href="{{ route('customers') }}"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel
-                </a>
-            </div> --}}
-
-            <div class="clearfix"></div>
+                    class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
+                {{-- <button id="save_button_adjustment_detail" data-toggle="tooltip" title="<?php //echo $button_save; ?>" class="btn btn-gray headerblack  buttons_menu" <?php if(isset($estatus) && $estatus == 'Close'){?> disabled <?php } ?> ><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button> --}}
+                <a style="pointer-events:all;" href="{{ route('customers') }}" data-toggle="tooltip" title="<?php //echo $button_cancel; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+            </div>
         </div> <!-- navbar-collapse.// -->
     </div>
 </nav>
@@ -53,13 +51,13 @@
                     <div class="col-md-12 mx-auto">
 
 
-                        <div class="nav-submenu">
+                        {{-- <div class="nav-submenu">
                             <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
                                     class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
                             <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"
                                 href="{{ route('customers') }}"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel
                             </a>
-                        </div>
+                        </div> --}}
 
                         <input type="hidden" name="estatus" value="Active">
 
@@ -341,6 +339,8 @@
     </div>
 @endsection
 @section('page-script')
+
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
     <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
