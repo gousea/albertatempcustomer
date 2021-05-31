@@ -1,114 +1,113 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title')
   Size
 @endsection
 @section('main-content')
-
-<?php 
-// echo "<pre>";
-// print_r($sizedata);
-// die
-?>
-
-<div id="content">
-  <div class="page-header">
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
     <div class="container-fluid">
-      <!-- <h1>Size</h1> -->
-      <ul class="breadcrumb">
-        <li><a href="https://customer.albertapayments.com/index.php?route=common/dashboard&amp;token=eMwburw5MFSlR8iEGnNbU1vCaERC5KOb">Home</a></li>
-        <li><a href="https://customer.albertapayments.com/index.php?route=administration/size&amp;token=eMwburw5MFSlR8iEGnNbU1vCaERC5KOb">Size</a></li>
-      </ul>
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase"> Manufacturer</span>
+            </div>
+            <div class="nav-submenu">
+                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <button type="button" onclick="addSize();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " > <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                <button type="button" id="size_delete"  title="Delete" class="btn btn-danger buttonred buttons_menu basic-button-small" > <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
-  </div>
-  <div class="container-fluid">
+</nav>
+<section class="section-content py-6">
+  <div id="content">
+    <div class="container-fluid">
 
-    @if (session()->has('message'))
-        <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>      
-    @endif
-
-    @if (session()->has('error'))
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>      
+      @if (session()->has('message'))
+          <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>      
       @endif
 
-    <div id='errorDiv'>
-    </div>
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-          <i class="fa fa-exclamation-circle"></i>{{$error}}
-        @endforeach
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div> 
-    @endif
+      @if (session()->has('error'))
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>      
+        @endif
 
-    <div class="panel panel-default">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title"><i class="fa fa-list"></i> Size</h3>
+      <div id='errorDiv'>
       </div>
-      <div class="panel-body">
-        <div class="row" style="padding-bottom: 15px; float: right;">
-            <div class="col-md-12">
-                <div class="">
-                    <a id="save_button" class="btn btn-primary" title="Save"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</a>
-                    <button type="button" onclick="addSize();" data-toggle="tooltip" title="Add New" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</button>    
-                    <button type="button" class="btn btn-danger" id="size_delete" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          @foreach ($errors->all() as $error)
+            <i class="fa fa-exclamation-circle"></i>{{$error}}
+          @endforeach
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div> 
+      @endif
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+            <form action="/sizesearch" method="post" id="form_size_search">
+              @csrf
+              <input type="hidden" name="searchbox" id="isizeid">
+                <div class="row">
+                  <div class="col-md-12">
+                      <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                      <input style="height: 33px; font-size: 12 !important; font-weight: 600" type="text" name="automplete-product" class="form-control ui-autocomplete-input" placeholder="Search Size..." id="autocomplete-product" autocomplete="off">
+                  </div>
                 </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-          <form action="/sizesearch" method="post" id="form_size_search">
-            @csrf
-            <input type="hidden" name="searchbox" id="isizeid">
-              <div class="row">
-                <div class="col-md-12">
-                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-                    <input type="text" name="automplete-product" class="form-control ui-autocomplete-input" placeholder="Search Size..." id="autocomplete-product" autocomplete="off">
+            </form>
+            
+            <form action="{{route('size.edit_list')}}" method="post" enctype="multipart/form-data" id="form-size">
+              @csrf
+              @method('post')
+              @if(session()->get('hq_sid') == 1)
+                  <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
+              @endif
+              <div class="table-responsive">
+                <table id="sizeTable" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead style="background-color: #286fb7!important;">
+                    <tr>
+                      <td style="width: 1px;color:black;" class="col-xs-1 headername text-uppercase  text-light  text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+                      <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
+                    </tr>
+                  </thead>
+                  <tbody id="searchData">
+                  @foreach($sizedata as $sizes)
+                    <tr>
+                      <td class="text-center">
+                        <input type="checkbox" name="selected[]" id="size[{{$sizes->isizeid}}][select]" value="{{$sizes->isizeid}}">
+                      </td>
+                      <td class="text-left">
+                        <span style="display:none;">{{$sizes->vsize}}</span>
+                        <input type="text" style="border:none;" maxlength="45" class="editable size_c" name="size[{{$sizes->isizeid}}][vsize]" id="size[{{$sizes->isizeid}}][vsize]" value="{{$sizes->vsize}}" onclick="">
+                        <input type="hidden" name="size[{{$sizes->isizeid}}][isizeid]" value="{{$sizes->isizeid}}">
+                      </td>
+                    </tr>
+                  @endforeach
+                  </tbody>
+                </table>
+                <div class="pull-right" style="margin-right: 5px">
+                  {{$sizedata->links()}}
                 </div>
               </div>
-          </form>
-          <br>
-          
-          <form action="{{route('size.edit_list')}}" method="post" enctype="multipart/form-data" id="form-size">
-            @csrf
-            @method('post')
-            @if(session()->get('hq_sid') == 1)
-                <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
-            @endif
-            <div class="table-responsive">
-              <table id="sizeTable" class="text-center table table-bordered table-hover" style="width:50%;">
-                <thead>
-                  <tr>
-                    <td style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
-                    <td style="" class="text-left">Name</td>
-                    <!-- <td class="text-center">Action</td> -->
-                  </tr>
-                </thead>
-                <tbody id="searchData">
-                @foreach($sizedata as $sizes)
-                  <tr>
-                    <td class="text-center">
-                      <input type="checkbox" name="selected[]" id="size[{{$sizes->isizeid}}][select]" value="{{$sizes->isizeid}}">
-                    </td>
-                    <td class="text-left">
-                      <span style="display:none;">{{$sizes->vsize}}</span>
-                      <input type="text" maxlength="45" class="editable size_c" name="size[{{$sizes->isizeid}}][vsize]" id="size[{{$sizes->isizeid}}][vsize]" value="{{$sizes->vsize}}" onclick="">
-                      <input type="hidden" name="size[{{$sizes->isizeid}}][isizeid]" value="{{$sizes->isizeid}}">
-                    </td>
-                  </tr>
-                @endforeach
-                </tbody>
-              </table>
-              {{$sizedata->links()}}
-            </div>
-          </form>
-          <!-- <div class="row">
-            <div class="col-sm-6 text-left"></div>
-            <div class="col-sm-6 text-right">Showing 1 to 7 of 7 (1 Pages)</div>
-          </div> -->
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"></p>
+        </div>
       </div>
     </div>
   </div>
@@ -116,7 +115,7 @@
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 <script type="text/javascript">
 
@@ -132,8 +131,10 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Add New Size</h4>
+            <h5 class="modal-title">Add New Size</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
       </div>
       <div class="modal-body">
         <form action="/addsize" method="post" id="add_new_form">
@@ -330,26 +331,6 @@ $("#closeBtn").click(function(){
 });
 
 
-//   $(document).on('submit', 'form#add_new_form', function(event) {
-//     $("div#divLoading").addClass('show');
-
-//     $('#addModal').modal('hide');
-//     $('.modal-backdrop').hide();
-
-//     if($('form#add_new_form #add_vsize').val() == ''){
-//       // alert('Please enter Size!');
-//       bootbox.alert({ 
-//          size: 'small',
-//          title: "Attention", 
-//          message: "Please enter Size!", 
-//          callback: function(){}
-//       });
-
-//       $("div#divLoading").removeClass('show');
-//       return false;
-//     }
-
-//   });
 </script>
 
 
@@ -511,99 +492,8 @@ $("#closeBtn").click(function(){
                     });
                 }
         });
-        
-        // $('#form-size').attr('action', edit_url);
-        // $('#form-size').submit();
-        // $("div#divLoading").addClass('show');
     });
   
-    
-    // $(document).on('click', '.size_c', function(e){
-    //   e.preventDefault();
-    //   let selectId = $(this).attr('id').replace("vsize", "select");
-    //   //console.log(selectId);
-    //   document.getElementById(selectId).setAttribute('checked','checked');
-
-    // });
-
-    // $(document).on('click','#save_button',function(e){
-
-    //   e.preventDefault();
-
-    //   $("div#divLoading").addClass('show');
-
-    //   var avArr = [];
-
-    //   $("#sizeTable input[type=checkbox]:checked").each(function () {
-
-    //     var id =$(this).val();
-    //     var name = $(this).closest('tr').find('.size_c').val();
-         
-    //     avArr.push({
-    //       isizeid:id,
-    //       vsize: name
-              
-    //     });
-    //   });
-      
-    //   if(avArr.length < 1){
-    //     bootbox.alert({ 
-    //         size: 'small',
-    //         title: "Attention", 
-    //         message: "You did not select anything", 
-    //         callback: function(){location.reload(true);}
-    //     });
-    //     $("div#divLoading").removeClass('show');
-    //     return false;
-    // }
-
-    //   $.ajax({
-    //       type: 'POST',
-    //       headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-    //       url: '/updatesize',
-    //       contentType: 'application/json',
-    //       data: JSON.stringify(avArr) // access in body
-    //   }).success(function (e) {
-    //      //console.log(e);
-    //       location.reload();
-    //   }).fail(function (msg) {
-    //     //console.log('FAIL');
-    //       //console.log('FAIL');
-    //     let mssg = '<div class="alert alert-danger">';
-        
-    //     //console.log(msg);
-    //     let errors = msg.responseJSON;
-    //     //console.log(errors);
-
-    //     $.each(errors, function(k, err){
-    //     //   console.log(err);
-    //       $.each(err, function(key, error){
-    //         // console.log(error);
-    //         mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-    //       });
-    //     });
-
-    //     mssg += '</div>';
-        
-    //     bootbox.alert({ 
-    //         size: 'small',
-    //         title: "Attention", 
-    //         message: mssg, 
-    //         callback: function(){location.reload(true);}
-    //     });
-        
-    //     $("div#divLoading").removeClass('show');
-
-    //   }).done(function (msg) {
-    //      // console.log('DONE');
-    //       $("div#divLoading").removeClass('show');
-
-    //   });
-
-    // });
-
-      // Serch Code
-
 
     $(document).on('submit', '#form_size_search', function (e) {
         e.preventDefault();
@@ -647,7 +537,7 @@ $("#closeBtn").click(function(){
                                     
                   html += '<td class="text-left">';
                   html += '<span style="display:none;">'+v.vsize+'</span>';
-                  html += '<input type="text" maxlength="45" class="editable size_c " name="size['+v.isizeid+'][\'vsize\']"  id="size['+v.isizeid+'][\'vsize\']" value="'+v.vsize+'" >';
+                  html += '<input type="text" style="border:none;"  maxlength="45" class="editable size_c " name="size['+v.isizeid+'][\'vsize\']"  id="size['+v.isizeid+'][\'vsize\']" value="'+v.vsize+'" >';
                   html += '<input type="hidden" name="size['+v.isizeid+'][\'isizeid\']" value="'+v.isizeid+'">';
                   html += '</td>'; 
                   
@@ -734,14 +624,14 @@ $("#closeBtn").click(function(){
         
      <?php } else { ?>
     
-     var delete_category_url = "{{route('size.delete')}}";
-     delete_category_url = delete_category_url.replace(/&amp;/g, '&');
+     var delete_size_url = "{{route('size.delete')}}";
+     delete_size_url = delete_size_url.replace(/&amp;/g, '&');
      var data = {};
 
         $("div#divLoading").addClass('show');
     
         $.ajax({
-            url : delete_category_url,
+            url : delete_size_url,
             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
             data : JSON.stringify(avArr),
             type : 'POST',
@@ -749,7 +639,7 @@ $("#closeBtn").click(function(){
             dataType: 'json',
             success: function(data) {
                 if(data.status == 0){
-                  $('#success_msg').html('<strong>'+ data.success +'</strong>');
+                  $('#success_msg').html('<strong>Size Deleted Successfully</strong>');
                   $("div#divLoading").removeClass('show');
                   $('#successModal').modal('show');
     
@@ -823,14 +713,14 @@ $('#delete_btn_category').click(function(){
       });
     });
     console.log(avArr);
-     var delete_category_url = "{{route('size.delete')}}";
-     delete_category_url = delete_category_url.replace(/&amp;/g, '&');
+     var delete_size_url = "{{route('size.delete')}}";
+     delete_size_url = delete_size_url.replace(/&amp;/g, '&');
      var data = {};
     
         $("div#divLoading").addClass('show');
     
         $.ajax({
-            url : delete_category_url,
+            url : delete_size_url,
             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
             data : JSON.stringify(avArr),
             type : 'POST',
@@ -839,7 +729,7 @@ $('#delete_btn_category').click(function(){
           success: function(data) {
 
             if(data.status == 0){
-              $('#success_msg').html('<strong>'+ data.success +'</strong>');
+              $('#success_msg').html('<strong>Size Deleted Successfully</strong>');
               $("div#divLoading").removeClass('show');
               $('#successModal').modal('show');
 
@@ -873,85 +763,7 @@ $('#delete_btn_category').click(function(){
         });
 });
 
-//   function myFunction() {
-//     var result = confirm("Want to delete?");
-//     if (result) {
 
-//       $(document).on('click', '#size_delete', function(event) {
-//         event.preventDefault();
-//         var delete_aisle_url = 'deletesize';
-//         delete_aisle_url = delete_aisle_url.replace(/&amp;/g, '&');
-//         var data = [];
-
-//         if($("input[name='selected[]']:checked").length == 0){
-//           bootbox.alert({ 
-//             size: 'small',
-//             title: "Attention", 
-//             message: 'Please Select Shelf to Delete!', 
-//             callback: function(){}
-//           });
-//           return false;
-//         }
-
-        
-//         $("input[name='selected[]']:checked").each(function (i)
-//         {
-//           data.push(
-//             {id : parseInt($(this).val())}
-//           );
-//         });
-
-//         let input = {'input': data};
-        
-//         $("div#divLoading").addClass('show');
-
-//         $.ajax({
-//             url : delete_aisle_url,
-//             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-//             data : JSON.stringify(input),
-//             type : 'POST',
-//             contentType: "application/json",
-//             dataType: 'json',
-//           success: function(data) {
-
-//             if(data.status == 0){
-//               $('#success_msg').html('<strong>'+ data.success +'</strong>');
-//               $("div#divLoading").removeClass('show');
-//               $('#successModal').modal('show');
-
-//               setTimeout(function(){
-//                   $('#successModal').modal('hide');
-//                   window.location.reload();
-//               }, 2000);
-//             }else{
-
-//               $('#error_msg').html('<strong>'+ data.error +'</strong>');
-//               $("div#divLoading").removeClass('show');
-//               $('#errorModal').modal('show');
-
-//             }
-
-
-//           },
-//           error: function(xhr) { // if error occured
-//             var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-            
-//             var error_show = '';
-
-//             if(response_error.error){
-//               error_show = response_error.error;
-//             }else if(response_error.validation_error){
-//               error_show = response_error.validation_error[0];
-//             }
-
-//             $('#error_alias').html('<strong>'+ error_show +'</strong>');
-//             $('#errorModal').modal('show');
-//             return false;
-//           }
-//         });
-//       });
-//     }
-//   }
 </script>
 <style>
     .disabled {

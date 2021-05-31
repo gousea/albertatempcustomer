@@ -17,7 +17,7 @@ class VendorController extends Controller
 
     public function index()
     {
-        $vendors = Vendor::orderBy('isupplierid', 'DESC')->paginate(20);
+        $vendors = Vendor::orderBy('isupplierid', 'DESC')->get();
         $data['edit_list'] = url('vendors/edit_list');
         return view('vendors.index', compact('vendors', 'data'));
     }

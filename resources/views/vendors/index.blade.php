@@ -43,7 +43,7 @@
                 @endif
                 <input type="hidden" name="MenuId" value="" />
                 <div class="table-responsive">
-                    <table id="vendor" class="table table-hover employeeview">
+                    <table id="vendor" class="table table-hover promotionview" style="width: 100%;">
                         <thead>
                             <tr class="header-color">
                                 <th style="width: 1px; color:black;" class="text-center"><input type="checkbox"
@@ -128,10 +128,10 @@
                     </table>
                 </div>
             </form>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-sm-6 text-left">{{ $vendors->links() }}</div>
                 <div class="col-sm-6 text-right"></div>
-            </div>
+            </div> --}}
         </div>
     </section>
     {{-- @endsection --}}
@@ -223,9 +223,21 @@
 @endsection
 
 @section('page-script')
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
     <script src=" {{ asset('javascript/bootbox.min.js') }}"></script>
     {{-- <script src=" {{ asset('asset/js/vendor.js') }}"></script> --}}
     <script>
+
+    var table = $('#vendor').DataTable({
+        "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
+        "searching":false,
+        "ordering": false,
+
+        "pageLength":20,
+      });
+
+      $("#vendor_paginate").addClass("pull-right");
+
         $('#vender_delete').click(function(){
     var vendor_ids = [];
     $.each($("input[name='selected[]']:checked"), function(){

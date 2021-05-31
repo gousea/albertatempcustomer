@@ -10,9 +10,9 @@ body {
     margin-top: 7px;
 }
 
-.store {
+/* .store {
     margin-right: 80px;
-}
+} */
 
 .logo {
     margin-left: 28px;
@@ -430,7 +430,7 @@ header,
     /* background-color: #343a40e6!important; */
     background-color: #474d53 !important;
     /* padding: 10px 10px 14px 10px; */
-    /* max-height: 45px; */
+    max-height: 45px;
     /* z-index: 301; */
     /* top: 55px; */
 }
@@ -594,6 +594,9 @@ header,
         font-weight: 500;
         padding-top: 5px;
     }
+    .store{
+        margin-right: 70px;
+    }
 }
 
 
@@ -602,8 +605,9 @@ and (min-device-width : 992px)
 and (max-device-width : 1024px){
     .sub li {
         padding-left: 5px;
-        padding-right: 5px;
+        padding-right: 13px;
     }
+
 }
 
 /* ============ desktop view ============ */
@@ -621,9 +625,9 @@ and (max-device-width : 1024px){
         margin-top: 0;
     }
 
-    .store {
-        margin-right: 80px;
-    }
+    /* .store {
+        margin-right: 68px;
+    } */
     .date-username {
         margin-top: 0px
     }
@@ -632,8 +636,8 @@ and (max-device-width : 1024px){
     }
 
     .sub li {
-        padding-left: 27px;
-        padding-right: 21px;
+        /* padding-left: 27px;
+        padding-right: 21px; */
         font-weight: 500;
         padding-top: 5px;
     }
@@ -661,6 +665,7 @@ and (max-device-width : 1024px){
 }
 
 @media only screen and (min-width: 768px) {
+
 }
 
 @media only screen and (max-width: 600px) {
