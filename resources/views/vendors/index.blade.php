@@ -235,7 +235,7 @@
         "searching":false,
         "ordering": false,
 
-        "pageLength":20,
+        "pageLength":10,
       });
 
       $("#vendor_paginate").addClass("pull-right");
