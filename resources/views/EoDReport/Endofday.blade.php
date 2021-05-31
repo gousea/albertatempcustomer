@@ -445,7 +445,7 @@
                            
                                   <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>HOURLY SALES</span></h6>
                                    <div class="col-md-4  text-uppercase">
-                                            <table class"tcolor">
+                                            <table class="tcolor">
                                               @foreach($hourly as $v)    
                                               <tr>
                                                
