@@ -12,7 +12,7 @@
     @method('PATCH')
 
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
+    <div class="container">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
                 <span class="font-weight-bold text-uppercase"><?php echo "Vendor Edit"; ?></span>
@@ -39,7 +39,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     @endif
-<div class="container-fluid">
+<div class="container">
     <div class="mytextdiv">
         <div class="mytexttitle font-weight-bold text-uppercase menu">
             GENERAL INFO
@@ -194,7 +194,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="container">
         <div id="EDIID">
             <div class="mytextdiv">
                 <div class="mytexttitle font-weight-bold text-uppercase menu">
