@@ -4,32 +4,30 @@
     Vendor Edit
 @stop
 
-<link rel="stylesheet" href="{{ asset('asset/css/vendor.css') }}">
+
+@section('main-content')
+
+<form action="{{ route('vendors.update', $vendor->isupplierid) }}" method="post" enctype="multipart/form-data" id="vendorForm" class="form-horizontal">
+    @csrf
+    @method('PATCH')
 
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="collapse navbar-collapse" id="main_nav">
-                <div class="menu">
-                    <h6 class="font-weight-bold text-uppercase">Edit Vendor</h6>
-                </div>
-                {{-- <div class="nav-submenu"> --}}
-                    {{-- <button type="button" id="form-vendor" data-toggle="tooltip" title="" class="btn btn-gray headerblack  buttons_menu"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                    <a href="{{ route('vendors') }}" data-toggle="tooltip" title="" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a> --}}
-
-                    {{-- <button type="submit" id="form-vendor" title="" class="btn btn-gray headerblack  buttons_menu"><i
-                            class="fa fa-save"></i>&nbsp;&nbsp;Save</button> --}}
-                    {{-- <input type="submit" name="submit" id="form-vendor" title="" class="btn btn-gray headerblack  buttons_menu" value="Save"><i class="fa fa-save"></i> --}}
-                    {{-- <a href="{{ route('vendors') }}" data-toggle="tooltip" title=""
-                        class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"><i
-                            class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a> --}}
-                {{-- </div> --}}
-            </div> <!-- navbar-collapse.// -->
-        </div>
+    <div class="container">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase"><?php echo "Vendor Edit"; ?></span>
+            </div>
+            <div class="nav-submenu">
+                <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
+                        class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
+                <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"
+                    href="{{ route('vendors') }}"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel
+                </a>
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
 </nav>
 
-@section('main-content')
 <div id="content" class="section-content">
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -41,7 +39,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     @endif
-<div class="container-fluid">
+<div class="container">
     <div class="mytextdiv">
         <div class="mytexttitle font-weight-bold text-uppercase menu">
             GENERAL INFO
@@ -52,16 +50,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 mx-auto">
-                <form action="{{ route('vendors.update', $vendor->isupplierid) }}" method="post" enctype="multipart/form-data" id="vendorForm" class="form-horizontal">
-                    @csrf
-                    @method('PATCH')
-                    <div class="nav-submenu">
-                        <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
-                                class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
-                        <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"
-                            href="{{ route('vendors') }}"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel
-                        </a>
-                    </div>
                     <input type="hidden" name="estatus" value="Active">
                     @if(session()->get('hq_sid') == 1)
                         <input type="hidden" id="hidden_store_hq_val" name="stores_hq" value="">
@@ -201,121 +189,122 @@
                         </div>
                     </div>
 
-                    <div id="EDIID">
-                        <div class="mytextdiv">
-                            <div class="mytexttitle font-weight-bold text-uppercase menu">
-                                EDI SETTINGS
-                            </div>
-                            <div class="divider font-weight-bold"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group" style="font-size:15px;">
-                                  {{-- <label class="col-sm-4 control-label" for="input-country">EDI Settings</label> --}}
-                                  <div class="col-sm-4">
-                                     <!-- <br><br><span><b> UPCA TO UPCE</b></span>
-                                      <br>
-                                     <br>
-                                     <input type="checkbox" id="upc_convert" name="upc_convert" value="Y" {{ $vendor->upc_convert == 'Y' ? 'checked' : '' }}>
-                                     <label for="convert"> convert</label> -->
 
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                           <div class="col-sm-2"></div>
-                           <div class="col-sm-5">
-                                <label style="font-size:15px; font-weight:normal;">Format</label>
-                            </div>
-                        </div>
-
-                        <div class="row" style="font-size:12px;">
-                            <div class="col-sm-2"></div>
-
-                            <div class="col-sm-2">
-                                <input type="radio" style="vertical-align:middle;" name="vendor_format" value="FEDWAY" {{ ($vendor->vendor_format == 'FEDWAY' ) ? 'checked' : '' }} >
-                                <label style="font-weight:normal;">FEDWAY</label>
-                            </div>
-                            <div class="col-sm-2">
-                                <input type="radio" style="vertical-align:middle;" name="vendor_format" value="ALLEN BROTHERS" {{ ($vendor->vendor_format == 'ALLEN BROTHERS' ) ? 'checked' : '' }} >
-                                <label for="convert" style="font-weight:normal;"> ALLEN BROTHERS</label>
-                            </div>
-                            <div class="col-sm-2">
-                                <input type="radio" style="vertical-align:middle;" name="vendor_format" value="CORE MARK" {{ ($vendor->vendor_format == 'CORE MARK' ) ? 'checked' : '' }} >
-                                <label style="font-weight:normal;">CORE MARK</label>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <input type="radio" style="vertical-align:middle;" name="vendor_format" value="RESNICK" {{ ($vendor->vendor_format == 'RESNICK' ) ? 'checked' : '' }} >
-                                <label for="convert" style="font-weight:normal;"> RESNICK</label>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <input type="radio" style="vertical-align:middle;" name="vendor_format" value="OTHERS" {{ (($vendor->vendor_format != 'ALLEN BROTHERS' && $vendor->vendor_format != 'CORE MARK' && $vendor->vendor_format != 'RESNICK' && $vendor->vendor_format != 'FEDWAY') || $vendor->vendor_format == 'OTHERS') ? 'checked' : '' }} >
-                                <label for="convert" style="font-weight:normal;"> OTHERS</label>
-                            </div>
-
-                        </div>
-                        <br>
-
-                        <div class="row">
-                           <div class="col-sm-2"></div>
-                           <div class="col-sm-5">
-                                <label style="font-size:15px; font-weight:normal;">Conversion</label>
-                            </div>
-                        </div>
-                        <div class="row" style="font-size:12px;">
-                           <div class="col-sm-2"></div>
-
-                           <div class="col-sm-2">
-                            <input type="radio" style="vertical-align:middle;" id="upc_convert_E" name="upc_convert" value="E" {{ $vendor->upc_convert == 'E' ? 'checked' : '' }}>
-                                <label style="font-weight:normal;">UPCA -UPCE</label>
-                            </div>
-                            <div class="col-sm-2">
-                                <input type="radio" style="vertical-align:middle;" id="upc_convert_A" name="upc_convert" value="A" {{ $vendor->upc_convert == 'A' ? 'checked' : '' }}>
-                                <label style="font-weight:normal;">UPCE -UPCA</label>
-                            </div>
-                            <div class="col-sm-2">
-                                <input type="radio" style="vertical-align:middle;" id="upc_convert_None" name="upc_convert" value="0" {{ $vendor->upc_convert =='0' ? 'checked' : '' }}>
-                                <label for="convert" style="font-weight:normal;"> None</label>
-                            </div>
-
-                        </div>
-                        <br>
-
-                        <div class="row">
-                           <div class="col-sm-2"></div>
-                           <div class="col-sm-5">
-                                <label style="font-size:15px; font-weight:normal;">Addl. Settings</label>
-                            </div>
-                        </div>
-                        <div class="row" style="font-size:12px;">
-                            <div class="col-sm-2"></div>
-
-                            <div class="col-sm-2">
-                                <input type="checkbox" style="vertical-align:middle;" id="upca_1" class="upca_1" name="remove_first_digit" value="Y" {{ ($vendor->remove_first_digit == 'Y') ? 'checked' : '' }}>
-                                 <label for="convert" class="upca_1" style="font-weight:normal;"> Remove 1st Digit</label>
-                            </div>
-                            <div class="col-sm-2">
-                                <input type="checkbox" style="vertical-align:middle;" id="upca_2" class="upca_2" name="remove_last_digit" value="Y" {{ ($vendor->remove_last_digit == 'Y')? 'checked' : '' }}>
-                                 <label for="convert" class="upca_2" style="font-weight:normal;"> Remove Last Digit</label>
-                            </div>
-                            <div class="col-sm-2">
-                                <input type="checkbox" style="vertical-align:middle;" id="upca_3" class="upca_3" name="check_digit" value="Y" {{ ($vendor->check_digit == 'Y' ) ? 'checked' : '' }}>
-                                 <label for="convert" class="upca_3" style="font-weight:normal;"> With Check Digit</label>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </form>
 
             </div>
         </div>
     </div>
+    <div class="container">
+        <div id="EDIID">
+            <div class="mytextdiv">
+                <div class="mytexttitle font-weight-bold text-uppercase menu">
+                    EDI SETTINGS
+                </div>
+                <div class="divider font-weight-bold"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group" style="font-size:15px;">
+                      {{-- <label class="col-sm-4 control-label" for="input-country">EDI Settings</label> --}}
+                      <div class="col-sm-4">
+                         <!-- <br><br><span><b> UPCA TO UPCE</b></span>
+                          <br>
+                         <br>
+                         <input type="checkbox" id="upc_convert" name="upc_convert" value="Y" {{ $vendor->upc_convert == 'Y' ? 'checked' : '' }}>
+                         <label for="convert"> convert</label> -->
+
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+               <div class="col-sm-2"></div>
+               <div class="col-sm-5">
+                    <label style="font-size:15px; font-weight:normal;">Format</label>
+                </div>
+            </div>
+
+            <div class="row" style="font-size:12px;">
+                <div class="col-sm-2"></div>
+
+                <div class="col-sm-2">
+                    <input type="radio" style="vertical-align:middle;" name="vendor_format" value="FEDWAY" {{ ($vendor->vendor_format == 'FEDWAY' ) ? 'checked' : '' }} >
+                    <label style="font-weight:normal;">FEDWAY</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="radio" style="vertical-align:middle;" name="vendor_format" value="ALLEN BROTHERS" {{ ($vendor->vendor_format == 'ALLEN BROTHERS' ) ? 'checked' : '' }} >
+                    <label for="convert" style="font-weight:normal;"> ALLEN BROTHERS</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="radio" style="vertical-align:middle;" name="vendor_format" value="CORE MARK" {{ ($vendor->vendor_format == 'CORE MARK' ) ? 'checked' : '' }} >
+                    <label style="font-weight:normal;">CORE MARK</label>
+                </div>
+
+                <div class="col-sm-2">
+                    <input type="radio" style="vertical-align:middle;" name="vendor_format" value="RESNICK" {{ ($vendor->vendor_format == 'RESNICK' ) ? 'checked' : '' }} >
+                    <label for="convert" style="font-weight:normal;"> RESNICK</label>
+                </div>
+
+                <div class="col-sm-2">
+                    <input type="radio" style="vertical-align:middle;" name="vendor_format" value="OTHERS" {{ (($vendor->vendor_format != 'ALLEN BROTHERS' && $vendor->vendor_format != 'CORE MARK' && $vendor->vendor_format != 'RESNICK' && $vendor->vendor_format != 'FEDWAY') || $vendor->vendor_format == 'OTHERS') ? 'checked' : '' }} >
+                    <label for="convert" style="font-weight:normal;"> OTHERS</label>
+                </div>
+
+            </div>
+            <br>
+
+            <div class="row">
+               <div class="col-sm-2"></div>
+               <div class="col-sm-5">
+                    <label style="font-size:15px; font-weight:normal;">Conversion</label>
+                </div>
+            </div>
+            <div class="row" style="font-size:12px;">
+               <div class="col-sm-2"></div>
+
+               <div class="col-sm-2">
+                <input type="radio" style="vertical-align:middle;" id="upc_convert_E" name="upc_convert" value="E" {{ $vendor->upc_convert == 'E' ? 'checked' : '' }}>
+                    <label style="font-weight:normal;">UPCA -UPCE</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="radio" style="vertical-align:middle;" id="upc_convert_A" name="upc_convert" value="A" {{ $vendor->upc_convert == 'A' ? 'checked' : '' }}>
+                    <label style="font-weight:normal;">UPCE -UPCA</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="radio" style="vertical-align:middle;" id="upc_convert_None" name="upc_convert" value="0" {{ $vendor->upc_convert =='0' ? 'checked' : '' }}>
+                    <label for="convert" style="font-weight:normal;"> None</label>
+                </div>
+
+            </div>
+            <br>
+
+            <div class="row">
+               <div class="col-sm-2"></div>
+               <div class="col-sm-5">
+                    <label style="font-size:15px; font-weight:normal;">Addl. Settings</label>
+                </div>
+            </div>
+            <div class="row" style="font-size:12px;">
+                <div class="col-sm-2"></div>
+
+                <div class="col-sm-2">
+                    <input type="checkbox" style="vertical-align:middle;" id="upca_1" class="upca_1" name="remove_first_digit" value="Y" {{ ($vendor->remove_first_digit == 'Y') ? 'checked' : '' }}>
+                     <label for="convert" class="upca_1" style="font-weight:normal;"> Remove 1st Digit</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="checkbox" style="vertical-align:middle;" id="upca_2" class="upca_2" name="remove_last_digit" value="Y" {{ ($vendor->remove_last_digit == 'Y')? 'checked' : '' }}>
+                     <label for="convert" class="upca_2" style="font-weight:normal;"> Remove Last Digit</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="checkbox" style="vertical-align:middle;" id="upca_3" class="upca_3" name="check_digit" value="Y" {{ ($vendor->check_digit == 'Y' ) ? 'checked' : '' }}>
+                     <label for="convert" class="upca_3" style="font-weight:normal;"> With Check Digit</label>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+</form>
 <?php if(session()->get('hq_sid') == 1){ ?>
 <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
@@ -374,6 +363,9 @@
 @endsection
 
 @section('page-script')
+
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.js"></script>

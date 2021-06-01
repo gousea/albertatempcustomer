@@ -1,119 +1,111 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
   Age Verification
 @endsection
 
 @section('main-content')
-<?php
-// echo "<pre>";
-// print_r($storeData);
-// echo "<pre>";
-?>
-<div id="content">
-  <div class="page-header">
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
     <div class="container-fluid">
-      
-      @if (session()->has('message'))
-        <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>      
-      @endif
-
-    <div id='errorDiv'>
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase" > Age Verification</span>
+            </div>
+            <div class="nav-submenu">
+                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @foreach ($errors->all() as $error)
-          <i class="fa fa-exclamation-circle"></i>{{$error}}<br/>
-        @endforeach
+</nav>
+<section class="section-content py-6">
+  <div id="content">
+    <div class="page-header">
+      <div class="container-fluid">
         
-      </div> 
-    @endif
-    
-    
-      <?php //if ($success) { ?>
-      {{-- <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php //echo $success; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div> --}}
-      <?php //} ?> 
+        @if (session()->has('message'))
+          <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>      
+        @endif
+
+      <div id='errorDiv'>
+      </div>
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          @foreach ($errors->all() as $error)
+            <i class="fa fa-exclamation-circle"></i>{{$error}}<br/>
+          @endforeach
+          
+        </div> 
+      @endif
       
-      <div class="panel panel-default" style="">
-        <div class="panel-heading head_title"> 
-            <h3 class="panel-title"><i class="fa fa-list"></i> Age Verification</h3>
-        </div>
-        <div class="panel-body">
-          <div class="row" style="padding-bottom: 15px;float: right;">
-            <div class="col-md-12">
-              <div class="">
-                <a id="save_button" class="btn btn-primary" title="Save">
-                <i class="fa fa-save"></i>&nbsp;&nbsp;Save</a>
+      
+      
+        <div class="panel panel-default" style="">
+        
+          <div class="panel-body">
+            <form action="/ageverifysearch" method="post" id="form_age_verification_search">
+              @csrf
+              <input type="hidden" name="searchbox" id="Id">
+              <div class="row">
+                <div class="col-md-12">
+                  <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                  <input type="text" style="height:33px; font-size: 12 !important; font-weight: 600;" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Age Verification..." id="autocomplete-product" autocomplete="off">
+                </div>
               </div>
-            </div>
-          </div>
+            </form>
+            <br>
 
-          <form action="/ageverifysearch" method="post" id="form_age_verification_search">
-            @csrf
-            <input type="hidden" name="searchbox" id="Id">
-            <div class="row">
-              <div class="col-md-12">
-                <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-                <input type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Age Verification..." id="autocomplete-product" autocomplete="off">
-              </div>
-            </div>
-          </form>
-          <br>
+            <form action="" method="post" enctype="multipart/form-data" id="form-age-verification">
+              <input type="hidden" name="MenuId" value="">
+                <div class="table-responsive">
+                  <table id="age-verification" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                    <thead style="background-color: #286fb7!important;">
+                      <tr>
+                        <td style="width: 1px;" class="text-center">
+                          <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                          </td>
+                        
+                        <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Description</th>
+                        <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Age</th>
+                        
+                      </tr> 
+                    </thead>
+                    <tbody id='searchData'>
 
-          <form action="" method="post" enctype="multipart/form-data" id="form-age-verification">
-            <input type="hidden" name="MenuId" value="">
-              <div class="table-responsive">
-                <table id="age-verification" class="text-center table table-bordered table-hover" style="width:50%;">
-                  <thead>
-                    <tr>
-                      <td style="width: 1px;" class="text-center">
-                        <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                      @foreach ($agedata as $k => $age)
+                      <tr>
+                        <td class="text-center">                        
+                      <input type="checkbox" name="selected[]" id="age_verification[{{$age->Id}}]['select']" class="checkboxId" value="{{$age->Id}}">
                         </td>
-                      <td style="" class="text-left">Description</td>
-                      
-                      <!--<td class="text-right">Value</td>-->
-                      <td class="text-right">Age</td>
-                      <!-- <td class="text-center">Action</td> -->
-                    </tr> 
-                  </thead>
-                  <tbody id='searchData'>
+                                          
+                        <!-- <td>{{ $age->vname }}</td>
+                        <td>{{ $age->vvalue }}</td> -->
 
-                    @foreach ($agedata as $k => $age)
-                    <tr>
-                      <td class="text-center">                        
-                    <input type="checkbox" name="selected[]" id="age_verification[{{$age->Id}}]['select']" class="checkboxId" value="{{$age->Id}}">
-                      </td>
-                                        
-                      <!-- <td>{{ $age->vname }}</td>
-                      <td>{{ $age->vvalue }}</td> -->
-
-                      <td class="text-left">
-                        <span style="display:none;">{{ $age->vname }}</span>
-                        <input type="text" maxlength="50" class="editable age_verification_c" name="age_verification[{{$age->Id}}]['vname']" id="age_verification[{{$age->Id}}]['vname']" value="{{ $age->vname }}" onclick="">
-                        <!--<input type="hidden" maxlength="50" class="editable age_verification_c" name="age_verification[1][vname]" id="age_verification[1][vname]" value="LOTTERY" onclick='document.getElementById("age_verification[2][select]").setAttribute("checked","checked");' />-->
-                        <input type="hidden" name="age_verification[{{$age->Id}}]['Id']" value="{{$age->Id}}">
-                      </td>
-                                        
-                      <td class="text-right">
-                        <input type="text" class="text-right editable age_verification_s" maxlength="50" name="age_verification[{{$age->Id}}]['vvalue']" id="age_verification[{{$age->Id}}]['vvalue']" value="{{ $age->vvalue }}" onclick="">
-                      </td>
-                                        
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-              </div>
-          </form>
+                        <td >
+                          <span style="display:none;">{{ $age->vname }}</span>
+                          <input type="text" style="border:none;" maxlength="50" class="editable age_verification_c" name="age_verification[{{$age->Id}}]['vname']" id="age_verification[{{$age->Id}}]['vname']" value="{{ $age->vname }}" onclick="">
+                          <!--<input type="hidden" maxlength="50" class="editable age_verification_c" name="age_verification[1][vname]" id="age_verification[1][vname]" value="LOTTERY" onclick='document.getElementById("age_verification[2][select]").setAttribute("checked","checked");' />-->
+                          <input type="hidden"  name="age_verification[{{$age->Id}}]['Id']" value="{{$age->Id}}">
+                        </td>
+                                          
+                        <td>
+                          <input type="text" style="border:none;" class="editable age_verification_s" maxlength="50" name="age_verification[{{$age->Id}}]['vvalue']" id="age_verification[{{$age->Id}}]['vvalue']" value="{{ $age->vvalue }}" onclick="">
+                        </td>
+                                          
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 
 <?php if(session()->get('hq_sid') == 1){ ?>
@@ -153,7 +145,7 @@
     
 @endsection
 
-@section('scripts')
+@section('page-script')
 <script type="text/javascript">
     $(document).ready(function($) {
   
@@ -177,8 +169,8 @@
 </script>
 
     <script src="/javascript/bootbox.min.js" defer=""></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
   
   <script type="text/javascript">
 
@@ -416,12 +408,12 @@ $('#Edit_btn_age').click(function(){
                                     
                   html += '<td class="text-left">';
                   html += '<span style="display:none;">'+v.vname+'</span>';
-                  html += '<input type="text" maxlength="50" class="editable age_verification_c" name="age_verification['+v.Id+'][\'vname\']" id="age_verification['+v.Id+'][\'vname\']" value="'+v.vname+'">';
+                  html += '<input type="text" style="border:none;" maxlength="50" class="editable age_verification_c" name="age_verification['+v.Id+'][\'vname\']" id="age_verification['+v.Id+'][\'vname\']" value="'+v.vname+'">';
                   html += '<input type="hidden" name="age_verification['+v.Id+'][\'Id\']" value="'+v.Id+'">';
                   html += '</td>';
                    
                   html +=  '<td class="text-right">';
-                  html +=  '<input type="text" class="editable age_verification_s" maxlength="50" name="age_verification['+v.Id+'][\'vvalue\']" id="age_verification['+v.Id+'][\'vvalue\']" value="'+v.vvalue+'">';
+                  html +=  '<input type="text" style="border:none;" class="editable age_verification_s" maxlength="50" name="age_verification['+v.Id+'][\'vvalue\']" id="age_verification['+v.Id+'][\'vvalue\']" value="'+v.vvalue+'">';
                   html +=  '</td>';
                   html += '</tr>';
                 });

@@ -516,9 +516,10 @@ class EndOfDayReportController extends Controller
                            $SALES=+$SALES+$v->saleamount;
                            $COST=+$COST+$v->cost;
                            $GP=+$GP+$v->gpp;
+                           $totalgpp=(($COST-$SALES)/$SALES)*100;
           }              
                            
-        $data_row .= $QUANTITY.','."$".$num.','."$".$COST.','.number_format($GP,2).PHP_EOL;             
+        $data_row .= $QUANTITY.','."$".$num.','."$".$COST.','.number_format($totalgpp,2).PHP_EOL;             
        
         // $data_row .= PHP_EOL;
         

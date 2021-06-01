@@ -7,13 +7,13 @@ Tax Collection Summary
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold text-uppercase"> Tax Collection Summary</span>
+                    <span class="font-weight-bold text-uppercase"> TAX REPORT</span>
                 </div>
                  <div class="nav-submenu">
                          <?php if(isset($reports) && count($reports) > 0){ ?>
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
                             </a>
-                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="" id="btnPrint">PRINT
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="/taxreport/print" id="btnPrint">PRINT
                             </a>
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
                             </a>
@@ -82,17 +82,36 @@ Tax Collection Summary
             
                        
                         <?php if(isset($reports) && count($reports) > 0){ ?>
-                            <br><b="col-md-12">
-                                    <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
+                            
+                           <div style="padding-left:40px;padding-right:40px">
+                                <div class="col-md-12">
+                                    <p>From: <?php echo $p_start_date; ?> To <?php echo $p_end_date; ?></p>
                                 </div>
+                            
+                           
+                                <div class="col-md-12">
+                                    <p>Store Address: <?php echo $store[0]->vaddress1 ?></p>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <p>Store Name: {{ session()->get('storeName') }}</p>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <p>Store Phone:<?php echo $store[0]->vphone1; ?></p>
+                                </div>
+                           
+                            
                             </div>
-                            <br><br>
+                            
+                            <div style="padding-left:12px;padding-right:40px">
+                            
                             <div class="row" style="margin-left: 2%;">
                                 <div class="col-md-6 col-sm-6">
                                 <b> <p><p style="float: left;">Non-Taxable Sales</p>
                                     <span style="float: right;"><?php echo "$",number_format((float)$reports['NONTAX'], 2) ; ?></span></p></b>
                                 </div>
-                            </div><br>
+                            </div>
                             <div class="row" style="margin-left: 2%;">
                                 <div class="col-md-6 col-sm-6">
                                     <p><p style="float: left;">  Taxable Sales (Tax1)</p>
@@ -114,7 +133,7 @@ Tax Collection Summary
                                 </div>
                             <?php } ?>
                             <div class="row" style="margin-left: 2%;">
-                                <div class="col-md-6 col-sm-6">
+                                <div class="col-md-6 col-sm-6 total_col">
                                     <b> <p><p style="float: left;"> Total Taxable Sales </p>
                                     <span style="float: right;"><?php echo "$",number_format((float)$reports['Tax1Sales'] + (float)$reports['Tax2Sales'] + (float)$reports['Tax3Sales'], 2) ; ?></span></p></b>
                                 </div>
@@ -151,7 +170,7 @@ Tax Collection Summary
                                 </div>
                             <?php } ?>
                             <div class="row" style="margin-left: 2%;">
-                                <div class="col-md-6 col-sm-6">
+                                <div class="col-md-6 col-sm-6 total_col">
                                     <p style="float: left;"><b>Total Tax</p>
                                     <span style="float: right;"><?php echo "$",number_format((float)$reports['TAX'], 2) ; ?></span></p>
                                     </b>
@@ -175,6 +194,9 @@ Tax Collection Summary
                                 </div>
                             </div>
                             <br><br>
+                            
+                            
+                            
                         <?php }else{ ?>
                             <?php if(isset($p_start_date)){ ?>
                                 <div class="row">
@@ -198,10 +220,13 @@ Tax Collection Summary
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
 <script>
-
+$(document).ready(function() {
+  $("#btnPrint").printPage();
+});
 const saveData = (function () {
     const a = document.createElement("a");
     document.body.appendChild(a);
@@ -472,32 +497,32 @@ if($('input[name="dates"]').val() != ''){
         
     });
 
-    $(document).on('click', '#btnPrint', function(e){
-        e.preventDefault();
-        $("div#divLoading").addClass('show');
-        $.ajax({
-                type: 'GET',
-                url: '/taxreport/print',
-                // data: formData,
-                dataType: 'html',
-                success: function (reponse) {
-                    $("div#divLoading").removeClass('show');
+    // $(document).on('click', '#btnPrint', function(e){
+    //     e.preventDefault();
+    //     $("div#divLoading").addClass('show');
+    //     $.ajax({
+    //             type: 'GET',
+    //             url: '/taxreport/print',
+    //             // data: formData,
+    //             dataType: 'html',
+    //             success: function (reponse) {
+    //                 $("div#divLoading").removeClass('show');
 
-                    var originalContents = document.body.innerHTML;
+    //                 var originalContents = document.body.innerHTML;
 
-                    document.body.innerHTML = reponse;
+    //                 document.body.innerHTML = reponse;
 
-                    window.print();
+    //                 window.print();
 
-                    document.body.innerHTML = originalContents;
-                },
-                error: function (data) {
-                    $("div#divLoading").removeClass('show');
+    //                 document.body.innerHTML = originalContents;
+    //             },
+    //             error: function (data) {
+    //                 $("div#divLoading").removeClass('show');
 
-                    console.log('Error:', data);
-                }
-            });
-    });
+    //                 console.log('Error:', data);
+    //             }
+    //         });
+    // });
 
 
     $(document).on("click", "#csv_export_btn", function (event) {
@@ -516,7 +541,7 @@ if($('input[name="dates"]').val() != ''){
           }).done(function(response){
             
             const data = response,
-            fileName = "end-of-day-report.csv";
+            fileName = "TAX_Report.csv";
 
             saveData(data, fileName);
             $("div#divLoading").removeClass('show');
@@ -548,6 +573,9 @@ h6 {
 h6 span { 
     background:#f8f9fa!important; 
     padding:0 10px; 
+    color:#286fb7;
+}
+.total_col{
     color:#286fb7;
 }
 </style>

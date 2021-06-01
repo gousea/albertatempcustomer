@@ -9,22 +9,24 @@
 @section('main-content')
 
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue menu">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="main_nav">
-                <div>
+        <div class="container">
+            <div class="row">
+                <div class="collapse navbar-collapse" id="main_nav">
                     <h6 class="font-weight-bold text-uppercase"> Vendor</h6>
-                </div>
-                <div class="nav-submenu">
-                    <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{ route('vendors.create') }}">
-                        ADD NEW
-                    </a>
-                    <button type="button" class="btn btn-danger buttonred buttons_menu basic-button-small"
-                        id="vender_delete" title="Delete" style="border-radius: 0px;"><i
-                            class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>
-                    {{-- <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> DELETE
-                        </a> --}}
-                </div>
-            </div> <!-- navbar-collapse.// -->
+                    <div class="nav-submenu">
+                        <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{ route('vendors.create') }}">
+                            ADD NEW
+                        </a>
+                        {{-- <a style="pointer-events:all;" href="{{ route('customers') }}" data-toggle="tooltip" --}}
+                        {{-- title="<?php //echo $button_cancel; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a> --}}
+                        <button type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"
+                            id="vender_delete" title="Delete"><i
+                                class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>
+                        {{-- <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> DELETE
+                            </a> --}}
+                    </div>
+                </div> <!-- navbar-collapse.// -->
+            </div>
         </div>
     </nav>
 
@@ -35,7 +37,7 @@
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>
         @endif
-        <div class="container-fluid">
+        <div class="container">
             <form action="" method="post" enctype="multipart/form-data" id="form-vendor">
                 @csrf
                 @if (session()->get('hq_sid') == 1)
@@ -207,14 +209,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Error Model</h4>
+                    <h4 class="modal-title"></h4>
                 </div>
 
                 <div class="modal-body">
-                    <h3>No vendor is selected </h3>
+                    <h3 style="font-size: 11px;">No vendor is selected </h3>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default text-uppercase" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -233,7 +235,7 @@
         "searching":false,
         "ordering": false,
 
-        "pageLength":20,
+        "pageLength":10,
       });
 
       $("#vendor_paginate").addClass("pull-right");
@@ -295,7 +297,7 @@
                       success: function(result){
                         bootbox.alert({
                             size: 'small',
-                            title: "Success",
+                            title: "",
                             message: result,
                             callback: function(){
                                 location.reload();
