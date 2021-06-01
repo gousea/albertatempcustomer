@@ -14,8 +14,12 @@ body {
     margin-right: 80px;
 } */
 
+.navbar{
+    padding: 10px 0px;
+}
+
 .logo {
-    margin-left: 28px;
+    /* margin-left: 28px; */
 }
 
 .logo-name {
@@ -30,8 +34,8 @@ body {
 }
 
 #store_search{
-    width: 100%;
-    margin: 0px 20px;
+    width: 86%;
+    margin: auto;
 }
 
 /* .section-header {
@@ -57,8 +61,8 @@ body {
 }
 
 .menu {
-    padding-left: 45px;
-    padding-right: 20px;
+    /* padding-left: 45px;
+    padding-right: 20px; */
     font-size:15px;
 }
 
@@ -237,6 +241,10 @@ table tbody {
     /* width: 300px; */
 }
 
+.nav-items-list.nav-bar-search li{
+    display: block;
+}
+
 a {
     text-decoration: none;
     color: #286fb7;
@@ -308,7 +316,7 @@ footer p {
     width: 2.375rem;
     height: 2.375rem;
     line-height: 2.375rem;
-    /* padding-left: 6px; */
+    padding-left: 5px;
     pointer-events: none;
     color: #aaa;
 }
@@ -608,6 +616,10 @@ and (max-device-width : 1024px){
         padding-right: 13px;
     }
 
+    .nav-submenu{
+        right: 40px;
+    }
+
 }
 
 /* ============ desktop view ============ */
@@ -632,7 +644,7 @@ and (max-device-width : 1024px){
         margin-top: 0px
     }
     .logo{
-        margin-left: 20px;
+        /* margin-left: 20px; */
     }
 
     .sub li {
@@ -657,10 +669,13 @@ and (max-device-width : 1024px){
     }
 
     .sub li {
-        padding-left: 30px;
+        /* padding-left: 30px; */
         padding-right: 37px;
         font-weight: 500;
         padding-top: 5px;
+    }
+    .nav-submenu{
+        right: 160px;
     }
 }
 
@@ -685,8 +700,8 @@ and (max-device-width : 1024px){
         margin-bottom: 10px;
     }
     .menu {
-        padding-left: 0px;
-        padding-bottom: 15px;
+        /* padding-left: 0px;
+        padding-bottom: 15px; */
     }
     .navbar-nav .nav-link {
         padding-left: 20px;

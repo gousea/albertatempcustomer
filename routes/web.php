@@ -578,7 +578,7 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
 
 
         //==============Physical Inventroy Module Route==================
-        Route::get('inventory/physicalInventroy', 'PhysicalInventroyController@index');
+        Route::get('inventory/physicalInventroy', 'PhysicalInventroyController@index')->name('inventory.physicalInventroy');
         // Route::post('inventory/physicalInventroy/search_inventory_list', 'PhysicalInventroyController@search_inventory_list');
         Route::post('inventory/physicalInventroy/search_inventory_list', 'PhysicalInventroyController@search_inventory_list');
         Route::get('inventory/physicalInventroy/create', 'PhysicalInventroyController@create')->name('inventory.physicalInventroy.create');
