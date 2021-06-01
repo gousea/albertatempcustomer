@@ -41,7 +41,7 @@
 
               <div class="mytextdiv">
                 <div class="mytexttitle font-weight-bold text-uppercase">
-                    promotion INFO
+                    ADJUSTMENT INFO
                 </div>
                 <div class="divider font-weight-bold"></div>
               </div>
