@@ -55,7 +55,7 @@ Buy Down
                 
                 <div class="panel-body">
                         
-                    <div class="box-body table-responsive col-xl-12 col-md-12">                  
+                    <div class="box-body">                  
                                         
                         <form action="<?php echo $data['delete_buydown']; ?>" method="post"  id="buydown_search">
                             @csrf
@@ -63,39 +63,42 @@ Buy Down
                                 <input type="hidden" name="stores_hq" id="hidden_stores_hq" value=""/>
                             <?php } ?>
                             <input type="hidden" name="MenuId" value=""/>
-                            <table id="table_bydown" class="table table-hover" data-classes="table table-hover table-condensed promotionview"
-                                data-row-style="rowColors" data-striped="true" data-click-to-select="true">
-                                <thead>
-                                    <tr role="row" class="header-color">
-                                        <th class="text-center no-filter-checkbox">
-                                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                                        </th>
-                                        <th class="text-left text-uppercase">BuyDown Name
-                                            <div class="form-group adjustment-has-search">
-                                                <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
-                                            </div>
-                                        </th>
-                                        <th class="text-left text-uppercase">Code
-                                            <div class="form-group adjustment-has-search">
-                                                <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
-                                            </div>
-                                        </th>
-                                        <th class="text-left text-uppercase">Amount
-                                            <div class="form-group adjustment-has-search">
-                                                <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
-                                            </div>
-                                        </th>
-                                        <th class="text-left text-uppercase no-filter">Start Date</th>
-                                        <th class="text-left text-uppercase no-filter">End Date</th>
-                                        <th class="text-left text-uppercase no-filter">Status</th>
-                                    </tr>
+                            
+                            <div class="table-responsive col-xl-12 col-md-12">
+                                <table id="table_bydown" class="table table-hover" data-classes="table table-hover table-condensed promotionview"
+                                    data-row-style="rowColors" data-striped="true" data-click-to-select="true" style="width:100%;">
+                                    <thead>
+                                        <tr role="row" class="header-color">
+                                            <th class="text-center no-filter-checkbox">
+                                                <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                                            </th>
+                                            <th class="text-left text-uppercase">BuyDown Name
+                                                <div class="form-group adjustment-has-search">
+                                                    <span class="fa fa-search form-control-feedback"></span>
+                                                    <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
+                                                </div>
+                                            </th>
+                                            <th class="text-left text-uppercase">Code
+                                                <div class="form-group adjustment-has-search">
+                                                    <span class="fa fa-search form-control-feedback"></span>
+                                                    <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
+                                                </div>
+                                            </th>
+                                            <th class="text-left text-uppercase">Amount
+                                                <div class="form-group adjustment-has-search">
+                                                    <span class="fa fa-search form-control-feedback"></span>
+                                                    <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
+                                                </div>
+                                            </th>
+                                            <th class="text-left text-uppercase no-filter">Start Date</th>
+                                            <th class="text-left text-uppercase no-filter">End Date</th>
+                                            <th class="text-left text-uppercase no-filter">Status</th>
+                                        </tr>
+                                        
+                                    </thead>
                                     
-                                </thead>
-                                
-                            </table>
+                                </table>
+                            </div>
                         </form>
                                     
                     </div>
@@ -367,8 +370,8 @@ Buy Down
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+        <h6 class="modal-title">Delete Buydown</h6>
         <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Delete Buydown</h4>
       </div>
       <div class="modal-body">
         <p>Are you Sure?</p>

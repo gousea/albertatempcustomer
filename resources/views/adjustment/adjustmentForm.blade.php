@@ -467,7 +467,7 @@
     if($("[name='checkbox_itemsort1[]']:checked").length == 0) {
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please select item to add", 
         callback: function(){}
       });
@@ -741,7 +741,7 @@
       // alert('please enter Number');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please enter number", 
         callback: function(){}
       });
@@ -752,7 +752,7 @@
       // alert('please select Date');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please select date", 
         callback: function(){}
       });
@@ -763,7 +763,7 @@
       // alert('please enter title');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please enter title", 
         callback: function(){}
       });
@@ -774,7 +774,7 @@
     if($('#itemsort2 > tbody > tr').length == 0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please add items!", 
         callback: function(){}
       });
@@ -850,7 +850,7 @@
     if($("[name='checkbox_itemsort2[]']:checked").length == 0) {
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please select item to remove", 
         callback: function(){}
       });
@@ -890,7 +890,7 @@
       // alert('please enter Number');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please enter number", 
         callback: function(){}
       });
@@ -900,7 +900,7 @@
       // alert('please select Date');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please select date", 
         callback: function(){}
       });
@@ -910,7 +910,7 @@
       // alert('please enter title');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please enter title", 
         callback: function(){}
       });
