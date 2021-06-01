@@ -58,7 +58,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-vendor-name">Vendor Name</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="text" name="vcompanyname" maxlength="50" value="{{ old('vcompanyname') }}" placeholder="vendor Name" id="input_vendor_name" class="form-control" required />
+                                <input type="text" name="vcompanyname" maxlength="50" value="{{ old('vcompanyname') }}" placeholder="VENDOR NAME" id="input_vendor_name" class="form-control" required />
                                 <span id="vcompanyname_error" style="color:red;"></span>
                             </div>
                         </div>

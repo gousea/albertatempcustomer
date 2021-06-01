@@ -60,7 +60,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-vendor-name">Vendor Name</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="text" name="vcompanyname" maxlength="50" value="{{ $vendor->vcompanyname }}" placeholder="vendor Name" id="input-vendor-name" class="form-control" />
+                                <input type="text" name="vcompanyname" maxlength="50" value="{{ $vendor->vcompanyname }}" placeholder="VENDOR NAME" id="input-vendor-name" class="form-control" />
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -79,7 +79,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-first-name">First Name</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="text" name="vfnmae" maxlength="25" value="{{ $vendor->vfnmae }}" placeholder="" id="input-first-name" class="form-control" />
+                                <input type="text" name="vfnmae" maxlength="25" value="{{ $vendor->vfnmae }}" placeholder="FIRST NAME" id="input-first-name" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-last-name">Last Name</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="text" name="vlname" maxlength="25" value="{{ $vendor->vlname }}" placeholder="" id="input-last-name" class="form-control"  />
+                                <input type="text" name="vlname" maxlength="25" value="{{ $vendor->vlname }}" placeholder="LAST NAME" id="input-last-name" class="form-control"  />
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -97,7 +97,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-vendor-code">Vendor Code</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="text" name="vcode" maxlength="20" value="{{ $vendor->vcode }}" placeholder="" id="input-last-name" class="form-control" />
+                                <input type="text" name="vcode" maxlength="20" value="{{ $vendor->vcode }}" placeholder="VENDOR CODE" id="input-last-name" class="form-control" />
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -105,7 +105,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-address">Address</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="text" name="vaddress1" maxlength="100" value="{{ $vendor->vaddress1 }}" placeholder="" id="input-address" class="form-control" />
+                                <input type="text" name="vaddress1" maxlength="100" value="{{ $vendor->vaddress1 }}" placeholder="ADDRESS" id="input-address" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-city">City</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="text" name="vcity" maxlength="50" value="{{ $vendor->vcity }}" placeholder="" id="input-city" class="form-control" onkeypress="" />
+                                <input type="text" name="vcity" maxlength="50" value="{{ $vendor->vcity }}" placeholder="CITY" id="input-city" class="form-control" onkeypress="" />
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -123,7 +123,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-state">State</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="text" name="vstate" maxlength="50" value="{{ $vendor->vstate }}" placeholder="" id="input-state" class="form-control" onkeypress="" />
+                                <input type="text" name="vstate" maxlength="50" value="{{ $vendor->vstate }}" placeholder="STATE" id="input-state" class="form-control" onkeypress="" />
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -131,7 +131,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-phone">Phone</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="text" name="vphone" maxlength="20" onkeyup="this.value=this.value.replace(/[^\d]/,'')" value="{{ $vendor->vphone }}" placeholder="" id="input-phone" class="form-control" />
+                                <input type="text" name="vphone" maxlength="20" onkeyup="this.value=this.value.replace(/[^\d]/,'')" value="{{ $vendor->vphone }}" placeholder="PHONE" id="input-phone" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-zip">Zip</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="text" name="vzip" maxlength="10" value="{{ $vendor->vzip }}" placeholder="" id="input-zip" class="form-control" />
+                                <input type="text" name="vzip" maxlength="10" value="{{ $vendor->vzip }}" placeholder="ZIP CODE" id="input-zip" class="form-control" />
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -157,7 +157,7 @@
                                 <label class="p-2 float-left text-uppercase" for="input-email">Email</label>
                             </div>
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                <input type="email" name="vemail" maxlength="100" value="{{ $vendor->vemail }}" placeholder=""  class="form-control" />
+                                <input type="email" name="vemail" maxlength="100" value="{{ $vendor->vemail }}" placeholder="EMAIL"  class="form-control" />
                             </div>
                             <span class="email_error"></span>
                         </div>
