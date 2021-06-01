@@ -151,7 +151,7 @@ class PhysicalInventroyController extends Controller
                 $temp['dclosedate']     = $value->dclosedate;
                 $temp['vordertitle']    = $value->vordertitle;                
                 $temp['view_edit']      = $view_edit;
-				$temp['delete_inventory']         = url('/inventory/physicalInventroy/delete_physical/' . '?ipoid=' . $value->ipiid );
+				$temp['delete_inventory']         = url('/inventory/physicalInventroy/delete_physical/' . '?ipiid=' . $value->ipiid );
 
                 $datas[]                = $temp;
             }
