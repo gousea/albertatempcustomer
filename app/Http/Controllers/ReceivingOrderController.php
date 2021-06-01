@@ -308,9 +308,9 @@ class ReceivingOrderController extends Controller
             foreach ($query as $key => $value) {
 
                 if($value->estatus == 'Close'){
-                    $view_edit = url('/ReceivingOrder/info' . '?iroid=' . $value->ipoid );
+                    $view_edit = url('/ReceivingOrder/info' . '?iroid=' . $value->iroid );
                 }else{
-                    $view_edit = url('/ReceivingOrder/edit' . '?iroid=' . $value->ipoid );
+                    $view_edit = url('/ReceivingOrder/edit' . '?iroid=' . $value->iroid );
                 }
                 $temp = array();
                 $temp['iroid']          = $value->ipoid;
@@ -324,7 +324,7 @@ class ReceivingOrderController extends Controller
                 $temp['dreceiveddate']  = $value->dreceiveddate;
                 $temp['LastUpdate']     = $value->LastUpdate;
                 $temp['view_edit']      = $view_edit;
-				$temp['delete']         = url('/ReceivingOrder/delete' . '?ipoid=' . $value->ipoid );
+				$temp['delete']         = url('/ReceivingOrder/delete' . '?ipoid=' . $value->iroid );
 
                 $datas[]                = $temp;
             }
