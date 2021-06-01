@@ -18,13 +18,9 @@ Credit Card Report
     </nav>
 
 <section class="section-content py-6"> 
-<div id="content">
-    
-    <div class="container-fluid">
-        <div class="panel panel-default">
-           
+
                <?php if(isset($reports) && count($reports) > 0){ ?>
-                    <div class="row" style="padding-bottom: 10px;float: right;">
+                    <div class="row" style="display:none";>
                         <div class="col-md-12">
                             <a id="pdf_export_btn" href="" class="" style="margin-right:10px;">
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
@@ -37,11 +33,16 @@ Credit Card Report
                             </a>
                         </div>
                     </div>
-                    <br>
+                    
                 <?php } ?>
-            <div class="panel-body">
-        <div style="margin: 10px;">
-                <form method="GET" id="filter_form"  action="{{ route('CardReportForm') }}" class="form-inline">
+           <div class="row" style="padding-left:40px;padding-right: 60px">
+                <div class="col-md-12" >
+                    <h6><span>SEARCH PARAMETERS </span></h6>
+                </div>    
+            </div>  
+            <br>
+            
+                <form method="GET" id="filter_form"  action="{{ route('CardReportForm') }}" class="form-inline" style="padding-left:40px">
                   <div class="form-group mx-sm-4 mb-2">
                       <input type='text' class="form-control" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Select Date Range" autocomplete="off" readonly/>
                       <input type='hidden' class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>                
@@ -55,16 +56,25 @@ Credit Card Report
                   <div class="form-group mx-sm-4 mb-2">
                     <input type="text" class="form-control" name="credit_card_amount" value="<?php echo isset($credit_card_amount) ? $credit_card_amount : ''; ?>" id="credit_card_amount" placeholder="Credit Card Amount" autocomplete="off">
                   </div>
-                  <div class="form-group mx-sm-4 mb-2"">
+                  <div class="form-group mx-sm-4 mb-2">
                     <input type="submit" class="btn btn-success" value="Generate">
                   </div>
                 </form>
-        </div>
+         
+            
+            <br>
+             <div class="row" style="padding-left: 40px;padding-right: 60px">
+                <div class="col-md-12" >
+                    <h6><span>CREDIT CARD REPORT </span></h6>
+                </div>    
+            </div>       
+            
+            
         <?php if(isset($reports) && count($reports) > 0){ ?>
            
-         <div style="margin-left: 46px;">
+         <div style="display:none">
                   <div class="col-md-12">
-                    <p><b>From: <?php echo $p_start_date; ?> To <?php echo $p_end_date; ?></p>
+                    <p><b>From: <?php echo $p_start_date; ?> To <?php echo $p_end_date; ?></b></p>
                   </div>
               
                   <div class="col-md-12">
@@ -81,7 +91,7 @@ Credit Card Report
           </div>
 
 
-    <div class="col-md-12 "style="margin: 10px;">
+    <div>
           <br>
                       <?php 
                               $grand_total_transaction_number= 0;
@@ -93,20 +103,23 @@ Credit Card Report
                               $grand_total_nauthamount = $grand_total_nauthamount + $report->nauthamount; ?>
                               
                       <?php } ?>          
-          
-                      <table data-toggle="table" data-classes="table table-hover table-condensed promotionview "
-                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
-                    data-pagination="true" data-click-to-select="true" style="padding-left: 40px;">
+        <div style="padding-left:56px">
+            <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" style="width: 100%;margin-bottom: 0px;">
               
                         <thead>
-                        <tr>
+                        <tr class="th_color">
+                       
                         <th style="width: 50%;">Card Type</th>
+                        <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         <th class="text-right" style="width: 30%;">Transactions</th>
                         <th class="text-right" style="width: 20%;">Amount</th>
                         </tr>
                         
-                        <tr>
+                        <tr class="headermenublue">
+                           
                         <th style="width: 50%;">Grand Total</th>
+                          <th></th>
                         <th class="text-right" style="width: 30%;"><?php echo $grand_total_transaction_number;?></th>
                         <th class="text-right" style="width: 20%;"><?php echo number_format((float)$grand_total_nauthamount, 2) ;?></th>
                         </tr>
@@ -119,9 +132,11 @@ Credit Card Report
                 
                    
                   <tr >
+                     
+                    
                    
-                      <table class="table table-striped table-hover " style="width: 100%;margin-bottom: 0px;">
-                            <thead>
+                      <table class="table table-striped table-hover " data-row-style="rowColors" data-striped="true" style="width: 100%;margin-bottom: 0px;">
+                            <thead class="headermenublue">
                                 
                               <tr class="search_header" style="cursor: pointer;" data-cardtype="<?php echo $report->vcardtype;?>">
                                 <th class="text-uppercase" style="width: 50%;"><?php echo $report->vcardtype;?> TOTAL</th>
@@ -144,6 +159,7 @@ Credit Card Report
               
               </tbody>
             </table>
+        </div>     
           </div>
         </div>
         <?php }else{ ?>
@@ -340,12 +356,12 @@ $(document).on('submit', '#filter_form', function(event) {
         var html = '';
         if(response){
 
-          html += '';
+          html += ''
           html += '<tr>';
           html += '<td colspan="3" style="padding: 0px;">';
-          html += '<table class="table" style="margin-bottom: 0px;">';
+          html += '<table style="margin-bottom: 0px;">';
           html += '<thead>';
-          html += '<tr>';
+          html += '<tr class="th_color">';
           html += '<th>DATE</th>';
           html += '<th>TIME</th>';
           html += '<th class="text-right">LAST FOUR OF CC</th>';
@@ -361,26 +377,26 @@ $(document).on('submit', '#filter_form', function(event) {
             console.log(v);
            var receipt_url = print_receipt_url+'?id='+v.id+'&by=mpstender';
 
-            html += '<tr>';
-            html += '<td>';
+            html += '<tr class="th_white_color" style="padding:1px">';
+            html += '<td class="th_white_color">';
             html += v.date;
             html += '</td>';
-            html += '<td>';
+            html += '<td class="th_white_color">';
             html += v.time;
             html += '</td>';
-            html += '<td class="text-right">';
+            html += '<td class="text-right th_white_color ">';
             html += v.last_four_of_cc;
             html += '</td>';
-            html += '<td class="text-right">';
+            html += '<td class="text-right th_white_color">';
             html += v.approvalcode;
             html += '</td>';
-            html += '<td class="text-right">';
+            html += '<td class="text-right th_white_color">';
             html += v.amount;
             html += '</td>';
-            html += '<td>';
+            html += '<td class="th_white_color">';
             html += v.vcardtype;
             html += '</td>';
-            html += '<td>';
+            html += '<td class="th_white_color">';
             html += '<a href="'+ receipt_url +'" class="btn btn-info printMe"><i class="fa fa-print"></i> Print</a>';
             html += '</td>';
             html += '</tr>';
@@ -388,8 +404,7 @@ $(document).on('submit', '#filter_form', function(event) {
 
           html += '</tbody>';
           html += '</table>';
-          html += '</td>';
-          html += '</tr>';
+     
 
           current_header.parent().parent().find('tbody').append(html);
           current_header.parent().parent().find('tbody').show();
@@ -625,4 +640,77 @@ $(document).ready(function() {
         
     });
 </script> 
+<style>
+/*.hidden-table:hover {*/
+/*     background-color: white !important;*/
+/* }*/
+/*td{*/
+/*    background-color: white !important; */
+/*}*/
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
+.ajax_table{
+    border-collapse: separate;
+    border-spacing: 0px 5px;
+    border-color: #fff !important;
+}
+table th:first-child {
+    border-radius: 9px 0px 0px 9px !important;
+    -moz-border-radius: 9px 0px 0px 9px;
+    -webkit-border-radius: 9px 0px 0px 9px;
+}
+
+table th:last-child {
+    border-radius: 0px 9px 9px 0px !important;
+    -moz-border-radius: 0px 9px 9px 0px;
+    -webkit-border-radius: 0px 9px 9px 0px;
+}
+
+table tr td:first-child {
+    border-radius: 9px 0px 0px 9px !important;
+    -moz-border-radius: 9px 0 0 9px;
+    -webkit-border-radius: 9px 0 0 9px;
+}
+
+table tr td:last-child {
+    border-top-left-radius: 0 9px 9px 0 !important;
+    -moz-border-radius: 0 9px 9px 0;
+    -webkit-border-radius: 0 9px 9px 0;
+} 
+
+tr:nth-child() {
+    background-color: #f2f2f2;
+    border-radius: 9px ;
+}
+.th_white_color{
+    background-color: #fff;
+    border-top: 3px solid ##cccccc;
+}
+h6 {
+   width: 100%; 
+   text-align: left; 
+   border-bottom: 2px solid; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+   color:#286fb7;
+} 
+
+h6 span { 
+    background:#f8f9fa!important; 
+    padding:0 10px; 
+    color:#286fb7;
+}
+.rcorner {
+  border-radius:9px;
+}
+</style>
 @endsection
