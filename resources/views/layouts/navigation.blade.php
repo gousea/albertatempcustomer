@@ -129,6 +129,53 @@
                         </li>
                     @endif
 
+<<<<<<< HEAD
+                @if (in_array('PER1009', session()->get('userPermsData')))
+                    <li class="nav-item sub-nav dropdown">
+                        <a class="nav-link  dropdown-toggle sub text-uppercase" href="#" data-toggle="dropdown"> REPORTS
+                        </a>
+                        <ul class="dropdown-menu main-dropdown">
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('EodReport') }}">
+                                    End of Day Report</a>
+                            </li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('EodShift') }}">
+                                    End of Shift Report </a>
+                            </li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('CardReport') }}"> Credit Card Report </a>
+                            </li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Scan Data Report </a>
+                            </li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Sales Transaction Report
+                                </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('TaxReport') }}"> Tax Report </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Hourly Sales Report </a>
+                            </li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> RO History Report </a>
+                            </li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Inventory on Hand Report
+                                </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Profit & Loss Report </a>
+                            </li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Paid Out Report </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Below Cost Report </a>
+                            </li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase"
+                                    href="{{ route('salesreport') }}"> Sales Report </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Product Listing </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Employee Loss Prevention
+                                    Report </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Item Summary Report </a>
+                            </li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Sales History Report </a>
+                            </li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Sales Analytics Report
+                                </a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Zero Movement Report </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
+=======
                     @if (in_array('PER1009', session()->get('userPermsData')))
                         <li class="nav-item sub-nav dropdown">
                             <a class="nav-link  dropdown-toggle sub text-uppercase" href="#" data-toggle="dropdown"> REPORTS
@@ -174,6 +221,7 @@
                             </ul>
                         </li>
                     @endif
+>>>>>>> b4674a8bacf18ca99a45cca96337d86114e7907e
 
 
                     <li class="nav-item"><a class="nav-link sub text-uppercase" href="#"> TUTORIALS </a></li>
