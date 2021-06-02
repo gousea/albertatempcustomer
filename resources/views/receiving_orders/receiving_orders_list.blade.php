@@ -116,8 +116,8 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
+              <h4 class="modal-title text-center">Import Invoice</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title text-center">Import Invoice</h4>
             </div>
             <div class="modal-body">
                 <form action="<?php echo $data['import_invoice_new'];?>" method="post" enctype="multipart/form-data" id="form_import_invoice_new">
@@ -129,29 +129,14 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <span style="display:inline-block;width:8%;">File: </span> <span style="display:inline-block;width:85%;"><input type="file" name="import_invoice_file" id="import_edi_file" class="form-control" required></span>
+                                <span style="display:inline-block;width:8%;">File: </span> <span style="display:inline-block;width:85%;"><input type="file" name="import_invoice_file" id="import_edi_file" class="form-control adjustment-fields" required></span>
                             </div>
                         </div>
-                        <!--<div class="col-md-12">
-                          <div class="form-group">
-                            <span style="display:inline-block;width:15%;">EDI Vendor: </span> <span style="display:inline-block;width:75%;">
-                            <select name="edi_predefined_vvendorid" class="form-control" id="edi_predefined_vvendors" required>
-                                <option></option>
-                              <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
-                                <?php foreach($data['vendors'] as $vendor){?>
-                                    <?php if($vendor['vcompanyname'] == 'ALLEN BROTHERS' || $vendor['vcompanyname'] == 'CORE MARK' || $vendor['vcompanyname'] == 'RESNICK' || $vendor['vcompanyname'] == 'FEDWAY' || $vendor['vcompanyname'] == 'fedway'){ ?>
-                                        <option value="<?php echo $vendor['isupplierid']; ?>"><?php echo $vendor['vcompanyname']; ?></option>
-                                    <?php }?>
-                                <?php } ?>
-                              <?php } ?>
-                            </select>
-                            </span>
-                          </div>
-                        </div>-->
+                        
                         <div class="col-md-12">
                           <div class="form-group">
                             <span style="display:inline-block;width:15%;">Vendor: </span> <span style="display:inline-block;width:75%;">
-                            <select name="vvendorid" class="form-control" id="vvendors" required>
+                            <select name="vvendorid" class="form-control adjustment-fields" id="vvendors" required>
                                 <option></option>
                               <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
                                 <?php foreach($data['vendors'] as $vendor){?>
@@ -163,37 +148,11 @@
                           </div>
                         </div>
                         <div class="col-md-12" id="display_vendor_options">
-                            <!--<div class="col-md-offset-1 form-group checkdigitOptions">
-                                <div class="floatBlock">
-                                    <label for="remove_check_digit"> <input id="remove_check_digit" name="check_digit" type="radio" value="without_check_digit" checked /> Without Check Digit </label>
-                                </div>
-                                
-                                <div class="floatBlock">
-                                    <label for="add_check_digit"> <input id="add_check_digit" name="check_digit" type="radio" value="with_check_digit" />  With Check Digit  </label>
-                                </div>
-                                
-                                <div class="floatBlock">
-                                    <label for="remove_first_digit"> <input id="remove_first_digit" name="check_digit" type="radio" value="without_first_digit" /> Without First Digit </label>
-                                </div>
-                                
-                                 <div class="floatBlock">
-                                    <label for="upcAtoEconversion"> <input id="upc_conversion_a_e" name="check_digit" type="radio" value="upc_conversion" /> Upc A to Upc E conversion </label>
-                                </div> 
-                            </div> -->
-                          <!--<div class="form-group">
-                                <span>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="digit" value="add_check_dgigit">Add Check Digit 
-                                    </label>
-                                    
-                                    <input type="radio" name="digit" value="remove_check_dgigit"> Remove Check Digit
-                                    <input type="radio" name="digit" value="remove_first_dgigit"> Remove First Digit 
-                                </span>
-                          </div>-->
+                            
                         </div>
                         <div class="col-md-12 text-center">
                           <div class="form-group">
-                            <input type="submit" class="btn btn-success" name="import_invoice" value="Import Invoice">&nbsp;<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success buttons_menu" name="import_invoice" value="Import Invoice">&nbsp;<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                           </div>
                         </div>
                     </div>
@@ -327,29 +286,29 @@
   <div class="modal-dialog modal-lg">
 
     <!-- Modal content-->
-    <div class="modal-content">
+    <div class="modal-content bg-light">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Import Missing Items</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         <form action="<?php echo $data['import_missing_items'];?>" method="post" enctype="multipart/form-data" id="form_import_missing_items">
             @csrf
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-8">
               <input name="itemsort_search" id="itemsort_search" placeholder="Search Item..." type="text" class="form-control">
             </div>
-            <div class="col-md-1 text-right">
-              <button class="btn btn-success" id="import_missing_item_btn">Import Items</button>
+            <div class="col-md-3 text-right">
+              <button class="btn btn-success basic-button-small  header-color" id="import_missing_item_btn">Import Items</button>
             </div>
           </div><br>
           <div class="row">
             <div class="col-md-12">
               <div class="table-responsive" style="height:450px;">
                 <?php if(isset($missing_items) && count($missing_items) > 0){?>
-                  <table class="table table-bordered tabler-hover" id="missing_item_table">
+                  <table class="table tabler-hover promotionview" data-classes="table table-hover promotionview" id="missing_item_table">
                     <thead>
-                      <tr>
+                      <tr class="header-color">
                         <th style="width: 1px; color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_missing_items\']').prop('checked', this.checked);" /></th>
                         <th class="text-left">SKU#</th>
                         <th class="text-left">Item Name</th>
@@ -384,7 +343,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default headerwhite basic-button-small" data-dismiss="modal" >Cancel</button>
       </div>
     </div>
   </div>
@@ -849,12 +808,12 @@
       
       columns :  [
                   {
-                      data: "ipoid", render: function(data, type, row){
+                      data: "iroid", render: function(data, type, row){
                           
                           return $("<input>").attr({
                                   // checked: !uncheckedBoxes[data],
                                   type: 'checkbox',
-                                  class: "ipoid",
+                                  class: "iroid",
                                   value: data,
                                   name: "selected[]",
                                   "data-order": data,
