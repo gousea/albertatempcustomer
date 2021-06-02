@@ -5,6 +5,12 @@
 @stop
 
 @section('main-content')
+<style>
+  .red-border{
+      border: 1px solid red;
+  }
+</style>
+
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
@@ -228,7 +234,7 @@
                       <label>Name</label>
                     </div>
                     <div class="col-md-10">
-                      <input type="text" maxlength="50" name="department[0][vdepartmentname]" id="add_vdepartmentname" class="form-control" required>
+                      <input onfocus="myFunction(this)" onfocusout="myFunc(this)" type="text" maxlength="50" name="department[0][vdepartmentname]" id="add_vdepartmentname" class="form-control" required>
                     </div>
                   </div>
                 </div>
@@ -241,7 +247,7 @@
                       <label>Description</label>
                     </div>
                     <div class="col-md-10">
-                      <textarea maxlength="100" name="department[0][vdescription]" id="add_vdescription" class="form-control"></textarea>
+                      <textarea onfocus="myFunction(this)" onfocusout="myFunc(this)" maxlength="100" name="department[0][vdescription]" id="add_vdescription" class="form-control"></textarea>
                     </div>
                   </div>
                 </div>
@@ -254,7 +260,7 @@
                       <label>Start Time</label>
                     </div>
                     <div class="col-md-10">
-                      <select class="form-control" name="department[0][start_hour]" style="width:45%;display:inline-block;">
+                      <select onfocus="myFunction(this)" onfocusout="myFunc(this)" class="form-control" name="department[0][start_hour]" style="width:45%;display:inline-block;">
                         <option value="">hour</option>
                         <?php if(isset($hours) && count($hours) > 0) {?>
                           <?php foreach($hours as $k => $hour) { ?>
@@ -277,7 +283,7 @@
                       <label>End Time</label>
                     </div>
                     <div class="col-md-10">
-                      <select class="form-control" name="department[0][end_hour]" style="width:45%;display:inline-block;">
+                      <select onfocus="myFunction(this)" onfocusout="myFunc(this)" class="form-control" name="department[0][end_hour]" style="width:45%;display:inline-block;">
                         <option value="">hour</option>
                         <?php if(isset($hours) && count($hours) > 0) {?>
                           <?php foreach($hours as $k => $hour) { ?>
@@ -285,7 +291,7 @@
                           <?php } ?>
                         <?php } ?>
                       </select>
-                      <select class="form-control" name="department[0][end_minute]" style="width:45%;display:inline-block;">
+                      <select onfocus="myFunction(this)" onfocusout="myFunc(this)" class="form-control" name="department[0][end_minute]" style="width:45%;display:inline-block;">
                         <option value="">minute</option>
                         <?php for($m=0;$m<60;$m++) { ?>
                         <option value="<?php echo str_pad($m,2,"0",STR_PAD_LEFT);?>"><?php echo str_pad($m,2,"0",STR_PAD_LEFT);?></option>
@@ -502,7 +508,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
+
+<script>
+  function myFunction(x) {
+    x.style.borderColor = "red";
+  }
+
+  function myFunc(x) {
+    x.style.borderColor = "green";
+  }
+</script>
 <script type="text/javascript">
+
 $(document).ready(function(){
     $('#add_vdepartmentname, .departmentname_c ').on('keypress', function (event) {
         var regex = new RegExp("^[a-zA-Z0-9. _]+$");
