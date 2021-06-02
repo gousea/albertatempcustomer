@@ -579,5 +579,4 @@ h6 span {
     color:#286fb7;
 }
 </style>
-
 @endsection   
