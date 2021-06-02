@@ -1,10 +1,25 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'Receiving Order')
 @section('main-content')
 
 <div id="content">
+
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+      <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="main_nav">
+              <div class="menu">
+                  <span class="font-weight-bold text-uppercase"> Receiving Order</span>
+              </div>
+              <div class="nav-submenu">
+                
+                <button type="submit" form="form-receiving-order" id="save_receiving_order" data-toggle="tooltip" title="Save" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <a type="button" href="<?php echo $data['cancel']; ?>" data-toggle="tooltip" title="Cancel" class="btn btn-danger buttonred buttons_menu basic-button-small cancel_btn_rotate" id="cancel_button"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+              </div>
+          </div> <!-- navbar-collapse.// -->
+      </div>
+    </nav>
     
-    <div class="container-fluid">
+    <div class="container-fluid section-content">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -16,621 +31,700 @@
         </div>
         @endif
         
-        <br>
-        <br>
-        <div class="panel panel-default">
-            <div class="panel-heading head_title">
-                <h3 class="panel-title"><i class="fa fa-pencil"></i> Add Receiving Order</h3>
-            </div>
+          
             <div class="panel-body">
                 
-                <div class="row" style="padding-bottom: 15px;float: right;">
-                  <div class="col-md-12">
-                    <div class="">
-                      <button type="submit" form="form-vendor" id="save_receiving_order" data-toggle="tooltip" title="Save" class="btn btn-primary" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                      <a href="<?php echo $data['cancel']; ?>" data-toggle="tooltip" title="Cancel" class="btn btn-default cancel_btn_rotate" id="cancel_button"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="clearfix"></div>
                 
                 <form action="<?php echo $data['action']; ?>" method="post" enctype="multipart/form-data" id="form-receiving-order" class="form-horizontal">
                     <?php if(isset($data['iroid'])){ ?>
                       <input type="hidden" name="iroid" value="<?php echo $data['iroid']; ?>">
                     <?php } ?>
                     <input type="hidden" name="receive_po" id="receive_po" value="">
-                    <ul class="nav nav-tabs responsive" id="myTab">
-                        <li class="active"><a href="#general_tab" data-toggle="tab">General</a></li>
-                        <li><a href="#item_tab" data-toggle="tab">Item</a></li>
-                    </ul>
+                   
                     
-                    <div class="tab-content responsive">
-                        <div class="tab-pane active" id="general_tab" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?> >
-                          <div class="row">
-                            <div class="col-md-8">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group required">
-                                    <label class="col-sm-4 control-label" for="input-phone">Invoice#</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vinvoiceno" maxlength="50" value="<?php echo isset($data['vinvoiceno']) ? $data['vinvoiceno'] : ''; ?>" placeholder="Invoice#" id="input_invoice" class="form-control" required />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group required">
-                                    <label class="col-sm-4 control-label" for="input-phone">Created</label>
-                                    <div class="col-sm-8">
-                                      
-                                      <input type="text" name="dcreatedate" value="<?php echo isset($data['dcreatedate']) ? $data['dcreatedate'] : date('m-d-Y'); ?>" placeholder="Created" id="input_created" class="form-control" required/>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Number</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vponumber" maxlength="30" value="<?php echo isset($data['vponumber']) ? $data['vponumber'] : ''; ?>" placeholder="Number" id="input_number" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group required">
-                                    <label class="col-sm-4 control-label" for="input-phone">Received</label>
-                                    <div class="col-sm-8">
-                                      
-                                      <input type="text" name="dreceiveddate" value="<?php echo isset($data['dreceiveddate']) ? $data['dreceiveddate'] : date('m-d-Y'); ?>" placeholder="Received" id="input_received" class="form-control" required/>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Title</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vordertitle" maxlength="50" value="<?php echo isset($data['vordertitle']) ? $data['vordertitle'] : ''; ?>" placeholder="Title" id="input_title" class="form-control" required/>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Status</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="estatus" maxlength="10" value="<?php echo isset($data['estatus']) ? $data['estatus'] : 'Open'; ?>" placeholder="Status" id="input_status" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Order By</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vorderby" maxlength="30" value="<?php echo isset($data['vorderby']) ? $data['vorderby'] : ''; ?>" placeholder="Order By" id="input_order_by" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Confirm  By</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vconfirmby" maxlength="30" value="<?php echo isset($data['vconfirmby']) ? $data['vconfirmby'] : ''; ?>" placeholder="Confirm  By" id="input_confirm_by" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Notes</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vnotes" maxlength="1000" value="<?php echo isset($data['vnotes']) ? $data['vnotes'] : ''; ?>" placeholder="Notes" id="input_notes" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Ship Via</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vshipvia" maxlength="30" value="<?php echo isset($data['vshipvia']) ? $data['vshipvia'] : ''; ?>" placeholder="Ship Via" id="input_ship_vai" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone"></label>
-                                    <div class="col-sm-8">
-                                      <select <?php if(isset($data['iroid'])){?> disabled <?php } ?> name="" class="form-control" id="loaded_vendor">
-                                      <option value="">-- Select Vendor --</option>
-                                      <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
-                                        <?php foreach($data['vendors'] as $vendor){?>
-                                          <?php if($vendor['isupplierid'] == $data['vvendorid']){?>
-                                            <option value="<?php echo $vendor['isupplierid']; ?>" selected="selected"><?php echo $vendor['vcompanyname']; ?></option>
-                                          <?php }else{ ?>
-                                            <option value="<?php echo $vendor['isupplierid']; ?>"><?php echo $vendor['vcompanyname']; ?></option>
-                                          <?php } ?>
-                                        <?php } ?>
-                                      <?php } ?>
-                                    </select>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <hr style="margin-top:0px;">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Vendor Name</label>
-                                    <div class="col-sm-8">
-                                      <input type="hidden" name="vvendorid" value="<?php echo isset($data['vvendorid']) ? $data['vvendorid'] : ''; ?>">
-                                      <input type="text" name="vvendorname" maxlength="50" value="<?php echo isset($data['vvendorname']) ? htmlspecialchars($data['vvendorname']) : ''; ?>" placeholder="Vendor Name" id="input_vendor_name" class="form-control"/>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Address1</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vvendoraddress1" maxlength="100" value="<?php echo isset($data['vvendoraddress1']) ? $data['vvendoraddress1'] : ''; ?>" placeholder="Address1" id="input_address1" class="form-control"/>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Address2</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vvendoraddress2" maxlength="100" value="<?php echo isset($data['vvendoraddress2']) ? $data['vvendoraddress2'] : ''; ?>" placeholder="Address2" id="input_address2" class="form-control"/>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">State</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vvendorstate" maxlength="20" value="<?php echo isset($data['vvendorstate']) ? $data['vvendorstate'] : ''; ?>" placeholder="State" id="input_state" class="form-control"/>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Zip</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vvendorzip" maxlength="10" value="<?php echo isset($data['vvendorzip']) ? $data['vvendorzip'] : ''; ?>" placeholder="Zip" id="input_zip" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Phone</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vvendorphone" maxlength="20" value="<?php echo isset($data['vvendorphone']) ? $data['vvendorphone'] : ''; ?>" placeholder="Phone" id="input_phone" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <hr style="margin-top:0px;">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Ship To</label>
-                                    <div class="col-sm-8">
-                                        <input type="hidden" name="vshpid" value="<?php echo isset($store['istoreid']) ? $store['istoreid'] : ''; ?>">
-                                        <input type="text" name="vshpname" maxlength="50" value="<?php echo isset($store['vstorename']) ? $store['vstorename'] : ''; ?>" placeholder="Ship To" id="input_ship_to" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Address1</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="vshpaddress1" maxlength="100" value="<?php echo isset($store['vaddress1']) ? $store['vaddress1'] : ''; ?>" placeholder="Address1" id="input_address1" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Address2</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="vshpaddress2" maxlength="100" value="" placeholder="Address2" id="input_address2" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">State</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="vshpstate" maxlength="20" value="<?php echo isset($store['vstate']) ? $store['vstate'] : ''; ?>" placeholder="State" id="input_state" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Zip</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vshpzip" maxlength="10" value="<?php echo isset($store['vzip']) ? $store['vzip'] : ''; ?>" placeholder="Zip" id="input_zip" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Phone</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vshpphone" maxlength="26" value="<?php echo isset($store['vphone1']) ? $store['vphone1'] : ''; ?>" placeholder="Phone" id="input_phone" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top:10%;">
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Subtotal</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="nsubtotal" maxlength="50" value="<?php echo isset($data['nsubtotal']) ? $data['nsubtotal'] : '0.00'; ?>" placeholder="Subtotal" id="input_subtotal" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Tax(+)</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="ntaxtotal" maxlength="50" value="<?php echo isset($data['ntaxtotal']) ? $data['ntaxtotal'] : '0.00'; ?>" placeholder="Tax(+)" id="input_tax" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Freight(+)</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="nfreightcharge" maxlength="50" value="<?php echo isset($data['nfreightcharge']) ? $data['nfreightcharge'] : '0.00'; ?>" placeholder="Freight(+)" id="input_frieght" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Deposit(+)</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="ndeposittotal" maxlength="50" value="<?php echo isset($data['ndeposittotal']) ? $data['ndeposittotal'] : '0.00'; ?>" placeholder="Deposit(+)" id="input_deposite" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Fuel(+)</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="nfuelcharge" maxlength="50" value="<?php echo isset($data['nfuelcharge']) ? $data['nfuelcharge'] : '0.00'; ?>" placeholder="Fuel(+)" id="input_fuel_charge" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Delivery(+)</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="ndeliverycharge" maxlength="50" value="<?php echo isset($data['ndeliverycharge']) ? $data['ndeliverycharge'] : '0.00'; ?>" placeholder="Delivery(+)" id="input_delivery_charge" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Return(-)</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="nreturntotal" maxlength="50" value="<?php echo isset($data['nreturntotal']) ? $data['nreturntotal'] : '0.00'; ?>" placeholder="Return(-)" id="input_return" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Discount(-)</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="ndiscountamt" maxlength="50" value="<?php echo isset($data['ndiscountamt']) ? $data['ndiscountamt'] : '0.00'; ?>" placeholder="Discount(-)" id="input_discount" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Rips(-)</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="nripsamt" maxlength="50" value="<?php echo isset($data['nripsamt']) ? $data['nripsamt'] : '0.00'; ?>" placeholder="Rips(-)" id="input_rips" class="form-control" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">Net Total</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="nnettotal" maxlength="50" value="<?php echo isset($data['nnettotal']) ? $data['nnettotal'] : '0.00'; ?>" placeholder="Net Total" id="input_net_total" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                    <div class="tab-content responsive  col-md-12">
+
+                        <div class="mytextdiv">
+                          <div class="mytexttitle font-weight-bold text-uppercase">
+                              TAB
                           </div>
+                          <div class="divider font-weight-bold"></div>
                         </div>
-                        <div class="tab-pane" id="item_tab">
-                          <div class="row" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
-                            <div class="" style="display: none;">
-                              <input type="text" placeholder="Add New Item" id="automplete-product" class="form-control">
-                            </div>
-                            <div>
-                                <p class="text-white" style="padding-left: 20px; font-size: 16px; background-color:red; color:white;">* MAX 500 no. of Items can be Add per Invoice.</p>
-                            </div>
-                            <div class="col-md-6">
-                              <button class="btn btn-info" style="border-radius:0px;" id="add_item_btn">Add Item</button>&nbsp;&nbsp;
-                              <button class="btn btn-danger" style="border-radius:0px;" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
-                              <button type="button" class="btn btn-success" style="border-radius:0px;<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check">Save/Receive</button>
-                              
-                            </div>
-                          </div>
-                          <br>
+
+                        <div class="py-3">
                           <div class="row">
-                            <div class="col-md-3">
-                              <input type="text" class="form-control" id="search_item_box" placeholder="Search Item...">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        </div>
+
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                            <input type="checkbox" name="for_general" maxlength="30" id="for_general" />
+                                            <label for="inputFirstname" class="p-2 text-uppercase">General</label>
+                                        </div>
+                                          
+                                      </div>
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        </div>
+
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                            <input type="checkbox" name="for_item" maxlength="30" id="for_item" />
+                                            <label for="inputFirstname" class="p-2 text-uppercase">Item</label>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+
+                        </div>
+
+                        <div class="tab-pane active" id="general_tab" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?> >
+                          
+                          <div class="mytextdiv">
+                            <div class="mytexttitle font-weight-bold text-uppercase">
+                                General Info
                             </div>
-                            <div class="col-md-5" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
-                              <input type="checkbox" name="update_pack_qty" value="Yes" class="form-control" id="update_pack_qty" style="display:inline-block;"> <span style="display:inline-block;font-size:14px;margin-top:12px;">&nbsp; Update pack qty in item</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                              <button class="btn btn-info" id="advance_btn" data-check="unchecked">Advance Update</button>
-                              <input type="checkbox" name="advance_update" value="Yes" class="form-control" id="advance_update" style="display:none;">
+                            <div class="divider font-weight-bold"></div>
+                          </div>
+
+                          <div class="py-3">
+                            <div class="row">
+                                <div class="col-md-12 mx-auto">
+                                    
+                                    <div class="form-group row">
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                                <label for="inputFirstname" class="p-2 float-right text-uppercase">Invoice#</label>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                                <input type="text" name="vinvoiceno" maxlength="50" value="<?php echo isset($data['vinvoiceno']) ? $data['vinvoiceno'] : ''; ?>" placeholder="Invoice#" id="input_invoice" class="form-control adjustment-fields" required />
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+          
+                                            <label for="inputNumber" class="p-2 float-right text-uppercase">Number</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                            <input type="text" name="vponumber" maxlength="30" value="<?php echo isset($data['vponumber']) ? $data['vponumber'] : ''; ?>" placeholder="Number" id="input_number" class="form-control adjustment-fields" readonly/>
+                                          </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputVendor" class="p-2 float-right text-uppercase">Select Vendor</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                            <select <?php if(isset($data['iroid'])){?> disabled <?php } ?> name="" class="form-control adjustment-fields" id="loaded_vendor">
+                                              <option value="">-- Select Vendor --</option>
+                                              <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
+                                                <?php foreach($data['vendors'] as $vendor){?>
+                                                  <?php if($vendor['isupplierid'] == $data['vvendorid']){?>
+                                                    <option value="<?php echo $vendor['isupplierid']; ?>" selected="selected"><?php echo $vendor['vcompanyname']; ?></option>
+                                                  <?php }else{ ?>
+                                                    <option value="<?php echo $vendor['isupplierid']; ?>"><?php echo $vendor['vcompanyname']; ?></option>
+                                                  <?php } ?>
+                                                <?php } ?>
+                                              <?php } ?>
+                                            </select>
+                                             
+                                          </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+          
+                            <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputCreated" class="p-2 float-right text-uppercase">Created</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="dcreatedate" value="<?php echo isset($data['dcreatedate']) ? $data['dcreatedate'] : date('m-d-Y'); ?>" placeholder="Created" id="input_created" class="form-control adjustment-fields" required/>
+                                          
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputReceived" class="p-2 float-right text-uppercase">Received</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                            <input type="text" name="dreceiveddate" value="<?php echo isset($data['dreceiveddate']) ? $data['dreceiveddate'] : date('m-d-Y'); ?>" placeholder="Received" id="input_received" class="form-control adjustment-fields" required/>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputStatus" class="p-2 float-right text-uppercase">Status</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          
+                                            <input type="text" name="estatus" maxlength="10" value="<?php echo isset($data['estatus']) ? $data['estatus'] : 'Open'; ?>" placeholder="Status" id="input_status" class="form-control adjustment-fields" readonly/>
+                                            
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
                             </div>
                           </div>
-                          <br>
+
+                          <div class="mytextdiv">
+                            <div class="mytexttitle font-weight-bold text-uppercase">
+                                Vendor Info
+                            </div>
+                            <div class="divider font-weight-bold"></div>
+                          </div>
+
+                          <div class="py-3">
                             <div class="row">
-                                <div class="col-md-3" style="font-size: 13px;">
-                                    <ul style="color:#0000cc; display: inline-block; margin-left: -20px;">(Font Color)<li>If Total unit is 0</li><li>If price required more than unit cost </li> <li>If unit cost is zero</li></ul>
+                                <div class="col-md-12 mx-auto">
+                                    
+                                    <div class="form-group row">
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                                <label for="inputVendorName" class="p-2 float-right text-uppercase">Vendor Name</label>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                              <input type="hidden" name="vvendorid" value="<?php echo isset($data['vvendorid']) ? $data['vvendorid'] : ''; ?>">
+                                              <input type="text" name="vvendorname" maxlength="50" value="<?php echo isset($data['vvendorname']) ? htmlspecialchars($data['vvendorname']) : ''; ?>" placeholder="Vendor Name" id="input_vendor_name" class="form-control adjustment-fields"/>
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+          
+                                            <label for="inputAddress1" class="p-2 float-right text-uppercase">ADDRESS LINE 1</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                            <input type="text" name="vvendoraddress1" maxlength="100" value="<?php echo isset($data['vvendoraddress1']) ? $data['vvendoraddress1'] : ''; ?>" placeholder="Address1" id="input_address1" class="form-control adjustment-fields"/>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputAddress2" class="p-2 float-right text-uppercase">ADDRESS LINE 2</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                            <input type="text" name="vvendoraddress2" maxlength="100" value="<?php echo isset($data['vvendoraddress2']) ? $data['vvendoraddress2'] : ''; ?>" placeholder="Address2" id="input_address2" class="form-control adjustment-fields"/>
+                                             
+                                          </div>
+                                        </div>
+
+                                    </div>
+                                    
                                 </div>
-                                <div class="col-md-3" style="font-size: 13px;">
-                                    <ul style="color:#FF0000; display: inline-block; margin-left: -20px;"> (Font Color)<li>If Suggested cost is less than Total amount</li></ul>
+                            </div>
+          
+                            <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputCity" class="p-2 float-right text-uppercase">City</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="city" value="<?php echo isset($data['city']) ? $data['city'] : ''; ?>" placeholder="City" id="input_city" class="form-control adjustment-fields" />
+                                          
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputState" class="p-2 float-right text-uppercase">State</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="vvendorstate" maxlength="20" value="<?php echo isset($data['vvendorstate']) ? $data['vvendorstate'] : ''; ?>" placeholder="State" id="input_state" class="form-control adjustment-fields"/>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputZip" class="p-2 float-right text-uppercase">Zip</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          
+                                          <input type="text" name="vvendorzip" maxlength="10" value="<?php echo isset($data['vvendorzip']) ? $data['vvendorzip'] : ''; ?>" placeholder="Zip" id="input_zip" class="form-control adjustment-fields" />
+                                            
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="mytextdiv">
+                            <div class="mytexttitle font-weight-bold text-uppercase">
+                                Order Info
+                            </div>
+                            <div class="divider font-weight-bold"></div>
+                          </div>
+
+                          <div class="py-3">
+                            <div class="row">
+                                <div class="col-md-12 mx-auto">
+                                    
+                                    <div class="form-group row">
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                                <label for="inputSubtotal" class="p-2 float-right text-uppercase">Subtotal</label>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                              <input type="text" name="nsubtotal" maxlength="50" value="<?php echo isset($data['nsubtotal']) ? $data['nsubtotal'] : '0.00'; ?>" placeholder="Subtotal" id="input_subtotal" class="form-control  adjustment-fields" readonly/>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+          
+                                            <label for="inputTax" class="p-2 float-right text-uppercase">Tax(+)</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                            <input type="text" name="ntaxtotal" maxlength="50" value="<?php echo isset($data['ntaxtotal']) ? $data['ntaxtotal'] : '0.00'; ?>" placeholder="Tax(+)" id="input_tax" class="form-control adjustment-fields"/>
+                                            
+                                          </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputFreight" class="p-2 float-right text-uppercase">Freight(+)</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                            <input type="text" name="nfreightcharge" maxlength="50" value="<?php echo isset($data['nfreightcharge']) ? $data['nfreightcharge'] : '0.00'; ?>" placeholder="Freight(+)" id="input_frieght" class="form-control adjustment-fields" />
+                                             
+                                          </div>
+                                        </div>
+
+                                    </div>
+                                    
                                 </div>
-                                <div class="col-md-3" style="font-size: 13px;">
-                                    <div style="height:20px; width:30px; background-color:#66ff66; display: inline-block;"></div> If Cost is higher
-                                </div>
-                                <div class="col-md-3" style="font-size: 13px;">
-                                    <div style="height:20px; width:30px; background-color:#ff8566; display: inline-block;"></div> If Cost is Lower
-                                </div>
+                            </div>
+          
+                            <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputDeposit" class="p-2 float-right text-uppercase">Deposit(+)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="ndeposittotal" maxlength="50" value="<?php echo isset($data['ndeposittotal']) ? $data['ndeposittotal'] : '0.00'; ?>" placeholder="Deposit(+)" id="input_deposite" class="form-control adjustment-fields" />
+                                          
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputFuel" class="p-2 float-right text-uppercase">Fuel(+)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="nfuelcharge" maxlength="50" value="<?php echo isset($data['nfuelcharge']) ? $data['nfuelcharge'] : '0.00'; ?>" placeholder="Fuel(+)" id="input_fuel_charge" class="form-control adjustment-fields" />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputDelivery" class="p-2 float-right text-uppercase">Delivery(+)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          
+                                          <input type="text" name="ndeliverycharge" maxlength="50" value="<?php echo isset($data['ndeliverycharge']) ? $data['ndeliverycharge'] : '0.00'; ?>" placeholder="Delivery(+)" id="input_delivery_charge" class="form-control adjustment-fields" />
+                                            
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputReturn" class="p-2 float-right text-uppercase">Return(-)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="nreturntotal" maxlength="50" value="<?php echo isset($data['nreturntotal']) ? $data['nreturntotal'] : '0.00'; ?>" placeholder="Return(-)" id="input_return" class="form-control adjustment-fields" />
+                                          
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputDiscount" class="p-2 float-right text-uppercase"Discount(-)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="ndiscountamt" maxlength="50" value="<?php echo isset($data['ndiscountamt']) ? $data['ndiscountamt'] : '0.00'; ?>" placeholder="Discount(-)" id="input_discount" class="form-control adjustment-fields" />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputRips " class="p-2 float-right text-uppercase">Rips(-)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          
+                                          <input type="text" name="nripsamt" maxlength="50" value="<?php echo isset($data['nripsamt']) ? $data['nripsamt'] : '0.00'; ?>" placeholder="Rips(-)" id="input_rips" class="form-control adjustment-fields" />
+                                            
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputNetTotal" class="p-2 float-right text-uppercase">Net Total</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="nnettotal" maxlength="50" value="<?php echo isset($data['nnettotal']) ? $data['nnettotal'] : '0.00'; ?>" placeholder="Net Total" id="input_net_total" class="form-control adjustment-fields" readonly/>
+                                          
+                                        </div>
+                                      </div>
+
+                                  </div>
+                                  
+                              </div>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div class="tab-pane" id="item_tab">
+
+                            <div class="mytextdiv">
+                              <div class="mytexttitle font-weight-bold text-uppercase">
+                                RECEIVING ORDER
+                              </div>
+                              <div class="divider font-weight-bold"></div>
+                            </div>
+
+                            <br>
+                          
+                            <div class="row" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
+                              <div class="" style="display: none;">
+                                <input type="text" placeholder="Add New Item" id="automplete-product" class="form-control">
+                              </div>
+                              {{-- <div class="row">
+                                  <p class="text-white" style="padding-left: 20px; font-size: 16px; background-color:red; color:white;">* MAX 500 no. of Items can be Add per Invoice.</p>
+                              </div> --}}
+                              <div class="col-md-5">
+                                <button class="btn btn-info buttons_menu basic-button-small" style="border-radius:0px;" id="add_item_btn">Add Item</button>&nbsp;&nbsp;
+                                <button class="btn btn-danger buttonred buttons_menu basic-button-small" style="border-radius:0px;" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
+                                <button type="button" class="btn btn-success buttons_menu basic-button-small" style="border-radius:0px;<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check">Save/Receive</button>
                                 
+                              </div>
+
+                              <div class="col-md-3">
+                                <div class="col-md-7 float-right">
+                                  <input type="text" class="form-control adjustment-fields" id="search_item_box" placeholder="Search Item...">
+                                </div>
+                              </div>
+
+                              <div class="col-md-4" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
+
+                                <div class="float-right">
+                                  <input type="checkbox" name="update_pack_qty" value="Yes" id="update_pack_qty"" />
+                                  <span style="font-size:14px;margin-top:12px;">&nbsp; Update pack qty in item</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <button class="btn btn-info basic-button-small" id="advance_btn" data-check="unchecked">Advance Update</button>
+                                {{-- <input type="checkbox" name="advance_update" value="Yes" class="form-control" id="advance_update" style="display:none;"> --}}
+                                </div>
+                              </div>
+
                             </div>
                             <br>
                             
-                          <div class="row" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
-                            <div class="col-md-12 inner-container">
-                              <table class="table table-bordered table-hover" id="item_table">
-                                <thead class="header">
-                                  <tr>
-                                    <th rowspan="2" style="width: 1px;vertical-align: middle;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_receiving_item\']').prop('checked', this.checked);" /></th>
-                                    <th rowspan="2" style="width:20%; vertical-align: middle;">SKU#</th>
-                                    <th rowspan="2" style="width:20%; vertical-align: middle;">Item Name</th>
-                                    <th rowspan="2" style="width:20%; vertical-align: middle;">Vendor Code</th>
-                                    <th rowspan="2" style="width:10%; vertical-align: middle;">Size</th>
-                                    <th rowspan="2" style="vertical-align: middle; width:10%;" class="">Selling Price</th>
-                                    <th rowspan="2" style="vertical-align: middle; width:20%;" >New Cost(Unit Cost)</th>
-                                    <th rowspan="2" style="vertical-align: middle;" class="text-right">QOH</th>
-                                    @if(isset($data['estatus']) && $data['estatus'] == 'Close')
-                                        <th rowspan="2" style="vertical-align: middle;" class="text-right">QOH Before Rece.</th>
-                                        <th rowspan="2" style="vertical-align: middle;" class="text-right">QOH After Rece.</th>
-                                    @endif
-                                    <th class="text-center" colspan="9">Order Information</th>
-                                  </tr>
-                                  <tr>
-                                    <th class="text-right">Unit Per Case</th><!-- Previously -> Case Qty -->
-                                    <th class="text-right">Order By</th>
-                                    <th class="text-right">Order Qty</th><!-- Previously -> Order Case -->
-                                    <th class="text-right">Total Unit</th>
-                                    <th class="text-right">Suggested Cost</th>
-                                    <th class="text-right">Total Amt</th>
-                                    <th class="text-right">Unit Cost</th>
-                                    <th class="text-right">GP%</th>
-                                    <th class="text-right">Rip Amt</th>
-                                  </tr>
-                                </thead>
-                                <tbody id="receiving_order_items" class="table-body">
-                                  <?php $total_amt = '0.00';?>
-                                  <?php if(isset($data['items']) && count($data['items']) > 0){?>
-                                    <?php foreach($data['items'] as $k => $item){ 
-                                    $total_amt +=$item['nordextprice']; 
-                                    ?>
-                                      <tr id="tab_tr_<?php echo $item['vitemid']; ?>">
-                                        <td class="text-center">
-                                          <input type="checkbox" name="selected_receiving_item[]" value="<?php echo $item['irodetid']; ?>"/>
-                                          <input type="hidden" name="selected_added_item[]" value="<?php echo $item['vitemid']; ?>"/>
-                                          <input type="hidden" name="items[<?php echo $k; ?>][vitemid]" value="<?php echo $item['vitemid']; ?>">
-                                          <input type="hidden" name="items[<?php echo $k; ?>][nordunitprice]" value="<?php echo $item['nordunitprice']; ?>">
-                                          <input type="hidden" name="items[<?php echo $k; ?>][vunitcode]" value="<?php echo $item['vunitcode']; ?>">
-                                          <input type="hidden" name="items[<?php echo $k; ?>][vunitname]" value="<?php echo $item['vunitname']; ?>">
-                                          <input type="hidden" name="items[<?php echo $k; ?>][irodetid]" value="<?php echo $item['irodetid']; ?>">
-                                        </td>
-            
-                                        <td style="width:20%;" class="vbarcode_class">
-                                          <?php echo $item['vbarcode']; ?>
-                                          <input type="hidden" name="items[<?php echo $k; ?>][vbarcode]" value="<?php echo $item['vbarcode']; ?>">
-                                        </td>
-            
-                                        <td style="width:20%;" class="vitemname_class">
-                                          <?php echo $item['vitemname']; ?>
-                                          <input type="hidden" name="items[<?php echo $k; ?>][vitemname]" value="<?php echo $item['vitemname']; ?>">
-                                        </td>
-                                            
-                                        <?php if(!empty($item['vvendoritemcode'])){ ?>
-                                          <td style="width:20%;">
-                                          <input type="text" class="vvendoritemcode_class" name="items[<?php echo $k; ?>][vvendoritemcode]" value="<?php echo $item['vvendoritemcode']; ?>" id="" style="width:100px;">
+                            <br>
+                              <div class="row">
+                                  <div class="col-md-3" style="font-size: 13px;">
+                                      <ul style="color:#0000cc; display: inline-block; margin-left: -20px;">(Font Color)<li>If Total unit is 0</li><li>If price required more than unit cost </li> <li>If unit cost is zero</li></ul>
+                                  </div>
+                                  <div class="col-md-3" style="font-size: 13px;">
+                                      <ul style="color:#FF0000; display: inline-block; margin-left: -20px;"> (Font Color)<li>If Suggested cost is less than Total amount</li></ul>
+                                  </div>
+                                  <div class="col-md-3" style="font-size: 13px;">
+                                      <div style="height:20px; width:30px; background-color:#66ff66; display: inline-block;"></div> If Cost is higher
+                                  </div>
+                                  <div class="col-md-3" style="font-size: 13px;">
+                                      <div style="height:20px; width:30px; background-color:#ff8566; display: inline-block;"></div> If Cost is Lower
+                                  </div>
+                                  
+                              </div>
+                              <br>
+                              
+                            <div class="row" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
+                              <div class="col-md-12 inner-container">
+                                <table class="table table-bordered table-hover" id="item_table">
+                                  <thead class="header">
+                                    <tr>
+                                      <th rowspan="2" style="width: 1px;vertical-align: middle;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_receiving_item\']').prop('checked', this.checked);" /></th>
+                                      <th rowspan="2" style="width:20%; vertical-align: middle;">SKU#</th>
+                                      <th rowspan="2" style="width:20%; vertical-align: middle;">Item Name</th>
+                                      <th rowspan="2" style="width:20%; vertical-align: middle;">Vendor Code</th>
+                                      <th rowspan="2" style="width:10%; vertical-align: middle;">Size</th>
+                                      <th rowspan="2" style="vertical-align: middle; width:10%;" class="">Selling Price</th>
+                                      <th rowspan="2" style="vertical-align: middle; width:20%;" >New Cost(Unit Cost)</th>
+                                      <th rowspan="2" style="vertical-align: middle;" class="text-right">QOH</th>
+                                      @if(isset($data['estatus']) && $data['estatus'] == 'Close')
+                                          <th rowspan="2" style="vertical-align: middle;" class="text-right">QOH Before Rece.</th>
+                                          <th rowspan="2" style="vertical-align: middle;" class="text-right">QOH After Rece.</th>
+                                      @endif
+                                      <th class="text-center" colspan="9">Order Information</th>
+                                    </tr>
+                                    <tr>
+                                      <th class="text-right">Unit Per Case</th><!-- Previously -> Case Qty -->
+                                      <th class="text-right">Order By</th>
+                                      <th class="text-right">Order Qty</th><!-- Previously -> Order Case -->
+                                      <th class="text-right">Total Unit</th>
+                                      <th class="text-right">Suggested Cost</th>
+                                      <th class="text-right">Total Amt</th>
+                                      <th class="text-right">Unit Cost</th>
+                                      <th class="text-right">GP%</th>
+                                      <th class="text-right">Rip Amt</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="receiving_order_items" class="table-body">
+                                    <?php $total_amt = '0.00';?>
+                                    <?php if(isset($data['items']) && count($data['items']) > 0){?>
+                                      <?php foreach($data['items'] as $k => $item){ 
+                                      $total_amt +=$item['nordextprice']; 
+                                      ?>
+                                        <tr id="tab_tr_<?php echo $item['vitemid']; ?>">
+                                          <td class="text-center">
+                                            <input type="checkbox" name="selected_receiving_item[]" value="<?php echo $item['irodetid']; ?>"/>
+                                            <input type="hidden" name="selected_added_item[]" value="<?php echo $item['vitemid']; ?>"/>
+                                            <input type="hidden" name="items[<?php echo $k; ?>][vitemid]" value="<?php echo $item['vitemid']; ?>">
+                                            <input type="hidden" name="items[<?php echo $k; ?>][nordunitprice]" value="<?php echo $item['nordunitprice']; ?>">
+                                            <input type="hidden" name="items[<?php echo $k; ?>][vunitcode]" value="<?php echo $item['vunitcode']; ?>">
+                                            <input type="hidden" name="items[<?php echo $k; ?>][vunitname]" value="<?php echo $item['vunitname']; ?>">
+                                            <input type="hidden" name="items[<?php echo $k; ?>][irodetid]" value="<?php echo $item['irodetid']; ?>">
                                           </td>
-                                        <?php } else { ?>
-                                          <td style="width:20%;">
-                                            <input type="text" class="vvendoritemcode_class" name="items[<?php echo $k; ?>][vvendoritemcode]" value="" id="" style="width:100px;">
+              
+                                          <td style="width:20%;" class="vbarcode_class">
+                                            <?php echo $item['vbarcode']; ?>
+                                            <input type="hidden" name="items[<?php echo $k; ?>][vbarcode]" value="<?php echo $item['vbarcode']; ?>">
                                           </td>
-                                        <?php } ?>
-                                        
-                                        <?php if(!empty($item['vsize'])){ ?>
-                                          <td style="width:10%;">
-                                          <?php echo $item['vsize']; ?>
-                                          <input type="hidden" class="vsize_class" name="items[<?php echo $k; ?>][vsize]" value="<?php echo $item['vsize']; ?>" id="" >
+              
+                                          <td style="width:20%;" class="vitemname_class">
+                                            <?php echo $item['vitemname']; ?>
+                                            <input type="hidden" name="items[<?php echo $k; ?>][vitemname]" value="<?php echo $item['vitemname']; ?>">
                                           </td>
-                                        <?php } else { ?>
-                                          <td style="width:10%;">
-                                            <input type="hidden" class="vsize_class" name="items[<?php echo $k; ?>][vsize]" value="" id="" >
-                                          </td>
-                                        <?php } ?>
-            
-                                        <td class="text-right">
-                                          <input type="hidden" class="" name="items[<?php echo $k; ?>][dunitprice]" id="" value="<?php echo $item['dunitprice']; ?>">
-                                            <div style="display: flex;">
-                                                <i id="<?php echo $item['vbarcode']; ?>" class="fa fa-eye fa-2x eye" aria-hidden="true" style="float: left; cursor: pointer;"> </i>
-                                                &nbsp&nbsp
-                                                <input type="text" class="nnewunitprice_class" name="items[<?php echo $k; ?>][dunitprice]" id="" style="width:60px;display: inline;text-align: right;" value="<?php echo $item['dunitprice']; ?>">
-                                            </div>
-                                        </td>
-                                        
-                                        <td class="text-right">
-                                            <input type="hidden" class="nlastcasstprice_class" name="items[<?php echo $k; ?>][po_last_costprice]" value="<?php echo $item['po_last_costprice']; ?>" id="" style="width:50px;text-align: right;background: rgb(220, 220, 220);">
-                                            
-                                            <?php 
-                                                if(isset($item['po_new_costprice']) && $item['po_new_costprice'] != 0){
-                                                    if( isset($item['nsellunit']) && $item['nsellunit'] > 0){
-                                                        $unitcost = $item['po_new_costprice']/$item['nsellunit'];
-                                                    }else{
-                                                        $unitcost = $item['po_new_costprice'];
-                                                    }
-                                                }
-                                                else{
-                                                    $unitcost = 0;
-                                                }
-                                                $unitcost = number_format($unitcost, 2);
-                                                
-                                                $profit = ($item['dunitprice'] - $item['nunitcost']);
-                                                if($item['dunitprice'] !=0){
-                                                $gross_profit = ($profit/$item['dunitprice'])*100;
-                                                }
-                                                else{
-                                                    $gross_profit =0;
-                                                }
-                                                
-                                                if(is_finite($gross_profit)) {
-                                                  $gross_profit = $gross_profit;
-                                                }else{
-                                                  $gross_profit = 0.00;
-                                                }
-                                            ?>
-                                            <input type="text" readonly class="nnewcosttprice_class" name="items[<?php echo $k; ?>][po_new_costprice]" value="<?php echo $item['po_new_costprice']. " (". $unitcost .")"; ?>" id="" style="width:70px;text-align: right;background: rgb(220, 220, 220);">
-                                            
-                                            <input type="hidden" class="newcostprice_class" name="items[<?php echo $k; ?>][new_costprice]" value="<?php echo $item['po_new_costprice']; ?>" id="" style="width:50px;text-align: right;background: rgb(220, 220, 220);">
-                                            <input type="hidden" class="nsellunit_class" name="items[<?php echo $k; ?>][nsellunit_class]" value="<?php echo $item['nsellunit']; ?>" id="" style="width:50px;text-align: right;background: rgb(220, 220, 220);">
-                                            <input type="hidden" class="oldunitcost_class" name="items[<?php echo $k; ?>][oldunitcost_class]" value="<?php echo $unitcost; ?>" id="" style="width:50px;text-align: right;">
-                                        </td>
-                                        
-                                        <td class="text-right" nowrap>
-                                          <?php echo $item['iqtyonhand'];?>
-                                          <input type="hidden" name="items[<?php echo $k; ?>][nitemqoh]" value="<?php echo $item['iqtyonhand'];?>">
-                                        </td>
-                                        
-                                        @if(isset($data['estatus']) && $data['estatus'] == 'Close')
-                                            <td class="text-right">
-                                                <?php echo $item['before_rece_qoh1'];?>
+                                              
+                                          <?php if(!empty($item['vvendoritemcode'])){ ?>
+                                            <td style="width:20%;">
+                                            <input type="text" class="vvendoritemcode_class" name="items[<?php echo $k; ?>][vvendoritemcode]" value="<?php echo $item['vvendoritemcode']; ?>" id="" style="width:100px;">
                                             </td>
-                                            <td class="text-right">
-                                                <?php echo $item['after_rece_qoh1'];?>
+                                          <?php } else { ?>
+                                            <td style="width:20%;">
+                                              <input type="text" class="vvendoritemcode_class" name="items[<?php echo $k; ?>][vvendoritemcode]" value="" id="" style="width:100px;">
                                             </td>
-                                        @endif
-                                        
-                                        <td class="text-right">
-                                          <input type="text" class="npackqty_class" name="items[<?php echo $k; ?>][npackqty]" value="<?php echo $item['npackqty']; ?>" id="" style="width:60px;text-align: right;">
-                                        </td>
-                                        
-                                        
-                                        <td class="text-right">
-                                            <select class="po_order_by_class" name="items[<?php echo $k; ?>][po_order_by]">
-                                                <option value="case" <?php if($item['po_order_by'] == 'case' || $item['po_order_by'] == 'Case'){ echo "selected = 'selected'"; } ?> >Case</option>
-                                                <option value="unit" <?php if($item['po_order_by'] == 'unit' || $item['po_order_by'] == 'Unit'){ echo "selected = 'selected'"; } ?> >Unit</option>
-                                            </select>
-                                        </td>
-                                        
-                                        <td class="text-right">
-                                          <input type="text" class="nordqty_class" name="items[<?php echo $k; ?>][nordqty]" id="" style="width:60px;text-align: right;" value="<?php echo $item['nordqty']; ?>">
-                                        </td>
-            
-                                        <td class="text-right">
-                                            <span class="itotalunit_span_class"><?php echo $item['itotalunit']; ?></span>
-                                            <input type="hidden" class="itotalunit_class" name="items[<?php echo $k; ?>][itotalunit]" value="<?php echo $item['itotalunit']; ?>" id="" style="width:80px;text-align: right;">
-                                        </td>
-                                        
-                                        
-                                        <td class="text-right">
-                                          <input type="text" class="sggtdqty_class" name="items[<?php echo $k; ?>][po_total_suggested_cost]" value="<?php echo number_format((float)$item['po_total_suggested_cost'], 2, '.', '') ; ?>" id="" style="width:80px;text-align: right;" readonly>
-                                        </td>
-                                        
-            
-                                        <td class="text-right">
-                                          <input type="text" class="nordextprice_class" name="items[<?php echo $k; ?>][nordextprice]" value="<?php echo number_format((float)$item['nordextprice'], 2, '.', '') ; ?>" id="" style="width:80px;text-align: right;">
-                                        </td>
-            
-                                        <td class="text-right">
-                                          <input type="text" class="nunitcost_class" name="items[<?php echo $k; ?>][nunitcost]" value="<?php echo number_format($item['nunitcost'], 2); ?>" id="" style="width:80px;text-align: right;">
-                                        </td>
-                                        <td class="text-right">
-                                          <input type="text" class="gp_class" name="items[<?php echo $k; ?>][gross_profit]" value="<?php echo number_format($gross_profit, 2); ?>" id="" style="width:50px;text-align: right;">
-                                        </td>
-                                        <td class="text-right">
-                                          <input type="text" class="nripamount_class" name="items[<?php echo $k; ?>][nripamount]" value="<?php echo $item['nripamount']; ?>" id="" style="width:50px;text-align: right;">
-                                        </td>
-                                        
-            
-                                      </tr>
+                                          <?php } ?>
+                                          
+                                          <?php if(!empty($item['vsize'])){ ?>
+                                            <td style="width:10%;">
+                                            <?php echo $item['vsize']; ?>
+                                            <input type="hidden" class="vsize_class" name="items[<?php echo $k; ?>][vsize]" value="<?php echo $item['vsize']; ?>" id="" >
+                                            </td>
+                                          <?php } else { ?>
+                                            <td style="width:10%;">
+                                              <input type="hidden" class="vsize_class" name="items[<?php echo $k; ?>][vsize]" value="" id="" >
+                                            </td>
+                                          <?php } ?>
+              
+                                          <td class="text-right">
+                                            <input type="hidden" class="" name="items[<?php echo $k; ?>][dunitprice]" id="" value="<?php echo $item['dunitprice']; ?>">
+                                              <div style="display: flex;">
+                                                  <i id="<?php echo $item['vbarcode']; ?>" class="fa fa-eye fa-2x eye" aria-hidden="true" style="float: left; cursor: pointer;"> </i>
+                                                  &nbsp&nbsp
+                                                  <input type="text" class="nnewunitprice_class" name="items[<?php echo $k; ?>][dunitprice]" id="" style="width:60px;display: inline;text-align: right;" value="<?php echo $item['dunitprice']; ?>">
+                                              </div>
+                                          </td>
+                                          
+                                          <td class="text-right">
+                                              <input type="hidden" class="nlastcasstprice_class" name="items[<?php echo $k; ?>][po_last_costprice]" value="<?php echo $item['po_last_costprice']; ?>" id="" style="width:50px;text-align: right;background: rgb(220, 220, 220);">
+                                              
+                                              <?php 
+                                                  if(isset($item['po_new_costprice']) && $item['po_new_costprice'] != 0){
+                                                      if( isset($item['nsellunit']) && $item['nsellunit'] > 0){
+                                                          $unitcost = $item['po_new_costprice']/$item['nsellunit'];
+                                                      }else{
+                                                          $unitcost = $item['po_new_costprice'];
+                                                      }
+                                                  }
+                                                  else{
+                                                      $unitcost = 0;
+                                                  }
+                                                  $unitcost = number_format($unitcost, 2);
+                                                  
+                                                  $profit = ($item['dunitprice'] - $item['nunitcost']);
+                                                  if($item['dunitprice'] !=0){
+                                                  $gross_profit = ($profit/$item['dunitprice'])*100;
+                                                  }
+                                                  else{
+                                                      $gross_profit =0;
+                                                  }
+                                                  
+                                                  if(is_finite($gross_profit)) {
+                                                    $gross_profit = $gross_profit;
+                                                  }else{
+                                                    $gross_profit = 0.00;
+                                                  }
+                                              ?>
+                                              <input type="text" readonly class="nnewcosttprice_class" name="items[<?php echo $k; ?>][po_new_costprice]" value="<?php echo $item['po_new_costprice']. " (". $unitcost .")"; ?>" id="" style="width:70px;text-align: right;background: rgb(220, 220, 220);">
+                                              
+                                              <input type="hidden" class="newcostprice_class" name="items[<?php echo $k; ?>][new_costprice]" value="<?php echo $item['po_new_costprice']; ?>" id="" style="width:50px;text-align: right;background: rgb(220, 220, 220);">
+                                              <input type="hidden" class="nsellunit_class" name="items[<?php echo $k; ?>][nsellunit_class]" value="<?php echo $item['nsellunit']; ?>" id="" style="width:50px;text-align: right;background: rgb(220, 220, 220);">
+                                              <input type="hidden" class="oldunitcost_class" name="items[<?php echo $k; ?>][oldunitcost_class]" value="<?php echo $unitcost; ?>" id="" style="width:50px;text-align: right;">
+                                          </td>
+                                          
+                                          <td class="text-right" nowrap>
+                                            <?php echo $item['iqtyonhand'];?>
+                                            <input type="hidden" name="items[<?php echo $k; ?>][nitemqoh]" value="<?php echo $item['iqtyonhand'];?>">
+                                          </td>
+                                          
+                                          @if(isset($data['estatus']) && $data['estatus'] == 'Close')
+                                              <td class="text-right">
+                                                  <?php echo $item['before_rece_qoh1'];?>
+                                              </td>
+                                              <td class="text-right">
+                                                  <?php echo $item['after_rece_qoh1'];?>
+                                              </td>
+                                          @endif
+                                          
+                                          <td class="text-right">
+                                            <input type="text" class="npackqty_class" name="items[<?php echo $k; ?>][npackqty]" value="<?php echo $item['npackqty']; ?>" id="" style="width:60px;text-align: right;">
+                                          </td>
+                                          
+                                          
+                                          <td class="text-right">
+                                              <select class="po_order_by_class" name="items[<?php echo $k; ?>][po_order_by]">
+                                                  <option value="case" <?php if($item['po_order_by'] == 'case' || $item['po_order_by'] == 'Case'){ echo "selected = 'selected'"; } ?> >Case</option>
+                                                  <option value="unit" <?php if($item['po_order_by'] == 'unit' || $item['po_order_by'] == 'Unit'){ echo "selected = 'selected'"; } ?> >Unit</option>
+                                              </select>
+                                          </td>
+                                          
+                                          <td class="text-right">
+                                            <input type="text" class="nordqty_class" name="items[<?php echo $k; ?>][nordqty]" id="" style="width:60px;text-align: right;" value="<?php echo $item['nordqty']; ?>">
+                                          </td>
+              
+                                          <td class="text-right">
+                                              <span class="itotalunit_span_class"><?php echo $item['itotalunit']; ?></span>
+                                              <input type="hidden" class="itotalunit_class" name="items[<?php echo $k; ?>][itotalunit]" value="<?php echo $item['itotalunit']; ?>" id="" style="width:80px;text-align: right;">
+                                          </td>
+                                          
+                                          
+                                          <td class="text-right">
+                                            <input type="text" class="sggtdqty_class" name="items[<?php echo $k; ?>][po_total_suggested_cost]" value="<?php echo number_format((float)$item['po_total_suggested_cost'], 2, '.', '') ; ?>" id="" style="width:80px;text-align: right;" readonly>
+                                          </td>
+                                          
+              
+                                          <td class="text-right">
+                                            <input type="text" class="nordextprice_class" name="items[<?php echo $k; ?>][nordextprice]" value="<?php echo number_format((float)$item['nordextprice'], 2, '.', '') ; ?>" id="" style="width:80px;text-align: right;">
+                                          </td>
+              
+                                          <td class="text-right">
+                                            <input type="text" class="nunitcost_class" name="items[<?php echo $k; ?>][nunitcost]" value="<?php echo number_format($item['nunitcost'], 2); ?>" id="" style="width:80px;text-align: right;">
+                                          </td>
+                                          <td class="text-right">
+                                            <input type="text" class="gp_class" name="items[<?php echo $k; ?>][gross_profit]" value="<?php echo number_format($gross_profit, 2); ?>" id="" style="width:50px;text-align: right;">
+                                          </td>
+                                          <td class="text-right">
+                                            <input type="text" class="nripamount_class" name="items[<?php echo $k; ?>][nripamount]" value="<?php echo $item['nripamount']; ?>" id="" style="width:50px;text-align: right;">
+                                          </td>
+                                          
+              
+                                        </tr>
+                                      <?php } ?>
+                                      
                                     <?php } ?>
-                                    
-                                  <?php } ?>
-                                      <tfoot>
-                                          
-                                            <tr>
-                                                @if(isset($data['estatus']) && $data['estatus'] == 'Close')
-                                                    <td colspan="11"></td>
-                                                @else
-                                                    <td colspan="9"></td>
-                                                @endif
-                                                <td class="text-right"><b>Total</b></td>
-                                                
-                                                <td class="text-right"><b><span class="total_order_qty"></span></b></td>
-                                                <td class="text-right"><b><span class="total_unit"></span></b></td>
-                                                <td class="text-right"><b><span class="total_suggested_amount"></span></b></td>
-                                                <td class="text-right"><b><span class="total_amount"></span></b></td>
-                                                <td>&nbsp;</td>
-                                                <td>&nbsp;</td>
-                                                <td>&nbsp;</td>
-                                            </tr>
-                                          
-                                      </tfoot>
-                                </tbody>
-                              </table>
+                                        <tfoot>
+                                            
+                                              <tr>
+                                                  @if(isset($data['estatus']) && $data['estatus'] == 'Close')
+                                                      <td colspan="11"></td>
+                                                  @else
+                                                      <td colspan="9"></td>
+                                                  @endif
+                                                  <td class="text-right"><b>Total</b></td>
+                                                  
+                                                  <td class="text-right"><b><span class="total_order_qty"></span></b></td>
+                                                  <td class="text-right"><b><span class="total_unit"></span></b></td>
+                                                  <td class="text-right"><b><span class="total_suggested_amount"></span></b></td>
+                                                  <td class="text-right"><b><span class="total_amount"></span></b></td>
+                                                  <td>&nbsp;</td>
+                                                  <td>&nbsp;</td>
+                                                  <td>&nbsp;</td>
+                                              </tr>
+                                            
+                                        </tfoot>
+                                  </tbody>
+                                </table>
+                              </div>
                             </div>
-                          </div>
+                            
                         </div>
                     </div>
                 </form>
@@ -643,11 +737,11 @@
 @endsection
 
 
-@section('scripts')
+@section('page-script')
 
 <style type="text/css">
  .nav.nav-tabs .active a{
-    background-color: #f05a28 !important; 
+    background-color: #286fb7 !important; 
     color: #fff !important; 
   }
 
@@ -668,10 +762,11 @@
     
 </style>
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
 <script src="{{ asset('javascript/bootstrap-datepicker.js') }}" defer></script>
 <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
-<script type="text/javascript" src="{{ asset('javascript/table-fixed-header.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('javascript/table-fixed-header.js') }}"></script> --}}
 
 <script>
 
@@ -727,16 +822,7 @@
 
 
 <script type="text/javascript">
-  // $(document).on('keyup', '.nordqty_class, .npackqty_class, .itotalunit_class', function(event) {
-  //   $('.nordqty_class, .npackqty_class, .itotalunit_class').keypress(function(event) {
-      
-   
-  //   $(this).val($(this).val().replace(/[^\d].+/, ""));
-  //   if ((event.which < 48 || event.which > 57)) {
-  //       event.preventDefault();
-  //   }
-    
-  // });
+  
 
     $(document).on('keypress', '.nordqty_class, .npackqty_class, .itotalunit_class', function(event) {
       $(this).val($(this).val().replace(/[^\d].+/, ""));
@@ -745,16 +831,7 @@
       }
     });
 
-  // $(document).on("keyup", 'input[name="ntaxtotal"], input[name="nfreightcharge"], input[name="ndeposittotal"], input[name="nreturntotal"], input[name="ndiscountamt"], input[name="nripsamt"], .nordextprice_class, .nunitcost_class', function(event) {
-
-  //   $('input[name="ntaxtotal"], input[name="nfreightcharge"], input[name="ndeposittotal"], input[name="nreturntotal"], input[name="ndiscountamt"], input[name="nripsamt"], .nordextprice_class, .nunitcost_class,.nnewunitprice_class').keypress(function(event) {
-
-  //   if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-  //     event.preventDefault();
-  //   }
-    
-  // });   
-
+  
   $(document).on('keypress', 'input[name="ntaxtotal"], input[name="nfreightcharge"], input[name="ndeposittotal"], input[name="nfuelcharge"], input[name="ndeliverycharge"], input[name="nreturntotal"], input[name="ndiscountamt"], input[name="nripsamt"], .nordextprice_class, .nunitcost_class,.nnewunitprice_class, .nripamount_class', function(event) {
     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
       event.preventDefault();
@@ -873,8 +950,8 @@
   });
 </script>
 
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
     $(function() {
@@ -1847,7 +1924,7 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
       // alert('Please Select Vendor!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Vendor!", 
         callback: function(){}
       });
@@ -2006,13 +2083,14 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
     </div>
   </div>
   
-  <style type="text/css">
+<style type="text/css">
   .editable_text {
     color: #000;
     border: none;
     background: none;
     cursor: pointer;
-}</style>
+  }
+</style>
 <script type="text/javascript">
 $('.editable_text').focus(function() {
   $(this).addClass("focusField");   
@@ -2309,8 +2387,8 @@ $('.editable_text').focus(function() {
     } 
 
   });
-// console.log(1781);
-// return false;
+    // console.log(1781);
+    // return false;
   $(document).on('click', '#save_receive_btn', function(event) {
     event.preventDefault();
     $('#receive_po').val('receivetostore');
@@ -2392,95 +2470,95 @@ $('.editable_text').focus(function() {
     $('#saveReceiveModal').modal('hide');
 
     $.ajax({
-    url : check_warehouse_invoice_url,
-    headers: {
-        'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-    },
-    data : { invoice : transfer_vinvnum },
-    dataType: 'json',
-    type : 'POST',
-    success: function(data) {
-      if(data.error){
+      url : check_warehouse_invoice_url,
+      headers: {
+          'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+      },
+      data : { invoice : transfer_vinvnum },
+      dataType: 'json',
+      type : 'POST',
+      success: function(data) {
+        if(data.error){
+          bootbox.alert({ 
+            size: 'small',
+            title: "Attention", 
+            message: "Invoice Already Exist!", 
+            callback: function(){
+              $('#saveReceiveModal').modal('show');
+            }
+          });
+          return false;
+        }else{
+
+          $("div#divLoading").addClass('show');
+          $('#saveReceiveModal').modal('hide');
+
+          $.ajax({
+            url : save_receive_item_url,
+            headers: {
+                  'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+              },
+            data : $('form#form-receiving-order').serialize(),
+            type : 'POST',
+            success: function(data) {
+              
+              $('#saveReceiveModal').modal('hide');
+              $("div#divLoading").removeClass('show');
+              $('#success_alias').html('<strong>'+ data.success +'</strong>');
+              $('#successModal').modal('show');
+
+              var receiving_order_list_url = '<?php echo $data['receiving_order_list']; ?>';
+              receiving_order_list_url = receiving_order_list_url.replace(/&amp;/g, '&');
+              
+              <?php if(!isset($data['iroid'])){?>
+                setTimeout(function(){
+                window.location.href = receiving_order_list_url;
+                $("div#divLoading").addClass('show');
+                }, 3000);
+              <?php }else{ ?>
+                setTimeout(function(){
+                window.location.reload();
+                $("div#divLoading").addClass('show');
+                }, 3000);
+              <?php } ?>
+            },
+            error: function(xhr) { // if error occured
+              var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+              
+              var error_show = '';
+
+              if(response_error.error){
+                error_show = response_error.error;
+              }else if(response_error.validation_error){
+                error_show = response_error.validation_error[0];
+              }
+              $('#saveReceiveModal').modal('hide');
+              $("div#divLoading").removeClass('show');
+              $('#error_alias').html('<strong>'+ error_show +'</strong>');
+              $('#errorModal').modal('show');
+              return false;
+            }
+          });
+        }
+      },
+      error: function(xhr) { // if error occured
+        var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+        
+        var error_show = '';
+
+        if(response_error.error){
+          error_show = response_error.error;
+        }else if(response_error.validation_error){
+          error_show = response_error.validation_error[0];
+        }
         bootbox.alert({ 
           size: 'small',
           title: "Attention", 
-          message: "Invoice Already Exist!", 
-          callback: function(){
-            $('#saveReceiveModal').modal('show');
-          }
-        });
-        return false;
-      }else{
-
-        $("div#divLoading").addClass('show');
-        $('#saveReceiveModal').modal('hide');
-
-        $.ajax({
-          url : save_receive_item_url,
-          headers: {
-                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-            },
-          data : $('form#form-receiving-order').serialize(),
-          type : 'POST',
-          success: function(data) {
-            
-            $('#saveReceiveModal').modal('hide');
-            $("div#divLoading").removeClass('show');
-            $('#success_alias').html('<strong>'+ data.success +'</strong>');
-            $('#successModal').modal('show');
-
-            var receiving_order_list_url = '<?php echo $data['receiving_order_list']; ?>';
-            receiving_order_list_url = receiving_order_list_url.replace(/&amp;/g, '&');
-            
-            <?php if(!isset($data['iroid'])){?>
-              setTimeout(function(){
-              window.location.href = receiving_order_list_url;
-               $("div#divLoading").addClass('show');
-              }, 3000);
-            <?php }else{ ?>
-              setTimeout(function(){
-              window.location.reload();
-               $("div#divLoading").addClass('show');
-              }, 3000);
-            <?php } ?>
-          },
-          error: function(xhr) { // if error occured
-            var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-            
-            var error_show = '';
-
-            if(response_error.error){
-              error_show = response_error.error;
-            }else if(response_error.validation_error){
-              error_show = response_error.validation_error[0];
-            }
-            $('#saveReceiveModal').modal('hide');
-            $("div#divLoading").removeClass('show');
-            $('#error_alias').html('<strong>'+ error_show +'</strong>');
-            $('#errorModal').modal('show');
-            return false;
-          }
+          message: error_show, 
+          callback: function(){}
         });
       }
-    },
-    error: function(xhr) { // if error occured
-      var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-      
-      var error_show = '';
-
-      if(response_error.error){
-        error_show = response_error.error;
-      }else if(response_error.validation_error){
-        error_show = response_error.validation_error[0];
-      }
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: error_show, 
-        callback: function(){}
-      });
-    }
-  });
+    });
   });
 </script>
 
@@ -2488,19 +2566,46 @@ $('.editable_text').focus(function() {
 
 <script type="text/javascript">
 
-  $(document).on('click', '#myTab li a', function() {
+  // $(document).on('click', '#myTab li a', function() {
     
-    if($(this).attr('href') == '#item_tab'){
+  //   if($(this).attr('href') == '#item_tab'){
         
-        $('.table').fixedHeader({
+      //   $('.table').fixedHeader({
+      //     topOffset: 0
+      //   });
+        
+      // $.cookie("tab_selected_po", 'item_tab'); //set cookie tab
+  //   }else{
+  //     $.cookie("tab_selected_po", 'general_tab'); //set cookie tab
+  //   }
+    
+  // });
+  $(document).on('click', '#for_general', function(){
+
+    if($('#for_general').is(":checked") == true){
+
+      $('#for_item').prop('checked', false);
+      $('.tab-content #item_tab').removeClass('active');
+      $('.tab-content #general_tab').addClass('active');
+
+      $.cookie("tab_selected_po", 'general_tab'); //set cookie tab
+    }
+  });
+
+  $(document).on('click', '#for_item', function(){
+
+    if($('#for_item').is(":checked") == true){
+
+      $('#for_general').prop('checked', false);
+      $('.tab-content #general_tab').removeClass('active');
+      $('.tab-content #item_tab').addClass('active');
+
+      $('.table').fixedHeader({
           topOffset: 0
         });
         
       $.cookie("tab_selected_po", 'item_tab'); //set cookie tab
-    }else{
-      $.cookie("tab_selected_po", 'general_tab'); //set cookie tab
     }
-    
   });
 
   $(document).on('click', '#cancel_button, #menu li a, .breadcrumb li a', function() {
@@ -3965,7 +4070,7 @@ $('.editable_text').focus(function() {
 
   });
 
-// advance update checkbox
+  // advance update checkbox
 
   $(document).ready(function(){
     advance_update_function(true);

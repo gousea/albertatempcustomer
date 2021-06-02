@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <span class="font-weight-bold text-uppercase" > Manufacturer</span>
+                <span class="font-weight-bold text-uppercase" > Aisle</span>
             </div>
             <div class="nav-submenu">
                 <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>

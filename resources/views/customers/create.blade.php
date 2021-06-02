@@ -61,7 +61,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vcustomername" maxlength="50"
-                                        value="{{ old('vcustomername') }}" placeholder="" id="vcustomername"
+                                        value="{{ old('vcustomername') }}" placeholder="CUSTOMER" id="vcustomername"
                                         class="form-control" required />
                                     <span id="vcustomernameerror" style="color: red"></span>
                                 </div>
@@ -72,7 +72,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vfname" maxlength="25" value="{{ old('vfname') }}"
-                                        placeholder="" id="input-first-name" class="form-control"
+                                        placeholder="FIRST NAME" id="input-first-name" class="form-control"
                                         onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"
                                         required />
                                 </div>
@@ -83,7 +83,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vlname" maxlength="25" value="{{ old('vlname') }}"
-                                        placeholder="" id="input-last-name" class="form-control"
+                                        placeholder="LAST NAME" id="input-last-name" class="form-control"
                                         onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" />
                                 </div>
                             </div>
@@ -96,7 +96,7 @@ class="form-horizontal">
                                         Number</label>
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                    <input type="text" name="vaccountnumber" maxlength="50" value="" placeholder=""
+                                    <input type="text" name="vaccountnumber" maxlength="50" value="" placeholder="ACCOUNT NUMBER"
                                         id="input-account-number" class="form-control" readonly />
                                 </div>
                             </div>
@@ -106,7 +106,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vaddress1" maxlength="100" value="{{ old('vaddress1') }}"
-                                        placeholder="" id="input-address" class="form-control" />
+                                        placeholder="ADDRESS" id="input-address" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -115,7 +115,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vcity" maxlength="40" value="{{ old('vcity') }}"
-                                        placeholder="" id="input-city" class="form-control" onkeypress="" />
+                                        placeholder="CITY" id="input-city" class="form-control" onkeypress="" />
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vstate" maxlength="40" value="{{ old('vstate') }}"
-                                        placeholder="" id="input-state" class="form-control" onkeypress="" />
+                                        placeholder="STATE" id="input-state" class="form-control" onkeypress="" />
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -136,7 +136,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vzip" maxlength="10" value="{{ old('vzip') }}"
-                                        placeholder="" id="input-zip" class="form-control" />
+                                        placeholder="ZIP CODE" id="input-zip" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -157,7 +157,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="email" name="vemail" maxlength="100" value="{{ old('vemail') }}"
-                                        placeholder="" id="email_field" class="form-control" />
+                                        placeholder="EMAIL" id="email_field" class="form-control" />
                                     <span id="email-error" style="color: red"></span>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@ class="form-horizontal">
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vphone" maxlength="20"
                                         onkeyup="this.value=this.value.replace(/[^\d]/,'')" value="{{ old('vphone') }}"
-                                        placeholder="" id="vphone" class="form-control" required />
+                                        placeholder="PHONE" id="vphone" class="form-control" required />
                                     <span id="vphoneerror" style="color: red"></span>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="creditday" maxlength="11" value="{{ old('creditday') }}"
-                                        placeholder="" id="input-creditday" class="form-control" />
+                                        placeholder="CREDIT DAY" id="input-creditday" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -237,7 +237,7 @@ class="form-horizontal">
                                     <label class="p-2 float-left text-uppercase" for="input-zip">Account Pin</label>
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                    <input type="text" name="account_pin" value="" placeholder="" id="account_pin"
+                                    <input type="text" name="account_pin" value="" placeholder="ACCOUNT PIN" id="account_pin"
                                         class="form-control" onkeypress="return isNumberKey(event);" required />
                                     <span id="ac_pin" style="color: red"></span>
                                 </div>
@@ -282,7 +282,7 @@ class="form-horizontal">
                                         Type</label>
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                    <input type="text" name="id_type" value="{{ old('id_type') }}" placeholder=""
+                                    <input type="text" name="id_type" value="{{ old('id_type') }}" placeholder="ID TYPE"
                                         id="id_type" class="form-control" />
                                 </div>
                             </div>
@@ -293,7 +293,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="id_number" maxlength="25" value="{{ old('id_number') }}"
-                                        placeholder="" id="id_number" class="form-control" />
+                                        placeholder="ID NUMBER" id="id_number" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-2 col-lg-4 p-form">
@@ -303,7 +303,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="expire_dt" value="{{ old('expire_dt') }}" autocomplete="off"
-                                        placeholder="" id="expire_dt" class="datetimepicker form-control" />
+                                        placeholder="ID EXPIRE DATE" id="expire_dt" class="datetimepicker form-control" />
                                     <span id="ex_dt" style="color: red"></span>
                                 </div>
                             </div>
@@ -317,7 +317,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="birth_dt" value="{{ old('birth_dt') }}" autocomplete="off"
-                                        placeholder="" id="birth_dt" class="datetimepicker form-control" />
+                                        placeholder="BIRTH DATE" id="birth_dt" class="datetimepicker form-control" />
                                     <span id="br_dt" style="color: red"></span>
                                 </div>
                             </div>
