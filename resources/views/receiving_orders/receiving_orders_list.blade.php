@@ -5,7 +5,7 @@
 <div id="content">
 
   <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
+    <div class="container">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
                 <span class="font-weight-bold text-uppercase"> Receiving Order</span>
@@ -27,7 +27,7 @@
   </nav>
   
   <section class="section-content py-6">
-    <div class="container-fluid">
+    <div class="container">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -48,49 +48,48 @@
                 
                     <div class="table-responsive col-xl-12 col-md-12">
                       
-                        <table id="receiving_order" class="table table-hover" data-classes="table table-hover table-condensed promotionview"
-                            data-row-style="rowColors" data-striped="true" data-click-to-select="true">
+                        <table id="receiving_order" class="table table-hover" data-classes="table table-hover promotionview">
                         
                             <thead>
                                 <tr class="header-color">
                                     <th style="width: 1px;" class="text-center no-filter-checkbox"><input type="checkbox" id="main_checkbox" /></th>
-                                    <th class="text-left">&nbsp;&nbsp;Status
-                                      <div class="form-group po-has-search">
+                                    <th class="text-left text-uppercase">&nbsp;&nbsp;Status
+                                      <div class="po-has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                       </div>
                                     </th>
-                                    <th class="text-left">&nbsp;&nbsp;PurchaseORD#
-                                      <div class="form-group po-has-search">
+                                    <th class="text-left text-uppercase">&nbsp;&nbsp;PurchaseORD#
+                                      <div class="po-has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                       </div>
                                     </th>
-                                    <th class="text-left">&nbsp;&nbsp;Invoice#
-                                      <div class="form-group po-has-search">
+                                    <th class="text-left text-uppercase">&nbsp;&nbsp;Invoice#
+                                      <div class="po-has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                       </div>
                                     </th>
-                                    <th class="text-left sample">&nbsp;&nbsp;Total
-                                      <div class="form-group po-has-search">
+                                    <th class="text-left text-uppercase sample">&nbsp;&nbsp;Total
+                                      <div class="po-has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                       </div>
                                     </th>
-                                    <th class="text-left">&nbsp;&nbsp;Vendor Name
-                                      <div class="form-group po-has-search">
+                                    <th class="text-left text-uppercase">&nbsp;&nbsp;Vendor
+                                      <div class="po-has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                       </div>
                                     </th>
-                                    <th class="text-left">&nbsp;&nbsp;Order Type
-                                      <div class="form-group po-has-search">
+                                    <th class="text-left text-uppercase">&nbsp;&nbsp;Order Type
+                                      <div class="po-has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                                       </div>
                                     </th>
-                                    <th class="text-left no-filter">Date Created</th>
+                                    <th class="text-left text-uppercase no-filter">Date Created</th>
                                     {{-- <th class="text-left">Date Received</th> --}}
                                     {{-- <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th> --}}
                                     <th class="text-left no-filter">Action</th>
@@ -217,11 +216,11 @@
 
 <style>
   .no-filter{
-      padding-bottom: 55px !important;
+      padding-bottom: 45px !important;
   }
 
   .no-filter-checkbox{
-      padding-bottom: 30px !important;
+      padding-bottom: 20px !important;
   }
 </style>
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
@@ -765,6 +764,12 @@
     	justify-content: flex-start;
     	break-before: always;
     }
+
+    .edit_btn_rotate{
+      line-height: 0.5;
+      border-radius: 6px;
+    }
+    
   </style>
 
 <script>
@@ -867,7 +872,7 @@
                   {"data": "dcreatedate"},
                   
                   { "data": "view_edit", render: function(data, type, row){
-                          return "<a href="+data+" data-toggle='tooltip' title='View' class='btn btn-sm btn-info edit_btn_rotate' ><i class='fa fa-eye'></i>&nbsp;&nbsp;View</a>";
+                          return "<a href="+data+" data-toggle='tooltip' title='View' class='btn btn-sm btn-info edit_btn_rotate header-color ' ><i class='fa fa-eye'></i>&nbsp;&nbsp;View</a>";
                     }
                 },
                   
@@ -896,6 +901,7 @@
               $('#buttonEditMultipleItems').prop('disabled', false);
           }
           $("div#divLoading").removeClass('show');
+          
   });
 
   $("#receiving_order_paginate").addClass("pull-right");

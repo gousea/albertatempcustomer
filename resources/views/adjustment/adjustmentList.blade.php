@@ -6,7 +6,7 @@
 <div id="content">
 
   <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
+    <div class="container">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
                 <span class="font-weight-bold text-uppercase"> <?php echo $text_list; ?></span>
@@ -29,7 +29,7 @@
           </ul>
         </div>
       </div> --}}
-      <div class="container-fluid">
+      <div class="container">
         <?php if ($error_warning) { ?>
         <div class="alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
           <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -67,28 +67,28 @@
                       <th class="text-center no-filter-checkbox" ><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
                       <th class="text-left text-uppercase"><?php echo $text_number; ?>
                         
-                            <div class="form-group adjustment-has-search">
+                            <div class="adjustment-has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_no">
                             </div>
                       </th>
                       <th class="text-left text-uppercase" ><?php echo $text_created; ?>
                         
-                            <div class="form-group adjustment-has-search">
+                            <div class="adjustment-has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_created">
                             </div>
                       </th>
                       <th class="text-left text-uppercase" ><?php echo $text_title; ?>
                         
-                            <div class="form-group adjustment-has-search">
+                            <div class="adjustment-has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_title">
                             </div>
                       </th>
                       <th class="text-left text-uppercase" ><?php echo $text_status; ?>
                         
-                            <div class="form-group adjustment-has-search">
+                            <div class="adjustment-has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control table-heading-fields" placeholder="SEARCH" id="adjustment_status">
                             </div>
@@ -131,7 +131,7 @@
                       </td>
     
                       <td class="text-left">
-                        <a href="<?php echo $adjustment_detail['edit']; ?>" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-pencil">&nbsp;&nbsp;Edit</i>
+                        <a href="<?php echo $adjustment_detail['edit']; ?>" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-info edit_btn_rotate header-color" ><i class="fa fa-pencil">&nbsp;&nbsp;Edit</i>
                         </a>
                       </td>
                     </tr>
@@ -253,11 +253,16 @@
 
   <style>
     .no-filter{
-        padding-bottom: 45px !important;
+        padding-bottom: 35px !important;
     }
 
     .no-filter-checkbox{
-        padding-bottom: 20px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .edit_btn_rotate{
+      line-height: 0.5;
+      border-radius: 6px;
     }
   </style>
 

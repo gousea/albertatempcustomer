@@ -405,7 +405,7 @@ header,
     font-weight: bold;
     color: #fff;
     width: 157px;
-    border-radius: 8px;
+    border-radius: 8px !important;
     font-size: 13px;
 }
 

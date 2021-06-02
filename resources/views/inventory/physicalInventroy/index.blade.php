@@ -9,7 +9,7 @@
 <div id="content">
     
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-      <div class="container-fluid">
+      <div class="container">
           <div class="collapse navbar-collapse" id="main_nav">
               <div class="menu">
                   <span class="font-weight-bold text-uppercase"> Physical Inventory</span>
@@ -25,7 +25,7 @@
     </nav>
 
     <section class="section-content py-6">
-      <div class="container-fluid">
+      <div class="container">
           @if (session()->has('message'))
               <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i>
                   {{session()->get('message')}}
@@ -40,43 +40,43 @@
                 <table id="physical_inventory_detail" class="table table-hover" style="">
                   <thead>
                     <tr class="header-color">
-                      <th class="text-left">Ref.Number
+                      <th class="text-left text-uppercase">Ref.Number
                         <div class="form-group has-search">
                           <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
-                      <th class="text-left">Created
+                      <th class="text-left text-uppercase">Created
                         <div class="form-group has-search">
                           <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
-                      <th class="text-left">Calculated
+                      <th class="text-left text-uppercase">Calculated
                         <div class="form-group has-search">
                           <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
-                      <th class="text-left">Commited
+                      <th class="text-left text-uppercase">Commited
                         <div class="form-group has-search">
                           <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
-                      <th class="text-left">Title
+                      <th class="text-left text-uppercase">Title
                         <div class="form-group has-search">
                           <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
-                      <th class="text-left">Status
+                      <th class="text-left text-uppercase">Status
                         <div class="form-group has-search">
                           <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
                           <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
                         </div>
                       </th>
-                      <th class="text-left no-filter">Action</th>
+                      <th class="text-left text-uppercase no-filter">Action</th>
                     </tr>
                   </thead>
                   
@@ -237,7 +237,7 @@
                         
                           let view_edit = row['view_edit'];
                           let delete_inventory = row['delete_inventory'];
-                            return "<a href="+view_edit+" data-toggle='tooltip' title='View' class='btn btn-sm btn-info edit_btn_rotate' ><i class='fa fa-eye'></i>&nbsp;&nbsp;View</a>&nbsp;<a href="+delete_inventory+" data-toggle='tooltip' title='Delete' class='btn btn-sm btn-danger' ><i class='fa fa-delete'>&nbsp;&nbsp;Delete</i></a>";
+                            return "<a href="+view_edit+" data-toggle='tooltip' title='View' class='btn btn-sm btn-info edit_btn_rotate header-color' ><i class='fa fa-eye'></i>&nbsp;&nbsp;View</a>&nbsp;<a href="+delete_inventory+" data-toggle='tooltip' title='Delete' class='btn btn-sm btn-danger buttonred' ><i class='fa fa-delete'>&nbsp;&nbsp;Delete</i></a>";
                         }
                       },
                     
@@ -279,5 +279,10 @@
   .no-filter-checkbox{
       padding-bottom: 20px !important;
   }
+
+  .edit_btn_rotate, .buttonred{
+      line-height: 0.5;
+      border-radius: 6px;
+    }
 </style>
 @endsection
