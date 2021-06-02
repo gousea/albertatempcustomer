@@ -140,13 +140,13 @@
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('EodShift') }}">
                                         End of Shift Report </a>
                                 </li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Credit Card Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('CardReport') }}"> Credit Card Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Scan Data Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Sales Transaction Report
                                     </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Tax Report </a></li>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('TaxReport') }}"> Tax Report </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Hourly Sales Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> RO History Report </a>
