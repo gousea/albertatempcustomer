@@ -44,15 +44,6 @@
     border-radius: 3rem;
 }
 
-.holder {
-    /* Clip edges, as some of the lines don't terminate nicely. */
-    overflow: hidden;
-    position: relative;
-    width: 200px;
-    height: 50px;
-    left: 55px;
-}
-
 .ellipse {
     position: absolute;
     /* background: radial-gradient(ellipse, transparent, transparent 7px, black 7px, black 10px, transparent 11px); */
@@ -114,14 +105,6 @@
     grid-row: 1 / span 2;
 }
 
-.grid-container {
-    width: 100%;
-    display: grid;
-    grid-gap: 17px;
-    text-align: center;
-    grid-template-columns: 200px 250px 320px;
-}
-
 .header_date_text {
     list-style-type: none;
     text-align: center;
@@ -162,11 +145,59 @@
         padding-left: 0px;
         padding-right: 0px;
     }
+
+    .grid-container {
+        width: 100%;
+        display: grid;
+        grid-gap: 17px;
+        text-align: center;
+        /* grid-template-columns: 200px 250px 320px; */
+        grid-template-columns:  183px 223px 270px;
+    }
+
+    .holder {
+        /* Clip edges, as some of the lines don't terminate nicely. */
+        overflow: hidden;
+        position: relative;
+        width: 200px;
+        height: 50px;
+        left: 55px;
+    }
+}
+
+@media only screen
+and (min-device-width : 992px)
+and (max-device-width : 1024px){
+    .grid-container {
+        width: 100%;
+        display: grid;
+        grid-gap: 17px;
+        text-align: center;
+        /* grid-template-columns: 200px 250px 320px; */
+        grid-template-columns: 200px 223px 250px;
+    }
 }
 
 /* ============ large desktop view// ============ */
 
 @media all and (min-width: 1024px) {
+    .grid-container {
+        width: 100%;
+        display: grid;
+        grid-gap: 17px;
+        text-align: center;
+        /* grid-template-columns: 200px 250px 320px; */
+        grid-template-columns: 200px 223px 250px;
+    }
+
+    .holder {
+        /* Clip edges, as some of the lines don't terminate nicely. */
+        overflow: hidden;
+        position: relative;
+        width: 200px;
+        height: 50px;
+        left: 0px;
+    }
 }
 
 @media only screen and (max-width: 600px) {
@@ -174,4 +205,5 @@
     .mx-auto {
         text-align: center;
     }
+
 }

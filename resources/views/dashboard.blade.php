@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('asset/css/dashboard.css') }}">
 
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-        <div class="container-fluid">
+        <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
                     <span class="font-weight-bold text-uppercase"> Dashboard</span>
@@ -22,7 +22,7 @@
             </div> <!-- navbar-collapse.// -->
         </div>
     </nav>
-    <div class="container-fluid section-content">
+    <div class="container section-content">
         <div class="col-md-12 col-xs-12 store-news">
             <div class="row">
                 <div class="col-lg-8 col-md-12 col-xs-8 pr-5">
@@ -108,7 +108,7 @@
             </div>
         </div>
         <section id="graph">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row mt-3">
                     <div class="col-lg-8 col-md-8 col-xs-8 ">
                         <div class="box box-info">
@@ -295,7 +295,7 @@
             </div>
         </section>
         <section id="table-data">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
                     <div class="col-8">
                         <table data-toggle="table" data-classes="table table-hover table-condensed employeeview"
