@@ -11,17 +11,21 @@ Parent Child
 <div id="content">
     
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-        <div class="container-fluid">
+        <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
                     <h6><span class="font-weight-bold text-uppercase"> Parent Child</span></h6>
+                </div>
+                <div class="nav-submenu">
+                    <button type="button" class="btn btn-gray headerblack buttons_menu" id="save_button" title="Save" style="border-radius: 6px; margin-right:5px;"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-danger buttonred basic-button-small buttons_menu" id="parent_delete" title="Delete" style="border-radius: 6px;"><i class="fa fa-trash"></i> Delete</button>
                 </div>
             </div> <!-- navbar-collapse.// -->
         </div>
     </nav>
       
     <section class="section-content py-6">
-        <div class="container-fluid">
+        <div class="container">
             
             @if (session()->has('message'))
                 <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
@@ -99,16 +103,16 @@ Parent Child
                                 <input type="hidden" name="Csearch_vbarcode" id="csearch_vbarcode" value="<?php echo isset($Csearch_vbarcode) ? $Csearch_vbarcode : ''; ?>">
                             </td>
                             <td class="text-left" style="background-color: #fff;"  style="width:37px;height:70px;background-color: #fff;" >
-                                <input type="button" class="btn btn-success float-right" value="Add New" id="addmore" style="border-radius: 6px;">
+                                <input type="button" class="btn btn-gray headerblack buttons_menu float-right" value="Add New" id="addmore" style="border-color: black;">
                             </td>
                         </form>
                         
                         <td style="background-color: #fff;">
-                            <button type="button" class="btn btn-danger float-right" id="parent_delete" title="Delete" style="border-radius: 6px;"><i class="fa fa-trash"></i> Delete</button>
+                            
                         </td>
                         
                         <td style="background-color: #fff;">
-                            <button type="button" class="btn btn-primary float-right" id="save_button" title="Save" style="border-radius: 6px; margin-right:5px;"><i class="fa fa-save"></i> Save</button>
+                            
                         </td>
                     </tr>
                 </tbody>
@@ -180,7 +184,7 @@ Parent Child
                                 </td>
 
                                 <td style="width:150px;"class="text-left">
-                                    <span ><?php echo $pitem['psku']; ?></span>
+                                    <span ><a href="<?php echo $pitem['item_link'];?>"><?php echo $pitem['psku']; ?></a></span>
                                 </td>
                             
                                 <td style="width:100px;" class="text-left">
@@ -194,7 +198,7 @@ Parent Child
                                 </td>
                             
                                 <td style="width:150px;"class="text-left">
-                                    <span ><?php echo $pitem['csku']; ?></span>
+                                    <span ><a href="<?php echo $pitem['citem_link'];?>"><?php echo $pitem['csku']; ?></a></span>
                                 </td>
         
                             </tr>

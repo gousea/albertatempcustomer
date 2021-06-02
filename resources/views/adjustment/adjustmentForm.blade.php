@@ -139,12 +139,13 @@
                 <div class="mytexttitle font-weight-bold text-uppercase">
                     ADD ITEMS
                 </div>
-                <span class="text-center" style="height:20px; width:100px; border-radius:6px; background-color:grey;"><small class="text-white">SEARCH ADD ITEMS</small></span>
+                <a class="btn btn-small text-center text-white" id="table_hideshow" style="line-height:5px; width:100px; border-radius:6px; background-color:grey; font-size:9px;">SEARCH ADD ITEMS</a>
                 &nbsp;
                 <div class="divider font-weight-bold"></div>
               </div>
+              <input type="hidden" value="0" id="for_table_hideshow">
               <br>
-              <div class="table-responsive">
+              <div class="table-responsive" id="add_items" style="display: none;">
                 <table class="table table-hover" style="padding:0px; margin:0px; width:100%;">
 
                   <thead>
@@ -198,7 +199,7 @@
 
               <center>
                 <div>
-                  <a type="button" class="btn btn-primary basic-button-large" id="add_item_btn" href="#">ADD TO ADJUSTMENT</a>
+                  <a type="button" class="btn btn-primary basic-button-large" id="add_item_btn" href="#" style="display: none;">ADD TO ADJUSTMENT</a>
                 </div>
               </center>
 
@@ -324,6 +325,21 @@
         });
     // });
   
+  });
+
+  $(document).on('click', '#table_hideshow', function(){
+
+    let table_hideshow_value = $('#for_table_hideshow').val();
+
+    if(table_hideshow_value == 0){
+      $('#add_items').show();
+      $('#add_item_btn').show();
+      $('#for_table_hideshow').val(1);
+    }else{
+      $('#add_items').hide();
+      $('#add_item_btn').hide();
+      $('#for_table_hideshow').val(0);
+    }
   });
   
 </script>

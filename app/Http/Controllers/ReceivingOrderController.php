@@ -236,7 +236,7 @@ class ReceivingOrderController extends Controller
             
             $start_from = ($input['start']);
 
-            $select_query = "SELECT * FROM trn_receivingorder LIMIT ". $input['start'].", ".$limit;
+            $select_query = "SELECT * FROM trn_receivingorder ORDER BY LastUpdate DESC LIMIT ". $input['start'].", ".$limit;
 
             $count_select_query = "SELECT COUNT(distinct iroid) as count FROM trn_receivingorder";
             $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
@@ -289,7 +289,7 @@ class ReceivingOrderController extends Controller
                 $check_condition = 1;
             }
             
-            $select_query = "SELECT * FROM trn_receivingorder ".$condition." LIMIT ". $input['start'].", ".$limit;
+            $select_query = "SELECT * FROM trn_receivingorder ".$condition." ORDER BY LastUpdate DESC LIMIT ". $input['start'].", ".$limit;
 
             $count_select_query = "SELECT COUNT(distinct iroid) as count FROM trn_receivingorder ".$condition;
             $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
@@ -313,7 +313,7 @@ class ReceivingOrderController extends Controller
                     $view_edit = url('/ReceivingOrder/edit' . '?iroid=' . $value->iroid );
                 }
                 $temp = array();
-                $temp['iroid']          = $value->ipoid;
+                $temp['iroid']          = $value->iroid;
                 $temp['estatus']        = $value->estatus;
                 $temp['vponumber']      = $value->vponumber;
                 $temp['nnettotal']      = $value->nnettotal;
