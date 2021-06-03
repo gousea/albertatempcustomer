@@ -207,26 +207,19 @@
     });
 
     $(document).on('click','#save_button', function(e){
-
-      e.preventDefault();
-
-      $("div#divLoading").addClass('show');
-
-      var avArr = [];
-
-      $("#shelvingTable input[type=checkbox]:checked").each(function () {
-
-        var id =$(this).val();
-        var name = $(this).closest('tr').find('.shelving_c').val();
-         
-        avArr.push({
-          id:id,
-          shelvingname: name
-              
-        });
-      });
+          e.preventDefault();
+          $("div#divLoading").addClass('show');
+          var avArr = [];
+          $("#shelvingTable input[type=checkbox]:checked").each(function () {
+            var id =$(this).val();
+            var name = $(this).closest('tr').find('.shelving_c').val();
+            avArr.push({
+              id:id,
+              shelvingname: name
+            });
+          });
       
-        if(avArr.length < 1){
+          if(avArr.length < 1){
             bootbox.alert({ 
                 size: 'small',
                 title: "Attention", 
@@ -235,40 +228,34 @@
             });
             $("div#divLoading").removeClass('show');
             return false;
-        }
+          }
 
       $.ajax({
           type: 'POST',
           headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
           url: '/updateshelving',
           contentType: 'application/json',
-          data: JSON.stringify(avArr) // access in body
-      }).success(function ( e ) {
-          location.reload();
-      }).fail(function (msg) {
-        let mssg = '<div class="alert alert-danger">';
-        let errors = msg.responseJSON;
-        $.each(errors, function(k, err){
-          $.each(err, function(key, error){
-            mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-          });
-        });
-
-        mssg += '</div>';
-        
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: mssg, 
-            callback: function(){location.reload(true);}
-        });
-        
-        $("div#divLoading").removeClass('show');
-
-      }).done(function (msg) {
-         // console.log('DONE');
-          $("div#divLoading").removeClass('show');
-
+          data: JSON.stringify(avArr), // access in body
+          success : function ( e ) {
+              location.reload();
+          },
+          error: function (msg) {
+                let mssg = '<div class="alert alert-danger">';
+                let errors = msg.responseJSON;
+                $.each(errors, function(k, err){
+                  $.each(err, function(key, error){
+                    mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+                  });
+                });
+                mssg += '</div>';
+                bootbox.alert({ 
+                    size: 'small',
+                    title: "Attention", 
+                    message: mssg, 
+                    callback: function(){location.reload(true);}
+                });
+                $("div#divLoading").removeClass('show');
+          }
       });
 
     });

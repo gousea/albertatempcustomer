@@ -194,7 +194,6 @@ $(document).on('click','#save_button', function(){
     var avArr = [];
 
     $("input[name='selected[]']:checked").each(function () {
-          
           var id = $(this).val();
           var name = $(this).closest('tr').find('.age_verification_c').val();
           var age = $(this).closest('tr').find('.age_verification_s').val();
@@ -204,8 +203,7 @@ $(document).on('click','#save_button', function(){
               vname: name,
               vvalue: age
           });
-  
-      });
+    });
       
     if(avArr.length < 1){
         bootbox.alert({ 
@@ -214,14 +212,10 @@ $(document).on('click','#save_button', function(){
             message: "You did not select anything", 
             callback: function(){location.reload(true);}
         });
-        
-        
         $("div#divLoading").removeClass('show');
         return false;
     }
     <?php if(session()->get('hq_sid') == 1){ ?>
-    
-        console.log(avArr);
         $.ajax({
             url : "<?php echo url('/duplicateage'); ?>",
             headers: {
@@ -256,7 +250,7 @@ $(document).on('click','#save_button', function(){
                     popup = popup + data;
                 @endforeach
                 $('#age_stores').html(popup);    
-            }
+            }, 
         });
         $("#myModal").modal('show');
     <?php } else { ?>
@@ -267,37 +261,29 @@ $(document).on('click','#save_button', function(){
               url: '/ageverification',
               contentType: 'application/json',
               data: JSON.stringify(avArr), // access in body
-          }).success(function (e) {
-              location.reload();
-          }).fail(function (msg) {
-                   
-                  //console.log('FAIL');
-                    let mssg = '<div class="alert alert-danger">';
-                    
-                    //console.log(msg);
-                    let errors = msg.responseJSON;
-                    //console.log(errors);
-            
-                    $.each(errors, function(k, err){
-                    //   console.log(err);
-                      $.each(err, function(key, error){
-                        // console.log(error);
-                        mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-                      });
-                    });
-            
-                    mssg += '</div>';
-                
-                    
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Attention", 
-                        message: mssg, 
-                        callback: function(){location.reload(true);}
-                    });
-                    
-                    $("div#divLoading").removeClass('show');
-                  });
+              success: function(result) {
+                location.reload();
+              },
+              error: function (msg) {
+                     let mssg = '<div class="alert alert-danger">';
+                     let errors = msg.responseJSON;
+                     $.each(errors, function(k, err){
+                        $.each(err, function(key, error){
+                          mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+                       });
+                     });
+                     mssg += '</div>';
+                     bootbox.alert({ 
+                         size: 'small',
+                         title: "Attention", 
+                         message: mssg, 
+                         callback: function(){location.reload(true);}
+                     });
+                     $("div#divLoading").removeClass('show');
+              },
+              
+          });
+          
     <?php } ?>
 });
 

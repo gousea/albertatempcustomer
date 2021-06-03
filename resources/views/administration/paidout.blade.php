@@ -255,26 +255,17 @@
   });
 
   $(document).on('click','#save_button', function(e){
-
     e.preventDefault();
-
     $("div#divLoading").addClass('show');
-
     var avArr = [];
-
     $("#paidout input[type=checkbox]:checked").each(function () {
-
       var id = $(this).val();
       var name = $(this).closest('tr').find('.paidouts_c').val();
       var status = $(this).closest('tr').find('.status_c').val();
-    //   console.log(id);
-    //   console.log(name); 
-    //   console.log(status); 
       avArr.push({
         ipaidoutid: id,
         vpaidoutname:name,
         estatus: status
-            
       });
     });
     
@@ -294,45 +285,28 @@
         headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
         url: '/updatepaidout',
         contentType: 'application/json',
-        data: JSON.stringify(avArr) // access in body
-    }).success(function (e) {
-        // console.log('SUCCESS');
-        // console.log(e);
-        location.reload();
-    }).fail(function (msg) {
-        
-      //console.log('FAIL');
-        let mssg = '<div class="alert alert-danger">';
-        
-        //console.log(msg);
-        let errors = msg.responseJSON;
-        //console.log(errors);
-
-        $.each(errors, function(k, err){
-        //   console.log(err);
-          $.each(err, function(key, error){
-            // console.log(error);
-            mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-          });
-        });
-
-        mssg += '</div>';
-        
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: mssg, 
-            callback: function(){location.reload(true);}
-        });
-        
-        $("div#divLoading").removeClass('show');
-
-    }).done(function (msg) {
-        //console.log('DONE');
-        $("div#divLoading").removeClass('show');
-
+        data: JSON.stringify(avArr),  // access in body
+        success : function (e) {
+            location.reload();
+        },
+        error: function (msg) {
+            let mssg = '<div class="alert alert-danger">';
+            let errors = msg.responseJSON;
+            $.each(errors, function(k, err){
+              $.each(err, function(key, error){
+                mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+              });
+            });
+            mssg += '</div>';
+            bootbox.alert({ 
+                size: 'small',
+                title: "Attention", 
+                message: mssg, 
+                callback: function(){location.reload(true);}
+            });
+            $("div#divLoading").removeClass('show');
+        }
     });
-
   });
 
   // Search Code

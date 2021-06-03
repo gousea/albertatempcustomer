@@ -352,98 +352,91 @@ $("#closeBtn").click(function(){
   <script type="text/javascript">
     
     $(document).on('click','#save_button', function(e){
-    e.preventDefault();
-    
-    var edit_url = '{{route('size.edit_list')}}';
-    edit_url = edit_url.replace(/&amp;/g, '&');
-  
-  
-    
-    $("div#divLoading").addClass('show');
-    var avArr = [];
-    $("input[name='selected[]']:checked").each(function () {
-      var id = $(this).val();
-      var name = $(this).closest('tr').find('.size_c').val();
-      avArr.push({
-        isizeid: id,
-        vsize: name
-      });
-    });
-    
-    if(avArr.length < 1){
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "You did not select anything", 
-            callback: function(){location.reload(true);}
+        e.preventDefault();
+        var edit_url = '{{route('size.edit_list')}}';
+        edit_url = edit_url.replace(/&amp;/g, '&');
+        $("div#divLoading").addClass('show');
+        var avArr = [];
+        $("input[name='selected[]']:checked").each(function () {
+          var id = $(this).val();
+          var name = $(this).closest('tr').find('.size_c').val();
+          avArr.push({
+            isizeid: id,
+            vsize: name
+          });
         });
-        $("div#divLoading").removeClass('show');
-        return false;
-    }else{
-        var numericReg = /^[0-9]*(?:\.\d{1,2})?$/;
     
-        <?php if(session()->get('hq_sid') == 1){ ?>
-            $.ajax({
-                  url: "<?php echo url('/size/duplicatesize'); ?>",
-                  method: 'post',
-                  headers: {
-                        'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-                  },
-                  data: {avArr},
-                  success: function(result){
-                        var popup = '';
-                        @foreach (session()->get('stores_hq') as $stores)
-                            if(result.includes({{ $stores->id }})){
-                                var data = '<tr>'+
-                                                '<td>'+
-                                                    '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
-                                                    '</div>'+
-                                                '</td>'+
-                                                '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
-                                            '</tr>';
-                                        $('#editSelectAllCheckbox').attr('disabled', true);
-                                  
-                            } else {
-                                var data = '<tr>'+
-                                                '<td>'+
-                                                    '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
-                                                    '</div>'+
-                                                '</td>'+
-                                                '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
-                                            '</tr>';
-                            }
-                            popup = popup + data;
-                        @endforeach
-                $('#edit_size_stores').html(popup);
-            }
+        if(avArr.length < 1){
+            bootbox.alert({ 
+                size: 'small',
+                title: "Attention", 
+                message: "You did not select anything", 
+                callback: function(){location.reload(true);}
             });
-            $("#EditModal").modal('show');
-        <?php } else { ?>
-            $.ajax({
-                url: "<?php echo url('/size/edit_list'); ?>",
-                method: 'post',
-                headers: {
-                      'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-                },
-                data: {data:avArr},
-                success: function(result){
-                    //   alert("hi");
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Success", 
-                        message: "Size Updated Successfully", 
-                        callback: function(){location.reload(true);}
-                    });
-                }
-            });
+            $("div#divLoading").removeClass('show');
+            return false;
+        }else{
+            var numericReg = /^[0-9]*(?:\.\d{1,2})?$/;
         
-        //   $('#form-size').attr('action', edit_url);
-        //   $('#form-size').submit();
-        //   $("div#divLoading").addClass('show');
-        <?php } ?>
-    }
+            <?php if(session()->get('hq_sid') == 1){ ?>
+                $.ajax({
+                      url: "<?php echo url('/size/duplicatesize'); ?>",
+                      method: 'post',
+                      headers: {
+                            'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                      },
+                      data: {avArr},
+                      success: function(result){
+                            var popup = '';
+                            @foreach (session()->get('stores_hq') as $stores)
+                                if(result.includes({{ $stores->id }})){
+                                    var data = '<tr>'+
+                                                    '<td>'+
+                                                        '<div class="custom-control custom-checkbox" id="table_green_check">'+
+                                                            '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '</div>'+
+                                                    '</td>'+
+                                                    '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
+                                                '</tr>';
+                                            $('#editSelectAllCheckbox').attr('disabled', true);
+                                      
+                                } else {
+                                    var data = '<tr>'+
+                                                    '<td>'+
+                                                        '<div class="custom-control custom-checkbox" id="table_green_check">'+
+                                                            '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '</div>'+
+                                                    '</td>'+
+                                                    '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
+                                                '</tr>';
+                                }
+                                popup = popup + data;
+                            @endforeach
+                    $('#edit_size_stores').html(popup);
+                }
+                });
+                $("#EditModal").modal('show');
+            <?php } else { ?>
+                $.ajax({
+                    url: "<?php echo url('/size/edit_list'); ?>",
+                    method: 'post',
+                    headers: {
+                          'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                    },
+                    data: {data:avArr},
+                    success: function(result){
+                        //   alert("hi");
+                        bootbox.alert({ 
+                            size: 'small',
+                            title: "Success", 
+                            message: "Size Updated Successfully", 
+                            callback: function(){location.reload(true);}
+                        });
+                    }
+                });
+            
+            <?php } ?>
+        }
     
 
   
