@@ -271,6 +271,11 @@ footer p {
     margin-bottom: 8px;
 }
 
+input::-webkit-input-placeholder {
+    font-size: 13px;
+    line-height: 3;
+}
+
 .promo-fields,
 .promo-fields::-webkit-input-placeholder {
     font-size: 13px;
@@ -279,7 +284,7 @@ footer p {
 .table-heading-fields,
 .table-heading-fields::-webkit-input-placeholder {
     font-size: 13px;
-    padding-left: 10px;
+    padding-left: 20px;
     border-radius: 7px;
     width: 80%;
     height: 33px;
@@ -359,7 +364,7 @@ header,
 
 .nav-submenu {
     position: absolute;
-    right: 33px;
+    right: 71px;
     top: 10px;
 }
 

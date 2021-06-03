@@ -6,157 +6,159 @@
 
 
 @section('main-content')
-<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="main_nav">
-            <div class="menu">
-                <span class="font-weight-bold text-uppercase" style="font-size: 22px"> Category</span>
-            </div>
-            <div class="nav-submenu">
-                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <button type="button" onclick="addCategory();" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
-                <button type="button" id="delete_category_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
-            </div>
-        </div> <!-- navbar-collapse.// -->
-    </div>
-</nav>
-<section class="section-content py-6">
-    <div id="content">
-        <div class="container-fluid">
-            <div class="panel panel-default">
-                @if (session()->has('message'))
-                  <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  </div>
-                @endif
-                @if (session()->has('error_message'))
-                  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error_message')}}
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  </div>
-                @endif
-
-                @if ($errors->any())
-                  <div class="alert alert-danger">
-                    <ul>
-                      @foreach ($errors->all() as $error)
-                        <li>{{$error}}</li>
-                      @endforeach
-                    </ul>
-                  </div>
-                @endif
-                <form action="{{route('category')}}" method="get" id="form_category_search" style="width: 100%">
-                    @csrf
-                    @method('get')
-                    <input type="hidden" name="searchbox" id="icategoryid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input style="height: 33px; font-size: 12px !important; font-weight: 600;" type="text" name="automplete-product"  class="form-control" placeholder="Search Category..." id="automplete-product">
-                        </div>
+<div id="content">
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+      <div class="container">
+          <div class="collapse navbar-collapse" id="main_nav">
+              <div class="menu">
+                  <span class="font-weight-bold text-uppercase" style="font-size: 22px"> Category</span>
+              </div>
+              <div class="nav-submenu">
+                  <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                  <button type="button" onclick="addCategory();" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                  <button type="button" id="delete_category_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+              </div>
+          </div> <!-- navbar-collapse.// -->
+      </div>
+  </nav>
+  <section class="section-content py-6">
+      
+          <div class="container">
+              <div class="panel panel-default">
+                  @if (session()->has('message'))
+                    <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
                     </div>
-                </form>
-                <div class="panel-body">
-                    <form action="" method="post" enctype="multipart/form-data" id="form-category">
-                        @csrf
-                        @method('post')
-                        @if(session()->get('hq_sid') == 1)
-                            <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
-                        @endif
-                        <input type="hidden" name="MenuId" value="<?php //echo $filter_menuid; ?>"/>
-                        <div class="table-responsive">
-                            <table id="category" class="table  table-hover" style="width:100%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;">
-                                <?php if ($data['categories']) { ?>
-                                    <thead>
-                                        <tr style="background-color: #286fb7!important;" >
-                                            <th style="width: 1px;color:black; border-bottom-left-radius: 9px" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                                            <th class="col-xs-1 headername text-uppercase text-light">Category Code</th>
-                                            <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Category Name</th>
-                                            <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Description</th>
-                                            <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Category Type</th>
-                                            <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Department</th>
-                                            <th style="border-bottom-right-radius: 9px; border-top-right-radius: 9px " class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">No. Of Sub Categories</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $category_row = 1;$i=0; ?>
-                                        <?php foreach ($data['categories'] as $category) { ?>
-                                            <tr id="category-row<?php echo $category_row; ?>">
-                                                <td style="border-bottom-left-radius: 9px !important; " data-order="<?php echo $category->icategoryid; ?>" class="text-center">
-                                                    <span style="display:none;"><?php echo $category->icategoryid; ?></span>
-                                                    <?php if (in_array($category->icategoryid, $data['selected'])) { ?>
-                                                    <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]" value="<?php echo $category->icategoryid; ?>" checked="checked" />
-                                                    <?php } else { ?>
-                                                    <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]"  value="<?php echo $category->icategoryid; ?>" />
-                                                    <?php } ?>
+                  @endif
+                  @if (session()->has('error_message'))
+                    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error_message')}}
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                  @endif
+
+                  @if ($errors->any())
+                    <div class="alert alert-danger">
+                      <ul>
+                        @foreach ($errors->all() as $error)
+                          <li>{{$error}}</li>
+                        @endforeach
+                      </ul>
+                    </div>
+                  @endif
+                  <form action="{{route('category')}}" method="get" id="form_category_search" style="width: 100%">
+                      @csrf
+                      @method('get')
+                      <input type="hidden" name="searchbox" id="icategoryid">
+                      <div class="row">
+                          <div class="col-md-12">
+                              <input style="height: 33px; font-size: 12px !important; font-weight: 600;" type="text" name="automplete-product"  class="form-control" placeholder="Search Category..." id="automplete-product">
+                          </div>
+                      </div>
+                  </form>
+                  <div class="panel-body">
+                      <form action="" method="post" enctype="multipart/form-data" id="form-category">
+                          @csrf
+                          @method('post')
+                          @if(session()->get('hq_sid') == 1)
+                              <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
+                          @endif
+                          <input type="hidden" name="MenuId" value="<?php //echo $filter_menuid; ?>"/>
+                          <div class="table-responsive">
+                              <table id="category" class="table  table-hover" style="width:100%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;">
+                                  <?php if ($data['categories']) { ?>
+                                      <thead>
+                                          <tr style="background-color: #286fb7!important;" >
+                                              <th style="width: 1px;color:black; border-bottom-left-radius: 9px" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                                              <th class="col-xs-1 headername text-uppercase text-light">Category Code</th>
+                                              <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Category Name</th>
+                                              <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Description</th>
+                                              <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Category Type</th>
+                                              <th class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">Department</th>
+                                              <th style="border-bottom-right-radius: 9px; border-top-right-radius: 9px " class="col-xs-1 headername text-uppercase  text-light" data-field="supplier_code">No. Of Sub Categories</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <?php $category_row = 1;$i=0; ?>
+                                          <?php foreach ($data['categories'] as $category) { ?>
+                                              <tr id="category-row<?php echo $category_row; ?>">
+                                                  <td style="border-bottom-left-radius: 9px !important; " data-order="<?php echo $category->icategoryid; ?>" class="text-center">
+                                                      <span style="display:none;"><?php echo $category->icategoryid; ?></span>
+                                                      <?php if (in_array($category->icategoryid, $data['selected'])) { ?>
+                                                      <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]" value="<?php echo $category->icategoryid; ?>" checked="checked" />
+                                                      <?php } else { ?>
+                                                      <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]"  value="<?php echo $category->icategoryid; ?>" />
+                                                      <?php } ?>
+                                                  </td>
+
+                                                  <td class="text-left">
+                                                      <span style="display:none;"><?php echo $category->vcategorycode; ?></span>
+                                                      <input type="hidden" maxlength="50" style="border:none;" class="editable categories_c" name="category[<?php echo $i; ?>][vcategorycode]" id="category[<?php echo $i; ?>][vcategorycode]" value="<?php echo $category->vcategorycode; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
+                                                      <?php echo $category->vcategorycode; ?>
+                                                      <input type="hidden" name="category[<?php echo $i; ?>][icategoryid]" value="<?php echo $category->icategoryid; ?>"/>
+                                                  </td>
+
+                                                  <td class="text-left">
+                                                      <span style="display:none;"><?php echo $category->vcategoryname; ?></span>
+                                                      <input type="text" maxlength="50" style="border:none;"  class="editable categoriesname_c" name="category[<?php echo $i; ?>][vcategoryname]" id="category[<?php echo $i; ?>][vcategoryname]" value="<?php echo $category->vcategoryname; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
+                                                      <input type="hidden" name="category[<?php echo $i; ?>][icategoryid]" value="<?php echo $category->icategoryid; ?>"/>
+                                                  </td>
+
+                                                  <td class="text-left"><textarea maxlength="100" style="border:none; height: 33px;"  class="editable" name="category[<?php echo $i; ?>][vdescription]" id="category[<?php echo $i; ?>][vdescription]" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'><?php echo $category->vdescription; ?></textarea></td>
+
+                                                  <td class="text-left">
+                                                      <select style="height: 33px; font-size: 12px !important; font-weight: 600" name="category[<?php echo $i; ?>][vcategorttype]" id="category[<?php echo $i; ?>][vcategorttype]" class="form-control" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
+                                                          <?php  if ($category->vcategorttype=="Sales") { ?>
+                                                          <option value="<?php echo "Sales"; ?>" selected="selected"><?php echo "Sales"; ?></option>
+                                                          <option value="<?php echo "MISC"; ?>" ><?php echo "MISC"; ?></option>
+                                                          <?php } else { ?>
+                                                          <option value="<?php echo "Sales"; ?>"><?php echo "Sales"; ?></option>
+                                                          <option value="<?php echo "MISC"; ?>" selected="selected"><?php echo "MISC"; ?></option>
+                                                          <?php } ?>
+                                                      </select>
                                                 </td>
 
-                                                <td class="text-left">
-                                                    <span style="display:none;"><?php echo $category->vcategorycode; ?></span>
-                                                    <input type="hidden" maxlength="50" style="border:none;" class="editable categories_c" name="category[<?php echo $i; ?>][vcategorycode]" id="category[<?php echo $i; ?>][vcategorycode]" value="<?php echo $category->vcategorycode; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
-                                    				        <?php echo $category->vcategorycode; ?>
-                                    			          <input type="hidden" name="category[<?php echo $i; ?>][icategoryid]" value="<?php echo $category->icategoryid; ?>"/>
-                                    			      </td>
+                                                <td>
+                                                      <select style="height: 33px; font-size: 12px !important; font-weight: 600" name="category[<?php echo $i; ?>][dept_code]" id="category[<?php echo $i; ?>][dept_code]" class="form-control" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
+                                                          <option value="0">--Select Department--</option>
+                                                          <?php if(isset($data['department']) && count($data['department']) > 0){?>
+                                                              <?php foreach($data['department'] as $department){ ?>
+                                                                  <?php if(isset($category->dept_code) && $category->dept_code == $department['vdepcode']){?>
+                                                                      <option value="<?php echo $department['vdepcode'];?>" selected="selected"><?php echo $department['vdepartmentname'];?></option>
+                                                                  <?php } else { ?>
+                                                                      <option value="<?php echo $department['vdepcode'];?>"><?php echo $department['vdepartmentname'];?></option>
+                                                                  <?php } ?>
+                                                              <?php } ?>
+                                                          <?php } ?>
+                                                      </select>
+                                                  </td>
 
-                                                <td class="text-left">
-                                                    <span style="display:none;"><?php echo $category->vcategoryname; ?></span>
-                                                    <input type="text" maxlength="50" style="border:none;"  class="editable categoriesname_c" name="category[<?php echo $i; ?>][vcategoryname]" id="category[<?php echo $i; ?>][vcategoryname]" value="<?php echo $category->vcategoryname; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
-                                    				        <input type="hidden" name="category[<?php echo $i; ?>][icategoryid]" value="<?php echo $category->icategoryid; ?>"/>
-                                    			      </td>
+                                                  <td class="text-center" style="border-bottom-right-radius: 9px; border-top-right-radius: 9px ">
+                                                      <input type="hidden" id="sub_cat" value="<?php echo $category->icategoryid; ?>|<?php echo $category->subcat_count; ?>" >
+                                                      <a onclick="viewSubCategory('<?=$category->icategoryid?>', '<?=$category->vcategoryname?>');" data-toggle="tooltip" title="View Sub Categories" class="btn small-btn"><?php echo $category->subcat_count; ?></a>
+                                                  </td>
 
-                                                <td class="text-left"><textarea maxlength="100" style="border:none; height: 33px;"  class="editable" name="category[<?php echo $i; ?>][vdescription]" id="category[<?php echo $i; ?>][vdescription]" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'><?php echo $category->vdescription; ?></textarea></td>
-
-                                                <td class="text-left">
-                                                    <select style="height: 33px; font-size: 12px !important; font-weight: 600" name="category[<?php echo $i; ?>][vcategorttype]" id="category[<?php echo $i; ?>][vcategorttype]" class="form-control" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
-                                                        <?php  if ($category->vcategorttype=="Sales") { ?>
-                                                        <option value="<?php echo "Sales"; ?>" selected="selected"><?php echo "Sales"; ?></option>
-                                                        <option value="<?php echo "MISC"; ?>" ><?php echo "MISC"; ?></option>
-                                                        <?php } else { ?>
-                                                        <option value="<?php echo "Sales"; ?>"><?php echo "Sales"; ?></option>
-                                                        <option value="<?php echo "MISC"; ?>" selected="selected"><?php echo "MISC"; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                               </td>
-
-                                               <td>
-                                                    <select style="height: 33px; font-size: 12px !important; font-weight: 600" name="category[<?php echo $i; ?>][dept_code]" id="category[<?php echo $i; ?>][dept_code]" class="form-control" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
-                                                        <option value="0">--Select Department--</option>
-                                                        <?php if(isset($data['department']) && count($data['department']) > 0){?>
-                                                            <?php foreach($data['department'] as $department){ ?>
-                                                                <?php if(isset($category->dept_code) && $category->dept_code == $department['vdepcode']){?>
-                                                                    <option value="<?php echo $department['vdepcode'];?>" selected="selected"><?php echo $department['vdepartmentname'];?></option>
-                                                                <?php } else { ?>
-                                                                    <option value="<?php echo $department['vdepcode'];?>"><?php echo $department['vdepartmentname'];?></option>
-                                                                <?php } ?>
-                                                            <?php } ?>
-                                                        <?php } ?>
-                                                    </select>
-                                                </td>
-
-                                                <td class="text-center" style="border-bottom-right-radius: 9px; border-top-right-radius: 9px ">
-                                                    <input type="hidden" id="sub_cat" value="<?php echo $category->icategoryid; ?>|<?php echo $category->subcat_count; ?>" >
-                                                    <a onclick="viewSubCategory('<?=$category->icategoryid?>', '<?=$category->vcategoryname?>');" data-toggle="tooltip" title="View Sub Categories" class="btn small-btn"><?php echo $category->subcat_count; ?></a>
-                                                </td>
-
-                                                <td class="text-left" style="display:none;"><input type="text" style="border:none;"  class="editable categories_s" name="category[<?php echo $i; ?>][isequence]" id="category[<?php echo $i; ?>][isequence]" value="<?php echo $category->isequence; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' /></td>
-                                            </tr>
-                                            <?php $category_row++; $i++;?>
-                                        <?php } ?>
-                                <?php } else { ?>
-                                          <tr>
-                                          <td colspan="7" class="text-center"><?php //echo $text_no_results;?></td>
-                                        </tr>
-                                <?php } ?>
-                                    </tbody>
-                            </table>
-                            <div class="pull-right" style="margin-right: 29px !important">
-                              {{$data['categories']->links()}}
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                                                  <td class="text-left" style="display:none;"><input type="text" style="border:none;"  class="editable categories_s" name="category[<?php echo $i; ?>][isequence]" id="category[<?php echo $i; ?>][isequence]" value="<?php echo $category->isequence; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' /></td>
+                                              </tr>
+                                              <?php $category_row++; $i++;?>
+                                          <?php } ?>
+                                  <?php } else { ?>
+                                            <tr>
+                                            <td colspan="7" class="text-center"><?php //echo $text_no_results;?></td>
+                                          </tr>
+                                  <?php } ?>
+                                      </tbody>
+                              </table>
+                              <div class="pull-right" style="margin-right: 29px !important">
+                                {{$data['categories']->links()}}
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      
+  </section>
+</div>
 
 
 <!-- Modal Add -->

@@ -4,108 +4,106 @@
 @endsection
 
 @section('main-content')
-<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="main_nav">
-            <div class="menu">
-                <span class="font-weight-bold text-uppercase" style="font-size: 22px"> Manufacturer</span>
-            </div>
-            <div class="nav-submenu">
-                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <button type="button" onclick="addManufacturer();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
-                <button type="button" id="delete_manufacturer_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
-            </div>
-        </div> <!-- navbar-collapse.// -->
-    </div>
-</nav>
-
-<section class="section-content py-6">
 <div id="content">
- 
-  
-  <div class="container-fluid">
-    @if (session()->has('message'))
-      <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>      
-    @endif
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase" style="font-size: 22px"> Manufacturer</span>
+                </div>
+                <div class="nav-submenu">
+                    <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                    <button type="button" onclick="addManufacturer();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                    <button type="button" id="delete_manufacturer_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+                </div>
+            </div> <!-- navbar-collapse.// -->
+        </div>
+    </nav>
 
-    <div id='errorDiv'>
-    </div>
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-          <i class="fa fa-exclamation-circle"></i>{{$error}}<br/>
-        @endforeach
-        
-      </div> 
-    @endif
+    <section class="section-content py-6">
+        <div class="container">
+          @if (session()->has('message'))
+            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+          @endif
 
-    <div class="panel panel-default">
+          <div id='errorDiv'>
+          </div>
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              @foreach ($errors->all() as $error)
+                <i class="fa fa-exclamation-circle"></i>{{$error}}<br/>
+              @endforeach
+              
+            </div> 
+          @endif
 
-      <div class="panel-body">
-        <form action="/manufacturersearch" method="post" id="form_category_search">
-          @csrf
-          <input type="hidden" name="searchbox" id="icategoryid">
-          <div class="row">
-            <div class="col-md-12">
-              <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-              <input style="height: 33px; font-size: 12px !important; font-weight: 600;" type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Manufacturer..." id="autocomplete-product" autocomplete="off">
+          <div class="panel panel-default">
+
+            <div class="panel-body">
+              <form action="/manufacturersearch" method="post" id="form_category_search">
+                @csrf
+                <input type="hidden" name="searchbox" id="icategoryid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                    <input style="height: 33px; font-size: 12px !important; font-weight: 600;" type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Manufacturer..." id="autocomplete-product" autocomplete="off">
+                  </div>
+                </div>
+              </form>
+              <br>
+              
+              <form action="" method="post" id="form-manufacturer">
+                @csrf
+                @method('post')
+                
+                @if(session()->get('hq_sid') == 1)
+                      <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
+                  @endif
+                <input type="hidden" name="MenuId" value="">
+                  <div class="table-responsive">
+                    <table id="manufacturer" class="table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                      <thead style="background-color: #286fb7!important;" >
+                        <tr>
+
+                          <th style="width: 1px;" class="text-center">
+                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                          </th>
+                          <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Manufacturer Code</th>
+                          <th class="col-xs-1 headername text-uppercase text-light" style="border-bottom-right-radius: 9px; border-top-right-radius: 9px" >Manufacturer Name</th>
+                          <th class="text-left" style="display:none;">Sequence</th>
+                        </tr>
+                      </thead>
+                      <tbody id="searchData"> 
+                      @foreach($manufacturer as $manufacturers)
+                        <tr id="category-row1">
+                          <td data-order="1" class="text-center">
+                            <span style="display:none;">{{$manufacturers->mfr_id}}</span>
+                            <input type="checkbox" class='checkbox_c' name="selected[]" id="manufacturer[{{$manufacturers->mfr_id}}][select]" value="{{$manufacturers->mfr_id}}">
+                          </td>
+                          <td class="text-left">
+                            <span style="display:none;">{{$manufacturers->mfr_code}}</span>
+                            <input type="text" style="border:none;" maxlength="50" class="editable mfrCode" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" value="{{$manufacturers->mfr_code}}" onclick="">
+                            <input type="hidden" name="manufacturer[{{$manufacturers->mfr_code}}][mfr_id]" value="{{$manufacturers->mfr_id}}">
+                          </td>
+                      
+                          <td class="text-left">
+                            <span style="display:none;">{{$manufacturers->mfr_name}}</span>
+                            <input type="text" style="border:none;"  maxlength="50" class="editable mfrName" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" value="{{$manufacturers->mfr_name}}" onclick="">
+                            <input type="hidden" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_id]" value="{{$manufacturers->mfr_id}}">
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+              </form>
             </div>
           </div>
-        </form>
-        <br>
-        
-        <form action="" method="post" id="form-manufacturer">
-          @csrf
-          @method('post')
-          
-          @if(session()->get('hq_sid') == 1)
-                <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
-            @endif
-          <input type="hidden" name="MenuId" value="">
-            <div class="table-responsive">
-              <table id="manufacturer" class="table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
-                <thead style="background-color: #286fb7!important;" >
-                  <tr>
-
-                    <th style="width: 1px;" class="text-center">
-                      <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                    </th>
-                    <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Manufacturer Code</th>
-                    <th class="col-xs-1 headername text-uppercase text-light" style="border-bottom-right-radius: 9px; border-top-right-radius: 9px" >Manufacturer Name</th>
-                    <th class="text-left" style="display:none;">Sequence</th>
-                  </tr>
-                </thead>
-                <tbody id="searchData"> 
-                @foreach($manufacturer as $manufacturers)
-                  <tr id="category-row1">
-                    <td data-order="1" class="text-center">
-                      <span style="display:none;">{{$manufacturers->mfr_id}}</span>
-                      <input type="checkbox" class='checkbox_c' name="selected[]" id="manufacturer[{{$manufacturers->mfr_id}}][select]" value="{{$manufacturers->mfr_id}}">
-                    </td>
-                    <td class="text-left">
-                      <span style="display:none;">{{$manufacturers->mfr_code}}</span>
-                      <input type="text" style="border:none;" maxlength="50" class="editable mfrCode" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" value="{{$manufacturers->mfr_code}}" onclick="">
-                      <input type="hidden" name="manufacturer[{{$manufacturers->mfr_code}}][mfr_id]" value="{{$manufacturers->mfr_id}}">
-                    </td>
-                
-                    <td class="text-left">
-                      <span style="display:none;">{{$manufacturers->mfr_name}}</span>
-                      <input type="text" style="border:none;"  maxlength="50" class="editable mfrName" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" value="{{$manufacturers->mfr_name}}" onclick="">
-                      <input type="hidden" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_id]" value="{{$manufacturers->mfr_id}}">
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
+        </div>
+    </section>
 </div>
-</section>
 
 <!-- Add New form -->
 

@@ -5,148 +5,147 @@
 @endsection
 
 @section('main-content')
-<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="main_nav">
-            <div class="menu">
-                <span class="font-weight-bold text-uppercase" style="font-size: 22px">Sub Category</span>
-            </div>
-            <div class="nav-submenu">
-                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu" title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <button type="button" onclick="addCategory();" class="btn btn-gray headerblack  buttons_menu" href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
-                <button type="button" id="delete_category_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
-            </div>
-        </div> <!-- navbar-collapse.// -->
-    </div>
-</nav>
-<section class="section-content py-6">
-  <div id="content">
-    <div class="container-fluid">
-      <div class="panel panel-default">
-       
-          @if (session()->has('message'))
-              <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-              </div>      
-              @endif
-              @if (session()->has('error'))
-              <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-              </div>      
-              @endif
-    
-            @if ($errors->any())
-              <div class="alert alert-danger">
-                <ul>
-                  @foreach ($errors->all() as $error)
-                    <li>{{$error}}</li>
-                  @endforeach
-                </ul>
-              </div>                
-            @endif
-        <div class="panel-body">
-
-        <form action="{{route('subcategory')}}" method="get" id="form_subcategory_search">
-          @csrf
-          @method('post')
-          <input type="hidden" name="searchbox" id="subcat_id">
-          <div class="row">
-              <div class="col-md-12">
-                  <input type="text" style="height: 33px !important; font-size: 12px !important; font-weight: 600;" name="automplete-product" class="form-control" placeholder="Search SubCategory..." id="automplete-product">
+<div id="content">
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+      <div class="container">
+          <div class="collapse navbar-collapse" id="main_nav">
+              <div class="menu">
+                  <span class="font-weight-bold text-uppercase" style="font-size: 22px">Sub Category</span>
               </div>
-          </div>
-        </form>
-          <br>
+              <div class="nav-submenu">
+                  <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu" title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                  <button type="button" onclick="addCategory();" class="btn btn-gray headerblack  buttons_menu" href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                  <button type="button" id="delete_category_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+              </div>
+          </div> <!-- navbar-collapse.// -->
+      </div>
+  </nav>
+  <section class="section-content py-6">
+      <div class="container">
+        <div class="panel panel-default">
+        
+            @if (session()->has('message'))
+                <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>      
+                @endif
+                @if (session()->has('error'))
+                <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>      
+                @endif
+      
+              @if ($errors->any())
+                <div class="alert alert-danger">
+                  <ul>
+                    @foreach ($errors->all() as $error)
+                      <li>{{$error}}</li>
+                    @endforeach
+                  </ul>
+                </div>                
+              @endif
+          <div class="panel-body">
 
-        <form action="{{route('subcategory.edit_list')}}" method="post" enctype="multipart/form-data" id="form-category">
+          <form action="{{route('subcategory')}}" method="get" id="form_subcategory_search">
             @csrf
             @method('post')
-            
-            @if(session()->get('hq_sid') == 1)
-                  <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
-              @endif
-            
-          <input type="hidden" name="MenuId" value="<?php //echo $filter_menuid; ?>"/>
-            <div class="table-responsive">
-              
-            <table id="subcategory" class="table  table-hover" style="width:100%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;">
-              <?php if ($data['categories']) { ?>
-                <thead style="background-color: #286fb7!important;">
-                  <tr>
-                    <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                    {{-- <th style="width:1px;" class="text-left">{{$data['column_category_code'] }}</th> --}}
-                    <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Sub Category Name</th>
-                                          
-                    {{-- <th class="text-left">{{$data['column_description']}}</th> --}}
-                    {{-- <th class="text-left">{{$data['column_category_type']}}</th> --}}
-                    <th style="border-bottom-right-radius: 9px; border-top-right-radius: 9px " class="col-xs-1 headername text-uppercase text-light">Category</th>
-                    
-                    <th class="text-left" style="display:none;"><?php //echo $column_sequence; ?></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                  <?php $category_row = 1;$i=0; ?>
-                  <?php foreach ($data['sub_categories'] as $subcategory) { ?>
-                  <tr id="category-row<?php echo $category_row; ?>">
-                    <td data-order="<?php echo $subcategory->subcat_id; ?>" class="text-center">
-                    <span style="display:none;"><?php echo $subcategory->subcat_id; ?></span>
-                    <?php if (in_array($subcategory->subcat_id, $data['selected'])) { ?>
-                      <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]" value="<?php echo $subcategory->subcat_id; ?>" checked="checked" />
-                      <?php } else { ?>
-                      <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]"  value="<?php echo $subcategory->subcat_id; ?>" />
-                      <?php } ?>
-                    </td>
-                    
-                    <td class="text-left">
-                      <span style="display:none;"><?php echo $subcategory->subcat_name; ?></span>
-                      <input type="text" style="height: 33px; border:none; font-size: 12px !important; font-weight: 600;" maxlength="50" class="editable subcategories_c" name="subcategory[<?php echo $i; ?>][subcat_name]" id="category[<?php echo $i; ?>][vcategoryname]" value="<?php echo $subcategory->subcat_name; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
-                      <input type="hidden" name="subcategory[<?php echo $i; ?>][subcat_id]" value="<?php echo $subcategory->subcat_id; ?>"/>
-                    </td>
-                    <?php 
-                    // echo "<pre>";
-                    // print_r($data['categories']);
-                    // die;
-                    ?>
-                      <td style="border-bottom-right-radius: 9px; border-top-right-radius: 9px "> 
-                          <select style="height: 33px; font-size: 12px !important; font-weight: 600;" name="subcategory[<?php echo $i; ?>][cat_id]" id="category[<?php echo $i; ?>][dept_code]" class="form-control categories_c" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
-                              <option value="">--Select Category--</option>
-                              <?php if(isset($data['categories']) && count($data['categories']) > 0){?>
-                                  <?php foreach($data['categories'] as $category){ ?>
-                                      <?php if(isset($subcategory->cat_id) && $subcategory->cat_id == $category->icategoryid){?>
-                                          <option value="<?php echo $category->icategoryid;?>" selected="selected"><?php echo $category->vcategoryname;?></option>
-                                      <?php } else { ?>
-                                          <option value="<?php echo $category->icategoryid;?>"><?php echo $category->vcategoryname;?></option>
-                                      <?php } ?>
-                                  <?php } ?>
-                              <?php } ?>
-                          </select>
-                      </td>
-                  
-                    <td class="text-left" style="display:none;">
-                      <input type="text" class="editable categories_s" name="category[<?php echo $i; ?>][isequence]" id="category[<?php echo $i; ?>][isequence]" value="<?php echo $category->isequence; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
-                    </td>
-                  </tr>
-                  <?php $category_row++; $i++;?>
-                  <?php } ?>
-                  <?php } else { ?>
-                    <tr>
-                    <td colspan="7" class="text-center"><?php //echo $text_no_results;?></td>
-                  </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
-              <div class="pull-right">
-                {{ $data['sub_categories']->links()}}
-              </div>
+            <input type="hidden" name="searchbox" id="subcat_id">
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" style="height: 33px !important; font-size: 12px !important; font-weight: 600;" name="automplete-product" class="form-control" placeholder="Search SubCategory..." id="automplete-product">
+                </div>
             </div>
           </form>
+            <br>
+
+          <form action="{{route('subcategory.edit_list')}}" method="post" enctype="multipart/form-data" id="form-category">
+              @csrf
+              @method('post')
+              
+              @if(session()->get('hq_sid') == 1)
+                    <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
+                @endif
+              
+            <input type="hidden" name="MenuId" value="<?php //echo $filter_menuid; ?>"/>
+              <div class="table-responsive">
+                
+              <table id="subcategory" class="table  table-hover" style="width:100%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;">
+                <?php if ($data['categories']) { ?>
+                  <thead style="background-color: #286fb7!important;">
+                    <tr>
+                      <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                      {{-- <th style="width:1px;" class="text-left">{{$data['column_category_code'] }}</th> --}}
+                      <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Sub Category Name</th>
+                                            
+                      {{-- <th class="text-left">{{$data['column_description']}}</th> --}}
+                      {{-- <th class="text-left">{{$data['column_category_type']}}</th> --}}
+                      <th style="border-bottom-right-radius: 9px; border-top-right-radius: 9px " class="col-xs-1 headername text-uppercase text-light">Category</th>
+                      
+                      <th class="text-left" style="display:none;"><?php //echo $column_sequence; ?></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <?php $category_row = 1;$i=0; ?>
+                    <?php foreach ($data['sub_categories'] as $subcategory) { ?>
+                    <tr id="category-row<?php echo $category_row; ?>">
+                      <td data-order="<?php echo $subcategory->subcat_id; ?>" class="text-center">
+                      <span style="display:none;"><?php echo $subcategory->subcat_id; ?></span>
+                      <?php if (in_array($subcategory->subcat_id, $data['selected'])) { ?>
+                        <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]" value="<?php echo $subcategory->subcat_id; ?>" checked="checked" />
+                        <?php } else { ?>
+                        <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]"  value="<?php echo $subcategory->subcat_id; ?>" />
+                        <?php } ?>
+                      </td>
+                      
+                      <td class="text-left">
+                        <span style="display:none;"><?php echo $subcategory->subcat_name; ?></span>
+                        <input type="text" style="height: 33px; border:none; font-size: 12px !important; font-weight: 600;" maxlength="50" class="editable subcategories_c" name="subcategory[<?php echo $i; ?>][subcat_name]" id="category[<?php echo $i; ?>][vcategoryname]" value="<?php echo $subcategory->subcat_name; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
+                        <input type="hidden" name="subcategory[<?php echo $i; ?>][subcat_id]" value="<?php echo $subcategory->subcat_id; ?>"/>
+                      </td>
+                      <?php 
+                      // echo "<pre>";
+                      // print_r($data['categories']);
+                      // die;
+                      ?>
+                        <td style="border-bottom-right-radius: 9px; border-top-right-radius: 9px "> 
+                            <select style="height: 33px; font-size: 12px !important; font-weight: 600;" name="subcategory[<?php echo $i; ?>][cat_id]" id="category[<?php echo $i; ?>][dept_code]" class="form-control categories_c" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
+                                <option value="">--Select Category--</option>
+                                <?php if(isset($data['categories']) && count($data['categories']) > 0){?>
+                                    <?php foreach($data['categories'] as $category){ ?>
+                                        <?php if(isset($subcategory->cat_id) && $subcategory->cat_id == $category->icategoryid){?>
+                                            <option value="<?php echo $category->icategoryid;?>" selected="selected"><?php echo $category->vcategoryname;?></option>
+                                        <?php } else { ?>
+                                            <option value="<?php echo $category->icategoryid;?>"><?php echo $category->vcategoryname;?></option>
+                                        <?php } ?>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </td>
+                    
+                      <td class="text-left" style="display:none;">
+                        <input type="text" class="editable categories_s" name="category[<?php echo $i; ?>][isequence]" id="category[<?php echo $i; ?>][isequence]" value="<?php echo $category->isequence; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
+                      </td>
+                    </tr>
+                    <?php $category_row++; $i++;?>
+                    <?php } ?>
+                    <?php } else { ?>
+                      <tr>
+                      <td colspan="7" class="text-center"><?php //echo $text_no_results;?></td>
+                    </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+                <div class="pull-right">
+                  {{ $data['sub_categories']->links()}}
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
   </section>
-
+</div>
 
 <!-- Modal Add -->
 <div class="modal fade" id="addModal" role="dialog">
