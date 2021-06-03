@@ -207,16 +207,16 @@
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="border: none;">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title"></h4>
                 </div>
 
-                <div class="modal-body">
-                    <h3 style="font-size: 11px;">No vendor is selected </h3>
+                <div class="modal-body" style="border: none;">
+                    <h3 style="font-size: 13px; text-transform: uppercase;">No vendor is selected </h3>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default text-uppercase" data-dismiss="modal">Close</button>
+                <div class="modal-footer" style="border: none;">
+                    <button type="button" style="font-size: 13px; width: 65px;" class="btn btn-primary text-uppercase" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -511,7 +511,17 @@
 
     </script>
     <style>
+        .modal-footer{
+            border: none;
+        }
 
+        .modal-footer button{
+            font-size: 13px;
+        }
+        .modal-body{
+            text-transform: uppercase;
+            font-size: 13px;
+        }
         #selectAllCheckbox: {
             color: white;
         }
