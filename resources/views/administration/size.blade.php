@@ -22,20 +22,20 @@
       
         <div class="container">
 
-          @if (session()->has('message'))
+        @if(session()->has('message'))
               <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
               </div>      
           @endif
 
+
           @if (session()->has('error'))
             <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div>      
-            @endif
+          @endif
 
-          <div id='errorDiv'>
-          </div>
+          <div id='errorDiv'></div>
           @if ($errors->any())
             <div class="alert alert-danger">
               @foreach ($errors->all() as $error)
@@ -44,6 +44,8 @@
               <button type="button" class="close" data-dismiss="alert">&times;</button>
             </div> 
           @endif
+
+
 
           <div class="panel panel-default">
             <div class="panel-body">
@@ -68,7 +70,9 @@
                     <table id="sizeTable" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                       <thead style="background-color: #286fb7!important;">
                         <tr>
-                          <td style="width: 1px;color:black;" class="col-xs-1 headername text-uppercase  text-light  text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+                          <td style="width: 1px;color:black;" class="col-xs-1 headername text-uppercase  text-light  text-center">
+                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                          </td>
                           <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
                         </tr>
                       </thead>
@@ -123,6 +127,12 @@
     function addSize() {
         $('#addModal').modal('show');
     }
+    $(document).on('click', '.size_c', function(e){
+      e.preventDefault();
+      let selectId = $(this).attr('id').replace("vsize", "select");
+      //console.log(selectId);
+      document.getElementById(selectId).setAttribute('checked','checked');
+    });
 </script>
 
   <!-- Modal Add-->
@@ -425,14 +435,29 @@ $("#closeBtn").click(function(){
                     },
                     data: {data:avArr},
                     success: function(result){
-                        //   alert("hi");
-                        bootbox.alert({ 
-                            size: 'small',
-                            title: "Success", 
-                            message: "Size Updated Successfully", 
-                            callback: function(){location.reload(true);}
-                        });
-                    }
+                      if(result){
+                          $('#success_msg').html('<strong>Size Updated Successfully</strong>');
+                          $("div#divLoading").removeClass('show');
+                          $('#successModal').modal('show');
+            
+                          setTimeout(function(){
+                              $('#successModal').modal('hide');
+                              window.location.reload();
+                          }, 2000);
+                      }else{
+                          var errorMsg = '';
+                          $.each(data.error_msg, function (k, v){
+                              errorMsg += v+'<br/>';
+                          });
+                          $('#error_msg').html('<strong>Size Updating Failed</strong>');
+                          $("div#divLoading").removeClass('show');
+                          $('#errorModal').modal('show');
+                          setTimeout(function(){
+                              $('#errorModal').modal('hide');
+                              window.location.reload();
+                          }, 4000);
+                      }
+                    },
                 });
             
             <?php } ?>
@@ -477,7 +502,6 @@ $("#closeBtn").click(function(){
                 },
                 data: {data:avArr, stores_hq: edit_stores},
                 success: function(result){
-                    //   alert("hi");
                     bootbox.alert({ 
                         size: 'small',
                         title: "Success", 
@@ -633,29 +657,26 @@ $("#closeBtn").click(function(){
             dataType: 'json',
             success: function(data) {
                 if(data.status == 0){
-                  $('#success_msg').html('<strong>Size Deleted Successfully</strong>');
-                  $("div#divLoading").removeClass('show');
-                  $('#successModal').modal('show');
-    
-                  setTimeout(function(){
-                      $('#successModal').modal('hide');
-                      window.location.reload();
-                  }, 2000);
+                    $('#success_msg').html('<strong>Size Deleted Successfully</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#successModal').modal('show');
+      
+                    setTimeout(function(){
+                        $('#successModal').modal('hide');
+                        window.location.reload();
+                    }, 2000);
                 }else{
-                  var errorMsg = '';
-                  
-                  $.each(data.error_msg, function (k, v){
-                      errorMsg += v+'<br/>';
-                  });
-        
-                  $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
-                  $("div#divLoading").removeClass('show');
-                  $('#errorModal').modal('show');
-                  
-                  setTimeout(function(){
-                      $('#errorModal').modal('hide');
-                      window.location.reload();
-                      }, 4000);
+                    var errorMsg = '';
+                    $.each(data.error_msg, function (k, v){
+                        errorMsg += v+'<br/>';
+                    });
+                    $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#errorModal').modal('show');
+                    setTimeout(function(){
+                        $('#errorModal').modal('hide');
+                        window.location.reload();
+                    }, 4000);
                 }
             },
             error: function(xhr) { // if error occured
