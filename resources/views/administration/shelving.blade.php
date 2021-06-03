@@ -7,101 +7,101 @@
 @endsection 
 
 @section('main-content')
-<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="main_nav">
-            <div class="menu">
-                <span class="font-weight-bold text-uppercase" > Shelving</span>
-            </div>
-            <div class="nav-submenu">
-                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <button type="button" onclick="addShelving();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
-                <button type="button" id="shelving_delete" onclick="myFunction()"  class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
-            </div>
-        </div> <!-- navbar-collapse.// -->
-    </div>
-</nav>
-<section class="section-content py-6">
-  
-    <div class="container-fluid">
-
-      @if(session()->has('message'))
-          <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-          </div>      
-      @endif
-
-
-      @if (session()->has('error'))
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>      
-      @endif
-
-      <div id='errorDiv'>
-      </div>
-      @if ($errors->any())
-        <div class="alert alert-danger">
-          @foreach ($errors->all() as $error)
-            <i class="fa fa-exclamation-circle"></i>{{$error}}
-          @endforeach
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div> 
-      @endif
-
-      <div class="panel panel-default">
-        
-        <div class="panel-body">
-
-          <form action="/shelvingsearch" method="post" id="form_shelving_search">
-            @csrf
-            <input type="hidden" name="searchbox" id="Id">
-            <div class="row">
-                <div class="col-md-12">
-                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-                    <input  style="height: 33px; font-size: 12 !important; font-weight: 600" type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Shelving..." id="autocomplete-product" autocomplete="off">
+<div id="content">
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase" > Shelving</span>
                 </div>
-            </div>
-          </form>
-          <br>
-            
-          <form action="" method="post" enctype="multipart/form-data" id="form-shelving">
-            @csrf
-            <div class="table-responsive">
-              <table id="shelvingTable" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
-                <thead style="background-color: #286fb7!important;">
-                  <tr>
-                    <td style="width: 1px;color:black;" class="text-center">
-                      <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
-                   
-                    <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
-
-                    <!-- <td class="text-center">Action</td> -->
-                  </tr>
-                </thead>
-                <tbody id="searchData">
-                  @foreach($shelvingdata as $shelvings)
-                  <tr>
-                    <td class="text-center">
-                      <input type="checkbox" name="selected[]" id="shelving[{{$shelvings->id}}][select]" value="{{$shelvings->id}}">
-                    </td>
-                    <td class="text-left">
-                      <span style="display:none;">{{$shelvings->shelvingname}}</span>
-                      <input type="text" style="border:none;" maxlength="45" class="editable shelving_c" name="shelving[{{$shelvings->id}}][{{$shelvings->shelvingname}}]" id="shelving[{{$shelvings->id}}][shelvingname]" value="{{$shelvings->shelvingname}}" onclick="">
-                      <input type="hidden" name="shelving[{{$shelvings->id}}][id]" value="{{$shelvings->id}}">
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-              
-            </div>
-          </form>
+                <div class="nav-submenu">
+                    <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                    <button type="button" onclick="addShelving();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                    <button type="button" id="shelving_delete" onclick="myFunction()"  class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+                </div>
+            </div> <!-- navbar-collapse.// -->
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </nav>
+    <section class="section-content py-6">
+      
+        <div class="container">
+
+          @if(session()->has('message'))
+              <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+              </div>      
+          @endif
+
+
+          @if (session()->has('error'))
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+          @endif
+
+          <div id='errorDiv'></div>
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              @foreach ($errors->all() as $error)
+                <i class="fa fa-exclamation-circle"></i>{{$error}}
+              @endforeach
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div> 
+          @endif
+
+          <div class="panel panel-default">
+            
+            <div class="panel-body">
+
+              <form action="/shelvingsearch" method="post" id="form_shelving_search">
+                @csrf
+                <input type="hidden" name="searchbox" id="Id">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                        <input  style="height: 33px; font-size: 12 !important; font-weight: 600" type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Shelving..." id="autocomplete-product" autocomplete="off">
+                    </div>
+                </div>
+              </form>
+              <br>
+                
+              <form action="" method="post" enctype="multipart/form-data" id="form-shelving">
+                @csrf
+                <div class="table-responsive">
+                  <table id="shelvingTable" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                    <thead style="background-color: #286fb7!important;">
+                      <tr>
+                        <td style="width: 1px;color:black;" class="text-center">
+                          <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+                      
+                        <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
+
+                        <!-- <td class="text-center">Action</td> -->
+                      </tr>
+                    </thead>
+                    <tbody id="searchData">
+                      @foreach($shelvingdata as $shelvings)
+                      <tr>
+                        <td class="text-center">
+                          <input type="checkbox" name="selected[]" id="shelving[{{$shelvings->id}}][select]" value="{{$shelvings->id}}">
+                        </td>
+                        <td class="text-left">
+                          <span style="display:none;">{{$shelvings->shelvingname}}</span>
+                          <input type="text" style="border:none;" maxlength="45" class="editable shelving_c" name="shelving[{{$shelvings->id}}][{{$shelvings->shelvingname}}]" id="shelving[{{$shelvings->id}}][shelvingname]" value="{{$shelvings->shelvingname}}" onclick="">
+                          <input type="hidden" name="shelving[{{$shelvings->id}}][id]" value="{{$shelvings->id}}">
+                        </td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                  
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </section>
+</div>
 
 <div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">

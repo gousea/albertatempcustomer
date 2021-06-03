@@ -5,115 +5,116 @@
 @endsection
 
 @section('main-content')
-<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="main_nav">
-            <div class="menu">
-                <span class="font-weight-bold text-uppercase" >  Paid Out</span>
-            </div>
-            <div class="nav-submenu">
-                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <button type="button" onclick="addPaidOut();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
-                <button type="button" id="paid_delete" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
-            </div>
-        </div> <!-- navbar-collapse.// -->
-    </div>
-</nav>
-
-<section class="section-content py-6">
-  <div id="content">
-
-    <div class="container-fluid">
-      @if (session()->has('message'))
-        <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>      
-      @endif
-
-      @if (session()->has('error'))
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>      
-        @endif
-
-      <div id='errorDiv'>
-      </div>
-      @if ($errors->any())
-        <div class="alert alert-danger">
-          @foreach ($errors->all() as $error)
-            <i class="fa fa-exclamation-circle"></i>{{$error}}
-          @endforeach
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div> 
-      @endif
-
-      <div class="panel panel-default">
-
-      <div class="panel-body">
-
-        <form action="/paidoutsearch" method="post" id="form_paid_out_search">
-          @csrf
-          <input type="hidden" name="searchbox" id="ipaidoutid">
-          <div class="row">
-            <div class="col-md-12">
-              <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-              <input style="height: 33px !important; font-size: 12px !important; font-weight: 600; " type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Paid Out..." id="autocomplete-product" autocomplete="off">
-            </div>
-          </div>
-        </form>
-          <br>
-        <form action="" method="post" enctype="multipart/form-data" id="form-paid-out">
-          @csrf
-          <input type="hidden" name="MenuId" value="">
-          <div class="table-responsive">
-            <table id="paid_out" class="table table-hover"  style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
-              <thead style="background-color: #286fb7!important;" >
-                <tr>
-                  <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>
-                  <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Paid Out</th>
-                  <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Status</th>
-                </tr>
-              </thead>
-              <tbody id="searchData">
-                @foreach($paidout as $paidouts)
-                  <tr id="paidout">
-                    <td data-order="102" class="text-center">
-                      <span style="display:none;">{{$paidouts->ipaidoutid}}</span>
-                      <input type="checkbox" name="selected[]" id="paidout[{{$paidouts->ipaidoutid}}][select]" value="{{$paidouts->ipaidoutid}}">
-                    </td>
-          
-                    <td class="text-left">
-                      <span style="display:none;">{{$paidouts->vpaidoutname}}</span>
-                      <input type="text" style="border:none;" maxlength="100" class="editable paidouts_c" name="paidout[{{$paidouts->ipaidoutid}}][vpaidoutname]" id="paidout[{{$paidouts->ipaidoutid}}][vpaidoutname]" value="{{$paidouts->vpaidoutname}}" onclick="">
-                      <input type="hidden" name="paidout[{{$paidouts->ipaidoutid}}][ipaidoutid]" value="{{$paidouts->vpaidoutname}}">
-                    </td>
-          
-                    <td class="text-left">
-                      <select style="height: 33px !important; font-size: 12px !important; font-weight: 600; " name="paidout[{{$paidouts->ipaidoutid}}][estatus]"  id="paidout[{{$paidouts->ipaidoutid}}][estatus]" class="form-control status_c" onchange="">
-                        @if($paidouts->estatus == 'Active')
-                          <option value="Active" selected="selected">Active</option>
-                          <option value="Inactive">Inactive</option>
-                          @else
-                          <option value="Active">Active</option>
-                          <option value="Inactive" selected="selected">Inactive</option>
-                        @endif
-
-                      </select>
-                    </td>
-                  </tr>
-                @endforeach
-              </tbody>
-            </table>
-            <div class="pull-right">
-            {{$paidout->links()}}
-            </div>
-          </div>
-        </form>
+<div id="content">
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase" >  Paid Out</span>
+                </div>
+                <div class="nav-submenu">
+                    <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                    <button type="button" onclick="addPaidOut();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                    <button type="button" id="paid_delete" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+                </div>
+            </div> <!-- navbar-collapse.// -->
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </nav>
+
+    <section class="section-content py-6">
+      
+
+        <div class="container">
+          @if (session()->has('message'))
+            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+          @endif
+
+          @if (session()->has('error'))
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+            @endif
+
+          <div id='errorDiv'>
+          </div>
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              @foreach ($errors->all() as $error)
+                <i class="fa fa-exclamation-circle"></i>{{$error}}
+              @endforeach
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div> 
+          @endif
+
+          <div class="panel panel-default">
+
+          <div class="panel-body">
+
+            <form action="/paidoutsearch" method="post" id="form_paid_out_search">
+              @csrf
+              <input type="hidden" name="searchbox" id="ipaidoutid">
+              <div class="row">
+                <div class="col-md-12">
+                  <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                  <input style="height: 33px !important; font-size: 12px !important; font-weight: 600; " type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Paid Out..." id="autocomplete-product" autocomplete="off">
+                </div>
+              </div>
+            </form>
+              <br>
+            <form action="" method="post" enctype="multipart/form-data" id="form-paid-out">
+              @csrf
+              <input type="hidden" name="MenuId" value="">
+              <div class="table-responsive">
+                <table id="paid_out" class="table table-hover"  style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead style="background-color: #286fb7!important;" >
+                    <tr>
+                      <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>
+                      <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Paid Out</th>
+                      <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="searchData">
+                    @foreach($paidout as $paidouts)
+                      <tr id="paidout">
+                        <td data-order="102" class="text-center">
+                          <span style="display:none;">{{$paidouts->ipaidoutid}}</span>
+                          <input type="checkbox" name="selected[]" id="paidout[{{$paidouts->ipaidoutid}}][select]" value="{{$paidouts->ipaidoutid}}">
+                        </td>
+              
+                        <td class="text-left">
+                          <span style="display:none;">{{$paidouts->vpaidoutname}}</span>
+                          <input type="text" style="border:none;" maxlength="100" class="editable paidouts_c" name="paidout[{{$paidouts->ipaidoutid}}][vpaidoutname]" id="paidout[{{$paidouts->ipaidoutid}}][vpaidoutname]" value="{{$paidouts->vpaidoutname}}" onclick="">
+                          <input type="hidden" name="paidout[{{$paidouts->ipaidoutid}}][ipaidoutid]" value="{{$paidouts->vpaidoutname}}">
+                        </td>
+              
+                        <td class="text-left">
+                          <select style="height: 33px !important; font-size: 12px !important; font-weight: 600; " name="paidout[{{$paidouts->ipaidoutid}}][estatus]"  id="paidout[{{$paidouts->ipaidoutid}}][estatus]" class="form-control status_c" onchange="">
+                            @if($paidouts->estatus == 'Active')
+                              <option value="Active" selected="selected">Active</option>
+                              <option value="Inactive">Inactive</option>
+                              @else
+                              <option value="Active">Active</option>
+                              <option value="Inactive" selected="selected">Inactive</option>
+                            @endif
+
+                          </select>
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+                <div class="pull-right">
+                {{$paidout->links()}}
+                </div>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+    </section>
+</div>
 
 
 @endsection
