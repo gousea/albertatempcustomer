@@ -194,7 +194,7 @@ class CustomerController extends Controller
             'SID' => session()->get('sid')
         ]);
         }
-        return redirect('customers')->with('message', 'customers updated Successfully');
+        return redirect('customers')->with('message', 'Customer Updated Successfully');
 
     }
 
@@ -204,6 +204,6 @@ class CustomerController extends Controller
         for($i = 0; $i < count($delId['selected']); $i++ ){
             Customer::where('icustomerid', '=', $delId['selected'][$i] )->delete();
         }
-        return redirect('customers')->with('message', 'customers Deleted Successfully');
+        return redirect('customers')->with('message', 'Customer Deleted Successfully');
     }
 }

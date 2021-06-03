@@ -14,7 +14,7 @@ body {
     margin-right: 80px;
 } */
 
-.navbar{
+.navbar {
     padding: 10px 0px;
 }
 
@@ -33,7 +33,7 @@ body {
     font-weight: bold;
 }
 
-#store_search{
+#store_search {
     width: 86%;
     margin: auto;
 }
@@ -63,7 +63,7 @@ body {
 .menu {
     /* padding-left: 45px;
     padding-right: 20px; */
-    font-size:15px;
+    font-size: 15px;
 }
 
 .headerwhite {
@@ -95,7 +95,7 @@ body {
     height: calc(0.9em + 0.76rem + 0.25px);
 }
 
-.dropdown-menu-right{
+.dropdown-menu-right {
     max-height: 600px;
     overflow: scroll;
     width: 300px;
@@ -235,13 +235,12 @@ table tbody {
     background-color: #fff;
 }
 
-
-.nav-items-list li{
+.nav-items-list li {
     display: inline-block;
     /* width: 300px; */
 }
 
-.nav-items-list.nav-bar-search li{
+.nav-items-list.nav-bar-search li {
     display: block;
 }
 
@@ -274,6 +273,7 @@ footer p {
 input::-webkit-input-placeholder {
     font-size: 13px;
     line-height: 3;
+    text-transform: uppercase;
 }
 
 .promo-fields,
@@ -438,7 +438,7 @@ header,
     padding-right: 10px;
 }
 
-.list-nav li{
+.list-nav li {
     list-style: none;
     display: inline-block;
 }
@@ -611,24 +611,20 @@ header,
         font-weight: 500;
         padding-top: 5px;
     }
-    .store{
+    .store {
         margin-right: 70px;
     }
 }
 
-
-@media only screen
-and (min-device-width : 992px)
-and (max-device-width : 1024px){
+@media only screen and (min-device-width: 992px) and (max-device-width: 1024px) {
     .sub li {
         padding-left: 5px;
         padding-right: 13px;
     }
 
-    .nav-submenu{
+    .nav-submenu {
         right: 40px;
     }
-
 }
 
 /* ============ desktop view ============ */
@@ -650,9 +646,9 @@ and (max-device-width : 1024px){
         margin-right: 68px;
     } */
     .date-username {
-        margin-top: 0px
+        margin-top: 0px;
     }
-    .logo{
+    .logo {
         /* margin-left: 20px; */
     }
 
@@ -683,13 +679,12 @@ and (max-device-width : 1024px){
         font-weight: 500;
         padding-top: 5px;
     }
-    .nav-submenu{
+    .nav-submenu {
         right: 160px;
     }
 }
 
 @media only screen and (min-width: 768px) {
-
 }
 
 @media only screen and (max-width: 600px) {
