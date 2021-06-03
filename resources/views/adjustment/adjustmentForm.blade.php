@@ -303,28 +303,40 @@
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
-<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css')}}" rel="stylesheet" />
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-{{--<script src="{{ asset('javascript/bootstrap-datepicker.js')}}"></script> --}}
 
- <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ {{-- <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
 
-{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-     --}}
+     <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+     {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script> --}}
+     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
 
 <script type="text/javascript">
-  $(function(){
+  // $(function(){
 
-    // $('#dcreatedate').each(function(){
-        $('#dcreatedate').datepicker({
-          dateFormat: 'mm-dd-yy',
-          todayHighlight: true,
-          autoclose: true,
-        });
-    // });
+  //   // $('#dcreatedate').each(function(){
+  //       $('#dcreatedate').datepicker({
+  //         dateFormat: 'mm-dd-yy',
+  //         todayHighlight: true,
+  //         autoclose: true,
+  //       });
+  //   // });
   
+  // });
+
+  $(function(){
+    $("#dcreatedate").datepicker({
+      format: 'mm-dd-yyyy',
+      todayHighlight: true,
+      autoclose: true,
+         widgetPositioning:{
+                                horizontal: 'auto',
+                                vertical: 'bottom'
+                            }
+      
+      
+    });
   });
 
   $(document).on('click', '#table_hideshow', function(){

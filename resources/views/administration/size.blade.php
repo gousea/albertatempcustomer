@@ -3,99 +3,104 @@
   Size
 @endsection
 @section('main-content')
-<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="main_nav">
-            <div class="menu">
-                <span class="font-weight-bold text-uppercase"> Size </span>
-            </div>
-            <div class="nav-submenu">
-                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <button type="button" onclick="addSize();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " > <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
-                <button type="button" id="size_delete"  title="Delete" class="btn btn-danger buttonred buttons_menu basic-button-small" > <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
-            </div>
-        </div> <!-- navbar-collapse.// -->
-    </div>
-</nav>
-<section class="section-content py-6">
-  <div id="content">
-    <div class="container-fluid">
-
-      @if (session()->has('message'))
-          <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-          </div>      
-      @endif
-
-      @if (session()->has('error'))
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>      
-        @endif
-
-      <div id='errorDiv'>
-      </div>
-      @if ($errors->any())
-        <div class="alert alert-danger">
-          @foreach ($errors->all() as $error)
-            <i class="fa fa-exclamation-circle"></i>{{$error}}
-          @endforeach
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div> 
-      @endif
-
-      <div class="panel panel-default">
-        <div class="panel-body">
-            <form action="/sizesearch" method="post" id="form_size_search">
-              @csrf
-              <input type="hidden" name="searchbox" id="isizeid">
-                <div class="row">
-                  <div class="col-md-12">
-                      <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-                      <input style="height: 33px; font-size: 12 !important; font-weight: 600" type="text" name="automplete-product" class="form-control ui-autocomplete-input" placeholder="Search Size..." id="autocomplete-product" autocomplete="off">
-                  </div>
+<div id="content">
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Size </span>
                 </div>
-            </form>
-            
-            <form action="{{route('size.edit_list')}}" method="post" enctype="multipart/form-data" id="form-size">
-              @csrf
-              @method('post')
-              @if(session()->get('hq_sid') == 1)
-                  <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
-              @endif
-              <div class="table-responsive">
-                <table id="sizeTable" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
-                  <thead style="background-color: #286fb7!important;">
-                    <tr>
-                      <td style="width: 1px;color:black;" class="col-xs-1 headername text-uppercase  text-light  text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
-                      <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
-                    </tr>
-                  </thead>
-                  <tbody id="searchData">
-                  @foreach($sizedata as $sizes)
-                    <tr>
-                      <td class="text-center">
-                        <input type="checkbox" name="selected[]" id="size[{{$sizes->isizeid}}][select]" value="{{$sizes->isizeid}}">
-                      </td>
-                      <td class="text-left">
-                        <span style="display:none;">{{$sizes->vsize}}</span>
-                        <input type="text" style="border:none;" maxlength="45" class="editable size_c" name="size[{{$sizes->isizeid}}][vsize]" id="size[{{$sizes->isizeid}}][vsize]" value="{{$sizes->vsize}}" onclick="">
-                        <input type="hidden" name="size[{{$sizes->isizeid}}][isizeid]" value="{{$sizes->isizeid}}">
-                      </td>
-                    </tr>
-                  @endforeach
-                  </tbody>
-                </table>
-                <div class="pull-right" style="margin-right: 5px">
-                  {{$sizedata->links()}}
+                <div class="nav-submenu">
+                    <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                    <button type="button" onclick="addSize();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " > <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                    <button type="button" id="size_delete"  title="Delete" class="btn btn-danger buttonred buttons_menu basic-button-small" > <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
                 </div>
-              </div>
-            </form>
+            </div> <!-- navbar-collapse.// -->
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </nav>
+    <section class="section-content py-6">
+      
+        <div class="container">
+
+        @if(session()->has('message'))
+              <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+              </div>      
+          @endif
+
+
+          @if (session()->has('error'))
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+          @endif
+
+          <div id='errorDiv'></div>
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              @foreach ($errors->all() as $error)
+                <i class="fa fa-exclamation-circle"></i>{{$error}}
+              @endforeach
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div> 
+          @endif
+
+
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <form action="/sizesearch" method="post" id="form_size_search">
+                  @csrf
+                  <input type="hidden" name="searchbox" id="isizeid">
+                    <div class="row">
+                      <div class="col-md-12">
+                          <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                          <input style="height: 33px; font-size: 12 !important; font-weight: 600" type="text" name="automplete-product" class="form-control ui-autocomplete-input" placeholder="Search Size..." id="autocomplete-product" autocomplete="off">
+                      </div>
+                    </div>
+                </form>
+                
+                <form action="{{route('size.edit_list')}}" method="post" enctype="multipart/form-data" id="form-size">
+                  @csrf
+                  @method('post')
+                  @if(session()->get('hq_sid') == 1)
+                      <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
+                  @endif
+                  <div class="table-responsive">
+                    <table id="sizeTable" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                      <thead style="background-color: #286fb7!important;">
+                        <tr>
+                          <td style="width: 1px;color:black;" class="col-xs-1 headername text-uppercase  text-light  text-center">
+                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                          </td>
+                          <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
+                        </tr>
+                      </thead>
+                      <tbody id="searchData">
+                      @foreach($sizedata as $sizes)
+                        <tr>
+                          <td class="text-center">
+                            <input type="checkbox" name="selected[]" id="size[{{$sizes->isizeid}}][select]" value="{{$sizes->isizeid}}">
+                          </td>
+                          <td class="text-left">
+                            <span style="display:none;">{{$sizes->vsize}}</span>
+                            <input type="text" style="border:none;" maxlength="45" class="editable size_c" name="size[{{$sizes->isizeid}}][vsize]" id="size[{{$sizes->isizeid}}][vsize]" value="{{$sizes->vsize}}" onclick="">
+                            <input type="hidden" name="size[{{$sizes->isizeid}}][isizeid]" value="{{$sizes->isizeid}}">
+                          </td>
+                        </tr>
+                      @endforeach
+                      </tbody>
+                    </table>
+                    <div class="pull-right" style="margin-right: 5px">
+                      {{$sizedata->links()}}
+                    </div>
+                  </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </section>
+</div>
 
 <div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -122,6 +127,12 @@
     function addSize() {
         $('#addModal').modal('show');
     }
+    $(document).on('click', '.size_c', function(e){
+      e.preventDefault();
+      let selectId = $(this).attr('id').replace("vsize", "select");
+      //console.log(selectId);
+      document.getElementById(selectId).setAttribute('checked','checked');
+    });
 </script>
 
   <!-- Modal Add-->
@@ -351,98 +362,106 @@ $("#closeBtn").click(function(){
   <script type="text/javascript">
     
     $(document).on('click','#save_button', function(e){
-    e.preventDefault();
-    
-    var edit_url = '{{route('size.edit_list')}}';
-    edit_url = edit_url.replace(/&amp;/g, '&');
-  
-  
-    
-    $("div#divLoading").addClass('show');
-    var avArr = [];
-    $("input[name='selected[]']:checked").each(function () {
-      var id = $(this).val();
-      var name = $(this).closest('tr').find('.size_c').val();
-      avArr.push({
-        isizeid: id,
-        vsize: name
-      });
-    });
-    
-    if(avArr.length < 1){
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "You did not select anything", 
-            callback: function(){location.reload(true);}
+        e.preventDefault();
+        var edit_url = '{{route('size.edit_list')}}';
+        edit_url = edit_url.replace(/&amp;/g, '&');
+        $("div#divLoading").addClass('show');
+        var avArr = [];
+        $("input[name='selected[]']:checked").each(function () {
+          var id = $(this).val();
+          var name = $(this).closest('tr').find('.size_c').val();
+          avArr.push({
+            isizeid: id,
+            vsize: name
+          });
         });
-        $("div#divLoading").removeClass('show');
-        return false;
-    }else{
-        var numericReg = /^[0-9]*(?:\.\d{1,2})?$/;
     
-        <?php if(session()->get('hq_sid') == 1){ ?>
-            $.ajax({
-                  url: "<?php echo url('/size/duplicatesize'); ?>",
-                  method: 'post',
-                  headers: {
-                        'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-                  },
-                  data: {avArr},
-                  success: function(result){
-                        var popup = '';
-                        @foreach (session()->get('stores_hq') as $stores)
-                            if(result.includes({{ $stores->id }})){
-                                var data = '<tr>'+
-                                                '<td>'+
-                                                    '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
-                                                    '</div>'+
-                                                '</td>'+
-                                                '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
-                                            '</tr>';
-                                        $('#editSelectAllCheckbox').attr('disabled', true);
-                                  
-                            } else {
-                                var data = '<tr>'+
-                                                '<td>'+
-                                                    '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
-                                                    '</div>'+
-                                                '</td>'+
-                                                '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
-                                            '</tr>';
-                            }
-                            popup = popup + data;
-                        @endforeach
-                $('#edit_size_stores').html(popup);
-            }
+        if(avArr.length < 1){
+            bootbox.alert({ 
+                size: 'small',
+                title: "Attention", 
+                message: "You did not select anything", 
+                callback: function(){location.reload(true);}
             });
-            $("#EditModal").modal('show');
-        <?php } else { ?>
-            $.ajax({
-                url: "<?php echo url('/size/edit_list'); ?>",
-                method: 'post',
-                headers: {
-                      'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-                },
-                data: {data:avArr},
-                success: function(result){
-                    //   alert("hi");
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Success", 
-                        message: "Size Updated Successfully", 
-                        callback: function(){location.reload(true);}
-                    });
-                }
-            });
+            $("div#divLoading").removeClass('show');
+            return false;
+        }else{
+            var numericReg = /^[0-9]*(?:\.\d{1,2})?$/;
         
-        //   $('#form-size').attr('action', edit_url);
-        //   $('#form-size').submit();
-        //   $("div#divLoading").addClass('show');
-        <?php } ?>
-    }
+            <?php if(session()->get('hq_sid') == 1){ ?>
+                $.ajax({
+                      url: "<?php echo url('/size/duplicatesize'); ?>",
+                      method: 'post',
+                      headers: {
+                            'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                      },
+                      data: {avArr},
+                      success: function(result){
+                            var popup = '';
+                            @foreach (session()->get('stores_hq') as $stores)
+                                if(result.includes({{ $stores->id }})){
+                                    var data = '<tr>'+
+                                                    '<td>'+
+                                                        '<div class="custom-control custom-checkbox" id="table_green_check">'+
+                                                            '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '</div>'+
+                                                    '</td>'+
+                                                    '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
+                                                '</tr>';
+                                            $('#editSelectAllCheckbox').attr('disabled', true);
+                                      
+                                } else {
+                                    var data = '<tr>'+
+                                                    '<td>'+
+                                                        '<div class="custom-control custom-checkbox" id="table_green_check">'+
+                                                            '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '</div>'+
+                                                    '</td>'+
+                                                    '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
+                                                '</tr>';
+                                }
+                                popup = popup + data;
+                            @endforeach
+                    $('#edit_size_stores').html(popup);
+                }
+                });
+                $("#EditModal").modal('show');
+            <?php } else { ?>
+                $.ajax({
+                    url: "<?php echo url('/size/edit_list'); ?>",
+                    method: 'post',
+                    headers: {
+                          'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                    },
+                    data: {data:avArr},
+                    success: function(result){
+                      if(result){
+                          $('#success_msg').html('<strong>Size Updated Successfully</strong>');
+                          $("div#divLoading").removeClass('show');
+                          $('#successModal').modal('show');
+            
+                          setTimeout(function(){
+                              $('#successModal').modal('hide');
+                              window.location.reload();
+                          }, 2000);
+                      }else{
+                          var errorMsg = '';
+                          $.each(data.error_msg, function (k, v){
+                              errorMsg += v+'<br/>';
+                          });
+                          $('#error_msg').html('<strong>Size Updating Failed</strong>');
+                          $("div#divLoading").removeClass('show');
+                          $('#errorModal').modal('show');
+                          setTimeout(function(){
+                              $('#errorModal').modal('hide');
+                              window.location.reload();
+                          }, 4000);
+                      }
+                    },
+                });
+            
+            <?php } ?>
+        }
     
 
   
@@ -483,7 +502,6 @@ $("#closeBtn").click(function(){
                 },
                 data: {data:avArr, stores_hq: edit_stores},
                 success: function(result){
-                    //   alert("hi");
                     bootbox.alert({ 
                         size: 'small',
                         title: "Success", 
@@ -639,29 +657,26 @@ $("#closeBtn").click(function(){
             dataType: 'json',
             success: function(data) {
                 if(data.status == 0){
-                  $('#success_msg').html('<strong>Size Deleted Successfully</strong>');
-                  $("div#divLoading").removeClass('show');
-                  $('#successModal').modal('show');
-    
-                  setTimeout(function(){
-                      $('#successModal').modal('hide');
-                      window.location.reload();
-                  }, 2000);
+                    $('#success_msg').html('<strong>Size Deleted Successfully</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#successModal').modal('show');
+      
+                    setTimeout(function(){
+                        $('#successModal').modal('hide');
+                        window.location.reload();
+                    }, 2000);
                 }else{
-                  var errorMsg = '';
-                  
-                  $.each(data.error_msg, function (k, v){
-                      errorMsg += v+'<br/>';
-                  });
-        
-                  $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
-                  $("div#divLoading").removeClass('show');
-                  $('#errorModal').modal('show');
-                  
-                  setTimeout(function(){
-                      $('#errorModal').modal('hide');
-                      window.location.reload();
-                      }, 4000);
+                    var errorMsg = '';
+                    $.each(data.error_msg, function (k, v){
+                        errorMsg += v+'<br/>';
+                    });
+                    $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#errorModal').modal('show');
+                    setTimeout(function(){
+                        $('#errorModal').modal('hide');
+                        window.location.reload();
+                    }, 4000);
                 }
             },
             error: function(xhr) { // if error occured
