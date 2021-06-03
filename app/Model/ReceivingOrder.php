@@ -1995,25 +1995,32 @@ class ReceivingOrder extends Model
             }
         }
         
-        if (isset($search_items['price_select_by']) && !empty(trim($search_items['price_select_by'])) && $search_items['select_by_value1'] != null && !empty($search_items['select_by_value1'])) {
-            $search_conditions = $search_items['price_select_by'];
+        // if (isset($search_items['price_select_by']) && !empty(trim($search_items['price_select_by'])) && $search_items['select_by_value1'] != null && !empty($search_items['select_by_value1'])) {
+        //     $search_conditions = $search_items['price_select_by'];
             
-            $select_by_value1 = $search_items['select_by_value1'];
-            $select_by_value2 = $search_items['select_by_value2'];
+        //     $select_by_value1 = $search_items['select_by_value1'];
+        //     $select_by_value2 = $search_items['select_by_value2'];
             
-            if ($search_conditions == 'greater' && isset($select_by_value1)) {
-                $condition .= " AND mi.dunitprice > $select_by_value1 ";
-            } elseif ($search_conditions == 'less' && isset($select_by_value1)) {
-                $condition .= " AND mi.dunitprice < $select_by_value1 ";
-            } elseif ($search_conditions == 'equal' && isset($select_by_value1)) {
-                $condition .= " AND mi.dunitprice = $select_by_value1 ";
-            } elseif ($search_conditions == 'between' && isset($select_by_value1) && isset($select_by_value2)) {
+        //     if ($search_conditions == 'greater' && isset($select_by_value1)) {
+        //         $condition .= " AND mi.dunitprice > $select_by_value1 ";
+        //     } elseif ($search_conditions == 'less' && isset($select_by_value1)) {
+        //         $condition .= " AND mi.dunitprice < $select_by_value1 ";
+        //     } elseif ($search_conditions == 'equal' && isset($select_by_value1)) {
+        //         $condition .= " AND mi.dunitprice = $select_by_value1 ";
+        //     } elseif ($search_conditions == 'between' && isset($select_by_value1) && isset($select_by_value2)) {
 
-                $condition .= " AND mi.dunitprice BETWEEN $select_by_value1 AND $select_by_value2 ";
-            }
-        }
+        //         $condition .= " AND mi.dunitprice BETWEEN $select_by_value1 AND $select_by_value2 ";
+        //     }
+        // }
         
-        if(!empty(trim($search_items['item_name'])) || !empty(trim($search_items['sku'])) || $search_items['size'] != 'all' || $search_items['dept_code'] != 'all' || $search_items['category_code'] != 'All' || $search_items['supplier_code'] != 'all' || !empty($search_items['select_by_value1'])){
+        if (isset($search_items['price']) && !empty(trim($search_items['price'])) && $search_items['price'] != null) {
+            $search = $search_items['price'];
+            if (isset($search)) {
+                $condition .= " AND mi.dunitprice = $search ";
+            } 
+        }
+
+        if(!empty(trim($search_items['item_name'])) || !empty(trim($search_items['sku'])) || $search_items['size'] != 'all' || $search_items['dept_code'] != 'all' || $search_items['category_code'] != 'All' || $search_items['supplier_code'] != 'all' || !empty($search_items['price'])){
             if(count($pre_items_id) > 0){
                 $sort='';
                 $pre_items_id = implode(',', $pre_items_id);

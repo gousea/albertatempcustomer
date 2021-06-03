@@ -424,6 +424,10 @@ header,
     border-radius: 8px;
 }
 
+.button-blue {
+    background-color: #286fb7;
+}
+
 .fa-sign-out {
     padding-top: 10px;
     padding-right: 10px;
