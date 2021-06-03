@@ -129,6 +129,25 @@
                     </table>
                 </div>
             </form>
+
+            <div id="errorModel" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="border: none;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+
+                        <div class="modal-body" style="border: none;">
+                            <h3 style="font-size: 13px; text-transform: uppercase;">No Customer is selected </h3>
+                        </div>
+                        <div class="modal-footer" style="border: none;">
+                            <button type="button" style="font-size: 13px; width: 65px;" class="btn btn-primary text-uppercase" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {{-- <div class="row">
                 <div class="col-sm-6 text-left">{{ $customers->links() }}</div>
                 <div class="col-sm-6 text-right"></div>
@@ -153,7 +172,17 @@
       $("#vendor_paginate").addClass("pull-right");
 
         $('#customer_delete').click(function() {
-            $('#form-customer').submit();
+                var customer_ids = [];
+                $.each($("input[name='selected[]']:checked"), function(){
+                    customer_ids.push($(this).val());
+                });
+                console.log(customer_ids);
+                if(customer_ids.length > 0){
+                    $('#form-customer').submit();
+                }else{
+                    $('#errorModel').modal('show');
+                }
+
         });
 
     </script>
