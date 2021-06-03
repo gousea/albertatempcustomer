@@ -11,7 +11,14 @@ Credit Card Report
                     <span class="font-weight-bold text-uppercase">Credit Card Report</span>
                 </div>
                 <div class="nav-submenu">
-                   
+                       <?php if(isset($reports) && count($reports) > 0){ ?>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('ccprint')}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            </a>
+                        <?php } ?>
                 </div>
             </div> 
         </div>
@@ -44,21 +51,34 @@ Credit Card Report
             
                 <form method="GET" id="filter_form"  action="{{ route('CardReportForm') }}" class="form-inline" style="padding-left:40px">
                   <div class="form-group mx-sm-4 mb-2">
-                      <input type='text' class="form-control" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Select Date Range" autocomplete="off" readonly/>
+                      <input type='text' class="form-control rcorner" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Select Date Range" autocomplete="off" readonly/>
                       <input type='hidden' class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>                
                   </div>
-                <!--  <div class="col-md-2"> -->
+               
                     <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" autocomplete="off">
-                <!--  </div> -->
-                  <div class="form-group mx-sm-4 mb-2">
-                    <input type="text" class="form-control" name="credit_card_number" value="<?php echo isset($credit_card_number) ? $credit_card_number : ''; ?>" id="credit_card_number" maxlength="4" placeholder="Credit Card Number" autocomplete="off" >
+               
+                  <div class="form-group mx-sm-2 mb-2">
+                    <input type="text" class="form-control rcorner" name="credit_card_number" value="<?php echo isset($credit_card_number) ? $credit_card_number : ''; ?>" id="credit_card_number" maxlength="4" placeholder="Credit Card Number" autocomplete="off" >
+                  </div>
+                  <div class="form-group mx-sm-2 mb-2">
+                    <input type="text" class="form-control rcorner" name="credit_card_amount" value="<?php echo isset($credit_card_amount) ? $credit_card_amount : ''; ?>" id="credit_card_amount" placeholder="Credit Card Amount" autocomplete="off">
                   </div>
                   <div class="form-group mx-sm-4 mb-2">
-                    <input type="text" class="form-control" name="credit_card_amount" value="<?php echo isset($credit_card_amount) ? $credit_card_amount : ''; ?>" id="credit_card_amount" placeholder="Credit Card Amount" autocomplete="off">
+                    <input type="submit" class="btn btn-success rcorner header-color" value="Generate">
                   </div>
-                  <div class="form-group mx-sm-4 mb-2">
-                    <input type="submit" class="btn btn-success" value="Generate">
-                  </div>
+                  
+                   <?php if(isset($p_start_date)){?>
+                            <div class="form-group mx-sm-3 mb-2">
+                                 <?php $date = \DateTime::createFromFormat('m-d-Y' , $p_start_date);
+                                   $startdate=$date->format('d-m-Y'); ?>
+                                   
+                                   <?php $date = \DateTime::createFromFormat('m-d-Y' , $p_end_date);
+                                   $endtdate=$date->format('d-m-Y'); ?>
+                                   
+                                   
+                                   <h6 style="text-transform: uppercase;"><span> <?php  echo date(' l F d,Y', strtotime($startdate));?> - <?php  echo date(' l F d,Y', strtotime($endtdate));?></span></h6>
+                            </div>   
+                           <?php } ?>
                 </form>
          
             
@@ -103,7 +123,7 @@ Credit Card Report
                               $grand_total_nauthamount = $grand_total_nauthamount + $report->nauthamount; ?>
                               
                       <?php } ?>          
-        <div style="padding-left:56px">
+        <div style="padding-left:56px;padding-right: 60px">
             <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
                     data-row-style="rowColors" data-striped="true" style="width: 100%;margin-bottom: 0px;">
               
@@ -111,9 +131,9 @@ Credit Card Report
                         <tr class="th_color">
                        
                         <th style="width: 50%;">Card Type</th>
-                        <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                        <th class="text-right" style="width: 30%;">Transactions</th>
-                        <th class="text-right" style="width: 20%;">Amount</th>
+                        <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th class="text-right text-uppercase" style="width: 30%;">Transactions</th>
+                        <th class="text-right text-uppercase" style="width: 20%;">Amount</th>
                         </tr>
                         
                         <tr class="headermenublue">
@@ -135,7 +155,7 @@ Credit Card Report
                      
                     
                    
-                      <table class="table table-striped table-hover " data-row-style="rowColors" data-striped="true" style="width: 100%;margin-bottom: 0px;">
+                      <table class="table table-striped table-hover promotionview" data-row-style="rowColors" data-striped="true" style="width: 100%;margin-bottom: 0px;">
                             <thead class="headermenublue">
                                 
                               <tr class="search_header" style="cursor: pointer;" data-cardtype="<?php echo $report->vcardtype;?>">
@@ -359,16 +379,16 @@ $(document).on('submit', '#filter_form', function(event) {
           html += ''
           html += '<tr>';
           html += '<td colspan="3" style="padding: 0px;">';
-          html += '<table style="margin-bottom: 0px;">';
+          html += '<table data-toggle="table" class="table table-striped table-hover promotionview" data-row-style="rowColors" data-striped="true"style="margin-bottom: 0px;"  >';
           html += '<thead>';
           html += '<tr class="th_color">';
           html += '<th>DATE</th>';
           html += '<th>TIME</th>';
-          html += '<th class="text-right">LAST FOUR OF CC</th>';
-          html += '<th class="text-right">APPROVAL CODE</th>';
-          html += '<th class="text-right">AMOUNT</th>';
-          html += '<th>CARD TYPE</th>';
-          html += '<th>ACTION</th>';
+          html += '<th class="text-center">LAST FOUR OF CC</th>';
+          html += '<th class="text-center">APPROVAL CODE</th>';
+          html += '<th class="text-center">AMOUNT</th>';
+          html += '<th class="text-center">CARD TYPE</th>';
+          html += '<th class="text-right">ACTION</th>';
           html += '</tr>';
           html += '</thead>';
           html += '<tbody>';
@@ -384,19 +404,19 @@ $(document).on('submit', '#filter_form', function(event) {
             html += '<td class="th_white_color">';
             html += v.time;
             html += '</td>';
-            html += '<td class="text-right th_white_color ">';
+            html += '<td class="text-right th_white_color text-center ">';
             html += v.last_four_of_cc;
             html += '</td>';
-            html += '<td class="text-right th_white_color">';
+            html += '<td class="text-right th_white_color text-center">';
             html += v.approvalcode;
             html += '</td>';
-            html += '<td class="text-right th_white_color">';
+            html += '<td class="text-right th_white_color text-center">';
             html += v.amount;
             html += '</td>';
-            html += '<td class="th_white_color">';
+            html += '<td class="th_white_color text-center">';
             html += v.vcardtype;
             html += '</td>';
-            html += '<td class="th_white_color">';
+            html += '<td class="th_white_color text-right">';
             html += '<a href="'+ receipt_url +'" class="btn btn-info printMe"><i class="fa fa-print"></i> Print</a>';
             html += '</td>';
             html += '</tr>';
@@ -641,12 +661,7 @@ $(document).ready(function() {
     });
 </script> 
 <style>
-/*.hidden-table:hover {*/
-/*     background-color: white !important;*/
-/* }*/
-/*td{*/
-/*    background-color: white !important; */
-/*}*/
+
 .th_color{
     background-color: #474c53 !important;
     color: #fff;
@@ -657,6 +672,7 @@ table, .promotionview {
     width: 100% !important;
     position: relative;
     left: 0%;
+    background-color: #f8f9fa;
 }
 .ajax_table{
     border-collapse: separate;
