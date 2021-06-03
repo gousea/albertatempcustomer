@@ -108,8 +108,8 @@ Tax Collection Summary
                             
                             <div class="row" style="margin-left: 2%;">
                                 <div class="col-md-6 col-sm-6">
-                                <b> <p><p style="float: left;">Non-Taxable Sales</p>
-                                    <span style="float: right;"><?php echo "$",number_format((float)$reports['NONTAX'], 2) ; ?></span></p></b>
+                                 <p><p style="float: left;">Non-Taxable Sales</p>
+                                    <span style="float: right;"><?php echo "$",number_format((float)$reports['NONTAX'], 2) ; ?></span></p>
                                 </div>
                             </div>
                             <div class="row" style="margin-left: 2%;">
@@ -136,19 +136,18 @@ Tax Collection Summary
                                 <div class="col-md-6 col-sm-6 total_col">
                                     <b> <p><p style="float: left;"> Total Taxable Sales </p>
                                     <span style="float: right;"><?php echo "$",number_format((float)$reports['Tax1Sales'] + (float)$reports['Tax2Sales'] + (float)$reports['Tax3Sales'], 2) ; ?></span></p></b>
+                                     <br><hr style="border-top: 2px solid #ccc;">
                                 </div>
                             </div>
-                            <div class="row" style="margin-left: 2%;">
-                                <div class="col-md-6 col-sm-12">
-                                    <hr style="border-top: 2px solid #ccc;">
-                                </div>
-                            </div>
-                            <div class="row" style="margin-left: 2%;">
+                           
+                               
+                            
+                            <div class="row" style="margin-left: 2%;margin-top: -16px;">
                                 <div class="col-md-6 col-sm-6">
                                     <p><p style="float: left;"><b>Net Sales</b></p>
                                     <span style="float: right;"><b><?php echo "$",$netsale = number_format($reports['Tax1Sales']+$reports['Tax2Sales']+$reports['Tax3Sales']+$reports['NONTAX'], 2) ; ?></b></span></p>
                                 </div>
-                            </div><br>
+                            </div>
                             <div class="row" style="margin-left: 2%;">
                                 <div class="col-md-6 col-sm-6">
                                     <p><p style="float: left;">Tax 1</p>
@@ -176,7 +175,7 @@ Tax Collection Summary
                                     </b>
                                 </div>
                             </div>
-                            <div class="row" style="margin-left: 2%;">
+                            <div class="row" style="margin-left: 2%;margin-top: -16px;">
                                 <div class="col-md-6 col-sm-12">
                                     <hr style="border-top: 2px solid #ccc;">
                                 </div>
@@ -579,4 +578,5 @@ h6 span {
     color:#286fb7;
 }
 </style>
+
 @endsection   

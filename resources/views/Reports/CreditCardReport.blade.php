@@ -208,7 +208,7 @@ Credit Card Report
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" ></script>
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
-
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
 
@@ -672,41 +672,12 @@ table, .promotionview {
     width: 100% !important;
     position: relative;
     left: 0%;
+   
+}
+.table .table {
     background-color: #f8f9fa;
 }
-.ajax_table{
-    border-collapse: separate;
-    border-spacing: 0px 5px;
-    border-color: #fff !important;
-}
-table th:first-child {
-    border-radius: 9px 0px 0px 9px !important;
-    -moz-border-radius: 9px 0px 0px 9px;
-    -webkit-border-radius: 9px 0px 0px 9px;
-}
 
-table th:last-child {
-    border-radius: 0px 9px 9px 0px !important;
-    -moz-border-radius: 0px 9px 9px 0px;
-    -webkit-border-radius: 0px 9px 9px 0px;
-}
-
-table tr td:first-child {
-    border-radius: 9px 0px 0px 9px !important;
-    -moz-border-radius: 9px 0 0 9px;
-    -webkit-border-radius: 9px 0 0 9px;
-}
-
-table tr td:last-child {
-    border-top-left-radius: 0 9px 9px 0 !important;
-    -moz-border-radius: 0 9px 9px 0;
-    -webkit-border-radius: 0 9px 9px 0;
-} 
-
-tr:nth-child() {
-    background-color: #f2f2f2;
-    border-radius: 9px ;
-}
 .th_white_color{
     background-color: #fff;
     border-top: 3px solid ##cccccc;
