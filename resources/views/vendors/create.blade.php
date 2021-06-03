@@ -19,7 +19,7 @@
                 <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
                     class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
                 {{-- <button id="save_button_adjustment_detail" data-toggle="tooltip" title="<?php //echo $button_save; ?>" class="btn btn-gray headerblack  buttons_menu" <?php if(isset($estatus) && $estatus == 'Close'){?> disabled <?php } ?> ><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button> --}}
-                <a style="pointer-events:all;" href="{{ route('customers') }}" data-toggle="tooltip" title="<?php //echo $button_cancel; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+                <a style="pointer-events:all;" href="{{ route('vendors') }}" data-toggle="tooltip" title="<?php //echo $button_cancel; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
             </div>
         </div> <!-- navbar-collapse.// -->
     </div>
