@@ -66,9 +66,9 @@
                 <table id="aisleTable" class="text-center table  table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                   <thead style="background-color: #286fb7!important;">
                     <tr>
-                      <td style="width: 1px;color:black;" class="text-center">
+                      <th style="width: 1px;color:black;" class="text-center">
                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                      </td>
+                      </th>
                       <!-- previous code <td style="width: 1px;" class="text-center">
                       <input type="checkbox"  onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td> -->
                         <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
@@ -83,7 +83,7 @@
                         <td class="text-center">
                           <input type="checkbox" class="checkbox_c" name="selected[]" id="aisle[{{$aisles->Id}}][select]"  value="{{$aisles->Id}}">
                         </td>
-                        <td class="text-left">
+                        <td class="text-center">
                           <span style="display:none;">{{$aisles->aislename}}</span>
                           <input type="text" style="border:none;" maxlength="45" class="editable aisle_c" name="aisle[{{$aisles->Id}}][{{$aisles->aislename}}]" id="aisle[{{$aisles->Id}}][aislename]" value="{{$aisles->aislename}}" onclick="">
                           <input type="hidden" name="aisle[{{$aisles->Id}}][Id]" value="{{$aisles->Id}}">
@@ -111,6 +111,38 @@
       <div class="modal-body">
         <div class="alert alert-success text-center">
           <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
         </div>
       </div>
     </div>
@@ -157,7 +189,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input class="btn btn-success" type="submit" value="Save" id="saveAisleButton">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn  btn-outline-primary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>
@@ -195,14 +227,10 @@
       });
       
       if(avArr.length < 1){
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "You did not select anything", 
-            callback: function(){location.reload(true);}
-        });
-        $("div#divLoading").removeClass('show');
-        return false;
+          $('#warning_msg').html("You did not select anything");
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
+          return false;
       }
 
       $.ajax({
@@ -224,16 +252,10 @@
                 });
               });
               mssg += '</div>';
-              bootbox.alert({ 
-                size: 'small',
-                title: "Attention", 
-                message: mssg, 
-                callback: function(){location.reload(true);}
-              });
-
+              $('#error_msg').html(mssg);
               $("div#divLoading").removeClass('show');
-
-              }
+              $('#errorModal').modal('show');
+          }
       });
 
     });
@@ -304,25 +326,15 @@
 
 <script type="text/javascript">
   $(document).on('submit', 'form#add_new_form', function(event) {
-    $("div#divLoading").addClass('show');
-
-    $('#addModal').modal('hide');
-    $('.modal-backdrop').hide();
-
-    if($('form#add_new_form #add_aislename').val() == ''){
-     // alert('Please enter Shelf Name!');
-       bootbox.alert({ 
-         size: 'small',
-         title: "Attention", 
-         message: "Please enter Aisle Name!", 
-         callback: function(){}
-       });
-
-      $("div#divLoading").removeClass('show');
-       return false;
-    }
-
-    
+      $("div#divLoading").addClass('show');
+      $('#addModal').modal('hide');
+      $('.modal-backdrop').hide();
+      if($('form#add_new_form #add_aislename').val() == ''){
+          $('#warning_msg').html("Please enter Aisle Name!");
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
+          return false;
+      }
   });
 </script>
 
@@ -347,12 +359,11 @@
         var data = [];
 
         if($("input[name='selected[]']:checked").length == 0){
-          bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: 'Please Select Aisle to Delete!', 
-            callback: function(){}
-          });
+         
+          $('#warning_msg').html("Please Select Aisle to Delete!");
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
+          
           return false;
         }
 

@@ -301,7 +301,7 @@
           </div>
           <div class="modal-footer" style="justify-content: flex-center !important;">
             <button type="button" class="btn btn-success" id="save_department" >Save</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
           </div>
         </div>
         

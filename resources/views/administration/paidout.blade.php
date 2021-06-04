@@ -70,7 +70,9 @@
                 <table id="paid_out" class="table table-hover"  style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                   <thead style="background-color: #286fb7!important;" >
                     <tr>
-                      <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>
+                      <th style="width: 1px;color:black;" class="text-center">
+                          <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                      </th>
                       <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Paid Out</th>
                       <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Status</th>
                     </tr>
@@ -114,6 +116,56 @@
           </div>
         </div>
     </section>
+</div>
+
+
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -176,7 +228,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input class="btn btn-success" type="submit" value="Save">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-outline-primary " data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>
@@ -200,30 +252,11 @@
     $('.modal-backdrop').hide();
 
     if($('form#add_new_form #add_vpaidoutname').val() == ''){
-      // alert('Please enter name!');
-       bootbox.alert({ 
-         size: 'small',
-         title: "Attention", 
-         message: "Please enter name!", 
-         callback: function(){}
-       });
-
+      $('#warning_msg').html('Please enter name!');
       $("div#divLoading").removeClass('show');
+      $('#warningModal').modal('show');
         return false;
     }
-
-    // if($('form#add_new_form #add_vpaidoutname').val() == ''){
-    //   // alert('Please enter name!');
-    //   bootbox.alert({ 
-    //      size: 'small',
-    //      title: "Attention", 
-    //      message: "Please Enter Status!", 
-    //      callback: function(){}
-    //   });
-    //   $("div#divLoading").removeClass('show');
-    //   return false;
-    // }
-
   });
 
 </script>
@@ -233,9 +266,6 @@
     $("div#divLoading").addClass('show');
   });
 
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
 </script>
 
 <!-- Save data -->
@@ -270,13 +300,9 @@
     });
     
     if(avArr.length < 1){
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "You did not select anything", 
-            callback: function(){location.reload(true);}
-        });
+        $('#warning_msg').html('You did not select anything');
         $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
 
@@ -298,13 +324,9 @@
               });
             });
             mssg += '</div>';
-            bootbox.alert({ 
-                size: 'small',
-                title: "Attention", 
-                message: mssg, 
-                callback: function(){location.reload(true);}
-            });
+            $('#error_msg').html(mssg);
             $("div#divLoading").removeClass('show');
+            $('#errorModal').modal('show');
         }
     });
   });
@@ -393,12 +415,9 @@
         var data = [];
 
         if($("input[name='selected[]']:checked").length == 0){
-          bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: 'Please Select paidout to Delete!', 
-            callback: function(){}
-          });
+          $('#warning_msg').html('Please Select paidout to Delete!');
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
           return false;
         }
 
