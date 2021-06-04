@@ -64,10 +64,9 @@
                     <table id="age-verification" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                       <thead style="background-color: #286fb7!important;">
                         <tr>
-                          <td style="width: 1px;" class="text-center">
+                          <th style="width: 1px;" class="text-center">
                             <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                            </td>
-                          
+                          </th>
                           <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Description</th>
                           <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Age</th>
                           
@@ -108,6 +107,39 @@
     
   </section>
 </div>
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <?php if(session()->get('hq_sid') == 1){ ?>
@@ -206,13 +238,9 @@ $(document).on('click','#save_button', function(){
     });
       
     if(avArr.length < 1){
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "You did not select anything", 
-            callback: function(){location.reload(true);}
-        });
+        $('#warning_msg').html('You did not select anything');
         $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
     <?php if(session()->get('hq_sid') == 1){ ?>
@@ -273,13 +301,10 @@ $(document).on('click','#save_button', function(){
                        });
                      });
                      mssg += '</div>';
-                     bootbox.alert({ 
-                         size: 'small',
-                         title: "Attention", 
-                         message: mssg, 
-                         callback: function(){location.reload(true);}
-                     });
-                     $("div#divLoading").removeClass('show');
+                     
+                    $('#error_msg').html(mssg);
+                    $("div#divLoading").removeClass('show');
+                    $('#errorModal').modal('show');
               },
               
           });
