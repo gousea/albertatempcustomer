@@ -4,7 +4,7 @@ Tax Collection Summary
 @endsection
 @section('main-content')
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-        <div class="container-fluid">
+        <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
                     <span class="font-weight-bold text-uppercase"> TAX REPORT</span>
@@ -24,15 +24,15 @@ Tax Collection Summary
     </nav>
 
 <section class="section-content py-6">
-
+     <div class="container">
     <div class="row">
-                <div class="col-md-12" style="padding-left: 60px;padding-right: 60px">
+                <div class="col-md-12" >
                     <h6><span>DATE SELECTION </span></h6>
                 </div>    
     </div>
     
     <br>  
-    <form method="post" action="{{ route('TaxReportForm') }}"  class="form-inline" style="padding-left:40px"id="filter_form">
+    <form method="post" action="{{ route('TaxReportForm') }}"  class="form-inline" id="filter_form">
                         @csrf
                       
                             <?php
@@ -75,7 +75,7 @@ Tax Collection Summary
     
     <br>
     <div class="row">
-           <div class="col-md-12" style="padding-left: 60px;padding-right: 60px">
+           <div class="col-md-12" >
                         <h6><span>TAX REPORT </span></h6>
             </div>             
     </div>         
@@ -83,7 +83,7 @@ Tax Collection Summary
                        
                         <?php if(isset($reports) && count($reports) > 0){ ?>
                             
-                           <div style="padding-left:40px;padding-right:40px">
+                           <div >
                                 <div class="col-md-12">
                                     <p>From: <?php echo $p_start_date; ?> To <?php echo $p_end_date; ?></p>
                                 </div>
@@ -104,91 +104,88 @@ Tax Collection Summary
                             
                             </div>
                             
-                            <div style="padding-left:12px;padding-right:40px">
+                            <div style="margin-left:1.4%;">
                             
-                            <div class="row" style="margin-left: 2%;">
+                            <div class="row" >
                                 <div class="col-md-6 col-sm-6">
-                                <b> <p><p style="float: left;">Non-Taxable Sales</p>
-                                    <span style="float: right;"><?php echo "$",number_format((float)$reports['NONTAX'], 2) ; ?></span></p></b>
+                                 <p><p style="float: left;">Non-Taxable Sales</p>
+                                    <span style="float: right;"><?php echo "$",number_format((float)$reports['NONTAX'], 2) ; ?></span></p>
                                 </div>
                             </div>
-                            <div class="row" style="margin-left: 2%;">
+                            <div class="row" >
                                 <div class="col-md-6 col-sm-6">
                                     <p><p style="float: left;">  Taxable Sales (Tax1)</p>
                                     <span style="float: right;"><?php echo "$",number_format((float)$reports['Tax1Sales'], 2) ; ?></span></p>
                                 </div>
                             </div>
-                            <div class="row" style="margin-left: 2%;">
+                            <div class="row" >
                                 <div class="col-md-6 col-sm-6">
                                     <p><p style="float: left;"> Taxable Sales (Tax2)</p>
                                     <span style="float: right;"><?php echo  "$",number_format((float)$reports['Tax2Sales'], 2) ; ?></span></p>
                                 </div>
                             </div>
                             <?php  if(isset($reports['Tax3Sales'])){ ?>
-                                <div class="row" style="margin-left: 2%;">
+                                <div class="row" >
                                     <div class="col-md-6 col-sm-6">
                                         <p><p style="float: left;"> Taxable Sales (Tax3)</p>
                                         <span style="float: right;"><?php echo  "$",number_format((float)$reports['Tax3Sales'], 2) ; ?></span></p>
                                     </div>
                                 </div>
                             <?php } ?>
-                            <div class="row" style="margin-left: 2%;">
+                            <div class="row" >
                                 <div class="col-md-6 col-sm-6 total_col">
                                     <b> <p><p style="float: left;"> Total Taxable Sales </p>
                                     <span style="float: right;"><?php echo "$",number_format((float)$reports['Tax1Sales'] + (float)$reports['Tax2Sales'] + (float)$reports['Tax3Sales'], 2) ; ?></span></p></b>
+                                     <br><hr style="border-top: 2px solid #ccc;">
                                 </div>
                             </div>
-                            <div class="row" style="margin-left: 2%;">
-                                <div class="col-md-6 col-sm-12">
-                                    <hr style="border-top: 2px solid #ccc;">
-                                </div>
-                            </div>
-                            <div class="row" style="margin-left: 2%;">
+                           
+                               
+                            
+                            <div class="row" style="margin-left:-1.5%;margin-top: -16px;">
                                 <div class="col-md-6 col-sm-6">
                                     <p><p style="float: left;"><b>Net Sales</b></p>
                                     <span style="float: right;"><b><?php echo "$",$netsale = number_format($reports['Tax1Sales']+$reports['Tax2Sales']+$reports['Tax3Sales']+$reports['NONTAX'], 2) ; ?></b></span></p>
                                 </div>
-                            </div><br>
-                            <div class="row" style="margin-left: 2%;">
+                            </div>
+                            <div class="row" >
                                 <div class="col-md-6 col-sm-6">
                                     <p><p style="float: left;">Tax 1</p>
                                     <span style="float: right;"><?php echo "$",number_format((float)$reports['tax1'], 2) ; ?></span></p>
                                 </div>
                             </div>
-                            <div class="row" style="margin-left: 2%;">
+                            <div class="row" >
                                 <div class="col-md-6 col-sm-6">
                                     <p><p style="float: left;">Tax 2</p>
                                     <span style="float: right;"><?php echo "$",number_format((float)$reports['tax2'], 2); ?></span></p>
                                 </div>
                             </div>
                             <?php  if(isset($reports['tax3'])){ ?> 
-                                <div class="row" style="margin-left: 2%;">
+                                <div class="row" >
                                     <div class="col-md-6 col-sm-6">
                                         <p><p style="float: left;">Tax 3</p>
                                         <span style="float: right;"><?php echo "$",number_format((float)$reports['tax3'], 2); ?></span></p> 
                                     </div>
                                 </div>
                             <?php } ?>
-                            <div class="row" style="margin-left: 2%;">
+                            <div class="row" >
                                 <div class="col-md-6 col-sm-6 total_col">
                                     <p style="float: left;"><b>Total Tax</p>
                                     <span style="float: right;"><?php echo "$",number_format((float)$reports['TAX'], 2) ; ?></span></p>
                                     </b>
+                                    <br>
+                                    <hr style="border-top: 2px solid #ccc;margin-top: 6px;">
                                 </div>
                             </div>
-                            <div class="row" style="margin-left: 2%;">
-                                <div class="col-md-6 col-sm-12">
-                                    <hr style="border-top: 2px solid #ccc;">
-                                </div>
-                            </div>
+                            
                             <?php if(isset($reports['LiabilitySales']) && $reports['LiabilitySales']!=0) { ?>
-                            <div class="row" style="margin-left: 2%;">
+                            <div class="row" >
                                 <div class="col-md-6 col-sm-6">
                                     <p><b>LiabilitySales <span style="float: right;"><?php echo "$",number_format((float)$reports['LiabilitySales'], 2) ; ?></span></b></p>
                                 </div>
                             </div>
                             <?php } ?>
-                            <div class="row" style="margin-left: 2%;">
+                            <div class="row" >
                                 <div class="col-md-6 col-sm-6">
                                     <p><b>Gross Sales <span style="float: right;"><?php echo "$",number_format((float)$reports['NNETTOTAL'], 2) ; ?></span></b></p>
                                 </div>
@@ -209,7 +206,7 @@ Tax Collection Summary
                             <?php } ?>
                         <?php } ?>
                 </div>    
-
+</div>
 </section>
 @endsection
 @section('page-script')
@@ -579,4 +576,5 @@ h6 span {
     color:#286fb7;
 }
 </style>
+
 @endsection   

@@ -5,7 +5,7 @@ Credit Card Report
 @section('main-content')
 
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-        <div class="container-fluid">
+        <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
                     <span class="font-weight-bold text-uppercase">Credit Card Report</span>
@@ -25,6 +25,7 @@ Credit Card Report
     </nav>
 
 <section class="section-content py-6"> 
+ <div class="container">
 
                <?php if(isset($reports) && count($reports) > 0){ ?>
                     <div class="row" style="display:none";>
@@ -42,14 +43,14 @@ Credit Card Report
                     </div>
                     
                 <?php } ?>
-           <div class="row" style="padding-left:40px;padding-right: 60px">
+           <div class="row">
                 <div class="col-md-12" >
                     <h6><span>SEARCH PARAMETERS </span></h6>
                 </div>    
             </div>  
             <br>
             
-                <form method="GET" id="filter_form"  action="{{ route('CardReportForm') }}" class="form-inline" style="padding-left:40px">
+                <form method="GET" id="filter_form"  action="{{ route('CardReportForm') }}" class="form-inline" >
                   <div class="form-group mx-sm-4 mb-2">
                       <input type='text' class="form-control rcorner" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Select Date Range" autocomplete="off" readonly/>
                       <input type='hidden' class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>                
@@ -83,7 +84,7 @@ Credit Card Report
          
             
             <br>
-             <div class="row" style="padding-left: 40px;padding-right: 60px">
+             <div class="row">
                 <div class="col-md-12" >
                     <h6><span>CREDIT CARD REPORT </span></h6>
                 </div>    
@@ -123,7 +124,7 @@ Credit Card Report
                               $grand_total_nauthamount = $grand_total_nauthamount + $report->nauthamount; ?>
                               
                       <?php } ?>          
-        <div style="padding-left:56px;padding-right: 60px">
+        <div>
             <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
                     data-row-style="rowColors" data-striped="true" style="width: 100%;margin-bottom: 0px;">
               
@@ -208,7 +209,7 @@ Credit Card Report
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" ></script>
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
-
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
 
@@ -672,41 +673,12 @@ table, .promotionview {
     width: 100% !important;
     position: relative;
     left: 0%;
+   
+}
+.table .table {
     background-color: #f8f9fa;
 }
-.ajax_table{
-    border-collapse: separate;
-    border-spacing: 0px 5px;
-    border-color: #fff !important;
-}
-table th:first-child {
-    border-radius: 9px 0px 0px 9px !important;
-    -moz-border-radius: 9px 0px 0px 9px;
-    -webkit-border-radius: 9px 0px 0px 9px;
-}
 
-table th:last-child {
-    border-radius: 0px 9px 9px 0px !important;
-    -moz-border-radius: 0px 9px 9px 0px;
-    -webkit-border-radius: 0px 9px 9px 0px;
-}
-
-table tr td:first-child {
-    border-radius: 9px 0px 0px 9px !important;
-    -moz-border-radius: 9px 0 0 9px;
-    -webkit-border-radius: 9px 0 0 9px;
-}
-
-table tr td:last-child {
-    border-top-left-radius: 0 9px 9px 0 !important;
-    -moz-border-radius: 0 9px 9px 0;
-    -webkit-border-radius: 0 9px 9px 0;
-} 
-
-tr:nth-child() {
-    background-color: #f2f2f2;
-    border-radius: 9px ;
-}
 .th_white_color{
     background-color: #fff;
     border-top: 3px solid ##cccccc;
