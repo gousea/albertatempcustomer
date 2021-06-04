@@ -189,7 +189,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input class="btn btn-success" type="submit" value="Save" id="saveAisleButton">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn  btn-outline-primary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>
