@@ -5,108 +5,101 @@
 @endsection
 
 @section('main-content')
-<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="main_nav">
-            <div class="menu">
-                <span class="font-weight-bold text-uppercase" > Aisle</span>
-            </div>
-            <div class="nav-submenu">
-                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                <button type="button" onclick="addAisle();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
-                <button type="button" id="aisle_delete" onclick="myFunction()"  class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
-            </div>
-        </div> <!-- navbar-collapse.// -->
-    </div>
-</nav>
-
-<section class="section-content py-6">
-  <div id="content">
-    <div class="container-fluid">
-      @if (session()->has('message'))
-      <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>      
-      @endif
-
-      @if (session()->has('error'))
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>      
-      @endif
-
-    <div id='errorDiv'>
-    </div>
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-          <i class="fa fa-exclamation-circle"></i>{{$error}}
-        @endforeach
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div> 
-    @endif
-
-      <div class="panel panel-default">
-        
-        <div class="panel-body">
-
-          <form action="/aislesearch" method="post" id="form_aisle_search">
-            @csrf
-            <input type="hidden" name="searchbox" id="Id">
-            <div class="row">
-              <div class="col-md-12">
-                <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-                <input type="text" style="height: 33px; font-size: 12 !important; font-weight: 600" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Aisle..." id="autocomplete-product" autocomplete="off">
+<div id="content">
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+      <div class="container">
+          <div class="collapse navbar-collapse" id="main_nav">
+              <div class="menu">
+                  <span class="font-weight-bold text-uppercase" > Aisle</span>
               </div>
-            </div>
-          </form>
-            <br>
-        
-          <form action="" method="post" enctype="multipart/form-data" id="form-aisle">
-            @csrf
-            <div class="table-responsive">
-              <table id="aisleTable" class="text-center table  table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
-                <thead style="background-color: #286fb7!important;">
-                  <tr>
-                    <td style="width: 1px;color:black;" class="text-center">
-                      <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                    </td>
-                    <!-- previous code <td style="width: 1px;" class="text-center">
-                    <input type="checkbox"  onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td> -->
-                      <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
+              <div class="nav-submenu">
+                  <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                  <button type="button" onclick="addAisle();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                  <button type="button" id="aisle_delete" onclick="myFunction()"  class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+              </div>
+          </div> <!-- navbar-collapse.// -->
+      </div>
+  </nav>
 
-                    <!-- <td class="text-center">Action</td> -->
-                  </tr>
-                </thead>
+  <section class="section-content py-6">
+      <div class="container">
+        @if (session()->has('message'))
+          <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>      
+        @endif
 
-                <tbody id="searchData">
-                  @foreach($aisle as $aisles)
+        @if (session()->has('error'))
+          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>      
+        @endif
+        <div id='errorDiv'></div>
+        @if ($errors->any())
+          <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+              <i class="fa fa-exclamation-circle"></i>{{$error}}
+            @endforeach
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div> 
+        @endif
+
+        <div class="panel panel-default">
+          
+          <div class="panel-body">
+
+            <form action="/aislesearch" method="post" id="form_aisle_search">
+              @csrf
+              <input type="hidden" name="searchbox" id="Id">
+              <div class="row">
+                <div class="col-md-12">
+                  <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                  <input type="text" style="height: 33px; font-size: 12 !important; font-weight: 600" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Aisle..." id="autocomplete-product" autocomplete="off">
+                </div>
+              </div>
+            </form>
+              <br>
+          
+            <form action="" method="post" enctype="multipart/form-data" id="form-aisle">
+              @csrf
+              <div class="table-responsive">
+                <table id="aisleTable" class="text-center table  table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead style="background-color: #286fb7!important;">
                     <tr>
-                      <td class="text-center">
-                        <input type="checkbox" class="checkbox_c" name="selected[]" id="aisle[{{$aisles->Id}}][select]"  value="{{$aisles->Id}}">
+                      <td style="width: 1px;color:black;" class="text-center">
+                        <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                       </td>
-                      <td class="text-left">
-                        <span style="display:none;">{{$aisles->aislename}}</span>
-                        <input type="text" style="border:none;" maxlength="45" class="editable aisle_c" name="aisle[{{$aisles->Id}}][{{$aisles->aislename}}]" id="aisle[{{$aisles->Id}}][aislename]" value="{{$aisles->aislename}}" onclick="">
-                        <input type="hidden" name="aisle[{{$aisles->Id}}][Id]" value="{{$aisles->Id}}">
-                      </td>
+                      <!-- previous code <td style="width: 1px;" class="text-center">
+                      <input type="checkbox"  onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td> -->
+                        <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
+
+                      <!-- <td class="text-center">Action</td> -->
                     </tr>
-                  @endforeach
-                </tbody>
-              </table>
-              {{$aisle->links()}}
-            </div>
-          </form>
-            <!-- <div class="row">
-                <div class="col-sm-6 text-left"></div>
-                <div class="col-sm-6 text-right">Showing 1 to 1 of 1 (1 Pages)</div>
-            </div> -->
+                  </thead>
+
+                  <tbody id="searchData">
+                    @foreach($aisle as $aisles)
+                      <tr>
+                        <td class="text-center">
+                          <input type="checkbox" class="checkbox_c" name="selected[]" id="aisle[{{$aisles->Id}}][select]"  value="{{$aisles->Id}}">
+                        </td>
+                        <td class="text-left">
+                          <span style="display:none;">{{$aisles->aislename}}</span>
+                          <input type="text" style="border:none;" maxlength="45" class="editable aisle_c" name="aisle[{{$aisles->Id}}][{{$aisles->aislename}}]" id="aisle[{{$aisles->Id}}][aislename]" value="{{$aisles->aislename}}" onclick="">
+                          <input type="hidden" name="aisle[{{$aisles->Id}}][Id]" value="{{$aisles->Id}}">
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+                {{$aisle->links()}}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+  </section>
 </div>
-</section>
 
 <div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -189,22 +182,15 @@
     });
 
     $(document).on('click','#save_button', function(e){
-
       e.preventDefault();
-
       $("div#divLoading").addClass('show');
-
       var avArr = [];
-
       $("#aisleTable input[type=checkbox]:checked").each(function () {
-
         var id =$(this).val();
         var name = $(this).closest('tr').find('.aisle_c').val();
-         
         avArr.push({
           id: id,
           aislename: name
-              
         });
       });
       
@@ -217,7 +203,7 @@
         });
         $("div#divLoading").removeClass('show');
         return false;
-    }
+      }
 
       $.ajax({
           type: 'POST',
@@ -225,41 +211,29 @@
           url: '/updateaisle',
           contentType: 'application/json',
           datatype: 'json',
-          data: JSON.stringify(avArr) // access in body
-      }).success(function (e) {
+          data: JSON.stringify(avArr), // access in body
+          success: function(result) {
+                location.reload();
+          },
+          error : function (msg) {
+              let mssg = '<div class="alert alert-danger">';
+              let errors = msg.responseJSON;
+              $.each(errors, function(k, err){
+                $.each(err, function(key, error){
+                  mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+                });
+              });
+              mssg += '</div>';
+              bootbox.alert({ 
+                size: 'small',
+                title: "Attention", 
+                message: mssg, 
+                callback: function(){location.reload(true);}
+              });
 
-            location.reload();
-      }).fail(function (msg) {
+              $("div#divLoading").removeClass('show');
 
-         //console.log('FAIL');
-        let mssg = '<div class="alert alert-danger">';
-        
-        //console.log(msg);
-        let errors = msg.responseJSON;
-        //console.log(errors);
-
-        $.each(errors, function(k, err){
-        //   console.log(err);
-          $.each(err, function(key, error){
-            // console.log(error);
-            mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-          });
-        });
-
-        mssg += '</div>';
-        
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: mssg, 
-            callback: function(){location.reload(true);}
-        });
-        
-        $("div#divLoading").removeClass('show');
-
-      }).done(function (msg) {
-          $("div#divLoading").removeClass('show');
-
+              }
       });
 
     });
@@ -357,9 +331,6 @@
     $("div#divLoading").addClass('show');
   });
 
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
 </script>
 
 <!-- Delete Shelfname -->
