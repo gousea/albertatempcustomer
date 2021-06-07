@@ -83,7 +83,7 @@
                         <td class="text-center">
                           <input type="checkbox" class="checkbox_c" name="selected[]" id="aisle[{{$aisles->Id}}][select]"  value="{{$aisles->Id}}">
                         </td>
-                        <td class="text-center">
+                        <td class="text-left">
                           <span style="display:none;">{{$aisles->aislename}}</span>
                           <input type="text" style="border:none;" maxlength="45" class="editable aisle_c" name="aisle[{{$aisles->Id}}][{{$aisles->aislename}}]" id="aisle[{{$aisles->Id}}][aislename]" value="{{$aisles->aislename}}" onclick="">
                           <input type="hidden" name="aisle[{{$aisles->Id}}][Id]" value="{{$aisles->Id}}">
