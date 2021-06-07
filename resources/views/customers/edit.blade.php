@@ -304,7 +304,7 @@
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="expire_dt" value="{{ $customer->id_expire_dt }}"
-                                        placeholder="id expire date" id="expire_dt" class="datetimepicker form-control" />
+                                        placeholder="id expire date" id="expire_dt" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -317,7 +317,7 @@
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="birth_dt" value="{{ $customer->birth_dt }}"
-                                        placeholder="birth date" id="birth_dt" class="datetimepicker form-control" />
+                                        placeholder="birth date" id="birth_dt" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -334,12 +334,17 @@
     <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
-    <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
+
+    {{-- old datepicker --}}
+    {{-- <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" /> --}}
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     {{-- <script src="{{ asset('javascript/bootstrap-datepicker.js')}}"></script> --}}
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {{-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
 
     <script type="text/javascript">
         $(document).on('change', 'input[name="vcustomername"]', function(event) {
@@ -353,21 +358,44 @@
             $('input[name="vaccountnumber"]').val(ac_number);
         });
 
-        $(function() {
-            $('#expire_dt').datepicker({
-                dateFormat: 'yy-mm-dd',
+        $(function(){
+            $("#expire_dt").datepicker({
+                format: 'yyyy-mm-dd',
                 todayHighlight: true,
                 autoclose: true,
+                widgetPositioning:{
+                    horizontal: 'auto',
+                    vertical: 'bottom'
+                }
+            });
+        });
+        $(function(){
+            $("#birth_dt").datepicker({
+                format: 'yyyy-mm-dd',
+                todayHighlight: true,
+                autoclose: true,
+                widgetPositioning:{
+                    horizontal: 'auto',
+                    vertical: 'bottom'
+                }
             });
         });
 
-        $(function() {
-            $('#birth_dt').datepicker({
-                dateFormat: 'yy-mm-dd',
-                todayHighlight: true,
-                autoclose: true,
-            });
-        });
+        // $(function() {
+        //     $('#expire_dt').datepicker({
+        //         dateFormat: 'yy-mm-dd',
+        //         todayHighlight: true,
+        //         autoclose: true,
+        //     });
+        // });
+
+        // $(function() {
+        //     $('#birth_dt').datepicker({
+        //         dateFormat: 'yy-mm-dd',
+        //         todayHighlight: true,
+        //         autoclose: true,
+        //     });
+        // });
 
         // $(function() {
         //     $('#expire_dt').datetimepicker({
