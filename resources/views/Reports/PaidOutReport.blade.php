@@ -1,84 +1,76 @@
-@extends('layouts.master')
-
-@section('title', 'Vendor Paid Out Report')
+@extends('layouts.layout')
+@section('title')
+Vendor Paid Out Report
+@endsection
 @section('main-content')
-<div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
-        </div>
-    </div>
-    
-    <div class="container-fluid">
-       <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>Vendor Paid Out Report</h3>
-            </div>
-          
-            <div class="panel-body">
-                <?php if(isset($report_paid_out) && count($report_paid_out) > 0){ ?>
-                    <div class="row" style="padding-bottom: 10px;float: right;">
-                        <div class="col-md-12">
-                            <a id="pdf_export_btn" href="" class="" style="margin-right:10px;">
-                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
-                            </a>
-                            <a  id="btnPrint" href="{{route('Paidoutprint')}}" class="" style="margin-right:10px;">
-                                <i class="fa fa-print" aria-hidden="true"></i> Print
-                            </a>
-                            <a id="csv_export_btn" href="" class="" style="margin-right:10px;">
-                                <i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV
-                            </a>
-                        </div>
-                    </div>
-                    <br>
-                <?php } ?>
 
-                <div class="row" style="margin: 10px;">
-                <form method="POST" id="filter_form" action="{{ route('PaidoutForm') }}">
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Paid Out Report</span>
+                </div>
+                <div class="nav-submenu">
+                       <?php if(isset($report_paid_out) && count($report_paid_out) > 0){ ?>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('Paidoutprint')}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            </a>
+                        <?php } ?>
+                </div>
+            </div> 
+        </div>
+    </nav>
+
+<section class="section-content py-6"> 
+    <div class="container">
+          
+        <div class="col-md-12" >
+        <h6><span>SEARCH PARAMETERS </span></h6>
+        <br>
+        </div>    
+         
+    
+        <form method="POST" id="filter_form" action="{{ route('PaidoutForm') }}">
                 @csrf   
                     
-                        <div class="container">
                             <div class="row">
                                 
-                                 <div class='col-md-3' style="width:250px;">
+                                 <div class='mx-sm-4 mb-2"'>
                                     <div class="form-group">
-                                        <div class='input-group date' id='start_date_container'>
-                                            <input type='text' class="form-control datePicker" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Start Date" readonly/>
+                                        <div class='input-group date ' id='start_date_container'>
+                                            <input type='text' class="form-control datePicker"  style="border-radius: 9px"; name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Start Date" readonly />
+                                           
                                             <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                <span class="glyphicon glyphicon-calendar rcorner"></span>
                                             </span>
                                         </div>
                                     </div>
                                     
                                              
-                                <div class='col-md-0'>
-                                    <div class="form-group">
+                             
+                                    <div class="form-group  mx-sm-2 mb-2">
                                         <div class='input-group date' id='start_date_container'>
-                                            <input type='hidden' class="form-control datePicker" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>
+                                            <input type='hidden' class="form-control datePicker"  name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>
                 
                                         </div>
                                     </div>
-                                </div>
-                                
+                               
 
                                 <div class='col-md-0'>
-                                    <div class="form-group">
+                                    <div class="form-group  mx-sm-2 mb-2">
                                         <div class='input-group date' id='end_date_container'>
-                                            <input type='hidden' class="form-control datePicker" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly/>
+                                            <input type='hidden' class="form-control datePicker rcorner" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly/>
                                     
                                       </div>
                                     </div>
                                 </div> 
                             </div>
                             
-                <div class="col-md-2">
-               <select name="vendorid" class="form-control" id="vendorid">
+                <div class=" mx-sm-2 mb-2">
+               <select name="vendorid" class="form-control "   style="border-radius: 9px";id="vendorid">
                    <option value ='' >Select Vendor</option>
                    <option value='All' selected="selected">All </option>
                     
@@ -98,8 +90,8 @@
                     </select>
                </div>
            
-              <div class="col-md-2">
-              <select name="amount_by" class="form-control" id="amount_by" >
+              <div class=" mx-sm-2 mb-2">
+              <select name="amount_by" class="form-control rcorner" id="amount_by" >
                 <option value='All'>--Select Amount Type--</option>
                 <option value="less"<?php if( isset($_POST['amount_by']) && $_POST['amount_by']=='less') echo 'selected="selected"';?>>Less Than</option>
                 <option value="greater" <?php if(isset($_POST['amount_by']) && $_POST['amount_by']=='greater') echo 'selected="selected"';?>>Greater Than</option>
@@ -107,18 +99,24 @@
                </select>
               </div>
                
-               <div class="col-md-2" >
-                   <input type="number" class="form-control"  name="amount"  id="amount" Placeholder="Amount"  step="any" value="<?php echo $_POST['amount'] ?? '' ;?>" autocomplete="off">
+               <div class=" mx-sm-1 mb-2">
+                   <input type="number" class="form-control rcorner"  name="amount"  id="amount" Placeholder="Amount"  step="any" value="<?php echo $_POST['amount'] ?? '' ;?>" autocomplete="off">
                </div>
-                                <div class="col-md-2">
-                                    <input type="submit" class="btn btn-success" value="Generate">
-                                </div>
+               <div class=" mx-sm-2 mb-2">
+                    <input type="submit" class="btn btn-success rcorner header-color" value="Generate">
                 </div>
-                </div>
-                    </form>
+        </div> 
+                
+    </form>
+        <br>    
+        <div class="col-md-12" >
+            <h6><span> PAID OUT REPORT </span></h6>
+        </div>    
+                
+            
              
             <?php if(isset($report_paid_out) && count($report_paid_out) > 0){ ?>
-                <div class="row" style="margin: 10px;">
+                <div class="row" style="display: none;">
                   <div class="col-md-12">
                     <p><b>EOD Start Date: </b><?php echo $p_start_date; ?> <b>EOD To Date: </b><?php echo $p_end_date; ?></p>
                   </div>
@@ -133,34 +131,28 @@
                     <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
                   </div>
                 </div>
-                <div class="row" style="margin: 10px;">
+              
                     <div class="col-md-12 table-responsive">
-                        <br>
-                        
-                        <table class="table table-bordered table-striped table-hover">
-                    
-                    
-                            <tr>
+                          <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
+                   data-click-to-select="true">
+                   <thead>
+                     <tr class="th_color text-uppercase">
                                 
-                                <?php if($p_start_date ==$p_end_date){ ?>
-                                   <th>Serial No.</th>
-                                <?php }  else { ?>
-                                    <th  style="display:none;">Serial No.</th>
-                                 <?php } ?>
-                                 
-                                <?php if($p_start_date ==$p_end_date){ ?>
-                                    <th style="display:none;">Paid Out Date</th>
-                                <?php }  else { ?>
-                                    <th>Paid Out Date</th>
-                                 <?php } ?>
+                               
+                                <th>Paid Out Date</th>
+                                
+                                 <th>Time</th>
                                  
                                 <th>Vendor Name</th>
                                 <th>Amount</th>
                                 <th>Tender Type</th>
                                 <th>Register No</th>
-                                <th>Time</th>
+                               
                                 <th>User ID</th>
+                               
                             </tr>
+                          
                             <?php $total=0;?>
                             <?php foreach($report_paid_out as $v){
                                   if($v->Vendor === "Total"){
@@ -170,55 +162,48 @@
                              
                                 } ?>
                              
-                             <tr> 
+                     <tr class="header-color"> 
+                               
+                                <th> GRAND TOTAL</th>
+                                <th></th>
                                 
                                 <th></th>
-                                <th>Total</th>
                                 <th><?php echo "$",number_format($total,2); ?></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th></th>
                                 </tr>
+                    </thead>              
                             <?php 
                                 $count = 0; 
                                 foreach($report_paid_out as $v){?>
                                  <?php if($v->Vendor === "Total"){
                                  continue;
                                  }?>
+                        <tbody>      
                                     <tr>
-                                             <?php if($p_start_date ==$p_end_date){ ?>
-                                              <td><?php echo ++$count; ?></td>
-                                            <?php }  else { ?>
-                                                <td  style="display:none;"></td>
-                                             <?php } ?>
-                                             
-                                             <?php if($p_start_date ==$p_end_date){ ?>
-                                             <td style="display:none;"><?php echo isset($v->dt) ? $v->dt: ""; ?></td>
-                                              <?php }  else { ?>
-                                                <td><?php echo isset($v->dt) ? $v->dt: ""; ?></td>
-                                             <?php } ?>
-                                             
+                                            
+                                           <td><?php echo isset($v->dt) ? $v->dt: ""; ?></td>
+                                            
                                        
-                                           
+                                           <td><?php echo isset($v->ttime) ? $v->ttime: 0.00; ?></td>
                                             <td><?php echo isset($v->Vendor) ? $v->Vendor: ""; ?></td>
                                             <td><?php echo "$",isset($v->Amount) ? $v->Amount: 0.00; ?></td>
                                             
                                             <td><?php echo isset($v->TenderType) ? $v->TenderType: 0.00; ?></td>
                                             <td><?php echo isset($v->RegNo) ? $v->RegNo : 0.00; ?></td>
-                                            <td><?php echo isset($v->ttime) ? $v->ttime: 0.00; ?></td>
+                                            
                                             <td><?php echo isset($v->UserId) ? $v->UserId: 0.00; ?></td>
                                     </tr>
                                 <?php } ?>
                     
-                    
-                    
+                         
+                        </tbody>   
                         </table>
-                        
+                        </div>
                       
-                        
-                    </div>
-                </div>
+              
+               
                 <br>
             <?php }else{ ?>
                 <?php if(isset($p_start_date)){ ?>
@@ -232,14 +217,14 @@
                 <?php } ?>
             <?php } ?>
         </div>
-            </div>
+            
         </div>
     </div>
 </div>
+</section>
 
 @endsection   
-@section('scripts')  
-
+@section('page-script')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
@@ -249,7 +234,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" ></script>
 
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <script type="text/javascript">
 
    $(document).ready(function() {
@@ -378,10 +363,10 @@
 
 <style type="text/css">
 
-.table.table-bordered.table-striped.table-hover thead > tr {
-    background-color: #2486c6;
-    color: #fff;
-}
+/*.table.table-bordered.table-striped.table-hover thead > tr {*/
+/*    background-color: #2486c6;*/
+/*    color: #fff;*/
+/*}*/
 .select2-selection__rendered {
     line-height: 31px !important;
 }
@@ -552,6 +537,38 @@ $(document).ready(function() {
 
 </script>
 <style>
+.rcorner {
+  border-radius:9px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+h6 {
+   width: 100%; 
+   text-align: left; 
+   border-bottom: 2px solid; 
+   line-height: 0.1em;
+   margin: 0px 0 20px; 
+   color:#286fb7;
+} 
 
+h6 span { 
+    background:#f8f9fa!important; 
+    padding:10px 0px; 
+    color:#286fb7;
+}
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
 </style>
+
 @endsection 
