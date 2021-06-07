@@ -207,7 +207,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input type="button" class="btn btn-success" id="save_subcategory" value="Save">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>
@@ -371,12 +371,47 @@
     
 <?php } ?>
 
+
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 @endsection
 
 @section('page-script')
 
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
   
 <script type="text/javascript">
@@ -394,32 +429,7 @@ $(document).ready(function(){
     
 })
 
-//   $(document).on('submit', 'form#add_new_form', function(event) {
-    
-//     if($('form#add_new_form #add_vcategoryname').val() == ''){
-//       // alert('Please enter name!');
-//       bootbox.alert({ 
-//         size: 'small',
-//         title: "Attention", 
-//         message: "Please enter name!", 
-//         callback: function(){}
-//       });
-//       return false;
-//     }
-    
-//     if($('form#add_new_form #add_dept_code').val() == ''){
-//       // alert('Please enter name!');
-//       bootbox.alert({ 
-//         size: 'small',
-//         title: "Attention", 
-//         message: "Please select a Category!", 
-//         callback: function(){}
-//       });
-//       return false;
-//     }
-//     $("div#divLoading").addClass('show');
-    
-//   });
+
 
  $('#button-filter').on('click', function() {
     url = '';
@@ -538,25 +548,18 @@ $("#closeBtn").click(function(){
     var subcatids = [];
     
     if($("input[name='selected[]']:checked").length == 0){
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: 'Please Select SubCategory to Edit!', 
-        callback: function(){}
-      });
+      $('#warning_msg').html('Please Select SubCategory to Edit!');
+      $("div#divLoading").removeClass('show');
+      $('#warningModal').modal('show');
       return false;
     }
     
     $('.subcategories_c').each(function(){
         subcatids.push($(this).val());
       if($(this).val() == ''){
-        // alert('Please Enter Category Name');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please Enter Sub Category Name", 
-          callback: function(){}
-        });
+        $('#warning_msg').html('Please Enter Sub Category Name');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         all_category = false;
         return false;
       }else{
@@ -571,13 +574,9 @@ $("#closeBtn").click(function(){
       $('.categories_s').each(function(){
         if($(this).val() != ''){
           if(!numericReg.test($(this).val())){
-            // alert('Please Enter Only Number');
-            bootbox.alert({ 
-              size: 'small',
-              title: "Attention", 
-              message: "Please Enter Only Number", 
-              callback: function(){}
-            });
+            $('#warning_msg').html('Please Enter Only Number');
+            $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
             all_done = false;
             return false;
           }else{
@@ -737,12 +736,11 @@ $(document).ready(function($) {
     event.preventDefault();
     
     if($("input[name='selected[]']:checked").length == 0){
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: 'Please Select SubCategory to Delete!', 
-        callback: function(){}
-      });
+      
+      $('#warning_msg').html('Please Select SubCategory to Delete!');
+      $("div#divLoading").removeClass('show');
+      $('#warningModal').modal('show');
+      
       return false;
     }
     
@@ -811,7 +809,7 @@ $(document).ready(function($) {
             dataType: 'json',
             success: function(data) {
                 if(data['success_msg']){
-                  $('#success_msg').html('<strong>Sub category Deleted successfully</strong>');
+                    $('#success_msg').html('<strong>Sub category Deleted successfully</strong>');
                     $("div#divLoading").removeClass('show');
                     $('#successModal').modal('show');
                     setTimeout(function(){

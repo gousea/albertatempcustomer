@@ -70,9 +70,9 @@
                     <table id="sizeTable" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                       <thead style="background-color: #286fb7!important;">
                         <tr>
-                          <td style="width: 1px;color:black;" class="col-xs-1 headername text-uppercase  text-light  text-center">
+                          <th style="width: 1px;color:black;" class="col-xs-1 headername text-uppercase  text-light  text-center">
                             <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                          </td>
+                          </th>
                           <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
                         </tr>
                       </thead>
@@ -112,6 +112,37 @@
       <div class="modal-body">
         <div class="alert alert-success text-center">
           <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
         </div>
       </div>
     </div>
@@ -171,7 +202,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input type="button" class="btn btn-success"  value="Save" id="saveSizeButton">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
             </div>
           </div>  
         </form>
@@ -349,10 +380,6 @@ $("#closeBtn").click(function(){
   $(document).ready(function($) {
     $("div#divLoading").addClass('show');
   });
-
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
 </script>
 
   
@@ -434,30 +461,40 @@ $("#closeBtn").click(function(){
                           'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                     },
                     data: {data:avArr},
-                    success: function(result){
-                      if(result){
-                          $('#success_msg').html('<strong>Size Updated Successfully</strong>');
-                          $("div#divLoading").removeClass('show');
-                          $('#successModal').modal('show');
-            
-                          setTimeout(function(){
-                              $('#successModal').modal('hide');
-                              window.location.reload();
-                          }, 2000);
-                      }else{
-                          var errorMsg = '';
-                          $.each(data.error_msg, function (k, v){
-                              errorMsg += v+'<br/>';
-                          });
-                          $('#error_msg').html('<strong>Size Updating Failed</strong>');
+                    success: function (e) {
+                        alert("hi 434");
+                        location.reload();
+                    },
+                    error: function (msg) {
+                          $('#error_msg').html("The name has already been taken !");
                           $("div#divLoading").removeClass('show');
                           $('#errorModal').modal('show');
-                          setTimeout(function(){
-                              $('#errorModal').modal('hide');
-                              window.location.reload();
-                          }, 4000);
-                      }
                     },
+                    // success: function(result){
+                    //   console.log(result);
+                    //   // if(result){
+                    //   //     $('#success_msg').html('<strong>Size Updated Successfully</strong>');
+                    //   //     $("div#divLoading").removeClass('show');
+                    //   //     $('#successModal').modal('show');
+            
+                    //   //     setTimeout(function(){
+                    //   //         $('#successModal').modal('hide');
+                    //   //         window.location.reload();
+                    //   //     }, 2000);
+                    //   // }else{
+                    //   //     var errorMsg = '';
+                    //   //     $.each(data.error_msg, function (k, v){
+                    //   //         errorMsg += v+'<br/>';
+                    //   //     });
+                    //   //     $('#error_msg').html('<strong>Size Updating Failed</strong>');
+                    //   //     $("div#divLoading").removeClass('show');
+                    //   //     $('#errorModal').modal('show');
+                    //   //     setTimeout(function(){
+                    //   //         $('#errorModal').modal('hide');
+                    //   //         window.location.reload();
+                    //   //     }, 4000);
+                    //   // }
+                    // },
                 });
             
             <?php } ?>

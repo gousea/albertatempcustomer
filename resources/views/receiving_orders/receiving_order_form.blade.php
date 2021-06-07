@@ -100,10 +100,10 @@
                             <div class="row">
                                 <div class="col-md-12 mx-auto">
                                     
-                                    <div class="form-group row">
+                                    <div class="form-group row ">
                                         <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                                <label for="inputFirstname" class="p-2 float-right text-uppercase">Invoice#</label>
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                                <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Invoice#</label>
                                             </div>
                                             <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
@@ -472,9 +472,9 @@
                                   <p class="text-white" style="padding-left: 20px; font-size: 16px; background-color:red; color:white;">* MAX 500 no. of Items can be Add per Invoice.</p>
                               </div> --}}
                               <div class="col-md-6">
-                                <button class="btn btn-info button-blue buttons_menu basic-button-small" style="border-radius:0px;" id="add_item_btn">Add Item</button>&nbsp;&nbsp;
-                                <button class="btn btn-danger buttonred buttons_menu basic-button-small" style="border-radius:0px;" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
-                                <button type="button" class="btn btn-info buttons_menu basic-button-small" style="border-radius:0px;<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check">Save/Receive</button>
+                                <button class="btn btn-primary button-blue buttons_menu basic-button-small" id="add_item_btn">Add Item</button>&nbsp;&nbsp;
+                                <button class="btn btn-danger buttonred buttons_menu basic-button-small" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
+                                <button type="button" class="btn btn-info buttons_menu basic-button-small" style="<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check">Save/Receive</button>
                                 
                               </div>
 
@@ -489,8 +489,9 @@
                                 <div class="col-md-11 float-right">
                                   <input type="checkbox" name="update_pack_qty" value="Yes" id="update_pack_qty"" />
                                   <span style="font-size:14px;margin-top:12px;">&nbsp; Update pack qty</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <button class="btn btn-info button-blue basic-button-small" id="advance_btn" data-check="unchecked">Advance Update</button>
+                                  <button class="btn btn-primary button-blue basic-button-small" id="advance_btn" data-check="unchecked">Advance Update</button>
                                 {{-- <input type="checkbox" name="advance_update" value="Yes" class="form-control" id="advance_update" style="display:none;"> --}}
+                                  <input type="hidden" value="1" id="advance_update">
                                 </div>
                               </div>
 
@@ -498,10 +499,10 @@
                             <br>
                             
                             <br>
-                              {{-- <div class="row"> --}}
-                                  {{-- <div class="col-md-3" style="font-size: 13px;">
+                              <div class="row">
+                                  <div class="col-md-3" style="font-size: 13px;">
                                       <ul style="color:#0000cc; display: inline-block; margin-left: -20px;">(Font Color)<li>If price required more than unit cost </li> <li>If unit cost is zero</li></ul>
-                                  </div> --}}
+                                  </div>
                                   {{-- <div class="col-md-3" style="font-size: 13px;">
                                       <ul style="color:#FF0000; display: inline-block; margin-left: -20px;"> (Font Color)<li>If Suggested cost is less than Total amount</li></ul>
                                   </div> --}}
@@ -512,7 +513,7 @@
                                       <div style="height:20px; width:30px; background-color:#ff8566; display: inline-block;"></div> If Cost is Lower
                                   </div>
                                    --}}
-                              {{-- </div> --}}
+                              </div>
                               
                               
                             <div class="row" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
@@ -1086,7 +1087,7 @@
     
     var nordqty = $(this).val();
     var npackqty = $(this).closest('tr').find('.npackqty_class').val();
-    // var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
+    
     var nordextprice = $(this).closest('tr').find('.nordextprice_class').val();
     var nunitcost = $(this).closest('tr').find('.nunitcost_class').val();
     var po_order_by = $(this).closest('tr').find('.po_order_by_class').val();
@@ -1187,20 +1188,15 @@
     $(this).closest('tr').find('.itotalunit_class').val(closest_itotalunit);
     $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
     
-    
-    
-    // if(parseFloat(old_unitcost) > parseFloat(closest_nunitcost)){
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#66ff66');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', '#ff8566');
-    // }else if(parseFloat(old_unitcost) < parseFloat(closest_nunitcost)){
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#ff8566');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', '#66ff66');
-    // }else{
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', 'white');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', 'white');   
-    // }
-    
-    
+    if(parseFloat(nunitcost) == 0 || parseFloat(nunitprice) <  parseFloat(nunitcost)){
+        
+        $(this).closest('tr').children('td').css('color', '#0000cc');
+        $(this).closest('tr').children('td.noInput').css('color', '#0000cc');
+    } else {
+        
+        $(this).closest('tr').children('td').css('color', 'black');
+        $(this).closest('tr').children('td.noInput').css('color', 'black');
+    }
     nettotal();
     
     total_suggested_amount();
@@ -1273,16 +1269,15 @@
     $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
     $(this).closest('tr').find('.nordextprice_class').val(closest_nordextprice);
     
-    // if(parseFloat(old_unitcost) > parseFloat(closest_nunitcost)){
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#66ff66');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', '#ff8566');
-    // }else if(parseFloat(old_unitcost) < parseFloat(closest_nunitcost)){
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#ff8566');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', '#66ff66');
-    // }else{
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', 'white');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', 'white');   
-    // }
+    if(parseFloat(nunitcost) == 0 || parseFloat(nunitprice) <  parseFloat(nunitcost)){
+        
+        $(this).closest('tr').children('td').css('color', '#0000cc');
+        $(this).closest('tr').children('td.noInput').css('color', '#0000cc');
+    } else {
+        
+        $(this).closest('tr').children('td').css('color', 'black');
+        $(this).closest('tr').children('td.noInput').css('color', 'black');
+    }
     
 
   });
@@ -1292,7 +1287,6 @@
   $(document).on('keyup', '.nordextprice_class', function(event) {
     event.preventDefault();
     
-    // console.log("Changed nordextprice_class");
     
     var nordextprice = $(this).val();
     var npackqty = $(this).closest('tr').find('.npackqty_class').val();
@@ -1301,7 +1295,7 @@
     var nunitcost = $(this).closest('tr').find('.nunitcost_class').val();
     
     var nunitprice = $(this).closest('tr').find('.nnewunitprice_class').val();
-    var suggested_cost = $(this).closest('tr').find('.sggtdqty_class').val();
+    
     var order_by = $(this).closest('tr').find('.po_order_by_class').val();
     let old_unitcost = $(this).closest('tr').find('.oldunitcost_class').val();
     let row = $(this).closest('tr').index() + 1; 
@@ -1376,14 +1370,14 @@
     
     $(this).closest('tr').find('.gp_class').val(gross_profit);
 
-    if(parseFloat(suggested_cost) < parseFloat(nordextprice)){
+    if(parseFloat(nunitcost) == 0 || parseFloat(nunitprice) <  parseFloat(nunitcost)){
         // $(this).closest('tr').children('td').css('background-color', '#ff9999');
-        $(this).closest('tr').children('td').css('color', '#FF0000');
-        $(this).closest('tr').children('td.noInput').css('color', '#FF0000');
+        $(this).closest('tr').children('td').css('color', '#0000cc');
+        $(this).closest('tr').children('td.noInput').css('color', '#0000cc');
     } else {
-        $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
-        $(this).closest('tr').children('td').css('color', '#000000');
-        $(this).closest('tr').children('td.noInput').css('color', '#666666');
+        
+        $(this).closest('tr').children('td').css('color', 'black');
+        $(this).closest('tr').children('td.noInput').css('color', 'black');
     }
     
     $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
@@ -1816,7 +1810,7 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
       
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Can not add more than 500 items! Remove "+diff+" Items", 
         callback: function(){}
       });
@@ -1828,7 +1822,7 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
       // alert('Please Enter Invoice!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -1839,7 +1833,7 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
     if(($.trim($('input[name="vinvoiceno"]').val())).length==0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -1851,7 +1845,7 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
       // alert('Please Select Created Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Created Date!", 
         callback: function(){}
       });
@@ -1863,7 +1857,7 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
       // alert('Please Select Received Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Received Date!", 
         callback: function(){}
       });
@@ -2168,7 +2162,7 @@ $('.editable_text').focus(function() {
       // alert('Please Enter Invoice!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -2179,7 +2173,7 @@ $('.editable_text').focus(function() {
     if(($.trim($('input[name="vinvoiceno"]').val())).length==0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -2191,7 +2185,7 @@ $('.editable_text').focus(function() {
       // alert('Please Select Created Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Created Date!", 
         callback: function(){}
       });
@@ -2203,7 +2197,7 @@ $('.editable_text').focus(function() {
       // alert('Please Select Received Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Received Date!", 
         callback: function(){}
       });
@@ -2215,7 +2209,7 @@ $('.editable_text').focus(function() {
       // alert('Please Select Vendor!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Vendor!", 
         callback: function(){}
       });
@@ -2244,7 +2238,7 @@ $('.editable_text').focus(function() {
     {
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "price required more then unit cost", 
           callback: function(){}
         });
@@ -2268,7 +2262,7 @@ $('.editable_text').focus(function() {
       {
            bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Total Unit must not be zero OR delete Item!", 
             callback: function(){}
           });
@@ -2292,7 +2286,7 @@ $('.editable_text').focus(function() {
       {
       bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Total Amt must not be zero!", 
             callback: function(){}
           });
@@ -2311,7 +2305,7 @@ $('.editable_text').focus(function() {
           // alert('price required more then unit cost');
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Unit Cost must not be zero!", 
             callback: function(){}
           });
@@ -2327,7 +2321,7 @@ $('.editable_text').focus(function() {
         // alert('Please add items');
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "Please add items", 
           callback: function(){}
         });
@@ -2432,7 +2426,7 @@ $('.editable_text').focus(function() {
         if(data.error){
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Invoice Already Exist!", 
             callback: function(){
               $('#saveReceiveModal').modal('show');
@@ -2504,7 +2498,7 @@ $('.editable_text').focus(function() {
         }
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: error_show, 
           callback: function(){}
         });
@@ -2544,6 +2538,17 @@ $('.editable_text').focus(function() {
   });
 
   $(document).on('click', '#for_item', function(){
+
+    if($('input[name="vvendorid"]').val() == ''){
+      // alert('Please Select Vendor!');
+      bootbox.alert({ 
+        size: 'small',
+        title: "  ", 
+        message: "Please Select Vendor!", 
+        callback: function(){}
+      });
+      return false;
+    }
 
     if($('#for_item').is(":checked") == true){
 
@@ -2985,7 +2990,7 @@ $('.editable_text').focus(function() {
           
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Can not add more than 500 items!", 
             callback: function(){}
           });
@@ -3093,7 +3098,7 @@ $('.editable_text').focus(function() {
             //   search_table_html += value.dcostprice;
             //   search_table_html += value.nunitcost;
             //   search_table_html += value.new_costprice;
-                search_table_html += (value.new_costprice/value.nsellunit);
+                search_table_html += (value.new_costprice/value.nsellunit).toFixed(2);
               search_table_html += '</td>';
               
               search_table_html += '<td class="tdOrderBy">';
@@ -3152,7 +3157,7 @@ $('.editable_text').focus(function() {
           {
                 bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    title: "  ", 
                     message: error_show, 
                     callback: function(){}
                 });
@@ -3288,7 +3293,7 @@ $('.editable_text').focus(function() {
           // alert(error_show);
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: error_show, 
             callback: function(){}
           });
@@ -3348,11 +3353,6 @@ $('.editable_text').focus(function() {
 
   });
   
-    // $(document).on('click', '#head_checkbox', function(){
-    //     $("input[name='selected_search_history_items[]']:checked").each(function (i) {
-    //       data_add_items[i] = parseInt($(this).val());
-    //     });
-    // });
 
   $(document).on('click', '#add_selected_items', function(event) {
     event.preventDefault();
@@ -3365,7 +3365,7 @@ $('.editable_text').focus(function() {
           
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Can not add more than 500 items!", 
             callback: function(){}
           });
@@ -3488,7 +3488,7 @@ $('.editable_text').focus(function() {
             html_receiving_item += '<tr id="tab_tr_'+item.iitemid+'">';
             html_receiving_item += '<td class="text-center noInput"><input type="checkbox" name="selected_receiving_item[]" value="0"/><input type="hidden" name="items['+window.index_item+'][vitemid]" value="'+item.iitemid+'"><input type="hidden" name="items['+window.index_item+'][nordunitprice]" value="'+item.dunitprice+'"><input type="hidden" name="items['+window.index_item+'][vunitcode]" value="'+item.vunitcode+'"><input type="hidden" name="items['+window.index_item+'][vunitname]" value="'+item.vunitname+'"><input type="hidden" name="items['+window.index_item+'][irodetid]" value="0"><input type="hidden" name="selected_added_item[]" value="'+item.iitemid+'"/></td>';
             html_receiving_item += '<td style="width:20%;" class="vbarcode_class noInput">'+item.vbarcode+'<input type="hidden" name="items['+window.index_item+'][vbarcode]" value="'+item.vbarcode+'"></td>';
-            html_receiving_item += '<td style="width:20%;" class="vitemname_class noInput">'+item.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+item.vitemname+'"></td>';
+            html_receiving_item += '<td style="width:20%; !important" class="vitemname_class noInput">'+item.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+item.vitemname+'"></td>';
 
             if(item.vvendoritemcode != null){
               html_receiving_item += '<td style="width:20%;"><input type="text" class="vvendoritemcode_class adjustment-fields" name="items['+window.index_item+'][vvendoritemcode]" value="'+item.vvendoritemcode+'" id="" style="width:100px;"></td>';
@@ -3566,7 +3566,7 @@ $('.editable_text').focus(function() {
                 gross_profit = 0.00;
             }
             
-            html_receiving_item += '<td class="text-right"><input type="text" disabled class="nnewcosttprice_class adjustment-fields" name="items['+window.index_item+'][po_new_costprice]" id="" style="width:70px;text-align:right;background: rgb(220, 220, 220);" value="'+ item.new_costprice +'"><input type="hidden" class="nlastunitprice_class" name="items['+window.index_item+'][po_last_costprice]" id="" style="width:70px;text-align:right;background: rgb(220, 220, 220);" value="'+ item.new_costprice +'"><input type="hidden" class="newcostprice_class" name="items['+window.index_item+'][new_costprice]" id="" style="width:60px;text-align:right;background: rgb(220, 220, 220);" value="'+ item.new_costprice +'"><input type="hidden" class="nsellunit_class" name="items['+window.index_item+'][nsellunit_class]" id="" style="width:60px;text-align:right;background: rgb(220, 220, 220);" value="'+ item.nsellunit +'"><input type="hidden" class="oldunitcost_class" name="items['+window.index_item+'][old_unitcost]" id="" style="width:60px;text-align:right;" value="'+ unit_cost +'"></td>';
+            html_receiving_item += '<td class="text-right">'+ item.new_costprice +'<input type="hidden" disabled class="nnewcosttprice_class adjustment-fields" name="items['+window.index_item+'][po_new_costprice]" id="" style="width:70px;text-align:right;background: rgb(220, 220, 220);" value="'+ item.new_costprice +'"><input type="hidden" class="nlastunitprice_class" name="items['+window.index_item+'][po_last_costprice]" id="" style="width:70px;text-align:right;background: rgb(220, 220, 220);" value="'+ item.new_costprice +'"><input type="hidden" class="newcostprice_class" name="items['+window.index_item+'][new_costprice]" id="" style="width:60px;text-align:right;background: rgb(220, 220, 220);" value="'+ item.new_costprice +'"><input type="hidden" class="nsellunit_class" name="items['+window.index_item+'][nsellunit_class]" id="" style="width:60px;text-align:right;background: rgb(220, 220, 220);" value="'+ item.nsellunit +'"><input type="hidden" class="oldunitcost_class" name="items['+window.index_item+'][old_unitcost]" id="" style="width:60px;text-align:right;" value="'+ unit_cost +'"></td>';
             html_receiving_item += '<td class="text-right"><input type="text" class="gp_class adjustment-fields" name="items['+window.index_item+'][gross_profit]" value="'+ gross_profit +'" id="" style="width:50px;text-align:right;"></td>';
             html_receiving_item += '<td class="text-right"><input type="text" class="nripamount_class adjustment-fields" name="items['+window.index_item+'][nripamount]" value="0.00" id="" style="width:50px;text-align:right;"></td>';
             html_receiving_item += '</tr>';
@@ -3602,7 +3602,7 @@ $('.editable_text').focus(function() {
         total_amount();
         total_order_unit();
 
-        if($('#advance_update').is(':checked')){
+        if($('#advance_update').val() == 0){
           advance_update_function(false);
         }else{
           advance_update_function(true);
@@ -3798,7 +3798,7 @@ $('.editable_text').focus(function() {
       if(d1 > d2){
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "Start date must be less then end date!", 
           callback: function(){}
         });
@@ -4034,19 +4034,18 @@ $('.editable_text').focus(function() {
     advance_update_function(true);
   });
 
-  $(document).on('change', '#advance_update', function(event) {
-    event.preventDefault();
-    if($(this).is(':checked')){
-      advance_update_function(false);
-    }else{
-      advance_update_function(true);
-    }
-  });
+  
 
   var advance_update_function = function(status){
     if(status == false){
-      $(".vvendoritemcode_class, .nnewunitprice_class, .npackqty_class").attr("readonly", false); 
-      $(".vvendoritemcode_class, .nnewunitprice_class, .npackqty_class").css("background", '#fff'); 
+
+      if($('#update_pack_qty').is(':checked')){
+        $(".vvendoritemcode_class, .nnewunitprice_class, .npackqty_class").attr("readonly", false); 
+        $(".vvendoritemcode_class, .nnewunitprice_class, .npackqty_class").css("background", '#fff'); 
+      }else{
+        $(".vvendoritemcode_class, .nnewunitprice_class").attr("readonly", false); 
+        $(".vvendoritemcode_class, .nnewunitprice_class").css("background", '#fff'); 
+      }
     }else{
       $(".vvendoritemcode_class, .nnewunitprice_class, .npackqty_class").attr("readonly", true); 
       $(".vvendoritemcode_class, .nnewunitprice_class, .npackqty_class").css("background", '#DCDCDC'); 
@@ -4056,14 +4055,12 @@ $('.editable_text').focus(function() {
   $(document).on('click', '#advance_btn', function(event) {
     event.preventDefault();
 
-    if($(this).attr('data-check') == 'unchecked'){
-      $("#advance_update").prop( "checked", true );
-      $("#advance_update").trigger('change');
-      $('#advance_btn').attr('data-check', 'checked');
+    if($('#advance_update').val() == 0){
+      advance_update_function(false);
+      $('#advance_update').val(1);
     }else{
-      $("#advance_update").prop( "checked", false );
-      $("#advance_update").trigger('change');
-      $('#advance_btn').attr('data-check', 'unchecked');
+      advance_update_function(true);
+      $('#advance_update').val(0);
     }
     
   });
@@ -4163,11 +4160,11 @@ $('.editable_text').focus(function() {
   //   $("div#divLoading").removeClass('show');
   // });
   
-   $(document).ready(function(){
-        $('.table').fixedHeader({
-          topOffset: 0
-        }); 
-  });
+  //  $(document).ready(function(){
+  //       $('.table').fixedHeader({
+  //         topOffset: 0
+  //       }); 
+  // });
 </script>
 
 // <script>
@@ -4212,7 +4209,7 @@ $('.editable_text').focus(function() {
 //             if($('#price_select_by').val() == 'between' && typeof(select_by_val1) != "undefined" && select_by_val1 !== null && typeof(select_by_val2) != "undefined" && select_by_val2 !== null && select_by_val1 >= select_by_val2){
 //                     bootbox.alert({
 //                                 size: 'small',
-//                                 title: "Attention",
+//                                 title: "  ",
 //                                 message: "Second value must be greater than first value!",
 //                               });
 //             }

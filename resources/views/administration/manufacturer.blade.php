@@ -155,7 +155,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input type="button" class="btn btn-success" value="Save" id="saveManufacturerButton">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>

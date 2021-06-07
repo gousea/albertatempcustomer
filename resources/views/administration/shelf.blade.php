@@ -67,9 +67,9 @@
                   <table id="shelfTable" class="text-center table  table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                     <thead style="background-color: #286fb7!important;" >
                       <tr>
-                        <td style="width: 1px;color:black;" class="text-center">
+                        <th style="width: 1px;color:black;" class="text-center">
                           <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                        </td>
+                        </th>
                         <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
 
                         <!-- <td class="text-center">Action</td> -->
@@ -121,6 +121,40 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('page-script')
@@ -185,7 +219,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input class="btn btn-success" type="submit" value="Save" id="saveShelfButton">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>
@@ -227,13 +261,10 @@
         });
 
         if(avArr.length < 1){
-            bootbox.alert({ 
-                size: 'small',
-                title: "Attention", 
-                message: "You did not select anything", 
-                callback: function(){location.reload(true);}
-            });
+            
+            $('#warning_msg').html('You did not select anything');
             $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
             return false;
         }
 
@@ -255,13 +286,10 @@
                 });
               });
               mssg += '</div>';
-              bootbox.alert({ 
-                  size: 'small',
-                  title: "Attention", 
-                  message: mssg, 
-                  callback: function(){location.reload(true);}
-              });
+              
+              $('#error_msg').html(mssg);
               $("div#divLoading").removeClass('show');
+              $('#errorModal').modal('show');
 
           },
     });
@@ -339,15 +367,9 @@
     $('.modal-backdrop').hide();
 
     if($('form#add_new_form #add_shelfname').val() == ''){
-      // alert('Please enter Shelf Name!');
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: "Please enter Shelf Name!", 
-        callback: function(){}
-      });
-
+      $('#warning_msg').html('Please enter Shelf Name!');
       $("div#divLoading").removeClass('show');
+      $('#warningModal').modal('show');
       return false;
     }
 
@@ -370,12 +392,10 @@
         var data = [];
 
         if($("input[name='selected[]']:checked").length == 0){
-          bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: 'Please Select Shelf to Delete!', 
-            callback: function(){}
-          });
+
+          $('#warning_msg').html('Please Select Shelf to Delete!');
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
           return false;
         }
 
@@ -399,7 +419,6 @@
             contentType: "application/json",
             dataType: 'json',
           success: function(data) {
-            if(data.status == 0){
               $('#success_msg').html('<strong>Shelf is deleted successfully</strong>');
               $("div#divLoading").removeClass('show');
               $('#successModal').modal('show');
@@ -407,11 +426,6 @@
                   $('#successModal').modal('hide');
                   window.location.reload();
               }, 2000);
-            }else{
-              $('#error_msg').html('<strong>'+ data.error +'</strong>');
-              $("div#divLoading").removeClass('show');
-              $('#errorModal').modal('show');
-            }
           },
           error: function(xhr) { // if error occured
             var  response_error = $.parseJSON(xhr.responseText); //decode the response array

@@ -710,4 +710,9 @@ header,
     .navbar-nav .nav-link {
         padding-left: 20px;
     }
+
+    .required .control-label {
+        content:"*";
+        color:red;
+      }
 }
