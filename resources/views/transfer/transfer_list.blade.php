@@ -4,7 +4,7 @@
 <div id="content">
   
   <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
+    <div class="container">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
                 <span class="font-weight-bold text-uppercase"><?php echo $text_list; ?></span>
