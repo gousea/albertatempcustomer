@@ -15,7 +15,7 @@
                 <div class="nav-submenu">
                     <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
                     <button type="button" onclick="addPaidOut();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
-                    <button type="button" id="paid_delete" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+                    <button type="button" id="paid_delete"  onclick="myFunction()" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
                 </div>
             </div> <!-- navbar-collapse.// -->
         </div>
@@ -407,7 +407,6 @@
   function myFunction() {
     var result = confirm("Want to delete?");
     if (result) {
-
       $(document).on('click', '#paid_delete', function(event) {
         event.preventDefault();
         var delete_aisle_url = 'deletepaidout';
@@ -440,44 +439,35 @@
             type : 'POST',
             contentType: "application/json",
             dataType: 'json',
-          success: function(data) {
-            //console.log('Success');
-
-            if(data.status == 0){
-              //console.log('status');
-              $('#success_msg').html('<strong>'+ data.success +'</strong>');
-              $("div#divLoading").removeClass('show');
-              $('#successModal').modal('show');
-
-              setTimeout(function(){
-                  $('#successModal').modal('hide');
-                  window.location.reload();
-              }, 2000);
-            }else{
-
-              $('#error_msg').html('<strong>'+ data.error +'</strong>');
-              $("div#divLoading").removeClass('show');
-              $('#errorModal').modal('show');
-
+            success: function(data) {
+              //console.log('Success');
+                  if(data.status == 0){
+                    //console.log('status');
+                    $('#success_msg').html('<strong>Paid Out Deleted successfully!</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#successModal').modal('show');
+                    setTimeout(function(){
+                        $('#successModal').modal('hide');
+                        window.location.reload();
+                    }, 2000);
+                  }else{
+                    $('#error_msg').html('<strong>'+ data.error +'</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#errorModal').modal('show');
+                  }
+            },
+            error: function(xhr) { // if error occured
+                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+                var error_show = '';
+                if(response_error.error){
+                  error_show = response_error.error;
+                }else if(response_error.validation_error){
+                  error_show = response_error.validation_error[0];
+                }
+                $('#error_alias').html('<strong>'+ error_show +'</strong>');
+                $('#errorModal').modal('show');
+                return false;
             }
-
-
-          },
-          error: function(xhr) { // if error occured
-            var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-            
-            var error_show = '';
-
-            if(response_error.error){
-              error_show = response_error.error;
-            }else if(response_error.validation_error){
-              error_show = response_error.validation_error[0];
-            }
-
-            $('#error_alias').html('<strong>'+ error_show +'</strong>');
-            $('#errorModal').modal('show');
-            return false;
-          }
         });
       });
     }
