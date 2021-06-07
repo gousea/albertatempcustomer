@@ -69,7 +69,7 @@
             <form action="" method="post"  id="form-adjustment-reason">
               @csrf
               <div class="table-responsive">
-                <table id="adjustment_reason" class="table table-hover promotionview" >
+                <table id="adjustment_reason" class="table table-hover promotionview" style="width:100%;">
                   <thead>
                     <tr class="header-color">
                       <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>

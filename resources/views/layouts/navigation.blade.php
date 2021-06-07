@@ -144,7 +144,7 @@
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Scan Data Report </a>
                                 </li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Sales Transaction Report
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('SalesTransaction') }}"> Sales Transaction Report
                                     </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('TaxReport') }}"> Tax Report </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Hourly Sales Report </a>
@@ -155,7 +155,7 @@
                                     </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Profit & Loss Report </a>
                                 </li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Paid Out Report </a></li>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('PaidoutReport') }}"> Paid Out Report </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Below Cost Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase"
