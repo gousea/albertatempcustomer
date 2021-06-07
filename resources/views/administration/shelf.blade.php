@@ -419,7 +419,6 @@
             contentType: "application/json",
             dataType: 'json',
           success: function(data) {
-            if(data.status == 0){
               $('#success_msg').html('<strong>Shelf is deleted successfully</strong>');
               $("div#divLoading").removeClass('show');
               $('#successModal').modal('show');
@@ -427,11 +426,6 @@
                   $('#successModal').modal('hide');
                   window.location.reload();
               }, 2000);
-            }else{
-              $('#error_msg').html('<strong>'+ data.error +'</strong>');
-              $("div#divLoading").removeClass('show');
-              $('#errorModal').modal('show');
-            }
           },
           error: function(xhr) { // if error occured
             var  response_error = $.parseJSON(xhr.responseText); //decode the response array

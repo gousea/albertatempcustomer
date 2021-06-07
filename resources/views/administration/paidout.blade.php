@@ -440,21 +440,13 @@
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
-              //console.log('Success');
-                  if(data.status == 0){
-                    //console.log('status');
-                    $('#success_msg').html('<strong>Paid Out Deleted successfully!</strong>');
-                    $("div#divLoading").removeClass('show');
-                    $('#successModal').modal('show');
-                    setTimeout(function(){
-                        $('#successModal').modal('hide');
-                        window.location.reload();
-                    }, 2000);
-                  }else{
-                    $('#error_msg').html('<strong>'+ data.error +'</strong>');
-                    $("div#divLoading").removeClass('show');
-                    $('#errorModal').modal('show');
-                  }
+                $('#success_msg').html('<strong>Paid Out Deleted successfully!</strong>');
+                $("div#divLoading").removeClass('show');
+                $('#successModal').modal('show');
+                setTimeout(function(){
+                    $('#successModal').modal('hide');
+                    window.location.reload();
+                }, 2000);
             },
             error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
