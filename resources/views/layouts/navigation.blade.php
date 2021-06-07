@@ -85,7 +85,7 @@
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('transfer') }}">
                                         Transfer </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Location </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Reason </a></li>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('reason') }}"> Reason </a></li>
                             </ul>
                         </li>
                     @endif

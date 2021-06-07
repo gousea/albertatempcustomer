@@ -83,7 +83,7 @@
                         <td class="text-center">
                           <input type="checkbox" class="checkbox_c" name="selected[]" id="aisle[{{$aisles->Id}}][select]"  value="{{$aisles->Id}}">
                         </td>
-                        <td class="text-center">
+                        <td class="text-left">
                           <span style="display:none;">{{$aisles->aislename}}</span>
                           <input type="text" style="border:none;" maxlength="45" class="editable aisle_c" name="aisle[{{$aisles->Id}}][{{$aisles->aislename}}]" id="aisle[{{$aisles->Id}}][aislename]" value="{{$aisles->aislename}}" onclick="">
                           <input type="hidden" name="aisle[{{$aisles->Id}}][Id]" value="{{$aisles->Id}}">
@@ -387,25 +387,13 @@
             contentType: "application/json",
             dataType: 'json',
           success: function(data) {
-
-            if(data.status == 0){
               $('#success_msg').html('<strong>Asile Deleted successfully</strong>');
               $("div#divLoading").removeClass('show');
               $('#successModal').modal('show');
-
               setTimeout(function(){
                   $('#successModal').modal('hide');
                   window.location.reload();
               }, 3000);
-            }else{
-
-              $('#error_msg').html('<strong>'+ data.error +'</strong>');
-              $("div#divLoading").removeClass('show');
-              $('#errorModal').modal('show');
-
-            }
-
-
           },
           error: function(xhr) { // if error occured
             var  response_error = $.parseJSON(xhr.responseText); //decode the response array
