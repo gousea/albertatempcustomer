@@ -226,6 +226,12 @@ class ItemGroupController extends Controller
         
                 }
                 foreach($changed_old_array as $v){
+
+                    $groupItemid = DB::connection('mysql')->select("SELECT id FROM u".$store.".itemgroupdetail where iitemgroupid = '".(int)$itemGroup_id."' AND  vsku = '".$v."' ");
+                    
+                    $insert_delete_perm = "INSERT INTO u".$store.".mst_delete_table SET  TableName = 'itemgroupdetail',`Action` = 'delete',`TableId` = '" . (int)$groupItemid[0]->id . "',SID = '" . (int)(session()->get('sid'))."'";
+                    $query =  DB::connection('mysql')->insert($insert_delete_perm);
+                    
                     $delete_query = "DELETE FROM u".$store.".itemgroupdetail  WHERE iitemgroupid = '".(int)$itemGroup_id."' AND  vsku = '".$v."' ";
                     DB::connection('mysql')->statement($delete_query);
                     // $delete_group_detail = ItemGroupDetail::where('iitemgroupid',$req->input('grpid'))->where('vsku',$v)->delete();
@@ -279,6 +285,12 @@ class ItemGroupController extends Controller
     
     
             foreach($changed_old_array as $v){
+
+                $groupItemid = DB::connection('mysql_dynamic')->select("SELECT id FROM itemgroupdetail where iitemgroupid = '".(int)$req->input('grpid')."' AND  vsku = '".$v."' ");
+                  
+                $insert_delete_perm = "INSERT INTO mst_delete_table SET  TableName = 'itemgroupdetail',`Action` = 'delete',`TableId` = '" . (int)$groupItemid[0]->id . "',SID = '" . (int)(session()->get('sid'))."'";
+                $query =  DB::connection('mysql_dynamic')->insert($insert_delete_perm);
+                
                 $delete_group_detail = ItemGroupDetail::where('iitemgroupid',$req->input('grpid'))->where('vsku',$v)->delete();
             }
           

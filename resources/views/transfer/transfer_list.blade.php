@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Item Adjustment')
+@section('title', 'Transfer')
 @section('main-content')
 <div id="content">
   
