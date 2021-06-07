@@ -29,9 +29,7 @@
       </div>
       <?php } ?>
       <div class="panel panel-default">
-        <div class="panel-heading head_title">
-          <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_list; ?></h3>
-        </div>
+        
         <div class="panel-body">
           
           <div class="clearfix"></div>
@@ -48,7 +46,7 @@
                   <div class="form-group">
                     <label class="col-sm-4 control-label" for="input-transfer"><?php echo $text_transfer_type; ?></label>
                     <div class="col-sm-8">
-                      <select name="transfer[vtransfertype]" id="transfer_vtransfertype" class="form-control" >
+                      <select name="transfer[vtransfertype]" id="transfer_vtransfertype" class="form-control  adjustment-fields" >
                         <?php foreach($transfer_types as $transfer_type){ ?>
                           <?php if(isset($vtransfertype) && $vtransfertype == $transfer_type['value_transfer']){ ?>
                             <option value="<?php echo $transfer_type['value_transfer']; ?>" selected="selected"><?php echo $transfer_type['text_transfer']; ?></option>
@@ -65,7 +63,7 @@
                   <div class="form-group">
                     <label class="col-sm-4 control-label" for="input-transfer"><?php echo $text_transfer_date; ?></label>
                     <div class="col-sm-8">
-                      <input type="text" name="transfer[dreceivedate]" value="<?php echo date('m-d-Y');?>" placeholder="<?php echo $text_transfer_date; ?>" class="form-control" id="transfer_date"/>
+                      <input type="text" name="transfer[dreceivedate]" value="<?php echo date('m-d-Y');?>" placeholder="<?php echo $text_transfer_date; ?>" class="form-control  adjustment-fields" id="transfer_date"/>
                     </div>
                   </div>
                 </div>
@@ -76,7 +74,7 @@
                   <div class="form-group">
                     <label class="col-sm-4 control-label" for="input-template"><?php echo $text_vendor; ?></label>
                     <div class="col-sm-8">
-                      <select name="transfer[vvendorid]" id="transfer_vvendorid" class="form-control" >
+                      <select name="transfer[vvendorid]" id="transfer_vvendorid" class="form-control  adjustment-fields" >
                         <?php foreach($vendors as $vendor){ ?>
                         <?php if(isset($vendor_id) && $vendor_id == $vendor['isupplierid']){?>
                         <option value="<?php echo $vendor['isupplierid']; ?>" selected="selected"><?php echo $vendor['vcompanyname']; ?></option>
@@ -92,7 +90,7 @@
                   <div class="form-group required" id="invoice_id">
                     <label class="col-sm-4 control-label" for="input-template"><?php echo $text_invoice; ?></label>
                     <div class="col-sm-8">
-                      <input type="text" maxlength="50" name="transfer[vinvnum]" value="<?php echo isset($vinvnum) ? $vinvnum : ''; ?>" placeholder="<?php echo $text_invoice; ?>" class="form-control" id="transfer_vinvnum"/>
+                      <input type="text" maxlength="50" name="transfer[vinvnum]" value="<?php echo isset($vinvnum) ? $vinvnum : ''; ?>" placeholder="<?php echo $text_invoice; ?>" class="form-control  adjustment-fields" id="transfer_vinvnum"/>
                     </div>
                   </div>
                 </div>
@@ -102,7 +100,7 @@
             <div class="row">
               <div class="col-md-4" id="table_list_items_left">
                 <div class="table-responsive" >
-                  <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
+                  <table class="table table-hover promotionview" style="padding:0px; margin:0px; left:3%;" >
                     <thead>
                       <tr class="header-color">
                         <td style="width: 1px;" class="text-center"><input type="checkbox" id="selectAll"/></td>
@@ -112,7 +110,7 @@
                     </thead>
                   </table>
                   <div class="div-table-content">
-                    <table class="table table-bordered table-hover" id="itemsort1" style="table-layout: fixed;">
+                    <table class="table table-hover promotionview" id="itemsort1" style="table-layout: fixed; left:3%;">
                       <tbody style="display: block; height:400px; overflow-y : scroll;">
                         
                       </tbody>
@@ -127,21 +125,21 @@
               </div>
               <div class="col-md-7" id="table_list_items_right">
                 <div class="table-responsive" >
-                  <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
+                  <table class="table table-hover promotionview" style="padding:0px; margin:0px; left:3%;" >
                     <thead>
                       <tr class="header-color">
                         <td style="width:1%" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" id="selectedcheck"/></td>
                         <td style="width:25%;"><input type="text" class="form-control itemsort2_search" placeholder="SKU#" style="border:none;width:100px;"></td>
                         <td style="width:35%;"><input type="text" class="form-control itemsort2_search" placeholder="Item Name" style="border:none;width:100px;"></td>
-                        <td class="text-right" style="width:10%;">Case Qty</td>
+                        <td class="text-left" style="width:10%;">Case Qty</td>
                         <td style="width:10%;">Size</td>
-                        <td class="text-right" style="width:10%;">Pack Qty</td>
-                        <td class="text-right" style="width:10%;">Transfer Qty</td>
+                        <td class="text-left" style="width:10%;">Pack Qty</td>
+                        <td class="text-left" style="width:10%;">Transfer Qty</td>
                       </tr>
                     </thead>
                   </table>
-                  <div class="div-table-content" style="">
-                    <table class="table table-bordered table-hover" id="itemsort2">
+                  <div class="div-table-content">
+                    <table class="table table-hover promotionview" id="itemsort2" style="left:3%;">
                       <tbody style="display: block; height:400px; overflow-y : scroll;">
                         
                       </tbody>
@@ -198,7 +196,7 @@
 
 @section('page-script')
 
-
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
 
 <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css')}}" rel="stylesheet" />
@@ -299,10 +297,10 @@ $(document).on('click', '#add_item_btn', function(event) {
           right_items_html += '<td class="text-center" style="width:1%;"><input type="checkbox" name="checkbox_itemsort2[]" value="'+v.iitemid+'"/></td>';
           right_items_html += '<td style="width:25%;">'+v.vbarcode+'<input type="hidden" name="items['+window.index_item+'][vbarcode]" value="'+v.vbarcode+'"></td>';
           right_items_html += '<td style="width:35%;">'+v.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+v.vitemname+'"></td>';
-          right_items_html += '<td class="text-right" style="width:10%;">'+v.iqtyonhand+'<input type="hidden" name="items['+window.index_item+'][nitemqoh]" value="'+v.iqtyonhand+'"></td>';
+          right_items_html += '<td class="text-left" style="width:10%;">'+v.iqtyonhand+'<input type="hidden" name="items['+window.index_item+'][nitemqoh]" value="'+v.iqtyonhand+'"></td>';
           right_items_html += '<td style="width:10%;"><input type="text" maxlength="50" class="editable editable_all_selected" name="items['+window.index_item+'][vsize]" id="" style="width:35px;"></td>';
-          right_items_html += '<td class="text-right" style="width:10%;"><input type="text" class="editable_all_selected npackqty_class" name="items['+window.index_item+'][npackqty]" value="'+v.npack+'" id="" style="width:35px;text-align:right;"></td>';
-          right_items_html += '<td class="text-right" style="width:10%;"><input type="text" maxlength="10" class="editable_all_selected ntransferqty_class" name="items['+window.index_item+'][ntransferqty]" value="" id="" style="width:35px;text-align:right;"></td>';
+          right_items_html += '<td class="text-left" style="width:10%;"><input type="text" class="editable_all_selected npackqty_class" name="items['+window.index_item+'][npackqty]" value="'+v.npack+'" id="" style="width:35px;text-align:right;"></td>';
+          right_items_html += '<td class="text-left" style="width:10%;"><input type="text" maxlength="10" class="editable_all_selected ntransferqty_class" name="items['+window.index_item+'][ntransferqty]" value="" id="" style="width:35px;text-align:right;"></td>';
           right_items_html += '</tr>';
           window.index_item++;
         });
@@ -689,6 +687,7 @@ $(document).on('submit', 'form#form-transfer', function(event) {
                   left_items_html += '</tr>';
                 });
 
+                $('#itemsort1').addClass('promotionview');
                 $('#itemsort1 tbody').html('');
                 $('#itemsort1 tbody').append(left_items_html);
               }
@@ -701,15 +700,15 @@ $(document).on('submit', 'form#form-transfer', function(event) {
                     right_items_html += '<td style="width:25%;">'+v.vbarcode+'<input type="hidden" name="items['+window.index_item+'][vbarcode]" value="'+v.vbarcode+'"></td>';
                     right_items_html += '<td style="width:35%;">'+v.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+v.vitemname+'"></td>';
                     if(v.onhandcaseqty && v.onhandcaseqty !=0){
-                      right_items_html += '<td class="text-right" style="width:10%;">'+parseInt(v.onhandcaseqty)+'<input type="hidden" name="items['+window.index_item+'][nitemqoh]" value="'+parseInt(v.onhandcaseqty)+'"></td>';
+                      right_items_html += '<td class="text-left" style="width:10%;">'+parseInt(v.onhandcaseqty)+'<input type="hidden" name="items['+window.index_item+'][nitemqoh]" value="'+parseInt(v.onhandcaseqty)+'"></td>';
                     }else{
-                      right_items_html += '<td class="text-right" style="width:10%;"><input type="hidden" name="items['+window.index_item+'][nitemqoh]" value=""></td>';
+                      right_items_html += '<td class="text-left" style="width:10%;"><input type="hidden" name="items['+window.index_item+'][nitemqoh]" value=""></td>';
                     }
                     
 
                     right_items_html += '<td style="width:10%;"><input type="text" maxlength="50" class="editable" name="items['+window.index_item+'][vsize]" value="'+v.vsize+'" id="" style="width:35px;"></td>';
-                    right_items_html += '<td class="text-right" style="width:10%;"><input type="text" class="editable_all_selected npackqty_class" name="items['+window.index_item+'][npackqty]" value="'+v.npackqty+'" id="" style="width:35px;text-align:right;"></td>';
-                    right_items_html += '<td class="text-right" style="width:10%;"><input type="text" maxlength="10" class="editable_all_selected ntransferqty_class" name="items['+window.index_item+'][ntransferqty]" value="" id="" style="width:35px;text-align:right;"></td>';
+                    right_items_html += '<td class="text-left" style="width:10%;"><input type="text" class="editable_all_selected npackqty_class" name="items['+window.index_item+'][npackqty]" value="'+v.npackqty+'" id="" style="width:35px;text-align:right;"></td>';
+                    right_items_html += '<td class="text-left" style="width:10%;"><input type="text" maxlength="10" class="editable_all_selected ntransferqty_class" name="items['+window.index_item+'][ntransferqty]" value="" id="" style="width:35px;text-align:right;"></td>';
                     right_items_html += '</tr>';
                     window.index_item++;
                   });
