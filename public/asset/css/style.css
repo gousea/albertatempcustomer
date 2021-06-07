@@ -715,4 +715,9 @@ and (max-device-width : 1024px){
     .navbar-nav .nav-link {
         padding-left: 20px;
     }
+
+    .required .control-label {
+        content:"*";
+        color:red;
+      }
 }
