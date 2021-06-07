@@ -66,9 +66,9 @@
                 <table id="aisleTable" class="text-center table  table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                   <thead style="background-color: #286fb7!important;">
                     <tr>
-                      <td style="width: 1px;color:black;" class="text-center">
+                      <th style="width: 1px;color:black;" class="text-center">
                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                      </td>
+                      </th>
                       <!-- previous code <td style="width: 1px;" class="text-center">
                       <input type="checkbox"  onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td> -->
                         <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
@@ -117,6 +117,38 @@
   </div>
 </div>
 
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('page-script')
@@ -157,7 +189,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input class="btn btn-success" type="submit" value="Save" id="saveAisleButton">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn  btn-outline-primary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>
@@ -182,35 +214,24 @@
     });
 
     $(document).on('click','#save_button', function(e){
-
       e.preventDefault();
-
       $("div#divLoading").addClass('show');
-
       var avArr = [];
-
       $("#aisleTable input[type=checkbox]:checked").each(function () {
-
         var id =$(this).val();
         var name = $(this).closest('tr').find('.aisle_c').val();
-         
         avArr.push({
           id: id,
           aislename: name
-              
         });
       });
       
       if(avArr.length < 1){
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "You did not select anything", 
-            callback: function(){location.reload(true);}
-        });
-        $("div#divLoading").removeClass('show');
-        return false;
-    }
+          $('#warning_msg').html("You did not select anything");
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
+          return false;
+      }
 
       $.ajax({
           type: 'POST',
@@ -218,41 +239,23 @@
           url: '/updateaisle',
           contentType: 'application/json',
           datatype: 'json',
-          data: JSON.stringify(avArr) // access in body
-      }).success(function (e) {
-
-            location.reload();
-      }).fail(function (msg) {
-
-         //console.log('FAIL');
-        let mssg = '<div class="alert alert-danger">';
-        
-        //console.log(msg);
-        let errors = msg.responseJSON;
-        //console.log(errors);
-
-        $.each(errors, function(k, err){
-        //   console.log(err);
-          $.each(err, function(key, error){
-            // console.log(error);
-            mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-          });
-        });
-
-        mssg += '</div>';
-        
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: mssg, 
-            callback: function(){location.reload(true);}
-        });
-        
-        $("div#divLoading").removeClass('show');
-
-      }).done(function (msg) {
-          $("div#divLoading").removeClass('show');
-
+          data: JSON.stringify(avArr), // access in body
+          success: function(result) {
+                location.reload();
+          },
+          error : function (msg) {
+              let mssg = '<div class="alert alert-danger">';
+              let errors = msg.responseJSON;
+              $.each(errors, function(k, err){
+                $.each(err, function(key, error){
+                  mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+                });
+              });
+              mssg += '</div>';
+              $('#error_msg').html(mssg);
+              $("div#divLoading").removeClass('show');
+              $('#errorModal').modal('show');
+          }
       });
 
     });
@@ -323,25 +326,15 @@
 
 <script type="text/javascript">
   $(document).on('submit', 'form#add_new_form', function(event) {
-    $("div#divLoading").addClass('show');
-
-    $('#addModal').modal('hide');
-    $('.modal-backdrop').hide();
-
-    if($('form#add_new_form #add_aislename').val() == ''){
-     // alert('Please enter Shelf Name!');
-       bootbox.alert({ 
-         size: 'small',
-         title: "Attention", 
-         message: "Please enter Aisle Name!", 
-         callback: function(){}
-       });
-
-      $("div#divLoading").removeClass('show');
-       return false;
-    }
-
-    
+      $("div#divLoading").addClass('show');
+      $('#addModal').modal('hide');
+      $('.modal-backdrop').hide();
+      if($('form#add_new_form #add_aislename').val() == ''){
+          $('#warning_msg').html("Please enter Aisle Name!");
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
+          return false;
+      }
   });
 </script>
 
@@ -350,9 +343,6 @@
     $("div#divLoading").addClass('show');
   });
 
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
 </script>
 
 <!-- Delete Shelfname -->
@@ -369,12 +359,11 @@
         var data = [];
 
         if($("input[name='selected[]']:checked").length == 0){
-          bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: 'Please Select Aisle to Delete!', 
-            callback: function(){}
-          });
+         
+          $('#warning_msg').html("Please Select Aisle to Delete!");
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
+          
           return false;
         }
 
@@ -398,25 +387,13 @@
             contentType: "application/json",
             dataType: 'json',
           success: function(data) {
-
-            if(data.status == 0){
               $('#success_msg').html('<strong>Asile Deleted successfully</strong>');
               $("div#divLoading").removeClass('show');
               $('#successModal').modal('show');
-
               setTimeout(function(){
                   $('#successModal').modal('hide');
                   window.location.reload();
               }, 3000);
-            }else{
-
-              $('#error_msg').html('<strong>'+ data.error +'</strong>');
-              $("div#divLoading").removeClass('show');
-              $('#errorModal').modal('show');
-
-            }
-
-
           },
           error: function(xhr) { // if error occured
             var  response_error = $.parseJSON(xhr.responseText); //decode the response array

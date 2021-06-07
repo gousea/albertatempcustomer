@@ -74,7 +74,7 @@ class="form-horizontal">
                                     <input type="text" name="vfname" maxlength="25" value="{{ old('vfname') }}"
                                         placeholder="FIRST NAME" id="input-first-name" class="form-control"
                                         onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"
-                                        required />
+                                        />
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -264,7 +264,7 @@ class="form-horizontal">
 
             <?php if ($version->ver_no == '3.1.0') { ?>
 
-            <div class="container-fluid">
+            <div class="container">
                 <div class="mytextdiv">
                     <div class="mytexttitle font-weight-bold text-uppercase menu">
                         GENERAL INFO

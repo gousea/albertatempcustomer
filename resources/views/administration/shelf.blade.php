@@ -67,9 +67,9 @@
                   <table id="shelfTable" class="text-center table  table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                     <thead style="background-color: #286fb7!important;" >
                       <tr>
-                        <td style="width: 1px;color:black;" class="text-center">
+                        <th style="width: 1px;color:black;" class="text-center">
                           <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                        </td>
+                        </th>
                         <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Name</th>
 
                         <!-- <td class="text-center">Action</td> -->
@@ -121,6 +121,40 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('page-script')
@@ -185,7 +219,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input class="btn btn-success" type="submit" value="Save" id="saveShelfButton">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>
@@ -213,80 +247,52 @@
 
     
   $(document).on('click','#save_button', function(e){
-
-    e.preventDefault();
-
-    $("div#divLoading").addClass('show');
-
-    var avArr = [];
-
-    $("#shelfTable input[type=checkbox]:checked").each(function () {
-
-      var id =$(this).val();
-      var name = $(this).closest('tr').find('.shelf_c').val();
-        
-      avArr.push({
-        Id: id,
-        shelfname: name
-            
-      });
-    });
-
-    if(avArr.length < 1){
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "You did not select anything", 
-            callback: function(){location.reload(true);}
+        e.preventDefault();
+        $("div#divLoading").addClass('show');
+        var avArr = [];
+        $("#shelfTable input[type=checkbox]:checked").each(function () {
+          var id =$(this).val();
+          var name = $(this).closest('tr').find('.shelf_c').val();
+          avArr.push({
+              Id: id,
+              shelfname: name
+                  
+            });
         });
-        $("div#divLoading").removeClass('show');
-        return false;
-    }
+
+        if(avArr.length < 1){
+            
+            $('#warning_msg').html('You did not select anything');
+            $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
+            return false;
+        }
 
     $.ajax({
         type: 'POST',
         headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
         url: '/updateshelf',
         contentType: 'application/json',
-        data: JSON.stringify(avArr) // access in body
-    }).success(function (e) {
-        //console.log('SUCCESS');
-        //console.log(e);
-        location.reload();
-    }).fail(function (msg) {
-      
-        //console.log('FAIL');
-        let mssg = '<div class="alert alert-danger">';
-        
-        //console.log(msg);
-        let errors = msg.responseJSON;
-        //console.log(errors);
+        data: JSON.stringify(avArr), // access in body
+        success: function (e) {
+            location.reload();
+        },
+        error: function (msg) {
+              let mssg = '<div class="alert alert-danger">';
+              let errors = msg.responseJSON;
+              $.each(errors, function(k, err){
+                $.each(err, function(key, error){
+                  mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+                });
+              });
+              mssg += '</div>';
+              
+              $('#error_msg').html(mssg);
+              $("div#divLoading").removeClass('show');
+              $('#errorModal').modal('show');
 
-        $.each(errors, function(k, err){
-        //   console.log(err);
-          $.each(err, function(key, error){
-            // console.log(error);
-            mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-          });
-        });
-
-        mssg += '</div>';
-        
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: mssg, 
-            callback: function(){location.reload(true);}
-        });
-        
-        $("div#divLoading").removeClass('show');
-
-    }).done(function (msg) {
-       // console.log('DONE');
-        $("div#divLoading").removeClass('show');
-
+          },
     });
-
   });
 
     // Serch Code
@@ -361,15 +367,9 @@
     $('.modal-backdrop').hide();
 
     if($('form#add_new_form #add_shelfname').val() == ''){
-      // alert('Please enter Shelf Name!');
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: "Please enter Shelf Name!", 
-        callback: function(){}
-      });
-
+      $('#warning_msg').html('Please enter Shelf Name!');
       $("div#divLoading").removeClass('show');
+      $('#warningModal').modal('show');
       return false;
     }
 
@@ -392,12 +392,10 @@
         var data = [];
 
         if($("input[name='selected[]']:checked").length == 0){
-          bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: 'Please Select Shelf to Delete!', 
-            callback: function(){}
-          });
+
+          $('#warning_msg').html('Please Select Shelf to Delete!');
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
           return false;
         }
 
@@ -421,7 +419,6 @@
             contentType: "application/json",
             dataType: 'json',
           success: function(data) {
-            if(data.status == 0){
               $('#success_msg').html('<strong>Shelf is deleted successfully</strong>');
               $("div#divLoading").removeClass('show');
               $('#successModal').modal('show');
@@ -429,11 +426,6 @@
                   $('#successModal').modal('hide');
                   window.location.reload();
               }, 2000);
-            }else{
-              $('#error_msg').html('<strong>'+ data.error +'</strong>');
-              $("div#divLoading").removeClass('show');
-              $('#errorModal').modal('show');
-            }
           },
           error: function(xhr) { // if error occured
             var  response_error = $.parseJSON(xhr.responseText); //decode the response array

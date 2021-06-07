@@ -15,7 +15,7 @@
                 <div class="nav-submenu">
                     <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
                     <button type="button" onclick="addPaidOut();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
-                    <button type="button" id="paid_delete" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+                    <button type="button" id="paid_delete"  onclick="myFunction()" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
                 </div>
             </div> <!-- navbar-collapse.// -->
         </div>
@@ -70,7 +70,9 @@
                 <table id="paid_out" class="table table-hover"  style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                   <thead style="background-color: #286fb7!important;" >
                     <tr>
-                      <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>
+                      <th style="width: 1px;color:black;" class="text-center">
+                          <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                      </th>
                       <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Paid Out</th>
                       <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Status</th>
                     </tr>
@@ -114,6 +116,56 @@
           </div>
         </div>
     </section>
+</div>
+
+
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -176,7 +228,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input class="btn btn-success" type="submit" value="Save">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-outline-primary " data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>
@@ -200,30 +252,11 @@
     $('.modal-backdrop').hide();
 
     if($('form#add_new_form #add_vpaidoutname').val() == ''){
-      // alert('Please enter name!');
-       bootbox.alert({ 
-         size: 'small',
-         title: "Attention", 
-         message: "Please enter name!", 
-         callback: function(){}
-       });
-
+      $('#warning_msg').html('Please enter name!');
       $("div#divLoading").removeClass('show');
+      $('#warningModal').modal('show');
         return false;
     }
-
-    // if($('form#add_new_form #add_vpaidoutname').val() == ''){
-    //   // alert('Please enter name!');
-    //   bootbox.alert({ 
-    //      size: 'small',
-    //      title: "Attention", 
-    //      message: "Please Enter Status!", 
-    //      callback: function(){}
-    //   });
-    //   $("div#divLoading").removeClass('show');
-    //   return false;
-    // }
-
   });
 
 </script>
@@ -233,9 +266,6 @@
     $("div#divLoading").addClass('show');
   });
 
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
 </script>
 
 <!-- Save data -->
@@ -255,37 +285,24 @@
   });
 
   $(document).on('click','#save_button', function(e){
-
     e.preventDefault();
-
     $("div#divLoading").addClass('show');
-
     var avArr = [];
-
     $("#paidout input[type=checkbox]:checked").each(function () {
-
       var id = $(this).val();
       var name = $(this).closest('tr').find('.paidouts_c').val();
       var status = $(this).closest('tr').find('.status_c').val();
-    //   console.log(id);
-    //   console.log(name); 
-    //   console.log(status); 
       avArr.push({
         ipaidoutid: id,
         vpaidoutname:name,
         estatus: status
-            
       });
     });
     
     if(avArr.length < 1){
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "You did not select anything", 
-            callback: function(){location.reload(true);}
-        });
+        $('#warning_msg').html('You did not select anything');
         $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
 
@@ -294,45 +311,24 @@
         headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
         url: '/updatepaidout',
         contentType: 'application/json',
-        data: JSON.stringify(avArr) // access in body
-    }).success(function (e) {
-        // console.log('SUCCESS');
-        // console.log(e);
-        location.reload();
-    }).fail(function (msg) {
-        
-      //console.log('FAIL');
-        let mssg = '<div class="alert alert-danger">';
-        
-        //console.log(msg);
-        let errors = msg.responseJSON;
-        //console.log(errors);
-
-        $.each(errors, function(k, err){
-        //   console.log(err);
-          $.each(err, function(key, error){
-            // console.log(error);
-            mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-          });
-        });
-
-        mssg += '</div>';
-        
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: mssg, 
-            callback: function(){location.reload(true);}
-        });
-        
-        $("div#divLoading").removeClass('show');
-
-    }).done(function (msg) {
-        //console.log('DONE');
-        $("div#divLoading").removeClass('show');
-
+        data: JSON.stringify(avArr),  // access in body
+        success : function (e) {
+            location.reload();
+        },
+        error: function (msg) {
+            let mssg = '<div class="alert alert-danger">';
+            let errors = msg.responseJSON;
+            $.each(errors, function(k, err){
+              $.each(err, function(key, error){
+                mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+              });
+            });
+            mssg += '</div>';
+            $('#error_msg').html(mssg);
+            $("div#divLoading").removeClass('show');
+            $('#errorModal').modal('show');
+        }
     });
-
   });
 
   // Search Code
@@ -411,7 +407,6 @@
   function myFunction() {
     var result = confirm("Want to delete?");
     if (result) {
-
       $(document).on('click', '#paid_delete', function(event) {
         event.preventDefault();
         var delete_aisle_url = 'deletepaidout';
@@ -419,12 +414,9 @@
         var data = [];
 
         if($("input[name='selected[]']:checked").length == 0){
-          bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: 'Please Select paidout to Delete!', 
-            callback: function(){}
-          });
+          $('#warning_msg').html('Please Select paidout to Delete!');
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
           return false;
         }
 
@@ -447,44 +439,27 @@
             type : 'POST',
             contentType: "application/json",
             dataType: 'json',
-          success: function(data) {
-            //console.log('Success');
-
-            if(data.status == 0){
-              //console.log('status');
-              $('#success_msg').html('<strong>'+ data.success +'</strong>');
-              $("div#divLoading").removeClass('show');
-              $('#successModal').modal('show');
-
-              setTimeout(function(){
-                  $('#successModal').modal('hide');
-                  window.location.reload();
-              }, 2000);
-            }else{
-
-              $('#error_msg').html('<strong>'+ data.error +'</strong>');
-              $("div#divLoading").removeClass('show');
-              $('#errorModal').modal('show');
-
+            success: function(data) {
+                $('#success_msg').html('<strong>Paid Out Deleted successfully!</strong>');
+                $("div#divLoading").removeClass('show');
+                $('#successModal').modal('show');
+                setTimeout(function(){
+                    $('#successModal').modal('hide');
+                    window.location.reload();
+                }, 2000);
+            },
+            error: function(xhr) { // if error occured
+                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+                var error_show = '';
+                if(response_error.error){
+                  error_show = response_error.error;
+                }else if(response_error.validation_error){
+                  error_show = response_error.validation_error[0];
+                }
+                $('#error_alias').html('<strong>'+ error_show +'</strong>');
+                $('#errorModal').modal('show');
+                return false;
             }
-
-
-          },
-          error: function(xhr) { // if error occured
-            var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-            
-            var error_show = '';
-
-            if(response_error.error){
-              error_show = response_error.error;
-            }else if(response_error.validation_error){
-              error_show = response_error.validation_error[0];
-            }
-
-            $('#error_alias').html('<strong>'+ error_show +'</strong>');
-            $('#errorModal').modal('show');
-            return false;
-          }
         });
       });
     }
