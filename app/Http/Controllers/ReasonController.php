@@ -85,7 +85,7 @@ class ReasonController extends Controller
             $reason->vreasonename = $inp['vreasonename'];
             $reason->save();
         }
-        $req->session()->flash('message','Success: you have modified AisleName!');
+        $req->session()->flash('message','Success: you have modified Reason!');
         return response()->json(['key' => 'value'], 200);
 
     }

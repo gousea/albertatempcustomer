@@ -303,7 +303,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="expire_dt" value="{{ old('expire_dt') }}" autocomplete="off"
-                                        placeholder="ID EXPIRE DATE" id="expire_dt" class="datetimepicker form-control" />
+                                        placeholder="ID EXPIRE DATE" id="expire_dt" class="form-control" />
                                     <span id="ex_dt" style="color: red"></span>
                                 </div>
                             </div>
@@ -317,7 +317,7 @@ class="form-horizontal">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="birth_dt" value="{{ old('birth_dt') }}" autocomplete="off"
-                                        placeholder="BIRTH DATE" id="birth_dt" class="datetimepicker form-control" />
+                                        placeholder="BIRTH DATE" id="birth_dt" class="form-control" />
                                     <span id="br_dt" style="color: red"></span>
                                 </div>
                             </div>
@@ -334,29 +334,56 @@ class="form-horizontal">
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
-    <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
+    {{-- old date picker --}}
+    {{-- <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" /> --}}
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     {{-- <script src="{{ asset('javascript/bootstrap-datepicker.js')}}"></script> --}}
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {{-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
 
     <script>
-        $(function() {
-            $('#expire_dt').datepicker({
-                dateFormat: 'yy-mm-dd',
+        $(function(){
+            $("#expire_dt").datepicker({
+                format: 'yyyy-mm-dd',
                 todayHighlight: true,
                 autoclose: true,
+                widgetPositioning:{
+                    horizontal: 'auto',
+                    vertical: 'bottom'
+                }
             });
         });
+        $(function(){
+            $("#birth_dt").datepicker({
+                format: 'yyyy-mm-dd',
+                todayHighlight: true,
+                autoclose: true,
+                widgetPositioning:{
+                    horizontal: 'auto',
+                    vertical: 'bottom'
+                }
+            });
+        });
+        // $(function() {
+        //     $('#expire_dt').datepicker({
+        //         dateFormat: 'yy-mm-dd',
+        //         todayHighlight: true,
+        //         autoclose: true,
+        //     });
+        // });
 
-        $(function() {
-            $('#birth_dt').datepicker({
-                dateFormat: 'yy-mm-dd',
-                todayHighlight: true,
-                autoclose: true,
-            });
-        });
+        // $(function() {
+        //     $('#birth_dt').datepicker({
+        //         dateFormat: 'yy-mm-dd',
+        //         todayHighlight: true,
+        //         autoclose: true,
+        //     });
+        // });
         // $(".form_datetime").datetimepicker({
         //     format: "dd MM yyyy - hh:ii",
         //     autoclose: true,
