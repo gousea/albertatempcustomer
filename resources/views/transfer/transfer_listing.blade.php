@@ -7,7 +7,7 @@
 <div id="content">
     
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-        <div class="container-fluid">
+        <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
                     <h6><span class="font-weight-bold text-uppercase"> <?php echo $text_list; ?></span></h6>
@@ -21,7 +21,7 @@
     
     <section class="section-content py-6">
         
-        <div class="container-fluid">
+        <div class="container">
           <?php if ($error_warning) { ?>
           <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
