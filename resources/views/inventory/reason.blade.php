@@ -11,7 +11,7 @@
     <div class="container">
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
-                <span class="font-weight-bold text-uppercase"> Category</span>
+                <span class="font-weight-bold text-uppercase"> Reason</span>
             </div>
             <div class="nav-submenu">
                 <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
@@ -193,6 +193,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <!-- Save data -->
 
@@ -328,7 +329,7 @@
                  html +='</td>';
                  html +='<td class="text-left">';
                  html +='<span style="display:none;">'+v.vreasonename+'</span>';
-                 html +='<input type="text" maxlength="50" class="editable adjustment_reason" name="adjustment_reason['+v.ireasonid+'][\'vreasonename\']" id="adjustment_reason['+v.ireasonid+'][\'vreasonename\']" value="'+v.vreasonename+' ">';
+                 html +='<input type="text" style="border:none;" maxlength="50" class="editable adjustment_reason" name="adjustment_reason['+v.ireasonid+'][\'vreasonename\']" id="adjustment_reason['+v.ireasonid+'][\'vreasonename\']" value="'+v.vreasonename+' ">';
                  html +='<input type="hidden" name="adjustment_reason['+v.ireasonid+'][\'ireasonid\']" value="'+v.vreasonename+'">';
                  html +='</td>';
                  html +='<td class="text-left">';

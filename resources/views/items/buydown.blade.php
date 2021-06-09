@@ -11,7 +11,7 @@ Buy Down
 <div id="content" >
 
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-        <div class="container-fluid">
+        <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
                     <span class="font-weight-bold text-uppercase"> Buy Down</span>
@@ -26,7 +26,7 @@ Buy Down
     </nav>
     
     <section class="section-content py-6">
-        <div class="container-fluid">
+        <div class="container">
             
             @if (session()->has('message'))
             <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
