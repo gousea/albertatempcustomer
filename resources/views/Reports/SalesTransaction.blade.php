@@ -94,7 +94,7 @@ Sales Transaction
                        </div>
                        
                       <div class="col-auto">
-                      <input type="submit" class="btn btn-success rcorner" name="Submit" value="Generate">
+                      <input type="submit" class="btn btn-success rcorner header-color" name="Submit" value="Generate">
                     </div>
                     
               </form>
