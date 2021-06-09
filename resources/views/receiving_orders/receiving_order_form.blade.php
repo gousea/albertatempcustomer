@@ -257,7 +257,7 @@
                                         </div>
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
-                                          <input type="text" name="city" value="<?php echo isset($data['city']) ? $data['city'] : ''; ?>" placeholder="City" id="input_city" class="form-control adjustment-fields" />
+                                          <input type="text" name="city" value="<?php echo isset($data['vcity']) ? $data['vcity'] : ''; ?>" placeholder="City" id="input_city" class="form-control adjustment-fields" />
                                           
                                         </div>
                                       </div>
@@ -752,10 +752,13 @@
 </style>
 
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
-<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
-<script src="{{ asset('javascript/bootstrap-datepicker.js') }}" defer></script>
+{{-- <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
+<script src="{{ asset('javascript/bootstrap-datepicker.js') }}" defer></script> --}}
 <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
 {{-- <script type="text/javascript" src="{{ asset('javascript/table-fixed-header.js') }}"></script> --}}
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
 
 <style>
   .padding-left-right{
@@ -928,6 +931,7 @@
           $('input[name="vvendorstate"]').val(result.vendor.vstate);
           $('input[name="vvendorzip"]').val(result.vendor.vzip);
           $('input[name="vvendorphone"]').val(result.vendor.vphone);
+          $('input[name="city"]').val(result.vendor.vcity);
 
           $('#myTab li:eq(1)').css('pointer-events','all');
         }
@@ -943,6 +947,8 @@
       $('input[name="vvendorstate"]').val('');
       $('input[name="vvendorzip"]').val('');
       $('input[name="vvendorphone"]').val('');
+      $('input[name="city"]').val('');
+
       $('#myTab li:eq(1)').css('pointer-events','none');
       $("div#divLoading").removeClass('show');
     }
@@ -950,8 +956,8 @@
   });
 </script>
 
-<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{{-- <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> --}}
+{{-- <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
 
 <script>
     $(function() {
@@ -2556,9 +2562,9 @@ $('.editable_text').focus(function() {
       $('.tab-content #general_tab').removeClass('active');
       $('.tab-content #item_tab').addClass('active');
 
-      $('.table').fixedHeader({
-          topOffset: 0
-        });
+      // $('.table').fixedHeader({
+      //     topOffset: 0
+      //   });
         
       $.cookie("tab_selected_po", 'item_tab'); //set cookie tab
     }
