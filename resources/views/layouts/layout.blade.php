@@ -59,6 +59,7 @@ rel="stylesheet" /> --}}
 </head>
 
 <body class="bg-light">
+    <div id="divLoading" class="show"></div>
     <header class="section-header">
         <div class="navbar navbar-expand-lg navbar-dark bg-primary headermenublue top">
             <div class="container">
@@ -158,8 +159,18 @@ rel="stylesheet" /> --}}
     @include('layouts.footer')
 
     <script type="text/javascript">
+        $(window).on('load', function() {
+            $("div#divLoading").removeClass('show');
+        });
+
+        $(window).on('beforeunload', function(){
+            $("div#divLoading").addClass('show');
+        });
+    </script>
+    <script type="text/javascript">
         $(document).ready(function() {
             /*to top*/
+ 
             $(window).scroll(function() {
                 if ($(this).scrollTop() > 200) {
                     $('.scrollToTop').fadeIn();

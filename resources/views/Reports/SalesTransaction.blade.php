@@ -501,12 +501,16 @@ $(document).ready(function() {
   width: 100% !important;
   }
   .select2-container--default .select2-selection--single .select2-selection__rendered{
-    line-height: 35px !important;
+    line-height: 38px !important;
     border-radius: 9px !important;
   }
 </style>
 <script>
     $('select[name="report_by"]').select2();
+    $('select[name="amount_by"]').select2();
+    $('select[name="iuserid"]').select2();
+    
+    
 </script>
 
 <!--<script src="view/javascript/table-fixed-header.js" ></script>-->

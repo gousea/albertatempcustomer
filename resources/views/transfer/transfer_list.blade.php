@@ -203,7 +203,12 @@
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 {{-- <script src="{{ asset('javascript/bootstrap-datepicker.js')}}"></script> --}}
-<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{{-- <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script> --}}
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+
 
 <script type="text/javascript">
 $.ajaxSetup({
@@ -400,7 +405,7 @@ $(document).on('click', '#save_button_transfer', function(event) {
   if($('#itemsort2 > tbody > tr').length == 0){
     bootbox.alert({ 
       size: 'small',
-      title: "Attention", 
+      title: "  ", 
       message: "please add Items", 
       callback: function(){}
     });
@@ -412,7 +417,7 @@ $(document).on('click', '#save_button_transfer', function(event) {
     if($('#transfer_vinvnum').val() == ''){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please enter invoice", 
         callback: function(){}
       });
@@ -422,7 +427,7 @@ $(document).on('click', '#save_button_transfer', function(event) {
     if(($.trim($('#transfer_vinvnum').val())).length==0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -444,7 +449,7 @@ $(document).on('click', '#save_button_transfer', function(event) {
       if(data.error){
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "Invoice Already Exist!", 
           callback: function(){}
         });
@@ -466,7 +471,7 @@ $(document).on('click', '#save_button_transfer', function(event) {
       }
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: error_show, 
         callback: function(){}
       });
@@ -495,7 +500,7 @@ $(document).on('submit', 'form#form-transfer', function(event) {
       setTimeout(function(){
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "Successfully Updated Transfer!!!", 
           callback: function(){}
         });
@@ -504,7 +509,7 @@ $(document).on('submit', 'form#form-transfer', function(event) {
       var cancel_url = '<?php echo $cancel; ?>';
     
       cancel_url = cancel_url.replace(/&amp;/g, '&');
-      window.location.href = cancel_url;
+      // window.location.href = cancel_url;
       $("div#divLoading").addClass('show');
       
     },
@@ -535,9 +540,16 @@ $(document).on('submit', 'form#form-transfer', function(event) {
 
     $('#transfer_date').each(function(){
         $(this).datepicker({
-          dateFormat: 'mm-dd-yy',
+          
+          format: 'mm-dd-yyyy',
           todayHighlight: true,
           autoclose: true,
+          widgetPositioning:{
+                                  horizontal: 'auto',
+                                  vertical: 'bottom'
+                              }
+        
+        
         });
     });
   
@@ -712,7 +724,7 @@ $(document).on('submit', 'form#form-transfer', function(event) {
                     right_items_html += '</tr>';
                     window.index_item++;
                   });
-
+                  
                   $('#itemsort2 tbody').html('');
                   $('#itemsort2 tbody').append(right_items_html);
                 }
