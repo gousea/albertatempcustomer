@@ -4,7 +4,7 @@ Vendor Paid Out Report
 @endsection
 @section('main-content')
 
-<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue"
         <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
@@ -38,7 +38,7 @@ Vendor Paid Out Report
                     
                             <div class="row">
                                 
-                                 <div class='mx-sm-4 mb-2"'>
+                                 <div class='mx-sm-4 mb-2'>
                                     <div class="form-group">
                                         <div class='input-group date ' id='start_date_container'>
                                             <input type='text' class="form-control datePicker"  style="border-radius: 9px"; name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Start Date" readonly />
@@ -70,7 +70,7 @@ Vendor Paid Out Report
                             </div>
                             
                 <div class=" mx-sm-2 mb-2">
-               <select name="vendorid" class="form-control "   style="border-radius: 9px";id="vendorid">
+               <select name="vendorid" class="form-control "   id="vendorid">
                    <option value ='' >Select Vendor</option>
                    <option value='All' selected="selected">All </option>
                     
@@ -175,12 +175,13 @@ Vendor Paid Out Report
                                 </tr>
                     </thead>              
                             <?php 
+                            
                                 $count = 0; 
                                 foreach($report_paid_out as $v){?>
                                  <?php if($v->Vendor === "Total"){
                                  continue;
                                  }?>
-                        <tbody>      
+                           
                                     <tr>
                                             
                                            <td><?php echo isset($v->dt) ? $v->dt: ""; ?></td>
@@ -198,7 +199,7 @@ Vendor Paid Out Report
                                 <?php } ?>
                     
                          
-                        </tbody>   
+                        
                         </table>
                         </div>
                       
@@ -234,7 +235,7 @@ Vendor Paid Out Report
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" ></script>
 
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
-<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+
 <script type="text/javascript">
 
    $(document).ready(function() {
@@ -371,7 +372,7 @@ Vendor Paid Out Report
     line-height: 31px !important;
 }
 .select2-container .select2-selection--single {
-    height: 35px !important;
+    height: 38px !important;
 }
 .select2-selection__arrow {
     height: 34px !important;
@@ -379,6 +380,10 @@ Vendor Paid Out Report
 </style>
 <script>
     $('select[name="vendorid"]').select2();
+    $('select[name="amount_by"]').select2();
+    $('select[name="amount"]').select2();
+    
+    
 </script>
 
 <style type="text/css">
