@@ -164,6 +164,10 @@
 </script>
 
 <script type="text/javascript">
+
+    $(window).on('load', function() {
+      $("div#divLoading").removeClass('show');
+    });
     $(document).ready(function($) {
   
       $("div#divLoading").addClass('show');
@@ -173,6 +177,8 @@
             
       $("div#divLoading").removeClass('show');
     });
+
+
   
     $(document).on('keypress keyup blur', 'input[name="vzip"],input[name="isequence"]', function(event) {
   
