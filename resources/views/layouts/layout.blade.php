@@ -159,8 +159,18 @@ rel="stylesheet" /> --}}
     @include('layouts.footer')
 
     <script type="text/javascript">
+        $(window).on('load', function() {
+            $("div#divLoading").removeClass('show');
+        });
+
+        $(window).on('beforeunload', function(){
+            $("div#divLoading").addClass('show');
+        });
+    </script>
+    <script type="text/javascript">
         $(document).ready(function() {
             /*to top*/
+ 
             $(window).scroll(function() {
                 if ($(this).scrollTop() > 200) {
                     $('.scrollToTop').fadeIn();
