@@ -161,6 +161,7 @@ ITEM SUMMARY REPORT
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="{{ asset('javascript/bootbox.min.js')}}"></script>
 <script src="{{ asset('javascript/table-fixed-header.js')}}" ></script>
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
 
 <style type="text/css">
