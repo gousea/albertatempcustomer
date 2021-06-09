@@ -59,6 +59,7 @@ rel="stylesheet" /> --}}
 </head>
 
 <body class="bg-light">
+    <div id="divLoading" class="show"></div>
     <header class="section-header">
         <div class="navbar navbar-expand-lg navbar-dark bg-primary headermenublue top">
             <div class="container">
