@@ -4162,9 +4162,10 @@ $('.editable_text').focus(function() {
 </script>
 
 <script type="text/javascript">
-  // $(window).load(function() {
-  //   $("div#divLoading").removeClass('show');
-  // });
+  $(window).on('load', function() {
+      $("div#divLoading").removeClass('show');
+  });
+
   
   //  $(document).ready(function(){
   //       $('.table').fixedHeader({
