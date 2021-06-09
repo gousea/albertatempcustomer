@@ -1,149 +1,77 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title')
-  Item Summary Report
+ITEM SUMMARY REPORT
 @endsection
 @section('main-content')
 
-<div id="content">
-  <div class="page-header">
-      <div class="container-fluid">
-      <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-              <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-              <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-              <?php //} ?>
-          </ul>
-      </div>
-  </div>
-  <div class="container-fluid">  
-  <div class="panel panel-default">
-      <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo "Item Summary"; ?></h3>
-      </div>
-      <div class="panel-body">
-          
-            <?php if(isset($data_error)){ ?>
-                    <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> Sorry no data found!
-                      <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    </div>  
-            <?php } ?>
-          
-            @if(Session::has('success'))
-                <div class="alert alert-success">
-                      {{ Session::get('success') }}
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase">ITEM SUMMARY REPORT</span>
                 </div>
-            @endif
-          
-        @if(session()->has('message'))
-            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>      
-        @endif
-        @if(session()->has('error'))
-            <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>      
-        @endif
-
-        @if ($errors->any())
-          <div class="alert alert-danger">
-            <ul>
-              @foreach ($errors->all() as $error)
-                <li>{{$error}}</li>
-              @endforeach
-            </ul>
-          </div>                
-        @endif
-
-    
-      <div class="row" style="padding-bottom: 15px;float: right;">
-        <div class="col-md-12">
-          <a id="csv_export_btn" href="{{route('itemsummarycsv_export')}}" class="pull-right" style="margin-right:10px;"><i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV</a>
-          <a href="{{route('itemsummaryprint_page')}}" id="btnPrint" class="pull-right" style="margin-right:10px;"><i class="fa fa-print" aria-hidden="true"></i> Print</a>
-        <a id="pdf_export_btn" href="{{route('itemsummarypdf_save_page')}}" class="pull-right" style="margin-right:10px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a>
+                <div class="nav-submenu">
+                       <?php if(isset($item_summary) && count($item_summary) > 0){ ?>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('itemsummaryprint_page')}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            </a>
+                        <?php } ?>
+                </div>
+            </div> 
         </div>
-      </div>
-      
-      <div class="clearfix"></div>
+    </nav>
 
-      <div class="row">
+<section class="section-content py-6"> 
+
+<div class="container">
+          
+       
+        <h6><span>SEARCH PARAMETERS </span></h6>
+        <br>
+        
           <form method="post" id="filter_form">
             @csrf
-            @method('post')
-              <div class='col-md-12'>
-                  <div class="col-md-2">
-                      <input type="" autocomplete="off" class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" autocomplete="off">
+           
+            <div class="row">
+             
+                  <div class="col-md-3">
+                      <input type="" autocomplete="off" class="form-control rcorner" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" autocomplete="off">
                   </div> 
-                  <div class="col-md-2">
-                      <input type="" autocomplete="off" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" autocomplete="off">
+                  
+                  <div class="col-md-3">
+                      <input type="" autocomplete="off" class="form-control rcorner" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" autocomplete="off">
                   </div>
               
                   <div class="col-md-2">
-                    <input type="submit" class="btn btn-success align-bottom" value="Generate">
+                    <input type="submit" class="btn btn-success align-bottom rcorner header-color" value="Generate">
                   </div> 
-              </div>
-        </form>
-      </div>
-      <br>
-      <?php if(!empty($item_summary)) { ?>
-          
-          <!--<div class="row">
-            <div class="col-md-12">
-              <div class='col-md-6'>
-                  <p><b>Store Name: </b><?php echo $storename; ?></p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <div class='col-md-6'>
-                  <p><b>Store Address: </b><?php echo $storeaddress; ?></p>
-              </div>    
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <div class='col-md-6'>
-                  <p><b>Store Phone: </b><?php echo $storephone; ?></p>
-              </div>
-            </div>
-          </div> -->
-          
-          <div class="row">
-                <div class="col-md-12">
-                  <p>From: <?php echo $p_start_date; ?> To <?php echo $p_end_date; ?></p>
-                </div>
-              </div>
               
-              <div class="row">
-                <div class="col-md-12">
-                  <p><b>Store Name: </b><?php echo $storename; ?></p>
-                </div>
-                <div class="col-md-12">
-                  <p><b>Store Address: </b><?php echo $storeaddress; ?></p>
-                </div>
-                <div class="col-md-12">
-                  <p><b>Store Phone: </b><?php echo $storephone; ?></p>
-                </div>
-              </div>
-          
-          <div class="row">
+            </div>  
+        </form>
+        
+        <br><br>
+        <h6><span> ITEM SUMMARY  </span></h6>
+        <br>
+     
+      
+      <?php if(!empty($item_summary)) { ?>
+         
+    
               
             <div class="table-responsive">
-                
-              
-              <div class="col-md-12">
+           
                   
-                  <div class="col-md-10">
-                  
-                      <table class="table <!--table-bordered table-striped --> table-hover">
+                      <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
+                   data-click-to-select="true">
                           <thead class="header">
-                          <tr>
+                          <tr class="header-color  text-uppercase">
                               <th>Sku</th>
                               <th>Item Name</th>
-                              <th></th>
+                              
                               <th class='text-right'>Qty Sold</th>
                               <th class='text-right'>Avg. Price</th>
                               <th class='text-right'>Amount</th>
@@ -153,11 +81,11 @@
                           <?php $grand_total_qty = $grand_total_amount = 0;?>
                           <?php foreach($out as $r) { ?>
                               
-                              <tr>
+                              <tr class="th_color text-uppercase">
                                   <th><?php echo isset($r['catagoryname']) ? $r['catagoryname']: ''; ?></th>
                                   <th></th>
                                   <th></th>
-                                  <th></th>
+                                  
                                   <th></th>
                                   <th></th>
                                   
@@ -165,19 +93,19 @@
                               <?php $total_qty = $total_amount = 0;?>
                               <?php foreach($r['details'] as $itmes) { ?>
                                   <?php $total_qty += $itmes['qtysold']; $total_amount += $itmes['amount']; ?>
-                                  <tr>
+                                  <tr class="th_color">
                                       <td><?php echo isset($itmes['sku']) ? $itmes['sku']: 0; ?></td>
                                       <td><?php echo isset($itmes['itemname']) ? $itmes['itemname']: ''; ?></td>
-                                      <td></td>
+                                      
                                       <td class='text-right'><?php echo isset($itmes['qtysold']) ? $itmes['qtysold']: 0; ?></td>
                                       <td class='text-right'><?php echo "$",isset($itmes['avgprice']) ? number_format($itmes['avgprice'],2): 0; ?></td>
                                       <td class='text-right'><?php echo "$",isset($itmes['amount']) ? $itmes['amount']: 0; ?></td>
                                   </tr>
                               <?php } ?>
-                              <tr> 
+                              <tr class="header-color  text-uppercase"> 
                                   <th></th>
-                                  <th></th>
-                                  <th class='text-right'> Sub Total:</th>
+                                   <th> Sub Total</th>
+                                 
                                   <th class='text-right'> <?php echo number_format($total_qty,2); ?> </th>
                                   <th>  </th>
                                   <th class='text-right'> <?php echo "$",number_format($total_amount,2); ?> </th>
@@ -186,20 +114,21 @@
                                   $grand_total_amount += $total_amount; ?>
 
                           <?php } ?>
-                          <tr> 
+                          <tr class="header-color  text-uppercase"> 
                               <th></th>
-                              <th></th>
-                              <th class='text-right'> Grand Total:</th>
+                              <th > Grand Total</th>
+                              
+                              
                               <th class='text-right'> <?php echo number_format($grand_total_qty,2); ?> </th>
                               <th>  </th>
                               <th class='text-right'> <?php echo "$",number_format($grand_total_amount,2); ?> </th>
                           </tr>
                       </table>
-                  </div>
-              </div>
+                  
+              
               
             </div>
-          </div>
+          
       <?php } else if(isset($p_start_date)){ ?>
           <div class="col-md-12">  
               <table class="table table-bordered" style="width:50%;">
@@ -215,17 +144,18 @@
   </div>
 </div>
 </div>
-
+</div>
+</section>
 @endsection
 
-@section('scripts')
+@section('page-script')
 <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
 
-<script src="{{ asset('javascript/chart/highcharts.js')}}"></script>
-<script src="{{ asset('javascript/chart/exporting.js')}}"></script>
-<script src="{{ asset('javascript/chart/export-data.js')}}"></script>
+<!--<script src="{{ asset('javascript/chart/highcharts.js')}}"></script>-->
+<!--<script src="{{ asset('javascript/chart/exporting.js')}}"></script>-->
+<!--<script src="{{ asset('javascript/chart/export-data.js')}}"></script>-->
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -247,12 +177,14 @@
       format: 'mm-dd-yyyy',
       todayHighlight: true,
       autoclose: true,
+      orientation: "bottom left" 
     });
     
     $("#end_date").datepicker({
       format: 'mm-dd-yyyy',
       todayHighlight: true,
       autoclose: true,
+      orientation: "bottom left" 
     });
   });
 
@@ -380,5 +312,38 @@
     });
 
 </script>
+<style>
+.rcorner {
+  border-radius:9px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+h6 {
+   width: 100%; 
+   text-align: left; 
+   border-bottom: 2px solid; 
+   line-height: 0.1em;
+   margin: 0px 0 20px; 
+   color:#286fb7;
+} 
 
+h6 span { 
+    background:#f8f9fa!important; 
+    padding:10px 0px; 
+    color:#286fb7;
+}
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
+</style>
 @endsection
