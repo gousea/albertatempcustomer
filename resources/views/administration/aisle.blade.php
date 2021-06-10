@@ -241,7 +241,8 @@
           datatype: 'json',
           data: JSON.stringify(avArr), // access in body
           success: function(result) {
-                location.reload();
+              avArr = [];
+              location.reload();
           },
           error : function (msg) {
               let mssg = '<div class="alert alert-danger">';
@@ -396,6 +397,7 @@
               setTimeout(function(){
                   $('#successModal').modal('hide');
                   window.location.reload();
+                  data = [];
               }, 3000);
           },
           error: function(xhr) { // if error occured
