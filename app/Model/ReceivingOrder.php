@@ -1970,28 +1970,49 @@ class ReceivingOrder extends Model
         if (isset($search_items['size']) && !empty($search_items['size'])) {
             $search = $search_items['size'];
             if ($search != 'all') {
-                $condition .= " AND mi.vsize ='" . $search . "'";
+                $condition .= " AND mi.vsize LIKE  '%" . $search . "%'";
             }
         }
         
+        // if (isset($search_items['dept_code']) && !empty(trim($search_items['dept_code']))) {
+        //     $search = $search_items['dept_code'];
+        //     if ($search != 'all') {
+        //         $condition .= " AND mi.vdepcode ='" . $search . "'";
+        //     }
+        // }
+
         if (isset($search_items['dept_code']) && !empty(trim($search_items['dept_code']))) {
             $search = $search_items['dept_code'];
             if ($search != 'all') {
-                $condition .= " AND mi.vdepcode ='" . $search . "'";
+                $condition .= " AND md.vdepartmentname LIKE  '%" . $search . "%'";
             }
         }
+
+        // if (isset($search_items['category_code']) && !empty(trim($search_items['category_code']))) {
+        //     $search = $search_items['category_code'];
+        //     if ($search != 'All' && $search != 'all') {
+        //         $condition .= " AND mi.vcategorycode ='" . $search . "'";
+        //     }
+        // }
 
         if (isset($search_items['category_code']) && !empty(trim($search_items['category_code']))) {
             $search = $search_items['category_code'];
             if ($search != 'All' && $search != 'all') {
-                $condition .= " AND mi.vcategorycode ='" . $search . "'";
+                $condition .= " AND mc.vcategoryname LIKE  '%" . $search . "%'";
             }
         }
         
+        // if (isset($search_items['supplier_code']) && !empty($search_items['supplier_code'])) {
+        //     $search = $search_items['supplier_code'];
+        //     if ($search != 'all') {
+        //         $condition .= " AND mi.vsuppliercode ='" . $search . "'";
+        //     }
+        // }
+
         if (isset($search_items['supplier_code']) && !empty($search_items['supplier_code'])) {
             $search = $search_items['supplier_code'];
             if ($search != 'all') {
-                $condition .= " AND mi.vsuppliercode ='" . $search . "'";
+                $condition .= " AND msupp.vcompanyname LIKE  '%" . $search . "%'";
             }
         }
         

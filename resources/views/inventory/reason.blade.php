@@ -150,7 +150,7 @@
           
           <div class="row">
             <div class="col-md-12 text-center">
-              <input class="btn btn-success button-blue headerblack buttons_menu" type="submit" value="Save">
+              <input class="btn button-blue headerblack buttons_menu" type="submit" value="Save">
               <button type="button" class="btn btn-gray headerblack buttons_menu" data-dismiss="modal" style="border-color: black">Cancel</button>
             </div>
           </div>
