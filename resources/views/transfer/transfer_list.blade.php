@@ -509,7 +509,7 @@ $(document).on('submit', 'form#form-transfer', function(event) {
       var cancel_url = '<?php echo $cancel; ?>';
     
       cancel_url = cancel_url.replace(/&amp;/g, '&');
-      // window.location.href = cancel_url;
+      window.location.href = cancel_url;
       $("div#divLoading").addClass('show');
       
     },
