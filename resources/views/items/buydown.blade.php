@@ -177,6 +177,13 @@ Buy Down
         
         if($('.buydown_id:checked').length > 0){
             $('#deleteItemModal').modal('show');
+        }else{
+            bootbox.alert({ 
+                    size: 'small',
+                    title: "  ", 
+                    message: 'Please Select Buydown!', 
+                    callback: function(){}
+                });
         }
     });
     
