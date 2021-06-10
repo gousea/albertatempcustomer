@@ -262,12 +262,12 @@
 </script>
 
 <script type="text/javascript">
-  $(document).ready(function($) {
-    $("div#divLoading").addClass('show');
-  });
-  $(window).on('load', function() {
-      $("div#divLoading").removeClass('show');
-  });
+  // $(document).ready(function($) {
+  //   $("div#divLoading").addClass('show');
+  // });
+  // $(window).on('load', function() {
+  //     $("div#divLoading").removeClass('show');
+  // });
 
 </script>
 
