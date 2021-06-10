@@ -55,38 +55,38 @@
                                     <th style="width: 1px;" class="text-center no-filter-checkbox"><input type="checkbox" id="main_checkbox" /></th>
                                     <th class="text-left text-uppercase" style="width: 155px;">&nbsp;&nbsp;Status
                                       <div class="po-has-search">
-                                        <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                        <span class="fa fa-search form-control-feedback" style="width: 1.375rem;"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 0.275rem;">
                                       </div>
                                     </th>
                                     <th class="text-left text-uppercase" style="width: 155px;">&nbsp;&nbsp;PurchaseORD#
                                       <div class="po-has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH">
                                       </div>
                                     </th>
                                     <th class="text-left text-uppercase" style="width: 155px;">&nbsp;&nbsp;Invoice#
                                       <div class="po-has-search">
-                                        <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                        <span class="fa fa-search form-control-feedback" style="width: 1.375rem;"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 0.275rem;">
                                       </div>
                                     </th>
                                     <th class="text-left text-uppercase sample" style="width: 155px;">&nbsp;&nbsp;Total
                                       <div class="po-has-search">
-                                        <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                        <span class="fa fa-search form-control-feedback" style="width: 1.375rem;"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 0.275rem;">
                                       </div>
                                     </th>
                                     <th class="text-left text-uppercase" style="width: 155px;">&nbsp;&nbsp;Vendor
                                       <div class="po-has-search">
-                                        <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                        <span class="fa fa-search form-control-feedback" style="width: 1.375rem;"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 0.275rem;">
                                       </div>
                                     </th>
                                     <th class="text-left text-uppercase" style="width: 155px ;">&nbsp;&nbsp;Order Type
                                       <div class="po-has-search">
-                                        <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                        <span class="fa fa-search form-control-feedback" style="width: 1.375rem;"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 0.275rem;">
                                       </div>
                                     </th>
                                     <th class="text-left text-uppercase no-filter">Date Created</th>

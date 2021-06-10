@@ -193,7 +193,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> --}}
 
 <!-- Save data -->
 
@@ -244,11 +244,11 @@
           url: '/updatereason',
           contentType: 'application/json',
           datatype: 'json',
-          data: JSON.stringify(avArr) // access in body
-      }).success(function (e) {
-          //console.log('SUCCESS');
-          //console.log(e);
+          data: JSON.stringify(avArr),
+          success: function(result) {
             location.reload();
+          }// access in body
+      
       }).fail(function (msg) {
 
      //console.log('FAIL');
