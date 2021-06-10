@@ -84,13 +84,13 @@
                           </td>
                           <td class="text-left">
                             <span style="display:none;">{{$manufacturers->mfr_code}}</span>
-                            <input type="text" style="border:none;" maxlength="50" class="editable mfrCode" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" value="{{$manufacturers->mfr_code}}" onclick="">
+                            <input type="text" style="border:none;" maxlength="50" class="editable mfrCode" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_code]" value="{{$manufacturers->mfr_code}}" onclick='document.getElementById("manufacturer[{{$manufacturers->mfr_id}}][select]").setAttribute("checked","checked");'>
                             <input type="hidden" name="manufacturer[{{$manufacturers->mfr_code}}][mfr_id]" value="{{$manufacturers->mfr_id}}">
                           </td>
                       
                           <td class="text-left">
                             <span style="display:none;">{{$manufacturers->mfr_name}}</span>
-                            <input type="text" style="border:none;"  maxlength="50" class="editable mfrName" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" value="{{$manufacturers->mfr_name}}" onclick="">
+                            <input type="text" style="border:none;"  maxlength="50" class="editable mfrName" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" id="manufacturer[{{$manufacturers->mfr_id}}][mfr_name]" value="{{$manufacturers->mfr_name}}" onclick='document.getElementById("manufacturer[{{$manufacturers->mfr_id}}][select]").setAttribute("checked","checked");'>
                             <input type="hidden" name="manufacturer[{{$manufacturers->mfr_id}}][mfr_id]" value="{{$manufacturers->mfr_id}}">
                           </td>
                         </tr>

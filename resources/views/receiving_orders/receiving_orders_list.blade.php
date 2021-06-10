@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <span style="display:inline-block;width:8%;">File: </span> <span style="display:inline-block;width:85%;"><input type="file" name="import_invoice_file" id="import_edi_file" class="form-control adjustment-fields" required></span>
+                                <span style="display:inline-block;width:15%;">File: </span> <span style="display:inline-block;width:75%;"><input type="file" name="import_invoice_file" id="import_edi_file" class="adjustment-fields" required></span>
                             </div>
                         </div>
                         
@@ -223,7 +223,7 @@
             // alert(response.error);
             bootbox.alert({ 
               size: 'small',
-              title: "Attention", 
+              title: "  ", 
               message: response.error, 
               callback: function(){}
             });
@@ -249,7 +249,7 @@
             // alert(response.error);
             bootbox.alert({ 
               size: 'small',
-              title: "Attention", 
+              title: "  ", 
               message: response.error, 
               callback: function(){}
             });
@@ -429,7 +429,7 @@
       // alert('Please select items for import!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please select items for import!", 
         callback: function(){}
       });
@@ -520,7 +520,7 @@
     if($("input[name='selected[]']:checked").length == 0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: 'Please Select PO to Delete!', 
         callback: function(){}
       });
