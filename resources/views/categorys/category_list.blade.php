@@ -707,9 +707,9 @@ $(document).on('click', '#save_button', function(event) {
     $(function() { $('input[name="automplete-product"]').focus(); });
 
 
-    $(document).ready(function($) {
-        $("div#divLoading").addClass('show');
-    });
+    // $(document).ready(function($) {
+    //     $("div#divLoading").addClass('show');
+    // });
 
     // $(window).load(function() {
     //     $("div#divLoading").removeClass('show');
