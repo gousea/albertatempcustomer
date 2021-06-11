@@ -4,7 +4,7 @@ RO History Report
 @endsection
 @section('main-content')
 
-<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue"
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
