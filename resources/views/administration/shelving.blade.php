@@ -272,6 +272,7 @@
           contentType: 'application/json',
           data: JSON.stringify(avArr), // access in body
           success : function ( e ) {
+              avArr = [];
               location.reload();
           },
           error: function (msg) {
@@ -416,6 +417,7 @@
 
               setTimeout(function(){
               $('#successModal').modal('hide');
+              data = [];
               window.location.reload();
               }, 2000);
           },
