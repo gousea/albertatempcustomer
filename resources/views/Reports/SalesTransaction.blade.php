@@ -147,6 +147,8 @@ Sales Transaction
                           <th>Action</th>
                         </tr>
                       </thead>
+                      
+
                       <tbody>
                       <?php  $nettotal=$ntaxtotal=0 ?>
                           <?php foreach ($reports as $key => $value){ 
