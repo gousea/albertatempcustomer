@@ -759,7 +759,7 @@
 
 <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
-
+ 
 <style>
   .padding-left-right{
     padding: 0 2% 0 2%;
@@ -965,7 +965,7 @@
 
 {{-- <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> --}}
 {{-- <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
-
+<script src = "https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <script>
     $(function() {
         <?php if(isset($data['items']) && count($data['items']) > 0){?>
