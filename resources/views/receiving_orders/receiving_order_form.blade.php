@@ -403,7 +403,7 @@
 
                                       <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            <label for="inputDiscount" class="p-2 float-right text-uppercase"Discount(-)</label>
+                                            <label for="inputDiscount" class="p-2 float-right text-uppercase">Discount(-)</label>
                                         </div>
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
@@ -487,7 +487,7 @@
                               <div class="col-md-4" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
 
                                 <div class="col-md-11 float-right">
-                                  <input type="checkbox" name="update_pack_qty" value="Yes" id="update_pack_qty"" />
+                                  <input type="checkbox" name="update_pack_qty" value="Yes" id="update_pack_qty" />
                                   <span style="font-size:14px;margin-top:12px;">&nbsp; Update pack qty</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                   <button class="btn btn-primary button-blue basic-button-small" id="advance_btn" data-check="unchecked">Advance Update</button>
                                 {{-- <input type="checkbox" name="advance_update" value="Yes" class="form-control" id="advance_update" style="display:none;"> --}}
@@ -892,21 +892,28 @@
 
       $('#myTab li:eq(0)').addClass('active');
       $('.tab-content #general_tab').addClass('active');
-
+      $('#for_general').prop('checked', true);
+        
     }else{
       if ((!!$.cookie('tab_selected_po')) && ($.cookie('tab_selected_po') != '')) {
         var tab_s = $.cookie('tab_selected_po');
-
+        
         $('#myTab li.active').removeClass('active');
         $('.tab-content div.tab-pane.active').removeClass('active');
-
+        
         if(tab_s == 'item_tab'){
           $('#myTab li:eq(1)').addClass('active');
           $('.tab-content #item_tab').addClass('active');
-        }else{
+          $('#for_item').prop('checked', true);
+        }else{ 
           $('#myTab li:eq(0)').addClass('active');
           $('.tab-content #general_tab').addClass('active');
+          $('#for_general').prop('checked', true);
         }
+      }else{
+          $('#myTab li:eq(0)').addClass('active');
+          $('.tab-content #general_tab').addClass('active');
+          $('#for_general').prop('checked', true);
       }
     }
   });

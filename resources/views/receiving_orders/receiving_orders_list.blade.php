@@ -92,7 +92,7 @@
                                     <th class="text-left text-uppercase no-filter">Date Created</th>
                                     {{-- <th class="text-left">Date Received</th> --}}
                                     {{-- <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th> --}}
-                                    <th class="text-left no-filter">Action</th>
+                                    <th class="text-left text-uppercase no-filter">Action</th>
                                 </tr>
                             </thead>
                         
@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <span style="display:inline-block;width:15%;">File: </span> <span style="display:inline-block;width:75%;"><input type="file" name="import_invoice_file" id="import_edi_file" class="adjustment-fields" required></span>
+                                <span style="display:inline-block;width:15%;">File: </span> <span style="display:inline-block;width:75%;"><input type="file" name="import_invoice_file" id="import_edi_file" required></span>
                             </div>
                         </div>
                         
