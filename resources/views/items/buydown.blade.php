@@ -72,22 +72,22 @@ Buy Down
                                             <th class="text-center no-filter-checkbox">
                                                 <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                             </th>
-                                            <th class="text-left text-uppercase">BuyDown Name
+                                            <th class="text-left text-uppercase" style="width: 20%;">BuyDown Name
                                                 <div class="form-group adjustment-has-search">
                                                     <span class="fa fa-search form-control-feedback"></span>
-                                                    <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
+                                                    <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH">
                                                 </div>
                                             </th>
-                                            <th class="text-left text-uppercase">Code
+                                            <th class="text-left text-uppercase" style="width: 20%;">Code
                                                 <div class="form-group adjustment-has-search">
                                                     <span class="fa fa-search form-control-feedback"></span>
-                                                    <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
+                                                    <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH">
                                                 </div>
                                             </th>
-                                            <th class="text-left text-uppercase">Amount
+                                            <th class="text-left text-uppercase" style="width: 20%;">Amount
                                                 <div class="form-group adjustment-has-search">
                                                     <span class="fa fa-search form-control-feedback"></span>
-                                                    <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH" id="adjustment_no">
+                                                    <input type="text" class="form-control table-heading-fields search_text_box" placeholder="SEARCH">
                                                 </div>
                                             </th>
                                             <th class="text-left text-uppercase no-filter">Start Date</th>
@@ -174,7 +174,17 @@ Buy Down
 <script>
     $(document).on('click', '#buydown_delete', function(event) {
         event.preventDefault();
-        $('#deleteItemModal').modal('show');
+        
+        if($('.buydown_id:checked').length > 0){
+            $('#deleteItemModal').modal('show');
+        }else{
+            bootbox.alert({ 
+                    size: 'small',
+                    title: "  ", 
+                    message: 'Please Select Buydown!', 
+                    callback: function(){}
+                });
+        }
     });
     
     

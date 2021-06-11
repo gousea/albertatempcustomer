@@ -277,7 +277,7 @@ class ReceivingOrder extends Model
                     $query->vshipvia = $data['vshipvia'] ?? '';
                     $query->dreceiveddate = $dreceiveddate;
                     $query->estatus = $close; 
-                    $query->vconfirmby = $data['vconfirmby']; 
+                    $query->vconfirmby = $data['vconfirmby'] ?? ''; 
                     $query->vvendorid = $data['vvendorid']; 
                     $query->vvendorname = $data['vvendorname']; 
                     $query->vvendoraddress1 = $data['vvendoraddress1'] ?? ''; 
@@ -340,7 +340,7 @@ class ReceivingOrder extends Model
                             
                             $unit_price = (isset($item['dunitprice']) && $item['dunitprice'] != 0)?($item['dunitprice']):($item['nordunitprice']);
                             
-                            $insert_pod_query = "INSERT INTO trn_receivingorderdetail SET  iroid = '" . (int)$iroid . "',vitemid = '" . ($item['vitemid']) . "',nordunitprice = '" . $unit_price . "', po_last_costprice = '" . ($isItemExist['last_costprice']) . "', po_new_costprice = '" . ($isItemExist['new_costprice']) . "', vunitcode = '" . ($item['vunitcode']) . "',`vunitname` = '" . ($item['vunitname']) . "',`vbarcode` = '" . ($item['vbarcode']) . "', vitemname = '" . ($item['vitemname']) . "', vvendoritemcode = '" . ($item['vvendoritemcode']) . "', vsize = '" . ($item['vsize']) . "', po_order_by = '" . ($item['po_order_by']) . "', nordqty = '" . ($item['nordqty']) . "', npackqty = '" . ($item['npackqty']) . "', itotalunit = '" . ($item['itotalunit']) . "', po_total_suggested_cost = '" . ($item['po_total_suggested_cost']) . "', nordextprice = '" . ($item['nordextprice']) . "', nunitcost = '" . ($item['nunitcost']) . "',SID = '" . (int)(session()->get('sid'))."',nripamount= '" . ($item['nripamount']) . "'";
+                            $insert_pod_query = "INSERT INTO trn_receivingorderdetail SET  iroid = '" . (int)$iroid . "',vitemid = '" . ($item['vitemid']) . "',nordunitprice = '" . $unit_price . "', po_last_costprice = '" . ($isItemExist['last_costprice']) . "', po_new_costprice = '" . ($isItemExist['new_costprice']) . "', vunitcode = '" . ($item['vunitcode']) . "',`vunitname` = '" . ($item['vunitname']) . "',`vbarcode` = '" . ($item['vbarcode']) . "', vitemname = '" . ($item['vitemname']) . "', vvendoritemcode = '" . ($item['vvendoritemcode']) . "', vsize = '" . ($item['vsize']) . "', po_order_by = '" . ($item['po_order_by']) . "', nordqty = '" . ($item['nordqty']) . "', npackqty = '" . ($item['npackqty']) . "', itotalunit = '" . ($item['itotalunit']) . "', nordextprice = '" . ($item['nordextprice']) . "', nunitcost = '" . ($item['nunitcost']) . "',SID = '" . (int)(session()->get('sid'))."',nripamount= '" . ($item['nripamount']) . "'";
                             
                             DB::connection('mysql_dynamic')->insert($insert_pod_query);
 							
@@ -1282,8 +1282,8 @@ class ReceivingOrder extends Model
                 
                try {
                     $vvendorname = addslashes($data['vvendorname']);
-                    $vordertitle = addslashes($data['vordertitle']);
-                    $update_po_query = "UPDATE trn_receivingorder SET  vinvoiceno = '" . ($data['vinvoiceno']) . "',vrefnumber = '" . ($data['vinvoiceno']) . "',dcreatedate = '" . $dcreatedate . "', vponumber = '" . ($data['vponumber']) . "',`dreceiveddate` = '" . $dreceiveddate . "',`vordertitle` = '" . ($vordertitle) . "', estatus = '" . $close . "', vorderby = '" . ($data['vorderby']) . "', vconfirmby = '" . ($data['vconfirmby']) . "', vnotes = '" . ($data['vnotes']) . "', vshipvia = '" . ($data['vshipvia']) . "', vvendorid = '" . ($data['vvendorid']) . "', vvendorname = '" . ($vvendorname) . "', vvendoraddress1 = '" . ($data['vvendoraddress1']) . "', vvendoraddress2 = '" . ($data['vvendoraddress2']) . "', vvendorstate = '" . ($data['vvendorstate']) . "', vvendorzip = '" . ($data['vvendorzip']) . "', vvendorphone = '" . ($data['vvendorphone']) . "',vshpid = '" . ($data['vshpid']) . "',vshpname = '" . ($data['vshpname']) . "',vshpaddress1 = '" . ($data['vshpaddress1']) . "',vshpaddress2 = '" . ($data['vshpaddress2']) . "',vshpstate = '" . ($data['vshpstate']) . "',vshpzip = '" . ($data['vshpzip']) . "',vshpphone = '" . ($data['vshpphone']) . "',nsubtotal = '" . ($data['nsubtotal']) . "',ntaxtotal = '" . ($data['ntaxtotal']) . "',nfreightcharge = '" . ($data['nfreightcharge']) . "',ndeposittotal = '" . ($data['ndeposittotal']) . "',nfuelcharge = '" . ($data['nfuelcharge']) . "',ndeliverycharge = '" . ($data['ndeliverycharge']) . "',nreturntotal = '" . ($data['nreturntotal']) . "',ndiscountamt = '" . ($data['ndiscountamt']) . "',nripsamt = '" . ($data['nripsamt']) . "',nnettotal = '" . ($data['nnettotal']) . "', vordertype = '" . $ordertype . "' WHERE iroid='". (int)($data['iroid']) ."'";
+                    // $vordertitle = addslashes($data['vordertitle']);
+                    $update_po_query = "UPDATE trn_receivingorder SET  vinvoiceno = '" . ($data['vinvoiceno']) . "',vrefnumber = '" . ($data['vinvoiceno']) . "',dcreatedate = '" . $dcreatedate . "', vponumber = '" . ($data['vponumber']) . "',`dreceiveddate` = '" . $dreceiveddate . "', estatus = '" . $close . "', vvendorid = '" . ($data['vvendorid']) . "', vvendorname = '" . ($vvendorname) . "', vvendoraddress1 = '" . ($data['vvendoraddress1']) . "', vvendoraddress2 = '" . ($data['vvendoraddress2']) . "', vvendorstate = '" . ($data['vvendorstate']) . "', vvendorzip = '" . ($data['vvendorzip']) . "', nsubtotal = '" . ($data['nsubtotal']) . "',ntaxtotal = '" . ($data['ntaxtotal']) . "',nfreightcharge = '" . ($data['nfreightcharge']) . "',ndeposittotal = '" . ($data['ndeposittotal']) . "',nfuelcharge = '" . ($data['nfuelcharge']) . "',ndeliverycharge = '" . ($data['ndeliverycharge']) . "',nreturntotal = '" . ($data['nreturntotal']) . "',ndiscountamt = '" . ($data['ndiscountamt']) . "',nripsamt = '" . ($data['nripsamt']) . "',nnettotal = '" . ($data['nnettotal']) . "', vordertype = '" . $ordertype . "' WHERE iroid='". (int)($data['iroid']) ."'";
                     
                     DB::connection('mysql_dynamic')->update($update_po_query);
                     
@@ -1319,7 +1319,7 @@ class ReceivingOrder extends Model
                             
 							if(count($ipodetid_ids) > 0){
                                 
-                                $update_pod_query = "UPDATE trn_receivingorderdetail SET  iroid = '" . (int)$iroid . "',vitemid = '" . ($item['vitemid']) . "',nordunitprice = '" . ($item['nordunitprice']) . "', po_last_costprice = '" . ($item['po_last_costprice']) . "', vunitcode = '" . ($item['vunitcode']) . "',`vunitname` = '" . ($item['vunitname']) . "',`vbarcode` = '" . ($item['vbarcode']) . "', vitemname = '" . ($item['vitemname']) . "', vvendoritemcode = '" . ($item['vvendoritemcode']) . "', vsize = '" . ($item['vsize']) . "', po_order_by = '" . ($item['po_order_by']) . "', nordqty = '" . ($item['nordqty']) . "', npackqty = '" . ($item['npackqty']) . "', itotalunit = '" . ($item['itotalunit']) . "', po_total_suggested_cost = '" . ($item['po_total_suggested_cost']) . "', nordextprice = '" . ($item['nordextprice']) . "', nunitcost = '" . ($item['nunitcost']) . "',nripamount= '" . ($item['nripamount']) . "' WHERE irodetid='" . (int)($item['irodetid']) . "' ";
+                                $update_pod_query = "UPDATE trn_receivingorderdetail SET  iroid = '" . (int)$iroid . "',vitemid = '" . ($item['vitemid']) . "',nordunitprice = '" . ($item['nordunitprice']) . "', po_last_costprice = '" . ($item['po_last_costprice']) . "', vunitcode = '" . ($item['vunitcode']) . "',`vunitname` = '" . ($item['vunitname']) . "',`vbarcode` = '" . ($item['vbarcode']) . "', vitemname = '" . ($item['vitemname']) . "', vvendoritemcode = '" . ($item['vvendoritemcode']) . "', vsize = '" . ($item['vsize']) . "', po_order_by = '" . ($item['po_order_by']) . "', nordqty = '" . ($item['nordqty']) . "', npackqty = '" . ($item['npackqty']) . "', itotalunit = '" . ($item['itotalunit']) . "', nordextprice = '" . ($item['nordextprice']) . "', nunitcost = '" . ($item['nunitcost']) . "',nripamount= '" . ($item['nripamount']) . "' WHERE irodetid='" . (int)($item['irodetid']) . "' ";
                                
                                 DB::connection('mysql_dynamic')->update($update_pod_query);
                             }else{
@@ -1329,7 +1329,7 @@ class ReceivingOrder extends Model
                                 $isItemExist = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid='". (int)$item['vitemid'] ."'");
                                 $isItemExist = isset($isItemExist[0])?(array)$isItemExist[0]:[];
                                 
-                                $insert_pod_query = "INSERT INTO trn_receivingorderdetail SET  iroid = '" . (int)$iroid . "',vitemid = '" . ($item['vitemid']) . "',nordunitprice = '" . ($item['nordunitprice']) . "', po_last_costprice = '" . ($isItemExist['last_costprice']) . "', po_new_costprice = '" . ($isItemExist['new_costprice']) . "', vunitcode = '" . ($item['vunitcode']) . "',`vunitname` = '" . ($item['vunitname']) . "',`vbarcode` = '" . ($item['vbarcode']) . "', vitemname = '" . ($item['vitemname']) . "', vvendoritemcode = '" . ($item['vvendoritemcode']) . "', vsize = '" . ($item['vsize']) . "', po_order_by = '" . ($item['po_order_by']) . "', nordqty = '" . ($item['nordqty']) . "', npackqty = '" . ($item['npackqty']) . "', itotalunit = '" . ($item['itotalunit']) . "', po_total_suggested_cost = '" . ($item['po_total_suggested_cost']) . "', nordextprice = '" . ($item['nordextprice']) . "', nunitcost = '" . ($item['nunitcost']) . "',SID = '" . (int)(session()->get('sid'))."',nripamount= '" . ($item['nripamount']) . "'";                                
+                                $insert_pod_query = "INSERT INTO trn_receivingorderdetail SET  iroid = '" . (int)$iroid . "',vitemid = '" . ($item['vitemid']) . "',nordunitprice = '" . ($item['nordunitprice']) . "', po_last_costprice = '" . ($isItemExist['last_costprice']) . "', po_new_costprice = '" . ($isItemExist['new_costprice']) . "', vunitcode = '" . ($item['vunitcode']) . "',`vunitname` = '" . ($item['vunitname']) . "',`vbarcode` = '" . ($item['vbarcode']) . "', vitemname = '" . ($item['vitemname']) . "', vvendoritemcode = '" . ($item['vvendoritemcode']) . "', vsize = '" . ($item['vsize']) . "', po_order_by = '" . ($item['po_order_by']) . "', nordqty = '" . ($item['nordqty']) . "', npackqty = '" . ($item['npackqty']) . "', itotalunit = '" . ($item['itotalunit']) . "', nordextprice = '" . ($item['nordextprice']) . "', nunitcost = '" . ($item['nunitcost']) . "',SID = '" . (int)(session()->get('sid'))."',nripamount= '" . ($item['nripamount']) . "'";                                
                                 
                                 DB::connection('mysql_dynamic')->insert($insert_pod_query);
                             }
@@ -1719,7 +1719,7 @@ class ReceivingOrder extends Model
                 $query->vshipvia = $data['vshipvia'] ?? '';
                 // $query->dreceiveddate = $dreceiveddate;
                 $query->estatus = $data['estatus']; 
-                $query->vconfirmby = $data['vconfirmby']; 
+                $query->vconfirmby = $data['vconfirmby'] ?? ''; 
                 $query->vvendorid = $data['vvendorid']; 
                 $query->vvendorname = $data['vvendorname']; 
                 $query->vvendoraddress1 = $data['vvendoraddress1'] ?? ''; 
@@ -1970,28 +1970,49 @@ class ReceivingOrder extends Model
         if (isset($search_items['size']) && !empty($search_items['size'])) {
             $search = $search_items['size'];
             if ($search != 'all') {
-                $condition .= " AND mi.vsize ='" . $search . "'";
+                $condition .= " AND mi.vsize LIKE  '%" . $search . "%'";
             }
         }
         
+        // if (isset($search_items['dept_code']) && !empty(trim($search_items['dept_code']))) {
+        //     $search = $search_items['dept_code'];
+        //     if ($search != 'all') {
+        //         $condition .= " AND mi.vdepcode ='" . $search . "'";
+        //     }
+        // }
+
         if (isset($search_items['dept_code']) && !empty(trim($search_items['dept_code']))) {
             $search = $search_items['dept_code'];
             if ($search != 'all') {
-                $condition .= " AND mi.vdepcode ='" . $search . "'";
+                $condition .= " AND md.vdepartmentname LIKE  '%" . $search . "%'";
             }
         }
+
+        // if (isset($search_items['category_code']) && !empty(trim($search_items['category_code']))) {
+        //     $search = $search_items['category_code'];
+        //     if ($search != 'All' && $search != 'all') {
+        //         $condition .= " AND mi.vcategorycode ='" . $search . "'";
+        //     }
+        // }
 
         if (isset($search_items['category_code']) && !empty(trim($search_items['category_code']))) {
             $search = $search_items['category_code'];
             if ($search != 'All' && $search != 'all') {
-                $condition .= " AND mi.vcategorycode ='" . $search . "'";
+                $condition .= " AND mc.vcategoryname LIKE  '%" . $search . "%'";
             }
         }
         
+        // if (isset($search_items['supplier_code']) && !empty($search_items['supplier_code'])) {
+        //     $search = $search_items['supplier_code'];
+        //     if ($search != 'all') {
+        //         $condition .= " AND mi.vsuppliercode ='" . $search . "'";
+        //     }
+        // }
+
         if (isset($search_items['supplier_code']) && !empty($search_items['supplier_code'])) {
             $search = $search_items['supplier_code'];
             if ($search != 'all') {
-                $condition .= " AND mi.vsuppliercode ='" . $search . "'";
+                $condition .= " AND msupp.vcompanyname LIKE  '%" . $search . "%'";
             }
         }
         

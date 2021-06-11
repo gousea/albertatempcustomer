@@ -377,9 +377,12 @@ $("#closeBtn").click(function(){
 
 
 <script type="text/javascript">
-  $(document).ready(function($) {
-    $("div#divLoading").addClass('show');
-  });
+  // $(document).ready(function($) {
+  //   $("div#divLoading").addClass('show');
+  // });
+  // $(window).on('load', function() {
+  //     $("div#divLoading").removeClass('show');
+  // });
 </script>
 
   
@@ -404,13 +407,10 @@ $("#closeBtn").click(function(){
         });
     
         if(avArr.length < 1){
-            bootbox.alert({ 
-                size: 'small',
-                title: "Attention", 
-                message: "You did not select anything", 
-                callback: function(){location.reload(true);}
-            });
+            $('#warning_msg').html("You did not select anything");
             $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
+            location.reload(true);
             return false;
         }else{
             var numericReg = /^[0-9]*(?:\.\d{1,2})?$/;
@@ -462,7 +462,7 @@ $("#closeBtn").click(function(){
                     },
                     data: {data:avArr},
                     success: function (e) {
-                        alert("hi 434");
+                        avArr = [];
                         location.reload();
                     },
                     error: function (msg) {
@@ -618,12 +618,10 @@ $("#closeBtn").click(function(){
         event.preventDefault();
         
         if($("input[name='selected[]']:checked").length == 0){
-          bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: 'Please Select Size to Delete!', 
-            callback: function(){}
-          });
+          $('#warning_msg').html("Please Select Size to Delete!");
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
+          location.reload(true);
           return false;
         }
         var avArr = [];
@@ -700,6 +698,7 @@ $("#closeBtn").click(function(){
       
                     setTimeout(function(){
                         $('#successModal').modal('hide');
+                        avArr = [];
                         window.location.reload();
                     }, 2000);
                 }else{
@@ -787,6 +786,7 @@ $('#delete_btn_category').click(function(){
 
               setTimeout(function(){
                   $('#successModal').modal('hide');
+                  avArr = [];
                   window.location.reload();
               }, 2000);
             }else{

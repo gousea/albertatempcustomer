@@ -119,13 +119,7 @@
                   </table>
                 </div>
               </form>
-              <?php if ($transfers) { ?>
-              <div class="row">
-                <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-                <div class="col-sm-6 text-right"><?php echo $results; ?></div>
-                {{$transfers->links()}}
-              </div>
-              <?php } ?>
+              
             </div>
           </div>
         </div>
@@ -137,12 +131,17 @@
 
 @section('page-script')
 <script type="text/javascript">
-    $(document).ready(function($) {
-      $("div#divLoading").addClass('show');
-    });
-  
-    $(window).on('load',function() {
-      $("div#divLoading").removeClass('show');
-    });
+    
+    var table = $('#transfer_listing').DataTable({
+        "dom": 't<"bottom col-md-12 row"<"col-md-4"i><"col-md-8"p>>',
+        "searching":false,
+        "ordering": false,
+        
+        "pageLength":20,
+      });
+
+      $("#transfer_listing_paginate").addClass("pull-right");
+    
+   
   </script>
 @endsection

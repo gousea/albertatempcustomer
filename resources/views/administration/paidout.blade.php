@@ -262,9 +262,12 @@
 </script>
 
 <script type="text/javascript">
-  $(document).ready(function($) {
-    $("div#divLoading").addClass('show');
-  });
+  // $(document).ready(function($) {
+  //   $("div#divLoading").addClass('show');
+  // });
+  // $(window).on('load', function() {
+  //     $("div#divLoading").removeClass('show');
+  // });
 
 </script>
 
@@ -313,6 +316,7 @@
         contentType: 'application/json',
         data: JSON.stringify(avArr),  // access in body
         success : function (e) {
+            avArr = [];
             location.reload();
         },
         error: function (msg) {
@@ -445,6 +449,7 @@
                 $('#successModal').modal('show');
                 setTimeout(function(){
                     $('#successModal').modal('hide');
+                    data = [];
                     window.location.reload();
                 }, 2000);
             },

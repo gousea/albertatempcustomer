@@ -35,13 +35,9 @@ class TransferController extends Controller
         $model = new Transfer();
 		$transfer_data = $model->getTransfersData($filter_data);
         $transfer_data = json_decode(json_encode($transfer_data), true);
-		$transfer_total = $model->getTransfersTotal($filter_data);
-		$data['transfers'] = $this->arrayPaginator($transfer_data, $request);
-		if(count($transfer_data)==0){ 
-			$data['transfers'] =array();
-			$transfer_total = 0;
-			$data['transfer_row'] =1;
-		}
+		
+		$data['transfers'] = $transfer_data;
+		
 		$data['heading_title'] = "Transfer";
 		$data['text_list'] = "Transfer";
 		$data['text_no_results'] = "No Records Found";

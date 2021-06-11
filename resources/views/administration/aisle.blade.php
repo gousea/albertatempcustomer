@@ -241,7 +241,8 @@
           datatype: 'json',
           data: JSON.stringify(avArr), // access in body
           success: function(result) {
-                location.reload();
+              avArr = [];
+              location.reload();
           },
           error : function (msg) {
               let mssg = '<div class="alert alert-danger">';
@@ -339,9 +340,12 @@
 </script>
 
 <script type="text/javascript">
-  $(document).ready(function($) {
-    $("div#divLoading").addClass('show');
-  });
+  // $(document).ready(function($) {
+  //   $("div#divLoading").addClass('show');
+  // });
+  // $(window).on('load', function() {
+  //     $("div#divLoading").removeClass('show');
+  // });
 
 </script>
 
@@ -393,6 +397,7 @@
               setTimeout(function(){
                   $('#successModal').modal('hide');
                   window.location.reload();
+                  data = [];
               }, 3000);
           },
           error: function(xhr) { // if error occured

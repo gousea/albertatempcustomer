@@ -107,7 +107,7 @@
                                             </div>
                                             <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
-                                                <input type="text" name="vinvoiceno" maxlength="50" value="<?php echo isset($data['vinvoiceno']) ? $data['vinvoiceno'] : ''; ?>" placeholder="Invoice#" id="input_invoice" class="form-control adjustment-fields" required />
+                                                <input type="text" name="vinvoiceno" maxlength="50" value="<?php echo isset($data['vinvoiceno']) ? $data['vinvoiceno'] : ''; ?>" placeholder="Invoice#" id="input_invoice" class="form-control adjustment-fields" />
                                                 
                                             </div>
                                         </div>
@@ -257,7 +257,7 @@
                                         </div>
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
-                                          <input type="text" name="city" value="<?php echo isset($data['city']) ? $data['city'] : ''; ?>" placeholder="City" id="input_city" class="form-control adjustment-fields" />
+                                          <input type="text" name="city" value="<?php echo isset($data['vcity']) ? $data['vcity'] : ''; ?>" placeholder="City" id="input_city" class="form-control adjustment-fields" />
                                           
                                         </div>
                                       </div>
@@ -403,7 +403,7 @@
 
                                       <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            <label for="inputDiscount" class="p-2 float-right text-uppercase"Discount(-)</label>
+                                            <label for="inputDiscount" class="p-2 float-right text-uppercase">Discount(-)</label>
                                         </div>
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
@@ -487,7 +487,7 @@
                               <div class="col-md-4" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
 
                                 <div class="col-md-11 float-right">
-                                  <input type="checkbox" name="update_pack_qty" value="Yes" id="update_pack_qty"" />
+                                  <input type="checkbox" name="update_pack_qty" value="Yes" id="update_pack_qty" />
                                   <span style="font-size:14px;margin-top:12px;">&nbsp; Update pack qty</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                   <button class="btn btn-primary button-blue basic-button-small" id="advance_btn" data-check="unchecked">Advance Update</button>
                                 {{-- <input type="checkbox" name="advance_update" value="Yes" class="form-control" id="advance_update" style="display:none;"> --}}
@@ -752,11 +752,14 @@
 </style>
 
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
-<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
-<script src="{{ asset('javascript/bootstrap-datepicker.js') }}" defer></script>
+{{-- <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
+<script src="{{ asset('javascript/bootstrap-datepicker.js') }}" defer></script> --}}
 <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
 {{-- <script type="text/javascript" src="{{ asset('javascript/table-fixed-header.js') }}"></script> --}}
 
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+ 
 <style>
   .padding-left-right{
     padding: 0 2% 0 2%;
@@ -889,21 +892,28 @@
 
       $('#myTab li:eq(0)').addClass('active');
       $('.tab-content #general_tab').addClass('active');
-
+      $('#for_general').prop('checked', true);
+        
     }else{
       if ((!!$.cookie('tab_selected_po')) && ($.cookie('tab_selected_po') != '')) {
         var tab_s = $.cookie('tab_selected_po');
-
+        
         $('#myTab li.active').removeClass('active');
         $('.tab-content div.tab-pane.active').removeClass('active');
-
+        
         if(tab_s == 'item_tab'){
           $('#myTab li:eq(1)').addClass('active');
           $('.tab-content #item_tab').addClass('active');
-        }else{
+          $('#for_item').prop('checked', true);
+        }else{ 
           $('#myTab li:eq(0)').addClass('active');
           $('.tab-content #general_tab').addClass('active');
+          $('#for_general').prop('checked', true);
         }
+      }else{
+          $('#myTab li:eq(0)').addClass('active');
+          $('.tab-content #general_tab').addClass('active');
+          $('#for_general').prop('checked', true);
       }
     }
   });
@@ -928,6 +938,7 @@
           $('input[name="vvendorstate"]').val(result.vendor.vstate);
           $('input[name="vvendorzip"]').val(result.vendor.vzip);
           $('input[name="vvendorphone"]').val(result.vendor.vphone);
+          $('input[name="city"]').val(result.vendor.vcity);
 
           $('#myTab li:eq(1)').css('pointer-events','all');
         }
@@ -943,6 +954,8 @@
       $('input[name="vvendorstate"]').val('');
       $('input[name="vvendorzip"]').val('');
       $('input[name="vvendorphone"]').val('');
+      $('input[name="city"]').val('');
+
       $('#myTab li:eq(1)').css('pointer-events','none');
       $("div#divLoading").removeClass('show');
     }
@@ -950,9 +963,9 @@
   });
 </script>
 
-<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+{{-- <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> --}}
+{{-- <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
+<script src = "https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <script>
     $(function() {
         <?php if(isset($data['items']) && count($data['items']) > 0){?>
@@ -2142,13 +2155,13 @@ $('.editable_text').focus(function() {
       </div>
       <div class="modal-body">
         <div class="text-center">
-          <h4>To Send this adjustment to Warehouse Please click on "Send to Warehouse", receive adjustment to Store Click on "Receive to Store"</h4>
+          <h6>To Send this adjustment to Warehouse Please click on "Send to Warehouse", receive adjustment to Store Click on "Receive to Store"</h6>
         </div>
       </div>
       <div class="modal-footer" style="border-top:none;">
-        <input type="button" class="btn btn-success" id="save_receive_btn" value="Receive to Store">
-        <input type="button" class="btn btn-success" id="save_receive_btn_to_warehouse" value="Send to Warehouse">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <input type="button" class="btn btn-success buttons_menu" id="save_receive_btn" value="Receive to Store">
+        <input type="button" class="btn btn-success buttons_menu" id="save_receive_btn_to_warehouse" value="Send to Warehouse">
+        <button type="button" class="btn btn-default buttons_menu" data-dismiss="modal" style="border:black;">Cancel</button>
       </div>
     </div>
   </div>
@@ -2556,9 +2569,9 @@ $('.editable_text').focus(function() {
       $('.tab-content #general_tab').removeClass('active');
       $('.tab-content #item_tab').addClass('active');
 
-      $('.table').fixedHeader({
-          topOffset: 0
-        });
+      // $('.table').fixedHeader({
+      //     topOffset: 0
+      //   });
         
       $.cookie("tab_selected_po", 'item_tab'); //set cookie tab
     }
@@ -2732,7 +2745,7 @@ $('.editable_text').focus(function() {
                         <th class="text-left text-uppercase sortable">SKU</th>
                         <th class="text-left text-uppercase sortable">Name</th>
                         <th class="text-left text-uppercase sortable">Size</th>
-                        <th class="text-left text-uppercase sortable">QOH</th>
+                        <th class="text-left text-uppercase sortable" nowrap="nowrap">QOH</th>
                         <th class="text-left text-uppercase sortable">Cost</th>
                         <th class="text-left text-uppercase">Order By</th>
                         <th class="text-left text-uppercase" style="">Unit Per Case</th>
@@ -3077,10 +3090,10 @@ $('.editable_text').focus(function() {
               
               search_table_html += '<tr>';
               search_table_html += '<td><input type="checkbox" class="selected_search_items" name="selected_search_history_items[]" value="'+ value.iitemid +'"></td>';
-              search_table_html += '<td>';
+              search_table_html += '<td style="width:10% !important;">';
               search_table_html += value.vbarcode;
               search_table_html += '</td>';
-              search_table_html += '<td>';
+              search_table_html += '<td style="width:20% !important;">';
               search_table_html += value.vitemname;
               search_table_html += '</td>';
               search_table_html += '<td>';
@@ -3090,7 +3103,7 @@ $('.editable_text').focus(function() {
                 search_table_html += '';
               }
               search_table_html += '</td>';
-              search_table_html += '<td class="text-left">';
+              search_table_html += '<td class="text-left" nowrap="nowrap">';
               search_table_html += value.QOH;
               search_table_html += '</td>';
               
@@ -3533,7 +3546,7 @@ $('.editable_text').focus(function() {
 
             html_receiving_item += '<td class="text-right"><input type="text" class="nunitcost_class adjustment-fields" name="items['+window.index_item+'][nunitcost]" value="' + unitCost.toFixed(4) + '" id="" style="width:80px;text-align:right;" readonly></td>';
             
-            html_receiving_item += '<td class="text-right noInput">'+ item.iqtyonhand +'<input type="hidden" name="items['+window.index_item+'][nitemqoh]" value="'+ item.iqtyonhand +'"></td>';
+            html_receiving_item += '<td class="text-right noInput" nowrap="nowrap">'+ item.iqtyonhand +'<input type="hidden" name="items['+window.index_item+'][nitemqoh]" value="'+ item.iqtyonhand +'"></td>';
             
             html_receiving_item += '<td class="text-right"><input type="text" class="npackqty_class adjustment-fields" name="items['+window.index_item+'][npackqty]" value="'+item.npack+'" id="" style="width:60px;text-align:right;"></td>';
             html_receiving_item += '<td class="text-right"><select class="po_order_by_class adjustment-fields" name="items['+window.index_item+'][po_order_by]"><option value="case"';
@@ -4156,9 +4169,10 @@ $('.editable_text').focus(function() {
 </script>
 
 <script type="text/javascript">
-  // $(window).load(function() {
-  //   $("div#divLoading").removeClass('show');
-  // });
+  $(window).on('load', function() {
+      $("div#divLoading").removeClass('show');
+  });
+
   
   //  $(document).ready(function(){
   //       $('.table').fixedHeader({
@@ -4167,152 +4181,23 @@ $('.editable_text').focus(function() {
   // });
 </script>
 
-// <script>
-//     $(document).ready(function(){
-//         var url = "<?php echo $data['searchitem'];?>";
-//         url = url.replace(/&amp;/g, '&');
-//         var departments = "<?php echo $data['departments'];?>";
-//         var suppliers = "<?php echo $data['suppliers'];?>";
-//         var size = "<?php echo $data['size'];?>";
-//         var price = "<?php echo $data['price']; ?>";
+<script>
+    $(document).ready(function(){
         
-//         $(document).on('change', '#price_select_by', function(){
-//             var select_by = $(this).val();
-//             var select_by_value1 = $('#select_by_value_1').val() === undefined?'':$('#select_by_value_1').val();
-//             var select_by_value2 = $('#select_by_value_2').val() === undefined?'':$('#select_by_value_2').val();
-    
-    
-//             var html='';
-//             if(select_by === 'between'){
-    
-//                 html = '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box search_item_history" placeholder="Enter" style="width:40px;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="'+select_by_value1+'"/>';
-//                 html += '<input type="number" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box search_item_history" placeholder="Amt" style="width:40px;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="'+select_by_value2+'"/>';
-    
-//                 $(this).css({'width': 71});
-    
-    
-//             } else {
-    
-//                 html = '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box search_item_history" placeholder="Enter Amt" style="width:70px;color:black;border-radius: 4px;height:28px;margin-left:5px;" value="'+select_by_value1+'"/>';
-//                 // $('#selectByValuesSpan').html('not between');
-//                 $(this).css({'width': 90});
-//             }
-//             $('#selectByValuesSpan').html(html);
-    
-//         });
-        
-//         $(document).on('input', '#select_by_value_2, #select_by_value_1', function(){
+        $(document).on("click", "#clear_filters", function(){
             
-//             select_by_val1 = parseFloat($('#select_by_value_1').val());
-//             select_by_val2 = parseFloat($('#select_by_value_2').val());
-            
-//             if($('#price_select_by').val() == 'between' && typeof(select_by_val1) != "undefined" && select_by_val1 !== null && typeof(select_by_val2) != "undefined" && select_by_val2 !== null && select_by_val1 >= select_by_val2){
-//                     bootbox.alert({
-//                                 size: 'small',
-//                                 title: "  ",
-//                                 message: "Second value must be greater than first value!",
-//                               });
-//             }
-//         });
-        
-        
-//         $('#item_listing thead tr').clone(true).appendTo( '#item_listing thead' );
-//         $('#item_listing thead tr:eq(1) th').each( function (i) {
-            
-//             var title = $(this).text();
-//             if(title == 'DEPT.')
-//             {
-//                 $(this).html(departments)
-//             }
-            
-//             else if(title == "CATEGORY")
-//             {
-//                 $(this).html('<select class="form-control search_item_history" name="category_code" id="category_code" style="width: 90px; padding: 0px; font-size: 9px;" disabled><option>All</option></select>')
-//             }
-            
-//             else if(title == 'VENDOR')
-//             {
-//                 $(this).html(suppliers)
-//             }
-            
-//             else if(title == 'SIZE')
-//             {
-//                 $(this).html(size)
-//             }
-//             else if(title == 'ITEM NAME')
-//             {
-//                 $(this).html( '<input type="text" name="" class="search_text_box search_item_history" id="item_name" placeholder="Search" style="width:70px;color:black;border-radius: 4px;height:28px;"/>' );
-//             } else if(title == 'SKU'){
-//                 $(this).html( '<input type="text" name="" class="search_text_box search_item_history" id="sku" placeholder="Search" style="width:70px;color:black;border-radius: 4px;height:28px;"/>' );
-//             }
-//             else if(title == 'PRICE')
-//             {
-//                 $(this).html(price);
-//             } else
-//             {
-//                 $(this).html( '' );
-//             }
-            
-//         });
-        
-        
-//         $(document).on("change","#dept_code",function(){
-//             var get_category_ajax;
-//             if($(this).val() != "")
-//             {
-//                 $('#category_code').attr("placeholder", "Loading...");
-//                 var get_categories_url = "<?php echo $data['get_categories_url']; ?>";
-//                 get_categories_url = get_categories_url.replace(/&amp;/g, '&');
-    
-//                 var get_department_items_url = "<?php echo $data['get_department_items_url']; ?>";
-//                 get_department_items_url = get_department_items_url.replace(/&amp;/g, '&');
-//                 var dep_code = [$(this).val()];
-    
-//                 if(get_category_ajax && get_category_ajax.readyState != 4 ){
-//                     get_category_ajax.abort();
-//                 }
-    
-//                 get_category_ajax = $.ajax({
-//                     url: get_categories_url,
-//                     headers: {
-//                         'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-//                     },
-//                     type: 'post',
-//                     data : {dep_code : dep_code},
-//                     success:function(data){
-//                         if(data)
-//                         {
-//                             $('#category_code').attr("placeholder", "Select Category");
-//                             $( '#category_code' ).html( data );
-//                             $('#category_code').prop("disabled", false);
-//                         }
-//                         else
-//                         {
-//                             $( '#category_code' ).html( '' );
-//                             $('#category_code').prop("disabled", true);
-//                         }
-//                     }
-//                 })
-//             }
-    
-//         });
-        
-//         $(document).on("click", "#clear_filters", function(){
-            
-//             $('tbody#history_items').empty();
-//             $('#search_vendor_item_code').val('');
-//             $('#item_name').val('');
-//             $('#select_by_value_1').val('');
-//             $('#sku').val('');
-//             $('#size_id').val('all');
-//             if($('#dept_code').val()!='all'){
-//                 $('#category_code').val('all');  
-//             }
-//             $('#dept_code').val('all');
-//             $('#supplier_code').val('all');
-//         });
-//     });
-// </script>
+            $('tbody#history_items').empty();
+            $('#search_vendor_item_code').val('');
+            $('#item_name').val('');
+            $('#select_by_value_1').val('');
+            $('#sku').val('');
+            $('#size_id').val(' ');
+            $('#category_code').val(' '); 
+            $('#dept_code').val(' ');
+            $('#supplier_code').val(' ');
+        });
+    });
+</script>
 
 @endsection
 

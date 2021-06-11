@@ -147,10 +147,10 @@
             </div>
           </div>
           <br>
-          
+            
           <div class="row">
             <div class="col-md-12 text-center">
-              <input class="btn btn-success button-blue headerblack buttons_menu" type="submit" value="Save">
+              <input class="btn button-blue headerblack buttons_menu" type="submit" value="Save">
               <button type="button" class="btn btn-gray headerblack buttons_menu" data-dismiss="modal" style="border-color: black">Cancel</button>
             </div>
           </div>
@@ -244,11 +244,11 @@
           url: '/updatereason',
           contentType: 'application/json',
           datatype: 'json',
-          data: JSON.stringify(avArr) // access in body
-      }).success(function (e) {
-          //console.log('SUCCESS');
-          //console.log(e);
+          data: JSON.stringify(avArr),
+          success: function(result) {
             location.reload();
+          }// access in body
+      
       }).fail(function (msg) {
 
      //console.log('FAIL');
