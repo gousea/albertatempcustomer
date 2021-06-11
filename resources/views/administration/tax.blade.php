@@ -385,13 +385,9 @@
       
       if(val > 100 || val < 0)
       {
-       
-       
           alert('Invalid Tax Rate.  Please Check..!');
           this.value='';  
-          
           event.preventDefault();
-          
       }
       
       

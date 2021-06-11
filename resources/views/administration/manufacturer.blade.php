@@ -294,6 +294,39 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 
@@ -371,19 +404,29 @@ $("#closeBtn").click(function(){
 <!-- save data -->
 
 <script type="text/javascript">
+    $(document).on('click', '.mfrCode, .mfrName', function(e){
+        e.preventDefault();
+        let selectId = $(this).attr('id').replace("mfr_code", "select");
+      
+        let selectcode = $(this).attr('id').replace("mfr_name", "select");
+      
+        document.getElementById(selectId).setAttribute('checked','checked');
+        document.getElementById(selectcode).setAttribute('checked','checked');
+
+    });
+
   $(document).on('click','#save_button', function(e){
+      
     e.preventDefault();
+    $("div#divLoading").addClass('show');
     $('.mfrName').each(function(){
         var allManufactures = [];         
         allManufactures.push($(this).val());
         
       if($(this).val() == ''){
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please Enter Manufacturer Name", 
-          callback: function(){}
-        });
+        $('#warning_msg').html("Please Enter Manufacturer Name");
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         all_category = false;
         return false;
       }else{
@@ -393,7 +436,7 @@ $("#closeBtn").click(function(){
     
     // var subcatids = []; 
     
-    // $("div#divLoading").addClass('show');
+    $("div#divLoading").addClass('show');
     var avArr = [];
    $("input[name='selected[]']:checked").each(function () {
       var id = $(this).val();
@@ -407,13 +450,10 @@ $("#closeBtn").click(function(){
       });
     });
     if(avArr.length < 1){
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "You did not select anything", 
-            callback: function(){location.reload(true);}
-        });
+        $('#warning_msg').html("You did not select anything");
         $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
+        location.reload(true);
         return false;
     }else{
         <?php if(session()->get('hq_sid') == 1){ ?>
@@ -464,33 +504,18 @@ $("#closeBtn").click(function(){
                 contentType: 'application/json',
                 data: JSON.stringify({data:avArr}),
                 success: function(result) {
-                     location.reload();
+                    var avArr = [];
+                    location.reload();
                 },
-            });
-            
-            request.done(function( msg ) {
-                $("div#divLoading").removeClass('show');
-            });
-             
-            request.fail(function( msg ) {
-              let mssg = '<div class="alert alert-danger">';
-                let errors = msg.responseJSON;
-                $.each(errors, function(k, err){
-                  $.each(err, function(key, error){
-                    mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-                  });
-                });
-        
-                mssg += '</div>';
-                
-                bootbox.alert({ 
-                    size: 'small',
-                    title: "Attention", 
-                    message: mssg, 
-                    callback: function(){location.reload(true);}
-                });
-                
-                $("div#divLoading").removeClass('show');
+                error: function(msg){
+                    $('#error_msg').html('The manufacturer name is already taken !');
+                    $("div#divLoading").removeClass('show');
+                    $('#errorModal').modal('show');
+                    setTimeout(function(){
+                      $('#errorModal').modal('hide');
+                      window.location.reload();
+                    }, 2000);
+                }
             });
         <?php } ?>
     }
@@ -551,14 +576,10 @@ $("#closeBtn").click(function(){
         
                 mssg += '</div>';
                 
-                bootbox.alert({ 
-                    size: 'small',
-                    title: "Attention", 
-                    message: mssg, 
-                    callback: function(){location.reload(true);}
-                });
-                
+                $('#error_msg').html(mssg);
                 $("div#divLoading").removeClass('show');
+                $('#errorModal').modal('show');
+                location.reload(true);
             });
     });
 
@@ -601,13 +622,13 @@ $("#closeBtn").click(function(){
               html +='</td>';
               html +='<td class="text-left">';
               html +='<span style="display:none;">'+v.mfr_code+'</span>';
-              html +='<input type="text" maxlength="50" class="editable mfrCode" name="manufacturer['+v.mfr_id+'][\'mfr_code\']" id="manufacturer['+v.mfr_id+'][\'mfr_code\']" value="'+v.mfr_code+'">';
+              html +='<input type="text" style="border:none" maxlength="50" class="editable mfrCode" name="manufacturer['+v.mfr_id+'][\'mfr_code\']" id="manufacturer['+v.mfr_id+'][\'mfr_code\']" value="'+v.mfr_code+'">';
               html +='<input type="hidden" name="manufacturer['+v.mfr_code+'][\mfr_id\]" value="'+v.mfr_id+'">';
               html += '</td>';
                 
               html+='<td class="text-left">';
               html+='<span style="display:none;">'+v.mfr_name+'</span>';
-              html+='<input type="text" maxlength="50" class="editable mfrName" name="manufacturer['+v.mfr_id+'][\'mfr_name\']" id="manufacturer['+v.mfr_id+'][\'mfr_name\']" value="'+v.mfr_name+'">';
+              html+='<input type="text"  style="border:none" maxlength="50" class="editable mfrName" name="manufacturer['+v.mfr_id+'][\'mfr_name\']" id="manufacturer['+v.mfr_id+'][\'mfr_name\']" value="'+v.mfr_name+'">';
               html+='<input type="hidden" name="manufacturer['+v.mfr_id+'][\mfr_id\]" value="'+v.mfr_id+'">';
               html +='</td>';
                   
@@ -633,13 +654,11 @@ $("#closeBtn").click(function(){
     $(document).on('click', '#delete_manufacturer_btn', function(event) {
         event.preventDefault();
         if($("input[name='selected[]']:checked").length == 0){
-          bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: 'Please Select Manufacturer to Delete!', 
-            callback: function(){}
-          });
-          return false;
+         
+            $('#warning_msg').html("Please Select Manufacturer to Delete!");
+            $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
+            return false;
         }
         var avArr = [];
         $("#manufacturer input[type=checkbox]:checked").each(function () {
@@ -652,7 +671,7 @@ $("#closeBtn").click(function(){
             mfr_code:code
           });
         });
-        
+        $("div#divLoading").addClass('show');
         <?php if(session()->get('hq_sid') == 1){ ?>
             $.ajax({
                   url: "<?php echo url('/manufacturer/duplicatemanufacurer'); ?>",
@@ -693,8 +712,6 @@ $("#closeBtn").click(function(){
             $("#DeleteModal").modal('show');
             
         <?php } else { ?>
-    
-            $("div#divLoading").addClass('show');
         
             $.ajax({
                 url : "<?php echo url('/deletemanufacturer'); ?>",
@@ -704,49 +721,25 @@ $("#closeBtn").click(function(){
                 contentType: "application/json",
                 dataType: 'json',
                 success: function(data) {
-
-                    if(data['success']){
-                      $('#success_msg').html('<strong>Manufacturer Deleted Successfully</strong>');
-                      $("div#divLoading").removeClass('show');
-                      $('#successModal').modal('show');
-
-                      setTimeout(function(){
+                    $('#success_msg').html('<strong>Manufacturer Deleted Successfully</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#successModal').modal('show');
+                    setTimeout(function(){
                       $('#successModal').modal('hide');
+                      var avArr = [];
                       window.location.reload();
-                      }, 3000);
-                    }else{
-                      var errorMsg = '';
-                      
-                      $.each(data.error_msg, function (k, v){
-                          errorMsg += v+'<br/>';
-                      });
+                    }, 3000);
+                },
+                error: function(xhr) { 
             
-                      $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
+                      $('#error_msg').html('<strong>Manufacturer Deletion failed</strong>');
                       $("div#divLoading").removeClass('show');
                       $('#errorModal').modal('show');
                       
                       setTimeout(function(){
                           $('#errorModal').modal('hide');
                           window.location.reload();
-                          }, 4000);
-                    }
-                },
-                error: function(xhr) { // if error occured
-                    var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-                    
-                    var error_show = '';
-            
-                    if(response_error.error){
-                      error_show = response_error.error;
-                      
-                
-                    }else if(response_error.validation_error){
-                      error_show = response_error.validation_error[0];
-                    }
-            
-                    $('#error_alias').html('<strong>'+ error_show +'</strong>');
-                    $('#errorModal').modal('show');
-                    return false;
+                      }, 4000);
                 }
             });
 
@@ -837,50 +830,25 @@ $('#delete_btn_manufacturer').click(function(){
         contentType: "application/json",
         dataType: 'json',
         success: function(data) {
-            if(data.success){
-              setTimeout(function(){
-                bootbox.alert({ 
-                    size: 'small',
-                    title: "Attention", 
-                    message: 'Deleted Successfully',
-                    callback: function(){}
-                });
-              $('#successModal').modal('hide');
-              window.location.reload();
-              }, 3000);
-            }else{
-              var errorMsg = '';
-              
-              $.each(data.error_msg, function (k, v){
-                  errorMsg += v+'<br/>';
-              });
-    
-              $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
-              $("div#divLoading").removeClass('show');
-              $('#errorModal').modal('show');
-              
-              setTimeout(function(){
-                  $('#errorModal').modal('hide');
-                  window.location.reload();
-                  }, 4000);
-            }
-        },
-        error: function(xhr) { // if error occured
-            var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            $('#success_msg').html('<strong>Manufacturer Deleted successfully</strong>');
+            $("div#divLoading").removeClass('show');
+            $('#successModal').modal('show');
+            setTimeout(function(){
+                $('#successModal').modal('hide');
+                window.location.reload();
+                avArr = [];
+            }, 3000);
             
-            var error_show = '';
-    
-            if(response_error.error){
-              error_show = response_error.error;
-              
-        
-            }else if(response_error.validation_error){
-              error_show = response_error.validation_error[0];
-            }
-    
-            $('#error_alias').html('<strong>'+ error_show +'</strong>');
+        },
+        error: function(xhr) { 
+            $('#error_msg').html('<strong>Manufacturer deletion failed</strong>');
+            $("div#divLoading").removeClass('show');
             $('#errorModal').modal('show');
-            return false;
+              
+            setTimeout(function(){
+                $('#errorModal').modal('hide');
+                window.location.reload();
+            }, 4000);
         }
     });
 });
