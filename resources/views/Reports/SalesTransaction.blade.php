@@ -139,14 +139,16 @@ Sales Transaction
                           <th>Date</th>
                           <th>Reg</th>
                           <th>Tran#</th>
-                          <th class="text-right">Total</th>
+                          <th >Total</th>
                          <!-- <th class="text-right">Change</th>-->
-                          <th class="text-right">Total Tax</th>
-                          <th> <a style="color:#fff;" >Tender Type</a></th>
+                          <th>Total Tax</th>
+                          <th> Tender Type</th>
                           <!--<th>Trn Type</th>-->
                           <th>Action</th>
                         </tr>
                       </thead>
+                      
+
                       <tbody>
                       <?php  $nettotal=$ntaxtotal=0 ?>
                           <?php foreach ($reports as $key => $value){ 
@@ -158,9 +160,9 @@ Sales Transaction
                               <td><b>Grand Total</b></td>
                               <td></td>
                               <td></td>
-                              <td class="text-right"> <b><?php echo "$",$nettotal;?></b></td>
+                              <td> <b><?php echo "$",$nettotal;?></b></td>
                             
-                              <td class="text-right"><b><?php echo "$",$ntaxtotal;?></b></td>
+                              <td><b><?php echo "$",$ntaxtotal;?></b></td>
                              
                               <td></td>
                               <td></td>
@@ -171,9 +173,9 @@ Sales Transaction
                               <td><?php echo date('m-d-Y g:i:sA', strtotime($value->dtrandate));?></td>
                               <td><?php echo $value->vterminalid;?></td>
                               <td><?php echo $value->trnsalesid;?></td>
-                              <td class="text-right"><?php echo "$",$value->nnettotal;?></td>
+                              <td><?php echo "$",$value->nnettotal;?></td>
                             
-                              <td class="text-right"><?php echo "$",$value->ntaxtotal;?></td>
+                              <td><?php echo "$",$value->ntaxtotal;?></td>
                              
                               <td><?php echo $value->tendername;?></td>
                              

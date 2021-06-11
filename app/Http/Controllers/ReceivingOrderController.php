@@ -308,7 +308,8 @@ class ReceivingOrderController extends Controller
             foreach ($query as $key => $value) {
 
                 if($value->estatus == 'Close'){
-                    $view_edit = url('/ReceivingOrder/info' . '?iroid=' . $value->iroid );
+                    // $view_edit = url('/ReceivingOrder/info' . '?iroid=' . $value->iroid );
+                    $view_edit = url('/ReceivingOrder/edit' . '?iroid=' . $value->iroid );
                 }else{
                     $view_edit = url('/ReceivingOrder/edit' . '?iroid=' . $value->iroid );
                 }
