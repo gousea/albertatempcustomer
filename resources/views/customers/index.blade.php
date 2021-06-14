@@ -46,7 +46,7 @@
                                         onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
 
                                 <th class="col-xs-1 headername text-uppercase">Customer
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields" placeholder="CUSTOMER" id="customer">
@@ -54,7 +54,7 @@
                                 </th>
 
                                 <th class="col-xs-1 headername text-uppercase">First Name
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields"
@@ -62,7 +62,7 @@
                                     </div>
                                 </th>
                                 <th class="col-xs-1 headername text-uppercase">Last Name
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields"
@@ -70,14 +70,14 @@
                                     </div>
                                 </th>
                                 <th class="col-xs-1 headername text-uppercase">Phone
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields" placeholder="PHONE" id="phone">
                                     </div>
                                 </th>
                                 <th class="col-xs-1 headername text-uppercase">Status
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields" placeholder="STATUS" id="status">
@@ -166,9 +166,9 @@
             "dom": 't<<"float-right"p>><"clear">',
             "searching":true,
             "destroy": true,
-            "ordering": true,
+            "ordering": false,
             "pageLength":10,
-            "order": [[ 3, "desc" ]]
+            "order": [[ 3, "asc" ]]
         });
 
         $('#customer').on('input', function () {
