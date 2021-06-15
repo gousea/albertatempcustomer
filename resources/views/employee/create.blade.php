@@ -63,7 +63,7 @@
                         </div>
           <!-- //row -->
                     </div>
-                </form>    
+                </form>
         </div>
     </div>
     <div class="mytextdiv">
@@ -188,9 +188,9 @@
                                     placeholder="QUANTITY LIMIT" name="q_limit">
                             </div>
                         </div>
-                    </div>                      
+                    </div>
                 </form>
-               
+
             </div>
         </div>
     </div>
@@ -258,9 +258,9 @@
                                     placeholder="PROMOTION SLAB PRICE" name="p_sprice">
                             </div>
                         </div>
-                    </div>                     
+                    </div>
                 </form>
-               
+
             </div>
         </div>
     </div>
@@ -302,9 +302,9 @@
                                     placeholder="PROMOTION CATEGORY" name="p_category">
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </form>
-               
+
             </div>
         </div>
     </div>
@@ -347,9 +347,9 @@
                                     placeholder="PROMOTION CATEGORY" name="p_category">
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </form>
-               
+
             </div>
         </div>
     </div>
@@ -392,9 +392,9 @@
                                     placeholder="PROMOTION CATEGORY" name="p_category">
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </form>
-               
+
             </div>
         </div>
     </div>
@@ -450,11 +450,11 @@
                         </tr>
                         <tr id="tr-id-2" class="tr-class-2">
                             <td></td>
-                            <td>PERMISSION7</td>                  
+                            <td>PERMISSION7</td>
                         </tr>
                         <tr id="tr-id-2" class="tr-class-2">
                             <td></td>
-                            <td>PERMISSION8</td>                
+                            <td>PERMISSION8</td>
                         </tr>
                         <tr id="tr-id-2" class="tr-class-2">
                             <td></td>
@@ -510,11 +510,11 @@
                         </tr>
                         <tr id="tr-id-2" class="tr-class-2">
                             <td></td>
-                            <td>PERMISSION7</td>                  
+                            <td>PERMISSION7</td>
                         </tr>
                         <tr id="tr-id-2" class="tr-class-2">
                             <td></td>
-                            <td>PERMISSION8</td>                
+                            <td>PERMISSION8</td>
                         </tr>
                         <tr id="tr-id-2" class="tr-class-2">
                             <td></td>
@@ -570,11 +570,11 @@
                         </tr>
                         <tr id="tr-id-2" class="tr-class-2">
                             <td></td>
-                            <td>PERMISSION7</td>                  
+                            <td>PERMISSION7</td>
                         </tr>
                         <tr id="tr-id-2" class="tr-class-2">
                             <td></td>
-                            <td>PERMISSION8</td>                
+                            <td>PERMISSION8</td>
                         </tr>
                         <tr id="tr-id-2" class="tr-class-2">
                             <td></td>

@@ -112,7 +112,7 @@
                 <div class="row mt-3">
                     <div class="col-lg-8 col-md-8 col-xs-8 ">
                         <div class="box box-info">
-                            <div class="box-header with-border d-flex justify-content-between">
+                            {{-- <div class="box-header with-border d-flex justify-content-between">
                                 <h4 class="box-title text-capitalize">last 7 day sales</h4>
                                 <div class="box-tools pull-right dropdown">
                                     <button type="button" class="btn outline-secondary dropdown-toggle btn-sales"
@@ -243,8 +243,16 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- /.box-body -->
+                            <div class="panel panel-default">
+                                <div class="panel-body padding15">
+                                    <strong><h2 class="md-title" align="center"><sup style="font-size: 20px">Last 7 Day Customer</sup></h2></strong>
+                                    <div class="box-body chart-responsive">
+                                        <div class="chart" id="line-chart" style="height: 300px;"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-xs-4">
@@ -388,5 +396,70 @@
             </div>
         </section>
     </div>
+
+@endsection
+
+@section('page-script')
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+{{-- <link href="/stylesheet/morris.css" rel="stylesheet" type="text/css"/> --}}
+<link rel="stylesheet" href="{{ asset('asset/css/morris.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('asset/js/morris.min.js') }}"> --}}
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+{{-- <script src="/javascript/morriss/morris.min.js"></script> --}}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      var temp_sevendaysales = '<?php echo json_encode($output['sevendaysales']); ?>';
+      window.sevendaysales = $.parseJSON(temp_sevendaysales);
+
+      var temp_sevendaysCustomer = '<?php echo json_encode($output['sevendaysCustomer']); ?>';
+      window.sevendaysCustomer = $.parseJSON(temp_sevendaysCustomer);
+
+
+      var temp_dailySummary = '<?php echo json_encode($output['dailySummary']); ?>';
+      window.dailySummary = $.parseJSON(temp_dailySummary);
+
+      var temp_topItem = '<?php echo json_encode($output['topItem']); ?>';
+      window.topItem = $.parseJSON(temp_topItem);
+
+      var temp_topCategory = '<?php echo json_encode($output['topCategory']); ?>';
+      window.topCategory = $.parseJSON(temp_topCategory);
+
+      var temp_customer = '<?php echo json_encode($output['customer']); ?>';
+      window.customer = $.parseJSON(temp_customer);
+    });
+  </script>
+
+    <script src="/javascript/dashboardApi.js"></script>
+
+  <script type="text/javascript">
+    $(window).load(function() {
+      $("div#divLoading").removeClass('show');
+    });
+
+    $(document).ready(function(){
+        setTimeout(function(){
+            if(window.sevenDaySalesArea !== undefined){
+                window.sevenDaySalesArea.redraw();
+            }
+            if(window.sevenDaysCustomerArea !== undefined){
+                window.sevenDaysCustomerArea.redraw();
+            }
+            if(window.topFiveCategoryBar !== undefined){
+                window.topFiveCategoryBar.redraw();
+            }
+            if(window.topFiveProductBar !== undefined){
+                window.topFiveProductBar.redraw();
+            }
+            if(window.cutomerFlow !== undefined){
+                window.cutomerFlow.redraw();
+            }
+
+        }, 50);
+    });
+
+
+  </script>
 
 @endsection

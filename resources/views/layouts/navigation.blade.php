@@ -149,9 +149,9 @@
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('TaxReport') }}"> Tax Report </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Hourly Sales Report </a>
                                 </li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> RO History Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('POReport') }}"> RO History Report </a>
                                 </li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Inventory on Hand Report
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('InventoryReport') }}"> Inventory on Hand Report
                                     </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Profit & Loss Report </a>
                                 </li>
@@ -163,7 +163,7 @@
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Product Listing </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Employee Loss Prevention
                                         Report </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Item Summary Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('itemsummary') }}"> Item Summary Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Sales History Report </a>
                                 </li>
