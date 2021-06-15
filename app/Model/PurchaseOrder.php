@@ -64,111 +64,195 @@ class PurchaseOrder extends Model
         
     //     return $run_query;
     // }
-    public function getSearchItemHistoryAll($search_item,$ivendorid,$pre_items_id)
+    public function getSearchItemHistoryAll($search_items,$ivendorid,$pre_items_id)
     {
-       //parent-child Search changed 05-10(oct)-2020
-        if(count($pre_items_id) > 0){
-            $sort='';
-            $pre_items_id = implode(',', $pre_items_id);
-            //$query = "SELECT mi.iitemid,mi.vitemcode,mi.vitemname,mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,mi.dcostprice,mi.dunitprice,mi.nunitcost,mi.npack,mi.iqtyonhand QOH,mi.new_costprice FROM mst_item as mi  LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) WHERE (mi.vitemname LIKE  '%" .($search_item). "%' OR mi.vbarcode LIKE  '%" .($search_item). "%' OR mi.vsize LIKE  '%" .($search_item). "%' OR mia.valiassku LIKE  '%" .($search_item). "%' OR mi.dcostprice LIKE  '%" .($search_item). "%' OR mi.dunitprice LIKE  '%" .($search_item). "%') AND mi.iitemid NOT IN($pre_items_id) AND mi.estatus='Active'";
+        $condition = "WHERE mi.estatus='Active'";
             
-                 $parentid=DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item mi where mi.vitemname = '$search_item' ");
-                 if(isset($parentid) && !empty($parentid)){
-                     $parentid_data=$parentid[0]->parentid;
-                     $child_data=$parentid[0]->iitemid;
-                     $isparentchild=$parentid[0]->isparentchild;
-                      if($parentid_data>0 && $isparentchild == 1)
-                         {
-                         $sort = " ORDER BY mi.parentid DESC";
-                         }
-                         else{
-                          $sort = " ORDER BY mi.isparentchild DESC";   
-                         }
-                     
-                     $query = "SELECT mi.iitemid,mi.vitemcode,
-                     case mi.isparentchild when 0 then trim(mi.vitemname)  when 1 then Concat(mi.vitemname,' [Child]')
-                     when 2 then  Concat(mi.vitemname,' [Parent]') end   as vitemname,
-                     mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,
-                     mi.dcostprice,mi.dunitprice,mi.nunitcost,mi.npack,
-                     case mi.isparentchild  when 1 then   Mod(p.IQTYONHAND,p.NPACK)  else  
-                     (Concat(cast(((mi.IQTYONHAND div mi.NPACK )) as signed), '  (', Mod(mi.IQTYONHAND,mi.NPACK) ,')') )end as QOH,
-                     
-                     mi.new_costprice FROM mst_item as mi  
-                     LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode)
-                     LEFT JOIN mst_item p ON mi.parentid = p.iitemid 
-                     WHERE mi.vitemname = '$search_item'  OR mi.iitemid=$parentid_data OR mi.parentid=$child_data
-                     AND mi.iitemid NOT IN($pre_items_id) 
-                     AND mi.estatus='Active' $sort ";
-                 }
-                 else{
-                  $query = "SELECT mi.iitemid,mi.vitemcode,
-                  case mi.isparentchild when 0 then trim(mi.vitemname)  when 1 then Concat(mi.vitemname,' [Child]')
-                  when 2 then  Concat(mi.vitemname,' [Parent]') end   as vitemname,
-                  mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,mi.dcostprice,
-                  mi.dunitprice,mi.nunitcost,mi.npack,
-                  case mi.isparentchild  when 1 then   Mod(p.IQTYONHAND,p.NPACK)  else  
-                  (Concat(cast(((mi.IQTYONHAND div mi.NPACK )) as signed), '  (', Mod(mi.IQTYONHAND,mi.NPACK) ,')') )end as QOH,
-                  mi.new_costprice FROM mst_item as mi  
-                  LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode)
-                  LEFT JOIN mst_item p ON mi.parentid = p.iitemid 
-                  WHERE (mi.vitemname LIKE  '%" .($search_item). "%' OR mi.vbarcode LIKE  '%" .($search_item). "%' OR mi.vsize LIKE  '%" .($search_item). "%' OR mia.valiassku LIKE  '%" .($search_item). "%' OR mi.dcostprice LIKE  '%" .($search_item). "%' OR mi.dunitprice LIKE  '%" .($search_item). "%') AND mi.iitemid NOT IN($pre_items_id) AND mi.estatus='Active'";
-                }
-                     
-        }else{
-            
-            // $query = "SELECT mi.iitemid,mi.vitemcode,mi.vitemname,mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,mi.dcostprice,mi.dunitprice,mi.nunitcost,mi.npack,mi.iqtyonhand QOH,
-            // mi.new_costprice FROM mst_item as mi  LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) WHERE 
-            // (mi.vitemname LIKE  '%" .($search_item). "%' OR mi.vbarcode LIKE  '%" .($search_item). "%' OR mi.vsize LIKE  '%" .($search_item).  "%' 
-            // OR mia.valiassku LIKE  '%" .($search_item). "%' OR mi.dcostprice LIKE  '%" .($search_item). "%' OR mi.dunitprice LIKE  '%" .($search_item). "%') 
-            // AND mi.estatus='Active'";
-            
-                 $parentid=DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item mi where mi.vitemname = '$search_item' ");
-                 if(isset($parentid) && !empty($parentid)){
-                     $parentid_data=$parentid[0]->parentid;
-                     $child_data=$parentid[0]->iitemid;
-                     $isparentchild=$parentid[0]->isparentchild;
-                     
-                      if($parentid_data>0 && $isparentchild == 1)
-                         {
-                         $sort = " ORDER BY mi.parentid DESC";
-                         }
-                         else{
-                          $sort = " ORDER BY mi.isparentchild DESC";   
-                         }
-                     $query = "SELECT DISTINCT mi.iitemid,mi.vitemcode,
-                     case mi.isparentchild when 0 then trim(mi.vitemname)  when 1 then Concat(mi.vitemname,' [Child]')
-                     when 2 then  Concat(mi.vitemname,' [Parent]') end   as vitemname,
-                     mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,
-                     mi.dcostprice,mi.dunitprice,mi.nunitcost,mi.npack,
-                     case mi.isparentchild  when 1 then   Mod(p.IQTYONHAND,p.NPACK)  else  
-                     (Concat(cast(((mi.IQTYONHAND div mi.NPACK )) as signed), '  (', Mod(mi.IQTYONHAND,mi.NPACK) ,')') )end as QOH,
-                     mi.new_costprice FROM mst_item as mi  
-                     LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode)
-                     LEFT JOIN mst_item p ON mi.parentid = p.iitemid WHERE 
-                     mi.iitemid=$parentid_data OR mi.parentid=$child_data
-                     OR mi.vitemname = '$search_item'
-                     AND mi.estatus='Active' $sort";
-                 }
-                 else{
-                    $query = "SELECT mi.iitemid,mi.vitemcode,
-                    case mi.isparentchild when 0 then trim(mi.vitemname)  when 1 then Concat(mi.vitemname,' [Child]')
-                     when 2 then  Concat(mi.vitemname,' [Parent]') end   as vitemname,
-                    mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,mi.dcostprice,mi.dunitprice,mi.nunitcost,mi.npack,
-                     case mi.isparentchild  when 1 then   Mod(p.IQTYONHAND,p.NPACK)  else  
-                     (Concat(cast(((mi.IQTYONHAND div mi.NPACK )) as signed), '  (', Mod(mi.IQTYONHAND,mi.NPACK) ,')') )end as QOH,
-                    mi.new_costprice FROM mst_item as mi  
-                    LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) 
-                    LEFT JOIN mst_item p ON mi.parentid = p.iitemid WHERE 
-                    (mi.vitemname LIKE  '%" .($search_item). "%' OR mi.vbarcode LIKE  '%" .($search_item). "%' OR mi.vsize LIKE  '%" .($search_item).  "%' 
-                    OR mia.valiassku LIKE  '%" .($search_item). "%' OR mi.dcostprice LIKE  '%" .($search_item). "%' OR mi.dunitprice LIKE  '%" .($search_item). "%') 
-                    AND mi.estatus='Active'";
-                 }
+        if (isset($search_items['item_name']) && !empty(trim($search_items['item_name']))) {
+            $search = $search_items['item_name'];
+            $condition .= " AND mi.vitemname LIKE  '%" . $search . "%'";
+        }
+
+        if (isset($search_items['sku']) && !empty(trim($search_items['sku']))) {
+            $search = $search_items['sku'];
+            $condition .= " AND mi.vbarcode LIKE  '%" . $search . "%'";
         }
         
-        // echo $query; die;
-        $run_query = DB::connection('mysql_dynamic')->select($query);
-        
-        return $run_query;
+        if (isset($search_items['size']) && !empty($search_items['size'])) {
+            $search = $search_items['size'];
+            if ($search != 'all') {
+                $condition .= " AND mi.vsize LIKE  '%" . $search . "%'";
+            }
+        }
+
+        if (isset($search_items['dept_code']) && !empty(trim($search_items['dept_code']))) {
+            $search = $search_items['dept_code'];
+            if ($search != 'all') {
+                $condition .= " AND md.vdepartmentname LIKE  '%" . $search . "%'";
+            }
+        }
+
+        if (isset($search_items['category_code']) && !empty(trim($search_items['category_code']))) {
+            $search = $search_items['category_code'];
+            if ($search != 'All' && $search != 'all') {
+                $condition .= " AND mc.vcategoryname LIKE  '%" . $search . "%'";
+            }
+        }
+
+        if (isset($search_items['supplier_code']) && !empty($search_items['supplier_code'])) {
+            $search = $search_items['supplier_code'];
+            if ($search != 'all') {
+                $condition .= " AND msupp.vcompanyname LIKE  '%" . $search . "%'";
+            }
+        }
+       
+        if (isset($search_items['price']) && !empty(trim($search_items['price'])) && $search_items['price'] != null) {
+            $search = $search_items['price'];
+            if (isset($search)) {
+                $condition .= " AND mi.dunitprice = $search ";
+            } 
+        }
+
+        //parent-child Search changed 05-10(oct)-2020
+        if(!empty(trim($search_items['item_name'])) || !empty(trim($search_items['sku'])) || $search_items['size'] != 'all' || $search_items['dept_code'] != 'all' || $search_items['category_code'] != 'All' || $search_items['supplier_code'] != 'all' || !empty($search_items['price'])){
+            if(count($pre_items_id) > 0){
+                $sort='';
+                $pre_items_id = implode(',', $pre_items_id);
+                
+                if(isset($search_items['item_name']) && !empty($search_items['item_name'])){
+                    $parentid=DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item mi where mi.vitemname = '".$search_items['item_name']."' ");
+                    if(isset($parentid) && !empty($parentid)){
+                        $parentid_data=$parentid[0]->parentid;
+                        $child_data=$parentid[0]->iitemid;
+                        $isparentchild=$parentid[0]->isparentchild;
+                        if($parentid_data>0 && $isparentchild == 1)
+                            {
+                            $sort = " mi.parentid DESC";
+                            }
+                            else{
+                            $sort = " mi.isparentchild DESC";   
+                            }
+                        
+                        $query = "SELECT DISTINCT mi.iitemid,mi.vitemcode, md.vdepartmentname, mc.vcategoryname,msupp.vcompanyname,
+                        case mi.isparentchild when 0 then trim(mi.vitemname)  when 1 then Concat(mi.vitemname,' [Child]')
+                        when 2 then  Concat(mi.vitemname,' [Parent]') end   as vitemname,
+                        mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,
+                        mi.dcostprice,mi.dunitprice,mi.nunitcost,mi.npack,
+                        case mi.isparentchild  when 1 then   Mod(p.IQTYONHAND,p.NPACK)  else  
+                        (Concat(cast(((mi.IQTYONHAND div mi.NPACK )) as signed), '  (', Mod(mi.IQTYONHAND,mi.NPACK) ,')') )end as QOH,
+                        
+                        mi.new_costprice FROM mst_item as mi  
+                        LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode)
+                        LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
+                        LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode)
+                        LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode)
+                        LEFT JOIN mst_item p ON mi.parentid = p.iitemid 
+                        " .$condition." OR mi.iitemid=$parentid_data OR mi.parentid=$child_data ORDER BY ". $sort;
+                    }
+                    else{
+                        $query = "SELECT DISTINCT mi.iitemid,mi.vitemcode, md.vdepartmentname, mc.vcategoryname,msupp.vcompanyname,
+                        case mi.isparentchild when 0 then trim(mi.vitemname)  when 1 then Concat(mi.vitemname,' [Child]')
+                        when 2 then  Concat(mi.vitemname,' [Parent]') end   as vitemname,
+                        mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,mi.dcostprice,
+                        mi.dunitprice,mi.nunitcost,mi.npack,
+                        case mi.isparentchild  when 1 then   Mod(p.IQTYONHAND,p.NPACK)  else  
+                        (Concat(cast(((mi.IQTYONHAND div mi.NPACK )) as signed), '  (', Mod(mi.IQTYONHAND,mi.NPACK) ,')') )end as QOH,
+                        mi.new_costprice FROM mst_item as mi  
+                        LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode) 
+                        LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
+                        LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode)
+                        LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode)
+                        LEFT JOIN mst_item p ON mi.parentid = p.iitemid 
+                        " .$condition." AND mi.iitemid NOT IN(".$pre_items_id.")";
+                    }
+                    
+                }else{
+                    $query = "SELECT DISTINCT mi.iitemid,mi.vitemcode, md.vdepartmentname, mc.vcategoryname,msupp.vcompanyname,
+                        case mi.isparentchild when 0 then trim(mi.vitemname)  when 1 then Concat(mi.vitemname,' [Child]')
+                        when 2 then  Concat(mi.vitemname,' [Parent]') end   as vitemname,
+                        mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,mi.dcostprice,
+                        mi.dunitprice,mi.nunitcost,mi.npack,
+                        case mi.isparentchild  when 1 then   Mod(p.IQTYONHAND,p.NPACK)  else  
+                        (Concat(cast(((mi.IQTYONHAND div mi.NPACK )) as signed), '  (', Mod(mi.IQTYONHAND,mi.NPACK) ,')') )end as QOH,
+                        mi.new_costprice FROM mst_item as mi  
+                        LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode) 
+                        LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
+                        LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode)
+                        LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode)
+                        LEFT JOIN mst_item p ON mi.parentid = p.iitemid 
+                        " .$condition." AND mi.iitemid NOT IN(".$pre_items_id.")";
+                }
+                        
+            }else{
+                
+                if(isset($search_items['item_name']) && !empty($search_items['item_name'])){
+                    $parentid=DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item mi where mi.vitemname = '".$search_items['item_name']."' ");
+                    if(isset($parentid) && !empty($parentid)){
+                        $parentid_data=$parentid[0]->parentid;
+                        $child_data=$parentid[0]->iitemid;
+                        $isparentchild=$parentid[0]->isparentchild;
+                        
+                        if($parentid_data>0 && $isparentchild == 1)
+                            {
+                                $sort = " mi.parentid DESC";
+                            }
+                            else{
+                                $sort = " mi.isparentchild DESC";   
+                            }
+                        $query = "SELECT DISTINCT mi.iitemid,mi.vitemcode, md.vdepartmentname, mc.vcategoryname,msupp.vcompanyname,
+                            case mi.isparentchild when 0 then trim(mi.vitemname)  when 1 then Concat(mi.vitemname,' [Child]')
+                            when 2 then  Concat(mi.vitemname,' [Parent]') end   as vitemname,
+                            mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,
+                            mi.dcostprice,mi.dunitprice,mi.nunitcost,mi.npack,
+                            case mi.isparentchild  when 1 then   Mod(p.IQTYONHAND,p.NPACK)  else  
+                            (Concat(cast(((mi.IQTYONHAND div mi.NPACK )) as signed), '  (', Mod(mi.IQTYONHAND,mi.NPACK) ,')') )end as QOH,
+                            mi.new_costprice FROM mst_item as mi  
+                            LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode) 
+                            LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
+                            LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode)
+                            LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode)
+                            LEFT JOIN mst_item p ON mi.parentid = p.iitemid  
+                            " .$condition." OR mi.iitemid=$parentid_data OR mi.parentid=$child_data ORDER BY ". $sort;
+                    }
+                    else{
+                        $query = "SELECT DISTINCT mi.iitemid,mi.vitemcode, md.vdepartmentname, mc.vcategoryname,msupp.vcompanyname,
+                        case mi.isparentchild when 0 then trim(mi.vitemname)  when 1 then Concat(mi.vitemname,' [Child]')
+                        when 2 then  Concat(mi.vitemname,' [Parent]') end   as vitemname,
+                        mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,mi.dcostprice,mi.dunitprice,mi.nunitcost,mi.npack,
+                        case mi.isparentchild  when 1 then   Mod(p.IQTYONHAND,p.NPACK)  else  
+                        (Concat(cast(((mi.IQTYONHAND div mi.NPACK )) as signed), '  (', Mod(mi.IQTYONHAND,mi.NPACK) ,')') )end as QOH,
+                        mi.new_costprice FROM mst_item as mi  
+                        LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode) 
+                        LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
+                        LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode)
+                        LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) 
+                        LEFT JOIN mst_item p ON mi.parentid = p.iitemid
+                        " .$condition;
+                    }
+                }else{
+                    $query = "SELECT DISTINCT(mi.iitemid),mi.vitemcode, md.vdepartmentname, mc.vcategoryname,msupp.vcompanyname,
+                        case mi.isparentchild when 0 then trim(mi.vitemname)  when 1 then Concat(mi.vitemname,' [Child]')
+                        when 2 then  Concat(mi.vitemname,' [Parent]') end   as vitemname,
+                        mi.vbarcode,mi.nsellunit,mi.vsize,mi.iqtyonhand,mi.dcostprice,mi.dunitprice,mi.nunitcost,mi.npack,
+                        case mi.isparentchild  when 1 then   Mod(p.IQTYONHAND,p.NPACK)  else  
+                        (Concat(cast(((mi.IQTYONHAND div mi.NPACK )) as signed), '  (', Mod(mi.IQTYONHAND,mi.NPACK) ,')') )end as QOH,
+                        mi.new_costprice FROM mst_item as mi  
+                        LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode) 
+                        LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
+                        LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode)
+                        LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) 
+                        LEFT JOIN mst_item p ON mi.parentid = p.iitemid
+                        " .$condition;
+                }
+            }
+            
+            // echo $query; die;
+            $run_query = DB::connection('mysql_dynamic')->select($query);
+            
+            return $run_query;
+        }else{
+            return array();
+        }
     }
     
     
