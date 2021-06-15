@@ -162,6 +162,7 @@ ITEM SUMMARY REPORT
 <script src="{{ asset('javascript/bootbox.min.js')}}"></script>
 <script src="{{ asset('javascript/table-fixed-header.js')}}" ></script>
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
 
 
 <style type="text/css">
@@ -323,20 +324,7 @@ ITEM SUMMARY REPORT
     
   
 }
-h6 {
-   width: 100%; 
-   text-align: left; 
-   border-bottom: 2px solid; 
-   line-height: 0.1em;
-   margin: 0px 0 20px; 
-   color:#286fb7;
-} 
 
-h6 span { 
-    background:#f8f9fa!important; 
-    padding:10px 0px; 
-    color:#286fb7;
-}
 
 [class^='select2'] {
   border-radius: 9px !important;
