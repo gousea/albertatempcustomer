@@ -144,6 +144,7 @@ Sales Transaction
                           <th>Total Tax</th>
                           <th> Tender Type</th>
                           <!--<th>Trn Type</th>-->
+                          
                           <th>Action</th>
                         </tr>
                       </thead>

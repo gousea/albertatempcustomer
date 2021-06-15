@@ -46,41 +46,41 @@
                                         onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
 
                                 <th class="col-xs-1 headername text-uppercase">Customer
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields" placeholder="CUSTOMER">
+                                        <input type="text" class="form-control table-heading-fields" placeholder="CUSTOMER" id="customer">
                                     </div>
                                 </th>
 
                                 <th class="col-xs-1 headername text-uppercase">First Name
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields"
-                                            placeholder="FIRST NAME">
+                                            placeholder="FIRST NAME" id="first_name">
                                     </div>
                                 </th>
                                 <th class="col-xs-1 headername text-uppercase">Last Name
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
                                         <input type="text" class="form-control table-heading-fields"
-                                            placeholder="LAST NAME">
+                                            placeholder="LAST NAME" id="last_name">
                                     </div>
                                 </th>
                                 <th class="col-xs-1 headername text-uppercase">Phone
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields" placeholder="PHONE">
+                                        <input type="text" class="form-control table-heading-fields" placeholder="PHONE" id="phone">
                                     </div>
                                 </th>
                                 <th class="col-xs-1 headername text-uppercase">Status
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields" placeholder="STATUS">
+                                        <input type="text" class="form-control table-heading-fields" placeholder="STATUS" id="status">
                                     </div>
                                 </th>
                             </tr>
@@ -162,11 +162,29 @@
 
     <script>
         var table = $('#vendor').DataTable({
-            "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
-            "searching":false,
+            // "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
+            "dom": 't<<"float-right"p>><"clear">',
+            "searching":true,
+            "destroy": true,
             "ordering": false,
-
             "pageLength":10,
+            "order": [[ 3, "asc" ]]
+        });
+
+        $('#customer').on('input', function () {
+            table.columns(1).search(this.value).draw();
+        });
+        $('#first_name').on('input', function () {
+            table.columns(2).search(this.value).draw();
+        });
+        $('#last_name').on('input', function () {
+            table.columns(3).search(this.value).draw();
+        });
+        $('#phone').on('input', function () {
+            table.columns(4).search(this.value).draw();
+        });
+        $('#status').on('input', function () {
+            table.columns(5).search(this.value).draw();
         });
 
       $("#vendor_paginate").addClass("pull-right");

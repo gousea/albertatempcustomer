@@ -53,33 +53,33 @@
                                         onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
 
                                 <th class="col-xs-1 headername text-uppercase">Supplier Code
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
-                                        <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields"
+                                        <span class="fa fa-search form-control-feedback" id="filter_supplier_code"></span>
+                                        <input type="text" class="form-control table-heading-fields" id="supplier_code"
                                             placeholder="SUPPLIER CODE">
                                     </div>
                                 </th>
                                 <th class="col-xs-1 headername text-uppercase">Vendor Name
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
-                                        <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields"
+                                        <span class="fa fa-search form-control-feedback" id="filter_vendor_name"></span>
+                                        <input type="text" class="form-control table-heading-fields" id="vendor_name"
                                             placeholder="VENDOR NAME">
                                     </div>
                                 </th>
                                 <th class="col-xs-1 headername text-uppercase">Phone
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
-                                        <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields" placeholder="PHONE">
+                                        <span class="fa fa-search form-control-feedback" id="filter_phone"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="PHONE" id="phone">
                                     </div>
                                 </th>
                                 <th class="col-xs-1 headername text-uppercase">Email
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i>
+                                    {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
                                     <div class="form-group has-search">
-                                        <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control table-heading-fields" placeholder="EMAIL">
+                                        <span class="fa fa-search form-control-feedback" id="filter_email"></span>
+                                        <input type="text" class="form-control table-heading-fields" placeholder="EMAIL" id="email">
                                     </div>
                                 </th>
                             </tr>
@@ -226,17 +226,54 @@
 
 @section('page-script')
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> --}}
+{{-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
+{{-- <script src="http://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src=" {{ asset('javascript/bootbox.min.js') }}"></script>
+    <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
+
     {{-- <script src=" {{ asset('asset/js/vendor.js') }}"></script> --}}
     <script>
 
-    var table = $('#vendor').DataTable({
-        "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
-        "searching":false,
-        "ordering": false,
+    $(document).ready(function() {
+        var table = $('#vendor').DataTable({
+            // "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
+            "dom": 't<<"float-right"p>><"clear">',
+            "searching":true,
+            "destroy": true,
+            "pageLength":10,
+            "ordering": false,
+            "order": [[ 1, "asc" ]]
 
-        "pageLength":10,
-      });
+        });
+    });
+
+    // $(document).ready(function(){
+    //     $('#filter_supplier_code').on('input', function () {
+    //         var table = $('#vendor').DataTable({
+    //             "ordering": false,
+    //             "order": [[ 1, "asc" ]]
+    //         });
+    //     });
+    // });
+
+    $(document).ready(function(){
+        var table = $('#vendor').DataTable();
+        $('#supplier_code').on('input', function () {
+            table.columns(1).search(this.value).draw();
+        });
+        $('#vendor_name').on('input', function () {
+            table.columns(2).search(this.value).draw();
+        });
+        $('#phone').on('input', function () {
+            table.columns(3).search(this.value).draw();
+        });
+        $('#email').on('input', function () {
+            table.columns(4).search(this.value).draw();
+        });
+
+    });
 
       $("#vendor_paginate").addClass("pull-right");
 

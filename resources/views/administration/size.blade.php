@@ -410,7 +410,7 @@ $("#closeBtn").click(function(){
             $('#warning_msg').html("You did not select anything");
             $("div#divLoading").removeClass('show');
             $('#warningModal').modal('show');
-            location.reload(true);
+            
             return false;
         }else{
             var numericReg = /^[0-9]*(?:\.\d{1,2})?$/;
@@ -621,7 +621,7 @@ $("#closeBtn").click(function(){
           $('#warning_msg').html("Please Select Size to Delete!");
           $("div#divLoading").removeClass('show');
           $('#warningModal').modal('show');
-          location.reload(true);
+          
           return false;
         }
         var avArr = [];
