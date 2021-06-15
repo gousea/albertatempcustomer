@@ -1,21 +1,27 @@
-@extends('layout')
+@extends('layouts.layout')
+
+@section('title')
+    Employee
+@stop
 
 @section('main-content')
 
 
-<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="main_nav">
-            <div class="menu">
-                <span class="font-weight-bold"> EMPLOYEES</span>
-            </div>
-            <div class="nav-submenu">
-                <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{route('employee.create')}}"> ADD NEW
-                </a>
-                <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> DELETE
-                </a>
-            </div>
-        </div> <!-- navbar-collapse.// -->
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue menu">
+    <div class="container">
+        <div class="row">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold"> EMPLOYEES</span>
+                </div>
+                <div class="nav-submenu">
+                    <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{route('employee.create')}}"> ADD NEW
+                    </a>
+                    <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> DELETE
+                    </a>
+                </div>
+            </div> <!-- navbar-collapse.// -->
+        </div>
     </div>
 </nav>
 

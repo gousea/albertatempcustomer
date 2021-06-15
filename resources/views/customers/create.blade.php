@@ -237,7 +237,7 @@ class="form-horizontal">
                                     <label class="p-2 float-left text-uppercase" for="input-zip">Account Pin</label>
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                    <input type="text" name="account_pin" value="" placeholder="ACCOUNT PIN" id="account_pin"
+                                    <input type="text" name="account_pin" value="{{ old('account_pin') }}" placeholder="ACCOUNT PIN" id="account_pin"
                                         class="form-control" onkeypress="return isNumberKey(event);" required />
                                     <span id="ac_pin" style="color: red"></span>
                                 </div>
