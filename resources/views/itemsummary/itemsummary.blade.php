@@ -12,11 +12,11 @@ ITEM SUMMARY REPORT
                 </div>
                 <div class="nav-submenu">
                        <?php if(isset($item_summary) && count($item_summary) > 0){ ?>
-                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{route('itemsummarycsv_export')}}"  id="csv_export_btn" > CSV
                             </a>
                              <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('itemsummaryprint_page')}}" id="btnPrint">PRINT
                             </a>
-                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('itemsummarypdf_save_page')}}" > PDF
                             </a>
                         <?php } ?>
                 </div>
@@ -46,7 +46,7 @@ ITEM SUMMARY REPORT
                   </div>
               
                   <div class="col-md-2">
-                    <input type="submit" class="btn btn-success align-bottom rcorner header-color" value="Generate">
+                    <input type="submit" class="btn btn-success align-bottom rcorner header-color"   value="Generate">
                   </div> 
               
             </div>  
@@ -64,9 +64,9 @@ ITEM SUMMARY REPORT
             <div class="table-responsive">
            
                   
-                      <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                      <table data-toggle="table" data-classes="table table-condensed promotionview"
                     data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
-                   data-click-to-select="true">
+                   data-click-to-select="true" >
                           <thead class="header">
                           <tr class="header-color  text-uppercase">
                               <th>Sku</th>
@@ -129,14 +129,14 @@ ITEM SUMMARY REPORT
               
             </div>
           
-      <?php } else if(isset($p_start_date)){ ?>
-          <div class="col-md-12">  
-              <table class="table table-bordered" style="width:50%;">
-                  <tbody>
-                      <tr><td><b>Sorry no data found!</b></td></tr> 
-                  </tbody>  
-              </table>
-          </div>
+      <?php } else if(isset($item_summary)){ ?>
+         <div class="row">
+                        <div class="col-md-12"><br><br>
+                            <div class="alert alert-info text-center">
+                                <strong>Sorry no data found!</strong>
+                            </div>
+                        </div>
+                    </div>
       <?php } ?>
       
       
@@ -208,9 +208,9 @@ ITEM SUMMARY REPORT
   $(document).ready(function() {
     $("#btnPrint").printPage();
   });
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
+//   $(window).load(function() {
+//     $("div#divLoading").removeClass('show');
+//   });
   const saveData = (function () {
     const a = document.createElement("a");
     document.body.appendChild(a);
@@ -225,30 +225,55 @@ ITEM SUMMARY REPORT
     };
   }());
 
-  $(document).on("click", "#csv_export_btn", function (event) {
+//   $(document).on("click", "#csv_export_btn", function (event) {
 
-    event.preventDefault();
+//     event.preventDefault();
 
-    $("div#divLoading").addClass('show');
+//     $("div#divLoading").addClass('show');
 
-      var csv_export_url = "{{route('itemsummarycsv_export')}}";
+//       var csv_export_url = "{{route('itemsummarycsv_export')}}";
     
-      csv_export_url = csv_export_url.replace(/&amp;/g, '&');
+//       csv_export_url = csv_export_url.replace(/&amp;/g, '&');
 
-      $.ajax({
-        url : csv_export_url,
-        type : 'GET',
-      }).done(function(response){
+//       $.ajax({
+//         url : csv_export_url,
+//         type : 'GET',
+//       }).done(function(response){
         
-        const data = response,
-        fileName = "item-summary-report.csv";
+//         const data = response,
+//         fileName = "item-summary-report.csv";
 
-        saveData(data, fileName);
-        $("div#divLoading").removeClass('show');
+//         saveData(data, fileName);
+//         $("div#divLoading").removeClass('show');
         
-      });
+//       });
     
-  });
+//   });
+ $(document).on("click", "#csv_export_btn", function (event) {
+
+        event.preventDefault();
+
+        $("div#divLoading").addClass('show');
+
+          var csv_export_url = '<?php echo route('itemsummarycsv_export'); ?>';
+        
+          csv_export_url = csv_export_url.replace(/&amp;/g, '&');
+
+          $.ajax({
+            url : csv_export_url,
+            type : 'GET',
+          }).done(function(response){
+            
+            const data = response,
+            fileName = "Item summary.csv";
+
+            saveData(data, fileName);
+            $("div#divLoading").removeClass('show');
+            
+          });
+        
+    });
+
 
   $(document).on("click", "#pdf_export_btn", function (event) {
 
@@ -334,5 +359,6 @@ table, .promotionview {
     position: relative;
     left: 0%;
 }
+
 </style>
 @endsection
