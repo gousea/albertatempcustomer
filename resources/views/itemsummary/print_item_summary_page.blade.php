@@ -32,11 +32,7 @@
           </div>
         </div>
       
-<table border="0" width = "100%;">
-    
-    <tbody>
-        <tr>
-            <td>
+
                 <table class="table table-hover">
                             
                     <tr>
@@ -90,12 +86,7 @@
                         <th class='text-right'> <?php echo number_format($grand_total_amount,2); ?> </th>
                     </tr>
                 </table>
-            </td>
-
-        </tr>
-
-    </tbody>
-</table>
+   
 
 <style type="text/css">
 
