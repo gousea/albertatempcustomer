@@ -1,71 +1,25 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'Purchase Order')
 @section('main-content')
 
 <div id="content">
-    <style>
-        
-        .table.table-bordered.table-striped.table-hover thead > tr{
-         	background: #03a9f4 none repeat  0 0 !important;
-        }
-        
-        select{
-            color:black;
-            border-radius: 4px;
-            height:30px;
-            font-size: 9px;
-            background-color: #fff;
-        }
-
-        .autocomplete {
-          /*the container must be positioned relative:*/
-          position: relative;
-          display: inline-block;
-        }
-        
-        .autocomplete-items {
-          position: absolute;
-          border: 1px solid #d4d4d4;
-          border-bottom: none;
-          border-top: none;
-          z-index: 99;
-          /*position the autocomplete items to be the same width as the container:*/
-          top: 100%;
-          left: 0;
-          right: 0;
-        }
-        .autocomplete-items div {
-          padding: 10px;
-          cursor: pointer;
-          background-color: #fff;
-          color: #000;
-          border-bottom: 1px solid #d4d4d4;
-        }
-        .autocomplete-items div:hover {
-          /*when hovering an item:*/
-          background-color: #e9e9e9;
-        }
-        .autocomplete-active {
-          /*when navigating through the items using the arrow keys:*/
-          background-color: DodgerBlue !important;
-          color: #ffffff;
-        }
-        
-        
-        .ui-menu-item-wrapper{
-            font-family:Liberation Sans;
-            font-size:9px;
-            font-weight:normal;
-            backgound-colour: #ffff;
-        }
-        .ui-menu-item-wrapper:hover{
-            font-size:10px;
-            font-weight:bold;
-    }
-
-    </style>
     
-  
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase">Purchase Order (Sales History)</span>
+            </div>
+            <div class="nav-submenu">
+              <button type="submit" form="form-purchase-order" id="save_purchase_order" data-toggle="tooltip" title="Save" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+              <a href="<?php echo $data['cancel']; ?>" data-toggle="tooltip" title="Cancel" class="btn btn-danger buttonred buttons_menu basic-button-small cancel_btn_rotate" id="cancel_button"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+              
+            </div>
+        </div> <!-- navbar-collapse.// -->
+    </div>
+  </nav>
+    
+  <div class="container-fluid section-content">
     <div class="container-fluid">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
@@ -81,19 +35,9 @@
         <br>
         <br>
         <div class="panel panel-default">
-            <div class="panel-heading head_title">
-                <h3 class="panel-title"><i class="fa fa-pencil"></i>Purchase Order (Sales History)</h3>
-            </div>
+            
             <div class="panel-body">
                 
-                <div class="row" style="padding-bottom: 15px;float: right;">
-                    <div class="col-md-12">
-                        <div class="">
-                            <button style="margin-left: 35px;" type="submit" form="form-vendor" id="save_purchase_order" data-toggle="tooltip" title="Save" class="btn btn-primary" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                            <a href="<?php echo $data['cancel']; ?>" data-toggle="tooltip" title="Cancel" class="btn btn-default pull-right cancel_btn_rotate" id="cancel_button"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
-                        </div>
-                    </div>
-                </div>
                 <div class="clearfix"></div>
                 
                 <form action="<?php echo $data['action']; ?>" method="post" enctype="multipart/form-data" id="form-purchase-order" class="form-horizontal">
@@ -107,15 +51,28 @@
                     
                     <!-- ITEM TAB -->
                     <div class="">
-                        <div class="" id="meta_div" style="display: none;">
+                      <div class="" id="meta_div" style="display: none;">
                             
-                            <div class="row"> <!-- First Row -->
-                                    
-                                    <div class="col-md-4 form-group field-wrapper required-field">
-                                        <label class="col-md-3 control-label" for="input-phone">Vendor Name</label>
-                                        <div class="col-md-9">
+                        <div class="mytextdiv">
+                          <div class="mytexttitle font-weight-bold text-uppercase">
+                              General Info
+                          </div>
+                          <div class="divider font-weight-bold"></div>
+                        </div>
+
+                        <div class="py-3">
+                          <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row ">
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                              <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Vendor Name</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
                                             <input type="hidden" name="vvendorid" value="<?php echo $data['vvendorid']; ?>"><input type="hidden" name="vvendorname" value="<?php echo $data['vvendorname']; ?>">
-                                            <select <?php if(isset($data['ipoid'])){?> disabled <?php } ?> name="" class="form-control" id="loaded_vendor">
+                                            <select <?php if(isset($data['ipoid'])){?> disabled <?php } ?> name="" class="form-control adjustment-fields" id="loaded_vendor">
                                                 <option value="">-- Select Vendor --</option>
                                                 <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
                                                     <?php foreach($data['vendors'] as $vendor){?>
@@ -126,158 +83,98 @@
                                                         <?php } ?>
                                                     <?php } ?>
                                                 <?php } ?>
-                                            </select>        
+                                            </select>
+                                              
+                                          </div>
                                       </div>
-                                    </div>
-                                        
-                                    <div class="col-md-4 form-group">
-                                        <label class="col-md-3 control-label" for="input-phone">Subtotal</label>
-                                        <div class="col-md-9">
-                                            <input type="text" name="nsubtotal" maxlength="50" value="<?php echo isset($data['nsubtotal']) ? $data['nsubtotal'] : '0.00'; ?>" placeholder="Subtotal" id="input_subtotal" class="form-control" readonly/>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputCreated" class="p-2 float-right text-uppercase">Created</label>
                                         </div>
-                                    </div>
-                                        
-                                    <div class="col-md-4 form-group">
-                                        <label class="col-md-3 control-label" for="input-phone">Delivery(+)</label>
-                                        <div class="col-md-9">
-                                            <input type="text" name="ndeliverycharge" maxlength="50" value="<?php echo isset($data['ndeliverycharge']) ? $data['ndeliverycharge'] : '0.00'; ?>" placeholder="Delivery" id="input_delivery_charge" class="form-control" />
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                          <?php 
+                                          if(isset($data['dcreatedate'])){
+                                            $dcreatedate = DateTime::createFromFormat('Y-m-d H:i:s', $data['dcreatedate']);
+                                            $dcreatedate = $dcreatedate->format('m-d-Y');
+                                          }
+                                        ?>
+                                        <input type="text" name="dcreatedate" value="<?php echo isset($dcreatedate) ? $dcreatedate : date('m-d-Y'); ?>" placeholder="Created" id="input-Created" class="form-control adjustment-fields" required/>
                                         </div>
-                                    </div>
-                                    
-                                </div>
-                                
-                                
-                            <div class="row"><!-- Second Row -->
-                                
-                                <div class="col-md-4 form-group field-wrapper required-field">
-                                    <label class="col-md-3 control-label" for="input-phone">Invoice#</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="vinvoiceno" maxlength="50" value="<?php echo isset($data['vinvoiceno']) ? $data['vinvoiceno'] : ''; ?>" placeholder="Invoice" id="input_invoice" class="form-control" required />      
-                                        <input 
-                                        type="hidden" name="estatus" maxlength="10" 
-                                        value="<?php echo isset($data['estatus']) ? $data['estatus'] : 'Open'; ?>" 
-                                        placeholder="Status" 
-                                        id="input-Status" class="form-control" readonly/>
-                                        
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-4 form-group">
-                                    <label class="col-md-3 control-label" for="input-phone">Tax(+)</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="ntaxtotal" maxlength="50" value="<?php echo isset($data['ntaxtotal']) ? $data['ntaxtotal'] : '0.00'; ?>" placeholder="Tax" id="input_tax" class="form-control" />
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-4 form-group">
-                                    <label class="col-md-3 control-label" for="input-phone">Return(-)</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="nreturntotal" maxlength="50" value="<?php echo isset($data['nreturntotal']) ? $data['nreturntotal'] : '0.00'; ?>" placeholder="Return" id="input_return" class="form-control" />
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
-                            
-                            <div class="row"><!-- Third Row -->
-                                
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Created</label>
-                                    
-                                  <div class="col-md-9">
-                                    <?php 
-                                      if(isset($data['dcreatedate'])){
-                                        $dcreatedate = DateTime::createFromFormat('Y-m-d H:i:s', $data['dcreatedate']);
-                                        $dcreatedate = $dcreatedate->format('m-d-Y');
-                                      }
-                                    ?>
-                                    <input type="text" name="dcreatedate" value="<?php echo isset($dcreatedate) ? $dcreatedate : date('m-d-Y'); ?>" placeholder="Created" id="input-Created" class="form-control" required/>      
-                                  </div>
-                                </div>
-                                    
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Freight(+)</label>
-                                  <div class="col-md-9">
-                                    <input type="text" name="nfreightcharge" maxlength="50" value="<?php echo isset($data['nfreightcharge']) ? $data['nfreightcharge'] : '0.00'; ?>" placeholder="Freight(+)" id="input_frieght" class="form-control" />
-                                  </div>
-                                </div>
-                                
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Discount(-)</label>
-                                  <div class="col-md-9">
-                                    <input type="text" name="ndiscountamt" maxlength="50" value="<?php echo isset($data['ndiscountamt']) ? $data['ndiscountamt'] : '0.00'; ?>" placeholder="Discount(-)" id="input-Discount(-)" class="form-control" />
-                                  </div>
-                                </div>
-                            </div>
-                             
-                            
-                            <div class="row"><!-- Fourth Row -->
-            
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Received</label>
-                                  <div class="col-md-9">
-                                    <?php 
-                                      if(isset($data['dreceiveddate'])){
-                                        $dreceiveddate = DateTime::createFromFormat('Y-m-d H:i:s', $data['dreceiveddate']);
-                                        $dreceiveddate = $dreceiveddate->format('m-d-Y');
-                                      }
-                                    ?>
-                                    <input type="text" name="dreceiveddate" value="<?php echo isset($dreceiveddate) ? $dreceiveddate : date('m-d-Y'); ?>" placeholder="Received" id="input-Received" class="form-control" required/>
-                                  </div>
-                                </div>
-                
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Deposit(+)</label>
-                                  <div class="col-md-9">
-                                    <input type="text" name="ndeposittotal" maxlength="50" value="<?php echo isset($data['ndeposittotal']) ? $data['ndeposittotal'] : '0.00'; ?>" placeholder="Deposit(+)" id="input_deposite" class="form-control" />
-                                  </div>
-                                </div>
-            
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Rips(-)</label>
-                                  <div class="col-md-9">
-                                    <input type="text" name="nripsamt" maxlength="50" value="<?php echo isset($data['nripsamt']) ? $data['nripsamt'] : '0.00'; ?>" placeholder="Rips(-)" id="input_rips" class="form-control" />
-                                  </div>
-                                </div>
-                                
-                            </div>
-                            
-                            
-                            <div class="row"><!-- Fifth Row -->
-                
-                                    <div class="col-md-4 form-group">
-                                      <label class="col-md-3 control-label" for="input-phone">Confirm By</label>
-                                      <div class="col-md-9">
-                                        <input type="text" name="vconfirmby" maxlength="30" value="<?php echo isset($data['vconfirmby']) ? $data['vconfirmby'] : ''; ?>" placeholder="Confirm By" id="input_confirm_by" class="form-control" />
                                       </div>
-                                    </div>
-                    
-                                    <div class="col-md-4 form-group">
-                                      <label class="col-md-3 control-label" for="input-phone">Fuel(+)</label>
-                                      <div class="col-md-9">
-                                        <input type="text" name="nfuelcharge" maxlength="50" value="<?php echo isset($data['nfuelcharge']) ? $data['nfuelcharge'] : '0.00'; ?>" placeholder="Fuel(+)" id="input_fuel_charge" class="form-control" />
-                                      </div>
-                                    </div>
-                
-                                    <div class="col-md-4 form-group">
-                                      <label class="col-md-3 control-label" for="input-phone">Net Total</label>
-                                      <div class="col-md-9">
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                           
-                                        <input type="text" name="nnettotal" maxlength="50" value="<?php echo isset($data['nnettotal']) ? $data['nnettotal'] : '0.00'; ?>" placeholder="Net Total" id="input_net_total" class="form-control" readonly/>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputReceived" class="p-2 float-right text-uppercase">Received</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          
+                                          <?php 
+                                            if(isset($data['dreceiveddate'])){
+                                              $dreceiveddate = DateTime::createFromFormat('Y-m-d H:i:s', $data['dreceiveddate']);
+                                              $dreceiveddate = $dreceiveddate->format('m-d-Y');
+                                            }
+                                          ?>
+                                          <input type="text" name="dreceiveddate" value="<?php echo isset($dreceiveddate) ? $dreceiveddate : date('m-d-Y'); ?>" placeholder="Received" id="input-Received" class="form-control adjustment-fields" required/>
+                                           
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+        
+                          <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                
+                                <div class="form-group row">
+                                    
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <label for="inputInvoice" class="p-2 float-right text-uppercase">Invoice#</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <input type="text" name="vinvoiceno" maxlength="50" value="<?php echo isset($data['vinvoiceno']) ? $data['vinvoiceno'] : ''; ?>" placeholder="Invoice" id="input_invoice" class="form-control adjustment-fields" />      
+                                       
+                                        <input type="hidden" name="estatus" maxlength="10" value="<?php echo isset($data['estatus']) ? $data['estatus'] : 'Open'; ?>" placeholder="Status" id="input-Status" class="form-control" readonly/>
+
                                       </div>
                                     </div>
+
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputConfirmBy" class="p-2 float-right text-uppercase">Confirm By</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                        <input type="text" name="vconfirmby" maxlength="30" value="<?php echo isset($data['vconfirmby']) ? $data['vconfirmby'] : ''; ?>" placeholder="Confirm By" id="input_confirm_by" class="form-control adjustment-fields" />
+                                      </div>
+                                    </div>
+
                                     
-                                </div>                
+                                </div>
                                 
-                            <hr style="border-top: 2px solid #808080;">                
-                            
-                        </div>
+                            </div>
+                          </div>
+                        </div>    
+                          
+                        <div class="mytextdiv">
+                          <div class="mytexttitle font-weight-bold text-uppercase">
+                              Items
+                          </div>
+                          <div class="divider font-weight-bold"></div>
+                        </div>                
+                          
+                      </div>
                             
                         <div class="">
                             <div id="search_div"> 
                                 <div class="row">
                                     <div class='col-sm-2'>
-                                        <select id='selectBy' class='form-control' name='select_by'>
+                                        <select id='selectBy' class='form-control adjustment-fields' name='select_by'>
                                             <?php 
                                                 foreach($data['select_by_list'] as $k => $v) {
                                                     echo "<option value='{$k}'";
@@ -291,49 +188,38 @@
                                             ?>
                                         </select>
                                     </div>
-                                    <div class='inputBox' id='divWeek' style=''>
-                                        <div class='col-sm-2' id='' style=''>
-                                            <input type='number' name='input_week' class='form-control' id='inputWeek' placeholder='Weeks (1 - 13)' min='1' max='13' onKeyUp="if(this.value > 13) $(this).val(13)" value="<?php if(isset($weeks)){ echo $weeks; }?>">
-                                            
+                                    <div class='inputBox row col-sm-6' id='divWeek'>
+                                        <div class='col-sm-4'>
+                                            <input type='number' name='input_week' class='form-control adjustment-fields' id='inputWeek' placeholder='Weeks (1 - 13)' min='1' max='13' onKeyUp="if(this.value > 13) $(this).val(13)" value="<?php if(isset($weeks)){ echo $weeks; }?>">
                                         </div>
-                                        <div class='col-sm-4'style="margin-top: 10px;"><input type=checkbox name='include_current_week' value='yes' <?php if(isset($include_current_week) && ($include_current_week === 'yes')){ echo 'checked';} ?> > Include Current Week (Week No. <?php echo date('W', strtotime('today')); ?>)</div>
-                                    </div>
-                                    <div class='inputBox' id='divMonth' style='display: none'>
-                                        <div class='col-sm-2' id='' style=''>
-                                            <input type='number'  name='input_month' class='form-control' id='inputMonth' placeholder='Months (1 - 12)' min='1' max='12'  onKeyUp="if(this.value>=12) { $(this).val(12) }"  value="<?php if(isset($months)){ echo $months; }?>">
+                                        <div class='col-sm-6'>
+                                          <input type="checkbox" name='include_current_week' value='yes' <?php if(isset($include_current_week) && ($include_current_week === 'yes')){ echo 'checked';} ?> > Include Current Week (Week No. <?php echo date('W', strtotime('today')); ?>)
                                         </div>
-                                        <div class='col-sm-4'style="margin-top: 10px;"><input type=checkbox name='include_current_month' value='yes' <?php if(isset($include_current_month) && ($include_current_month === 'yes')){ echo 'checked';} ?> > Include Current Month (<?php echo date('F', strtotime('today')); ?>)</div>
                                     </div>
-                                    <div class='col-sm-3 inputBox' id='divYear' style='display: none'>
-                                        <!--<input class='form-control' id='inputYear' placeholder='Enter the Year Number'>-->
-                                        <select class='form-control' id='inputYear' placeholder='Enter the Year Number' name='input_year'>
+                                    <div class='inputBox row col-sm-6' id='divMonth' style='display: none'>
+                                        <div class='col-sm-4'>
+                                            <input type='number' name='input_month' class='form-control adjustment-fields' id='inputMonth' placeholder='Months (1 - 12)' min='1' max='12'  onKeyUp="if(this.value>=12) { $(this).val(12) }"  value="<?php if(isset($months)){ echo $months; }?>">
+                                        </div>
+                                        <div class='col-sm-6'><input type='checkbox' name='include_current_month' value='yes' <?php if(isset($include_current_month) && ($include_current_month === 'yes')){ echo 'checked';} ?> > Include Current Month (<?php echo date('F', strtotime('today')); ?>)</div>
+                                    </div>
+                                    <div class='col-sm-3 inputBox row col-sm-6' id='divYear' style='display: none'>
+                                      
+                                        <select class='form-control adjustment-fields' id='inputYear' placeholder='Enter the Year Number' name='input_year'>
                                             <option value='<?php echo date("Y",strtotime("-1 year")); ?>' <?php if($data['year'] === date("Y",strtotime("-1 year"))){ echo 'selected'; } ?> ><?php echo date("Y",strtotime("-1 year")); ?></option>
                                             <option value='<?php echo date("Y"); ?>' <?php if($data['year'] === date("Y")){ echo 'selected'; } ?> ><?php echo date("Y").' (YTD)'; ?></option>
                                         </select>
-                                        
+                                       
                                     </div>
-                                    <div class='inputBox' id='divCustom' style='display: none'>
-                                        <!--<div class='col-sm-2'>
-                                            <input type='hidden' class='form-control' id='inputFrom' placeholder='From' name='input_from'>
-                                        </div>
-                                        <div class='col-sm-2'>
-                                            <input  type='hidden' class='form-control' id='inputTo' placeholder='To' name='input_to'>
-                                        </div>-->
+                                    <div class='inputBox row col-sm-6' id='divCustom' style='display: none'>
                                         
                                         <div class='col-sm-3'>
-                                            <input class='form-control' id='customDateRange' placeholder='Enter Date Range' name='custom_date_range' value="{{ $custom_date_range ?? '' }}" style='width:111%;'>
-                                            <!--<input type='hidden' class='form-control' id='inputFrom' placeholder='From' name='input_from'>
-                                            <input  type='hidden' class='form-control' id='inputTo' placeholder='To' name='input_to'>-->
+                                            <input class='form-control adjustment-fields' id='customDateRange' placeholder='Enter Date Range' name='custom_date_range' value="{{ $custom_date_range ?? '' }}" style='width:111%;'>
+                                            
                                         </div>
-                                        
                                     </div>
-                    
-                                    <!--<div class="col-md-2">
-                                        <input type="submit" class="btn btn-success" value="Generate">
-                                    </div>-->
                                     
                                     <div class='col-sm-2'>
-                                        <input type='button' class='btn btn-info' id='generateSalesHistoryReport' value='Generate'>
+                                        <input type='button' class='btn btn-info basic-button-small' id='generateSalesHistoryReport' value='Generate'>
                                     </div>
                                 </div>
                                 
@@ -343,18 +229,84 @@
                                 <div class="row" id="div_item_listing">
                                     <div class="col-md-12">
                                         <div class="box-body table-responsive">
-                                            <table id="item_listing" class="table table-bordered table-striped table-hover" style="font-size:9px;">
+                                            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%;">
                                                 <thead>
-                                                    <tr>
+                                                    <tr class="header-color" styel="font-size:5px;">
                                                         <th style="width: 1px;"><input type='checkbox'></th>
-                                                        <th style="width: 15%;position: relative;">ITEM NAME</th>
-                                                        <th style="width: 5%;position: relative;">SIZE</th>
-                                                        <th>SKU</th>
-                                                        <th style="width: 22%;">PRICE</th>
-                                                        <th>DEPT.</th>
-                                                        <th style="">CATEGORY</th>
-                                                        <th style="">SUB CAT</th>
-                                                        <th>VENDOR</th>
+                                                        <th style="width: 15%;position: relative;">ITEM NAME
+                                                          <div class="adjustment-has-search">
+                                                            <input type="text" autocomplete="off" id="search_item_name" name="item_name" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
+                                                          </div>
+                                                        </th>
+                                                        <th style="width: 10%;position: relative;">SIZE
+                                                          <div class="adjustment-has-search">
+                                                            <input type="text" autocomplete="off" id="search_size" name="size" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
+                                                          </div>
+                                                        </th>
+
+                                                        <th>SKU
+                                                          <div class="adjustment-has-search">
+                                                            <input type="text" autocomplete="off" id="search_sku" name="barcode" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
+                                                          </div>
+                                                        </th>
+
+                                                        <th style="width: 22%;">PRICE
+                                                          <div class="adjustment-has-search">
+                                                            
+                                                            <select class='table-heading-fields' id='price_select_by' name='price_select_by' style='width:40%; padding-left: 5px;'>
+                                                              <option value="greater" selected>Greater than</option>
+                                                              <option value="less">Less than</option>
+                                                              <option value="equal">Equal to</option>
+                                                              <option value="between">Between</option>
+                                                            </select>
+                                                            <span id='selectByValuesSpan'>
+                                                              <input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box table-heading-fields' placeholder='Enter Amount' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px; padding-left: 5px;' value=''/>
+                                                            </span>
+                                                          </div>
+                                                        </th>
+
+                                                        <th>DEPT.
+                                                          <div class="adjustment-has-search">
+                                                            <select class='table-heading-fields' name='dept_code' id='dept_code' style='width: 100px;'>
+                                                              <option value='all'>All</option>";
+                                                                  <?php 
+                                                                    foreach($data['departments'] as $department){
+                                                                  ?>  
+                                                                      <option value='<?=$department['vdepcode']?>'><?=$department['vdepartmentname'] ?></option>;
+                                                                  <?php } ?>
+                                                            </select>
+                                                          </div>
+                                                        </th>
+
+                                                        <th style="">Category
+                                                          <div class="adjustment-has-search">
+                                                            <select class='table-heading-fields' name='category_code' id='category_code' style='width: 100px; padding-left: 5px;'>
+                                                              <option value='all'>All</option>
+                                                              
+                                                            </select>
+                                                          </div>
+                                                        </th>
+
+                                                        <th style="">SUB CAT
+                                                          <div class="adjustment-has-search">
+                                                            <select class='table-heading-fields' name='sub_category_id' id='sub_category_id' style='width: 100px; padding-left: 5px;'>
+                                                              <option value='all'>All</option>
+                                                            </select>
+                                                          </div>
+                                                        </th>
+
+                                                        <th>VENDOR
+                                                          <div class="adjustment-has-search">
+                                                            <select class='table-heading-fields' name='supplier_code' id='supplier_code' style='width: 100px; padding-left: 5px;'>
+                                                              <option value='all'>All</option>
+                                                              <?php
+                                                                foreach($data['vendors'] as $supplier){
+                                                              ?>
+                                                                  <option value="<?=$supplier['isupplierid'] ?>"><?=$supplier['vcompanyname'] ?> </option>
+                                                              <?php } ?>
+                                                            </select>
+                                                          </div>
+                                                        </th>
                         		                    </tr>
                         		                </thead>
                                             </table>
@@ -367,7 +319,7 @@
                                         
                                         <div class="box-body table-responsive" id='divTbodyItemListing'  style="height: 400px; font-size:9px;">
                                             
-                                            <table id='tbodyItemListing' class='table table-bordered table-striped table-hover'>
+                                            <table id='tbodyItemListing' class='table table-striped table-hover promotionview'>
                                                     
                                             </table>
                                             
@@ -395,43 +347,47 @@
                                 </div>
                                     
                                 <div class="col-md-6">
-                                    <button class="btn btn-info" style="border-radius:0px;" id="add_selected_items">Add Item</button>&nbsp;&nbsp;
-                                    <button class="btn btn-danger" style="border-radius:0px;" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
+                                    <button class="btn button-blue buttons_menu basic-button-small" id="add_selected_items">Add Item</button>&nbsp;&nbsp;
+                                    <button class="btn btn-danger buttonred buttons_menu basic-button-small" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
                                  
-                                    <button type="button" class="btn btn-success" style="border-radius:0px;<?php if(isset($estatus) && $estatus == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check" value="export">Export</button>
+                                    <button type="button" class="btn btn-info buttons_menu basic-button-small"<?php if(isset($estatus) && $estatus == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check" value="export">Export</button>
                                 </div>
+
+                                <div class="col-md-4">
+                                  <div class="col-md-6 float-right">
+                                    <input type="text" class="form-control adjustment-fields" id="search_item_box" placeholder="Search Item...">
+                                  </div>
+                                </div>
+
+                                <div class="col-md-2" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
+                                  <div class="float-right">
+                                    <input type="checkbox" name="advance_update" value="Yes" class="" id="advance_update">
+                                    <span style="font-size:14px;margin-top:12px;">&nbsp; Update pack qty in item</span>
+                                  </div>
+                                </div>
+
                             </div>
                           
                             <br>
-                            <div class="row">
-                                <div class="col-md-3">
-                                  <input type="text" class="form-control" id="search_item_box" placeholder="Search Item...">
-                                </div>
-                                <div class="col-md-5" <?php if(isset($estatus) && $estatus == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
-                                    <input type="checkbox" name="update_pack_qty" value="Yes" class="form-control" id="update_pack_qty" style="display:inline-block;"> <span style="display:inline-block;font-size:14px;margin-top:12px;">&nbsp; Update pack qty in item</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button class="btn btn-info" id="advance_btn" data-check="unchecked">Advance Update</button>
-                                    <input type="checkbox" name="advance_update" value="Yes" class="form-control" id="advance_update" style="display:none;">
-                                </div>
-                            </div>
+                            
                             <br>
                             <div class="row" <?php if(isset($estatus) && $estatus == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
                                 <div class="col-md-12" style="overflow-y:auto; font-size: 11px;">
-                                    <table class="table table-bordered table-hover" style="width:100%;" id="po-items">
+                                    <table class="table table-hover promotionview" style="width:100%;" id="po-items">
                                         <thead>
                                             
-                                            <tr>
-                                                <th style="width: 1px;vertical-align: middle;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_purchase_item\']').prop('checked', this.checked);" /></th>
-                                                <th style="width:20%; vertical-align: middle;">Vendor</th>
-                                                <th style="width:10%; vertical-align: middle;">SKU#</th>
-                                                <th style="width:20%; vertical-align: middle;">Item Name</th>
-                                                <!--<th style="width:20%; vertical-align: middle;">Vendor Code</th>-->
-                                                <th style="width:5%; vertical-align: middle;">Size</th>
-                                                <th style="vertical-align: middle; width:5%;" class="">New Cost</th>
-                                                <th style="vertical-align: middle; width:5%;" class="text-right">Unit per Case</th>
-                                                <th style="vertical-align: middle; width:5%;" class="text-right">Order By</th>
-                                                <th class="text-center" style="vertical-align: middle; width:5%;">Order Qty</th>
-                                                <th class="text-center" style="vertical-align: middle; width:5%;">Suggested Cost</th>
-                                                <th class="text-center" style="vertical-align: middle; width:5%;">Total Amount</th>
+                                          <tr class="header-color">
+                                                <th style="vertical-align: middle;" class="text-center text-uppercase"><input type="checkbox" onclick="$('input[name*=\'selected_purchase_item\']').prop('checked', this.checked);" /></th>
+                                                <th style="vertical-align: middle;" class="text-uppercase">Vendor</th>
+                                                <th style="vertical-align: middle;" class="text-uppercase">SKU#</th>
+                                                <th style="vertical-align: middle;" class="text-uppercase">Item Name</th>
+                                                <th style="vertical-align: middle;" class="text-uppercase">Size</th>
+                                                <th style="vertical-align: middle; " class="text-uppercase">New Cost</th>
+                                                <th style="vertical-align: middle; " class="text-right  text-uppercase">Unit per Case</th>
+                                                <th style="vertical-align: middle; " class="text-right text-uppercase">Order By</th>
+                                                <th class="text-center text-uppercase" style="vertical-align: middle; ">Order Qty</th>
+                                                <th class="text-center text-uppercase" style="vertical-align: middle; ">Suggested Cost</th>
+                                                <th class="text-center text-uppercase" style="vertical-align: middle; ">Total Amount</th>
                                             </tr>
                                             
                                         </thead>
@@ -544,17 +500,21 @@
             </div>
         </div>
     </div>
-  
+  </div>
 </div>
 
 @endsection
 
 
-@section('scripts')
+@section('page-script')
 
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
-<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
-<script src="{{ asset('javascript/bootstrap-datepicker.js') }}" defer></script>
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script src="{{ asset('javascript/jquery.printPage.js') }}"></script>
 
 
@@ -566,30 +526,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 
 
-<script src="{{ asset('javascript/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('javascript/dataTables.bootstrap.min.js') }}"></script>
-
-
 <style type="text/css">
- .nav.nav-tabs .active a{
-    background-color: #f05a28 !important; 
-    color: #fff !important; 
-  }
-
-  .nav.nav-tabs li a{
-    color: #fff !important; 
-    background-color: #03A9F4; 
-  }
-
-  .nav.nav-tabs li a:hover{
-    color: #fff !important; 
-    background-color: #f05a28 !important; 
-  }
-
-  .nav.nav-tabs li a:hover{
-    color: #fff !important; 
-  }
-  
+ 
     div.field-wrapper {
         display: block;
        
@@ -607,8 +545,6 @@
 
 </style>
 
-<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
-<script src="{{ asset('javascript/bootstrap-datepicker.js') }}" defer></script>
 <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
 <script>
   $(function(){
@@ -673,22 +609,7 @@
     });
 </script>
 <style type="text/css">
-        tr.header{
-            cursor:pointer;
-        }
-        
-        tr.header > th{
-            background-color: #DCDCDC;
-            border: 1px solid #808080 !important;
-        }
-        
-        tr.header > th, tr.header > th > span{
-            font-size: 15px;
-        }
-        
-        tr.header > th > span{
-            float: right;
-        }
+       
         
         .header .sign:after{
             content:"+";
@@ -708,10 +629,6 @@
     
     var item_name_list = [];
     
-    $(window).load(function() {
-        $("div#divLoading").removeClass('show');
-    });
-    
     
     $(document).on('click', '#generateSalesHistoryReport', function(){
         
@@ -724,7 +641,7 @@
         {
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: "Please Enter the Number of Months", 
                 callback: function(){}
             });
@@ -735,7 +652,7 @@
         {
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: "Please Enter the Number of Weeks", 
                 callback: function(){}
             });
@@ -746,7 +663,7 @@
         {
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: "Please Select the Year", 
                 callback: function(){}
             });
@@ -757,7 +674,7 @@
         {
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: "Please Select the Date Range", 
                 callback: function(){}
             });
@@ -779,7 +696,7 @@
                 
                 bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    title: "  ", 
                     message: "Please fill / select at least one of the filters", 
                     callback: function(){}
                 });
@@ -794,7 +711,7 @@
                 
                 bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    title: "  ", 
                     message: "Please Select the Date Range", 
                     callback: function(){}
                 });
@@ -808,7 +725,7 @@
             if(from > to){
                 bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    title: "  ", 
                     message: "From date must be <b>less than</b> To date!", 
                     callback: function(){}
                 });
@@ -871,94 +788,7 @@
     
     $(document).ready(function(){
         
-        var departments = "<?php echo $data['departments'];?>";
-        var categories = "<?php echo $data['categories'];?>";
-        var subcategories = "<?php echo $data['subcategories'];?>";        
-        var suppliers = "<?php echo $data['suppliers'];?>";
-        var price_select_by = "<?php echo $data['price_select_by'];?>";
         
-        $('#item_listing thead tr').clone(true).appendTo( '#item_listing thead' );
-        
-        // console.log($('#item_listing thead tr:eq(1) th'));
-        
-        $('#item_listing thead tr:eq(1) th').each( function (i) {
-            
-            var title = $(this).text();
-            
-            /*if(i == 0)
-            {
-                $(this).html( '' );
-            }
-            else*/ if(title == 'DEPT.')
-            {
-                $(this).html(departments)
-            }
-            else/* if(title == "TYPE")
-            {
-                $(this).html(item_types)
-            }
-            else*/ if(title == "CATEGORY")
-            {
-                $(this).attr('id', 'thCategory');
-                $(this).html(categories);
-            }
-            else if(title == "SUB CAT")
-            {
-                $(this).attr('id', 'thSubCategory');
-                $(this).html(subcategories);
-            }
-            else if(title == 'VENDOR')
-            {
-                $(this).html(suppliers)
-            }
-            /*else if(title == 'MFR')
-            {
-                $(this).html(manufacturers)
-            }
-            else if(title == 'UNIT')
-            {
-                $(this).html(units)
-            }*/
-            else if(title == 'SIZE')
-            {
-                $(this).html('<input type="text" autocomplete="off" id="search_size" name="size" class="search_text_box" placeholder="Size" style="width:100%;color:black;border-radius: 4px;height:28px;" value="{{ $size ?? '' }}"/>')
-            }
-            else if(title == 'ITEM NAME')
-            {
-                $(this).html( '<input type="text" autocomplete="off" id="search_item_name" name="item_name" class="search_text_box" placeholder="Search" style="width:100%;color:black;border-radius: 4px;height:28px;" value="{{ $item_name ?? ''}}"/>' );
-            }
-            else if(title == 'SKU')
-            {
-                $(this).html( '<input type="text" autocomplete="off" id="search_sku" name="barcode" class="search_text_box" placeholder="Search" style="width:100%;color:black;border-radius: 4px;height:28px;" value="{{ $barcode ?? ''}}"/>' );
-            }
-            else if(title == 'PRICE') {
-                $(this).html(price_select_by);
-            }
-            else
-            {
-                $(this).html( '' );
-            }
-            
-            /*$( '.search_text_box', this ).on( 'keyup change', function () {
-                if ( table.column(i).search() !== this.value ) {
-                    table
-                        .column(i)
-                        .search( this.value )
-                        .draw();
-                }
-            } );
-            
-            $( 'select', this ).on( 'change', function () {
-                if ( table.column(i).search() !== this.value) {
-                    table
-                        .column(i)
-                        .search( this.value )
-                        .draw();
-                }
-            } );*/
-        })
-        
-        $("div#divLoading").removeClass('show');
         
         $("#item_listing_filter").hide();
         $("#item_listing_processing").remove();
@@ -1811,7 +1641,7 @@ $(document).on('keyup', '.new_costprice_class', function(event) {
       // alert('Please Enter Invoice!');
         bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Please Enter Invoice!", 
             callback: function(){}
         });
@@ -1824,7 +1654,7 @@ $(document).on('keyup', '.new_costprice_class', function(event) {
     if(($.trim($('input[name="vinvoiceno"]').val())).length==0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -1836,7 +1666,7 @@ $(document).on('keyup', '.new_costprice_class', function(event) {
       // alert('Please Select Created Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Created Date!", 
         callback: function(){}
       });
@@ -1848,7 +1678,7 @@ $(document).on('keyup', '.new_costprice_class', function(event) {
       // alert('Please Select Received Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Received Date!", 
         callback: function(){}
       });
@@ -1860,7 +1690,7 @@ $(document).on('keyup', '.new_costprice_class', function(event) {
       // alert('Please Select Vendor!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Vendor!", 
         callback: function(){}
       });
@@ -2218,7 +2048,7 @@ $(document).on('click', '#continue_export', function(event) {
       
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -2229,7 +2059,7 @@ $(document).on('click', '#continue_export', function(event) {
     if(($.trim($('input[name="vinvoiceno"]').val())).length==0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -2241,7 +2071,7 @@ $(document).on('click', '#continue_export', function(event) {
       
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Created Date!", 
         callback: function(){}
       });
@@ -2253,7 +2083,7 @@ $(document).on('click', '#continue_export', function(event) {
       // alert('Please Select Received Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Received Date!", 
         callback: function(){}
       });
@@ -2265,7 +2095,7 @@ $(document).on('click', '#continue_export', function(event) {
       // alert('Please Select Vendor!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Vendor!", 
         callback: function(){}
       });
@@ -2291,7 +2121,7 @@ $(document).on('click', '#continue_export', function(event) {
     {
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "price required more then unit cost", 
           callback: function(){}
         });
@@ -2314,7 +2144,7 @@ $(document).on('click', '#continue_export', function(event) {
       {
            bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Total Unit must not be zero OR delete Item!", 
             callback: function(){}
           });
@@ -2337,7 +2167,7 @@ $(document).on('click', '#continue_export', function(event) {
       {
       bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Total Amt must not be zero!", 
             callback: function(){}
           });
@@ -2355,7 +2185,7 @@ $(document).on('click', '#continue_export', function(event) {
           
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Unit Cost must not be zero!", 
             callback: function(){}
           });
@@ -2371,7 +2201,7 @@ $(document).on('click', '#continue_export', function(event) {
         // alert('Please add items');
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "Please add items", 
           callback: function(){}
         });
@@ -2581,7 +2411,7 @@ $(document).on('click', '#continue_export', function(event) {
           if(data.error){
             bootbox.alert({ 
               size: 'small',
-              title: "Attention", 
+              title: "  ", 
               message: "Invoice Already Exist!", 
               callback: function(){
                 $('#saveReceiveModal').modal('show');
@@ -2653,7 +2483,7 @@ $(document).on('click', '#continue_export', function(event) {
           }
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: error_show, 
             callback: function(){}
           });
@@ -3004,7 +2834,7 @@ $(document).on('click', '#continue_export', function(event) {
           {
                 bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    title: "  ", 
                     message: error_show, 
                     callback: function(){}
                 });
@@ -3137,7 +2967,7 @@ $(document).on('click', '#continue_export', function(event) {
           // alert(error_show);
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: error_show, 
             callback: function(){}
           });
@@ -3212,6 +3042,8 @@ $(document).on('click', '#continue_export', function(event) {
         var ivendorid = $('input[name="vvendorid"]').val();
 
         if($("input[name='selected_search_history_items[]']:checked").length == 0){
+          $("#meta_div").hide();
+          $("#search_div").show();
           $('#error_alias').html('<strong>Please Select Items to Add!</strong>');
           $('#errorModal').modal('show');
           return false;
@@ -3521,7 +3353,7 @@ $(document).on('click', '#continue_export', function(event) {
       if(d1 > d2){
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "Start date must be less then end date!", 
           callback: function(){}
         });
@@ -4057,11 +3889,7 @@ $(document).on('click', '#continue_export', function(event) {
 
 </script>
 
-<script type="text/javascript">
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
-</script>
+
 <!-- Warnig to save data -->
 <div class="modal fade" id="save_data" role="dialog" style="z-index: 9999;">
   <div class="modal-dialog modal-md">
@@ -4072,22 +3900,23 @@ $(document).on('click', '#continue_export', function(event) {
       </div>
       <div class="modal-body">
         <div class="text-center">
-          <h4>
+          <h6>
               Only the saved data will be exported. Do you want to continue?
-          </h4>
+          </h6>
           <span>Click <input type="button" class="btn btn-link" id="invoice_detail" value="here" style="padding: 0;"> to enter invoice details</span>
         </div>
         
       </div>
       <div class="modal-footer" style="border-top:none;">
-        <div class="col-md-12 text-center">
+        
+        <div class="col-md-12 text-center form-inline">
             <div class="col-md-6">
-                <input type="button" class="btn btn-success col-md-12" id="continue_export" value="Yes">
+                <input type="button" class="btn btn-success buttons_menu col-md-12" id="continue_export" value="Yes">
             </div>
             <div class="col-md-6">
-                <input type="button" class="btn btn-success col-md-12" id="stop_export"  data-dismiss="modal" value="No">
+                <input type="button" class="btn btn-success buttons_menu col-md-12" id="stop_export"  data-dismiss="modal" value="No">
             </div>
-            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+            
         </div>
       </div>
     </div>
@@ -4103,15 +3932,15 @@ $(document).on('click', '#continue_export', function(event) {
       </div>
       <div class="modal-body">
         <div class="text-center">
-          <h4>
+          <h5>
               Export Purchase Order as
               <i class="fa fa-info-circle" title="Only the saved data will be reflected" style="cursor: pointer; color:blue;font-size: 10px;position: absolute;margin-left: 10px;margin-top: -5px;"></i>
-          </h4>
+          </h5>
         </div>
         
       </div>
       <div class="modal-footer" style="border-top:none;">
-        <div class="col-md-12 text-center">
+        <div class="col-md-12 text-center form-inline">
             <div class="col-md-3">
                 <input type="button" class="btn btn-success col-md-12" id="export_po_as_pdf" value="PDF">
             </div>
@@ -4124,8 +3953,7 @@ $(document).on('click', '#continue_export', function(event) {
             <div class="col-md-3">
                 <input type="button" class="btn btn-success col-md-12" id="export_po_as_email" value="Email">
             </div>
-        
-            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+            
         </div>
       </div>
     </div>

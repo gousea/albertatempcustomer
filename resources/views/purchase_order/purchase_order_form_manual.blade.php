@@ -410,18 +410,18 @@
                                         <thead>
                                             
                                             <tr class="header-color">
-                                                <th style="vertical-align: middle;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_purchase_item\']').prop('checked', this.checked);" /></th>
-                                                <th style="vertical-align: middle;">Vendor</th>
-                                                <th style="vertical-align: middle;">SKU#</th>
-                                                <th style="vertical-align: middle;">Item Name</th>
+                                                <th style="vertical-align: middle;" class="text-center text-uppercase"><input type="checkbox" onclick="$('input[name*=\'selected_purchase_item\']').prop('checked', this.checked);" /></th>
+                                                <th style="vertical-align: middle;" class="text-uppercase">Vendor</th>
+                                                <th style="vertical-align: middle;" class="text-uppercase">SKU#</th>
+                                                <th style="vertical-align: middle;" class="text-uppercase">Item Name</th>
                                                 
-                                                <th style="vertical-align: middle;">Size</th>
-                                                <th style="vertical-align: middle;" class="">New Cost</th>
-                                                <th style="vertical-align: middle;" class="text-left">Unit per Case</th>
-                                                <th style="vertical-align: middle;" class="text-left">Order By</th>
-                                                <th class="text-center" style="vertical-align: middle;">Order Qty</th>
-                                                <th class="text-center" style="vertical-align: middle;">Suggested Cost</th>
-                                                <th class="text-center" style="vertical-align: middle;">Total Amount</th>
+                                                <th style="vertical-align: middle;" class="text-uppercase">Size</th>
+                                                <th style="vertical-align: middle;" class="text-uppercase">New Cost</th>
+                                                <th style="vertical-align: middle;" class="text-left text-uppercase">Unit per Case</th>
+                                                <th style="vertical-align: middle;" class="text-left text-uppercase">Order By</th>
+                                                <th class="text-center text-uppercase" style="vertical-align: middle;">Order Qty</th>
+                                                <th class="text-center text-uppercase" style="vertical-align: middle;">Suggested Cost</th>
+                                                <th class="text-center text-uppercase" style="vertical-align: middle;">Total Amount</th>
                                             </tr>
                                           
                                         </thead>
@@ -735,8 +735,8 @@
   });
 </script>
 
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
     $(function() {
@@ -1680,8 +1680,7 @@ $('.editable_text').focus(function() {
             <div class="col-md-3">
                 <input type="button" class="btn btn-success col-md-12" id="export_po_as_email" value="Email">
             </div>
-        
-            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+            
         </div>
       </div>
     </div>
