@@ -7,6 +7,7 @@
 @section('main-content')
 
     <link rel="stylesheet" href="{{ asset('asset/css/dashboard.css') }}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container">
@@ -249,7 +250,7 @@
                                 <div class="panel-body padding15">
                                     <strong><h2 class="md-title" align="center"><sup style="font-size: 20px">Last 7 Day Customer</sup></h2></strong>
                                     <div class="box-body chart-responsive">
-                                        <div class="chart" id="line-chart" style="height: 300px;"></div>
+                                            <div class="chart" id="chart" style="height: 300px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -400,22 +401,25 @@
 @endsection
 
 @section('page-script')
-<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-{{-- <link href="/stylesheet/morris.css" rel="stylesheet" type="text/css"/> --}}
-<link rel="stylesheet" href="{{ asset('asset/css/morris.css') }}">
-{{-- <link rel="stylesheet" href="{{ asset('asset/js/morris.min.js') }}"> --}}
-<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+{{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> --}}
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+4 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+{{-- <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script> --}}
+{{-- <link href="/stylesheet/morris.css" rel="stylesheet" type="text/css"/> --}}
+{{-- <link rel="stylesheet" href="{{ asset('asset/css/morris.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('asset/js/morris.min.js') }}"> --}}
+{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script> --}}
+{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> --}}
 {{-- <script src="/javascript/morriss/morris.min.js"></script> --}}
 
 <script type="text/javascript">
+
     $(document).ready(function(){
       var temp_sevendaysales = '<?php echo json_encode($output['sevendaysales']); ?>';
       window.sevendaysales = $.parseJSON(temp_sevendaysales);
 
       var temp_sevendaysCustomer = '<?php echo json_encode($output['sevendaysCustomer']); ?>';
       window.sevendaysCustomer = $.parseJSON(temp_sevendaysCustomer);
-
 
       var temp_dailySummary = '<?php echo json_encode($output['dailySummary']); ?>';
       window.dailySummary = $.parseJSON(temp_dailySummary);
@@ -431,7 +435,7 @@
     });
   </script>
 
-    <script src="/javascript/dashboardApi.js"></script>
+    <script src="{{ asset('javascript/dashboardApi.js') }}"></script>
 
   <script type="text/javascript">
     $(window).load(function() {
