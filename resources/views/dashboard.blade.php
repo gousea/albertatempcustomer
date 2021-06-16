@@ -16,9 +16,9 @@
                     <span class="font-weight-bold text-uppercase"> Dashboard</span>
                 </div>
                 <div class="nav-submenu">
-                    <a type="button" class="btn btn-gray headerblack  buttons_menu text-uppercase"
+                    {{-- <a type="button" class="btn btn-gray headerblack  buttons_menu text-uppercase"
                         href="{{ route('dashboardlayout') }}"> Edit layout
-                    </a>
+                    </a> --}}
                 </div>
             </div> <!-- navbar-collapse.// -->
         </div>
@@ -307,9 +307,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-8">
-                        <table data-toggle="table" data-classes="table table-hover table-condensed employeeview"
+                        {{-- <table data-toggle="table" data-classes="table table-hover table-condensed employeeview"
                             data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-pagination="true"
-                            class="">
+                            class=""> --}}
+                        <table id="vendor" class="table table-hover promotionview" style="width: 100%;">
                             <thead>
                                 <tr class="header-colors">
                                     <th class="col-xs-1 headername text-capitalize" data-field="timestamp">timestamp
@@ -413,6 +414,15 @@
 {{-- <script src="/javascript/morriss/morris.min.js"></script> --}}
 
 <script type="text/javascript">
+    var table = $('#vendor').DataTable({
+        "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
+        "searching":false,
+        "ordering": false,
+
+        "pageLength":10,
+      });
+
+      $("#vendor_paginate").addClass("pull-right");
 
     $(document).ready(function(){
       var temp_sevendaysales = '<?php echo json_encode($output['sevendaysales']); ?>';
