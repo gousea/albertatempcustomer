@@ -2007,7 +2007,7 @@ class PurchaseOrderController extends Controller
 		$json = array();
 		
         //removed ivendorid on 6th April 2020: To search items regardless of selected vendor
-        if (isset($input['search_item']) && $request->isMethod('post')) {		    
+        if (isset($input) && $request->isMethod('post')) {		    
 			
 	        $pre_items_id = json_decode(file_get_contents('php://input'), true);
             
@@ -2016,7 +2016,7 @@ class PurchaseOrderController extends Controller
             // new search result function without vendor filter 			
 			
 			$PurchaseOrder = new PurchaseOrder;
-			$items = $PurchaseOrder->getSearchItemHistoryAll($input['search_item'],$input['ivendorid'],$pre_items_id);
+			$items = $PurchaseOrder->getSearchItemHistoryAll($input,$input['ivendorid'],$pre_items_id);
 			$json['items'] = $items;
 		}
             
