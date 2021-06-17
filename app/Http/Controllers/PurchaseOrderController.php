@@ -1029,85 +1029,13 @@ class PurchaseOrderController extends Controller
         // ==================================== Drop down for departments ============================================
         
         $departments = Department::orderBy('vdepartmentname', 'ASC')->get()->toArray();
-        
-        $departments_html ="";
-        $departments_html = "<select class='' name='dept_code' id='dept_code' style='width: 100px;'><option value='all'>All</option>";
-        foreach($departments as $department){
-            if(isset($data['departments']) && $data['departments'] == $department['vdepcode']){
-                $departments_html .= "<option value='".$department['vdepcode']."' selected='selected'>".$department['vdepartmentname']."</option>";
-            } else {
-                $departments_html .= "<option value='".$department['vdepcode']."'>".$department['vdepartmentname']."</option>";
-            }
-        }
-        $departments_html .="</select>";
-        
-        $data['departments'] = $departments_html;
-        
-        
-        
-        // ==================================== Drop down for categories ============================================
-        $categories_html = "<select class='' name='category_code' id='category_code' style='width: 100px;'><option value='all'>All</option>";
-        
-        if(isset($input['dept_code'])){
-
-            $get_categories = Category::where('dept_code', $input['dept_code'])->get()->toArray();
-        
-            foreach($get_categories as $category){
-                if(isset($input['category_code']) && $input['category_code'] == $category['vcategorycode']){
-                    $categories_html .= "<option value='".$category['vcategorycode']."' selected='selected'>".$category['vcategoryname']."</option>";
-                } else {
-                    $categories_html .= "<option value='".$category['vcategorycode']."'>".$category['vcategoryname']."</option>";
-                }
-            }
-            
-        }
-        
-        $categories_html .="</select>";
-        $data['categories'] = $categories_html;
-        
-        
-        // ==================================== Drop down for sub categories ============================================
-
-        $subcategories_html = "<select class='' name='sub_category_id' id='sub_category_id' style='width: 100px;'><option value='all'>All</option>";
-        
-        if(isset($input['category_code'])) {
-            
-            $get_subcategories = SubCategory::where('cat_id', $input['category_code'])->get()->toArray();
-        
-            foreach($get_subcategories as $subcategory){
-                if(isset($input['sub_category_id']) && $input['sub_category_id'] == $subcategory['subcat_id']){
-                    $subcategories_html .= "<option value='".$subcategory['subcat_id']."' selected='selected'>".$subcategory['subcat_name']."</option>";
-                } else {
-                    $subcategories_html .= "<option value='".$subcategory['subcat_id']."'>".$subcategory['subcat_name']."</option>";
-                }
-            }
-            
-        }
-        $subcategories_html .="</select>";
-        $data['subcategories'] = $subcategories_html;
-        
+                
+        $data['departments'] = $departments;
         
         
         // ==================================== Drop down for vendors ============================================
         
         $suppliers = Supplier::orderBy('vcompanyname', 'ASC')->get()->toArray();
-        
-        
-        // $suppliers = $this->model_administration_items->getSuppliers();
-        $supplier_html ="";
-        $supplier_html = "<select class='' name='supplier_code' id='supplier_code' style='width: 100px;'><option value='all'>All</option>";
-        foreach($suppliers as $supplier){
-            $supplier_html .= "<option value='".$supplier['isupplierid']."'";
-            
-            if(isset($input['vvendorid']) && $input['vvendorid'] == $supplier['isupplierid']){
-                $supplier_html .= "selected='selected'>".$supplier['vcompanyname']."</option>";
-            }
-            
-            $supplier_html .= ">".$supplier['vcompanyname']."</option>";
-        }
-        $supplier_html .="</select>";
-        
-        $data['suppliers'] = $supplier_html;        
         
         $data['vendors'] = $suppliers;
 		$data['store'] = Store::All()->toArray();
@@ -1132,43 +1060,7 @@ class PurchaseOrderController extends Controller
                         'c' => 'Custom'
                      );
             
-        $price_select_by_list = array(
-                                    'greater'   => 'Greater than',
-                                    'less'      => 'Less than',
-                                    'equal'     => 'Equal to',
-                                    'between'   => 'Between'
-                                );        
-                
-        $price_select_by_html = "<select class='' id='price_select_by' name='price_select_by' style='width:40%;'>";
-        foreach($price_select_by_list as $k => $v){
-            $price_select_by_html .= "<option value='".$k."'";
-            
-            if(isset($data['price_select_by']) && $k === $data['price_select_by']){
-                $price_select_by_html .= " selected";
-            }
-            
-            $price_select_by_html .= ">".$v."</option>";
-        }
-        $price_select_by_html .= "</select>";
-        $price_select_by_html .= "<span id='selectByValuesSpan'>";
-        
-        if(isset($input['price_select_by']) && $input['price_select_by'] === 'between'){
-            // $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Enter Amt' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$data['select_by_value_2']."'/></span>";
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amt' style='width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value='".$data['select_by_value_1']."'/>";
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Enter Amt' style='width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value='".$data['select_by_value_2']."'/>";
-        } else {
-            if(isset($data['select_by_value_1'])){
-                $select_by_value_1 =  $data['select_by_value_1'];
-            }else{
-                $select_by_value_1 = '';
-            }
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amount' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$select_by_value_1."'/>";
-        }
-        
-        $price_select_by_html .= "</span>"; 
-        
-        $data['price_select_by'] = $price_select_by_html;		
-		
+       
         $data['get_categories_url'] = url('/PurchaseOrder/sales_history/get_categories');
         $data['get_subcategories_url'] = url('/PurchaseOrder/sales_history/get_subcategories');
         
@@ -1438,90 +1330,17 @@ class PurchaseOrderController extends Controller
 				array_push($data['items_id'], $v['vitemid']);
 			}
 		}
-		
-		
+				
         // ==================================== Drop down for departments ============================================
         
         $departments = Department::orderBy('vdepartmentname', 'ASC')->get()->toArray();
         
-        $departments_html ="";
-        $departments_html = "<select class='' name='dept_code' id='dept_code' style='width: 100px;'><option value='all'>All</option>";
-        foreach($departments as $department){
-            if(isset($data['departments']) && $data['departments'] == $department['vdepcode']){
-                $departments_html .= "<option value='".$department['vdepcode']."' selected='selected'>".$department['vdepartmentname']."</option>";
-            } else {
-                $departments_html .= "<option value='".$department['vdepcode']."'>".$department['vdepartmentname']."</option>";
-            }
-        }
-        $departments_html .="</select>";
-        
-        $data['departments'] = $departments_html;
-        
-        
-        
-        // ==================================== Drop down for categories ============================================
-        $categories_html = "<select class='' name='category_code' id='category_code' style='width: 100px;'><option value='all'>All</option>";
-        
-        if(isset($input['dept_code'])){
-            
-            $get_categories = Category::where('dept_code', $input['dept_code'])->get()->toArray();
-                
-            foreach($get_categories as $category){
-                if(isset($input['category_code']) && $input['category_code'] == $category['vcategorycode']){
-                    $categories_html .= "<option value='".$category['vcategorycode']."' selected='selected'>".$category['vcategoryname']."</option>";
-                } else {
-                    $categories_html .= "<option value='".$category['vcategorycode']."'>".$category['vcategoryname']."</option>";
-                }
-            }
-            
-        }
-        
-        $categories_html .="</select>";
-        $data['categories'] = $categories_html;
-        
-        
-        // ==================================== Drop down for sub categories ============================================
-
-        $subcategories_html = "<select class='' name='sub_category_id' id='sub_category_id' style='width: 100px;'><option value='all'>All</option>";
-        
-        if(isset($input['category_code'])) {
-            
-            $get_subcategories = SubCategory::where('cat_id', $input['category_code'])->get()->toArray();
-        
-            foreach($get_subcategories as $subcategory){
-                if(isset($input['sub_category_id']) && $input['sub_category_id'] == $subcategory['subcat_id']){
-                    $subcategories_html .= "<option value='".$subcategory['subcat_id']."' selected='selected'>".$subcategory['subcat_name']."</option>";
-                } else {
-                    $subcategories_html .= "<option value='".$subcategory['subcat_id']."'>".$subcategory['subcat_name']."</option>";
-                }
-            }
-            
-        }
-        $subcategories_html .="</select>";
-        $data['subcategories'] = $subcategories_html;
-        
-        
+        $data['departments'] = $departments;
+              
         
         // ==================================== Drop down for vendors ============================================
         
         $suppliers = Supplier::orderBy('vcompanyname', 'ASC')->get()->toArray();
-        
-        
-        // $suppliers = $this->model_administration_items->getSuppliers();
-        $supplier_html ="";
-        $supplier_html = "<select class='' name='supplier_code' id='supplier_code' style='width: 100px;'><option value='all'>All</option>";
-        foreach($suppliers as $supplier){
-            $supplier_html .= "<option value='".$supplier['isupplierid']."'";
-            
-            if(isset($input['vvendorid']) && $input['vvendorid'] == $supplier['isupplierid']){
-                $supplier_html .= "selected='selected'>".$supplier['vcompanyname']."</option>";
-            }
-            
-            $supplier_html .= ">".$supplier['vcompanyname']."</option>";
-        }
-        $supplier_html .="</select>";
-        
-        $data['suppliers'] = $supplier_html;        
         
         $data['vendors'] = $suppliers;
 		$data['store'] = Store::All()->toArray();
@@ -1540,49 +1359,6 @@ class PurchaseOrderController extends Controller
                         'c' => 'Custom'
                      );
 
-
-        $price_select_by_list = array(
-                                    'greater'   => 'Greater than',
-                                    'less'      => 'Less than',
-                                    'equal'     => 'Equal to',
-                                    'between'   => 'Between'
-                                );        
-                
-        $price_select_by_html = "<select class='' id='price_select_by' name='price_select_by' style='width:40%;'>";
-        foreach($price_select_by_list as $k => $v){
-            $price_select_by_html .= "<option value='".$k."'";
-            
-            if(isset($data['price_select_by']) && $k === $data['price_select_by']){
-                $price_select_by_html .= " selected";
-            }
-            
-            $price_select_by_html .= ">".$v."</option>";
-        }
-        $price_select_by_html .= "</select>";
-        $price_select_by_html .= "<span id='selectByValuesSpan'>";
-        
-        // $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amt' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$data['select_by_value_1']."'/>";
-
-
-
-        if(isset($input['price_select_by']) && $input['price_select_by'] === 'between'){
-            // $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Enter Amt' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$data['select_by_value_2']."'/></span>";
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amt' style='width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value='".$data['select_by_value_1']."'/>";
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Enter Amt' style='width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value='".$data['select_by_value_2']."'/>";
-        } else {
-            if(isset($data['select_by_value_1'])){
-                $select_by_value_1 =  $data['select_by_value_1'];
-            }else{
-                $select_by_value_1 = '';
-            }
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amount' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$select_by_value_1."'/>";
-        }
-        
-        $price_select_by_html .= "</span>"; 
-        
-        
-        $data['price_select_by'] = $price_select_by_html;		
-		
 		$data['get_categories_url'] = url('/PurchaseOrder/sales_history/get_categories');
         $data['get_subcategories_url'] = url('/PurchaseOrder/sales_history/get_subcategories');
         
@@ -1699,7 +1475,7 @@ class PurchaseOrderController extends Controller
         
         if(empty(trim($search_items['vitemname'])) && empty(trim($search_items['vbarcode'])) && empty(trim($search_items['vendor'])) && empty(trim($search_items['vcategoryname'])) &&  empty(trim($search_items['vdepartmentname'])))
         {
-            $limit = 20;
+            $limit = 10;
             
             $start_from = ($input['start']);
             
@@ -1740,7 +1516,7 @@ class PurchaseOrderController extends Controller
         else
         {
             
-            $limit = 20;
+            $limit = 10;
             
             $start_from = ($input['start']);
             

@@ -50,37 +50,37 @@
                                             <th class="text-left text-uppercase">&nbsp;&nbsp;Status
                                               <div class="po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH"  style="width: 100%; padding-left: 5px;">
                                               </div>
                                             </th>
                                             <th class="text-left text-uppercase">&nbsp;&nbsp;PurchaseORD#
                                               <div class="po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 5px;">
                                               </div>
                                             </th>
                                             <th class="text-left text-uppercase">&nbsp;&nbsp;Invoice#
                                               <div class="po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH"  style="width: 100%; padding-left: 5px;">
                                               </div>
                                             </th>
                                             <th class="text-left text-uppercase sample">&nbsp;&nbsp;Total
                                               <div class="po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="width: 100%; padding-left: 5px;">
                                               </div>
                                             </th>
                                             <th class="text-left text-uppercase">&nbsp;&nbsp;Vendor
                                               <div class="po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="width: 100%; padding-left: 5px;">
                                               </div>
                                             </th>
                                             <th class="text-left text-uppercase">&nbsp;&nbsp;Order Type
                                               <div class="po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="width: 100%; padding-left: 5px;">
                                               </div>
                                             </th>
                                             <th class="text-left text-uppercase no-filter">Date Created</th>

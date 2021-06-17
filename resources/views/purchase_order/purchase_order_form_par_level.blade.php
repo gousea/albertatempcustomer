@@ -1,13 +1,9 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'Purchase Order')
 @section('main-content')
 
 <div id="content">
-    <style>
-        
-        .table.table-bordered.table-striped.table-hover thead > tr{
-         	background: #03a9f4 none repeat  0 0 !important;
-        }
+    <style> 
         
         select{
             color:black;
@@ -61,12 +57,26 @@
         .ui-menu-item-wrapper:hover{
             font-size:10px;
             font-weight:bold;
-    }
+        }
 
     </style>    
     
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+      <div class="container">
+          <div class="collapse navbar-collapse" id="main_nav">
+              <div class="menu">
+                  <span class="font-weight-bold text-uppercase">Purchase Order (PAR Level)</span>
+              </div>
+              <div class="nav-submenu">
+                <button type="submit" form="form-purchase-order" id="save_purchase_order" data-toggle="tooltip" title="Save" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <a href="<?php echo $data['cancel']; ?>" data-toggle="tooltip" title="Cancel" class="btn btn-danger buttonred buttons_menu basic-button-small cancel_btn_rotate" id="cancel_button"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+                
+              </div>
+          </div> <!-- navbar-collapse.// -->
+      </div>
+    </nav>
     
-  
+  <div class="container-fluid section-content">
     <div class="container-fluid">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
@@ -79,37 +89,32 @@
         </div>
         @endif
         
-        <br>
-        <br>
         <div class="panel panel-default">
-            <div class="panel-heading head_title">
-                <h3 class="panel-title"><i class="fa fa-pencil"></i> Purchase Order (PAR Level)</h3>
-            </div>
+            
             <div class="panel-body">
                 
                 <div class="row" style="padding-bottom: 15px;">
                     <div class="col-md-12">
                       
-                        <?php if(isset($data['estatus'])) { ?>
-                            <?php if($data['estatus'] == 'Close') { ?>
-                                <span class="col-md-1 label label-danger"  style="padding-top: 5px;padding-bottom: 0px;margin-top: -6px;">
-                                    <h4>Closed</h4>
-                                </span>
-                            <?php } else { ?>
-                                <span class="col-md-1 label label-success"  style="padding-top: 5px;padding-bottom: 0px;margin-top: -6px;">
-                                    <h4>Open</h4>
-                                </span>
-                            <?php } ?>    
-                        <?php } else { ?>
-                            <span class="col-md-1 label label-success"  style="padding-top: 5px;padding-bottom: 0px;margin-top: -6px;">
-                                <h4>Open</h4>
+                      <?php if(isset($data['estatus'])) { ?>
+                        <?php if($data['estatus'] == 'Close') { ?>
+                            <span class="col-md-1 badge badge-danger">
+                                <h6>Closed</h6>
                             </span>
-                        <?php } ?>
+                        <?php } else { ?>
+                            <span class="col-md-1 badge badge-success">
+                                <h6>Open</h6>
+                            </span>
+                        <?php } ?>    
+                      <?php } else { ?>
+                        <span class="col-md-1 badge badge-success">
+                            <h6>Open</h6>
+                        </span>
+                      <?php } ?>
                         
                         
                         <div class="col-md-3 pull-right">
-                          <button type="submit" form="form-vendor" id="save_purchase_order" data-toggle="tooltip" title="Save" class="btn btn-primary" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-                          <a href="<?php echo $data['cancel']; ?>" data-toggle="tooltip" title="Cancel" class="btn btn-default cancel_btn_rotate" id="cancel_button"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+                          
                         </div>
                     </div>
                 </div>
@@ -126,232 +131,360 @@
                     <!-- ITEM TAB -->
                     <div class="">
                       
-                        <div class="" id="meta_div" style="display: none;">
+                      <div class="" id="meta_div" style="display: none;">
                             
-                            <div class="row"> <!-- First Row -->
-                                    
-                                <div class="col-md-4 form-group field-wrapper required-field">
-                                    <label class="col-md-3 control-label" for="input-phone">Vendor Name</label>
-                                    <div class="col-md-9">
-                                        <input type="hidden" name="vvendorid" value="<?php echo $data['vvendorid']; ?>"><input type="hidden" name="vvendorname" value="<?php echo $data['vvendorname']; ?>">
-                                        <select <?php if(isset($data['ipoid'])){?> disabled <?php } ?> name="" class="form-control" id="loaded_vendor">
-                                            <option value="">-- Select Vendor --</option>
-                                            <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
-                                                <?php foreach($data['vendors'] as $vendor){?>
-                                                    <?php if($vendor['isupplierid'] == $data['vvendorid']){?>
-                                                        <option value="<?php echo $vendor['isupplierid']; ?>" selected="selected"><?php echo $vendor['vcompanyname']; ?></option>
-                                                    <?php }else{ ?>
-                                                        <option value="<?php echo $vendor['isupplierid']; ?>"><?php echo $vendor['vcompanyname']; ?></option>
+                        <div class="mytextdiv">
+                          <div class="mytexttitle font-weight-bold text-uppercase">
+                              General Info
+                          </div>
+                          <div class="divider font-weight-bold"></div>
+                        </div>
+
+                        <div class="py-3">
+                          <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row ">
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                              <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Vendor Name</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                            <input type="hidden" name="vvendorid" value="<?php echo $data['vvendorid']; ?>"><input type="hidden" name="vvendorname" value="<?php echo $data['vvendorname']; ?>">
+                                            <select <?php if(isset($data['ipoid'])){?> disabled <?php } ?> name="" class="form-control adjustment-fields" id="loaded_vendor">
+                                                <option value="">-- Select Vendor --</option>
+                                                <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
+                                                    <?php foreach($data['vendors'] as $vendor){?>
+                                                        <?php if($vendor['isupplierid'] == $data['vvendorid']){?>
+                                                            <option value="<?php echo $vendor['isupplierid']; ?>" selected="selected"><?php echo $vendor['vcompanyname']; ?></option>
+                                                        <?php }else{ ?>
+                                                            <option value="<?php echo $vendor['isupplierid']; ?>"><?php echo $vendor['vcompanyname']; ?></option>
+                                                        <?php } ?>
                                                     <?php } ?>
                                                 <?php } ?>
-                                            <?php } ?>
-                                        </select>        
-                                  </div>
-                                </div>
-                                    
-                                <div class="col-md-4 form-group">
-                                    <label class="col-md-3 control-label" for="input-phone">Subtotal</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="nsubtotal" maxlength="50" value="<?php echo isset($data['nsubtotal']) ? $data['nsubtotal'] : '0.00'; ?>" placeholder="Subtotal" id="input_subtotal" class="form-control" readonly/>
-                                    </div>
-                                </div>
-                                    
-                                <div class="col-md-4 form-group">
-                                    <label class="col-md-3 control-label" for="input-phone">Delivery(+)</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="ndeliverycharge" maxlength="50" value="<?php echo isset($data['ndeliverycharge']) ? $data['ndeliverycharge'] : '0.00'; ?>" placeholder="Delivery" id="input_delivery_charge" class="form-control" />
-                                    </div>
-                                </div>
-                                
-                            </div>
-                                
-                                
-                            <div class="row"><!-- Second Row -->
-                                
-                                <div class="col-md-4 form-group field-wrapper required-field">
-                                    <label class="col-md-3 control-label" for="input-phone">Invoice#</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="vinvoiceno" maxlength="50" value="<?php echo isset($data['vinvoiceno']) ? $data['vinvoiceno'] : ''; ?>" placeholder="Invoice" id="input_invoice" class="form-control" required />      
-                                        <input 
-                                        type="hidden" name="estatus" maxlength="10" 
-                                        value="<?php echo isset($data['estatus']) ? $data['estatus'] : 'Open'; ?>" 
-                                        placeholder="Status" 
-                                        id="input-Status" class="form-control" readonly/>
-                                        
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-4 form-group">
-                                    <label class="col-md-3 control-label" for="input-phone">Tax(+)</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="ntaxtotal" maxlength="50" value="<?php echo isset($data['ntaxtotal']) ? $data['ntaxtotal'] : '0.00'; ?>" placeholder="Tax" id="input_tax" class="form-control" />
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-4 form-group">
-                                    <label class="col-md-3 control-label" for="input-phone">Return(-)</label>
-                                    <div class="col-md-9">
-                                        <input type="text" name="nreturntotal" maxlength="50" value="<?php echo isset($data['nreturntotal']) ? $data['nreturntotal'] : '0.00'; ?>" placeholder="Return" id="input_return" class="form-control" />
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
-                            
-                            <div class="row"><!-- Third Row -->
-                                
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Created</label>
-                                    
-                                  <div class="col-md-9">
-                                    <?php 
-                                      if(isset($data['dcreatedate'])){
-                                        $dcreatedate = DateTime::createFromFormat('Y-m-d H:i:s', $data['dcreatedate']);
-                                        $dcreatedate = $dcreatedate->format('m-d-Y');
-                                      }
-                                    ?>
-                                    <input type="text" name="dcreatedate" value="<?php echo isset($dcreatedate) ? $dcreatedate : date('m-d-Y'); ?>" placeholder="Created" id="input-Created" class="form-control" required/>      
-                                  </div>
-                                </div>
-                                    
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Freight(+)</label>
-                                  <div class="col-md-9">
-                                    <input type="text" name="nfreightcharge" maxlength="50" value="<?php echo isset($data['nfreightcharge']) ? $data['nfreightcharge'] : '0.00'; ?>" placeholder="Freight(+)" id="input_frieght" class="form-control" />
-                                  </div>
-                                </div>
-                                
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Discount(-)</label>
-                                  <div class="col-md-9">
-                                    <input type="text" name="ndiscountamt" maxlength="50" value="<?php echo isset($data['ndiscountamt']) ? $data['ndiscountamt'] : '0.00'; ?>" placeholder="Discount(-)" id="input-Discount(-)" class="form-control" />
-                                  </div>
-                                </div>
-                            </div>
-                             
-                            
-                            <div class="row"><!-- Fourth Row -->
-            
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Received</label>
-                                  <div class="col-md-9">
-                                    <?php 
-                                      if(isset($data['dreceiveddate'])){
-                                        $dreceiveddate = DateTime::createFromFormat('Y-m-d H:i:s', $data['dreceiveddate']);
-                                        $dreceiveddate = $dreceiveddate->format('m-d-Y');
-                                      }
-                                    ?>
-                                    <input type="text" name="dreceiveddate" value="<?php echo isset($dreceiveddate) ? $dreceiveddate : date('m-d-Y'); ?>" placeholder="Received" id="input-Received" class="form-control" required/>
-                                  </div>
-                                </div>
-                
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Deposit(+)</label>
-                                  <div class="col-md-9">
-                                    <input type="text" name="ndeposittotal" maxlength="50" value="<?php echo isset($data['ndeposittotal']) ? $data['ndeposittotal'] : '0.00'; ?>" placeholder="Deposit(+)" id="input_deposite" class="form-control" />
-                                  </div>
-                                </div>
-            
-                                <div class="col-md-4 form-group">
-                                  <label class="col-md-3 control-label" for="input-phone">Rips(-)</label>
-                                  <div class="col-md-9">
-                                    <input type="text" name="nripsamt" maxlength="50" value="<?php echo isset($data['nripsamt']) ? $data['nripsamt'] : '0.00'; ?>" placeholder="Rips(-)" id="input_rips" class="form-control" />
-                                  </div>
-                                </div>
-                                
-                            </div>
-                            
-                            
-                            <div class="row"><!-- Fifth Row -->
-                
-                                    <div class="col-md-4 form-group">
-                                      <label class="col-md-3 control-label" for="input-phone">Confirm By</label>
-                                      <div class="col-md-9">
-                                        <input type="text" name="vconfirmby" maxlength="30" value="<?php echo isset($data['vconfirmby']) ? $data['vconfirmby'] : ''; ?>" placeholder="Confirm By" id="input_confirm_by" class="form-control" />
+                                            </select>
+                                              
+                                          </div>
                                       </div>
-                                    </div>
-                    
-                                    <div class="col-md-4 form-group">
-                                      <label class="col-md-3 control-label" for="input-phone">Fuel(+)</label>
-                                      <div class="col-md-9">
-                                        <input type="text" name="nfuelcharge" maxlength="50" value="<?php echo isset($data['nfuelcharge']) ? $data['nfuelcharge'] : '0.00'; ?>" placeholder="Fuel(+)" id="input_fuel_charge" class="form-control" />
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputCreated" class="p-2 float-right text-uppercase">Created</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                          <?php 
+                                          if(isset($data['dcreatedate'])){
+                                            $dcreatedate = DateTime::createFromFormat('Y-m-d H:i:s', $data['dcreatedate']);
+                                            $dcreatedate = $dcreatedate->format('m-d-Y');
+                                          }
+                                        ?>
+                                        <input type="text" name="dcreatedate" value="<?php echo isset($dcreatedate) ? $dcreatedate : date('m-d-Y'); ?>" placeholder="Created" id="input-Created" class="form-control adjustment-fields" required/>
+                                        </div>
                                       </div>
-                                    </div>
-                
-                                    <div class="col-md-4 form-group">
-                                      <label class="col-md-3 control-label" for="input-phone">Net Total</label>
-                                      <div class="col-md-9">
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                           
-                                        <input type="text" name="nnettotal" maxlength="50" value="<?php echo isset($data['nnettotal']) ? $data['nnettotal'] : '0.00'; ?>" placeholder="Net Total" id="input_net_total" class="form-control" readonly/>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputReceived" class="p-2 float-right text-uppercase">Received</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          
+                                          <?php 
+                                            if(isset($data['dreceiveddate'])){
+                                              $dreceiveddate = DateTime::createFromFormat('Y-m-d H:i:s', $data['dreceiveddate']);
+                                              $dreceiveddate = $dreceiveddate->format('m-d-Y');
+                                            }
+                                          ?>
+                                          <input type="text" name="dreceiveddate" value="<?php echo isset($dreceiveddate) ? $dreceiveddate : date('m-d-Y'); ?>" placeholder="Received" id="input-Received" class="form-control adjustment-fields" required/>
+                                           
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+        
+                          <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                
+                                <div class="form-group row">
+                                    
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <label for="inputInvoice" class="p-2 float-right text-uppercase">Invoice#</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <input type="text" name="vinvoiceno" maxlength="50" value="<?php echo isset($data['vinvoiceno']) ? $data['vinvoiceno'] : ''; ?>" placeholder="Invoice" id="input_invoice" class="form-control adjustment-fields" />      
+                                       
+                                        <input type="hidden" name="estatus" maxlength="10" value="<?php echo isset($data['estatus']) ? $data['estatus'] : 'Open'; ?>" placeholder="Status" id="input-Status" class="form-control" readonly/>
+
                                       </div>
                                     </div>
+
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputConfirmBy" class="p-2 float-right text-uppercase">Confirm By</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                        <input type="text" name="vconfirmby" maxlength="30" value="<?php echo isset($data['vconfirmby']) ? $data['vconfirmby'] : ''; ?>" placeholder="Confirm By" id="input_confirm_by" class="form-control adjustment-fields" />
+                                      </div>
+                                    </div>
+
                                     
-                                </div>                
-            
-                            
-                            <hr style="border-top: 2px solid #808080;">                
-            
-            
+                                </div>
+                                
+                            </div>
+                          </div>
+                        </div> 
+                        
+                        <div class="mytextdiv">
+                          <div class="mytexttitle font-weight-bold text-uppercase">
+                              Order Info
+                          </div>
+                          <div class="divider font-weight-bold"></div>
                         </div>
+
+                        <div class="py-3">
+                          <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                              <label for="inputSubtotal" class="p-2 float-right text-uppercase">Subtotal</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                            <input type="text" name="nsubtotal" maxlength="50" value="<?php echo isset($data['nsubtotal']) ? $data['nsubtotal'] : '0.00'; ?>" placeholder="Subtotal" id="input_subtotal" class="form-control  adjustment-fields" readonly/>
+
+                                          </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputTax" class="p-2 float-right text-uppercase">Tax(+)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                          <input type="text" name="ntaxtotal" maxlength="50" value="<?php echo isset($data['ntaxtotal']) ? $data['ntaxtotal'] : '0.00'; ?>" placeholder="Tax(+)" id="input_tax" class="form-control adjustment-fields"/>
+                                          
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputFreight" class="p-2 float-right text-uppercase">Freight(+)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          
+                                          <input type="text" name="nfreightcharge" maxlength="50" value="<?php echo isset($data['nfreightcharge']) ? $data['nfreightcharge'] : '0.00'; ?>" placeholder="Freight(+)" id="input_frieght" class="form-control adjustment-fields" />
+                                           
+                                        </div>
+                                      </div>
+
+                                  </div>
+                                  
+                              </div>
+                          </div>
+        
+                          <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                
+                                <div class="form-group row">
+                                    
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <label for="inputDeposit" class="p-2 float-right text-uppercase">Deposit(+)</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <input type="text" name="ndeposittotal" maxlength="50" value="<?php echo isset($data['ndeposittotal']) ? $data['ndeposittotal'] : '0.00'; ?>" placeholder="Deposit(+)" id="input_deposite" class="form-control adjustment-fields" />
+                                        
+                                      </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputFuel" class="p-2 float-right text-uppercase">Fuel(+)</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <input type="text" name="nfuelcharge" maxlength="50" value="<?php echo isset($data['nfuelcharge']) ? $data['nfuelcharge'] : '0.00'; ?>" placeholder="Fuel(+)" id="input_fuel_charge" class="form-control adjustment-fields" />
+                                      </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputDelivery" class="p-2 float-right text-uppercase">Delivery(+)</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        
+                                        <input type="text" name="ndeliverycharge" maxlength="50" value="<?php echo isset($data['ndeliverycharge']) ? $data['ndeliverycharge'] : '0.00'; ?>" placeholder="Delivery(+)" id="input_delivery_charge" class="form-control adjustment-fields" />
+                                          
+                                      </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                
+                                <div class="form-group row">
+                                    
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <label for="inputReturn" class="p-2 float-right text-uppercase">Return(-)</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <input type="text" name="nreturntotal" maxlength="50" value="<?php echo isset($data['nreturntotal']) ? $data['nreturntotal'] : '0.00'; ?>" placeholder="Return(-)" id="input_return" class="form-control adjustment-fields" />
+                                        
+                                      </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputDiscount" class="p-2 float-right text-uppercase">Discount(-)</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <input type="text" name="ndiscountamt" maxlength="50" value="<?php echo isset($data['ndiscountamt']) ? $data['ndiscountamt'] : '0.00'; ?>" placeholder="Discount(-)" id="input_discount" class="form-control adjustment-fields" />
+                                      </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputRips " class="p-2 float-right text-uppercase">Rips(-)</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        
+                                        <input type="text" name="nripsamt" maxlength="50" value="<?php echo isset($data['nripsamt']) ? $data['nripsamt'] : '0.00'; ?>" placeholder="Rips(-)" id="input_rips" class="form-control adjustment-fields" />
+                                          
+                                      </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                
+                                <div class="form-group row">
+                                    
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <label for="inputNetTotal" class="p-2 float-right text-uppercase">Net Total</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <input type="text" name="nnettotal" maxlength="50" value="<?php echo isset($data['nnettotal']) ? $data['nnettotal'] : '0.00'; ?>" placeholder="Net Total" id="input_net_total" class="form-control adjustment-fields" readonly/>
+                                        
+                                      </div>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                          </div>
+
+                        </div>
+                          
+                        <div class="mytextdiv">
+                          <div class="mytexttitle font-weight-bold text-uppercase">
+                              Items
+                          </div>
+                          <div class="divider font-weight-bold"></div>
+                        </div>                
+                          
+                      </div>
                         
                         <div class="">
                             
                             <div class="row" id="div_item_listing" style="height: 700px;">
                                 <div class="col-md-12">
                                     <div class="box-body table-responsive">
-                    		            <table id="item_listing" class="table table-bordered table-striped table-hover" style="font-size:9px;">
+                    		            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%; font-size:9px;">
                     		                <thead>
-                    		                    <tr>
+                    		                    <tr class="header-color" style="font-size:12px;">
                     		                        <th style="width: 1px;"><input type='checkbox'></th>
-                                                    <th style="width: 15%;position: relative;">Item Name</th>
-                                                    <th>SKU</th>
-                                                    <th>Vendor</th>
-                                                    <th>Dept.</th>
-                                                    <th style="">Category</th>
-                                                    <th style="">Sub Cat</th>
-                                                    <th>Price</th>
-                                                    <th>Cost</th>
-                                                    <th>PAR</th>
-                                                    <th>QoH</th>
-                                                    <th>Sugg. Qty.</th>
+                                                    <th class="text-uppercase" style="width: 15%;position: relative;">Item Name
+                                                      <div class="adjustment-has-search">
+                                                        <input type="text" autocomplete="off" id="search_item_name" name="item_name" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
+                                                      </div>
+                                                    </th>
+                                                    <th class="text-uppercase">SKU
+                                                      <div class="adjustment-has-search">
+                                                        <input type="text" autocomplete="off" id="search_sku" name="barcode" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
+                                                      </div>
+                                                    </th>
+                                                    <th class="text-uppercase">Vendor
+                                                      <div class="adjustment-has-search">
+                                                        <select class='table-heading-fields' name='supplier_code' id='supplier_code' style='width: 100px; padding-left: 5px;'>
+                                                          <option value='all'>All</option>
+                                                          <?php
+                                                            foreach($data['vendors'] as $supplier){
+                                                          ?>
+                                                              <option value="<?=$supplier['isupplierid'] ?>"><?=$supplier['vcompanyname'] ?> </option>
+                                                          <?php } ?>
+                                                        </select>
+                                                      </div>
+                                                    </th>
+                                                    <th class="text-uppercase">Dept.
+                                                      <div class="adjustment-has-search">
+                                                        <select class='table-heading-fields' name='dept_code' id='dept_code' style='width: 100px;'>
+                                                          <option value='all'>All</option>";
+                                                              <?php 
+                                                                foreach($data['departments'] as $department){
+                                                              ?>  
+                                                                  <option value='<?=$department['vdepcode']?>'><?=$department['vdepartmentname'] ?></option>;
+                                                              <?php } ?>
+                                                        </select>
+                                                      </div>
+                                                    </th>
+                                                    <th class="text-uppercase">Category
+                                                      <div class="adjustment-has-search">
+                                                        <select class='table-heading-fields' name='category_code' id='category_code' style='width: 100px; padding-left: 5px;'>
+                                                          <option value='all'>All</option>
+                                                          
+                                                        </select>
+                                                      </div>
+                                                    </th>
+                                                    <th class="text-uppercase">Sub Cat
+                                                      <div class="adjustment-has-search">
+                                                        <select class='table-heading-fields' name='sub_category_id' id='sub_category_id' style='width: 100px; padding-left: 5px;'>
+                                                          <option value='all'>All</option>
+                                                        </select>
+                                                      </div>
+                                                    </th>
+                                                    <th class="text-uppercase no-filter">Price</th>
+                                                    <th class="text-uppercase no-filter">Cost</th>
+                                                    <th class="text-uppercase no-filter">PAR</th>
+                                                    <th class="text-uppercase no-filter">QoH</th>
+                                                    <th class="text-uppercase no-filter">Sugg. Qty.</th>
                     		                    </tr>
                     		                </thead>
                     		            </table>
-                    		            
-                    		            
-                    		            
-                    		            
-                    		            
+                    		         
                     		            
                     		        </div>
                                 </div>
                             </div>
-                            
-                            
-                            <!--<div class='row'>
-                                <div class="col-md-12">
-            
-                                    <div class="box-body table-responsive" id='divTbodyItemListing'  style="height: 400px; font-size:9px;">
-                    		            
-                    		            <table id='tbodyItemListing' class='table table-bordered table-striped table-hover'>
-                    		                    
-                    		            </table>
-                    		            
-                    		            <div class="alert alert-info text-center" id="item_history_err_div" style="display: none; font-size:11px;">
-                                            <strong id="item_history_err">Sorry no data found!</strong>
-                                        </div>
-                                        <div class="alert alert-success text-center" id="item_history_success_div" style="display: none; font-size:11px;">
-                                            <strong>Items Added Successfully!</strong>
-                                        </div>
-                    		            
-                    		        </div>
-                    	        </div>
-                            </div>-->
-            
-            
-            
-            
-            
+                                                      
+                                     
                         </div>            
                         
                         
@@ -364,43 +497,48 @@
                             </div>
                             
                             <div class="col-md-6">
-                              <button class="btn btn-primary" style="border-radius:0px;" id="add_selected_items" >Add Item</button>&nbsp;&nbsp;
-                              <button class="btn btn-danger" style="border-radius:0px;<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
-                              <button type="button" class="btn btn-success" style="border-radius:0px;<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check" value="export">Export</button>
+                              <button class="btn button-blue buttons_menu basic-button-small" id="add_selected_items" >Add Item</button>&nbsp;&nbsp;
+                              <button class="btn btn-danger buttonred buttons_menu basic-button-small" style="<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
+                              <button type="button" class="btn btn-info buttons_menu basic-button-small" style="<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check" value="export">Export</button>
                               
                               <span title="You can add more items even after exporting the data by clicking on Add Item" style="font-size:20px; color:red; cursor: pointer;">&#8505;</span>
                             </div>
+
+                            <div class="col-md-4">
+                              <div class="col-md-6 float-right">
+                                <input type="text" class="form-control adjustment-fields" id="search_item_box" placeholder="Search Item...">
+                              </div>
+                            </div>
+
+                            <div class="col-md-2" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
+                              <div class="float-right">
+                                <input type="checkbox" name="advance_update" value="Yes" class="" id="advance_update">
+                                <span style="font-size:14px;margin-top:12px;">&nbsp; Update pack qty in item</span>
+                              </div>
+                            </div>
+
                           </div>
                           
                           <br>
-                          <div class="row">
-                            <div class="col-md-3">
-                              <input type="text" class="form-control" id="search_item_box" placeholder="Search Item...">
-                            </div>
-                            <div class="col-md-5" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
-                              <input type="checkbox" name="update_pack_qty" value="Yes" class="form-control" id="update_pack_qty" style="display:inline-block;"> <span style="display:inline-block;font-size:14px;margin-top:12px;">&nbsp; Update pack qty in item</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                              <button class="btn btn-info" id="advance_btn" data-check="unchecked">Advance Update</button>
-                              <input type="checkbox" name="advance_update" value="Yes" class="form-control" id="advance_update" style="display:none;">
-                            </div>
-                          </div>
+                          
                           <br>
                           <div class="row" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
                             <div class="col-md-12" style="overflow-y:auto; font-size: 11px;">
-                              <table class="table table-bordered table-hover" style="width:100%;" id="po-items">
+                              <table class="table table-hover promotionview" style="width:100%;" id="po-items">
                                 <thead>
             
-                                  <tr>
-                                    <th style="width: 1px;vertical-align: middle;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_purchase_item\']').prop('checked', this.checked);" /></th>
-                                    <th style="width:20%; vertical-align: middle;">Vendor</th>
-                                    <th style="width:10%; vertical-align: middle;">SKU#</th>
-                                    <th style="width:20%; vertical-align: middle;">Item Name</th>
-                                    <th style="width:5%; vertical-align: middle;">Size</th>
-                                    <th style="vertical-align: middle; width:5%;" class="">New Cost</th>
-                                    <th style="vertical-align: middle; width:5%;" class="text-right">Unit per Case</th>
-                                    <th style="vertical-align: middle; width:5%;" class="text-right">Order By</th>
-                                    <th class="text-center" style="vertical-align: middle; width:5%;">Order Qty</th>
-                                    <th class="text-center" style="vertical-align: middle; width:5%;">Suggested Cost</th>
-                                    <th class="text-center" style="vertical-align: middle;">Total Amount</th>
+                                  <tr class="header-color">
+                                    <th style="vertical-align: middle;" class="text-cente text-uppercaser"><input type="checkbox" onclick="$('input[name*=\'selected_purchase_item\']').prop('checked', this.checked);" /></th>
+                                    <th style="vertical-align: middle;" class="text-uppercase">Vendor</th>
+                                    <th style="vertical-align: middle;" class="text-uppercase">SKU#</th>
+                                    <th style="vertical-align: middle;" class="text-uppercase">Item Name</th>
+                                    <th style="vertical-align: middle;" class="text-uppercase">Size</th>
+                                    <th style="vertical-align: middle;" class="text-uppercase">New Cost</th>
+                                    <th style="vertical-align: middle;" class="text-right text-uppercase">Unit per Case</th>
+                                    <th style="vertical-align: middle;" class="text-right text-uppercase">Order By</th>
+                                    <th class="text-center text-uppercase" style="vertical-align: middle;">Order Qty</th>
+                                    <th class="text-center text-uppercase" style="vertical-align: middle;">Suggested Cost</th>
+                                    <th class="text-center text-uppercase" style="vertical-align: middle;">Total Amount</th>
                                   </tr>
                                 </thead>
                                 <tbody id="purchase_order_items">
@@ -516,17 +654,21 @@
             </div>
         </div>
     </div>
-  
+  </div>
 </div>
 
 @endsection
 
 
-@section('scripts')
+@section('page-script')
 
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
-<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
-<script src="{{ asset('javascript/bootstrap-datepicker.js') }}" defer></script>
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script src="{{ asset('javascript/jquery.printPage.js') }}"></script>
 
 
@@ -538,11 +680,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 
 
-<script src="{{ asset('javascript/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('javascript/dataTables.bootstrap.min.js') }}"></script>
-
-
 <style type="text/css">
+
+  .no-filter{
+      padding-bottom: 45px !important;
+  }
+
  .nav.nav-tabs .active a{
     background-color: #f05a28 !important; 
     color: #fff !important; 
@@ -579,16 +722,8 @@
 
 </style>
 
-<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
-<script src="{{ asset('javascript/bootstrap-datepicker.js') }}" defer></script>
 <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
-<script>
-  $(function(){
 
-    
-    
-  });
-</script>
 
 <script type="text/javascript">
   $(document).on('keyup', '#search_item_box', function(event) {
@@ -625,22 +760,7 @@
     });
 </script>
 <style type="text/css">
-        tr.header{
-            cursor:pointer;
-        }
         
-        tr.header > th{
-            background-color: #DCDCDC;
-            border: 1px solid #808080 !important;
-        }
-        
-        tr.header > th, tr.header > th > span{
-            font-size: 15px;
-        }
-        
-        tr.header > th > span{
-            float: right;
-        }
         
         .header .sign:after{
             content:"+";
@@ -660,10 +780,6 @@
     
     var item_name_list = [];
     
-    $(window).load(function() {
-        $("div#divLoading").removeClass('show');
-    });
-    
     
     $(document).on('click', '#generateSalesHistoryReport', function(){
         
@@ -676,7 +792,7 @@
         {
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: "Please Enter the Number of Months", 
                 callback: function(){}
             });
@@ -687,7 +803,7 @@
         {
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: "Please Enter the Number of Weeks", 
                 callback: function(){}
             });
@@ -698,7 +814,7 @@
         {
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: "Please Select the Year", 
                 callback: function(){}
             });
@@ -709,7 +825,7 @@
         {
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: "Please Select the Date Range", 
                 callback: function(){}
             });
@@ -730,7 +846,7 @@
             if(itemName === '' && size === '' && sku === '' && value1 === '' && dept_code === 'all' && dept_code === 'all' && category_code === 'all' && sub_category_id === 'all' && supplier_code === 'all'){
                 bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    title: "  ", 
                     message: "Please fill / select at least one of the filters", 
                     callback: function(){}
                 });
@@ -757,7 +873,7 @@
                 
                 bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    title: "  ", 
                     message: "Please Select the Date Range", 
                     callback: function(){}
                 });
@@ -771,7 +887,7 @@
             if(from > to){
                 bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    title: "  ", 
                     message: "From date must be <b>less than</b> To date!", 
                     callback: function(){}
                 });
@@ -838,74 +954,11 @@
     
     // $(document).ready(function(){
         
-        var departments = "<?php echo $data['departments'];?>";
-        var categories = "<?php echo $data['categories'];?>";
-        var subcategories = "<?php echo $data['subcategories'];?>";        
-        var suppliers = "<?php echo $data['suppliers'];?>";
-        var price_select_by = "<?php echo $data['price_select_by'];?>";
-        
-        $('#item_listing thead tr').clone(true).appendTo( '#item_listing thead' );
-        
-        console.log($('#item_listing thead tr:eq(1) th'));
-        
-        $('#item_listing thead tr:eq(1) th').each( function (i) {
-            
-            
-            
-            var title = $(this).text();
-            
-            // console.log(title);
-            
-            
-            /*if(i == 0)
-            {
-                $(this).html( '' );
-            }
-            else*/ if(title == 'Dept.')
-            {
-                $(this).html(departments)
-            }
-            else/* if(title == "TYPE")
-            {
-                $(this).html(item_types)
-            }
-            else*/ if(title == "Category")
-            {
-                $(this).attr('id', 'thCategory');
-                $(this).html(categories);
-            }
-            else if(title == "Sub Cat")
-            {
-                $(this).attr('id', 'thSubCategory');
-                $(this).html(subcategories);
-            }
-            else if(title == 'Vendor')
-            {
-                $(this).html(suppliers)
-            }
-            else if(title == 'SIZE')
-            {
-                $(this).html('<input type="text" autocomplete="off" id="search_size" name="size" class="search_text_box" placeholder="Size" style="width:100%;color:black;border-radius: 4px;height:28px;" value="{{ $size ?? '' }}"/>')
-            }
-            else if(title == 'Item Name')
-            {
-                $(this).html( '<input type="text" autocomplete="off" id="search_item_name" name="item_name" class="search_text_box" placeholder="Search" style="width:100%;color:black;border-radius: 4px;height:28px;" value="{{ $item_name ?? ''}}"/>' );
-            }
-            else if(title == 'SKU')
-            {
-                $(this).html( '<input type="text" autocomplete="off" id="search_sku" name="barcode" class="search_text_box" placeholder="Search" style="width:100%;color:black;border-radius: 4px;height:28px;" value="{{ $barcode ?? ''}}"/>' );
-            }
-            else if(title == 'PRICE') {
-                // $(this).html(price_select_by);
-            }
-            else
-            {
-                $(this).html( '' );
-            }
-            
+       
+        $('#item_listing thead tr th').each( function (i) {
+           
             $(this).on('keyup change', '.search_text_box', function(){  
-            
-            // $( '.search_text_box', this ).on( 'keyup change', function () {
+                console.log("jjjhjhjhj");
                 if ( table.column(i).search() !== this.value ) {
                     table
                         .column(i)
@@ -915,9 +968,7 @@
             });
             
             $(this).on('change', 'select', function(){  
-            
-            // $( 'select', this ).on( 'change', function () {
-                
+
                 if ( table.column(i).search() !== this.value) {
                     
                     table
@@ -934,9 +985,7 @@
         $("#item_listing_processing").remove();
         $(".dataTables_scrollBody").remove();
 
-        // autocomplete(document.getElementById("search_item_name"), item_name_list);
-
-
+        
         var url = '<?php echo $data['search_items'];?>';
         url = url.replace(/&amp;/g, '&');
     
@@ -946,14 +995,14 @@
             "autoWidth": false,
             "fixedHeader": true,
             "processing": false,
-            "iDisplayLength": 20,
+            "iDisplayLength": 10,
             "serverSide": true,
             "bLengthChange": false,
             "language": {
                 search: "_INPUT_",
                 searchPlaceholder: "Search..."
             },
-            "dom": '<"mysearch"lf>rt<"bottom"ip>',
+            "dom": 't<"bottom col-md-12 row"<"col-md-3"i><"col-md-9"p>>',
            
             "ajax": {
               url: url,
@@ -997,22 +1046,8 @@
         });
         
         $("#item_listing_filter").hide();
-    
-    $(document).on('change', '#price_select_by', function(){
-        var select_by = $(this).val();
-        var html='';
-        if(select_by === 'between'){
-            
-            html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box" placeholder="Enter Amt" style="width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="{{ $select_by_value_1 ?? '' }}"/>';
-            html += '<input type="text" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box" placeholder="Enter Amt" style="width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="{{ $select_by_value_2 ?? '' }}"/>'
-        } else {
-            
-            html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box" placeholder="Enter Amt" style="width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;" value="{{ $select_by_value_1 ?? '' }}"/>'
-            // $('#selectByValuesSpan').html('not between');
-        }
-        $('#selectByValuesSpan').html(html);
-        
-    });
+        $("#item_listing_paginate").addClass("pull-right");
+
     
     $(document).on('change', '#dept_code', function(){
         /*console.log("Dept changed");
@@ -1817,7 +1852,7 @@ $(document).on('change input', '.new_costprice_class', function(event) {
       // alert('Please Enter Invoice!');
         bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Please Enter Invoice!", 
             callback: function(){}
         });
@@ -1830,7 +1865,7 @@ $(document).on('change input', '.new_costprice_class', function(event) {
     if(($.trim($('input[name="vinvoiceno"]').val())).length==0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -1842,7 +1877,7 @@ $(document).on('change input', '.new_costprice_class', function(event) {
       // alert('Please Select Created Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Created Date!", 
         callback: function(){}
       });
@@ -1854,7 +1889,7 @@ $(document).on('change input', '.new_costprice_class', function(event) {
       // alert('Please Select Received Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Received Date!", 
         callback: function(){}
       });
@@ -1871,7 +1906,7 @@ $(document).on('change input', '.new_costprice_class', function(event) {
       // alert('Please Select Vendor!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Vendor!", 
         callback: function(){}
       });
@@ -2134,20 +2169,20 @@ $('.editable_text').focus(function() {
       </div>
       <div class="modal-body">
         <div class="text-center">
-          <h4>This will transfer the Purchase Order to Receiving Order. Once done, cannot be reverted. Are you sure you want to continue?</h4>
+          <h5>This will transfer the Purchase Order to Receiving Order. Once done, cannot be reverted. Are you sure you want to continue?</h5>
         </div>
         
       </div>
       <div class="modal-footer" style="border-top:none;">
         
-        <div class="col-md-12 text-center">
+        <div class="col-md-12 text-center form-inline">
             <div class="col-md-6">
-                <input type="button" class="btn btn-success col-md-12" id="save_receive_btn" value="Yes">
+                <input type="button" class="btn btn-success basic-button-small col-md-12" id="save_receive_btn" value="Yes">
             </div>
             <div class="col-md-6">
-                <button type="button" class="btn btn-default col-md-12" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-grey headerwhite basic-button-small col-md-12" data-dismiss="modal">No</button>
             </div>
-            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+            
         </div>
           
         <!--<input type="button" class="btn btn-success" id="save_receive_btn_to_warehouse" value="Send to Warehouse">-->
@@ -2175,7 +2210,7 @@ $('.editable_text').focus(function() {
       // alert('Please Enter Invoice!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -2186,7 +2221,7 @@ $('.editable_text').focus(function() {
     if(($.trim($('input[name="vinvoiceno"]').val())).length==0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Enter Invoice!", 
         callback: function(){}
       });
@@ -2198,7 +2233,7 @@ $('.editable_text').focus(function() {
       // alert('Please Select Created Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Created Date!", 
         callback: function(){}
       });
@@ -2210,7 +2245,7 @@ $('.editable_text').focus(function() {
       // alert('Please Select Received Date!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Received Date!", 
         callback: function(){}
       });
@@ -2222,7 +2257,7 @@ $('.editable_text').focus(function() {
       // alert('Please Select Vendor!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please Select Vendor!", 
         callback: function(){}
       });
@@ -2248,7 +2283,7 @@ $('.editable_text').focus(function() {
     {
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "price required more then unit cost", 
           callback: function(){}
         });
@@ -2271,7 +2306,7 @@ $('.editable_text').focus(function() {
       {
            bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Total Unit must not be zero OR delete Item!", 
             callback: function(){}
           });
@@ -2294,7 +2329,7 @@ $('.editable_text').focus(function() {
       {
       bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Total Amt must not be zero!", 
             callback: function(){}
           });
@@ -2312,7 +2347,7 @@ $('.editable_text').focus(function() {
           // alert('price required more then unit cost');
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Unit Cost must not be zero!", 
             callback: function(){}
           });
@@ -2328,7 +2363,7 @@ $('.editable_text').focus(function() {
         // alert('Please add items');
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "Please add items", 
           callback: function(){}
         });
@@ -3009,7 +3044,7 @@ $('.editable_text').focus(function() {
       if(d1 > d2){
         bootbox.alert({ 
           size: 'small',
-          title: "Attention", 
+          title: "  ", 
           message: "Start date must be less then end date!", 
           callback: function(){}
         });
@@ -3763,10 +3798,5 @@ $('.editable_text').focus(function() {
   });
 </script>
 
-<script type="text/javascript">
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
-</script>
 
 @endsection
