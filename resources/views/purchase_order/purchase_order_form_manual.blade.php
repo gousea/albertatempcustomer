@@ -179,7 +179,169 @@
                                   
                               </div>
                             </div>
-                          </div>    
+                          </div> 
+                          
+                          <div class="mytextdiv">
+                            <div class="mytexttitle font-weight-bold text-uppercase">
+                                Order Info
+                            </div>
+                            <div class="divider font-weight-bold"></div>
+                          </div>
+
+                          <div class="py-3">
+                            <div class="row">
+                                <div class="col-md-12 mx-auto">
+                                    
+                                    <div class="form-group row">
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                                <label for="inputSubtotal" class="p-2 float-right text-uppercase">Subtotal</label>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                              <input type="text" name="nsubtotal" maxlength="50" value="<?php echo isset($data['nsubtotal']) ? $data['nsubtotal'] : '0.00'; ?>" placeholder="Subtotal" id="input_subtotal" class="form-control  adjustment-fields" readonly/>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+          
+                                            <label for="inputTax" class="p-2 float-right text-uppercase">Tax(+)</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                            <input type="text" name="ntaxtotal" maxlength="50" value="<?php echo isset($data['ntaxtotal']) ? $data['ntaxtotal'] : '0.00'; ?>" placeholder="Tax(+)" id="input_tax" class="form-control adjustment-fields"/>
+                                            
+                                          </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputFreight" class="p-2 float-right text-uppercase">Freight(+)</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                            <input type="text" name="nfreightcharge" maxlength="50" value="<?php echo isset($data['nfreightcharge']) ? $data['nfreightcharge'] : '0.00'; ?>" placeholder="Freight(+)" id="input_frieght" class="form-control adjustment-fields" />
+                                             
+                                          </div>
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+                            </div>
+          
+                            <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputDeposit" class="p-2 float-right text-uppercase">Deposit(+)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="ndeposittotal" maxlength="50" value="<?php echo isset($data['ndeposittotal']) ? $data['ndeposittotal'] : '0.00'; ?>" placeholder="Deposit(+)" id="input_deposite" class="form-control adjustment-fields" />
+                                          
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputFuel" class="p-2 float-right text-uppercase">Fuel(+)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="nfuelcharge" maxlength="50" value="<?php echo isset($data['nfuelcharge']) ? $data['nfuelcharge'] : '0.00'; ?>" placeholder="Fuel(+)" id="input_fuel_charge" class="form-control adjustment-fields" />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputDelivery" class="p-2 float-right text-uppercase">Delivery(+)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          
+                                          <input type="text" name="ndeliverycharge" maxlength="50" value="<?php echo isset($data['ndeliverycharge']) ? $data['ndeliverycharge'] : '0.00'; ?>" placeholder="Delivery(+)" id="input_delivery_charge" class="form-control adjustment-fields" />
+                                            
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputReturn" class="p-2 float-right text-uppercase">Return(-)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="nreturntotal" maxlength="50" value="<?php echo isset($data['nreturntotal']) ? $data['nreturntotal'] : '0.00'; ?>" placeholder="Return(-)" id="input_return" class="form-control adjustment-fields" />
+                                          
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputDiscount" class="p-2 float-right text-uppercase">Discount(-)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="ndiscountamt" maxlength="50" value="<?php echo isset($data['ndiscountamt']) ? $data['ndiscountamt'] : '0.00'; ?>" placeholder="Discount(-)" id="input_discount" class="form-control adjustment-fields" />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          <label for="inputRips " class="p-2 float-right text-uppercase">Rips(-)</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                          
+                                          <input type="text" name="nripsamt" maxlength="50" value="<?php echo isset($data['nripsamt']) ? $data['nripsamt'] : '0.00'; ?>" placeholder="Rips(-)" id="input_rips" class="form-control adjustment-fields" />
+                                            
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputNetTotal" class="p-2 float-right text-uppercase">Net Total</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <input type="text" name="nnettotal" maxlength="50" value="<?php echo isset($data['nnettotal']) ? $data['nnettotal'] : '0.00'; ?>" placeholder="Net Total" id="input_net_total" class="form-control adjustment-fields" readonly/>
+                                          
+                                        </div>
+                                      </div>
+
+                                  </div>
+                                  
+                              </div>
+                            </div>
+
+                          </div>
                             
                           <div class="mytextdiv">
                             <div class="mytexttitle font-weight-bold text-uppercase">
@@ -1594,20 +1756,20 @@ $('.editable_text').focus(function() {
       </div>
       <div class="modal-body">
         <div class="text-center">
-          <h4>This will transfer the Purchase Order to Receiving Order. Once done, cannot be reverted. Are you sure you want to continue?</h4>
+          <h5>This will transfer the Purchase Order to Receiving Order. Once done, cannot be reverted. Are you sure you want to continue?</h5>
         </div>
         
       </div>
       <div class="modal-footer" style="border-top:none;">
         
-        <div class="col-md-12 text-center">
+        <div class="col-md-12 text-center form-inline">
             <div class="col-md-6">
-                <input type="button" class="btn btn-success col-md-12" id="save_receive_btn" value="Yes">
+                <input type="button" class="btn btn-success basic-button-small col-md-12" id="save_receive_btn" value="Yes">
             </div>
             <div class="col-md-6">
-                <button type="button" class="btn btn-default col-md-12" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-grey headerwhite basic-button-small col-md-12" data-dismiss="modal">No</button>
             </div>
-            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+            <!--<button type="button" class="btn btn-grey headerwhite basic-button-small" data-dismiss="modal">Cancel</button>-->
         </div>
             
         <!--<input type="button" class="btn btn-success" id="save_receive_btn_to_warehouse" value="Send to Warehouse">-->
