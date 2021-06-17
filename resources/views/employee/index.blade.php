@@ -12,7 +12,7 @@
         <div class="row">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold"> EMPLOYEES</span>
+                    <span class="font-weight-bold"> EMPLOYEES1</span>
                 </div>
                 <div class="nav-submenu">
                     <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{route('employee.create')}}"> ADD NEW
@@ -64,82 +64,34 @@
                 </tr>
             </thead>
             <tbody class="table-body">
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td></td>
-                    <td><a href="{{route('employee.edit')}}">Wheat</a></td>
-                    <td>Good</td>
-                    <td>200 Bags</td>
-                    <td>Active</td>
-                </tr>
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td></td>
-                    <td><a href="{{route('employee.edit')}}">Rice</a></td>
-                    <td>Good</td>
-                    <td>100 Bags</td>
-                    <td>Active</td>
-                </tr>
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td></td>
-                    <td><a href="{{route('employee.edit')}}">Rice</a></td>
-                    <td>Good</td>
-                    <td>100 Bags</td>
-                    <td>Active</td>
-                </tr>
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td></td>
-                    <td><a href="{{route('employee.edit')}}">Sugar</a></td>
-                    <td>Prime</td>
-                    <td>200 Bags</td>
-                    <td>Active</td>
-                </tr>
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td></td>
-                    <td><a href="{{route('employee.edit')}}">Maze</a></td>
-                    <td>Fine</td>
-                    <td>10 Packs</td>
-                    <td>Active</td>
-                </tr>
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td></td>
-                    <td><a href="{{route('employee.edit')}}">Sugar</a></td>
-                    <td>Prime</td>
-                    <td>200 Bags</td>
-                    <td>Active</td>
-                </tr>
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td></td>
-                    <td><a href="{{route('employee.edit')}}">Sugar</a></td>
-                    <td>Prime</td>
-                    <td>200 Bags</td>
-                    <td>Active</td>
-                </tr>
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td><a href="{{route('employee.edit')}}">Sugar</a></td>
-                    <td>Prime</td>
-                    <td>200 Bags</td>
-                    <td>Active</td>
-                </tr>
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td></td>
-                    <td><a href="{{route('employee.edit')}}">Sugar</a></td>
-                    <td>Prime</td>
-                    <td>200 Bags</td>
-                    <td>Active</td>
-                </tr>
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td></td>
-                    <td><a href="{{route('employee.edit')}}">Sugar</a></td>
-                    <td>Prime</td>
-                    <td>200 Bags</td>
-                    <td>Active</td>
-                </tr>
-                <tr id="tr-id-2" class="tr-class-2">
-                    <td></td>
-                    <td><a href="{{route('employee.edit')}}">Sugar</a></td>
-                    <td>Prime</td>
-                    <td>200 Bags</td>
-                    <td>Active</td>
-                </tr>
+                @foreach ($customers as $customer)
+                    <tr id="customer-row">
+                        <td data-order="" class="text-center">
+                            <input type="checkbox" name="selected[]" id=""
+                                value="{{ $user->iuserid }}" />
+                        </td>
+                        <td>
+                            <a href="{{route('employee.edit', $user->iuserid)}}"
+                                data-toggle="tooltip" title="Edit"><span>{{ $user->vfname }}</span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{route('employee.edit', $user->iuserid)}}"
+                                data-toggle="tooltip" title="Edit"><span>{{ $user->vphone }}</span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{route('employee.edit', $user->iuserid)}}"
+                                data-toggle="tooltip" title="Edit"><span>{{ $user->vemail }}</span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{route('employee.edit', $user->iuserid)}}"
+                                data-toggle="tooltip" title="Edit"><span>{{ $user->estatus }}</span>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
