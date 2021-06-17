@@ -25,10 +25,10 @@
                     @if (in_array('PER1004', session()->get('userPermsData')))
                         <li class="nav-item sub-nav dropdown">
                             <a class="nav-link dropdown-toggle sub text-uppercase" href="#" data-toggle="dropdown">
-                                EMPLOYEES </a>
+                                EMPLOYEE</a>
                             <ul class="dropdown-menu main-dropdown">
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('users') }}">
-                                        EMPLOYEES</a></li>
+                                        EMPLOYEE</a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('timeclock') }}">
                                         TIME CLOCK </a></li>
                             </ul>
