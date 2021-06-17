@@ -363,8 +363,9 @@ $(document).ready(function() {
       <!-- Modal content-->
       <div class="modal-content" style="background:#f8f9fa;">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-uppercase" id="modal_title">Modal Header</h4>
+        <h4 class="modal-title text-uppercase" id="modal_title" style="float: left;">Modal Header</h4>    
+          <button type="button" class="close" data-dismiss="modal" style="float: right;">&times;</button>
+          
         </div>
         <div class="modal-body" style="overflow-x:scroll !important;">
           <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
