@@ -175,8 +175,15 @@
                         </li>
                     @endif
 
+                    <li><a class="parent active"><i class="fa fa-cog fa-fw"></i> <span>Settings</span></a>
+                        <ul>
+                        <li><a href="{{ route('itemlistdisplay') }}">Item List Display</a></li>      
+                        <li><a href="{{ route('end_of_shift_printing') }}">POS Settings</a></li>
+                        <li><a href="{{ route('ftpsetting') }}">FTP</a></li>
+                        </ul>
+                    </li>
 
-                    <li class="nav-item"><a class="nav-link sub text-uppercase" href="#"> TUTORIALS </a></li>
+                    <!-- <li class="nav-item"><a class="nav-link sub text-uppercase" href="#"> TUTORIALS </a></li> -->
                 </ul>
             </div> <!-- navbar-collapse.// -->
         </div>
