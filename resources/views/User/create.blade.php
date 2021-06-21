@@ -402,7 +402,7 @@
                                         <label for="inputAddressLine1" class="p-2 float-left">START DATE</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                        <input type="text" name="start_dt" maxlength="25" value="{{ old('start_dt') }}" placeholder="START DATE" id="start_dt" class="form-control " style="width: 163px;"/>
+                                        <input type="text" name="start_dt" maxlength="25" value="{{ old('start_dt') }}" placeholder="START DATE" id="start_dt" class="form-control" style="width: 163px;"/>
                                         {{-- <input type="text" class="form-control promo-fields" id="p_bqty"
                                             placeholder="PROMOTION BUY QTY" name="p_bqty"> --}}
                                     </div>
@@ -413,7 +413,7 @@
                                         <label for="inputAddressLine2" class="p-2 float-left">TERMINATION DATE</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                        <input type="text" name="termination_dt" maxlength="25" value="{{ old('termination_dt') }}" placeholder="TERMINATION DATE" id="termination_dt " class="form-control" style="width: 163px;" />
+                                        <input type="text" name="termination_dt" maxlength="25" value="{{ old('termination_dt') }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;" />
                                         {{-- <input type="text" class="form-control promo-fields" id="p_sprice"
                                             placeholder="PROMOTION SLAB PRICE" name="p_sprice"> --}}
                                     </div>
