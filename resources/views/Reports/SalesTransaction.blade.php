@@ -36,7 +36,7 @@ Sales Transaction
                   @csrf
                   <div class="row">
                       
-                    <div class="col-auto ">
+                    <div class="col-md-3 ">
                          
                       <input type="" class="form-control rcorner" name="dates" value="<?php echo isset($start_date) ? $start_date : ''; ?>" id="dates" placeholder="Start Date" readonly >
                       <input type="hidden" class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : date('m-d-Y h:i', strtotime('now')); ?>" id="start_date" placeholder="Start Date" readonly>
@@ -144,12 +144,9 @@ Sales Transaction
                           <th>Total Tax</th>
                           <th> Tender Type</th>
                           <!--<th>Trn Type</th>-->
-                          
                           <th>Action</th>
                         </tr>
                       </thead>
-                      
-
                       <tbody>
                       <?php  $nettotal=$ntaxtotal=0 ?>
                           <?php foreach ($reports as $key => $value){ 
@@ -264,7 +261,7 @@ Sales Transaction
         startDate: "<?php echo isset($start_date) ? $start_date : date('m/d/Y');?>",
         endDate: "<?php echo isset($end_date) ? $end_date : date('m/d/Y');?>",
         locale: {
-          format: 'M/DD/YYYY '
+        format: 'M/DD/YYYY hh:mm A'
         },
         ranges: {
            'Today': [moment().startOf('day'), moment()],

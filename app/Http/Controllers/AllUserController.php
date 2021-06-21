@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Model\Permissiongroup;
 use App\Model\Userpermissiongroup;
 use Illuminate\Auth\Access\Gate;
+use DateTime;
 
 
 class AllUserController extends Controller
@@ -70,6 +71,37 @@ class AllUserController extends Controller
 
         $input = $request->all();
         $sid = session()->get('sid');
+
+        $ssn=isset($input['ssn']) ? $input['ssn']:'' ;
+           $pay_type=isset($input['pay_type']) ? $input['pay_type']:0 ;
+           $over_time=isset($input['over_time']) ? $input['over_time']:'' ;
+           $pay_rate=isset($input['pay_rate']) ? $input['pay_rate']:'' ;
+           $tc_id=isset($input['tc_id']) ? $input['tc_id']:'' ;
+           $tc_pass=isset($input['tc_pass']) ? $input['tc_pass']:'' ;
+           $tc_pass=$this->encodePassword($tc_pass);
+
+           $start_dt=isset($input['start_dt']) ? $input['start_dt']:'' ;
+           $termination_dt=isset($input['termination_dt']) ? $input['termination_dt']:'' ;
+           $vacation_hours=isset($input['vacation_hours']) ? $input['vacation_hours']:'' ;
+           $sick_hours=isset($input['sick_hours']) ? $input['sick_hours']:'' ;
+           $available_hours=isset($input['available_hours']) ? $input['available_hours']:'' ;
+
+           $sun_hours=isset($input['sun_hours']) ? $input['sun_hours']:'' ;
+           $mon_hours=isset($input['mon_hours']) ? $input['mon_hours']:'' ;
+           $tue_hours=isset($input['tue_hours']) ? $input['tue_hours']:'' ;
+           $wed_hours=isset($input['wed_hours']) ? $input['wed_hours']:'' ;
+           $thu_hours=isset($input['thu_hours']) ? $input['thu_hours']:'' ;
+           $fri_hours=isset($input['fri_hours']) ? $input['fri_hours']:'' ;
+           $sat_hours=isset($input['sat_hours']) ? $input['sat_hours']:'' ;
+
+           $time_email=isset($input['time_email']) ? $input['time_email']:'' ;
+           if(isset($input['time']) && isset($input['time'])=='time'){
+              $time_clock='Y';
+           }
+           else{
+              $time_clock='N';
+           }
+
         if (isset($input['vuserid'])) {
             $some_text = '========================== Duplicate UserID '.PHP_EOL;
             fwrite($myfile, $some_text);
@@ -156,9 +188,29 @@ class AllUserController extends Controller
                         'vpassword' => $encdoe_password,
                         'vusertype' => $input['vusertype'],
                         'vpasswordchange' => "No",
-                        'vuserbarcode' => $input['vuserbarcode'],
                         'estatus'   =>  $input['estatus'],
                         'SID'       =>  session()->get('sid'),
+
+                        'time_clock'=>$time_clock,
+                        'time_email'=>$time_email,
+                        'ssn' => $ssn,
+                        'pay_type'=>$pay_type,
+                        'over_time'=>$over_time,
+                        'pay_rate'=>$pay_rate,
+
+                        'tc_password'=>$tc_pass,
+                        'start_dt'=>$start_dt,
+                        'termination_dt'=>$termination_dt,
+                        'vacation_hours'=>$vacation_hours,
+                        'sick_hours'=>$sick_hours,
+                        'available_hours'=>$available_hours,
+                        'sun_hours'=>$sun_hours,
+                        'mon_hours'=>$mon_hours,
+                        'tue_hours'=>$tue_hours,
+                        'wed_hours'=>$wed_hours,
+                        'thu_hours'=>$thu_hours,
+                        'fri_hours'=>$fri_hours,
+                        'sat_hours'=>$sat_hours,
                     ]);
 
                     // User::create([
@@ -193,9 +245,29 @@ class AllUserController extends Controller
                         'vpassword' => $encdoe_password,
                         'vusertype' => $input['vusertype'],
                         'vpasswordchange' => "No",
-                        'vuserbarcode' => $input['vuserbarcode'],
                         'estatus'   =>  $input['estatus'],
                         'SID'       =>  session()->get('sid'),
+
+                        'time_clock'=>$time_clock,
+                        'time_email'=>$time_email,
+                        'ssn' => $ssn,
+                        'pay_type'=>$pay_type,
+                        'over_time'=>$over_time,
+                        'pay_rate'=>$pay_rate,
+
+                        'tc_password'=>$tc_pass,
+                        'start_dt'=>$start_dt,
+                        'termination_dt'=>$termination_dt,
+                        'vacation_hours'=>$vacation_hours,
+                        'sick_hours'=>$sick_hours,
+                        'available_hours'=>$available_hours,
+                        'sun_hours'=>$sun_hours,
+                        'mon_hours'=>$mon_hours,
+                        'tue_hours'=>$tue_hours,
+                        'wed_hours'=>$wed_hours,
+                        'thu_hours'=>$thu_hours,
+                        'fri_hours'=>$fri_hours,
+                        'sat_hours'=>$sat_hours,
                     ]);
 
                     // User::create([
@@ -243,11 +315,33 @@ class AllUserController extends Controller
                         'vpassword' => $encdoe_password,
                         'vusertype' => $input['vusertype'],
                         'vpasswordchange' => "No",
-                        'vuserbarcode' => $input['vuserbarcode'],
                         'estatus'   =>  $input['estatus'],
                         'SID'       =>  session()->get('sid'),
                         'mwpassword' => $encdoe_mwpassword,
                         'vemail' => $input['vemail'],
+
+                        'time_clock'=>$time_clock,
+                        'time_email'=>$time_email,
+                        'ssn'=>$ssn,
+                        'pay_type'=>$pay_type,
+                        'over_time'=>$over_time,
+                        'pay_rate'=>$pay_rate,
+
+                        'tc_password'=>$tc_pass,
+                        'start_dt'=>$start_dt,
+                        'termination_dt'=>$termination_dt,
+                        'vacation_hours'=>$vacation_hours,
+                        'sick_hours'=>$sick_hours,
+                        'available_hours'=>$available_hours,
+
+                        'sun_hours'=>$sun_hours,
+                        'mon_hours'=>$mon_hours,
+                        'tue_hours'=>$tue_hours,
+                        'wed_hours'=>$wed_hours,
+                        'thu_hours'=>$thu_hours,
+                        'fri_hours'=>$fri_hours,
+                        'sat_hours'=>$sat_hours,
+
                         ]);
 
                         User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->update([
@@ -285,11 +379,32 @@ class AllUserController extends Controller
                             'vpassword' => $encdoe_password,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
-                            'vuserbarcode' => $input['vuserbarcode'],
                             'estatus'   =>  $input['estatus'],
                             'SID'       =>  session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $input['vemail'],
+
+                            'time_clock'=>$time_clock,
+                            'time_email'=>$time_email,
+                            'ssn'=>$ssn,
+                            'pay_type'=>$pay_type,
+                            'over_time'=>$over_time,
+                            'pay_rate'=>$pay_rate,
+
+                            'tc_password'=>$tc_pass,
+                            'start_dt'=>$start_dt,
+                            'termination_dt'=>$termination_dt,
+                            'vacation_hours'=>$vacation_hours,
+                            'sick_hours'=>$sick_hours,
+                            'available_hours'=>$available_hours,
+
+                            'sun_hours'=>$sun_hours,
+                            'mon_hours'=>$mon_hours,
+                            'tue_hours'=>$tue_hours,
+                            'wed_hours'=>$wed_hours,
+                            'thu_hours'=>$thu_hours,
+                            'fri_hours'=>$fri_hours,
+                            'sat_hours'=>$sat_hours,
                         ]);
 
                         User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->update([
@@ -337,11 +452,32 @@ class AllUserController extends Controller
                             'vpassword' => $encdoe_password,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
-                            'vuserbarcode' => $input['vuserbarcode'],
                             'estatus'   =>  $input['estatus'],
                             'SID'       =>  session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $input['vemail'],
+
+                            'time_clock'=>$time_clock,
+                            'time_email'=>$time_email,
+                            'ssn'=>$ssn,
+                            'pay_type'=>$pay_type,
+                            'over_time'=>$over_time,
+                            'pay_rate'=>$pay_rate,
+
+                            'tc_password'=>$tc_pass,
+                            'start_dt'=>$start_dt,
+                            'termination_dt'=>$termination_dt,
+                            'vacation_hours'=>$vacation_hours,
+                            'sick_hours'=>$sick_hours,
+                            'available_hours'=>$available_hours,
+
+                            'sun_hours'=>$sun_hours,
+                            'mon_hours'=>$mon_hours,
+                            'tue_hours'=>$tue_hours,
+                            'wed_hours'=>$wed_hours,
+                            'thu_hours'=>$thu_hours,
+                            'fri_hours'=>$fri_hours,
+                            'sat_hours'=>$sat_hours,
                         ]);
 
                         $main = User::create([
@@ -380,11 +516,32 @@ class AllUserController extends Controller
                             'vpassword' => $encdoe_password,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
-                            'vuserbarcode' => $input['vuserbarcode'],
                             'estatus'   =>  $input['estatus'],
                             'SID'       =>  session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $input['vemail'],
+
+                            'time_clock'=>$time_clock,
+                            'time_email'=>$time_email,
+                            'ssn'=>$ssn,
+                            'pay_type'=>$pay_type,
+                            'over_time'=>$over_time,
+                            'pay_rate'=>$pay_rate,
+
+                            'tc_password'=>$tc_pass,
+                            'start_dt'=>$start_dt,
+                            'termination_dt'=>$termination_dt,
+                            'vacation_hours'=>$vacation_hours,
+                            'sick_hours'=>$sick_hours,
+                            'available_hours'=>$available_hours,
+
+                            'sun_hours'=>$sun_hours,
+                            'mon_hours'=>$mon_hours,
+                            'tue_hours'=>$tue_hours,
+                            'wed_hours'=>$wed_hours,
+                            'thu_hours'=>$thu_hours,
+                            'fri_hours'=>$fri_hours,
+                            'sat_hours'=>$sat_hours,
                         ]);
 
 
@@ -457,6 +614,7 @@ class AllUserController extends Controller
         }else {
             $users = "";
         }
+
         // $checkedPermission = Userpermission::where('userid', '=', $iuserid)->get()->toArray();
         $checkedPermission = DB::connection('mysql_dynamic')->select("SELECT  mp.vpermissioncode FROM mst_permission mp join mst_userpermissions mup
         on mp.vpermissioncode = mup.permission_id where mup.status = 'Active' and mup.userid = ".$iuserid);
@@ -490,6 +648,56 @@ class AllUserController extends Controller
         fwrite($myfile, $txt);
 
         $input = $request->all();
+
+        //Time clock variable set
+           $ssn=isset($input['ssn']) ? $input['ssn']:'' ;
+           $pay_type=isset($input['pay_type']) ? $input['pay_type']:0 ;
+           $over_time=isset($input['over_time']) ? $input['over_time']:'' ;
+           $pay_rate=isset($input['pay_rate']) ? $input['pay_rate']:'' ;
+           $tc_id=isset($input['tc_id']) ? $input['tc_id']:'' ;
+           $vuserbarcode=isset($input['vuserbarcode']) ? $input['vuserbarcode']:'' ;
+
+            if(isset($input['tc_pass1']) && $input['tc_pass1'] !='' ){
+               $tc_pass=$this->encodePassword($input['tc_pass1']);
+            }
+            else{
+               $tc_pass=isset($input['tc_pass']) ? $input['tc_pass']:'' ;
+            }
+
+
+           $start_dt=isset($input['start_dt']) ? $input['start_dt']:'' ;
+           $termination_dt=isset($input['termination_dt']) ? $input['termination_dt']:'' ;
+           $vacation_hours=isset($input['vacation_hours']) ? $input['vacation_hours']:'' ;
+           $sick_hours=isset($input['sick_hours']) ? $input['sick_hours']:'' ;
+           $available_hours=isset($input['available_hours']) ? $input['available_hours']:'' ;
+
+           $sun_hours=isset($input['sun_hours']) ? $input['sun_hours']:'' ;
+           $mon_hours=isset($input['mon_hours']) ? $input['mon_hours']:'' ;
+           $tue_hours=isset($input['tue_hours']) ? $input['tue_hours']:'' ;
+           $wed_hours=isset($input['wed_hours']) ? $input['wed_hours']:'' ;
+           $thu_hours=isset($input['thu_hours']) ? $input['thu_hours']:'' ;
+           $fri_hours=isset($input['fri_hours']) ? $input['fri_hours']:'' ;
+           $sat_hours=isset($input['sat_hours']) ? $input['sat_hours']:'' ;
+
+           $time_email=isset($input['time_email']) ? $input['time_email']:'' ;
+           if(isset($input['time']) && isset($input['time'])=='time'){
+              $time_clock='Y';
+           }
+           else{
+              $time_clock='N';
+           }
+
+            if(!empty($start_dt)){
+                // $startTime = DateTime::createFromFormat('m-d-Y', $start_dt);
+                // $start_dt = $startTime->format('Y-m-d');
+                $start_dt = $start_dt;
+
+                // $endTime = DateTime::createFromFormat('m-d-Y', $termination_dt);
+                // $termination_dt = $endTime->format('Y-m-d');
+                $termination_dt = $termination_dt;
+            }
+
+
         session()->put('userInput', $input);
         $sid = session()->get('sid');
         $que = Userpermission::where('userid', '=', $iuserid)->get()->toArray();
@@ -547,9 +755,6 @@ class AllUserController extends Controller
 
                 $update_query_time = "UPDATE mst_user SET LastUpdate =now() WHERE iuserid = '" . (int)$iuserid . "' ";
                 $query =  DB::connection('mysql_dynamic')->update($update_query_time);
-
-
-                // Userpermission::where('Id', '=', $mst_perm_id)->delete();
             }
         }
 
@@ -706,11 +911,33 @@ class AllUserController extends Controller
                                 'vpassword' => $this->encodePassword($input['vpassword']),
                                 'vusertype' => $input['vusertype'],
                                 'vpasswordchange' => "No",
-                                'vuserbarcode' => $input['vuserbarcode'],
+                                'vuserbarcode' => $vuserbarcode,
                                 'estatus'   =>  $input['estatus'],
                                 'SID'       =>  session()->get('sid'),
                                 'mwpassword' => $encdoe_mwpassword,
                                 'vemail' => $vemail,
+
+                                'tc_password'=>$tc_pass,
+                                'time_clock'=>$time_clock,
+                                'time_email'=>$time_email,
+                                'ssn'=>$ssn,
+                                'pay_type'=>$pay_type,
+                                'over_time'=>$over_time,
+                                'pay_rate'=>$pay_rate,
+
+                                'start_dt'=>$start_dt,
+                                'termination_dt'=>$termination_dt,
+                                'vacation_hours'=>$vacation_hours,
+                                'sick_hours'=>$sick_hours,
+                                'available_hours'=>$available_hours,
+
+                                'sun_hours'=>$sun_hours,
+                                'mon_hours'=>$mon_hours,
+                                'tue_hours'=>$tue_hours,
+                                'wed_hours'=>$wed_hours,
+                                'thu_hours'=>$thu_hours,
+                                'fri_hours'=>$fri_hours,
+                                'sat_hours'=>$sat_hours,
                             ]);
                             session()->forget('userInput');
                         }else{
@@ -742,11 +969,32 @@ class AllUserController extends Controller
                                     'vpassword' => $this->encodePassword($input['vpassword']),
                                     'vusertype' => $input['vusertype'],
                                     'vpasswordchange' => "No",
-                                    'vuserbarcode' => $input['vuserbarcode'],
+                                    'vuserbarcode' => $vuserbarcode,
                                     'estatus'   =>  $input['estatus'],
                                     'SID'       =>  session()->get('sid'),
                                     'mwpassword' => $encdoe_mwpassword,
                                     'vemail' => $vemail,
+
+                                    'time_clock'=>$time_clock,
+                                    'time_email'=>$time_email,
+                                    'ssn'=>$ssn,
+                                    'pay_type'=>$pay_type,
+                                    'over_time'=>$over_time,
+                                    'pay_rate'=>$pay_rate,
+
+                                    'start_dt'=>$start_dt,
+                                    'termination_dt'=>$termination_dt,
+                                    'vacation_hours'=>$vacation_hours,
+                                    'sick_hours'=>$sick_hours,
+                                    'available_hours'=>$available_hours,
+
+                                    'sun_hours'=>$sun_hours,
+                                    'mon_hours'=>$mon_hours,
+                                    'tue_hours'=>$tue_hours,
+                                    'wed_hours'=>$wed_hours,
+                                    'thu_hours'=>$thu_hours,
+                                    'fri_hours'=>$fri_hours,
+                                    'sat_hours'=>$sat_hours,
                                 ]);
                                 session()->forget('userInput');
                             }else{
@@ -770,11 +1018,33 @@ class AllUserController extends Controller
                                     'vpassword' => $this->encodePassword($input['vpassword']),
                                     'vusertype' => $input['vusertype'],
                                     'vpasswordchange' => "No",
-                                    'vuserbarcode' => $input['vuserbarcode'],
+                                    'vuserbarcode' => $vuserbarcode,
                                     'estatus'   =>  $input['estatus'],
                                     'SID'       =>  session()->get('sid'),
                                     'mwpassword' => $encdoe_mwpassword,
                                     'vemail' => $vemail,
+
+                                    'tc_password'=>$tc_pass,
+                                    'time_clock'=>$time_clock,
+                                    'time_email'=>$time_email,
+                                    'ssn'=>$ssn,
+                                    'pay_type'=>$pay_type,
+                                    'over_time'=>$over_time,
+                                    'pay_rate'=>$pay_rate,
+
+                                    'start_dt'=>$start_dt,
+                                    'termination_dt'=>$termination_dt,
+                                    'vacation_hours'=>$vacation_hours,
+                                    'sick_hours'=>$sick_hours,
+                                    'available_hours'=>$available_hours,
+
+                                    'sun_hours'=>$sun_hours,
+                                    'mon_hours'=>$mon_hours,
+                                    'tue_hours'=>$tue_hours,
+                                    'wed_hours'=>$wed_hours,
+                                    'thu_hours'=>$thu_hours,
+                                    'fri_hours'=>$fri_hours,
+                                    'sat_hours'=>$sat_hours,
                                 ]);
                                 session()->forget('userInput');
                             }
@@ -807,11 +1077,33 @@ class AllUserController extends Controller
                                 'vuserid'   => $vuserid,
                                 'vusertype' => $input['vusertype'],
                                 'vpasswordchange' => "No",
-                                'vuserbarcode' => $input['vuserbarcode'],
+                                'vuserbarcode' => $vuserbarcode,
                                 'estatus'   =>  $input['estatus'],
                                 'SID'       =>  session()->get('sid'),
                                 'mwpassword' => $encdoe_mwpassword,
                                 'vemail' => $vemail,
+
+                                'tc_password'=>$tc_pass,
+                                'time_clock'=>$time_clock,
+                                'time_email'=>$time_email,
+                                'ssn'=>$ssn,
+                                'pay_type'=>$pay_type,
+                                'over_time'=>$over_time,
+                                'pay_rate'=>$pay_rate,
+
+                                'start_dt'=>$start_dt,
+                                'termination_dt'=>$termination_dt,
+                                'vacation_hours'=>$vacation_hours,
+                                'sick_hours'=>$sick_hours,
+                                'available_hours'=>$available_hours,
+
+                                'sun_hours'=>$sun_hours,
+                                'mon_hours'=>$mon_hours,
+                                'tue_hours'=>$tue_hours,
+                                'wed_hours'=>$wed_hours,
+                                'thu_hours'=>$thu_hours,
+                                'fri_hours'=>$fri_hours,
+                                'sat_hours'=>$sat_hours,
                             ]);
                             session()->forget('userInput');
                         }else{
@@ -835,11 +1127,33 @@ class AllUserController extends Controller
                                 'vuserid'   => $vuserid,
                                 'vusertype' => $input['vusertype'],
                                 'vpasswordchange' => "No",
-                                'vuserbarcode' => $input['vuserbarcode'],
+                                'vuserbarcode' => $vuserbarcode,
                                 'estatus'   =>  $input['estatus'],
                                 'SID'       =>  session()->get('sid'),
                                 'mwpassword' => $encdoe_mwpassword,
                                 'vemail' => $vemail,
+
+                                'tc_password'=>$tc_pass,
+                                'time_clock'=>$time_clock,
+                                'time_email'=>$time_email,
+                                'ssn'=>$ssn,
+                                'pay_type'=>$pay_type,
+                                'over_time'=>$over_time,
+                                'pay_rate'=>$pay_rate,
+
+                                'start_dt'=>$start_dt,
+                                'termination_dt'=>$termination_dt,
+                                'vacation_hours'=>$vacation_hours,
+                                'sick_hours'=>$sick_hours,
+                                'available_hours'=>$available_hours,
+
+                                'sun_hours'=>$sun_hours,
+                                'mon_hours'=>$mon_hours,
+                                'tue_hours'=>$tue_hours,
+                                'wed_hours'=>$wed_hours,
+                                'thu_hours'=>$thu_hours,
+                                'fri_hours'=>$fri_hours,
+                                'sat_hours'=>$sat_hours,
                             ]);
                             session()->forget('userInput');
 
@@ -874,10 +1188,32 @@ class AllUserController extends Controller
                                 'vpassword' => $this->encodePassword($input['vpassword']),
                                 'vusertype' => $input['vusertype'],
                                 'vpasswordchange' => "No",
-                                'vuserbarcode' => $input['vuserbarcode'],
+                                'vuserbarcode' => $vuserbarcode,
                                 'estatus'   =>  $input['estatus'],
                                 'SID'       =>  session()->get('sid'),
                                 'vemail' => $vemail,
+
+                                'tc_password'=>$tc_pass,
+                                'time_clock'=>$time_clock,
+                                'time_email'=>$time_email,
+                                'ssn'=>$ssn,
+                                'pay_type'=>$pay_type,
+                                'over_time'=>$over_time,
+                                'pay_rate'=>$pay_rate,
+
+                                'start_dt'=>$start_dt,
+                                'termination_dt'=>$termination_dt,
+                                'vacation_hours'=>$vacation_hours,
+                                'sick_hours'=>$sick_hours,
+                                'available_hours'=>$available_hours,
+
+                                'sun_hours'=>$sun_hours,
+                                'mon_hours'=>$mon_hours,
+                                'tue_hours'=>$tue_hours,
+                                'wed_hours'=>$wed_hours,
+                                'thu_hours'=>$thu_hours,
+                                'fri_hours'=>$fri_hours,
+                                'sat_hours'=>$sat_hours,
                             ]);
                             session()->forget('userInput');
                         }else{
@@ -902,10 +1238,32 @@ class AllUserController extends Controller
                                 'vpassword' => $this->encodePassword($input['vpassword']),
                                 'vusertype' => $input['vusertype'],
                                 'vpasswordchange' => "No",
-                                'vuserbarcode' => $input['vuserbarcode'],
+                                'vuserbarcode' => $vuserbarcode,
                                 'estatus'   =>  $input['estatus'],
                                 'SID'       =>  session()->get('sid'),
                                 'vemail' => $vemail,
+
+                                'tc_password'=>$tc_pass,
+                                'time_clock'=>$time_clock,
+                                'time_email'=>$time_email,
+                                'ssn'=>$ssn,
+                                'pay_type'=>$pay_type,
+                                'over_time'=>$over_time,
+                                'pay_rate'=>$pay_rate,
+
+                                'start_dt'=>$start_dt,
+                                'termination_dt'=>$termination_dt,
+                                'vacation_hours'=>$vacation_hours,
+                                'sick_hours'=>$sick_hours,
+                                'available_hours'=>$available_hours,
+
+                                'sun_hours'=>$sun_hours,
+                                'mon_hours'=>$mon_hours,
+                                'tue_hours'=>$tue_hours,
+                                'wed_hours'=>$wed_hours,
+                                'thu_hours'=>$thu_hours,
+                                'fri_hours'=>$fri_hours,
+                                'sat_hours'=>$sat_hours,
                             ]);
                             session()->forget('userInput');
                         }
@@ -915,8 +1273,8 @@ class AllUserController extends Controller
                         $store_text = '========================== updt '.PHP_EOL;
                         fwrite($myfile, $store_text);
 
-                         $sql = "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_schema = 'u".$sid."' AND table_name = 'mst_user' AND column_name = 'lb_user'";
-                            $res =DB::connection('mysql')->select($sql);
+                        $sql = "SELECT COLUMN_NAME FROM information_schema.columns WHERE table_schema = 'u".$sid."' AND table_name = 'mst_user' AND column_name = 'lb_user'";
+                        $res =DB::connection('mysql')->select($sql);
 
                         if(count($res) > 0){
 
@@ -940,10 +1298,32 @@ class AllUserController extends Controller
                                 'vuserid'   => $vuserid,
                                 'vusertype' => $input['vusertype'],
                                 'vpasswordchange' => "No",
-                                'vuserbarcode' => $input['vuserbarcode'],
+                                'vuserbarcode' => $vuserbarcode,
                                 'estatus'   =>  $input['estatus'],
                                 'SID'       =>  session()->get('sid'),
                                 'vemail' => $vemail,
+
+                                'tc_password'=>$tc_pass,
+                                'time_clock'=>$time_clock,
+                                'time_email'=>$time_email,
+                                'ssn'=>$ssn,
+                                'pay_type'=>$pay_type,
+                                'over_time'=>$over_time,
+                                'pay_rate'=>$pay_rate,
+
+                                'start_dt'=>$start_dt,
+                                'termination_dt'=>$termination_dt,
+                                'vacation_hours'=>$vacation_hours,
+                                'sick_hours'=>$sick_hours,
+                                'available_hours'=>$available_hours,
+
+                                'sun_hours'=>$sun_hours,
+                                'mon_hours'=>$mon_hours,
+                                'tue_hours'=>$tue_hours,
+                                'wed_hours'=>$wed_hours,
+                                'thu_hours'=>$thu_hours,
+                                'fri_hours'=>$fri_hours,
+                                'sat_hours'=>$sat_hours,
                             ]);
                             session()->forget('userInput');
                         }else{
@@ -967,10 +1347,32 @@ class AllUserController extends Controller
                                 'vuserid'   => $vuserid,
                                 'vusertype' => $input['vusertype'],
                                 'vpasswordchange' => "No",
-                                'vuserbarcode' => $input['vuserbarcode'],
+                                'vuserbarcode' => $vuserbarcode,
                                 'estatus'   =>  $input['estatus'],
                                 'SID'       =>  session()->get('sid'),
                                 'vemail' => $vemail,
+
+                                'tc_password'=>$tc_pass,
+                                'time_clock'=>$time_clock,
+                                'time_email'=>$time_email,
+                                'ssn'=>$ssn,
+                                'pay_type'=>$pay_type,
+                                'over_time'=>$over_time,
+                                'pay_rate'=>$pay_rate,
+
+                                'start_dt'=>$start_dt,
+                                'termination_dt'=>$termination_dt,
+                                'vacation_hours'=>$vacation_hours,
+                                'sick_hours'=>$sick_hours,
+                                'available_hours'=>$available_hours,
+
+                                'sun_hours'=>$sun_hours,
+                                'mon_hours'=>$mon_hours,
+                                'tue_hours'=>$tue_hours,
+                                'wed_hours'=>$wed_hours,
+                                'thu_hours'=>$thu_hours,
+                                'fri_hours'=>$fri_hours,
+                                'sat_hours'=>$sat_hours,
                             ]);
                             session()->forget('userInput');
                         }
@@ -1244,7 +1646,7 @@ class AllUserController extends Controller
         fwrite($myfile, $txt);
         fclose($myfile);
 
-        return redirect('users')->with('message', 'Employee Updated Successfully');
+        return redirect('users')->with('message', 'User Updated Successfully');
     }
 
 
@@ -1255,7 +1657,7 @@ class AllUserController extends Controller
         //     UserDynamic::where('iuserid', '=', $delId['selected'][$i] )->delete();
         //     User::where('iuserid', '=', $delId['selected'][$i])->update(['estatus' => 'Inactive']);
         // }
-        // return redirect('users')->with('message', 'Employee Deleted Successfully');
+        // return redirect('users')->with('message', 'User Deleted Successfully');
 
          $file_location = 'user_permisson_remove.log';
         $myfile = fopen($file_location, "a") or die("Unable to open file!");
@@ -1275,9 +1677,9 @@ class AllUserController extends Controller
             $delete = User::where([['iuserid', '=', $del_id  ], ['sid', '=', $sid ] ])->delete();
         }
         if($delete){
-            return redirect('users')->with('message', 'Employee Deleted Successfully');
+            return redirect('users')->with('message', 'User Deleted Successfully');
         }else {
-            return redirect('users')->with('message', 'Master Employee can not be Deleted Permanently');
+            return redirect('users')->with('message', 'Master Users can not be Deleted Permanently');
         }
 
         $txt = "Insertion End Date And time is: ".date("Y-m-d h:i:sa").PHP_EOL;

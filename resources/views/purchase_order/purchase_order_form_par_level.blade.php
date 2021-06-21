@@ -420,7 +420,7 @@
                     		            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%; font-size:9px;">
                     		                <thead>
                     		                    <tr class="header-color" style="font-size:12px;">
-                    		                        <th style="width: 1px;"><input type='checkbox'></th>
+                    		                        <th style="width: 1px;"><input type='checkbox' onclick="$('input[name*=\'selected_search_history_items\']').prop('checked', this.checked);"></th>
                                                     <th class="text-uppercase" style="width: 15%;position: relative;">Item Name
                                                       <div class="adjustment-has-search">
                                                         <input type="text" autocomplete="off" id="search_item_name" name="item_name" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
@@ -1072,7 +1072,7 @@
             data: input,
             success:function(data) {
                 
-                $('#thCategory').html(data);
+                $('#category_code').html(data);
                 
             }
             
@@ -1100,7 +1100,7 @@
             data: input,
             success:function(data) {
                 
-                $('#thSubCategory').html(data);
+                $('#sub_category_id').html(data);
                 
             }
             
@@ -3796,6 +3796,13 @@ $('.editable_text').focus(function() {
         $("div#divLoading").removeClass('show');
       });
   });
+  
+    $(document).keypress(
+        function(event){
+        if (event.which == '13') {
+          event.preventDefault();
+        }
+    });
 </script>
 
 

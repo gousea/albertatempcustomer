@@ -3850,6 +3850,13 @@ $('.editable_text').focus(function() {
             $('#supplier_code').val(' ');
         });
     });
+    
+    $(document).keypress(
+        function(event){
+        if (event.which == '13') {
+          event.preventDefault();
+        }
+    });
 </script>
 
 @endsection

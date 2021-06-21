@@ -176,7 +176,17 @@
                     @endif
 
 
-                    <li class="nav-item"><a class="nav-link sub text-uppercase" href="#"> TUTORIALS </a></li>
+                    <li class="nav-item sub-nav dropdown">
+                        <a class="nav-link  dropdown-toggle sub text-uppercase" href="#" data-toggle="dropdown"> SETTINGS
+                        </a>
+                        <ul class="dropdown-menu main-dropdown">
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('itemlistdisplay') }}">Item List Display</a></li> 
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('end_of_shift_printing') }}"> POS Settings</a></li>
+                            <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('ftpsetting') }}">FTP</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- <li class="nav-item"><a class="nav-link sub text-uppercase" href="#"> TUTORIALS </a></li> -->
                 </ul>
             </div> <!-- navbar-collapse.// -->
         </div>

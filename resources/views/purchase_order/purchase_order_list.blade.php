@@ -62,7 +62,7 @@
                                             <th class="text-left text-uppercase">&nbsp;&nbsp;Invoice#
                                               <div class="po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH"  style="width: 100%; padding-left: 5px;">
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH"  style="width: 95%; padding-left: 5px;">
                                               </div>
                                             </th>
                                             <th class="text-left text-uppercase sample">&nbsp;&nbsp;Total
@@ -77,16 +77,16 @@
                                                 <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="width: 100%; padding-left: 5px;">
                                               </div>
                                             </th>
-                                            <th class="text-left text-uppercase">&nbsp;&nbsp;Order Type
+                                            <th class="text-left text-uppercase">&nbsp;Order Type
                                               <div class="po-has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="width: 100%; padding-left: 5px;">
                                               </div>
                                             </th>
-                                            <th class="text-left text-uppercase no-filter">Date Created</th>
+                                            <th class="text-left text-uppercase no-filter" style="padding-bottom: 27px !important;">Date Created</th>
                                             {{-- <th class="text-left">Date Received</th> --}}
                                             {{-- <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th> --}}
-                                            <th class="text-left no-filter">Action</th>
+                                            <th class="text-left text-uppercase no-filter">Action</th>
                                         </tr>
                                     </thead>
                                 
@@ -205,7 +205,7 @@
         if($("input[name='selected[]']:checked").length == 0){
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: 'Please Select PO to Delete!', 
                 callback: function(){}
             });
@@ -319,6 +319,14 @@
             $( this ).on( 'keyup', '.table-heading-fields', function () {
 
                 var self = this;
+                
+                if(self.value != ''){
+                    $(this).closest('div').find('.fa-search').hide();
+                    
+                }else{
+                    $(this).closest('div').find('.fa-search').show();
+                }
+                
                 if ( table.column(i).search() !== self.value ) {
                     
                     
@@ -345,10 +353,10 @@
             "iDisplayLength": 20,
             "serverSide": true,
             "bLengthChange": false,
-            "aoColumnDefs": [
-                { "sWidth": "190px", "aTargets": [ 7 ] },
+            // "aoColumnDefs": [
+            //     { "sWidth": "190px", "aTargets": [ 7 ] },
                 
-            ],
+            // ],
             //"autoWidth": true,
 
             "language": {

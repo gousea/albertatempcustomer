@@ -29,8 +29,9 @@ RO History Report
     <div class="container">
        
         
-               <h6><span>SEARCH PARAMETERS </span></h6>
+                <h6><span>SEARCH PARAMETERS </span></h6>
                 <br> 
+                
                 <form method="post" id="filter_form" action="{{ route('POForm') }}">
                     <div class="row"> 
                       @csrf
@@ -83,7 +84,8 @@ RO History Report
                     </div>    
                 </form>
                 <br><br>
-                  <h6><span> RO HISTORY </span></h6>
+                
+                <h6><span> RO HISTORY </span></h6>
     
                 <?php if(isset($reports) && count($reports) > 0){ ?>
                 <div class="row" style="margin: 10px; display:none">
@@ -96,7 +98,7 @@ RO History Report
                 </div>
                  
                   <br>
-                    <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    <table data-toggle="table" data-classes="table  table-condensed promotionview"
                     data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
                    data-click-to-select="true">
                       <thead class="header">
@@ -167,6 +169,8 @@ RO History Report
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.min.js"></script>
     
     <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
 
 <script>
   $(function(){
@@ -355,17 +359,20 @@ $(document).ready(function() {
 
 <!-- Modal -->
   <div class="modal fade" id="view_item_modal" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" style="background:#f8f9fa;">
       <!-- Modal content-->
-      <div class="modal-content">
+      <div class="modal-content" style="background:#f8f9fa;">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-uppercase" id="modal_title">Modal Header</h4>
+        <h4 class="modal-title text-uppercase" id="modal_title" style="float: left;">Modal Header</h4>    
+          <button type="button" class="close" data-dismiss="modal" style="float: right;">&times;</button>
+          
         </div>
         <div class="modal-body" style="overflow-x:scroll !important;">
-          <table class="table table-bordered table-striped table-hover">
+          <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
+                   data-click-to-select="true">
             <thead>
-              <tr>
+              <tr class="header-color  text-uppercase">
                 <th>SKU#</th>
                 <th>Item Name</th>
                 <th>Vendor Code</th>
@@ -381,10 +388,7 @@ $(document).ready(function() {
               </tr>
             </thead>
             <tbody id="item_table_body">
-              <tr>
-                <td>test</td>
-                <td>10.00</td>
-              </tr>
+            
             </tbody>
           </table>
         </div>
@@ -554,20 +558,7 @@ const saveData = (function () {
     
   
 }
-h6 {
-   width: 100%; 
-   text-align: left; 
-   border-bottom: 2px solid; 
-   line-height: 0.1em;
-   margin: 0px 0 20px; 
-   color:#286fb7;
-} 
 
-h6 span { 
-    background:#f8f9fa!important; 
-    padding:10px 0px; 
-    color:#286fb7;
-}
 
 [class^='select2'] {
   border-radius: 9px !important;
@@ -596,6 +587,7 @@ table, .promotionview {
 .select2-selection__arrow {
     height: 34px !important;
 }
+
 </style>
 <script>
     $('select[name="report_by[]"]').select2();
