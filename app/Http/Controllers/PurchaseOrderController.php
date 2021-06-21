@@ -225,11 +225,14 @@ class PurchaseOrderController extends Controller
         if(count($query) > 0){
             foreach ($query as $key => $value) {
 
-                if($value->estatus == 'Close'){
-                    $view_edit = url('/PurchaseOrder/info' . '?ipoid=' . $value->ipoid );
-                }else{
-                    $view_edit = url('/PurchaseOrder/edit' . '?ipoid=' . $value->ipoid );
-                }
+                // if($value->estatus == 'Close'){
+                //     $view_edit = url('/PurchaseOrder/info' . '?ipoid=' . $value->ipoid );
+                // }else{
+                //     $view_edit = url('/PurchaseOrder/edit' . '?ipoid=' . $value->ipoid );
+                // }
+                
+                $view_edit = url('/PurchaseOrder/edit' . '?ipoid=' . $value->ipoid );
+                
                 $temp = array();
                 $temp['ipoid']          = $value->ipoid;
                 $temp['estatus']        = $value->estatus;
@@ -438,7 +441,7 @@ class PurchaseOrderController extends Controller
         
         if(count($result['result']) !== 0) {
             
-            $html = '<thead><tr><th></th>';
+            $html = '<thead class="button-blue text-white text-uppercase font-weight-bold" style="font-size:12px";><tr><th></th>';
             $html .= '<th>Item Name</th>';
             $html .= '<th>Odr By</th>';
             $html .= '<th>Odr Qty</th>';
