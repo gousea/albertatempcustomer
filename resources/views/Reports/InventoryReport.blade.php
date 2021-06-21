@@ -16,7 +16,7 @@ Inventory On Hand Report
                             </a>
                              <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('print_page_inv')}}}" id="btnPrint">PRINT
                             </a>
-                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('InventoryReportpdf')}}" > PDF
                             </a>
                         <?php } ?>
                 </div>
