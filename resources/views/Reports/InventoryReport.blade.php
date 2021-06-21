@@ -1,28 +1,34 @@
-@extends('layouts.master')
-
-@section('title', 'Inventory On Hand Report')
+@extends('layouts.layout')
+@section('title')
+Inventory On Hand Report
+@endsection
 @section('main-content')
 
-<div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase">Inventory On Hand Report</span>
+                </div>
+                <div class="nav-submenu">
+                       <?php if(isset($reports) && count($reports) > 0){ ?>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('print_page_inv')}}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            </a>
+                        <?php } ?>
+                </div>
+            </div> 
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo "Inventory On Hand Report"; ?></h3>
-            </div>
-            <div class="panel-body">
-        
-                <?php if(isset($reports) && count($reports) > 0 ) { ?>
+    </nav>
+
+<section class="section-content py-6"> 
+    <div class="container">
+       
+      
+                <?php if(isset($reports_css) && count($reports_css) > 0 ) { ?>
                 
                 
                  <div class="row" style="padding-bottom: 10px;float: right;">
@@ -42,17 +48,17 @@
                         </div>
                         <br>
                 <?php } ?>
-                <div class="clearfix"></div>
+              
+                <h6><span>SEARCH PARAMETERS </span></h6>
+                <br>
         
-                <div class="row">
-                    <form method="get" id="filter_form"  action="{{ route('InventoryReportForm') }}">
+                <form method="get" id="filter_form"  action="{{ route('InventoryReportForm') }}">
                         @csrf
                         <div class="row">
-                            <div class="col-md-12">
+                          
                                 <div class="col-md-3" >  
-                                    <div class="form-group col-md-12">
-                                        <label for="name2" class="control-label">Department</label>
-                                        <div>
+                                    <div class="form-group ">
+                                      
                                             <select name="vdepcode[]" class="sample-class"  id="dept_code"  multiple="true">
                                                <!--tion value="All">All</option>-->
                                                 <?php if(isset($departments) && count($departments) > 0){?>
@@ -62,13 +68,13 @@
                                                     <?php } ?>
                                                 <?php } ?>
                                             </select>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             
                                 <div class="col-md-3"  >
-                                    <div class="form-group col-md-12">
-                                        <label for="name2" class="control-label">Category</label>
+                                    <div class="form-group ">
+                                        
                                         <div>
                                             <select name="vcategorycode[]"  class="sample-class1" multiple="true" id="category_code" style="width:100%;">
                                             <!--<option value="All">All</option>-->
@@ -84,8 +90,8 @@
                                 </div>
                                 
                                 <div class="col-md-3"  >
-                                    <div class="form-group col-md-12">
-                                        <label for="name2" class="control-label">Sub Category</label>
+                                    <div class="form-group ">
+                                       
                                         <div>
                                             <select name="subcat_id[]" class="sample-class2" id="subcat_id" multiple="true" >
                                                  <!--<option value="All">All</option>-->
@@ -100,37 +106,32 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group col-md-8">
-                                        <label for="qoh_date" class="control-label"></label>
-                                        <div>
-                                            <input type="hidden" readonly class="form-control" name="qoh_date" value="<?php echo isset($qoh_date) ? $qoh_date : date('m-d-Y'); ?>" id="qoh_date" placeholder="Date" autocomplete="off">
-                                            <div>
-                                                 <input type="submit" class="btn btn-success" style="border-radius: 5px !important" value="Generate Report">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-2">
-                                    <div class="form-group col-md-8">
+                            
+                                <input type="hidden" readonly class="form-control" name="qoh_date" value="<?php echo isset($qoh_date) ? $qoh_date : date('m-d-Y'); ?>" id="qoh_date" placeholder="Date" autocomplete="off">
+                                      
+                                
+                                   <div class="col-md-2"  >
+                                    <div class="form-group">
                                         
+                                      <input type="submit" class="btn btn-success align-bottom rcorner header-color form-control"  value="Generate">  
                                     </div>
-                                    
-                                </div>
-                            </div>
+                                    </div>
+                            
                         </div>
+                    
+                     
+                     
                      
                   </form>
-                </div>
+                  <br>
+                 <h6><span> INVENTORY ON HAND</span></h6>
+               
                 
                 <?php if((isset($reports) && count($reports) > 0) || (isset($reportsN) && count($reportsN) > 0)  || (isset($reportsZero) && count($reportsZero) > 0) ){ ?>
                 <br>
-                <div class="row">
-                  <div class="col-md-12">
+                
+                <?php if(isset($no)){?>
+                  <div class="col-md-12" >
                      <p><b>Store Name: </b>{{ session()->get('storeName') }}</p>
                   </div>
                   <div class="col-md-12">
@@ -150,12 +151,12 @@
                     <p style="font-size: 14px;"><span><b>Total Retail Value - </b>$ <?php echo number_format((float)$total_retail_value, 2) ;?></span></p>
                     <!--<p><span class="text-danger">*</span>Excludes Non-Inventory items and items with zero or negative QOH</p>-->
                   </div>
-        
-                  <div class="col-md-12 table-responsive">
-                  <br>
-                    <table class="table table-bordered table-striped table-hover" style="border:none;width:100%;">
+                <?php }?>
+         
+                    <table class="table table-striped table-condensed promotionview " 
+                    style="border:none;width:100%;">
                       <thead class='header'>
-                        <tr style="border-top: 1px solid #ddd;">
+                        <tr class="header-color  text-uppercase">
                     
                           <th style="width: 15%;">Department</th>
                           <th style="width: 20%;">Item</th>
@@ -168,8 +169,8 @@
                       </thead>
                       <tbody>
                         
-                        <?php foreach ($reports as $key => $value){ ?>
-                          <tr>
+                      
+                          <tr class="header-color  text-uppercase">
                             <td></td>
                             <td class="text-right"><b>Grand Total</b></td>
                             <td class="text-right"><b><?php echo $total_qoh;?></b></td>
@@ -178,12 +179,13 @@
                             <td class="text-right"></td>
                             <td class="text-right"><b>$ <?php echo number_format((float)$total_retail_value, 2) ;?></b></td>
                           </tr>
+                            <?php foreach ($reports as $key => $value){ ?>
                           <tr>
-                            <td colspan="7" style="padding:0px">
-                              <table class="table" style="margin-top: 3px;margin-bottom: 3px;">
+                        
+                              <table class="table  table-condensed promotionview "style="margin-top: 3px;margin-bottom: 3px;">
                                 <thead>
-                                  <tr class="search_header" style="cursor: pointer;" data-id="<?php echo $value['key_id']; ?>">
-                                    <th class="text-uppercase header" style="width: 15%;cursor: pointer;">
+                                  <tr class="search_header th_color " style="cursor: pointer;" data-id="<?php echo $value['key_id']; ?>">
+                                    <th class="text-uppercase header " style="width: 15%;cursor: pointer;">
                                       <?php echo $value['key_name']; ?>
                                     </th>
                                     <th style="width: 20%;">&nbsp;</th>
@@ -198,14 +200,14 @@
                             
                                 </tbody>
                               </table>
-                            </td>
+                            
                           </tr>
                         <?php } ?>
                          
                       </tbody>
                     </table>
-                  </div>
-                </div>
+                  
+                
                 <!---
                 negative
                 -->
@@ -219,9 +221,9 @@
                     <a id="pdf_export_btnZero" href=""  data-dismiss="modal"  class="pull-right" style="margin-right:10px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a>
                   </div>
                   <br>
-                 <table class="table table-bordered table-striped table-hover" style="border:none;width:100%;">
+                 <table class="table table-striped table-condensed promotionview " style="border:none;width:100%;">
                       <thead>
-                        <tr style="border-top: 1px solid #ddd;">
+                        <tr style="border-top: 1px solid #ddd;" class="header-color  text-uppercase">
                         
                           <th style="width: 15%;">Department</th>
                           <th style="width: 20%;">Item</th>
@@ -233,7 +235,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                         <tr>
+                         <tr class="header-color  text-uppercase">
                             <td></td>
                             <td class="text-right"><b>Grand Total</b></td>
                             <td class="text-right"><b><?php echo $total_qohZero;?></b></td>
@@ -245,10 +247,10 @@
                         <?php foreach ($reportsZero as $key => $value){ ?>
                         
                           <tr>
-                            <td colspan="7" style="padding:0px">
-                              <table class="table" style="margin-top: 3px;margin-bottom: 3px;">
+                            
+                              <table class="table  table-condensed promotionview" style="margin-top: 3px;margin-bottom: 3px;">
                                 <thead>
-                                  <tr class="search_headerZ" style="cursor: pointer;" data-id="<?php echo $value['key_id']; ?>">
+                                  <tr class="search_headerZ th_color" style="cursor: pointer;" data-id="<?php echo $value['key_id']; ?>">
                                     <th class="text-uppercase header" style="width: 15%;cursor: pointer;">
                                       <?php echo $value['key_name']; ?>
                                     </th>
@@ -264,7 +266,7 @@
                             
                                 </tbody>
                               </table>
-                            </td>
+                            
                           </tr>
                         <?php } ?>
                          
@@ -281,9 +283,9 @@
                       </div>
                       <br>
                       
-                      <table class="table table-bordered table-striped table-hover" style="border:none;width:100%;">
+                      <table class="table table-striped table-condensed promotionview " style="border:none;width:100%;">
                       <thead>
-                        <tr style="border-top: 1px solid #ddd;">
+                        <tr style="border-top: 1px solid #ddd;"  class="header-color  text-uppercase">
                          
                           <th style="width: 15%;">Department</th>
                           <th style="width: 20%;">Item</th>
@@ -295,7 +297,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                         <tr>
+                         <tr class="header-color  text-uppercase">
                             <td></td>
                             <td class="text-right"><b>Grand Total</b></td>
                             <td class="text-right"><b><?php echo $total_qohN;?></b></td>
@@ -307,10 +309,10 @@
                         <?php foreach ($reportsN as $key => $value){ ?>
                         
                           <tr>
-                            <td colspan="7" style="padding:0px">
-                              <table class="table" style="margin-top: 3px;margin-bottom: 3px;">
+                            
+                              <table class="table  table-condensed promotionview " style="margin-top: 3px;margin-bottom: 3px;">
                                 <thead>
-                                  <tr class="search_headerN" style="cursor: pointer;" data-id="<?php echo $value['key_id']; ?>">
+                                  <tr class="search_headerN th_color" style="cursor: pointer;" data-id="<?php echo $value['key_id']; ?>">
                                     <th class="text-uppercase header" style="width: 15%;cursor: pointer;">
                                       <?php echo $value['key_name']; ?>
                                     </th>
@@ -326,14 +328,14 @@
                             
                                 </tbody>
                               </table>
-                            </td>
+                            
                           </tr>
                         <?php } ?>
                     
                       </tbody>
                     </table>
-      </div>
-        </div>
+      
+        
         <?php }else{ ?>
             <div class="row">
               <div class="col-md-12"><br><br>
@@ -344,10 +346,11 @@
         </div>
         <?php } ?>
     </div>
-</div>
 
+</section>
 @endsection   
-@section('scripts')  
+
+@section('page-script')
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -355,7 +358,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
+
 <script>  
 $(document).ready(function() {
     
@@ -415,18 +420,18 @@ $(document).ready(function() {
        // });
     
            $selectElement = $('#dept_code').select2({
-            placeholder: "All",
+            placeholder: "Department",
             allowClear: true
             });
             
              $selectElement2 = $('#category_code').select2({
-            placeholder: "Please select  Category",
+            placeholder: "Category",
             allowClear: true
             });
     
             $('.sample-class2').select2();
             $selectElement3 = $('#subcat_id').select2({
-            placeholder: "Please select  SubCategory",
+            placeholder: " SubCategory",
             allowClear: true
     
    
@@ -528,16 +533,17 @@ $(document).ready(function() {
     });
 </script>  
 <style>
-    .select2-container--default .select2-selection--single{
-    border-radius: 0px !important;
-    height: 35px !important;
+    .select2-container--default .select2-selection--multiple{
+    border-radius: 9px !important;
+    height: 38px !important;
     width
   }
   .select2.select2-container.select2-container--default{
   width: 100% !important;
   }
+ 
   .select2-container--default .select2-selection--single .select2-selection__rendered{
-    line-height: 35px !important;
+    line-height: 38px !important;
   }
   
 </style>
@@ -621,7 +627,7 @@ $(document).ready(function() {
             html += '</tr>';
           });
 
-          html += '<tr>';
+          html += '<tr class="header-color  text-uppercase">';
           html += '<td style="width: 10%;"></td>';
           html += '<td style="width: 20%;" class="text-right"><b>Total</b></td>';
           html += '<td style="width: 10%;" class="text-right"><b>'+ total_qty +'</b></td>';
@@ -723,7 +729,7 @@ $(document).ready(function() {
             html += '</tr>';
           });
 
-          html += '<tr>';
+          html += '<tr class="header-color  text-uppercase">';
           html += '<td style="width: 10%;"></td>';
           html += '<td style="width: 20%;" class="text-right"><b>Total</b></td>';
           html += '<td style="width: 10%;" class="text-right"><b>'+ total_qty +'</b></td>';
@@ -826,7 +832,7 @@ $(document).ready(function() {
             html += '</tr>';
           });
 
-          html += '<tr>';
+          html += '<tr class="header-color  text-uppercase">';
           html += '<td style="width: 10%;"></td>';
           html += '<td style="width: 20%;" class="text-right"><b>Total</b></td>';
           html += '<td style="width: 10%;" class="text-right"><b>'+ total_qty +'</b></td>';
@@ -1063,6 +1069,26 @@ const saveData = (function () {
     });
 </script>  
 
+<style>
+.rcorner {
+  border-radius:9px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
 
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
+</style>
 
 @endsection 
