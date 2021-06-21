@@ -143,7 +143,7 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="main_nav">
                     <div class="menu">
-                        <span class="font-weight-bold"> EDIT EMPLOYEE</span>
+                        <span class="font-weight-bold text-uppercase"> EDIT EMPLOYEE</span>
                     </div>
                     <div class="nav-submenu">
                         <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
@@ -176,7 +176,7 @@
                                                 @if ($users->pos_user == 'Y')
                                                     checked
                                                 @endif
-                                        />POS
+                                        />  POS
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -188,8 +188,7 @@
                                                 @if ($users->web_user == 'Y')
                                                     checked
                                                 @endif
-                                        />
-                                        WEB
+                                        />  WEB
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -201,7 +200,7 @@
                                         @if ($users->mob_user == 'Y')
                                             checked
                                         @endif
-                                     />MOBILE
+                                     />  MOBILE
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -213,7 +212,7 @@
                                             @if ($users->lb_user == 'Y')
                                                 checked
                                             @endif
-                                        />LINEBUSTER
+                                        />  LINEBUSTER
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -222,7 +221,7 @@
                                             @if ($users->time_clock == 'Y')
                                                 checked
                                             @endif
-                                        />TIMECLOCK
+                                        />  TIMECLOCK
                                     </label>
                                 </div>
                             </div>
@@ -440,7 +439,7 @@
                                             //     $start_dt = $start_dt->format('m-d-Y');
                                             // }
                                         ?>
-                                        <input type="text" name="start_dt" maxlength="25" value="{{ $users->start_dt }}" placeholder="START DATE" id="start_dt" class="form-control " style="width: 163px;"/>
+                                        <input type="text" name="start_dt" maxlength="25" value="{{ $users->start_dt }}" placeholder="START DATE" id="start_dt" class="form-control " style="width: 163px;" required="required"/>
                                         {{-- <input type="text" class="form-control promo-fields" id="p_bqty"
                                             placeholder="PROMOTION BUY QTY" name="p_bqty"> --}}
                                     </div>
@@ -457,7 +456,7 @@
                                             //     $termination_dt = $termination_dt->format('m-d-Y');
                                             // }
                                         ?>
-                                        <input type="text" name="termination_dt" maxlength="25" value="{{ $users->termination_dt }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;" />
+                                        <input type="text" name="termination_dt" maxlength="25" value="{{ $users->termination_dt }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;" required="required"/>
                                         {{-- <input type="text" class="form-control promo-fields" id="p_sprice"
                                             placeholder="PROMOTION SLAB PRICE" name="p_sprice"> --}}
                                     </div>
@@ -871,18 +870,18 @@ setInterval(function() {
     if($('.mob').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
     if($('.web').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
     if($('.lb').prop("checked") == true){
         // $('#permission_divider').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
     if($('.pos').prop("checked") == true){
@@ -910,6 +909,7 @@ setInterval(function() {
     }
 
     if($('.time').prop("checked") == true){
+        // alert('aafdaf');
         $('#time_start').show();
         // document.getElementById("Submit").disabled = false;
     }
@@ -1053,16 +1053,16 @@ $('.time').click(function () {
             $("#input-re-mwpassword").removeAttr("required", "required");
         }
 
-        $("#input_tc_pass").attr("required", "required");
-        $("#input_start_dt").attr("required", "required");
-        $("#input_termination_dt").attr("required", "required");
+        $("#tc_pass").attr("required", "required");
+        $("#start_dt").attr("required", "required");
+        $("#termination_dt").attr("required", "required");
     }
     else
     {
         $("#time_start").hide();
-        $("#input_tc_pass").removeAttr("required", false);
-        $("#input_start_dt").attr("required", "false");
-        $("#input_termination_dt").attr("required", "false");
+        $("#tc_pass").removeAttr("required", false);
+        $("#start_dt").attr("required", "false");
+        $("#termination_dt").attr("required", "false");
     }
 });
 
