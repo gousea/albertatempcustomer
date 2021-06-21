@@ -145,7 +145,7 @@
                         <span class="font-weight-bold text-uppercase"> Create EMPLOYEE</span>
                     </div>
                     <div class="nav-submenu">
-                        <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
+                        <button type="submit" id="saveCustomer" class="btn btn-gray headerblack buttons_menu"><i
                             class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
                         <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small" href="{{ url('/users') }}"> CANCEL
                         </a>
@@ -416,7 +416,7 @@
                                             //     $termination_dt = $termination_dt->format('m-d-Y');
                                             // }
                                         ?>
-                                        <input type="text" name="termination_dt" maxlength="25" value="{{ old('termination_dt') }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;" />
+                                        <input type="text" name="termination_dt" maxlength="25" value="{{ old('termination_dt') }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;"/>
                                         {{-- <input type="text" class="form-control promo-fields" id="p_sprice"
                                             placeholder="PROMOTION SLAB PRICE" name="p_sprice"> --}}
                                     </div>
@@ -823,18 +823,18 @@ setInterval(function() {
     if($('.mob').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
     if($('.web').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
     if($('.lb').prop("checked") == true){
         // $('#permission_divider').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
     if($('.pos').prop("checked") == true){
@@ -862,6 +862,7 @@ setInterval(function() {
     }
 
     if($('.time').prop("checked") == true){
+        // alert('test');
         $('#time_start').show();
         // document.getElementById("Submit").disabled = false;
     }
@@ -977,16 +978,16 @@ $('.time').click(function () {
             $("#input-re-mwpassword").removeAttr("required", "required");
         }
 
-        $("#input_tc_pass").attr("required", "required");
-        $("#input_start_dt").attr("required", "required");
-        $("#input_termination_dt").attr("required", "required");
+        $("#tc_pass").attr("required", "required");
+        $("#start_dt").attr("required", "required");
+        $("#termination_dt").attr("required", "required");
     }
     else
     {
         $("#time_start").hide();
-        $("#input_tc_pass").removeAttr("required", false);
-        $("#input_start_dt").attr("required", "false");
-        $("#input_termination_dt").attr("required", "false");
+        $("#tc_pass").removeAttr("required", false);
+        $("#start_dt").attr("required", "false");
+        $("#termination_dt").attr("required", "false");
     }
 });
 
