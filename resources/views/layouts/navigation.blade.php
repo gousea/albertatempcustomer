@@ -57,7 +57,7 @@
                                         Promotions </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('buydown') }}"> Buy Down </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Item Group </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Quick Item </a></li>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('/item/quick_item_list') }}"> Quick Item </a></li>
                             </ul>
                         </li>
                     @endif
