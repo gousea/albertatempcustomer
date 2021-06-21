@@ -142,7 +142,7 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="main_nav">
                     <div class="menu">
-                        <span class="font-weight-bold"> Create EMPLOYEE</span>
+                        <span class="font-weight-bold text-uppercase"> Create EMPLOYEE</span>
                     </div>
                     <div class="nav-submenu">
                         <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
@@ -168,28 +168,27 @@
                             <div class="col-xs-12 checkbox-data">
                                 <div class="form-check col-xs-2 col-xs-offset-1">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="pos device" name="pos" value="pos" {{ old('pos') ? 'checked' : '' }}/>POS
+                                        <input type="checkbox" class="pos device" name="pos" value="pos" {{ old('pos') ? 'checked' : '' }}/>  POS
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="web device" name="web" value="web" {{ old('web') ? 'checked' : '' }}/>
-                                        WEB
+                                        <input type="checkbox" class="web device" name="web" value="web" {{ old('web') ? 'checked' : '' }}/>  WEB
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="mob device" name="mob" value="mob" {{ old('mob') ? 'checked' : '' }}/>MOBILE
+                                        <input type="checkbox" class="mob device" name="mob" value="mob" {{ old('mob') ? 'checked' : '' }}/>  MOBILE
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" name="lb" value="lb" class="lb device" {{ old('lb') ? 'checked' : '' }}/>LINEBUSTER
+                                        <input type="checkbox" name="lb" value="lb" class="lb device" {{ old('lb') ? 'checked' : '' }}/>  LINEBUSTER
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" name="time" value="time" class="time device" {{ old('time') ? 'checked' : '' }}/>TIMECLOCK
+                                        <input type="checkbox" name="time" value="time" class="time device" {{ old('time') ? 'checked' : '' }}/>  TIMECLOCK
                                     </label>
                                 </div>
                             </div>

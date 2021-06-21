@@ -143,7 +143,7 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="main_nav">
                     <div class="menu">
-                        <span class="font-weight-bold"> EDIT EMPLOYEE</span>
+                        <span class="font-weight-bold text-uppercase"> EDIT EMPLOYEE</span>
                     </div>
                     <div class="nav-submenu">
                         <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
@@ -176,7 +176,7 @@
                                                 @if ($users->pos_user == 'Y')
                                                     checked
                                                 @endif
-                                        />POS
+                                        />  POS
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -188,8 +188,7 @@
                                                 @if ($users->web_user == 'Y')
                                                     checked
                                                 @endif
-                                        />
-                                        WEB
+                                        />  WEB
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -201,7 +200,7 @@
                                         @if ($users->mob_user == 'Y')
                                             checked
                                         @endif
-                                     />MOBILE
+                                     />  MOBILE
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -213,7 +212,7 @@
                                             @if ($users->lb_user == 'Y')
                                                 checked
                                             @endif
-                                        />LINEBUSTER
+                                        />  LINEBUSTER
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -222,7 +221,7 @@
                                             @if ($users->time_clock == 'Y')
                                                 checked
                                             @endif
-                                        />TIMECLOCK
+                                        />  TIMECLOCK
                                     </label>
                                 </div>
                             </div>
