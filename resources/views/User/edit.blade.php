@@ -238,6 +238,12 @@
                 </div>
                 <div class="divider font-weight-bold"></div>
             </div>
+            @if (session()->has('message'))
+                <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i>
+                    {{ session()->get('message') }}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            @endif
             <div class="container py-3">
                 <div class="row">
                     <div class="col-md-12 mx-auto">
@@ -439,7 +445,7 @@
                                             //     $start_dt = $start_dt->format('m-d-Y');
                                             // }
                                         ?>
-                                        <input type="text" name="start_dt" maxlength="25" value="{{ $users->start_dt }}" placeholder="START DATE" id="start_dt" class="form-control " style="width: 163px;" required="required"/>
+                                        <input type="text" name="start_dt" maxlength="25" value="{{ $users->start_dt }}" placeholder="START DATE" id="start_dt" class="form-control " style="width: 163px;" />
                                         {{-- <input type="text" class="form-control promo-fields" id="p_bqty"
                                             placeholder="PROMOTION BUY QTY" name="p_bqty"> --}}
                                     </div>
@@ -456,7 +462,7 @@
                                             //     $termination_dt = $termination_dt->format('m-d-Y');
                                             // }
                                         ?>
-                                        <input type="text" name="termination_dt" maxlength="25" value="{{ $users->termination_dt }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;" required="required"/>
+                                        <input type="text" name="termination_dt" maxlength="25" value="{{ $users->termination_dt }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;"/>
                                         {{-- <input type="text" class="form-control promo-fields" id="p_sprice"
                                             placeholder="PROMOTION SLAB PRICE" name="p_sprice"> --}}
                                     </div>
