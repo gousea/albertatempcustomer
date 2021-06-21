@@ -1,8 +1,15 @@
+RO History Report 
+From : 12-01-2020 To : 06-17-2021
+Store Address:  : ALBERTA DEMO
+Store Address:  : 68 Culver Rd
+Store Phone : 888-888-8888
 
-EOD From date: 03-01-2021 EOD To date: 03-31-2021
-Store Name: ALBERTA DEMO
-Store Address: 68 Culver Rd
-Store Phone: 888-888-8888
-
-Sl. No,Paid Date,Vendor Name,Amount,Tender Type,Register No,Time,User ID
-1,03-11-2021,HT HACKNEY,$133.00,Cash,101,10:11:23 AM,844
+Vendor,Date,Net Total,RIP Total Amt
+ANGILINI WINES,12-23-2020,27.00,0.00
+CT LOTTERY,12-23-2020,11.00,0.00
+RESNICK TEST,01-13-2021,5051.46,0.00
+General Vendor,02-18-2021,15.00,0.00
+dffd,06-11-2021,12564.00,0.00
+General,06-11-2021,1.00,0.00
+DELI,06-11-2021,279.00,0.00
+,Total,$17948.46,$0
