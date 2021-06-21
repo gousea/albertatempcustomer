@@ -78,7 +78,6 @@ class AllUserController extends Controller
            $pay_rate=isset($input['pay_rate']) ? $input['pay_rate']:'' ;
            $tc_id=isset($input['tc_id']) ? $input['tc_id']:'' ;
            $tc_pass=isset($input['tc_pass']) ? $input['tc_pass']:'' ;
-           $vuserbarcode=isset($input['vuserbarcode']) ? $input['vuserbarcode']:'' ;
            $tc_pass=$this->encodePassword($tc_pass);
 
            $start_dt=isset($input['start_dt']) ? $input['start_dt']:'' ;
@@ -189,7 +188,6 @@ class AllUserController extends Controller
                         'vpassword' => $encdoe_password,
                         'vusertype' => $input['vusertype'],
                         'vpasswordchange' => "No",
-                        'vuserbarcode' => $vuserbarcode,
                         'estatus'   =>  $input['estatus'],
                         'SID'       =>  session()->get('sid'),
 
@@ -247,7 +245,6 @@ class AllUserController extends Controller
                         'vpassword' => $encdoe_password,
                         'vusertype' => $input['vusertype'],
                         'vpasswordchange' => "No",
-                        'vuserbarcode' => $vuserbarcode,
                         'estatus'   =>  $input['estatus'],
                         'SID'       =>  session()->get('sid'),
 
@@ -318,7 +315,6 @@ class AllUserController extends Controller
                         'vpassword' => $encdoe_password,
                         'vusertype' => $input['vusertype'],
                         'vpasswordchange' => "No",
-                        'vuserbarcode' => $vuserbarcode,
                         'estatus'   =>  $input['estatus'],
                         'SID'       =>  session()->get('sid'),
                         'mwpassword' => $encdoe_mwpassword,
@@ -383,7 +379,6 @@ class AllUserController extends Controller
                             'vpassword' => $encdoe_password,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
-                            'vuserbarcode' => $vuserbarcode,
                             'estatus'   =>  $input['estatus'],
                             'SID'       =>  session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
@@ -457,7 +452,6 @@ class AllUserController extends Controller
                             'vpassword' => $encdoe_password,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
-                            'vuserbarcode' => $vuserbarcode,
                             'estatus'   =>  $input['estatus'],
                             'SID'       =>  session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
@@ -522,7 +516,6 @@ class AllUserController extends Controller
                             'vpassword' => $encdoe_password,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
-                            'vuserbarcode' => $input['vuserbarcode'],
                             'estatus'   =>  $input['estatus'],
                             'SID'       =>  session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
@@ -641,10 +634,6 @@ class AllUserController extends Controller
         fwrite($myfile, $txt);
         fclose($myfile);
 
-        // echo "<pre>";
-        // print_r($users);
-        // die;
-
         return view('User.edit', compact('permissions', 'mstPermissiongroup', 'users', 'dataPerCheck'));
     }
 
@@ -697,8 +686,6 @@ class AllUserController extends Controller
            else{
               $time_clock='N';
            }
-
-        //    echo $start_dt;die;
 
             if(!empty($start_dt)){
                 // $startTime = DateTime::createFromFormat('m-d-Y', $start_dt);

@@ -1,4 +1,5 @@
 @extends('layouts.layout')
+
 @section('title')
     Employee Create
 @stop
@@ -134,14 +135,14 @@
 
     <link rel="stylesheet" href="{{ asset('asset/css/employee.css') }}">
 
-    <form action="{{ route('users.store') }}" method="post" enctype="multipart/form-data" id="vendorForm"
+    <form action="{{ url('/users/store') }}" method="post" enctype="multipart/form-data" id="vendorForm"
         class="form-horizontal">
         @csrf
         <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
             <div class="container">
                 <div class="collapse navbar-collapse" id="main_nav">
                     <div class="menu">
-                        <span class="font-weight-bold"> ADD EMPLOYEE</span>
+                        <span class="font-weight-bold"> Create EMPLOYEE</span>
                     </div>
                     <div class="nav-submenu">
                         <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
@@ -167,27 +168,28 @@
                             <div class="col-xs-12 checkbox-data">
                                 <div class="form-check col-xs-2 col-xs-offset-1">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="pos device"  {{ old('pos') ? 'checked' : '' }} name="pos" value="pos">POS
+                                        <input type="checkbox" class="pos device" name="pos" value="pos" {{ old('pos') ? 'checked' : '' }}/>POS
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="web device" {{ old('web') ? 'checked' : '' }} name="web" value="web">WEB
+                                        <input type="checkbox" class="web device" name="web" value="web" {{ old('web') ? 'checked' : '' }}/>
+                                        WEB
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="mob device"  {{ old('mob') ? 'checked' : '' }} name="mob" value="mob">MOBILE
+                                        <input type="checkbox" class="mob device" name="mob" value="mob" {{ old('mob') ? 'checked' : '' }}/>MOBILE
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" name="lb" value="lb" class="lb device"  {{ old('lb') ? 'checked' : '' }}>LINEBUSTER
+                                        <input type="checkbox" name="lb" value="lb" class="lb device" {{ old('lb') ? 'checked' : '' }}/>LINEBUSTER
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" name="time" value="time" class="time device"  {{ old('pos') ? 'checked' : '' }}>TIMECLOCK
+                                        <input type="checkbox" name="time" value="time" class="time device" {{ old('time') ? 'checked' : '' }}/>TIMECLOCK
                                     </label>
                                 </div>
                             </div>
@@ -286,8 +288,6 @@
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vstate" maxlength="25" value="{{ old('vstate') }}" placeholder="STATE" id="input-state" class="form-control" onkeypress="return (event.charCode > 64 &&
                                         event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" style="width: 163px;"/>
-                                    {{-- <input type="text" class="form-control promo-fields" id="p_itemtype"
-                                        placeholder="PROMOTION ITEM TYPE" name="p_itemtype"> --}}
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -296,8 +296,6 @@
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vzip" maxlength="10" value="{{ old('vzip') }}" placeholder="ZIP CODE" id="input-zip" class="form-control" style="width: 163px;"/>
-                                    {{-- <input type="text" class="form-control promo-fields" id="q_limit"
-                                        placeholder="QUANTITY LIMIT" name="q_limit"> --}}
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -306,8 +304,6 @@
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <input type="text" name="vcountry" maxlength="20" value="USA" class="form-control" readonly style="width: 163px;"/>
-                                    {{-- <input type="text" class="form-control promo-fields" id="allow_reqular_price"
-                                        placeholder="ALLOW REGULAR PRICE" name="allow_reqular_price"> --}}
                                 </div>
                             </div>
                         </div>
@@ -319,7 +315,6 @@
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <select name="vusertype" id="input-vusertype" class="form-control" required style="width: 163px;">
                                         <option value="">User Type</option>
-
                                         @if(isset($mstPermissiongroup))
                                             @foreach ($mstPermissiongroup as $group)
                                                 <option value="{{$group->vgroupname}}"
@@ -329,8 +324,7 @@
                                                 </option>
                                             @endforeach
                                         @endif
-
-                                        </select>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -342,8 +336,6 @@
                                         <option value="Active" >Active</option>
                                         <option value="InActive" >InActive</option>
                                     </select>
-                                    {{-- <input type="text" class="form-control promo-fields" id="q_limit"
-                                        placeholder="QUANTITY LIMIT" name="q_limit"> --}}
                                 </div>
                             </div>
                         </div>
@@ -402,7 +394,13 @@
                                         <label for="inputAddressLine1" class="p-2 float-left">START DATE</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                        <input type="text" name="start_dt" maxlength="25" value="{{ old('start_dt') }}" placeholder="START DATE" id="start_dt" class="form-control" style="width: 163px;"/>
+                                        <?php
+                                            // if(isset($users->start_dt) && $users->start_dt != '0000-00-00' && $users->start_dt != '0000-00-00 00:00:00'){
+                                            //     $start_dt = DateTime::createFromFormat('Y-m-d', $users->start_dt);
+                                            //     $start_dt = $start_dt->format('m-d-Y');
+                                            // }
+                                        ?>
+                                        <input type="text" name="start_dt" maxlength="25" value="{{ old('start_dt') }}" placeholder="START DATE" id="start_dt" class="form-control " style="width: 163px;"/>
                                         {{-- <input type="text" class="form-control promo-fields" id="p_bqty"
                                             placeholder="PROMOTION BUY QTY" name="p_bqty"> --}}
                                     </div>
@@ -413,6 +411,12 @@
                                         <label for="inputAddressLine2" class="p-2 float-left">TERMINATION DATE</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <?php
+                                            // if(isset($users->termination_dt) && $users->termination_dt != '0000-00-00' && $users->termination_dt != '0000-00-00 00:00:00'){
+                                            //     $termination_dt = DateTime::createFromFormat('Y-m-d', $users->termination_dt);
+                                            //     $termination_dt = $termination_dt->format('m-d-Y');
+                                            // }
+                                        ?>
                                         <input type="text" name="termination_dt" maxlength="25" value="{{ old('termination_dt') }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;" />
                                         {{-- <input type="text" class="form-control promo-fields" id="p_sprice"
                                             placeholder="PROMOTION SLAB PRICE" name="p_sprice"> --}}
@@ -439,8 +443,7 @@
                                         <label for="inputFirstname" class="p-2 float-left">TIME CLOCK ID</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                        <input type="text" class="form-control promo-fields" id="tc_id" name="tc_id"
-                                            placeholder="TIME CLOCK ID" readonly>
+                                        <input type="text" name="tc_id" maxlength="25" value="" id="input-vuserbarcode" class="form-control" readonly  />
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -449,8 +452,6 @@
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                         <input type="text" name="tc_pass" maxlength="4" value="{{ old('tc_pass') }}" placeholder="PASSWORD" id="input_tc_pass" class="form-control" style="width: 163px;"/>
-                                        {{-- <input type="text" class="form-control promo-fields" id="p_type"
-                                            placeholder="PROMOTION TYPE" name="p_type"> --}}
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -458,9 +459,8 @@
                                         <label for="inputLastname" class="p-2 float-left">CONFIRM PASSWORD</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                        <input type="text" name="tcc_pass" maxlength="4" value="{{ old('tcc_pass') }}" placeholder="CONFIRM PASSWORD" id="input_tcc_pass" class="form-control" style="width: 163px;"/>
-                                        {{-- <input type="text" class="form-control promo-fields" id="p_category"
-                                            placeholder="CONFIRM PASSWORD" name="p_category"> --}}
+                                                <input type="text" name="tcc_pass" maxlength="4" value="{{ old('tcc_pass') }}" placeholder="CONFIRM PASSWORD" id="input_tcc_pass" class="form-control" style="width: 163px;"/>
+                                        <div class="text-success" id="confirm-pass-msg3"></div>
                                     </div>
                                 </div>
                             </div>
@@ -579,11 +579,10 @@
         <section class="section-content py-4">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4 check" id="pos1" style="display: none;">
+                    <div class="col-md-4" id="pos1" style="display: none;">
                         <table class="table table-bordered">
                             <thead id="table_green_header_tag">
-                                <tr>
-                                    <th colspan="2" id="table_green_header">POS</th></tr>
+                                <tr><th colspan="2" id="table_green_header">POS</th></tr>
                             </thead>
                             <tbody>
                                 @if(isset($permissions))
@@ -665,7 +664,6 @@
     </form>
 @endsection
 
-
 @section('page-script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
 {{-- old date picker --}}
@@ -676,7 +674,6 @@
 
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-
 
 <script>
     $(function(){
@@ -702,7 +699,7 @@
         });
     });
     $(document).ready(function(){
-        //  $("#time_start").hide();
+         $("#time_start").hide();
 
     });
     // $().bfhtimepicker('toggle')
@@ -720,6 +717,29 @@
   </script>
 
 <script type="text/javascript">
+  $(document).on('keyup', 'input[name="tcc_pass"]', function(event) {
+    event.preventDefault();
+    var tc_pass = $('input[name="tc_pass"]').val();
+    var tcc_pass = $(this).val();
+
+    if(tc_pass == ''){
+      alert('Please Enter Password');
+      return false;
+    }
+
+    if(tc_pass != '' && tc_pass == tcc_pass){
+      $('#confirm-pass-msg3').removeClass('text-danger').addClass('text-success');
+      $('#confirm-pass-msg3').html('Time Clock Password Matched');
+      $(':input[type="submit"]').prop('disabled', false);
+      return false;
+    }else{
+      $('#confirm-pass-msg3').removeClass('text-success').addClass('text-danger');
+      $('#confirm-pass-msg3').html('Time Clock Password Not Matched');
+      $(':input[type="submit"]').prop('disabled', true);
+      return false;
+    }
+  });
+
   $(document).on('keyup', 'input[name="re_vpassword"]', function(event) {
     event.preventDefault();
     var vpassword = $('input[name="vpassword"]').val();
@@ -844,7 +864,7 @@ setInterval(function() {
 
     if($('.time').prop("checked") == true){
         $('#time_start').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
 }, 300);
@@ -881,34 +901,6 @@ $(function () {
      }
   }).change();
 });
-
-//new code
-// $('.web').click(function () {
-//     $('#web_mob').toggle(this.checked);
-//     if(this.checked){
-//         $('#web').show();
-//     }else{
-//         $('#web').hide();
-//     }
-// });
-
-// $('.pos').click(function () {
-//     $('#pos').toggle(this.checked);
-//     if(this.checked){
-//         $('#pos1').show();
-//     }else{
-//         $('#pos1').hide();
-//     }
-// });
-
-// $('.mob').click(function () {
-//     $('#web_mob').toggle(this.checked);
-//     if(this.checked){
-//         $('#mob').show();
-//     }else{
-//         $('#mob').hide();
-//     }
-// });
 
 $('.web').click(function () {
     $('#web_mob').toggle(this.checked);

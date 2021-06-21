@@ -503,8 +503,7 @@
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                         <input type="text" name="tcc_pass" maxlength="4" value="" placeholder="CONFIRM PASSWORD" id="input_tcc_pass" class="form-control" style="width: 163px;"/>
-                                        {{-- <input type="text" class="form-control promo-fields" id="p_category"
-                                            placeholder="CONFIRM PASSWORD" name="p_category"> --}}
+                                        <div class="text-success" id="confirm-pass-msg3"></div>
                                     </div>
                                 </div>
                             </div>
@@ -748,7 +747,7 @@
         });
     });
     $(document).ready(function(){
-        //  $("#time_start").hide();
+         $("#time_start").hide();
 
     });
     // $().bfhtimepicker('toggle')
@@ -766,6 +765,28 @@
   </script>
 
 <script type="text/javascript">
+ $(document).on('keyup', 'input[name="tcc_pass"]', function(event) {
+    event.preventDefault();
+    var tc_pass = $('input[name="tc_pass"]').val();
+    var tcc_pass = $(this).val();
+
+    if(tc_pass == ''){
+      alert('Please Enter Password');
+      return false;
+    }
+
+    if(tc_pass != '' && tc_pass == tcc_pass){
+      $('#confirm-pass-msg3').removeClass('text-danger').addClass('text-success');
+      $('#confirm-pass-msg3').html('Time Clock Password Matched');
+      $(':input[type="submit"]').prop('disabled', false);
+      return false;
+    }else{
+      $('#confirm-pass-msg3').removeClass('text-success').addClass('text-danger');
+      $('#confirm-pass-msg3').html('Time Clock Password Not Matched');
+      $(':input[type="submit"]').prop('disabled', true);
+      return false;
+    }
+  });
   $(document).on('keyup', 'input[name="re_vpassword"]', function(event) {
     event.preventDefault();
     var vpassword = $('input[name="vpassword"]').val();
@@ -890,7 +911,7 @@ setInterval(function() {
 
     if($('.time').prop("checked") == true){
         $('#time_start').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
 }, 300);
@@ -961,14 +982,14 @@ $('.web').click(function () {
     if(this.checked){
         $('#web').show();
         $("#input-email").attr("required", "required");
-        // $("#input-mwpassword").attr("required", "required");
-        // $("#input-re-mwpassword").attr("required", "required");
+        $("#input-mwpassword").attr("required", "required");
+        $("#input-re-mwpassword").attr("required", "required");
     }else{
         $('#web').hide();
         $('#permission_divider').hide();
         $("#input-email").removeAttr("required", "required");
-        // $("#input-mwpassword").removeAttr("required", "required");
-        // $("#input-re-mwpassword").removeAttr("required", "required");
+        $("#input-mwpassword").removeAttr("required", "required");
+        $("#input-re-mwpassword").removeAttr("required", "required");
     }
 });
 
@@ -988,8 +1009,8 @@ $('.pos').click(function () {
     }
 
     if(!$(".web").is(':checked') && !$(".mob").is(':checked') ){
-        // $("#input-mwpassword").removeAttr("required", "required");
-        // $("#input-re-mwpassword").removeAttr("required", "required");
+        $("#input-mwpassword").removeAttr("required", "required");
+        $("#input-re-mwpassword").removeAttr("required", "required");
     }
 });
 
@@ -999,8 +1020,8 @@ $('.mob').click(function () {
         if(this.checked){
             $('#mob').show();
             $("#input-email").removeAttr("required", "required");
-            // $("#input-mwpassword").removeAttr("required", "required");
-            // $("#input-re-mwpassword").removeAttr("required", "required");
+            $("#input-mwpassword").removeAttr("required", "required");
+            $("#input-re-mwpassword").removeAttr("required", "required");
         }else {
             $('#mob').hide();
             $('#permission_divider').hide();
@@ -1009,12 +1030,12 @@ $('.mob').click(function () {
         if(this.checked){
             $('#mob').show();
             $("#input-email").attr("required", "required");
-            // $("#input-mwpassword").attr("required", "required");
-            // $("#input-re-mwpassword").attr("required", "required");
+            $("#input-mwpassword").attr("required", "required");
+            $("#input-re-mwpassword").attr("required", "required");
         }else{
             $("#input-email").removeAttr("required", "required");
-            // $("#input-mwpassword").removeAttr("required", "required");
-            // $("#input-re-mwpassword").removeAttr("required", "required");
+            $("#input-mwpassword").removeAttr("required", "required");
+            $("#input-re-mwpassword").removeAttr("required", "required");
             $('#mob').hide();
             $('#permission_divider').hide();
         }
@@ -1025,11 +1046,11 @@ $('.time').click(function () {
     //$('#web_mob').toggle(this.checked);
     if(this.checked){
         $("#time_start").show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
 
         if(!$(".web").is(':checked') && !$(".mob").is(':checked') ){
-            // $("#input-mwpassword").removeAttr("required", "required");
-            // $("#input-re-mwpassword").removeAttr("required", "required");
+            $("#input-mwpassword").removeAttr("required", "required");
+            $("#input-re-mwpassword").removeAttr("required", "required");
         }
 
         $("#input_tc_pass").attr("required", "required");
