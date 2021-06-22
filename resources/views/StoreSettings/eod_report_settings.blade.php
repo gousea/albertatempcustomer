@@ -203,6 +203,56 @@
   
 </div>
 </div>
+
+
+
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection   
 @section('page-script') 
 
@@ -231,12 +281,16 @@
         
         if(tax1 === '' && tax2 === '' && tax3 === '' && nonTax === ''){
             
-            bootbox.alert({ 
-                size: 'medium',
-                title: "Warning !!", 
-                message: 'Cannot proceed without any inputs !!', 
-                callback: function(){}
-            });
+            // bootbox.alert({ 
+            //     size: 'medium',
+            //     title: "Warning !!", 
+            //     message: 'Cannot proceed without any inputs !!', 
+            //     callback: function(){}
+            // });
+
+            $('#warning_msg').html('Cannot proceed without any inputs !!');
+            $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
             
             return false;
         }
@@ -265,17 +319,22 @@
             type: 'POST',
             data: data,
             success: function (data, status, xhr) {
-                // $('p').append('status: ' + status + ', data: ' + data);
-                console.log('status: ' + status + ', data: ' + data.message);
-                
-                bootbox.alert({ 
-                    size: 'small',
-                    title: "Success", 
-                    message: data.message, 
-                    callback: function(){
-                        window.location.href = '{{ route('eodsetting_getlist') }}';
-                    }
-                });
+                // bootbox.alert({ 
+                //     size: 'small',
+                //     title: "Success", 
+                //     message: data.message, 
+                //     callback: function(){
+                //         window.location.href = '{{ route('eodsetting_getlist') }}';
+                //     }
+                // });
+
+                $('#success_msg').html("Setting saved Sucessfully");
+                $("div#divLoading").removeClass('show');
+                $('#successModal').modal('show');
+                setTimeout(function(){
+                    $('#successModal').modal('hide');
+                    window.location.href = '{{ route('eodsetting_getlist') }}';
+                }, 2000);
             },
             error: function (jqXhr, textStatus, errorMessage) {
                 // $('p').append('Error' + errorMessage);
@@ -391,23 +450,18 @@
     {
         if($('#dates').val() == '')
         {
-            bootbox.alert({ 
-                size: 'small',
-                title: "Attention", 
-                message: "Please Select Start Date", 
-                callback: function(){}
-            });
+            $('#warning_msg').html('Please Select Start Date');
+            $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
+            
             return false;
         }
 
         if($('#dates').val() == '')
         {
-            bootbox.alert({ 
-                size: 'small',
-                title: "Attention", 
-                message: "Please Select End Date", 
-                callback: function(){}
-            });
+            $('#warning_msg').html('Please Select End Date');
+            $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
             return false;
         } 
 
@@ -416,12 +470,15 @@
             var d2 = Date.parse($('input[name="end_date"]').val()); 
 
             if(d1 > d2){
-                bootbox.alert({ 
-                    size: 'small',
-                    title: "Attention", 
-                    message: "Start date must be less then end date!", 
-                    callback: function(){}
-                });
+                // bootbox.alert({ 
+                //     size: 'small',
+                //     title: "Attention", 
+                //     message: "Start date must be less then end date!", 
+                //     callback: function(){}
+                // });
+                $('#warning_msg').html('Start date must be less then end date!');
+                $("div#divLoading").removeClass('show');
+                $('#warningModal').modal('show');
                 return false;
             }
         }
