@@ -1,147 +1,157 @@
 @extends('layouts.layout')
 
 @section('title')
-Quick Items
-@endsection
+    Quick Items
+@stop
 
 @section('main-content')
-
 <div id="content">
-    <div class="page-header">
-
-
-
-    <div class="container">
-
-      @if (session()->has('message'))
-          <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-          </div>
-      @endif
-
-        @if ($errors->any())
-        <div class="alert alert-danger">
-          <ul>
-            @foreach ($errors->all() as $error)
-              <li>{{$error}}</li>
-            @endforeach
-          </ul>
-
-        </div>
-
-        @endif
-
-
-      <div class="panel panel-default" style="">
-    <div class="panel-heading head_title">
-        <h3 class="panel-title"><i class="fa fa-list"></i>Edit Quick Items</h3>
-    </div>
-
-
-        <div class="panel-body">
-
-        <div class="row" style="padding-bottom: 9px;float: right;">
-          <div class="col-md-12">
-            <div class="">
-              <button title="Update" class="btn btn-primary" id="update_button"><i class="fa fa-save"></i>&nbsp;&nbsp;Update</button>
-            </div>
-          </div>
-        </div>
-        <div class="clearfix"></div>
-
-      <br>
-
-    <form action="{{ url('/item/quick_item/update') }}" method="post" id="form-quick-item">
-      @csrf
-      <!-- <input type="hidden" name="MenuId" value=""> -->
-            @if(session()->get('hq_sid') == 1)
-                <input type="hidden" id="hidden_store_hq_val" name="stores_hq" value="">
-            @endif
-          <div class="table-responsive">
-            @if ($items)
-            <table id="vendor" class="table table-hover promotionview" style="width: 100%">
-                <thead>
-                    <tr class="header-color">
-                        <th class="text-center"><input type="checkbox"
-                                onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-
-                        <th class="col-xs-1 headername text-uppercase">Group Name
-                            {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control table-heading-fields" placeholder="GROUP NAME" id="group_name">
-                            </div>
-                        </th>
-
-                        <th class="col-xs-1 headername text-uppercase">Register Name
-                            {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control table-heading-fields"
-                                    placeholder="REGISTER NAME" id="register_name">
-                            </div>
-                        </th>
-                        <th class="col-xs-1 headername text-uppercase">Sequence
-                            {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control table-heading-fields"
-                                    placeholder="SEQUENCE" id="sequence">
-                            </div>
-                        </th>
-                        <th class="col-xs-1 headername text-uppercase">Status
-                            {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control table-heading-fields" placeholder="STATUS" id="status">
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-
-                <tbody class="table-body">
-                    @foreach ($items as $i => $item)
-                        <tr id="customer-row">
-                            <td data-order="" class="text-center">
-                                <input type="checkbox" name="selected[]" id="quick_item[{{$i}}][select]" class="checkboxId" value="{{$item['iitemgroupid']}}">
-                                <input type="hidden"  name="quick_item[{{$i}}][iitemgroupid]" value="{{ $item['iitemgroupid'] }}">
-                            </td>
-                            <td>
-                                {{-- <a href="{{route('users.edit', $user->iuserid)}}"
-                                    data-toggle="tooltip" title="Edit"><span>{{ $user->vfname }}</span>
-                                </a> --}}
-                                <input type="text" class="editable quick_vitemgroupname" name="quick_item[{{$i}}][vitemgroupname]" value="{{ $item['vitemgroupname'] }}" onclick='document.getElementById("quick_item[{{ $i }}][select]").setAttribute("checked","checked");' />
-                            </td>
-                            <td>
-                                <a href="#"
-                                    data-toggle="tooltip" title="Edit"><span>{{ $item['vterminalid'] }}</span>
-                                </a>
-                            </td>
-                            <td>
-                                {{-- <a href="{{route('users.edit', $user->iuserid)}}"
-                                    data-toggle="tooltip" title="Edit"><span>{{ $user->vemail }}</span>
-                                </a> --}}
-                                <input type="text" class="editable quick_sequence" name="quick_item[{{ $i }}][isequence]" value="{{ $item['isequence'] }}" onclick='document.getElementById("quick_item[{{$i}}][select]").setAttribute("checked","checked");' style="text-align: right;" />
-                            </td>
-                            <td>
-                                <a href="#"
-                                    data-toggle="tooltip" title="Edit"><span>{{ $item['estatus'] }}</span>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-              </table>
-            @else
-            <tr>
-              <td colspan="7" class="text-center">No results Found</td>
-            </tr>
-            @endif
-          </div>
-        </form>
-        </div>
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+      <div class="container">
+          <div class="collapse navbar-collapse" id="main_nav">
+              <div class="menu">
+                  <span class="font-weight-bold text-uppercase fontvalue"> Quick Items</span>
+              </div>
+              <div class="nav-submenu">
+                <button title="Update" class="btn btn-gray headerblack  buttons_menu" id="update_button"><i class="fa fa-save"></i>&nbsp;&nbsp;Update</button>
+              </div>
+          </div> <!-- navbar-collapse.// -->
       </div>
-    </div>
+  </nav>
+  <section class="section-content py-6">
+      <div class="container">
+          <div class="container-fluid">
+              <div class="panel panel-default">
+                  @if (session()->has('message'))
+                    <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                  @endif
+                  @if (session()->has('error_message'))
+                    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error_message')}}
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                  @endif
+
+                  <div id='errorDiv'>
+                      @if ($errors->any())
+                        <div class="alert alert-danger">
+                          @foreach ($errors->all() as $error)
+                            <i class="fa fa-exclamation-circle"></i>{{$error}}
+                          @endforeach
+                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+                      @endif
+                  </div>
+                  <div class="panel-body">
+                    <form action="{{ url('/item/quick_item/update') }}" method="post" id="form-quick-item">
+                    @csrf
+                    @method('post')
+                        @if(session()->get('hq_sid') == 1)
+                          <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
+                        @endif
+                    <div class="table-responsive">
+                        <table id="department" class="table table-hover employeeview" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                            <?php if ($items) { ?>
+                                <thead>
+                                <tr style="background-color: #286fb7!important;" >
+                                        <th style="width: 1px;color:black; border-bottom-left-radius: 9px" class="text-center">
+                                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                                        </th>
+                                        <th class="col-xs-1 headername text-uppercase text-light" data-field="group_name">Group Name
+                                            <div class="row">
+                                                <div class="col-md-12 form-group has-search" style="height: 33px">
+                                                    <span class="fa fa-search form-control-feedback"></span>
+                                                    <input type="text" class="form-control table-heading-fields" placeholder="GROUP NAME" id="group_name">
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th class="col-xs-1 headername text-uppercase  text-light" data-field="register_name">Register Name
+                                            <div class="row">
+                                                <div class="col-md-12 form-group has-search" style="height: 33px">
+                                                    <span class="fa fa-search form-control-feedback"></span>
+                                                    <input type="text" class="form-control table-heading-fields" placeholder="REGISTER NAME" id="register_name">
+                                                </div>
+                                            </div>
+
+                                        </th>
+                                        <th class="col-xs-1 headername text-uppercase  text-light" data-field="sequence">Sequence
+                                        <div class="row">
+                                                <div class="col-md-12 form-group has-search" style="height: 33px">
+                                                    <span class="fa fa-search form-control-feedback"></span>
+                                                    <input type="text" class="form-control table-heading-fields" placeholder="SEQUENCE" id="sequence">
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th class="col-xs-1 headername text-uppercase  text-light" data-field="status">Status
+                                            <div class="row">
+                                                <div class="col-md-12 form-group has-search" style="height: 33px">
+                                                    <span class="fa fa-search form-control-feedback"></span>
+                                                    <input type="text" class="form-control table-heading-fields" placeholder="STATUS" id="status">
+                                                </div>
+                                            </div>
+                                        </th>
+                                </tr>
+                                </thead>
+                                <tbody id="searchData">
+
+                                    <?php //$department_row = 1;$i=0; ?>
+                                    <?php foreach ($items as $i => $item) { ?>
+                                        <tr id="customer-row">
+
+                                            <td style="border-bottom-left-radius: 9px !important;"  data-order="<?php echo $item['iitemgroupid']; ?>" class="text-center">
+                                            <span style="display:none;"><?php echo $item['iitemgroupid']; ?></span>
+                                            <?php //if (in_array($item['iitemgroupid'], $selected)) { ?>
+                                                {{-- <input type="checkbox" name="selected[]" id="quick_item[{{$i}}][select]" value="{{$item['iitemgroupid']}}" checked="checked" /> --}}
+                                            <?php //} else { ?>
+                                                {{-- <input type="checkbox" name="selected[]" id="quick_item[{{$i}}][select]" value="{{$item['iitemgroupid']}}" /> --}}
+                                            <?php //} ?>
+                                                <input type="checkbox" name="selected[]" id="quick_item[{{$i}}][select]" class="checkboxId" value="{{$item['iitemgroupid']}}">
+                                                <input type="hidden"  name="quick_item[{{$i}}][iitemgroupid]" value="{{ $item['iitemgroupid'] }}">
+                                            </td>
+
+                                            <td>
+                                                {{-- <span style="display:none;">{{ $item['vitemgroupname'] }}</span>
+                                                <input type="text" maxlength="50" style="border:none;" class="editable quick_vitemgroupname" name="quick_item[{{$i}}][vitemgroupname]" id="quick_item[{{$i}}][vitemgroupname]" value="{{ $item['vitemgroupname'] }}" onclick='document.getElementById("quick_item[{{ $i }}][select]").setAttribute("checked","checked");' />
+                                                <input type="hidden" name="quick_item[{{$i}}][vitemgroupname]" value="{{ $item['vitemgroupname'] }}"/> --}}
+                                                <input style="border: none;" type="text" class="editable quick_vitemgroupname" name="quick_item[{{$i}}][vitemgroupname]" value="{{ $item['vitemgroupname'] }}" onclick='document.getElementById("quick_item[{{ $i }}][select]").setAttribute("checked","checked");' />
+                                            </td>
+
+                                            <td>
+                                                <span>{{ $item['vterminalid'] }}</span>
+                                            </td>
+
+                                            <td>
+                                                {{-- <span style="display:none;">{{ $item['isequence'] }}</span>
+                                                <input type="text" maxlength="50" style="border:none;" class="editable quick_sequence" name="quick_item[{{ $i }}][isequence]" id="quick_item[{{ $i }}][isequence]" value="{{ $item['isequence'] }}" onclick='document.getElementById("quick_item[{{$i}}][select]").setAttribute("checked","checked");' />
+                                                <input type="hidden" name="quick_item[{{ $i }}][isequence]" value="{{ $item['isequence'] }}"/> --}}
+                                                <input style="border: none;" type="text" class="editable quick_sequence" name="quick_item[{{ $i }}][isequence]" value="{{ $item['isequence'] }}" onclick='document.getElementById("quick_item[{{$i}}][select]").setAttribute("checked","checked");' style="text-align: right;" />
+                                            </td>
+                                            <td>
+                                                <span>{{ $item['estatus'] }}</span>
+                                            </td>
+                                        </tr>
+                                    <?php //$department_row++; $i++;?>
+                                    <?php } ?>
+                            <?php } else { ?>
+                                    <tr>
+                                        <td colspan="7" class="text-center"><?php echo 'No Data Found';?></td>
+                                    </tr>
+                            <?php } ?>
+                                </tbody>
+                        </table>
+                          {{-- <div class="pull-right" style="margin-right: 29px">
+                            {{ $departments->links() }}
+                          </div> --}}
+                    </div>
+                  </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- Modal Add -->
+</div>
 
 <?php if(session()->get('hq_sid') == 1){ ?>
     <div id="myModal" class="modal fade" role="dialog">
@@ -190,117 +200,138 @@ Quick Items
 @endsection
 
 @section('page-script')
-
-<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
-<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <style>
     #item_paginate{
         float: right;
     }
 </style>
 
-<script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
-
+    <script src=" {{ asset('javascript/bootbox.min.js') }}"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <script type="text/javascript">
-  $(document).on('click', '#update_button', function(event) {
 
-    var all_itemgroupname = true;
-    var all_itemgroupname_arr = [];
+var stores = [];
+stores.push("{{ session()->get('sid') }}");
+    $('#selectAllCheckbox').click(function(){
+    if($('#selectAllCheckbox').is(":checked")){
+        $(".stores").prop( "checked", true );
+    }else{
+        $( ".stores" ).prop("checked", false );
+    }
+});
 
-    var all_sequence = true;
-    var all_sequence_arr = [];
-    var all_correct = true;
+$("#save_btn").click(function(){
+    $.each($("input[name='stores']:checked"), function(){
+        stores.push($(this).val());
+    });
+    $("#hidden_store_hq_val").val(stores);
+    $('#form-quick-item').submit();
+    $("div#divLoading").addClass('show');
+});
 
-    var checkedCheckBox = false;
 
-    $("#searchData input[type=checkbox]:checked").each(function () {
-        checkedCheckBox = true;
+$(document).on('click', '#update_button', function(event) {
+
+var all_itemgroupname = true;
+var all_itemgroupname_arr = [];
+
+var all_sequence = true;
+var all_sequence_arr = [];
+var all_correct = true;
+
+var checkedCheckBox = false;
+
+$("#searchData input[type=checkbox]:checked").each(function () {
+    checkedCheckBox = true;
+});
+
+if(checkedCheckBox === false){
+    bootbox.alert({
+        size: 'small',
+        title: "Attention",
+        message: "You did not select anything",
+        callback: function(){location.reload(true);}
+    });
+    $("div#divLoading").removeClass('show');
+    return false;
+}
+
+$('.quick_vitemgroupname').each(function(){
+  if($(this).val() == ''){
+    // alert('Please Enter Group Name');
+
+    bootbox.alert({
+      size: 'small',
+      title: "Attention",
+      message: "Please Enter Group Name",
+      callback: function(){}
     });
 
-    if(checkedCheckBox === false){
-        bootbox.alert({
-            size: 'small',
-            title: "Attention",
-            message: "You did not select anything",
-            callback: function(){location.reload(true);}
-        });
-        $("div#divLoading").removeClass('show');
-        return false;
+    all_itemgroupname = false;
+    all_correct = false;
+    return false;
+  }else{
+    if(jQuery.inArray($(this).val(), all_itemgroupname_arr) !== -1){
+      // alert('Please Enter Unique Group Name');
+
+      bootbox.alert({
+        size: 'small',
+        title: "Attention",
+        message: "Please Enter Unique Group Name",
+        callback: function(){}
+      });
+
+      all_itemgroupname = false;
+      all_correct = false;
+      return false;
+    }else{
+      all_itemgroupname_arr.push($(this).val());
+      all_itemgroupname = true;
     }
+  }
+});
 
-    $('.quick_vitemgroupname').each(function(){
-      if($(this).val() == ''){
-        // alert('Please Enter Group Name');
+if(all_itemgroupname == true){
+  $('.quick_sequence').each(function(){
+    if($(this).val() == ''){
+      // alert('Please Enter Sequence');
 
+      bootbox.alert({
+        size: 'small',
+        title: "Attention",
+        message: "Please Enter Sequence",
+        callback: function(){}
+      });
+
+      all_sequence = false;
+      all_correct = false;
+      return false;
+    }else{
+      if(jQuery.inArray($(this).val(), all_sequence_arr) !== -1){
+        // alert('Please Enter Unique Sequence');
         bootbox.alert({
           size: 'small',
           title: "Attention",
-          message: "Please Enter Group Name",
+          message: "Please Enter Unique Sequence",
           callback: function(){}
         });
 
-        all_itemgroupname = false;
+        all_sequence = false;
         all_correct = false;
         return false;
       }else{
-        if(jQuery.inArray($(this).val(), all_itemgroupname_arr) !== -1){
-          // alert('Please Enter Unique Group Name');
-
-          bootbox.alert({
-            size: 'small',
-            title: "Attention",
-            message: "Please Enter Unique Group Name",
-            callback: function(){}
-          });
-
-          all_itemgroupname = false;
-          all_correct = false;
-          return false;
-        }else{
-          all_itemgroupname_arr.push($(this).val());
-          all_itemgroupname = true;
-        }
+        all_sequence_arr.push($(this).val());
+        all_sequence = true;
       }
-    });
-
-    if(all_itemgroupname == true){
-      $('.quick_sequence').each(function(){
-        if($(this).val() == ''){
-          // alert('Please Enter Sequence');
-
-          bootbox.alert({
-            size: 'small',
-            title: "Attention",
-            message: "Please Enter Sequence",
-            callback: function(){}
-          });
-
-          all_sequence = false;
-          all_correct = false;
-          return false;
-        }else{
-          if(jQuery.inArray($(this).val(), all_sequence_arr) !== -1){
-            // alert('Please Enter Unique Sequence');
-            bootbox.alert({
-              size: 'small',
-              title: "Attention",
-              message: "Please Enter Unique Sequence",
-              callback: function(){}
-            });
-
-            all_sequence = false;
-            all_correct = false;
-            return false;
-          }else{
-            all_sequence_arr.push($(this).val());
-            all_sequence = true;
-          }
-        }
-      });
     }
+  });
+}
 
     if(all_correct == true){
         <?php if(session()->get('hq_sid') == 1) { ?>
@@ -311,17 +342,7 @@ Quick Items
             $("div#divLoading").addClass('show');
         <?php } ?>
     }
-  });
-    var stores = [];
-    stores.push("{{ session()->get('sid') }}");
-     $('#selectAllCheckbox').click(function(){
-        if($('#selectAllCheckbox').is(":checked")){
-            $(".stores").prop( "checked", true );
-        }else{
-            $( ".stores" ).prop("checked", false );
-        }
     });
-
     $("#save_btn").click(function(){
         $.each($("input[name='stores']:checked"), function(){
             stores.push($(this).val());
@@ -333,19 +354,14 @@ Quick Items
 
     $(document).on('keypress keyup blur', '.quick_sequence', function(event) {
 
-        $(this).val($(this).val().replace(/[^\d].+/, ""));
+    $(this).val($(this).val().replace(/[^\d].+/, ""));
         if ((event.which < 48 || event.which > 57)) {
             event.preventDefault();
         }
 
     });
-</script>
 
-<!-- DataTables -->
-
-<script src="{{ asset('javascript/select2/js/select2.min.js') }}" type="text/javascript"></script>
-
-<script type="text/javascript">
+//  ================ Delete Code =======================
 
     $(document).ready(function() {
       var table = $('#item').DataTable({
@@ -382,7 +398,13 @@ Quick Items
         table.columns(4).search(this.value).draw();
     });
 
-  $("#vendor_paginate").addClass("pull-right");
-</script>
+    $("#vendor_paginate").addClass("pull-right");
 
+
+</script>
+<style>
+    .disabled {
+        pointer-events:none; //This makes it not clickable
+    }
+</style>
 @endsection

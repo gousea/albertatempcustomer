@@ -1,114 +1,193 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'End Of Day')
 @section('main-content')
+<link rel="stylesheet" href="{{ asset('asset/css/promotion.css') }}">
 
 <div id="content">
-    <div class="page-header">
-      <div class="container-fluid">
-        <!-- <h1><?php echo $heading_title; ?></h1> -->
-        <ul class="breadcrumb">
-          <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-          <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-          <?php } ?>
-        </ul>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-      <?php } ?>
-      <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-      <?php } ?>
-      <div class="panel panel-default">
-        <div class="panel-heading head_title">
-          <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+    
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Perform End of Day  </span>
+                </div>
+                
+            </div> <!-- navbar-collapse.// -->
         </div>
-        <div class="panel-body">
-  
-          
-          <div class="clearfix"></div>
-            
-          <form action="/end_of_day" method="post" enctype="multipart/form-data" id="form-end-of-day-shift">
-            @csrf
-            <div class="row">
-              <div class="col-md-3">
-                <input type="" class="form-control" name="start_date" value="<?php echo isset($start_date) ? $start_date : ''; ?>" id="select_date" placeholder="Select Start Date">
-              </div>
-              <div class="col-md-4">
-                <select name="batch[]" class="form-control" id="batch" multiple="true">
-                  <option value="">-- Please Select Batch --</option>
-                  <?php if(isset($batches) && count($batches) > 0){?>
-                    <?php foreach($batches as $batch){?>
-                      <?php if(isset($selected_batch_ids) && in_array($batch['ibatchid'], $selected_batch_ids)){?>
-                        <option selected="selected" value="<?php echo $batch['ibatchid']?>"><?php echo $batch['vbatchname']?></option>
-                      <?php } else { ?>
-                        <option value="<?php echo $batch['ibatchid']?>"><?php echo $batch['vbatchname']?></option>
-                      <?php } ?>
-                    <?php } ?>
-                  <?php } ?>
-                </select>
-              </div>
-              <div class="col-md-4">
-                <input type="submit" class="btn btn-success" name="add_end_of_shift" value="Add End of Day Shift">
-              </div>
+    </nav>
+
+    <section class="section-content py-6">
+        <div class="container">
+            <?php if ($error_warning) { ?>
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            <?php } ?>
+
+            <?php if ($success) { ?>
+                <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            <?php } ?>
+
+            <div class="mytextdiv mb-3">
+                <div class="mytexttitle font-weight-bold text-uppercase">
+                Perform End of Day
+                </div>
+                <div class="divider font-weight-bold"></div>
             </div>
-          </form>
-          <br>
-          <h4><b>Baches already associated with : <span id="selected_date"></span></b></h4>
-          <div id="batch_data" class="col-md-4 table-responsive">
-                <table class="table" style="border:none;" id="batch_table">
+            <form action="/end_of_day" method="post" enctype="multipart/form-data" id="form-end-of-day-shift">
+                @csrf
+                <div class="row">
+                <div class="col-md-3">
+                    <input type="" class="form-control" name="start_date" value="<?php echo isset($start_date) ? $start_date : ''; ?>" id="select_date" placeholder="Select Start Date">
+                </div>
+                <div class="col-md-4">
+                    <select name="batch[]" class="form-control" id="batch" multiple="true">
+                    <option value="">-- Please Select Batch --</option>
+                    <?php if(isset($batches) && count($batches) > 0){?>
+                        <?php foreach($batches as $batch){?>
+                        <?php if(isset($selected_batch_ids) && in_array($batch['ibatchid'], $selected_batch_ids)){?>
+                            <option selected="selected" value="<?php echo $batch['ibatchid']?>"><?php echo $batch['vbatchname']?></option>
+                        <?php } else { ?>
+                            <option value="<?php echo $batch['ibatchid']?>"><?php echo $batch['vbatchname']?></option>
+                        <?php } ?>
+                        <?php } ?>
+                    <?php } ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" style="background-color: #286fb7 !important; color: #fff;" class="btn" name="add_end_of_shift" value="Add End of Day Shift">
+                </div>
+                </div>
+            </form>
+
+            <div class="mytextdiv mb-3">
+                <div class="mytexttitle font-weight-bold text-uppercase">
+                Baches already associated with : <span id="selected_date"></span>
+                </div>
+                <div class="divider font-weight-bold"></div>
+            </div>
+            <!-- <h4><b>Baches already associated with : <span id="selected_date"></span></b></h4> -->
+            <div id="batch_data" class="table-responsive">
+                <table class="table" style="border:none; width: 100%; border-collapse: separate; border-spacing:0 5px !important;" id="batch_table">
                     
-                    <tr>
+                    <!-- <tr>
                         <th style="width: 1px;" class="text-center">
                             <input type="checkbox" name="selected_batchid[]" id="main_checkbox" value=" " onclick="$('input[name*=\'selected_batchid\']').prop('checked', this.checked);" style="color:black;" />
                         </th>
                         <th> Batch Id</th>
-                    </tr>
+                    </tr> -->
                     
                     <?php if(isset($batchdata_assoicited) && !empty($batchdata_assoicited)) { ?>
                         <?php foreach($batchdata_assoicited as $val) { ?>
                             <tr class="row_data">
-                                <td><input type="checkbox" name="selected_batchid[]" value="<?=$val['batchid'];?>" data-eodid="<?=$val['eodid'];?>"></td>
-                                <td><?=$val['batchid'];?></td>
+                                <td style="width: 1px;"><input type="checkbox" name="selected_batchid[]" value="<?=$val['batchid'];?>" data-eodid="<?=$val['eodid'];?>"></td>
+                                <td style="color: #286fb7 !important;"><?=$val['batchid'];?></td>
                             </tr>
                         <?php } ?>
                     <?php } ?>
                         
                 </table>
                 
-                <div class="row" id="reopen_btn">
-                    <button class="btn btn-success" id="reopen_batch">Re-Open Selected Close Btaches</button>
+                <div class="row ml-1" id="reopen_btn">
+                    <button style="background-color: #286fb7 !important; color: #fff;" class="btn" id="reopen_batch">Re-Open Selected Close Btaches</button>
                 </div>
                 
-                <div class="row" id="info_msg">
+                <div class="row ml-1" id="info_msg">
                     <span class="text-danger">No Data Found..</button>
                 </div>
-          </div>
-          
+            </div>
+
+        </div>
+    </section>
+  </div>
+
+
+
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+     Modal content
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"></p>
         </div>
       </div>
-        
     </div>
   </div>
+</div>
+
+
+<div class="modal fade" id="sucModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 
-@section('scripts')
+@section('page-script')
 
-<!--<link type="text/css" href="view/javascript/bootstrap-datepicker.css" rel="stylesheet" />
+<!-- <link type="text/css" href="view/javascript/bootstrap-datepicker.css" rel="stylesheet" />
 <script src="view/javascript/bootstrap-datepicker.js" defer></script>
-<script src="view/javascript/bootbox.min.js" defer></script>-->
+<script src="view/javascript/bootbox.min.js" defer></script> -->
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet"> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script> -->
+    
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
+
 <script type="text/javascript">
 $.ajaxSetup({
     headers: {
@@ -118,38 +197,27 @@ $.ajaxSetup({
   $(document).on('submit', '#form-end-of-day-shift', function(event) {
 
     if($('#select_date').val() == ''){
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: "Please Select Date", 
-        callback: function(){}
-      });
-      return false;
+        $('#warning_msg').html('Please Select Date');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
+        return false;
     }
 
     if($('#batch').val() == ''){
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: "Please Select Batch", 
-        callback: function(){}
-      });
-      return false;
+        $('#warning_msg').html('Please Select Batch');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
+        return false;
     }
 
     if($('#batch :selected').length == 0){
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: "Please Select Batch", 
-        callback: function(){}
-      });
-      return false;
+      
+        $('#warning_msg').html('Please Select Batch');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
+        return false;
     }
-
     $("div#divLoading").addClass('show');
-    
-
   });
 </script>
 
@@ -165,11 +233,7 @@ $.ajaxSetup({
 
 <?php echo $footer; ?>
 
-<script type="text/javascript">
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
-</script>
+
 <script>
     $(document).ready(function() {
         
@@ -185,13 +249,11 @@ $.ajaxSetup({
         $('#selected_date').text(select_date);
         
         $(document).on('change', '#select_date',function(){ 
-           var start_date;
+            var start_date;
             var reportdata_url = '<?php echo $reportdata_associated; ?>';
             reportdata_url  = reportdata_url.replace(/&amp;/g, '&');
             var start_date1 = $('input[name="start_date"]').val();
             
-            
-            console.log(start_date1);
             if(start_date != "")
             {
                 $.ajax({
@@ -217,7 +279,10 @@ $.ajaxSetup({
                         
                         $.each(obj,function(key,val){
                             
-                            var row= '<tr class="row_data"><td><input type="checkbox" name="selected_batchid[]" value="'+val.batchid+'" data-eodid="'+val.eodid+'"></td><td>'+val.batchid+'</td></tr>';
+                            var row= `<tr class="row_data">
+                                        <td style="width: 1px;"><input type="checkbox" name="selected_batchid[]" value="${val.batchid}" data-eodid="${val.eodid}"></td>
+                                        <td style="color: #286fb7 !important;">${val.batchid}</td>
+                                      </tr>`;
                             $('#batch_table').append(row);
                         });
                         // $('#batch_id').select2();
@@ -249,7 +314,7 @@ $.ajaxSetup({
                 }
             });
             reopen_batches = reopen_batches.filter(item => item);
-            console.log(reopen_batches);
+            
             
             if(reopen_batches != "")
             {
@@ -257,21 +322,22 @@ $.ajaxSetup({
                     url     : url,
                     data    : {batch_date:batch_date, reopen_batches:reopen_batches},
                     type    : 'POST',
-                }).done(function(response){
-                    
-                    if(response.error){
-                        $('#error_alias').html('<strong>'+ response.error +'</strong>');
-                        $('#errorAliasModal').modal('show');
-                    }else if(response.success){
-                        $('#success_alias').html('<strong>'+ response.success +'</strong>');
-                        $('#successAliasModal').modal('show'); 
-                        // window.location.reload(false);
-                        
-                        var redirect_url = "<?php echo $current_url; ?>";
-                        redirect_url = redirect_url.replace(/&amp;/g, '&');
-                        
-                        window.location.href = redirect_url;
-                    }
+                    success: function (e) {
+                        $('#success_msg').html('<strong>You have modified End of Day!</strong>');
+                        $("div#divLoading").removeClass('show');
+                        // alert("You have modified End of Day!");
+                        $('#successModal').modal('show');
+                        setTimeout(function(){
+                            $('#successModal').modal('hide');
+                            
+                            window.location.href = '{{ route('end_of_day') }}';
+                        }, 2000);
+                    },
+                    error: function (msg) {
+                        $('#error_msg').html(" End of Day modification failed !");
+                        $("div#divLoading").removeClass('show');
+                        $('#errorModal').modal('show');
+                    },
                     
                     
                 });
