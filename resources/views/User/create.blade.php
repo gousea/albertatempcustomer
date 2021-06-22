@@ -142,10 +142,10 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="main_nav">
                     <div class="menu">
-                        <span class="font-weight-bold text-uppercase"> Create EMPLOYEE</span>
+                        <span class="font-weight-bold"> Create EMPLOYEE</span>
                     </div>
                     <div class="nav-submenu">
-                        <button type="submit" id="saveCustomer" class="btn btn-gray headerblack buttons_menu"><i
+                        <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
                             class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
                         <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small" href="{{ url('/users') }}"> CANCEL
                         </a>
@@ -168,27 +168,28 @@
                             <div class="col-xs-12 checkbox-data">
                                 <div class="form-check col-xs-2 col-xs-offset-1">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="pos device" name="pos" value="pos" {{ old('pos') ? 'checked' : '' }}/>  POS
+                                        <input type="checkbox" class="pos device" name="pos" value="pos" {{ old('pos') ? 'checked' : '' }}/>POS
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="web device" name="web" value="web" {{ old('web') ? 'checked' : '' }}/>  WEB
+                                        <input type="checkbox" class="web device" name="web" value="web" {{ old('web') ? 'checked' : '' }}/>
+                                        WEB
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="mob device" name="mob" value="mob" {{ old('mob') ? 'checked' : '' }}/>  MOBILE
+                                        <input type="checkbox" class="mob device" name="mob" value="mob" {{ old('mob') ? 'checked' : '' }}/>MOBILE
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" name="lb" value="lb" class="lb device" {{ old('lb') ? 'checked' : '' }}/>  LINEBUSTER
+                                        <input type="checkbox" name="lb" value="lb" class="lb device" {{ old('lb') ? 'checked' : '' }}/>LINEBUSTER
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" name="time" value="time" class="time device" {{ old('time') ? 'checked' : '' }}/>  TIMECLOCK
+                                        <input type="checkbox" name="time" value="time" class="time device" {{ old('time') ? 'checked' : '' }}/>TIMECLOCK
                                     </label>
                                 </div>
                             </div>
@@ -205,22 +206,6 @@
                 </div>
                 <div class="divider font-weight-bold"></div>
             </div>
-            @if (session()->has('message'))
-            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i>
-                {{ session()->get('message') }}
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-            @endif
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{$error}}</li>
-                        @endforeach
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    </ul>
-                </div>
-            @endif
             <div class="container py-3">
                 <div class="row">
                     <div class="col-md-12 mx-auto">
@@ -432,7 +417,7 @@
                                             //     $termination_dt = $termination_dt->format('m-d-Y');
                                             // }
                                         ?>
-                                        <input type="text" name="termination_dt" maxlength="25" value="{{ old('termination_dt') }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;"/>
+                                        <input type="text" name="termination_dt" maxlength="25" value="{{ old('termination_dt') }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;" />
                                         {{-- <input type="text" class="form-control promo-fields" id="p_sprice"
                                             placeholder="PROMOTION SLAB PRICE" name="p_sprice"> --}}
                                     </div>
@@ -839,18 +824,18 @@ setInterval(function() {
     if($('.mob').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
-        // document.getElementById("Submit").disabled = false;
+        document.getElementById("Submit").disabled = false;
     }
 
     if($('.web').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
-        // document.getElementById("Submit").disabled = false;
+        document.getElementById("Submit").disabled = false;
     }
 
     if($('.lb').prop("checked") == true){
         // $('#permission_divider').show();
-        // document.getElementById("Submit").disabled = false;
+        document.getElementById("Submit").disabled = false;
     }
 
     if($('.pos').prop("checked") == true){
@@ -878,11 +863,7 @@ setInterval(function() {
     }
 
     if($('.time').prop("checked") == true){
-        // alert('test');
         $('#time_start').show();
-        // $('.webemail').prop('required', true);
-        //  $('.webpass').prop('required', true);
-        //  $('.webconpass').prop('required', true);
         // document.getElementById("Submit").disabled = false;
     }
 
@@ -898,12 +879,12 @@ $(function () {
          $('.webemail').prop('required', true);
          $('.webpass').prop('required', true);
          $('.webconpass').prop('required', true);
-        //  document.getElementById("Submit").disabled = false;
+         document.getElementById("Submit").disabled = false;
      }else{
          $('.webemail').prop('required', false);
          $('.webpass').prop('required', true);
          $('.webconpass').prop('required', true);
-        //  document.getElementById("Submit").disabled = true;
+         document.getElementById("Submit").disabled = true;
      }
   }).change();
 });
@@ -990,7 +971,7 @@ $('.time').click(function () {
     //$('#web_mob').toggle(this.checked);
     if(this.checked){
         $("#time_start").show();
-        // document.getElementById("Submit").disabled = false;
+        document.getElementById("Submit").disabled = false;
 
         if(!$(".web").is(':checked') && !$(".mob").is(':checked') ){
             $("#input-mwpassword").removeAttr("required", "required");
@@ -998,13 +979,15 @@ $('.time').click(function () {
         }
 
         $("#input_tc_pass").attr("required", "required");
-        $("#start_dt").attr("required", "required");
-        $("#termination_dt").attr("required", "required");
-    }else{
+        $("#input_start_dt").attr("required", "required");
+        $("#input_termination_dt").attr("required", "required");
+    }
+    else
+    {
         $("#time_start").hide();
         $("#input_tc_pass").removeAttr("required", false);
-        $("#start_dt").attr("required", false);
-        $("#termination_dt").attr("required", false);
+        $("#input_start_dt").attr("required", "false");
+        $("#input_termination_dt").attr("required", "false");
     }
 });
 
@@ -1013,10 +996,10 @@ $(function () {
      $('#web_mob').toggle(this.checked);
      if(this.checked){
          $('.webemail').prop('required', true);
-        //  document.getElementById("Submit").disabled = false;
+         document.getElementById("Submit").disabled = false;
      }else{
          $('.webemail').prop('required', false);
-        //  document.getElementById("Submit").disabled = true;
+         document.getElementById("Submit").disabled = true;
      }
   }).change();
 });

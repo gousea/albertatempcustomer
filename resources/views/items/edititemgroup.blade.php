@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
   Item Group
@@ -6,13 +6,21 @@
 
 @section('main-content')
 <div id="content">
-    
-  <div class="page-header">
-    <div class="container-fluid">
-      <!-- <h1>Item Group</h1> -->
-      
+  
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase">Item Group</span>
+            </div>
+            <div class="nav-submenu">
+                
+                <button id="save_button_group" data-toggle="tooltip" title="Save" class="btn btn-gray headerblack  buttons_menu" ><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <a style="pointer-events:all;" href="/itemgroup" data-toggle="tooltip" title="Cancel" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
-  </div>
+  </nav>
 
   <div class="container-fluid">
   
@@ -40,34 +48,21 @@
     @endif
 
     <div class="panel panel-default">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title">Item Group</h3>
-      </div>
+      
       <div class="panel-body">
-        <div class="row" style="padding-bottom: 9px;float: right;">
-          <div class="col-md-12">
-            <div class="">
-              <button id="save_button_group" title="Save" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-              <a href="/itemgroup" data-toggle="tooltip" title="Cancel" class="btn btn-default cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
-            </div>
-          </div>
-        </div>
-        <div class="clearfix"></div>
-
-        <ul class="nav nav-tabs responsive" id="myTab">
-          <!-- <li class="active"><a href="#item_tab" data-toggle="tab" style="background-color: #f05a28;color: #fff !important;pointer-events:none;">General</a></li> -->
-          <!--<li><a class="add_new_btn_rotate" href="https://customer.albertapayments.com/index.php?route=administration/group_slab_pricing&amp;token=lITyzK27IaERMkBz8AUBfX9hrH2neA01&amp;iitemgroupid=111" style="color: #fff !important;background-color: #03A9F4;">Group Slab Pricing</a></li>-->
-        </ul>
+        
 
         <form action="updategroupdetail" method="post"  id="form-group" class="form-horizontal">
           @csrf
-          <input type="hidden" name="iitemgroupid" value="{{$groupname->iitemgroupid}}">
+
+          <div class="container section-content">
+            <input type="hidden" name="iitemgroupid" value="{{$groupname->iitemgroupid}}">
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group required">
                   <label class="col-sm-4 control-label" for="input-group">Group Name</label>
                   <div class="col-sm-8">
-                    <input type="text" maxlength="100" name="vitemgroupname" value="{{$groupname->vitemgroupname}}" placeholder="Group Name" class="form-control" required="">
+                    <input type="text" maxlength="100" name="vitemgroupname" value="{{$groupname->vitemgroupname}}" placeholder="Group Name" class="form-control adjustment-fields" required="">
                     <input type="hidden" maxlength="100" name="iitemgroupid" value="{{$groupname->iitemgroupid}}" >
                   </div>
                 </div>
@@ -76,25 +71,26 @@
                 <div class="form-group">
                   <label class="col-sm-4 control-label" for="input-template">Item Type</label>
                   <div class="col-sm-8">
-                    <select name="vtype" id="vtype" class="form-control">
+                    <select name="vtype" id="vtype" class="form-control adjustment-fields">
                       <option value="">Please Select</option>
                       <option value="Product" selected="selected">Product</option>
                     </select>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
 
-          <br><br><br>
+          <br><br>
           <div class="row">
 
           <form action="" method="post"  id="groupsearch" >
             @csrf
             <div class="col-md-5">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover" style="background: none;" style="padding:0px; margin:0px;" name="table1" id='leftItemSelectTable'>
+                <table class="table table-hover promotionview" style="padding:0px; margin:0px; left:3%;" name="table1" id='leftItemSelectTable'>
                   <thead>
-                    <tr>
+                    <tr class="header-color">
                       <td style="width: 1px;" class="text-center">
                         <input type="checkbox" style="background: none;" onclick="$('input[name*=\'table1\']').prop('checked', this.checked)" name="table1">
                       </td>
@@ -104,13 +100,13 @@
                       <td style="width:242px;">
                         <input type="text" class="form-control search_c" id="itemsort1_search_item_name" placeholder="Name" style="border:none;">
                       </td>
-                      <td class="text-right" style="width:100px;">Price</td>
+                      <td class="text-right" style="width:100px; padding-top: 20px;">Price</td>
                     </tr>
                   </thead>
                 </table>
                 <div class="div-table-content">
-                  <table class="table table-bordered table-hover" id="itemsort1" style="table-layout: fixed;">
-                    <tbody id="searchData">
+                  <table class="table table-hover promotionview" id="itemsort1" style="table-layout: fixed; left:3%;">
+                    <tbody id="searchData" style="display: block; height:400px; overflow-y : scroll;">
                         
                     </tbody>
                   </table>
@@ -129,23 +125,23 @@
               </div>
             <div class="col-md-5">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" name="table2">
+                <table class="table table-hover promotionview" style="padding:0px; margin:0px; left:3%;" name="table2">
                   <thead>
-                    <tr>
+                    <tr class="header-color">
                       <td style="width:1%;" class="text-center">
                         <input style="background: none;"  type="checkbox" onclick="$('input[name*=\'table2\']').prop('checked', this.checked)" name="table2">
                       </td>
                       <td style="width:242px;">
                         <input type="text" class="form-control itemsort2_search" placeholder="Name" style="border:none;">
                       </td>
-                      <td class="text-right" style="width:100px;">Sequence</td>
-                      <td class="text-right">Price</td>
+                      <td class="text-right" style="width:100px; padding-top: 20px;">Sequence</td>
+                      <td class="text-right" style="padding-top: 20px;">Price</td>
                     </tr>
                   </thead>
                 </table>
                 <div class="div-table-content" style="">
-                  <table class="table table-bordered table-hover" id="itemsort2">
-                    <tbody>
+                  <table class="table table-hover promotionview" id="itemsort2" style="left:3%;">
+                    <tbody style="display: block; height:400px; overflow-y : scroll;">
                     @foreach($groupdetail as $gpd)
                       <tr>
                         <td class="text-center" style="width:1%;">
@@ -180,7 +176,7 @@
 </div>
 
 <?php if(session()->get('hq_sid') == 1){ ?>
-<!-- Modal -->
+  <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <!-- Modal content-->
@@ -215,7 +211,9 @@
 <?php } ?>
 @endsection
 
-@section('scripts')
+@section('page-script')
+
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
 <script>
   itemsSelected = [];
@@ -430,7 +428,7 @@ $(document).on('click','#save_button_group', function(e){
     if(avArr.length < 1){
         bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "You did not select anything", 
             callback: function(){location.reload(true);}
         });
@@ -485,9 +483,10 @@ $(document).on('click','#save_button_group', function(e){
             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
             url: '/updatedata',
             contentType: 'application/json',
-            data: JSON.stringify({grpid: grpid, grpname:grpName, barcodes: avArr}) // access in body
-        }).success(function (e) {
-            location.replace('/itemgroup');
+            data: JSON.stringify({grpid: grpid, grpname:grpName, barcodes: avArr}), // access in body
+            success: function (e) { 
+                  location.replace('/itemgroup');
+                },
         }).fail(function (msg) {
             //console.log('FAIL');
             let mssg = '<div class="alert alert-danger">';
@@ -508,7 +507,7 @@ $(document).on('click','#save_button_group', function(e){
           
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: mssg, 
                 callback: function(){
                     // location.reload(true);
@@ -571,7 +570,7 @@ $(document).on('click','#save_button_group', function(e){
             mssg += '</div>';
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: mssg, 
                 callback: function(){
                     // location.reload(true);

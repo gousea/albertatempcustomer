@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.master')
   
 @section('title', 'Manual Sales Entry')
 
@@ -17,85 +17,82 @@
 @endsection
 
 @section('main-content')
-
-<link rel="stylesheet" href="{{ asset('asset/css/promotion.css') }}">
-
 <div id="content">
-    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-        <div class="container">
-            <div class="collapse navbar-collapse" id="main_nav">
-                <div class="menu">
-                    <span class="font-weight-bold text-uppercase">Manual Sales Entry</span>
-                </div>
-                <div class="nav-submenu">
-                    <button type="button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu ">&nbsp;&nbsp;Print Options</button>
-                </div>
-            </div> <!-- navbar-collapse.// -->
+    <div class="page-header">
+        <div class="container-fluid">
+          
+          <!-- <h1><?php //echo $heading_title; ?></h1> -->
+          <ul class="breadcrumb">
+            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
+            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
+            <?php //} ?>
+          </ul>
         </div>
-    </nav>
-    <section class="section-content py-6">
-        <div class="container">
-            <form method="POST" id="filter_form" action="{{ route('eodsetting_getlist') }}">
-                @csrf   
-                <div class="mytextdiv mb-3">
-                    <div class="mytexttitle font-weight-bold text-uppercase">
-                    Date Selection
-                    </div>
-                    <div class="divider font-weight-bold"></div>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        
-                        <div class='col-md-3' style="width:250px;">
-                            <div class="form-group">
-                                <div class='input-group date' id='start_date_container'>
-                                    <input type='text' style="height: 33px !important; font-size: 15px;" class="form-control datePicker" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Start Date" readonly/>
-                                </div>
-                            </div>
-                            
-                                        
-                            <div class='col-md-0'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='start_date_container'>
-                                        <input type='hidden' class="form-control datePicker" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>
-            
-                                    </div>
-                                </div>
-                            </div>
-                        
-
-                            <div class='col-md-0'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='end_date_container'>
-                                        <input type='hidden' class="form-control datePicker" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly/>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-        
-                        <div class="col-md-2">
-                            <input type="submit" class="btn buttons_menu" style="background-color: #286fb7 !important; height: 33px !important; color: #fff; font-size: 13px;"  value="Generate">
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <div class="mytextdiv mb-3">
-                <div class="mytexttitle font-weight-bold text-uppercase">
-                BATCHES
-                </div>
-                <div class="divider font-weight-bold"></div>
+    </div>
+    
+    <div class="container-fluid">
+       <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-list"></i>Manual Sales Entry</h3>
             </div>
-            @if(isset($data) && count($data))
-                <table class="table table-striped table-hover"  style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
-                    <tr style="background-color: #286fb7!important;">
+          
+            <div class="panel-body">
+
+                <div class="row">
+                    <form method="POST" id="filter_form" action="{{ route('eodsetting_getlist') }}">
+                        @csrf   
+                        
+                        <div class="container">
+                            <div class="row">
+                                
+                                <div class='col-md-3' style="width:250px;">
+                                    <div class="form-group">
+                                        <div class='input-group date' id='start_date_container'>
+                                            <input type='text' class="form-control datePicker" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Start Date" readonly/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                             
+                                    <div class='col-md-0'>
+                                        <div class="form-group">
+                                            <div class='input-group date' id='start_date_container'>
+                                                <input type='hidden' class="form-control datePicker" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>
+                    
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+
+                                    <div class='col-md-0'>
+                                        <div class="form-group">
+                                            <div class='input-group date' id='end_date_container'>
+                                                <input type='hidden' class="form-control datePicker" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly/>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+              
+                                <div class="col-md-2">
+                                    <input type="submit" class="btn btn-success" value="Generate">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                @if(isset($data) && count($data))
+                <table class="table table-bordered table-striped table-hover">
+                    <tr>
                         <th><input type='checkbox' class='' id='selectAll'></th>
-                        <th class="col-xs-1 headername text-uppercase text-light">EOD Date</th>
-                        <th class="col-xs-1 headername text-uppercase text-light">Batch ID</th>
-                        <th class="col-xs-1 headername text-uppercase text-light">Taxable Sales</th>
-                        <th class="col-xs-1 headername text-uppercase text-light">Non Taxable Sales</th>
-                        <th class="col-xs-1 headername text-uppercase text-light">Total Tax</th>
-                        <th class="col-xs-1 headername text-uppercase text-light">Net Sales</th>
+                        <th>EOD Date</th>
+                        <th>Batch ID</th>
+                        <th>Taxable Sales</th>
+                        <th>Non Taxable Sales</th>
+                        <th>Total Tax</th>
+                        <th>Net Sales</th>
                     </tr>
                     
                     @foreach($data as $batch)
@@ -112,7 +109,7 @@
                 </table>
                 <div class='row'>
                     <div class='col-md-12'>
-                        <input type="button" class="btn buttons_menu pull-left" style="background-color: #286fb7 !important; height: 33px !important; color: #fff; font-size: 13px;" id='adjust' value="Adjust" disabled>
+                        <input type="button" class="btn pull-right" id='adjust' value="Adjust" disabled>
                     </div>
                 </div>
                 @elseif(isset($data))
@@ -121,66 +118,63 @@
                         There are no batches related to that date range
                     </div>
                 </div>
-            @else
+                @else
                     <!-- To display when the page is loaded for the first time -->
-            @endif
+                @endif
+            </div>
         </div>
-    </section>
-
+    </div>
 </div>
 
 
-
-
-<div class="modal fade bd-example-modal-lg"  id="taxSettingsModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
-  <div class="modal-dialog modal-lg">
+<div class="modal fade" id="taxSettingsModal" role="dialog">
+<div class="modal-dialog">
 
   <!-- Modal content-->
-  <div class="modal-content p-3" style=" border-radius: 1.3rem !important;">
-    
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title" style="font-size:17px;">Select the appropriate options</h4>
+    </div>
     <div class="modal-body">
-        <div class="mytextdiv mb-3">
-            <div class="mytexttitle font-weight-bold text-uppercase">
-            Add Amount By
+
+        <div class='row row-margin-05'>
+            <div class='col-md-4'>
+                <i class="fa fa-info-circle" style='color:red;' title='You can subtract by entering negative values'></i>
+                Add Amount By
             </div>
-            <div class="divider font-weight-bold"></div>
+            <div class='col-md-4 checkboxes'><input type='radio' name='addAmtBy' value='Dollar' checked> Dollars ($)</div>
+            <div class='col-md-4'><input type='radio' name='addAmtBy' value='Percent'> Percentage (%)</div>
         </div>
-        <div style="margin-left: 20px;">
-            <input type='radio' name='addAmtBy' value='Dollar' checked> Dollars ($) <br />
-            <input type='radio' name='addAmtBy' value='Percent'> Percentage (%)
-        </div> 
-       
-        <div class="mytextdiv mb-4 mt-3" >
-            <div class="mytexttitle font-weight-bold text-uppercase">
-            Values
-            </div>
-            <div class="divider font-weight-bold"></div>
+        
+        
+        <div class='row row-margin-10'>
+            <div class='col-md-6'><b>Taxable</b></div>
+            <div class='col-md-6'><b>Non -Taxable</b></div>
         </div>
-
-        <div class="row" style="margin-left: 20px;">
-            <div class="col-md-6" style="border-right: 1px solid #286fb7; height: 200px;">
-                <h5>Taxable</h5>
-                <div class='row m-5'> 
-                    <span class='pull-left'>Tax 1</span>
-                    <input type='text' style="border-radius: 5px;" class='floatValue col-md-8 eodSettings ml-2' id='taxableValue1' name='taxable_value_1' />
-                </div>
-
-                <div class='row m-5'> 
-                    <span class='pull-left'>Tax 2</span>
-                    <input type='text' style="border-radius: 5px;" class='floatValue col-md-8 eodSettings ml-2' id='taxableValue2' name='taxable_value_2' />
-                </div>
-
-                <div class='row m-5'> 
-                    <span class='pull-left'>Tax 3</span>
-                    <input type='text' style="border-radius: 5px;" class='floatValue col-md-8 eodSettings ml-2' id='taxableValue3' name='taxable_value_3' />
-                </div>
+        
+        <div class='row row-margin-05'>
+            <div class='col-md-6'> 
+                <div class='col-md-6'><span class='pull-right'>Tax 1</span></div>
+                <div class='col-md-6'><input type='text' class='floatValue col-md-10 eodSettings' id='taxableValue1' name='taxable_value_1' /></div>
             </div>
-            <div class="col-md-6">
-                <h5>Non - Taxable</h5>
-                <div class='row m-5'> 
-                    <span class='pull-left'>Value</span>
-                    <input type='text' style="border-radius: 5px;" class='floatValue col-md-8 eodSettings ml-2' id='nonTaxableValue' name='non_taxable_value' />
-                </div>
+            <div class='col-md-6'> 
+                <div class='col-md-6'><span class='pull-right'>Value</span></div>
+                <div class='col-md-6'><input type='text' class='floatValue col-md-10 eodSettings' id='nonTaxableValue' name='non_taxable_value' /></div>
+            </div>
+        </div>
+        
+        <div class='row row-margin-05'>
+            <div class='col-md-6'> 
+                <div class='col-md-6'><span class='pull-right'>Tax 2</span></div>
+                <div class='col-md-6'><input type='text' class='floatValue col-md-10 eodSettings' id='taxableValue2' name='taxable_value_2' /></div>
+            </div>
+        </div>
+        
+        <div class='row row-margin-05'>
+            <div class='col-md-6'> 
+                <div class='col-md-6'><span class='pull-right'>Tax 3</span></div>
+                <div class='col-md-6'><input type='text' class='floatValue col-md-10 eodSettings' id='taxableValue3' name='taxable_value_3' /></div>
             </div>
         </div>
         
@@ -190,11 +184,33 @@
             </div>
         </div>
         
-        <div class='row' >
-            <div class="col-md-5"></div>
-            <div class="col-md-7 pull-right mt-3">
-                <input class='btn buttons_menu'  style="background-color: #286fb7 !important; color: #fff;padding: 3px 20px; font-size: 12px; margin-right: 3px !important; " type='button' id='saveValues' value='Save'>
-                <input class='btn buttons_menu btn-danger' type='button' style="padding: 3px 20px; font-size: 12px;" value='Cancel' onclick="$('#taxSettingsModal').modal('hide');">
+        
+        
+        <!--<div class='row row-margin-10'>
+            <div class='col-md-3'></div>
+            <div class='col-md-3'>Tax 1</div>
+            <div class='col-md-3'>Tax 2</div>
+            <div class='col-md-3'>Tax 3</div>
+        </div>
+        
+        <div class='row row-margin-05'>
+            <div class='col-md-3'>Taxable Value</div>
+            <div class='col-md-3'><input type='text' class='floatValue col-md-10' id='taxableValue' name='taxable_value' /></div>
+            <div class='col-md-3'><input type='text' class='floatValue col-md-10' id='taxableValue' name='taxable_value' /></div>
+            <div class='col-md-3'><input type='text' class='floatValue col-md-10' id='taxableValue' name='taxable_value' /></div>
+        </div>
+        
+        <div class='row row-margin-05'>
+            <div class='col-md-3'>Non-Taxable Value</div>
+            <div class='col-md-3'><input type='text' class='floatValue col-md-10' id='nonTaxableValue' name='non_taxable_value'></div>
+            <div class='col-md-3'><input type='text' class='floatValue col-md-10' id='nonTaxableValue' name='non_taxable_value'></div>
+            <div class='col-md-3'><input type='text' class='floatValue col-md-10' id='nonTaxableValue' name='non_taxable_value'></div>
+        </div>-->
+        
+        <div class='row row-margin-20'>
+            <div class='col-md-4 col-md-offset-4'>
+                <input class='btn btn-success col-md-5' type='button' id='saveValues' value='Ok'>
+                <input class='btn btn-danger col-md-5 pull-right' type='button' value='Cancel' onclick="$('#taxSettingsModal').modal('hide');">
             </div>
         </div>
         
@@ -204,7 +220,7 @@
 </div>
 </div>
 @endsection   
-@section('page-script') 
+@section('scripts')  
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -382,8 +398,15 @@
                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                 }
             }, cb);
+        
             cb(start, end);
+            
+            
+        
         });
+      
+      
+      
     });
 
 
@@ -427,7 +450,7 @@
         }
         
         
-    var dates  = $("#dates").val();
+        var dates  = $("#dates").val();
     dates_array =dates.split("-");
     start_date = dates_array[0];
     end_date = dates_array[1];   
@@ -446,14 +469,18 @@
     
     $('input[name="end_date"]').val(end_date);
     
-    var formattedendDate = new Date(end_date);
+     var formattedendDate = new Date(end_date);
     var de = formattedendDate.getDate();
     var me =  formattedendDate.getMonth();
     me += 1;  // JavaScript months are 0-11
     me = ('0'+me).slice(-2);
     
     var ye = formattedendDate.getFullYear();
+    
     $('input[name="end_date"]').val(ye+'-'+me+'-'+de);
+  
+
+        
         $("div#divLoading").addClass('show');
     });
 </script>

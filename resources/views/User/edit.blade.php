@@ -143,7 +143,7 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="main_nav">
                     <div class="menu">
-                        <span class="font-weight-bold text-uppercase"> EDIT EMPLOYEE</span>
+                        <span class="font-weight-bold"> EDIT EMPLOYEE</span>
                     </div>
                     <div class="nav-submenu">
                         <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
@@ -176,7 +176,7 @@
                                                 @if ($users->pos_user == 'Y')
                                                     checked
                                                 @endif
-                                        />  POS
+                                        />POS
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -188,7 +188,8 @@
                                                 @if ($users->web_user == 'Y')
                                                     checked
                                                 @endif
-                                        />  WEB
+                                        />
+                                        WEB
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -200,7 +201,7 @@
                                         @if ($users->mob_user == 'Y')
                                             checked
                                         @endif
-                                     />  MOBILE
+                                     />MOBILE
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -212,7 +213,7 @@
                                             @if ($users->lb_user == 'Y')
                                                 checked
                                             @endif
-                                        />  LINEBUSTER
+                                        />LINEBUSTER
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -221,7 +222,7 @@
                                             @if ($users->time_clock == 'Y')
                                                 checked
                                             @endif
-                                        />  TIMECLOCK
+                                        />TIMECLOCK
                                     </label>
                                 </div>
                             </div>
@@ -238,22 +239,6 @@
                 </div>
                 <div class="divider font-weight-bold"></div>
             </div>
-            @if (session()->has('message'))
-                <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i>
-                    {{ session()->get('message') }}
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                </div>
-            @endif
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{$error}}</li>
-                        @endforeach
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    </ul>
-                </div>
-            @endif
             <div class="container py-3">
                 <div class="row">
                     <div class="col-md-12 mx-auto">
@@ -455,7 +440,7 @@
                                             //     $start_dt = $start_dt->format('m-d-Y');
                                             // }
                                         ?>
-                                        <input type="text" name="start_dt" maxlength="25" value="{{ $users->start_dt }}" placeholder="START DATE" id="start_dt" class="form-control " style="width: 163px;" />
+                                        <input type="text" name="start_dt" maxlength="25" value="{{ $users->start_dt }}" placeholder="START DATE" id="start_dt" class="form-control " style="width: 163px;"/>
                                         {{-- <input type="text" class="form-control promo-fields" id="p_bqty"
                                             placeholder="PROMOTION BUY QTY" name="p_bqty"> --}}
                                     </div>
@@ -472,7 +457,7 @@
                                             //     $termination_dt = $termination_dt->format('m-d-Y');
                                             // }
                                         ?>
-                                        <input type="text" name="termination_dt" maxlength="25" value="{{ $users->termination_dt }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;"/>
+                                        <input type="text" name="termination_dt" maxlength="25" value="{{ $users->termination_dt }}" placeholder="TERMINATION DATE" id="termination_dt" class="form-control" style="width: 163px;" />
                                         {{-- <input type="text" class="form-control promo-fields" id="p_sprice"
                                             placeholder="PROMOTION SLAB PRICE" name="p_sprice"> --}}
                                     </div>
@@ -886,18 +871,18 @@ setInterval(function() {
     if($('.mob').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
-        // document.getElementById("Submit").disabled = false;
+        document.getElementById("Submit").disabled = false;
     }
 
     if($('.web').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
-        // document.getElementById("Submit").disabled = false;
+        document.getElementById("Submit").disabled = false;
     }
 
     if($('.lb').prop("checked") == true){
         // $('#permission_divider').show();
-        // document.getElementById("Submit").disabled = false;
+        document.getElementById("Submit").disabled = false;
     }
 
     if($('.pos').prop("checked") == true){
@@ -925,7 +910,6 @@ setInterval(function() {
     }
 
     if($('.time').prop("checked") == true){
-        // alert('aafdaf');
         $('#time_start').show();
         // document.getElementById("Submit").disabled = false;
     }
@@ -942,12 +926,12 @@ $(function () {
          $('.webemail').prop('required', true);
          $('.webpass').prop('required', true);
          $('.webconpass').prop('required', true);
-        //  document.getElementById("Submit").disabled = false;
+         document.getElementById("Submit").disabled = false;
      }else{
          $('.webemail').prop('required', false);
          $('.webpass').prop('required', true);
          $('.webconpass').prop('required', true);
-        //  document.getElementById("Submit").disabled = true;
+         document.getElementById("Submit").disabled = true;
      }
   }).change();
 });
@@ -1070,15 +1054,15 @@ $('.time').click(function () {
         }
 
         $("#input_tc_pass").attr("required", "required");
-        $("#start_dt").attr("required", "required");
-        $("#termination_dt").attr("required", "required");
+        $("#input_start_dt").attr("required", "required");
+        $("#input_termination_dt").attr("required", "required");
     }
     else
     {
         $("#time_start").hide();
         $("#input_tc_pass").removeAttr("required", false);
-        $("#start_dt").attr("required", "false");
-        $("#termination_dt").attr("required", "false");
+        $("#input_start_dt").attr("required", "false");
+        $("#input_termination_dt").attr("required", "false");
     }
 });
 
@@ -1087,10 +1071,10 @@ $(function () {
      $('#web_mob').toggle(this.checked);
      if(this.checked){
          $('.webemail').prop('required', true);
-        //  document.getElementById("Submit").disabled = false;
+         document.getElementById("Submit").disabled = false;
      }else{
          $('.webemail').prop('required', false);
-        //  document.getElementById("Submit").disabled = true;
+         document.getElementById("Submit").disabled = true;
      }
   }).change();
 });

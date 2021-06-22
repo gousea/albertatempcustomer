@@ -44,7 +44,7 @@
         @csrf
         <div class="mytextdiv">
             <div class="mytexttitle font-weight-bold text-uppercase">
-              POS Settings
+              POS Setting
             </div>
             <div class="divider font-weight-bold"></div>
         </div>
@@ -73,7 +73,7 @@
         </div>
         <div class="mytextdiv">
             <div class="mytexttitle font-weight-bold text-uppercase">
-              Kiosk Settings
+              Kiosk Setting
             </div>
             <div class="divider font-weight-bold"></div>
         </div>
