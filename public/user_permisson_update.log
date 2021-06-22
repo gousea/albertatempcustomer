@@ -17974,3 +17974,132 @@ Insertion Starting Date And time is: 2021-06-22 07:15:11am
 ========================== check email is different one in db
 ========================== else duplicates
 ========================== User Email is already exists
+
+Insertion Starting Date And time is: 2021-06-22 08:18:14am
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== permission group
+========================== check email is different one in db
+========================== duplicates
+========================== else part
+========================== update user
+========================== email
+========================== if email
+Insertion End Date And time is: 2021-06-22 08:18:14am
+
+
+Insertion Starting Date And time is: 2021-06-22 08:18:27am
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== permission group
+========================== else duplicates
+========================== else part
+========================== updt usr
+========================== check pwd entered
+========================== if check pwd entered
+Insertion End Date And time is: 2021-06-22 08:18:27am
+
+
+Insertion Starting Date And time is: 2021-06-22 08:22:29am
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== permission group
+========================== check email is different one in db
+========================== duplicates
+========================== else part
+========================== updt usr
+========================== email
+========================== if email
+Insertion End Date And time is: 2021-06-22 08:22:30am
+
+
+Insertion Starting Date And time is: 2021-06-22 08:30:15am
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission else create
+========================== userpermission else create
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission update foreach
+========================== userpermission else create
+========================== userpermission update foreach
+========================== userpermission list of permission
+========================== userpermission list of permission foreach
+========================== permission group
+========================== check email is different one in db
+========================== else duplicates
+========================== else part
+========================== updt usr
+========================== email
+========================== if email
+Insertion End Date And time is: 2021-06-22 08:30:15am
+
