@@ -170,6 +170,8 @@ class AllUserController extends Controller
                 $res =DB::connection('mysql')->select($sql);
 
                 if(count($res) > 0){
+                    echo "rest";
+                    die;
                     $mst_user = UserDynamic::create([
                         'mob_user'  => $mob_user,
                         'web_user'  => $web_user,
@@ -227,7 +229,8 @@ class AllUserController extends Controller
                 }else{
                     $some_text = '========================== not check whether pos user or mobile & web user '.PHP_EOL;
                     fwrite($myfile, $some_text);
-
+                    echo "rest1";
+                    die;
                      $mst_user = UserDynamic::create([
                         'mob_user'  => $mob_user,
                         'web_user'  => $web_user,
@@ -297,6 +300,8 @@ class AllUserController extends Controller
                     $res =DB::connection('mysql')->select($sql);
 
                     if(count($res) > 0){
+                        echo "rest2";
+                    die;
                         $mst_user = UserDynamic::create([
                         'mob_user'  => $mob_user,
                         'web_user'  => $web_user,
@@ -361,7 +366,8 @@ class AllUserController extends Controller
                     }else{
                         $some_text = '========================== checking for this '.PHP_EOL;
                         fwrite($myfile, $some_text);
-
+                        echo "rest3";
+                    die;
                         $mst_user = UserDynamic::create([
                             'mob_user'  => $mob_user,
                             'web_user'  => $web_user,
@@ -434,7 +440,109 @@ class AllUserController extends Controller
                     $res =DB::connection('mysql')->select($sql);
 
                     if(count($res) > 0){
-                            $mst_user = UserDynamic::create([
+                    //     echo "rest4";
+                    // die;
+
+                    // $vfname = $input['vfname'];
+                    // $vlname = $input['vlname'];
+                    // $vaddress1 = $input['vaddress1'];
+                    // $vaddress2 = $input['vaddress2'];
+                    // $vcity     = $input['vcity'];
+                    // $vstate    = $input['vstate'];
+                    // $vzip      = $input['vzip'];
+                    // $vcountry  = $input['vcountry'];
+                    // $vphone    = $input['vphone'];
+                    // $vuserid   = $input['vuserid'];
+                    // $vusertype   = $input['vusertype'];
+                    // $estatus   = $input['estatus'];
+                    // $vemail   = $input['vemail'];
+
+
+                    // $mob_user  = isset($mob_user) ? $mob_user:'';
+                    // $web_user  = isset($web_user) ? $web_user:'';
+                    // $pos_user  = isset($pos_user) ? $pos_user:'';
+                    // $lb_user  = isset($lb_user) ? $lb_user:'';
+                    // $vfname = isset($vfname) ? $vfname:'';
+                    // $vlname = isset($vlname) ? $vlname:'';
+                    // $vaddress1 = isset($vaddress1) ? $vaddress1:'';
+                    // $vaddress2 = isset($vaddress2) ? $vaddress2:'';
+                    // $vcity = isset($vcity) ? $vcity:'';
+                    // $vstate = isset($vstate) ? $vstate:'';
+                    // $vzip = isset($vzip) ? $vzip:'';
+                    // $vcountry = isset($vcountry) ? $vcountry:'';
+                    // $vphone = isset($vphone) ? $vphone:'';
+                    // $vuserid = isset($vuserid) ? $vuserid:'';
+                    // $vpassword = isset($encdoe_password) ? $encdoe_password:'';
+                    // $vusertype = isset($vusertype) ? $vusertype:'';
+                    // $vpasswordchange = 'No';
+                    // $estatus = isset($estatus) ? $estatus:'';
+                    // $mwpassword = isset($encdoe_mwpassword) ? $encdoe_mwpassword:'';
+                    // $vemail = isset($vemail) ? $vemail:'';
+                    // $time_clock = isset($time_clock) ? $time_clock:'';
+                    // $time_email = isset($time_email) ? $time_email:'';
+                    // $ssn = isset($ssn) ? $ssn:'';
+                    // $pay_type = isset($pay_type) ? $pay_type:'';
+                    // $over_time = isset($over_time) ? $over_time:'';
+                    // $pay_rate = isset($pay_rate) ? $pay_rate:'';
+                    // $tc_password = isset($tc_pass) ? $tc_pass:'';
+                    // $start_dt = isset($start_dt) ? $start_dt:'';
+                    // $termination_dt = isset($termination_dt) ? $termination_dt:'';
+                    // $vacation_hours = isset($vacation_hours) ? $vacation_hours:'';
+                    // $sick_hours = isset($sick_hours) ? $sick_hours:'';
+                    // $available_hours = isset($available_hours) ? $available_hours:'';
+                    // $sun_hours = isset($sun_hours) ? $sun_hours:'';
+                    // $mon_hours = isset($mon_hours) ? $mon_hours:'';
+                    // $tue_hours = isset($tue_hours) ? $tue_hours:'';
+                    // $wed_hours = isset($wed_hours) ? $wed_hours:'';
+                    // $thu_hours = isset($thu_hours) ? $thu_hours:'';
+                    // $fri_hours = isset($fri_hours) ? $fri_hours:'';
+                    // $sat_hours = isset($sat_hours) ? $sat_hours:'';
+
+                    // $mst_user = "INSERT INTO mst_user SET
+                    // mob_user  = $mob_user,
+                    // web_user  = $web_user,
+                    // pos_user  = $pos_user,
+                    // lb_user  = $lb_user,
+                    // vfname = $vfname,
+                    // vlname = $vlname,
+                    // vaddress1 = $vaddress1,
+                    // vaddress2 = $vaddress2,
+                    // vcity = $vcity,
+                    // vstate = $vstate,
+                    // vzip = $vzip,
+                    // vcountry = $vcountry,
+                    // vphone = $vphone,
+                    // vuserid = $vuserid,
+                    // vpassword = $encdoe_password,
+                    // vusertype = $vusertype,
+                    // vpasswordchange = 'No',
+                    // estatus = $estatus,
+                    // mwpassword = $encdoe_mwpassword,
+                    // vemail = $vemail,
+                    // time_clock = $time_clock,
+                    // time_email = $time_email,
+                    // ssn = $ssn,
+                    // pay_type = $pay_type,
+                    // over_time = $over_time,
+                    // pay_rate = $pay_rate,
+                    // tc_password = $tc_pass,
+                    // start_dt = $start_dt,
+                    // termination_dt = $termination_dt,
+                    // vacation_hours = $vacation_hours,
+                    // sick_hours = $sick_hours,
+                    // available_hours = $available_hours,
+                    // sun_hours = $sun_hours,
+                    // mon_hours = $mon_hours,
+                    // tue_hours = $tue_hours,
+                    // wed_hours = $wed_hours,
+                    // thu_hours = $thu_hours,
+                    // fri_hours = $fri_hours,
+                    // sat_hours = $sat_hours,
+                    // SID = '" . (int)(session()->get('sid'))."'";
+                    // $query =  DB::connection('mysql_dynamic')->insert($mst_user);
+
+
+                        $mst_user = UserDynamic::create([
                             'mob_user'  => $mob_user,
                             'web_user'  => $web_user,
                             'pos_user'  => $pos_user,
@@ -456,7 +564,6 @@ class AllUserController extends Controller
                             'SID'       =>  session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $input['vemail'],
-
                             'time_clock'=>$time_clock,
                             'time_email'=>$time_email,
                             'ssn'=>$ssn,
@@ -470,7 +577,6 @@ class AllUserController extends Controller
                             'vacation_hours'=>$vacation_hours,
                             'sick_hours'=>$sick_hours,
                             'available_hours'=>$available_hours,
-
                             'sun_hours'=>$sun_hours,
                             'mon_hours'=>$mon_hours,
                             'tue_hours'=>$tue_hours,
@@ -479,7 +585,11 @@ class AllUserController extends Controller
                             'fri_hours'=>$fri_hours,
                             'sat_hours'=>$sat_hours,
                         ]);
-
+                        // dd($mst_user);
+                        // print_r($mst_user);
+                        // echo "------------";
+                        // echo $mst_user->iuserid;
+                        // die;
                         $main = User::create([
                             'mob_user'  => $mob_user,
                             'web_user'  => $web_user,
@@ -498,7 +608,8 @@ class AllUserController extends Controller
                     }else{
                         $some_text = '========================== else part for this '.PHP_EOL;
                         fwrite($myfile, $some_text);
-
+                        echo "rest5";
+                        die;
                             $mst_user = UserDynamic::create([
                             'mob_user'  => $mob_user,
                             'web_user'  => $web_user,

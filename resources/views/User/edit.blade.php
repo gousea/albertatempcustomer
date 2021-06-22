@@ -244,6 +244,16 @@
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                 </div>
             @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                        @endforeach
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </ul>
+                </div>
+            @endif
             <div class="container py-3">
                 <div class="row">
                     <div class="col-md-12 mx-auto">
@@ -932,12 +942,12 @@ $(function () {
          $('.webemail').prop('required', true);
          $('.webpass').prop('required', true);
          $('.webconpass').prop('required', true);
-         document.getElementById("Submit").disabled = false;
+        //  document.getElementById("Submit").disabled = false;
      }else{
          $('.webemail').prop('required', false);
          $('.webpass').prop('required', true);
          $('.webconpass').prop('required', true);
-         document.getElementById("Submit").disabled = true;
+        //  document.getElementById("Submit").disabled = true;
      }
   }).change();
 });
@@ -1059,14 +1069,14 @@ $('.time').click(function () {
             $("#input-re-mwpassword").removeAttr("required", "required");
         }
 
-        $("#tc_pass").attr("required", "required");
+        $("#input_tc_pass").attr("required", "required");
         $("#start_dt").attr("required", "required");
         $("#termination_dt").attr("required", "required");
     }
     else
     {
         $("#time_start").hide();
-        $("#tc_pass").removeAttr("required", false);
+        $("#input_tc_pass").removeAttr("required", false);
         $("#start_dt").attr("required", "false");
         $("#termination_dt").attr("required", "false");
     }
@@ -1077,10 +1087,10 @@ $(function () {
      $('#web_mob').toggle(this.checked);
      if(this.checked){
          $('.webemail').prop('required', true);
-         document.getElementById("Submit").disabled = false;
+        //  document.getElementById("Submit").disabled = false;
      }else{
          $('.webemail').prop('required', false);
-         document.getElementById("Submit").disabled = true;
+        //  document.getElementById("Submit").disabled = true;
      }
   }).change();
 });
