@@ -992,10 +992,10 @@ $('.time').click(function () {
         $("#time_start").show();
         // document.getElementById("Submit").disabled = false;
 
-        if(!$(".web").is(':checked') && !$(".mob").is(':checked') ){
+        // if(!$(".web").is(':checked') && !$(".mob").is(':checked') ){
             $("#input-mwpassword").removeAttr("required", "required");
             $("#input-re-mwpassword").removeAttr("required", "required");
-        }
+        // }
 
         $("#input_tc_pass").attr("required", "required");
         $("#start_dt").attr("required", "required");
