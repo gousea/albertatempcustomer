@@ -131,12 +131,13 @@
   
     <div class="modal fade" id="reconcileModal" role="dialog">
       <div class="modal-dialog">
-      
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Scan Data Reconciliation Report</h4>
+            <h5 class="modal-title">Scan Data Reconciliation Report</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
           <div class="modal-body">
               <div class='row'>
@@ -158,6 +159,56 @@
       </div>
     </div>
 
+
+
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('page-script')
@@ -273,12 +324,11 @@
         event.preventDefault();
         if($('#manufacturer :selected').length == 0 || $('#manufacturer :selected').val() == ''){
 
-            bootbox.alert({ 
-              size: 'small',
-              title: "Attention", 
-              message: "Please select the manufacturer before selecting the date!", 
-              callback: function(){}
-            });
+           
+            
+            $('#warning_msg').html('Please select the manufacturer before selecting the date!');
+            $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
             return false;
         }
     });
@@ -286,58 +336,44 @@
   $(document).on('submit', 'form#form_scan_data_search', function(event) {
     
     if($('#manufacturer :selected').length == 0 || $('#manufacturer :selected').val() == ''){
-        // alert('Please select department!');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please select manufacturer!", 
-          callback: function(){}
-        });
+        
+        
+        $('#warning_msg').html('Please select manufacturer!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
       
       
     if($('input[name="management_account_number"]').val() == ''){
-        // alert('Please enter management account number Or Retail Control Number!');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please enter management account number Or Retail Control Number!", 
-          callback: function(){}
-        });
+       
+        $('#warning_msg').html('Please enter management account number Or Retail Control Number!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
 
     if($('#week_ending_date').val() == ''){
-        // alert('Please select week ending date!');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please select week ending date!", 
-          callback: function(){}
-        });
+       
+        $('#warning_msg').html('Please select week ending date!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
 
     if(!$('#radioNone').is(':checked') && $('#department_id :selected').length == 0 || $('#department_id :selected').val() == ''){
-        // alert('Please select department!');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please select department!", 
-          callback: function(){}
-        });
+        
+        $('#warning_msg').html('Please select department!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
     
     if(!$('#radioNone').is(':checked') && $('#category_id :selected').length == 0 || $('#category_id :selected').val() == ''){
-        // alert('Please select department!');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please select category!", 
-          callback: function(){}
-        });
+        
+        $('#warning_msg').html('Please select category!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
 
