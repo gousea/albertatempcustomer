@@ -54,15 +54,10 @@
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('promotion') }}">
                                     Promotions </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('buydown') }}"> Buy Down </a></li>
-<<<<<<< HEAD
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('itemgroup') }}"> Item Group </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Quick Item </a></li>
-=======
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Item Group </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('/item/quick_item_list') }}"> Quick Item </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase"
                                     href="{{ url('/item/parent_child_list') }}">Parent Child</a></li>
->>>>>>> 18a11948f9d96559af6e9e4b915a84c7422d7a74
                             </ul>
                         </li>
                     @endif
