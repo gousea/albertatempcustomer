@@ -118,7 +118,7 @@
                 <div class="row" style="margin-top: 25px;" id="">
                     <div class="col-md-12">
                         <div class="col-md-1 pull-right" style="padding-left: 5px;">
-                            <input type="submit" name="Export" value="Generate" class="btn btn-success">
+                            <input type="submit" name="Export" style="background-color: #286fb7 !important; color: #fff;" value="Generate" class="btn">
                         </div>
                     </div>
                 </div>

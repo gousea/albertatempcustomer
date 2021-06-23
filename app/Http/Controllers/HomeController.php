@@ -182,8 +182,8 @@ class HomeController extends Controller
         // return compact('output');
         // return __LINE__;
         
-        $output = $this->get_dashboard_data($request, $sid);
-
+        // $output = $this->get_dashboard_data($request, $sid);
+        $output = [];
         
         // dd(compact('output'));
         
@@ -371,8 +371,8 @@ class HomeController extends Controller
         // $date2 = date('m-d-Y');
         // $edate = $date2 . ' 23:59:59';
         
-        $output = $this->get_dashboard_data($request, $sid);
-        
+        // $output = $this->get_dashboard_data($request, $sid);
+        $output = [];
         // dd($data);
         return view('dashboard', compact('output'));
     }
