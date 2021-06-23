@@ -132,7 +132,7 @@
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('CardReport') }}"> Credit Card Report </a>
                                 </li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Scan Data Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('scan_data_report') }}"> Scan Data Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('SalesTransaction') }}"> Sales Transaction Report
                                     </a></li>
