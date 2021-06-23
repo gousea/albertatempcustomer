@@ -939,6 +939,8 @@ $(function () {
 $(function () {
   $('.pos').change(function () {
      $('#pos').toggle(this.checked);
+     $("#input-mwpassword").removeAttr("required");
+     $("#input-re-mwpassword").removeAttr("required");
      if(this.checked){
          $('.posemail').prop('required', true);
         //  document.getElementById("Submit").disabled = false;

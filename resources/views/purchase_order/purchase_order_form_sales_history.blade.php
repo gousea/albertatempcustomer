@@ -364,7 +364,7 @@
                                         </div>
                                         <div class='col-sm-6'><input type='checkbox' name='include_current_month' value='yes' <?php if(isset($include_current_month) && ($include_current_month === 'yes')){ echo 'checked';} ?> > Include Current Month (<?php echo date('F', strtotime('today')); ?>)</div>
                                     </div>
-                                    <div class='col-sm-3 inputBox row col-sm-6' id='divYear' style='display: none'>
+                                    <div class='col-sm-3 inputBox row' id='divYear' style='display: none'>
                                       
                                         <select class='form-control adjustment-fields' id='inputYear' placeholder='Enter the Year Number' name='input_year'>
                                             <option value='<?php echo date("Y",strtotime("-1 year")); ?>' <?php if($data['year'] === date("Y",strtotime("-1 year"))){ echo 'selected'; } ?> ><?php echo date("Y",strtotime("-1 year")); ?></option>
@@ -394,7 +394,7 @@
                                             <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%;">
                                                 <thead>
                                                     <tr class="header-color" styel="font-size:5px;">
-                                                        <th style="width: 1px;"><input type='checkbox'></th>
+                                                        <th style="width: 1px;"><input type='checkbox' onclick="$('input[name*=\'selected_search_history_items\']').prop('checked', this.checked);"></th>
                                                         <th style="width: 15%;position: relative;">ITEM NAME
                                                           <div class="adjustment-has-search">
                                                             <input type="text" autocomplete="off" id="search_item_name" name="item_name" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
@@ -422,7 +422,7 @@
                                                               <option value="between">Between</option>
                                                             </select>
                                                             <span id='selectByValuesSpan'>
-                                                              <input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box table-heading-fields' placeholder='Enter Amount' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px; padding-left: 5px;' value=''/>
+                                                              <input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box table-heading-fields' placeholder='Enter Amount' style='width:56%;color:black;height:28px;margin-left:5px; padding-left: 5px;' value=''/>
                                                             </span>
                                                           </div>
                                                         </th>
@@ -479,9 +479,9 @@
                                 <div class='row'>
                                     <div class="col-md-12">
                                         
-                                        <div class="box-body table-responsive" id='divTbodyItemListing'  style="height: 400px; font-size:9px;">
+                                        <div class="box-body table-responsive" id='divTbodyItemListing'  style="height: 400px; font-size:9px; width:100%;">
                                             
-                                            <table id='tbodyItemListing' class='table table-striped table-hover promotionview'>
+                                            <table id='tbodyItemListing' class='table table-striped table-hover promotionview' style="width:100%;">
                                                     
                                             </table>
                                             
@@ -512,7 +512,7 @@
                                     <button class="btn button-blue buttons_menu basic-button-small" id="add_selected_items">Add Item</button>&nbsp;&nbsp;
                                     <button class="btn btn-danger buttonred buttons_menu basic-button-small" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
                                  
-                                    <button type="button" class="btn btn-info buttons_menu basic-button-small"<?php if(isset($estatus) && $estatus == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check" value="export">Export</button>
+                                    <button type="button" class="btn btn-info buttons_menu basic-button-small" style="<?php if(isset($estatus) && $estatus == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check" value="export">Export</button>
                                     <span title="You can add more items even after exporting the data by clicking on Add Item" style="font-size:20px; color:red; cursor: pointer;">&#8505;</span>
                                 </div>
 
@@ -951,8 +951,6 @@
     
     $(document).ready(function(){
         
-        
-        
         $("#item_listing_filter").hide();
         $("#item_listing_processing").remove();
         $(".dataTables_scrollBody").remove();
@@ -1061,11 +1059,11 @@
         var html='';
         if(select_by === 'between'){
             
-            html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box" placeholder="Enter Amt" style="width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="{{ $select_by_value_1 ?? '' }}"/>';
-            html += '<input type="text" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box" placeholder="Enter Amt" style="width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="{{ $select_by_value_2 ?? '' }}"/>'
+            html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box table-heading-fields" placeholder="Enter Amt" style="width:27%;color:black;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="{{ $select_by_value_1 ?? '' }}"/>';
+            html += '<input type="text" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box table-heading-fields" placeholder="Enter Amt" style="width:27%;color:black;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="{{ $select_by_value_2 ?? '' }}"/>'
         } else {
             
-            html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box" placeholder="Enter Amt" style="width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;" value="{{ $select_by_value_1 ?? '' }}"/>'
+            html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box table-heading-fields" placeholder="Enter Amt" style="width:56%;color:black;height:28px;margin-left:5px;" value="{{ $select_by_value_1 ?? '' }}"/>'
             // $('#selectByValuesSpan').html('not between');
         }
         $('#selectByValuesSpan').html(html);
@@ -1089,7 +1087,7 @@
             data: input,
             success:function(data) {
                 
-                $('#thCategory').html(data);
+                $('#category_code').html(data);
                 
             }
             
@@ -1116,7 +1114,7 @@
             data: input,
             success:function(data) {
                 
-                $('#thSubCategory').html(data);
+                $('#sub_category_id').html(data);
                 
             }
             
@@ -4046,10 +4044,14 @@ $(document).on('click', '#continue_export', function(event) {
       
     });
 
-
-
-   
-
+    
+    $(document).keypress(
+      function(event){
+        if (event.which == '13') {
+          event.preventDefault();
+        }
+    });
+    
 </script>
 
 

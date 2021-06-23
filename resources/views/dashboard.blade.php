@@ -418,28 +418,20 @@
         "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
         "searching":false,
         "ordering": false,
-
         "pageLength":10,
       });
-
       $("#vendor_paginate").addClass("pull-right");
-
     $(document).ready(function(){
       var temp_sevendaysales = '<?php echo json_encode($output['sevendaysales']); ?>';
       window.sevendaysales = $.parseJSON(temp_sevendaysales);
-
       var temp_sevendaysCustomer = '<?php echo json_encode($output['sevendaysCustomer']); ?>';
       window.sevendaysCustomer = $.parseJSON(temp_sevendaysCustomer);
-
       var temp_dailySummary = '<?php echo json_encode($output['dailySummary']); ?>';
       window.dailySummary = $.parseJSON(temp_dailySummary);
-
       var temp_topItem = '<?php echo json_encode($output['topItem']); ?>';
       window.topItem = $.parseJSON(temp_topItem);
-
       var temp_topCategory = '<?php echo json_encode($output['topCategory']); ?>';
       window.topCategory = $.parseJSON(temp_topCategory);
-
       var temp_customer = '<?php echo json_encode($output['customer']); ?>';
       window.customer = $.parseJSON(temp_customer);
     });
@@ -451,7 +443,6 @@
     $(window).load(function() {
       $("div#divLoading").removeClass('show');
     });
-
     $(document).ready(function(){
         setTimeout(function(){
             if(window.sevenDaySalesArea !== undefined){
@@ -469,11 +460,8 @@
             if(window.cutomerFlow !== undefined){
                 window.cutomerFlow.redraw();
             }
-
         }, 50);
     });
-
-
   </script>
 
 @endsection
