@@ -51,7 +51,7 @@
                           <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
                         @endif
                     <div class="table-responsive">
-                        <table id="department" class="table table-hover employeeview" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                        <table id="vendor" class="table table-hover promotionview" style="width: 100%">
                             <?php if ($items) { ?>
                                 <thead>
                                 <tr style="background-color: #286fb7!important;" >
@@ -206,7 +206,11 @@
     }
 </style>
 
-    <script src=" {{ asset('javascript/bootbox.min.js') }}"></script>
+{{-- <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
+
+    {{-- <script src=" {{ asset('javascript/bootbox.min.js') }}"></script> --}}
     <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -215,6 +219,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <script type="text/javascript">
+
+var table = $('#vendor').DataTable({
+        // "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
+        "dom": 't<<"float-right"p>><"clear">',
+        "searching":true,
+        "destroy": true,
+        "ordering": false,
+        "pageLength":10,
+        "order": [[ 3, "asc" ]]
+    });
+
+    $('#group_name').on('input', function () {
+        table.columns(1).search(this.value).draw();
+    });
+    $('#register_name').on('input', function () {
+        table.columns(2).search(this.value).draw();
+    });
+    $('#sequence').on('input', function () {
+        table.columns(3).search(this.value).draw();
+    });
+    $('#status').on('input', function () {
+        table.columns(4).search(this.value).draw();
+    });
+
+  $("#vendor_paginate").addClass("pull-right");
 
 var stores = [];
 stores.push("{{ session()->get('sid') }}");
@@ -254,7 +283,7 @@ $("#searchData input[type=checkbox]:checked").each(function () {
 if(checkedCheckBox === false){
     bootbox.alert({
         size: 'small',
-        title: "Attention",
+        title: "",
         message: "You did not select anything",
         callback: function(){location.reload(true);}
     });
@@ -268,7 +297,7 @@ $('.quick_vitemgroupname').each(function(){
 
     bootbox.alert({
       size: 'small',
-      title: "Attention",
+      title: "",
       message: "Please Enter Group Name",
       callback: function(){}
     });
@@ -282,7 +311,7 @@ $('.quick_vitemgroupname').each(function(){
 
       bootbox.alert({
         size: 'small',
-        title: "Attention",
+        title: "",
         message: "Please Enter Unique Group Name",
         callback: function(){}
       });
@@ -317,7 +346,7 @@ if(all_itemgroupname == true){
         // alert('Please Enter Unique Sequence');
         bootbox.alert({
           size: 'small',
-          title: "Attention",
+          title: "",
           message: "Please Enter Unique Sequence",
           callback: function(){}
         });
@@ -363,44 +392,17 @@ if(all_itemgroupname == true){
 
 //  ================ Delete Code =======================
 
-    $(document).ready(function() {
-      var table = $('#item').DataTable({
-        "searching": false,
-        "destroy": true,
-        "bLengthChange": false,
-        "pageLength":20
-      });
-    });
-    $(window).load(function() {
-        $("div#divLoading").removeClass('show');
-    });
-
-    var table = $('#vendor').DataTable({
-        // "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
-        "dom": 't<<"float-right"p>><"clear">',
-        "searching":true,
-        "destroy": true,
-        "ordering": false,
-        "pageLength":10,
-        "order": [[ 3, "asc" ]]
-    });
-
-    $('#name').on('input', function () {
-        table.columns(1).search(this.value).draw();
-    });
-    $('#cell_number').on('input', function () {
-        table.columns(2).search(this.value).draw();
-    });
-    $('#email').on('input', function () {
-        table.columns(3).search(this.value).draw();
-    });
-    $('#status').on('input', function () {
-        table.columns(4).search(this.value).draw();
-    });
-
-    $("#vendor_paginate").addClass("pull-right");
-
-
+    // $(document).ready(function() {
+    //   var table = $('#item').DataTable({
+    //     "searching": true,
+    //     "destroy": true,
+    //     "bLengthChange": false,
+    //     "pageLength":10
+    //   });
+    // });
+    // $(window).load(function() {
+    //     $("div#divLoading").removeClass('show');
+    // });
 </script>
 <style>
     .disabled {
