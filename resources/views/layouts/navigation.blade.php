@@ -153,15 +153,15 @@
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('InventoryReport') }}"> Inventory on Hand Report
                                     </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Profit & Loss Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{route('ProfitReport') }}"> Profit & Loss Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('PaidoutReport') }}"> Paid Out Report </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Below Cost Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('BelowCostReport') }}"> Below Cost Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase"
                                         href="{{ route('salesreport') }}"> Sales Report </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Product Listing </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Employee Loss Prevention
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('employeereport') }}"> Employee Loss Prevention
                                         Report </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('itemsummary') }}"> Item Summary Report </a>
                                 </li>
