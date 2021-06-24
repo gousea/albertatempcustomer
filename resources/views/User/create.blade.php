@@ -824,18 +824,18 @@ setInterval(function() {
     if($('.mob').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
     if($('.web').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
     if($('.lb').prop("checked") == true){
         // $('#permission_divider').show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
     }
 
     if($('.pos').prop("checked") == true){
@@ -879,12 +879,12 @@ $(function () {
          $('.webemail').prop('required', true);
          $('.webpass').prop('required', true);
          $('.webconpass').prop('required', true);
-         document.getElementById("Submit").disabled = false;
+        //  document.getElementById("Submit").disabled = false;
      }else{
          $('.webemail').prop('required', false);
          $('.webpass').prop('required', true);
          $('.webconpass').prop('required', true);
-         document.getElementById("Submit").disabled = true;
+        //  document.getElementById("Submit").disabled = true;
      }
   }).change();
 });
@@ -971,7 +971,7 @@ $('.time').click(function () {
     //$('#web_mob').toggle(this.checked);
     if(this.checked){
         $("#time_start").show();
-        document.getElementById("Submit").disabled = false;
+        // document.getElementById("Submit").disabled = false;
 
         if(!$(".web").is(':checked') && !$(".mob").is(':checked') ){
             $("#input-mwpassword").removeAttr("required", "required");
@@ -996,10 +996,10 @@ $(function () {
      $('#web_mob').toggle(this.checked);
      if(this.checked){
          $('.webemail').prop('required', true);
-         document.getElementById("Submit").disabled = false;
+        //  document.getElementById("Submit").disabled = false;
      }else{
          $('.webemail').prop('required', false);
-         document.getElementById("Submit").disabled = true;
+        //  document.getElementById("Submit").disabled = true;
      }
   }).change();
 });

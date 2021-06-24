@@ -14,7 +14,7 @@ Below Cost Report
                        <?php if(isset($reports) && count($reports) > 0){ ?>
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
                             </a>
-                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('BelowCostReportprint')}}}" id="btnPrint">PRINT
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('BelowCostReportprint')}}" id="btnPrint">PRINT
                             </a>
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('BelowCostReportpdf')}}" > PDF
                             </a>

@@ -14,7 +14,7 @@ Inventory On Hand Report
                        <?php if(isset($reports) && count($reports) > 0){ ?>
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
                             </a>
-                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('print_page_inv')}}}" id="btnPrint">PRINT
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('print_page_inv')}}" id="btnPrint">PRINT
                             </a>
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('InventoryReportpdf')}}" > PDF
                             </a>
@@ -59,7 +59,7 @@ Inventory On Hand Report
                                 <div class="col-md-3" >  
                                     <div class="form-group ">
                                       
-                                            <select name="vdepcode[]" class="sample-class"  id="dept_code"  multiple="true">
+                                            <select name="vdepcode[]" class="sample-class"  id="dept_code"  multiple="true" required>
                                                <!--tion value="All">All</option>-->
                                                 <?php if(isset($departments) && count($departments) > 0){?>
                                                     <?php foreach($departments as $department){ ?>
@@ -212,7 +212,7 @@ Inventory On Hand Report
                 negative
                 -->
                 
-                <h4> <font color="red"> <b>Items with zero QOH</b></font></h4>
+                <h5> <font color="red"> <b>Items with zero QOH</b></font></h5>
                 
                 
                  <div class="col-md-12">
@@ -273,7 +273,7 @@ Inventory On Hand Report
                       </tbody>
                     </table>
                     
-                    <h4> <font color="red"> <b>Items with negative QOH</b></font></h4>
+                    <h5> <font color="red"> <b>Items with negative QOH</b></font></h5>
                 
                 
                      <div class="col-md-12">
@@ -533,11 +533,11 @@ $(document).ready(function() {
     });
 </script>  
 <style>
-    .select2-container--default .select2-selection--multiple{
-    border-radius: 9px !important;
-    height: 38px !important;
-    width
-  }
+  /*  .select2-container--default .select2-selection--multiple{*/
+  /*  border-radius: 9px !important;*/
+  /*  height: 38px !important;*/
+  /*  width*/
+  /*}*/
   .select2.select2-container.select2-container--default{
   width: 100% !important;
   }
@@ -545,7 +545,21 @@ $(document).ready(function() {
   .select2-container--default .select2-selection--single .select2-selection__rendered{
     line-height: 38px !important;
   }
-  
+ 
+ 
+/* .select2-selection__rendered {*/
+/*    line-height: 31px !important;*/
+/*}*/
+.select2-selection .select2-selection--multiple {
+    height: 30px !important;
+    border-radius: 9px !important;
+}
+/*.selection{*/
+/*    height: 35px !important;*/
+/*}*/
+/*.select2-selection__arrow {*/
+/*    height: 34px !important;*/
+} 
 </style>
 
 <script type="text/javascript">

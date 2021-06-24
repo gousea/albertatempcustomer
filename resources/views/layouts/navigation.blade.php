@@ -54,15 +54,10 @@
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('promotion') }}">
                                     Promotions </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('buydown') }}"> Buy Down </a></li>
-<<<<<<< HEAD
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('itemgroup') }}"> Item Group </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Quick Item </a></li>
-=======
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Item Group </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('/item/quick_item_list') }}"> Quick Item </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase"
                                     href="{{ url('/item/parent_child_list') }}">Parent Child</a></li>
->>>>>>> 18a11948f9d96559af6e9e4b915a84c7422d7a74
                             </ul>
                         </li>
                     @endif
@@ -137,7 +132,7 @@
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('CardReport') }}"> Credit Card Report </a>
                                 </li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Scan Data Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('scan_data_report') }}"> Scan Data Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('SalesTransaction') }}"> Sales Transaction Report
                                     </a></li>
@@ -148,15 +143,15 @@
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('InventoryReport') }}"> Inventory on Hand Report
                                     </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Profit & Loss Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{route('ProfitReport') }}"> Profit & Loss Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('PaidoutReport') }}"> Paid Out Report </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Below Cost Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('BelowCostReport') }}"> Below Cost Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase"
                                         href="{{ route('salesreport') }}"> Sales Report </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Product Listing </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Employee Loss Prevention
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('employeereport') }}"> Employee Loss Prevention
                                         Report </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('itemsummary') }}"> Item Summary Report </a>
                                 </li>
