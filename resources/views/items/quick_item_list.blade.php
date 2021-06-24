@@ -220,7 +220,7 @@
 
 <script type="text/javascript">
 
-var table = $('#vendor').DataTable({
+    var table = $('#vendor').DataTable({
         // "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
         "dom": 't<<"float-right"p>><"clear">',
         "searching":true,
@@ -333,7 +333,7 @@ if(all_itemgroupname == true){
 
       bootbox.alert({
         size: 'small',
-        title: "Attention",
+        title: "",
         message: "Please Enter Sequence",
         callback: function(){}
       });
