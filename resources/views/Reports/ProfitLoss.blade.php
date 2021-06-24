@@ -1,25 +1,33 @@
-@extends('layouts.master')
-
-@section('title', 'Profit & Loss Report')
+@extends('layouts.layout')
+@section('title')
+Below Cost Report
+@endsection
 @section('main-content')
-<div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
+
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase">Profit & loss Report</span>
+                </div>
+                <div class="nav-submenu">
+                       <?php if(isset($reports) && count($reports) > 0){ ?>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('Profitprint')}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="#" > PDF
+                            </a>
+                        <?php } ?>
+                </div>
+            </div> 
         </div>
-    </div>
-    <div class="container-fluid">
-       <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>Profit & Loss Report</h3>
-            </div>
-            <?php if(isset($reports) && count($reports) > 0){ ?>
+    </nav>
+
+    
+    <div class="container">
+   
+            <?php if(isset($reports_css) && count($reports_css) > 0){ ?>
                 <div class="row" style="padding-bottom: 10px;float: right;">
                             <div class="col-md-12">
                             
@@ -36,13 +44,14 @@
                             </div>
                         </div>
             <?php } ?>
-            <div class="panel-body">
-                <div class="clearfix"></div>
-                <div class="row" style="margin: 10px;">
-                    <form method="post" id="filter_form" action="{{ route('ProfitForm') }}">
+             <br> 
+             <h6><span>DEPARTMENT FILTER </span></h6>
+              <br>       
+        <form method="post" id="filter_form" action="{{ route('ProfitForm') }}">
               @csrf
+              <div class="row" >
                 <div class="col-md-3">
-                  <select name="report_by" class="form-control" id="report_by" required>
+                  <select name="report_by" class="form-control rcorner" id="report_by" required>
                     <option value="">Please Select Report</option>
                     <?php foreach ($byreports as $key => $value){ ?>
                       <?php if(isset($selected_report_by) && ($selected_report_by == $value)){ ?>
@@ -54,7 +63,7 @@
                   </select>
                 </div>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Start Date" readonly>
+                  <input type="text" class="form-control rcorner" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Start Date" readonly>
                 </div>
               
                 <div class="col-md-0">
@@ -64,12 +73,18 @@
                   <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly>
                 </div>
                 <div class="col-md-2">
-                  <input type="submit" class="btn btn-success" value="Generate">
+                  <input type="submit" class="btn btn-success btn btn-success rcorner header-color" value="Generate">
                 </div>
+                
+              </div>  
               </form>
-                </div>
+              <br>
+              <br>
+                   <h6><span>ITEM SUMMARY </span></h6>
+             
+                
                 <?php if(isset($reports) && count($reports) > 0){ ?>
-                    <div class="row" style="margin: 10px;">
+                    <div class="row" style="margin: 10px;display:none">
                     <div class="col-md-12">
                     <p><b>Date Range: </b><?php echo $p_start_date; ?> to <?php echo $p_end_date; ?></p>
                        <p><b>Store Name: </b>{{ session()->get('storeName') }}</p>
@@ -77,18 +92,14 @@
                        <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
                     </div>
                 </div>
-                    <div class="row">
-                        
-                        <div class="table-responsive">
-                            
-                          
-                          <div class="col-md-12">
-                              
-                              <div class="col-md-10">
-                              
-                                  <table class="table table-hover table_display">
-                                      <thead class='header' id="table_header">
-                                      <tr>
+                 
+                    
+                   
+                                <table data-toggle="table" data-classes="table  table-condensed  profit_loss" 
+                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
+                   data-click-to-select="true">
+                                   
+                                      <tr class="headermenublue text-uppercase"> 
                                           <th>Name</th>
                                           <th class='text-right'>Unit Cost</th>
                                           <th class='text-right'>Selling Price</th>
@@ -99,13 +110,13 @@
                                           <th class='text-right'>Gross Profit</th>
                                           <th class='text-right'>Gross Profit(%)</th>
                                       </tr>
-                                      </thead>
+                                      
                                       <?php 
                                       
                                       $total_qty_sold1=$total_total_cost1=$total_total_price1=$total_markup1=$total_gross_profit1=$total_gross_profit_percentage=0;
                                       ?>
-                                      <tr>
-                                          <th> Total:</th>
+                                      <tr  class="headermenublue text-uppercase">
+                                          <th>  GRAND Total</th>
                                           <th></th>
                                           <th></th>
                                           <th class='text-right' id="top_total_qty"> <?php echo $total_qty_sold1 ; ?> </th>
@@ -120,7 +131,7 @@
                                       <?php foreach($out as $r) { ?>
                                           
                                           <?php $i++;?>
-                                          <tr class="first_row" id="child_<?php echo $i;?>">
+                                          <tr class="first_row th_color" id="child_<?php echo $i;?>">
                                               <th><?php echo isset($r['vname']) ? $r['vname']: ''; ?></th>
                                               <th></th>
                                               <th></th>
@@ -135,16 +146,12 @@
                                           <?php foreach($r['details'] as $itmes) { ?>
                                               <?php $total_qty_sold += $itmes['TotalQty']; $total_total_cost += $itmes['TotCostPrice']; $total_total_price += $itmes['TOTUNITPRICE']; $total_markup += $itmes['AmountPer']; $total_gross_profit += $itmes['Amount']
                                                 ;$subtotalgrossprofit +=$itmes['TOTUNITPRICE']-$itmes['TotCostPrice']; ?>
-                                              <tr>
+                                              <tr class="child_<?php echo $i;?>" style="display:none;">
                                                   <td style="display:none;" class="child_<?php echo $i;?>"><?php echo isset($itmes['vITemName']) ? $itmes['vITemName']: ''; ?></td>
                                                   <td style="display:none;" class='child_<?php echo $i;?> text-right'><?php echo "$",isset($itmes['DCOSTPRICE']) ? number_format($itmes['DCOSTPRICE'],2): ''; ?></td>
                                                   <td style="display:none;" class='child_<?php echo $i;?> text-right'><?php echo "$",isset($itmes['dUnitPrice']) ?  number_format($itmes['dUnitPrice'],2): ''; ?></td>
                                                   <td style="display:none;" class='child_<?php echo $i;?> text-right'><?php echo isset($itmes['TotalQty']) ? $itmes['TotalQty']: ''; ?></td>
-                                                  <!-- <?php $Total_Cost=$itmes['DCOSTPRICE']*$itmes['TotalQty'];?>
-                                                   <td style="display:none;" class='child_<?php echo $i;?> text-right'><?php echo "$",number_format($Total_Cost,2); ?></td>
-                                                  <?php $Total_pice=($itmes['dUnitPrice']) *$itmes['TotalQty'];?>
-                                                  <td style="display:none;" class='child_<?php echo $i;?> text-right'><?php echo "$",number_format($Total_pice,2); ?></td>
-                                                  -->
+                                                
                                                   <td style="display:none;" class='child_<?php echo $i;?> text-right'><?php echo isset($itmes['TotCostPrice']) ? $itmes['TotCostPrice']: ''; ?>
                                                   <td style="display:none;" class='child_<?php echo $i;?> text-right'><?php echo "$", isset($itmes['TOTUNITPRICE']) ? number_format($itmes['TOTUNITPRICE'],2): ''; ?></td>
                                               
@@ -160,8 +167,8 @@
                                                  </tr>
                                               
                                           <?php } ?>
-                                          <tr> 
-                                              <th> Sub Total:</th>
+                                          <tr  class="headermenublue text-uppercase"> 
+                                              <th> Sub Total</th>
                                               <th></th>
                                               <th></th>
                                               <th class='text-right'> <?php echo $total_qty_sold ;?> </th>
@@ -206,6 +213,8 @@
                                              ?>
                                       <?php } ?>
                                       </tr>
+                                      
+                                      
                                       <tr style="display:none;">
                                       <br>
                                       <br>
@@ -221,11 +230,10 @@
                                           <th class='text-right' id="bottom_total_geoss_profit_percent"> <?php echo number_format($total_gross_profit_percentage,2),"%"; ?> </th>
                                       </tr>
                                   </table>
-                              </div>
-                          </div>
+                              
                           
-                        </div>
-                      </div>
+                          
+                        
                 <?php }else{ ?>
                     <?php if(isset($p_start_date)){ ?>
                         <div class="row">
@@ -237,18 +245,20 @@
                       </div>
                     <?php } ?>
                 <?php } ?>
-            </div>
-        </div>
+            
+        
     </div>
-</div>
+
 
 @endsection   
-@section('scripts')  
+@section('page-script')
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> 
 <script type="text/javascript" src="{{ asset('javascript/table-fixed-header.js') }}"></script>    
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
 <script>
  $(document).ready(function() {
       $('input[name="dates"]').daterangepicker({
@@ -467,36 +477,36 @@ $(document).ready(function(){
 
 </script>
 <style type="text/css">
-  tr.first_row{
-    cursor:pointer;
-  }
+  /*tr.first_row{*/
+  /*  cursor:pointer;*/
+  /*}*/
 
-  tr.first_row > th{
-    background-color: #585858;
-    color: #fff;
+  /*tr.first_row > th{*/
+  /*  background-color: #585858;*/
+  /*  color: #fff;*/
     /*border: 1px solid #808080 !important;*/
-  }
+  /*}*/
 
-  tr.header > th, tr.header > th > span{
-    font-size: 15px;
-  }
+  /*tr.header > th, tr.header > th > span{*/
+  /*  font-size: 15px;*/
+  /*}*/
 
-  tr.header > th > span{
-    float: right;
-  }
+  /*tr.header > th > span{*/
+  /*  float: right;*/
+  /*}*/
 
-  .header .sign:after{
-    content:"+";
-    display:inline-block;      
-  }
-  .header.expand .sign:after{
-    content:"-";
-  }
+  /*.header .sign:after{*/
+  /*  content:"+";*/
+  /*  display:inline-block;      */
+  /*}*/
+  /*.header.expand .sign:after{*/
+  /*  content:"-";*/
+  /*}*/
 
-  tr.add_space th {
-    border: none !important;
-    padding: 2px !important;
-  }
+  /*tr.add_space th {*/
+  /*  border: none !important;*/
+  /*  padding: 2px !important;*/
+  /*}*/
 </style>
 <script>
 
@@ -623,4 +633,34 @@ $(document).ready(function() {
         }); 
   });
 </script>
+</script>
+<style>
+.rcorner {
+  border-radius:9px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
+.profit_loss {
+    border-collapse: separate;
+    border-spacing: 0px 5px;
+    border-color: #fff;
+}
+
+
+
+</style>
 @endsection
