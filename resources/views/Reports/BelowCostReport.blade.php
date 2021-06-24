@@ -53,7 +53,7 @@ Below Cost Report
                <div class="row" >
               
                 <div class="col-md-3">
-                  <select name="report_by[]" class="form-control" id="report_by" multiple="true">
+                  <select name="report_by[]" class="form-control" id="report_by" multiple="true" required>
     
                   <?php if(isset($selected_byreports) && count($selected_byreports) > 0){ ?>
                         <option value="">Please Select Department</option>
