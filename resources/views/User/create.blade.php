@@ -142,7 +142,7 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="main_nav">
                     <div class="menu">
-                        <span class="font-weight-bold"> Create EMPLOYEE</span>
+                        <span class="font-weight-bold"> CREATE EMPLOYEE</span>
                     </div>
                     <div class="nav-submenu">
                         <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
@@ -153,7 +153,27 @@
                 </div> <!-- navbar-collapse.// -->
             </div>
         </nav>
+                @if (session()->has('message'))
+                    <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                @endif
+                @if (session()->has('error_message'))
+                    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error_message')}}
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                @endif
 
+                <div id='errorDiv'>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                            <i class="fa fa-exclamation-circle"></i>{{$error}}
+                            @endforeach
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+                    @endif
+                </div>
         <div class="container section-content">
             <div class="mytextdiv">
                 <div class="mytexttitle font-weight-bold">
@@ -854,6 +874,8 @@ setInterval(function() {
           $(':input[type="submit"]').prop('disabled', true);
 
         }
+        $("#input-mwpassword").removeAttr("required");
+        $("#input-re-mwpassword").removeAttr("required");
 
         var vemailval = $('.webemail').val();
         if(vemailval == '--'){
