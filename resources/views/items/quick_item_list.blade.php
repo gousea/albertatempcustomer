@@ -114,7 +114,7 @@
                                                 {{-- <span style="display:none;">{{ $item['vitemgroupname'] }}</span>
                                                 <input type="text" maxlength="50" style="border:none;" class="editable quick_vitemgroupname" name="quick_item[{{$i}}][vitemgroupname]" id="quick_item[{{$i}}][vitemgroupname]" value="{{ $item['vitemgroupname'] }}" onclick='document.getElementById("quick_item[{{ $i }}][select]").setAttribute("checked","checked");' />
                                                 <input type="hidden" name="quick_item[{{$i}}][vitemgroupname]" value="{{ $item['vitemgroupname'] }}"/> --}}
-                                                <input style="border: none;" type="text" class="editable quick_vitemgroupname" name="quick_item[{{$i}}][vitemgroupname]" value="{{ $item['vitemgroupname'] }}" onclick='document.getElementById("quick_item[{{ $i }}][select]").setAttribute("checked","checked");' />
+                                                <input style="border: none;" type="text" class="editable quick_vitemgroupname" name="quick_item[{{$i}}][vitemgroupname]" value="{{ $item['vitemgroupname'] }}" onclick='document.getElementById("quick_item[{{$i}}][select]").checked = true;' />
                                             </td>
 
                                             <td>
@@ -125,7 +125,7 @@
                                                 {{-- <span style="display:none;">{{ $item['isequence'] }}</span>
                                                 <input type="text" maxlength="50" style="border:none;" class="editable quick_sequence" name="quick_item[{{ $i }}][isequence]" id="quick_item[{{ $i }}][isequence]" value="{{ $item['isequence'] }}" onclick='document.getElementById("quick_item[{{$i}}][select]").setAttribute("checked","checked");' />
                                                 <input type="hidden" name="quick_item[{{ $i }}][isequence]" value="{{ $item['isequence'] }}"/> --}}
-                                                <input style="border: none;" type="text" class="editable quick_sequence" name="quick_item[{{ $i }}][isequence]" value="{{ $item['isequence'] }}" onclick='document.getElementById("quick_item[{{$i}}][select]").setAttribute("checked","checked");' style="text-align: right;" />
+                                                <input style="border: none;" type="text" class="editable quick_sequence" name="quick_item[{{ $i }}][isequence]" value="{{ $item['isequence'] }}" onclick='document.getElementById("quick_item[{{$i}}][select]").checked = true;' style="text-align: right;" />
                                             </td>
                                             <td>
                                                 <span>{{ $item['estatus'] }}</span>
@@ -211,7 +211,7 @@
 <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
 <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
 
-    {{-- <script src=" {{ asset('javascript/bootbox.min.js') }}"></script> --}}
+    <script src=" {{ asset('javascript/bootbox.min.js') }}"></script>
     <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
