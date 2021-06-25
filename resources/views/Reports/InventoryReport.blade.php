@@ -162,9 +162,9 @@ Inventory On Hand Report
                           <th style="width: 20%;">Item</th>
                           <th style="width: 10%;" class="text-right">QOH</th>
                           <th style="width: 10%;" class="text-right">Cost Value</th>
-                          <th style="width: 10%;" class="text-right">Total Cost Value</th>
+                          <th style="width: 15%;" class="text-right">Total Cost Value</th>
                           <th style="width: 10%;" class="text-right">Retail Value</th>
-                          <th style="width: 10%;" class="text-right">Total Retail Value</th>
+                          <th style="width: 15%;" class="text-right">Total Retail Value</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -191,9 +191,9 @@ Inventory On Hand Report
                                     <th style="width: 20%;">&nbsp;</th>
                                     <th style="width: 10%;" class="text-right"><?php echo $value['search_total_qoh']; ?></th>
                                     <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_cost_price'], 2) ; ?></th>
-                                    <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_cost_price'], 2) ; ?></th>
+                                    <th style="width: 15%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_cost_price'], 2) ; ?></th>
                                     <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_retail_value'], 2) ; ?></th>
-                                    <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_retail_value'], 2) ; ?></th>
+                                    <th style="width: 15%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_retail_value'], 2) ; ?></th>
                                   </tr>
                                 </thead>
                                 <tbody style="display: none;">
@@ -229,9 +229,9 @@ Inventory On Hand Report
                           <th style="width: 20%;">Item</th>
                           <th style="width: 10%;" class="text-right">QOH</th>
                           <th style="width: 10%;" class="text-right">Cost Value</th>
-                          <th style="width: 10%;" class="text-right">Total Cost Value</th>
+                          <th style="width: 15%;" class="text-right">Total Cost Value</th>
                           <th style="width: 10%;" class="text-right">Retail Value</th>
-                          <th style="width: 10%;" class="text-right">Total Retail Value</th>
+                          <th style="width: 15%;" class="text-right">Total Retail Value</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -257,9 +257,9 @@ Inventory On Hand Report
                                     <th style="width: 20%;">&nbsp;</th>
                                     <th style="width: 10%;" class="text-right"><?php echo $value['search_total_qoh']; ?></th>
                                     <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_cost_price'], 2) ; ?></th>
-                                    <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_cost_price'], 2) ; ?></th>
+                                    <th style="width: 15%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_cost_price'], 2) ; ?></th>
                                     <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_retail_value'], 2) ; ?></th>
-                                    <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_retail_value'], 2) ; ?></th>
+                                    <th style="width: 15%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_retail_value'], 2) ; ?></th>
                                   </tr>
                                 </thead>
                                 <tbody style="display: none;">
@@ -291,9 +291,9 @@ Inventory On Hand Report
                           <th style="width: 20%;">Item</th>
                           <th style="width: 10%;" class="text-right">QOH</th>
                           <th style="width: 10%;" class="text-right">Cost Value</th>
-                          <th style="width: 10%;" class="text-right">Total Cost Value</th>
+                          <th style="width: 15%;" class="text-right">Total Cost Value</th>
                           <th style="width: 10%;" class="text-right">Retail Value</th>
-                          <th style="width: 10%;" class="text-right">Total Retail Value</th>
+                          <th style="width: 15%;" class="text-right">Total Retail Value</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -319,9 +319,9 @@ Inventory On Hand Report
                                     <th style="width: 20%;">&nbsp;</th>
                                     <th style="width: 10%;" class="text-right"><?php echo $value['search_total_qoh']; ?></th>
                                     <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_cost_price'], 2) ; ?></th>
-                                    <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_cost_price'], 2) ; ?></th>
+                                    <th style="width: 15%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_cost_price'], 2) ; ?></th>
                                     <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_retail_value'], 2) ; ?></th>
-                                    <th style="width: 10%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_retail_value'], 2) ; ?></th>
+                                    <th style="width: 15%;" class="text-right">$<?php echo number_format((float)$value['search_total_total_retail_value'], 2) ; ?></th>
                                   </tr>
                                 </thead>
                                 <tbody style="display: none;">
@@ -624,7 +624,7 @@ $(document).ready(function() {
             html +='$';
             html += parseFloat(v.cost).toFixed(2);
             html += '</td>';
-            html += '<td style="width: 10%;" class="text-right">';
+            html += '<td style="width: 15%;" class="text-right">';
             html +='$';
             html += tot_value.toFixed(2);
             html += '</td>';
@@ -634,7 +634,7 @@ $(document).ready(function() {
             html += parseFloat(v.price/v.nsellunit).toFixed(2);
             html += '</td>';
             
-            html += '<td style="width: 10%;" class="text-right">';
+            html += '<td style="width: 15%;" class="text-right">';
             html +='$';
             html += tot_ret_value.toFixed(2);
             html += '</td>';
@@ -646,9 +646,9 @@ $(document).ready(function() {
           html += '<td style="width: 20%;" class="text-right"><b>Total</b></td>';
           html += '<td style="width: 10%;" class="text-right"><b>'+ total_qty +'</b></td>';
           html += '<td style="width: 10%;"></td>';
-          html += '<td style="width: 10%;" class="text-right"><b>$ '+total_total_value.toFixed(2) +'</b></td>';
+          html += '<td style="width: 15%;" class="text-right"><b>$ '+total_total_value.toFixed(2) +'</b></td>';
           html += '<td style="width: 10%;" class="text-right"></td>';
-          html += '<td style="width: 10%;" class="text-right"><b>$ '+total_total_retail_value.toFixed(2) +'</b></td>';
+          html += '<td style="width: 15%;" class="text-right"><b>$ '+total_total_retail_value.toFixed(2) +'</b></td>';
           html += 'tr>';
 
           current_header.parent().parent().find('tbody').append(html);
@@ -726,7 +726,7 @@ $(document).ready(function() {
             html +='$';
             html += parseFloat(v.cost).toFixed(2);
             html += '</td>';
-            html += '<td style="width: 10%;" class="text-right">';
+            html += '<td style="width: 15%;" class="text-right">';
             html +='$';
             html += tot_value.toFixed(2);
             html += '</td>';
@@ -736,7 +736,7 @@ $(document).ready(function() {
             html += parseFloat(v.price/v.nsellunit).toFixed(2);
             html += '</td>';
             
-            html += '<td style="width: 10%;" class="text-right">';
+            html += '<td style="width: 15%;" class="text-right">';
             html +='$';
             html += tot_ret_value.toFixed(2);
             html += '</td>';
@@ -748,9 +748,9 @@ $(document).ready(function() {
           html += '<td style="width: 20%;" class="text-right"><b>Total</b></td>';
           html += '<td style="width: 10%;" class="text-right"><b>'+ total_qty +'</b></td>';
           html += '<td style="width: 10%;"></td>';
-          html += '<td style="width: 10%;" class="text-right"><b>$ '+total_total_value.toFixed(2) +'</b></td>';
+          html += '<td style="width: 15%;" class="text-right"><b>$ '+total_total_value.toFixed(2) +'</b></td>';
           html += '<td style="width: 10%;" class="text-right"></td>';
-          html += '<td style="width: 10%;" class="text-right"><b>$ '+total_total_retail_value.toFixed(2) +'</b></td>';
+          html += '<td style="width: 15%;" class="text-right"><b>$ '+total_total_retail_value.toFixed(2) +'</b></td>';
           html += 'tr>';
 
           current_header.parent().parent().find('tbody').append(html);
@@ -829,7 +829,7 @@ $(document).ready(function() {
             html +='$';
             html += parseFloat(v.cost).toFixed(2);
             html += '</td>';
-            html += '<td style="width: 10%;" class="text-right">';
+            html += '<td style="width: 15%;" class="text-right">';
             html +='$';
             html += tot_value.toFixed(2);
             html += '</td>';
@@ -839,7 +839,7 @@ $(document).ready(function() {
             html += parseFloat(v.price/v.nsellunit).toFixed(2);
             html += '</td>';
             
-            html += '<td style="width: 10%;" class="text-right">';
+            html += '<td style="width: 15%;" class="text-right">';
             html +='$';
             html += tot_ret_value.toFixed(2);
             html += '</td>';
@@ -851,9 +851,9 @@ $(document).ready(function() {
           html += '<td style="width: 20%;" class="text-right"><b>Total</b></td>';
           html += '<td style="width: 10%;" class="text-right"><b>'+ total_qty +'</b></td>';
           html += '<td style="width: 10%;"></td>';
-          html += '<td style="width: 10%;" class="text-right"><b>$ '+total_total_value.toFixed(2) +'</b></td>';
+          html += '<td style="width: 15%;" class="text-right"><b>$ '+total_total_value.toFixed(2) +'</b></td>';
           html += '<td style="width: 10%;" class="text-right"></td>';
-          html += '<td style="width: 10%;" class="text-right"><b>$ '+total_total_retail_value.toFixed(2) +'</b></td>';
+          html += '<td style="width: 15%;" class="text-right"><b>$ '+total_total_retail_value.toFixed(2) +'</b></td>';
           html += 'tr>';
 
           current_header.parent().parent().find('tbody').append(html);
