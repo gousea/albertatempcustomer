@@ -200,6 +200,7 @@
 @endsection
 
 @section('page-script')
+
 <style>
     #item_paginate{
         float: right;
