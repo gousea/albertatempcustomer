@@ -23,7 +23,7 @@ class ItemMovementController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $data['reportdata'] = url('/item/item_movement_report/reportdata');
@@ -34,30 +34,30 @@ class ItemMovementController extends Controller
         $data['searchitem'] = url('/item/item_movement_report/searchitem');
         $data['item_movement_print_data'] = url('/item/item_movement_report/item_movement_print_data');
         $data['printpage'] = url('/item/item_movement_report/printpage');
-		
-		
+
+
         // 		if (isset($this->error['warning'])) {
         // 			$data['error_warning'] = $this->error['warning'];
         // 		} else {
         // 			$data['error_warning'] = '';
         // 		}
-        
+
         $data['store_name'] = session()->get('storename');
-        
+
 		return view('items.item_movement', compact('data'));
     }
-    
+
     protected function getList(Request $request) {
-        
+
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "2G");
-        
+
 		$reports = '';
-		
+
 		$check = $request->all();
-		
+
         if($check['search_iitemid'] == '' && $check['search_vbarcode'] == '' ){
-            
+
             $data['reportdata'] = url('/item/item_movement_report/reportdata');
             $data['item_movement_data'] = url('/item/item_movement_report/item_movement_data');
             $data['print_page'] = url('/item/item_movement_report/print_page');
@@ -66,70 +66,70 @@ class ItemMovementController extends Controller
             $data['searchitem'] = url('/item/item_movement_report/searchitem');
             $data['item_movement_print_data'] = url('/item/item_movement_report/item_movement_print_data');
             $data['printpage'] = url('/item/item_movement_report/printpage');
-    		
-    		
+
+
             // 		if (isset($this->error['warning'])) {
             // 			$data['error_warning'] = $this->error['warning'];
             // 		} else {
             // 			$data['error_warning'] = '';
             // 		}
-            
+
             $data['store_name'] = session()->get('storename');
-            
+
             // 		return view('items.item_movement', compact('data'));
 		    return view('items.item_movement',  compact('data'))->with('message', "No item matching with the search");
 		}
-        
+
         if (($request->isMethod('post'))) {
-          
+
             $input = $request->all();
-            
+
             $ItemMovement = new ItemMovement;
             $reports = $ItemMovement->getItemMovementReport($input);
             // dd($reports);
             $data['report_by'] = $input['report_by'];
             $data['search_iitemid'] = $input['search_iitemid'];
             $data['search_vbarcode'] = $input['search_vbarcode'];
-            
+
             session()->put('reports', $reports);
             session()->put('search_iitemid', $data['search_iitemid']);
             session()->put('search_vbarcode', $data['search_vbarcode']);
             session()->put('report_by', $data['report_by']);
-            
-            $child_detail="select iitemid , vbarcode,vitemname from mst_item where parentid='". $data['search_iitemid'] ."'" ;     
+
+            $child_detail="select iitemid , vbarcode,vitemname from mst_item where parentid='". $data['search_iitemid'] ."'" ;
             $Child_id = DB::connection('mysql_dynamic')->select($child_detail);
-            
-            
+
+
             $parent_detail="SELECT p.iitemid ,p.vbarcode FROM mst_item c
                             join mst_item p ON c.parentid = p.iitemid
                             where  c.iitemid='". $data['search_iitemid'] ."'" ;
-            $parent_id = DB::connection('mysql_dynamic')->select($parent_detail);   
-           
-            
+            $parent_id = DB::connection('mysql_dynamic')->select($parent_detail);
+
+
             if(isset($Child_id) && !empty($Child_id)){
               $childreports= $ItemMovement->getItemMovementReport_child($Child_id);
-              
+
             }
-            
+
             else{
               $childreports=array();
-              
+
             }
-            
+
             //parent data start--------------------------
             if(isset($parent_id) && !empty($parent_id)){
                 $parentreports= $ItemMovement->getItemMovementReport_child($parent_id);
-               
+
             }
             else{
                 $parentreports=array();
-                
+
             }
-           //------------------------------------ 
-                         
+           //------------------------------------
+
         }
-        
-        
+
+
         $data['item_movement_data'] = url('/item/item_movement_report/item_movement_data');
         $data['print_page'] = url('/item/item_movement_report/print_page');
         $data['pdf_save_page'] = url('/item/item_movement_report/pdf_save_page');
@@ -137,29 +137,29 @@ class ItemMovementController extends Controller
         $data['searchitem'] = url('/item/item_movement_report/searchitem');
         $data['item_movement_print_data'] = url('/item/item_movement_report/item_movement_print_data');
         $data['printpage'] = url('/item/item_movement_report/printpage');
-		
-		
+
+
         // 		if (isset($this->error['warning'])) {
         // 			$data['error_warning'] = $this->error['warning'];
         // 		} else {
         // 			$data['error_warning'] = '';
         // 		}
-        
+
         $data['store_name'] = session()->get('storename');
-        
+
 		return view('items.item_movement', compact('data', 'reports','childreports','parentreports'));
 	}
-	
-	public function searchitem(Request $request) 
+
+	public function searchitem(Request $request)
 	{
         $return = array();
         $input = $request->all();
-        
+
         if ($request->isMethod('get') && isset($input['term'])) {
-            
+
             $search = $input['term'];
             $datas = DB::connection('mysql_dynamic')->select("SELECT DISTINCT(mi.iitemid),mi.vbarcode,mi.vitemname FROM mst_item as mi WHERE mi.estatus='Active' AND (mi.vitemname LIKE  '%" .($search). "%' OR mi.vbarcode LIKE  '%" .($search). "%')");
-            
+
             foreach ($datas as $key => $value) {
                 $temp = array();
                 $temp['iitemid'] = $value->iitemid;
@@ -170,86 +170,92 @@ class ItemMovementController extends Controller
         }
         return response(json_encode($return), 200)
                   ->header('Content-Type', 'application/json');
-         
+
     }
-    
-    public function item_movement_data(Request $request) 
+
+    public function item_movement_data(Request $request)
     {
         $return = array();
         $input = $request->all();
-        
+
+        // echo "<pre>";
+        // print_r($input);
+        // die;
+
         if((isset($input['vbarcode']) && !empty($input['vbarcode'])) && (isset($input['start_date']) && !empty($input['start_date'])) && (isset($input['end_date']) && !empty($input['end_date'])) && (isset($input['data_by']) && !empty($input['data_by']))){
-            
+
             $ItemMovement = new ItemMovement;
             $return = $ItemMovement->getItemMovementData($input['vbarcode'],$input['start_date'],$input['end_date'],$input['data_by']);
-      
+            // dd($return);
         }
         // dd($return);
         return response(json_encode($return), 200)
                   ->header('Content-Type', 'application/json');
-        
+
     }
-    
+
     public function pdf_save_page() {
 
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "2G");
-            
+
         $data['reports'] = session()->get('reports') ;
-        
+
         $data['search_iitemid'] = session()->get('search_iitemid') ;
         $data['search_vbarcode'] = session()->get('search_vbarcode') ;
         $data['report_by'] = session()->get('report_by');
-        
+
         $data['storename'] = session()->get('storename');
-        
+
         $data['heading_title'] = 'Item Movement Report';
-        
+        // echo "<pre>";
+        // print_r($data);
+        // die;
         // $html = $this->load->view('administration/print_item_movement_report_page', $data);
-        
+
         $pdf = PDF::loadView('items.print_item_movement_report_page',$data);
-        
+
         return $pdf->download('taxreport.pdf');
     }
-    
+
     public function print_page()
     {
-        
+
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "2G");
-            
+
         $data['reports'] = session()->get('reports') ;
-        
+
         $data['search_iitemid'] = session()->get('search_iitemid') ;
         $data['search_vbarcode'] = session()->get('search_vbarcode') ;
         $data['report_by'] = session()->get('report_by');
-        
+
         $data['storename'] = session()->get('storename');
-        
+
         $data['heading_title'] = 'Item Movement Report';
-        
-       
-        return view('items.print_item_movement_report_page',$data);  
+
+
+        return view('items.print_item_movement_report_page',$data);
 
     }
-    
-    public function item_movement_print_data(Request $request) 
+
+    public function item_movement_print_data(Request $request)
     {
         $input = $request->all();
-        
+
         $data['heading_title'] = 'Item Movement';
-        
+
         $salesid = ($input['isalesid'])?$input['isalesid']:'0';
         $idettrnid = ($input['idettrnid'])?$input['idettrnid']:'0';
-        
+
         $Reports = new Reports;
         $sales_header_data= $Reports->getSalesById($salesid);
         $sales_header =(array)$sales_header_data[0];
-        
+
 
         $trn_date = DateTime::createFromFormat('m-d-Y h:i A', $sales_header['trandate']);
         $trn_date = $trn_date->format('m-d-Y');
-        
+
         $sales_detail_data= $Reports->getSalesPerview($salesid);
         $sales_detail=$sales_detail_data;
 
@@ -278,9 +284,9 @@ class ItemMovementController extends Controller
             $c_zip = '';
             $c_phone = '';
         }
-        
+
         $html='';
-        
+
         $html='<table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <table width="100%" border="0" cellspacing="5" cellpadding="0" style="margin-bottom:15px;">
@@ -383,7 +389,7 @@ class ItemMovementController extends Controller
                       </tr>
                     </table>
                 </td>
-              </tr>		 
+              </tr>
               <tr style="border-bottom:1px solid #999;">
                 <td><table width="100%" border="0" cellspacing="0" cellpadding="0"  style="margin:15px 0px;">';
             if(count($sales_detail)>0)
@@ -408,7 +414,7 @@ class ItemMovementController extends Controller
                     if($idettrnid==$sales->idettrnid)
                         {
                     $html.='
-                        
+
                         <tr>
                             <th style="background-color:;">'.$sales->ndebitqty.'</th>
                             <th style="background-color:;">'.$sales->npack.'</th>
@@ -419,9 +425,9 @@ class ItemMovementController extends Controller
                             <th style="background-color:;">'.$sales->nextunitprice.'</th></b>
                         </tr>';
                       }else{
-                          
+
                            $html.='
-                        
+
                         <tr>
                             <td>'.$sales->ndebitqty.'</td>
                             <td>'.$sales->npack.'</td>
@@ -432,7 +438,7 @@ class ItemMovementController extends Controller
                             <td>'.$sales->nextunitprice.'</td>
                         </tr>';
                       }
-                      
+
             }
           $html.='</table></td>
               </tr><hr style="border-top:1px solid #999;">
@@ -452,14 +458,14 @@ class ItemMovementController extends Controller
                     <td width="70%" align="right" style="padding-top:5px;padding-bottom:5px;"><strong>Total</strong></td>
                     <td width="10%" style="padding-top:5px;padding-bottom:5px;">&nbsp;</td>
                     <td width="20%" align="right" style="padding-top:5px;padding-bottom:5px;">';
-                    $total=$sub_total+$sales_header['ntaxtotal'];				
+                    $total=$sub_total+$sales_header['ntaxtotal'];
                     $html.=$total.'</td>
                   </tr>
                 </table></td>
               </tr>
               <tr style="border-top:1px solid #999;border-bottom:1px solid #999;">
                 <td><table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin:5px 0px;">';
-                  
+
                   foreach($sales_tender as $tender)
                   {
                       if($tender->itenerid!="121")
@@ -470,8 +476,8 @@ class ItemMovementController extends Controller
                             <td width="20%" align="right">'.$tender->namount.'</td>
                           </tr>';
                       }
-                  } 
-                 
+                  }
+
                   $html.='</table></td>
               </tr>
               <tr>
@@ -487,7 +493,7 @@ class ItemMovementController extends Controller
                     <td width="20%" align="right" style="padding-top:5px;padding-bottom:5px;">'.$sales_header['nchange'].'</td>
                   </tr>
                 </table></td>
-              </tr>		  
+              </tr>
               <tr>
                 <td><table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin:5px 0px;display:none;">
                   <tr>
@@ -518,7 +524,7 @@ class ItemMovementController extends Controller
                   $html.='
                   <tr>
                     <td><table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin:5px 0px;">
-                          <tr style="border-top:1px solid #999;border-bottom:1px solid #999;line-height:30px;">					  
+                          <tr style="border-top:1px solid #999;border-bottom:1px solid #999;line-height:30px;">
                             <td align="center"><strong>Customer Licence Detail</strong></td>
                           </tr>
                           <tr>
@@ -541,48 +547,48 @@ class ItemMovementController extends Controller
               }
               $html.='
             </table>';
-            
+
             $file='<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><div id="content">
-            
+
       <div class="container-fluid">
         <div class="" style="margin-top:0%;">
-          <div class="panel-body"> 
+          <div class="panel-body">
             <div class="row">
-              <div class="col-md-12" id="printappend">'.$html.'          
+              <div class="col-md-12" id="printappend">'.$html.'
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>';
-    
-    
+
+
         $myfile = fopen(resource_path('views/sale2.blade.php'), "w");
-        
+
         fwrite($myfile,$file);
         fclose($myfile);
-    
+
         $return['code'] = 1;
         $return['data'] = $html;
-       
+
         echo json_encode($return);
         exit;
       }
 
-        
+
         // $store_info= Store::All()->toArray();
         // $store_info = isset($store_info[0])?(array)$store_info[0]:[];
-        
+
         // $ItemMovement = new ItemMovement;
         // $sales_header= $ItemMovement->getSalesById($isalesid);
-        
+
         // $trn_date = \DateTime::createFromFormat('m-d-Y h:i A', $sales_header['trandate']);
         // $trn_date = $trn_date->format('m-d-Y');
-        
+
         // $sales_detail= $ItemMovement->getSalesPerview($idettrnid);
 
         // $sales_customer= $ItemMovement->getSalesByCustomer($sales_header['icustomerid']);
-        
+
         // if(count($sales_customer) > 0){
         //     $c_name = $sales_customer['vfname'].' '.$sales_customer['vlname'];
         //     $c_address = $sales_customer['vaddress1'];
@@ -598,9 +604,9 @@ class ItemMovementController extends Controller
         //     $c_zip = '';
         //     $c_phone = '';
         // }
-  
+
         // $html='';
-  
+
         // $html='<table width="100%" border="0" cellspacing="0" cellpadding="0">
         //             <tr>
         //                 <table width="100%" border="0" cellspacing="5" cellpadding="0" style="margin-bottom:15px;">
@@ -695,7 +701,7 @@ class ItemMovementController extends Controller
         //                         </tr>
         //                     </table>
         //                 </td>
-        //             </tr>    
+        //             </tr>
         //             <tr style="border-bottom:1px solid #999;">
         //                 <td><table width="100%" border="0" cellspacing="0" cellpadding="0"  style="margin:15px 0px;">';
 
@@ -714,11 +720,11 @@ class ItemMovementController extends Controller
         //                       $html.='<th>Unit Price</th>';
         //                       $html.='<th>Total Price</th>';
         //                       $html.='</tr>';
-                        
+
         //                       $sub_total = $sales_detail['nextunitprice'];
         //                       $noofitems = $sales_detail['ndebitqty'];
         //                       $html.='
-                                
+
         //                                 <tr>
         //                                   <td>'.$sales_detail['ndebitqty'].'</td>
         //                                   <td>'.$sales_detail['npack'].'</td>
@@ -728,7 +734,7 @@ class ItemMovementController extends Controller
         //                                   <td>'.$sales_detail['nunitprice'].'</td>
         //                                   <td>'.$sales_detail['nextunitprice'].'</td>
         //                                 </tr>';
-                              
+
         //                     }
 
         //     $html.='</table></td>
@@ -744,31 +750,31 @@ class ItemMovementController extends Controller
         //         <td width="70%" align="right" style="padding-bottom:5px;"><strong>Total</strong></td>
         //         <td width="10%" style="padding-bottom:5px;">&nbsp;</td>
         //         <td width="20%" align="right" style="padding-top:5px;padding-bottom:5px;">';
-        //         $total=$sub_total;       
+        //         $total=$sub_total;
         //         $html.=$total.'</td>
         //         </tr>
         //       </table></td>
         //       </tr>
-              
-              
+
+
         //       </table></td>
         //       </tr>';
         //       $html.='
         //         </table>';
-            
+
         //             $file='<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><div id="content">
         //             <div class="container-fluid">
         //                 <div class="" style="margin-top:0%;">
-        //                     <div class="panel-body"> 
+        //                     <div class="panel-body">
         //                         <div class="row">
-        //                           <div class="col-md-12" id="printappend">'.$html.'          
+        //                           <div class="col-md-12" id="printappend">'.$html.'
         //                           </div>
         //                         </div>
         //                     </div>
         //                 </div>
         //             </div>
         //         </div>';
-        
+
         // //$filepath = storage_path("logs/items/print_item_movement_report.blade.php");
         //  $myfile = fopen(resource_path('views/sale2.blade.php'), "w");
         // //$myfile = fopen($filepath, "w");
@@ -777,17 +783,17 @@ class ItemMovementController extends Controller
 
         // $return['code'] = 1;
         // $return['data'] = $html;
-   
+
         // echo json_encode($return);
         // exit;
     }
-    
+
     public function printpage()
     {
        // dd("hi");
         // $filepath = storage_path("logs/items/print_item_movement_report.blade.php");
-        //return view('custom_view::logs.items.print_item_movement_report'); 
-         return view('sale2');  
+        //return view('custom_view::logs.items.print_item_movement_report');
+         return view('sale2');
     }
 }
 
