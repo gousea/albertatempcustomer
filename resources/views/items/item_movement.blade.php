@@ -85,16 +85,17 @@
 
                                 <?php if (isset($parentreports) && !empty($parentreports)) { ?>
                                     <tr class="headermenublue">
-                                        <th colspan="6"></th>
-                                        <th><?php echo $reports['item_data'][0]['vitemname']; ?>
+                                        <th colspan="1"></th>
+                                        <th colspan="5" style="text-align: center; padding-left: 110px;"><?php echo $reports['item_data'][0]['vitemname']; ?>
                                                 [QOH: UNITS <?php echo $parentreports[0]['item_data'][0]['QOH'] %
                                                 $parentreports[0]['item_data'][0]['npack']; ?> ]
                                         </th>
+                                        <th colspan="1"></th>
                                     </tr>
                                     <?php } else { ?>
                                     <tr class="headermenublue">
                                         <th colspan="1"></th>
-                                        <th colspan="5" style="text-align: center"><?php echo $reports['item_data'][0]['vitemname']; ?>
+                                        <th colspan="5" style="text-align: center; padding-left: 110px;"><?php echo $reports['item_data'][0]['vitemname']; ?>
                                                 [QOH: CASE <?php echo $reports['item_data'][0]['IQTYONHAND']; ?> ]
                                         </th>
                                         <th colspan="1"></th>
