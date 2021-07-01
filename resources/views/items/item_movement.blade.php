@@ -2286,7 +2286,7 @@
             item_movement_data_url = item_movement_data_url + '?vbarcode=' + vbarcode + '&start_date=' +
                 start_date + '&end_date=' + end_date + '&data_by=' + data_by;
 
-             alert(item_movement_data_url);
+            //  alert(item_movement_data_url);
 
             if (data_by == 'receive') {
                 $('#item_movement_by_date_selection_table > thead > tr').html(
