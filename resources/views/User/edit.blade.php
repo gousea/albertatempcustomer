@@ -154,6 +154,27 @@
                 </div> <!-- navbar-collapse.// -->
             </div>
         </nav>
+        @if (session()->has('message'))
+            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        @endif
+        @if (session()->has('error_message'))
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error_message')}}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        @endif
+
+        <div id='errorDiv'>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                    <i class="fa fa-exclamation-circle"></i>{{$error}}
+                    @endforeach
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            @endif
+        </div>
 
         <div class="container section-content">
             <div class="mytextdiv">
@@ -176,7 +197,7 @@
                                                 @if ($users->pos_user == 'Y')
                                                     checked
                                                 @endif
-                                        />POS
+                                        />&nbsp;&nbsp;POS
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -188,8 +209,7 @@
                                                 @if ($users->web_user == 'Y')
                                                     checked
                                                 @endif
-                                        />
-                                        WEB
+                                        />&nbsp;&nbsp;WEB
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -201,7 +221,7 @@
                                         @if ($users->mob_user == 'Y')
                                             checked
                                         @endif
-                                     />MOBILE
+                                     />&nbsp;&nbsp;MOBILE
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -213,7 +233,7 @@
                                             @if ($users->lb_user == 'Y')
                                                 checked
                                             @endif
-                                        />LINEBUSTER
+                                        />&nbsp;&nbsp;LINEBUSTER
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
@@ -222,7 +242,7 @@
                                             @if ($users->time_clock == 'Y')
                                                 checked
                                             @endif
-                                        />TIMECLOCK
+                                        />&nbsp;&nbsp;TIMECLOCK
                                     </label>
                                 </div>
                             </div>
@@ -877,6 +897,8 @@ setInterval(function() {
     if($('.web').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
+        $("#input-re-mwpassword").attr("required", "required");
+        $("#input-mwpassword").attr("required", "required");
         // document.getElementById("Submit").disabled = false;
     }
 
@@ -911,6 +933,12 @@ setInterval(function() {
 
     if($('.time').prop("checked") == true){
         $('#time_start').show();
+        $('#start_dt').prop('required', true);
+        $('#termination_dt').prop('required', true);
+        // $("#input-re-mwpassword").attr("required", "required");
+        // $("#input-mwpassword").attr("required", "required");
+        // $('#start_dt').prop('required', true);
+        // $('#termination_dt').prop('required', true);
         // document.getElementById("Submit").disabled = false;
     }
 

@@ -188,28 +188,27 @@
                             <div class="col-xs-12 checkbox-data">
                                 <div class="form-check col-xs-2 col-xs-offset-1">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="pos device" name="pos" value="pos" {{ old('pos') ? 'checked' : '' }}/>POS
+                                        <input type="checkbox" class="pos device" name="pos" value="pos" {{ old('pos') ? 'checked' : '' }}/>&nbsp;&nbsp;POS
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="web device" name="web" value="web" {{ old('web') ? 'checked' : '' }}/>
-                                        WEB
+                                        <input type="checkbox" class="web device" name="web" value="web" {{ old('web') ? 'checked' : '' }}/>&nbsp;&nbsp;WEB
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" class="mob device" name="mob" value="mob" {{ old('mob') ? 'checked' : '' }}/>MOBILE
+                                        <input type="checkbox" class="mob device" name="mob" value="mob" {{ old('mob') ? 'checked' : '' }}/>&nbsp;&nbsp;MOBILE
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" name="lb" value="lb" class="lb device" {{ old('lb') ? 'checked' : '' }}/>LINEBUSTER
+                                        <input type="checkbox" name="lb" value="lb" class="lb device" {{ old('lb') ? 'checked' : '' }}/>&nbsp;&nbsp;LINEBUSTER
                                     </label>
                                 </div>
                                 <div class="form-check col-xs-2">
                                     <label class="form-check-label font-weight-bold">
-                                        <input type="checkbox" name="time" value="time" class="time device" {{ old('time') ? 'checked' : '' }}/>TIMECLOCK
+                                        <input type="checkbox" name="time" value="time" class="time device" {{ old('time') ? 'checked' : '' }}/>&nbsp;&nbsp;TIMECLOCK
                                     </label>
                                 </div>
                             </div>
@@ -850,6 +849,8 @@ setInterval(function() {
     if($('.web').prop("checked") == true){
         $('#web_mob').show();
         $('#permission_divider').show();
+        $("#input-re-mwpassword").attr("required");
+        $("#input-mwpassword").attr("required");
         // document.getElementById("Submit").disabled = false;
     }
 
@@ -886,6 +887,8 @@ setInterval(function() {
 
     if($('.time').prop("checked") == true){
         $('#time_start').show();
+        $('#start_dt').prop('required', true);
+        $('#termination_dt').prop('required', true);
         // document.getElementById("Submit").disabled = false;
     }
 
