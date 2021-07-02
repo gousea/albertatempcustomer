@@ -79,26 +79,58 @@ class HourlySalesReportController extends Controller
 	    
 	    
             $value = array("All");
-
-            $data['dept_code']=$input['vdepcode'] ?? $value;
-          
+            
+            if ( isset($input['vdepcode']) && in_array("All", $input['vdepcode'] ))
+            {
+               $data['dept_code']= $value;
+            }
+            else{
+               $data['dept_code']=$input['vdepcode'] ?? $value; 
+            }
+            
             $array_dept = implode(',', $data['dept_code']); 
-           
-       
-            $data['cat_code']=$input['vcategorycode'] ?? $value;
+         
+         
+            if ( isset($input['vcategorycode']) && in_array("All", $input['vcategorycode'])){
+             $data['cat_code']= $value;
+            }
+            else{
+              $data['cat_code']=$input['vcategorycode'] ?? $value;   
+            }
            
             $array_cat = implode(',', $data['cat_code']); 
-           
-            $data['sub_code']=$input['subcat_id'] ?? $value;
             
+            
+            
+            if (isset($input['subcat_id']) && in_array("All", $input['subcat_id'])){
+             $data['sub_code']= $value;
+            }
+            else{
+               $data['sub_code']=$input['subcat_id'] ?? $value; 
+            }
             $array_sub = implode(',', $data['sub_code']); 
             
-          
-            $data['manu_code']=$input['manufacturer_id'] ??$value;
+            
+            if (isset($input['manufacturer_id']) && in_array("All", $input['manufacturer_id'])){
+             $data['manu_code']= $value;
+            }
+            else{
+              $data['manu_code']=$input['manufacturer_id'] ??$value;   
+            }
+           
             $array_manu = implode(',', $data['manu_code']); 
             
-            $data['sup_code']=$input['ivendorid'] ??$value;
+            if (isset($input['ivendorid']) &&in_array("All", $input['ivendorid'])){
+                  $data['sup_code']= $value; 
+            }
+            else{
+               $data['sup_code']=$input['ivendorid'] ??$value;   
+            }
+            
+          
             $array_sup = implode(',', $data['sup_code']); 
+            
+            
             
             $start_date=$input['start_date'];
             $end_date=$input['end_date'];
