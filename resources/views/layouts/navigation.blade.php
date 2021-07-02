@@ -137,7 +137,7 @@
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('SalesTransaction') }}"> Sales Transaction Report
                                     </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('TaxReport') }}"> Tax Report </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Hourly Sales Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('HourlySalesReport') }}"> Hourly Sales Report </a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('POReport') }}"> RO History Report </a>
                                 </li>
@@ -150,16 +150,16 @@
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase"
                                         href="{{ route('salesreport') }}"> Sales Report </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Product Listing </a></li>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('productlisting') }}"> Product Listing </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('employeereport') }}"> Employee Loss Prevention
                                         Report </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('itemsummary') }}"> Item Summary Report </a>
                                 </li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Sales History Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('saleshistoryreport') }}"> Sales History Report </a>
                                 </li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Sales Analytics Report
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('salesanalyticsreport') }}"> Sales Analytics Report
                                     </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Zero Movement Report </a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('zeromovementreport') }}"> Zero Movement Report </a>
                                 </li>
                             </ul>
                         </li>
