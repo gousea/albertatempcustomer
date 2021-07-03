@@ -29,7 +29,7 @@
                             <ul class="dropdown-menu main-dropdown">
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('users') }}">
                                         EMPLOYEE</a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('timeclock') }}">
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('time_clock') }}">
                                         TIME CLOCK </a></li>
                             </ul>
                         </li>
