@@ -8,7 +8,7 @@ Employee Loss Prevention Report
         <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold text-uppercase"> Employee Loss Prevention Report</span>
+                    <span class="font-weight-bold text-uppercase"> PRODUCT LISTING REPORT</span>
                 </div>
                 <div class="nav-submenu">
                      

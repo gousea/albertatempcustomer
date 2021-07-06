@@ -682,7 +682,7 @@ $(document).ready(function() {
    
   }
   .select2.select2-container.select2-container--default{
-  width: 100% !important;
+  /* width: 100% !important; */
   }
   .select2-container--default .select2-selection--single .select2-selection__rendered{
     line-height: 35px !important;
