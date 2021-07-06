@@ -178,6 +178,17 @@ class ItemMovementController extends Controller
         $return = array();
         $input = $request->all();
 
+        $start_date = explode("/", $input['start_date']);
+        // $start_date = $start_date[0].'-'.$start_date[1].'-'.$start_date[2];
+        $start_date = $start_date[2].'-'.$start_date[0].'-'.$start_date[1];
+
+        $end_date = explode("/", $input['end_date']);
+        // $end_date = $end_date[0].'-'.$end_date[1].'-'.$end_date[2];
+        $end_date = $end_date[2].'-'.$end_date[0].'-'.$end_date[1];
+
+        $input['start_date'] = $start_date;
+        $input['end_date'] = $end_date;
+
         // echo "<pre>";
         // print_r($input);
         // die;

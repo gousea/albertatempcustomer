@@ -1923,11 +1923,13 @@
                     {{-- <h3 class="text-danger"></h3> --}}
                     <div class="row">
                         <div class="col-md-2">
-                            <input type="" class="form-control" name="start_date" value="" id="start_date"
-                                placeholder="Start Date" readonly>
+                            <input type="text" name="start_date" value="{{ old('start_date') }}" autocomplete="off"
+                                        placeholder="Start Date" id="start_date" class="form-control" readonly/>
+                            {{-- <input type="text" class="form-control" name="start_date" id="start_date"
+                                placeholder="Start Date" readonly> --}}
                         </div>
                         <div class="col-md-2">
-                            <input type="" class="form-control" name="end_date" value="" id="end_date"
+                            <input type="text" class="form-control" name="end_date" id="end_date"
                                 placeholder="End Date" readonly>
                         </div>
                         <div class="col-md-3">
@@ -1981,20 +1983,15 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}"/>
-    {{-- <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> --}}
-    {{-- <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"/>
-    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script> --}}
-    <!-- jQuery UI library -->
+    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
+    <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
-
 
     <style>
     .autoc {
@@ -2005,17 +2002,26 @@
     </style>
 
     <script>
-        $(function() {
+         $(function(){
             $("#start_date").datepicker({
-                format: 'mm-dd-yyyy',
+                format: 'yyyy-mm-dd',
                 todayHighlight: true,
                 autoclose: true,
+                widgetPositioning:{
+                    horizontal: 'auto',
+                    vertical: 'bottom'
+                }
             });
-
+        });
+        $(function(){
             $("#end_date").datepicker({
-                format: 'mm-dd-yyyy',
+                format: 'yyyy-mm-dd',
                 todayHighlight: true,
                 autoclose: true,
+                widgetPositioning:{
+                    horizontal: 'auto',
+                    vertical: 'bottom'
+                }
             });
         });
     </script>
@@ -2033,28 +2039,6 @@
                 });
                 return false;
             }
-
-            // if($('#start_date').val() == ''){
-            //   // alert('Please Select Start Date');
-            //   bootbox.alert({
-            //     size: 'small',
-            //     title: "",
-            //     message: "Please Select Start Date",
-            //     callback: function(){}
-            //   });
-            //   return false;
-            // }
-
-            // if($('#end_date').val() == ''){
-            //   // alert('Please Select End Date');
-            //   bootbox.alert({
-            //     size: 'small',
-            //     title: "",
-            //     message: "Please Select End Date",
-            //     callback: function(){}
-            //   });
-            //   return false;
-            // }
 
             if ($('input[name="start_date"]').val() != '' && $('input[name="end_date"]').val() != '') {
 
@@ -2077,24 +2061,10 @@
         });
     </script>
 
-    {{-- <style type="text/css">
-        .table.table-bordered.table-striped.table-hover thead>tr {
-            background-color: #2486c6;
-            color: #fff;
-        }
-
-    </style> --}}
-
     <script>
         $(document).ready(function() {
             $("#btnPrint").printPage();
         });
-    </script>
-
-    <script type="text/javascript">
-        // $(window).load(function() {
-            // $("div#divLoading").removeClass('show');
-        // });
     </script>
 
     <script type="text/javascript">
@@ -2199,8 +2169,6 @@
             }
         });
     </script>
-
-    {{-- <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet"> --}}
 
     <script>
         $(function() {
@@ -2333,7 +2301,7 @@
                         if (data_by == 'sold') {
                             html += '<td><button data-idettrnid="' + v.idettrnid +
                                 '" data-isalesid="' + v.isalesid +
-                                '" class="btn btn-info print-sales"><i class="fa fa-print"></i> Print</button></td>';
+                                '" class="btn btn-info print-sales" style="background-color:#286fb7; color:#fff;"><i class="fa fa-print"></i> Print</button></td>';
                         }
                         html += '<td>';
                         if (data_by == 'sold') {
