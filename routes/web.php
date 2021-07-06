@@ -108,7 +108,7 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::post('/users/remove', 'AllUserController@remove')->name('users.remove');
     });
 
-    Route::get('/timeclock', 'TimeclockController@index')->name('timeclock');
+    // Route::get('/timeclock', 'TimeclockController@index')->name('timeclock');
     /*================= Store Module Routes =========================*/
     Route::group(['middleware' => ['Permission:PER1005']], function () {
         Route::get('/store/edit', 'StoreController@edit')->name('store.edit');
@@ -777,6 +777,13 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::get('/time_clock_pdf', 'TimeClockController@time_clock_pdf')->name('time_clock_pdf');
         Route::get('/time_clock_data_week', 'TimeClockController@time_clock_data_week')->name('time_clock_data_week');
     });
+
+    // venky edit this=======
+    Route::get('/time_clock', 'TimeClockController@index')->name('time_clock');
+    Route::get('/time_update', 'TimeClockController@update')->name('time_clock_save');
+    Route::get('/time_clock_pdf', 'TimeClockController@time_clock_pdf')->name('time_clock_pdf');
+    Route::get('/time_clock_data_week', 'TimeClockController@time_clock_data_week')->name('time_clock_data_week');
+
 
     // Time Clock sheet Route
     Route::get('/time_sheet', 'TimeSheetController@index')->name('time_sheet');
