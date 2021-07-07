@@ -50,7 +50,7 @@
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Last Modified Items</a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{url('/item/ItemMovement') }}"> Item Movement </a></li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#"> Item Audit </a></li>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{route('item_audit') }}"> Item Audit </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('promotion') }}">
                                     Promotions </a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url('buydown') }}"> Buy Down </a></li>
