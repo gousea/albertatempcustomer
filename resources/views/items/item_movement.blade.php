@@ -4,7 +4,6 @@
 
 @section('main-content')
 
-
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue menu">
         <div class="container">
             <div class="row">
@@ -58,7 +57,7 @@
                 <form method="POST" id="filter_form" action="{{ url('item/ItemMovement') }}" class="form-inline">
                     @csrf
                     <div class="form-group mx-sm-2 mb-2">
-                        <input type="text" class="form-control rcorner autoc" name="report_by"
+                        <input type="text" class="form-control ui-autocomplete-input" name="report_by"
                             value="<?php echo isset($data['report_by']) ? $data['report_by'] : ''; ?>"
                             id="automplete-product" placeholder="Search Item..." required>
                             <input type="hidden" name="search_iitemid" id="search_iitemid"
@@ -1999,6 +1998,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
     <style>
+        .ui-menu-item-wrapper:hover{
+            color: orangered;
+            border: rgb(235, 121, 29) 2px solid;
+            text-transform: uppercase;
+        }
     .autoc {
         /* position:absolute; */
         /* cursor:default;
