@@ -86,7 +86,7 @@
                                 <?php if (isset($parentreports) && !empty($parentreports)) { ?>
                                     <tr class="headermenublue">
                                         <th colspan="1"></th>
-                                        <th colspan="5" style="text-align: center; padding-left: 110px;"><?php echo $reports['item_data'][0]['vitemname']; ?>
+                                        <th colspan="5" style="text-align: center; padding-left: 300px; text-transform: uppercase;"><?php echo $reports['item_data'][0]['vitemname']; ?>
                                                 [QOH: UNITS <?php echo $parentreports[0]['item_data'][0]['QOH'] %
                                                 $parentreports[0]['item_data'][0]['npack']; ?> ]
                                         </th>
@@ -95,7 +95,7 @@
                                     <?php } else { ?>
                                     <tr class="headermenublue">
                                         <th colspan="1"></th>
-                                        <th colspan="5" style="text-align: center; padding-left: 110px;"><?php echo $reports['item_data'][0]['vitemname']; ?>
+                                        <th colspan="5" style="text-align: center; padding-left: 300px; text-transform: uppercase;"><?php echo $reports['item_data'][0]['vitemname']; ?>
                                                 [QOH: CASE <?php echo $reports['item_data'][0]['IQTYONHAND']; ?> ]
                                         </th>
                                         <th colspan="1"></th>
@@ -108,8 +108,8 @@
                                 $previous_year = date('Y', strtotime('-1 year'));
                                 ?>
                                 <tr>
-                                    <td colspan="1" class="th_color"></td>
-                                    <td colspan="2" class="th_color">
+                                    <td colspan="1" style="background-color: #fff;border-top: none;" class="th_color"></td>
+                                    <td colspan="2" class="th_color" style="background-color:#fff; border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $previous_year; ?> YTD SOLD
                                             <?php echo
@@ -148,7 +148,7 @@
                                     </td>
 
 
-                                    <td colspan="2" class="th_color">
+                                    <td colspan="2" class="th_color" style="background-color:#fff; border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $previous_year; ?> YTD ADJUSTMENT
                                             <?php echo $totaladjpreviousyr; ?>
@@ -169,9 +169,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th colspan="1" class="th_color">
-                                        </td>
-                                    <td colspan="2" class="th_color">
+                                    <td colspan="1" style="background-color: #fff;border-top: none;" class="th_color"></td>
+                                    <td colspan="2" class="th_color" style="background-color:#fff; border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $current_year; ?> YTD SOLD
                                             <?php echo
@@ -181,7 +180,7 @@
                                     </td>
 
 
-                                    <td colspan="2" class="th_color">
+                                    <td colspan="2" class="th_color" style="background-color:#fff; border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $current_year; ?> YTD ADJUSTMENT
                                             <!--  Old code
@@ -225,7 +224,7 @@
                                     </td>
 
 
-                                    <td colspan="2" class="th_color">
+                                    <td colspan="2" class="th_color" style="background-color:#fff; border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $current_year; ?> YTD RECEIVE
                                             <?php echo
@@ -716,8 +715,9 @@
                             <thead>
                                 <tr class="headermenublue">
                                     <th colspan="1"></th>
-                                    <th colspan="5" class="text-center text-uppercase"><b style="font-size: 16px;"><?php echo $childreports['item_data'][0]['vitemname']; ?> [QOH: CASE <?php echo
-                                            $childreports['item_data'][0]['IQTYONHAND']; ?> ]</b></th>
+                                    <th colspan="5" class="text-center text-uppercase" style="text-align: center; padding-left: 98px; text-transform: uppercase;">
+                                        <?php echo $childreports['item_data'][0]['vitemname']; ?> [QOH: CASE <?php echo
+                                            $childreports['item_data'][0]['IQTYONHAND']; ?> ]</th>
                                     <th colspan="1"></th>
                                 </tr>
                             </thead>
@@ -727,9 +727,9 @@
                                 $previous_year = date('Y', strtotime('-1 year'));
                                 ?>
                                 <tr>
-                                    <td colspan="2" style="background-color: #fff;" class="th_color"></td>
+                                    <td colspan="2" style="background-color: #fff;border-top: none;" class="th_color"></td>
                                     <td colspan="2" class="th_color" style="background-color: #fff;border-top: none;">
-                                        <b class="text-uppercase text-info" style="font-size: 14px;">
+                                        <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $previous_year; ?> YTD SOLD
                                             <?php echo
                                             !empty($childreports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
@@ -796,8 +796,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th colspan="2" style="background-color: #fff;border-top: none;" class="th_color">
-                                        </td>
+                                    <th colspan="2" style="background-color: #fff;border-top: none;" class="th_color"></td>
                                     <td colspan="2" class="th_color" style="background-color: #fff;border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $current_year; ?> YTD SOLD
