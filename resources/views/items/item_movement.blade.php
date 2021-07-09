@@ -4,7 +4,6 @@
 
 @section('main-content')
 
-
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue menu">
         <div class="container">
             <div class="row">
@@ -58,7 +57,7 @@
                 <form method="POST" id="filter_form" action="{{ url('item/ItemMovement') }}" class="form-inline">
                     @csrf
                     <div class="form-group mx-sm-2 mb-2">
-                        <input type="text" class="form-control rcorner autoc" name="report_by"
+                        <input type="text" class="form-control ui-autocomplete-input" name="report_by"
                             value="<?php echo isset($data['report_by']) ? $data['report_by'] : ''; ?>"
                             id="automplete-product" placeholder="Search Item..." required>
                             <input type="hidden" name="search_iitemid" id="search_iitemid"
@@ -86,7 +85,7 @@
                                 <?php if (isset($parentreports) && !empty($parentreports)) { ?>
                                     <tr class="headermenublue">
                                         <th colspan="1"></th>
-                                        <th colspan="5" style="text-align: center; padding-left: 110px;"><?php echo $reports['item_data'][0]['vitemname']; ?>
+                                        <th colspan="5" style="text-align: center; padding-left: 300px; text-transform: uppercase;"><?php echo $reports['item_data'][0]['vitemname']; ?>
                                                 [QOH: UNITS <?php echo $parentreports[0]['item_data'][0]['QOH'] %
                                                 $parentreports[0]['item_data'][0]['npack']; ?> ]
                                         </th>
@@ -95,7 +94,7 @@
                                     <?php } else { ?>
                                     <tr class="headermenublue">
                                         <th colspan="1"></th>
-                                        <th colspan="5" style="text-align: center; padding-left: 110px;"><?php echo $reports['item_data'][0]['vitemname']; ?>
+                                        <th colspan="5" style="text-align: center; padding-left: 300px; text-transform: uppercase;"><?php echo $reports['item_data'][0]['vitemname']; ?>
                                                 [QOH: CASE <?php echo $reports['item_data'][0]['IQTYONHAND']; ?> ]
                                         </th>
                                         <th colspan="1"></th>
@@ -108,8 +107,8 @@
                                 $previous_year = date('Y', strtotime('-1 year'));
                                 ?>
                                 <tr>
-                                    <td colspan="1" class="th_color"></td>
-                                    <td colspan="2" class="th_color">
+                                    <td colspan="1" style="background-color: #fff;border-top: none;" class="th_color"></td>
+                                    <td colspan="2" class="th_color" style="background-color:#fff; border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $previous_year; ?> YTD SOLD
                                             <?php echo
@@ -148,7 +147,7 @@
                                     </td>
 
 
-                                    <td colspan="2" class="th_color">
+                                    <td colspan="2" class="th_color" style="background-color:#fff; border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $previous_year; ?> YTD ADJUSTMENT
                                             <?php echo $totaladjpreviousyr; ?>
@@ -169,9 +168,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th colspan="1" class="th_color">
-                                        </td>
-                                    <td colspan="2" class="th_color">
+                                    <td colspan="1" style="background-color: #fff;border-top: none;" class="th_color"></td>
+                                    <td colspan="2" class="th_color" style="background-color:#fff; border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $current_year; ?> YTD SOLD
                                             <?php echo
@@ -181,7 +179,7 @@
                                     </td>
 
 
-                                    <td colspan="2" class="th_color">
+                                    <td colspan="2" class="th_color" style="background-color:#fff; border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $current_year; ?> YTD ADJUSTMENT
                                             <!--  Old code
@@ -225,7 +223,7 @@
                                     </td>
 
 
-                                    <td colspan="2" class="th_color">
+                                    <td colspan="2" class="th_color" style="background-color:#fff; border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $current_year; ?> YTD RECEIVE
                                             <?php echo
@@ -700,19 +698,26 @@
             <!-- new parent and child relationship // Hanamant B --->
             <?php foreach ($childreports as $childreports) { ?>
             <?php if (isset($childreports) && count($childreports['item_data']) > 0) { ?>
-            <h3>Child</h3>
+            {{-- <h3>Child</h3> --}}
+            <div class="col-md-12">
+                <h6><span>CHILD </span></h6>
+            </div>
+            <br>
             <?php } ?>
 
             <?php if (isset($childreports) && count($childreports['item_data']) > 0) { ?>
             <br><br>
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="table-responsive">
-                        <table class="table" style="border: 1px solid #ccc;">
+                        <table class="table table-hover promotionview dataTable no-footer">
                             <thead>
-                                <tr>
-                                    <th colspan="7" class="text-center text-uppercase"><b style="font-size: 16px;"><?php echo $childreports['item_data'][0]['vitemname']; ?> [QOH: CASE <?php echo
-                                            $childreports['item_data'][0]['IQTYONHAND']; ?> ]</b></th>
+                                <tr class="headermenublue">
+                                    <th colspan="1"></th>
+                                    <th colspan="5" class="text-center text-uppercase" style="text-align: center; padding-left: 98px; text-transform: uppercase;">
+                                        <?php echo $childreports['item_data'][0]['vitemname']; ?> [QOH: CASE <?php echo
+                                            $childreports['item_data'][0]['IQTYONHAND']; ?> ]</th>
+                                    <th colspan="1"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -721,9 +726,9 @@
                                 $previous_year = date('Y', strtotime('-1 year'));
                                 ?>
                                 <tr>
-                                    <td colspan="2" style="background-color: #fff;"></td>
-                                    <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
-                                        <b class="text-uppercase text-info" style="font-size: 14px;">
+                                    <td colspan="2" style="background-color: #fff;border-top: none;" class="th_color"></td>
+                                    <td colspan="2" class="th_color" style="background-color: #fff;border-top: none;">
+                                        <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $previous_year; ?> YTD SOLD
                                             <?php echo
                                             !empty($childreports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
@@ -768,7 +773,7 @@
                                     </td>
 
 
-                                    <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
+                                    <td colspan="2" class="th_color" style="background-color: #fff;border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $previous_year; ?> YTD ADJUSTMENT
                                             <?php echo $totaladjpreviousyr; ?>
@@ -779,7 +784,7 @@
                                         </b>
                                     </td>
 
-                                    <td colspan="2" class="text-left"
+                                    <td colspan="2" class="th_color"
                                         style="background-color: #fff;border-top: none;border-right: 2px solid #cdd0d4;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $previous_year; ?> YTD RECEIVE
@@ -790,9 +795,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th colspan="2" style="background-color: #fff;border-top: none;">
-                                        </td>
-                                    <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
+                                    <th colspan="2" style="background-color: #fff;border-top: none;" class="th_color"></td>
+                                    <td colspan="2" class="th_color" style="background-color: #fff;border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $current_year; ?> YTD SOLD
                                             <?php echo
@@ -802,7 +806,7 @@
                                     </td>
 
 
-                                    <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
+                                    <td colspan="2" class="th_color" style="background-color: #fff;border-top: none;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $current_year; ?> YTD ADJUSTMENT
                                             <!--  Old code
@@ -851,7 +855,7 @@
                                     </td>
 
 
-                                    <td colspan="2" class="text-left"
+                                    <td colspan="2" class="th_color"
                                         style="background-color: #fff;border-top: none;border-right: 2px solid #cdd0d4;">
                                         <b class="text-uppercase" style="font-size: 14px;">
                                             <?php echo $current_year; ?> YTD RECEIVE
@@ -1923,11 +1927,13 @@
                     {{-- <h3 class="text-danger"></h3> --}}
                     <div class="row">
                         <div class="col-md-2">
-                            <input type="" class="form-control" name="start_date" value="" id="start_date"
-                                placeholder="Start Date" readonly>
+                            <input type="text" name="start_date" value="{{ old('start_date') }}" autocomplete="off"
+                                        placeholder="Start Date" id="start_date" class="form-control" readonly/>
+                            {{-- <input type="text" class="form-control" name="start_date" id="start_date"
+                                placeholder="Start Date" readonly> --}}
                         </div>
                         <div class="col-md-2">
-                            <input type="" class="form-control" name="end_date" value="" id="end_date"
+                            <input type="text" class="form-control" name="end_date" id="end_date"
                                 placeholder="End Date" readonly>
                         </div>
                         <div class="col-md-3">
@@ -1981,22 +1987,22 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}"/>
-    {{-- <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> --}}
-    {{-- <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"/>
-    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script> --}}
-    <!-- jQuery UI library -->
+    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
+    <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
-
 
     <style>
+        .ui-menu-item-wrapper:hover{
+            color: orangered;
+            border: rgb(235, 121, 29) 2px solid;
+            text-transform: uppercase;
+        }
     .autoc {
         /* position:absolute; */
         /* cursor:default;
@@ -2005,17 +2011,26 @@
     </style>
 
     <script>
-        $(function() {
+         $(function(){
             $("#start_date").datepicker({
-                format: 'mm-dd-yyyy',
+                format: 'yyyy-mm-dd',
                 todayHighlight: true,
                 autoclose: true,
+                widgetPositioning:{
+                    horizontal: 'auto',
+                    vertical: 'bottom'
+                }
             });
-
+        });
+        $(function(){
             $("#end_date").datepicker({
-                format: 'mm-dd-yyyy',
+                format: 'yyyy-mm-dd',
                 todayHighlight: true,
                 autoclose: true,
+                widgetPositioning:{
+                    horizontal: 'auto',
+                    vertical: 'bottom'
+                }
             });
         });
     </script>
@@ -2033,28 +2048,6 @@
                 });
                 return false;
             }
-
-            // if($('#start_date').val() == ''){
-            //   // alert('Please Select Start Date');
-            //   bootbox.alert({
-            //     size: 'small',
-            //     title: "",
-            //     message: "Please Select Start Date",
-            //     callback: function(){}
-            //   });
-            //   return false;
-            // }
-
-            // if($('#end_date').val() == ''){
-            //   // alert('Please Select End Date');
-            //   bootbox.alert({
-            //     size: 'small',
-            //     title: "",
-            //     message: "Please Select End Date",
-            //     callback: function(){}
-            //   });
-            //   return false;
-            // }
 
             if ($('input[name="start_date"]').val() != '' && $('input[name="end_date"]').val() != '') {
 
@@ -2077,24 +2070,10 @@
         });
     </script>
 
-    {{-- <style type="text/css">
-        .table.table-bordered.table-striped.table-hover thead>tr {
-            background-color: #2486c6;
-            color: #fff;
-        }
-
-    </style> --}}
-
     <script>
         $(document).ready(function() {
             $("#btnPrint").printPage();
         });
-    </script>
-
-    <script type="text/javascript">
-        // $(window).load(function() {
-            // $("div#divLoading").removeClass('show');
-        // });
     </script>
 
     <script type="text/javascript">
@@ -2199,8 +2178,6 @@
             }
         });
     </script>
-
-    {{-- <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet"> --}}
 
     <script>
         $(function() {
@@ -2333,7 +2310,7 @@
                         if (data_by == 'sold') {
                             html += '<td><button data-idettrnid="' + v.idettrnid +
                                 '" data-isalesid="' + v.isalesid +
-                                '" class="btn btn-info print-sales"><i class="fa fa-print"></i> Print</button></td>';
+                                '" class="btn btn-info print-sales" style="background-color:#286fb7; color:#fff;"><i class="fa fa-print"></i> Print</button></td>';
                         }
                         html += '<td>';
                         if (data_by == 'sold') {

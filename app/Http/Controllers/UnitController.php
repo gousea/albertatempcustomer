@@ -58,7 +58,7 @@ class UnitController extends Controller
     				$model->editlistUnits($v['iunitid'],$v, $stores);
     			}
     			$url = '';
-                session()->put('message', "Success : Unit updated successfully!");
+                session()->put('success', "New unit added successfully!");
                 return redirect(route('unit'));
     		}
 		}
