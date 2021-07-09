@@ -1,34 +1,43 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title')
-  Zero Report
+ZERO MOVEMENT Report
 @endsection
 @section('main-content')
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase">ZERO MOVEMENT Report</span>
+                </div>
+                <div class="nav-submenu">
+                       <?php if(isset($zeromovement_reports) && count($zeromovement_reports) > 0){ ?>
+                       
+                            <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small btn_width"
+                            id="delete_all" ><i class="fa fa-trash"></i>&nbsp;&nbsp;DELETE ALL</a>
+                            
+                                 <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small btn_width"
+                            id="parent_delete" ><i class="fa fa-trash"></i>&nbsp;&nbsp;DELETE </a>
+                            
+                                 <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small btn_width"
+                            id="save_button" ><i class="fa fa-trash"></i>&nbsp;&nbsp; DEACTIVATE</a>
+                            
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu btn_width " href="{{route('zeromovementreportcsv_export')}}"  id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu btn_width"  href="{{route('zeromovementreportprint_page')}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu btn_width " id="pdf_export_btn" href="{{route('zeromovementreportpdf_save_page')}}" > PDF
+                            </a>
+                            
+                        <?php } ?>
+                </div>
+            </div> 
+        </div>
+    </nav>
 
-<?php 
-// echo "<pre>";
-// print_r($zeromovement_reports);
-// die;
-?>
 
-<div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <!-- <h1><?php //echo $heading_title; ?></h1> -->
-      <ul class="breadcrumb">
-        <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-        <?php //} ?>
-      </ul>
-    </div>
-  </div>
-  <div class="container-fluid">    
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo "Zero Movement Report"; ?></h3>
-      </div>
-      <div class="panel-body">
+  <div class="container">    
 
-        <?php if(isset($zeromovement_reports)){ ?>
+        <?php if(isset($zeromovement_reports_css)){ ?>
         <div class="row" style="padding-bottom: 15px;float: right;">
           <div class="col-md-12">
           <a id="csv_export_btn" href="{{route('zeromovementreportcsv_export')}}" class="pull-right" style="margin-right:10px;"><i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV</a>
@@ -39,178 +48,167 @@
           </div>
         </div>
         <?php } ?>
-        <div class="clearfix"></div>
-
-        <div class="row">
-          
-            <form method="GET" id="filter_form" action="/zeromovementreport">
-              
-                <div class="col-sm-2" style="width:250px;">
-                    <input type="text" class="form-control" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="mm/dd/yyyy - mm/dd/yyyy" readonly>
-                </div>
-                
-                <div class="col-md-0">
-                  <input type="hidden" class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly>
-                </div>
-                <div class="col-md-0">
-                  <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly>
-                </div>
-                <?php 
-                // foreach($departments as $department){
-                //     dd($vdepcode);
-                // }
-                ?>
-                <div class="col-sm-2" style="width:200px;padding-left:1px;">
-                    <select name="vdepcode" class="form-control" id="dept_code" style="display: inline-block;width: 87% !important;">
-                        <option value="" >--Select Department--</option>
-                              <?php if(isset($departments) && count($departments) > 0){?>
-                          <option value="All" <?php if(isset($vdepcode) && $vdepcode == 'All') { ?> selected="selected" <?php } ?> >All</option>
-                            <?php foreach($departments as $department){ ?>
-                            <?php if(isset($vdepcode) && $vdepcode == $department['vdepcode']){?>
-                              <option value="<?php echo $department['vdepcode'];?>" selected="selected"><?php echo $department['vdepartmentname'];?></option>
-                            <?php } else { ?>
-                              <option value="<?php echo $department['vdepcode'];?>"><?php echo $department['vdepartmentname'];?></option>
-                            <?php } ?>
-                            <?php } ?>
-                          <?php } ?>
-                    </select>
-                </div>
-                  
-                <div class="col-sm-2" style="width:200px;" >
-                    <select name="vcategorycode" class="form-control" id="category_code" style="display: inline-block;width: 87% !important;">
-                                    <option value="" >--Select Category--</option>
-                                    <?php if(isset($categories) && count($categories) > 0){?>
-                                         <option value="All" <?php if(isset($vcategorycode) && $vcategorycode == 'All') { ?> selected="selected" <?php } ?> >All</option>
-                                            <?php if(isset($categories) && count($categories)){?>
-                                                <?php foreach($categories as $category){ ?>
-                                                   <option value="<?php echo $category['vcategorycode'];?>" <?php if(isset($vcategorycode) && $vcategorycode == $category['vcategorycode']){ ?> selected <?php }?> ><?php echo $category['vcategoryname'];?></option>
-                                                <?php } ?>
-                                            <?php } ?>
+ 
+ 
+    <br>
+    <h6><span>SEARCH PARAMETERS </span></h6>
+    <br>
+        <form method="GET" id="filter_form" action="/zeromovementreport">
+                 <div class="row">
+                        <div class="col" style="width:250px;">
+                            <input type="text" class="form-control rcorner" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="mm/dd/yyyy - mm/dd/yyyy" readonly>
+                        </div>
+                        
+                        <div class="col-md-0">
+                          <input type="hidden" class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly>
+                        </div>
+                        <div class="col-md-0">
+                          <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly>
+                        </div>
+                      
+                        <div class="col" style="width:200px;padding-left:1px;">
+                            <select name="vdepcode" class="form-control " id="dept_code" style="display: inline-block;width: 87% !important;">
+                                <option value="" >--Select Department--</option>
+                                      <?php if(isset($departments) && count($departments) > 0){?>
+                                  <option value="All" <?php if(isset($vdepcode) && $vdepcode == 'All') { ?> selected="selected" <?php } ?> >All</option>
+                                    <?php foreach($departments as $department){ ?>
+                                    <?php if(isset($vdepcode) && $vdepcode == $department['vdepcode']){?>
+                                      <option value="<?php echo $department['vdepcode'];?>" selected="selected"><?php echo $department['vdepartmentname'];?></option>
+                                    <?php } else { ?>
+                                      <option value="<?php echo $department['vdepcode'];?>"><?php echo $department['vdepartmentname'];?></option>
                                     <?php } ?>
-                                          
-                    </select>
-                </div>
-                  
-                <div class="col-sm-2" style="width:200px;padding:0px;">
-                    <select name="subcat_id" class="form-control" id="subcat_id">
-                        <option value="">--Select Sub Category--</option>
-                        <?php if(isset($subcategories) && count($subcategories) ){?>
-                                <?php foreach($subcategories as $subcategory){ ?>
-                                 <option value="<?php echo $subcategory['subcat_id'];?>" <?php if(isset($subcat_id) && $subcat_id == $subcategory['subcat_id']){ ?> selected <?php }?> ><?php echo $subcategory['subcat_name'];?></option>
-                                 <?php } ?>
-                        <?php } ?>
-                                 
-                    </select>
-                </div>
-                  
-                <!--<div class="col-md-3">
-                  <select name="report_by" class="form-control" id="report_by">
-                    <option value="">Please Select Report</option>
-                    <?php foreach ($byreports as $key => $value){ ?>
-                      <?php if(isset($selected_report_by) && ($selected_report_by == $key)){ ?>
-                        <option value="<?php echo $key; ?>" selected="selected"><?php echo $value; ?></option>
-                      <?php } else { ?>
-                        <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-                      <?php } ?>
-                    <?php } ?>
-                  </select>
-                </div>
-                <?php if(isset($selected_report_data) && count($selected_report_data) > 0){ ?>
-                <div class="col-md-3" id="div_report_data">
-                  <select name="report_data[]" class="form-control" id="report_data" multiple="true">
-                    <?php if($selected_report_by == 1) { ?>
-                      <option value="">Please Select Category</option>
-                    <?php }else if($selected_report_by == 2) { ?>
-                      <option value="">Please Select Department</option>
-                    <?php } else { ?>
-                      <option value="">Please Select Item Group</option>
-                    <?php } ?>
-                    <?php if(in_array('ALL', $selected_report_data)){ ?>
-                      <option value="ALL" selected="selected">ALL</option>
-                    <?php } else { ?>
-                      <option value="ALL">ALL</option>
-                    <?php } ?>
-                    <?php if(isset($drop_down_datas)){ ?>
-                      <?php foreach($drop_down_datas as $drop_down_data){ ?>
-                        <?php $sel_report = false; ?>
-                        <?php foreach($selected_report_data as $selected_report_d){ ?>
-                          <?php if($drop_down_data['id'] == $selected_report_d){ ?>
-                            <option value="<?php echo $drop_down_data['id']?>" selected="selected"><?php echo $drop_down_data['name']?></option>
-                            <?php 
-                              $sel_report = true;
-                              break;
-                            ?>
-                           <?php } ?>
-                        <?php } ?>
-                        <?php if($sel_report == false){ ?>
-                          <option value="<?php echo $drop_down_data['id']?>"><?php echo $drop_down_data['name']?></option>
-                        <?php } ?>
-                      <?php } ?>
-                    <?php } ?>
-                  </select>
-                </div>
-                <?php } else { ?>
-                  <div class="col-md-3" style="display:none;" id="div_report_data">
-                    <select name="report_data[]" class="form-control" id="report_data" multiple="true">
-                      <option value="">Please Select</option>
-                    </select>
-                  </div>
-                <?php } ?>-->
-                
-                <div class="col-sm-2">
-                  <input type="submit" class="btn btn-success" value="Generate">
-                </div>
-            </form>
-        </div>    
-          
+                                    <?php } ?>
+                                  <?php } ?>
+                            </select>
+                        </div>
+                          
+                        <div class="col" style="width:200px;" >
+                            <select name="vcategorycode" class="form-control" id="category_code" style="display: inline-block;width: 87% !important;">
+                                            <option value="" >--Select Category--</option>
+                                            <?php if(isset($categories) && count($categories) > 0){?>
+                                                 <option value="All" <?php if(isset($vcategorycode) && $vcategorycode == 'All') { ?> selected="selected" <?php } ?> >All</option>
+                                                    <?php if(isset($categories) && count($categories)){?>
+                                                        <?php foreach($categories as $category){ ?>
+                                                           <option value="<?php echo $category['vcategorycode'];?>" <?php if(isset($vcategorycode) && $vcategorycode == $category['vcategorycode']){ ?> selected <?php }?> ><?php echo $category['vcategoryname'];?></option>
+                                                        <?php } ?>
+                                                    <?php } ?>
+                                            <?php } ?>
+                                                  
+                            </select>
+                        </div>
+                          
+                        <div class="col" style="width:200px;padding:0px;">
+                            <select name="subcat_id" class="form-control" id="subcat_id">
+                                <option value="">--Select Sub Category--</option>
+                                <?php if(isset($subcategories) && count($subcategories) ){?>
+                                        <?php foreach($subcategories as $subcategory){ ?>
+                                         <option value="<?php echo $subcategory['subcat_id'];?>" <?php if(isset($subcat_id) && $subcat_id == $subcategory['subcat_id']){ ?> selected <?php }?> ><?php echo $subcategory['subcat_name'];?></option>
+                                         <?php } ?>
+                                <?php } ?>
+                                         
+                            </select>
+                        </div>
+                          
+                        <!--<div class="col-md-3">
+                          <select name="report_by" class="form-control" id="report_by">
+                            <option value="">Please Select Report</option>
+                            <?php foreach ($byreports as $key => $value){ ?>
+                              <?php if(isset($selected_report_by) && ($selected_report_by == $key)){ ?>
+                                <option value="<?php echo $key; ?>" selected="selected"><?php echo $value; ?></option>
+                              <?php } else { ?>
+                                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                              <?php } ?>
+                            <?php } ?>
+                          </select>
+                        </div>
+                        <?php if(isset($selected_report_data) && count($selected_report_data) > 0){ ?>
+                        <div class="col-md-3" id="div_report_data">
+                          <select name="report_data[]" class="form-control" id="report_data" multiple="true">
+                            <?php if($selected_report_by == 1) { ?>
+                              <option value="">Please Select Category</option>
+                            <?php }else if($selected_report_by == 2) { ?>
+                              <option value="">Please Select Department</option>
+                            <?php } else { ?>
+                              <option value="">Please Select Item Group</option>
+                            <?php } ?>
+                            <?php if(in_array('ALL', $selected_report_data)){ ?>
+                              <option value="ALL" selected="selected">ALL</option>
+                            <?php } else { ?>
+                              <option value="ALL">ALL</option>
+                            <?php } ?>
+                            <?php if(isset($drop_down_datas)){ ?>
+                              <?php foreach($drop_down_datas as $drop_down_data){ ?>
+                                <?php $sel_report = false; ?>
+                                <?php foreach($selected_report_data as $selected_report_d){ ?>
+                                  <?php if($drop_down_data['id'] == $selected_report_d){ ?>
+                                    <option value="<?php echo $drop_down_data['id']?>" selected="selected"><?php echo $drop_down_data['name']?></option>
+                                    <?php 
+                                      $sel_report = true;
+                                      break;
+                                    ?>
+                                   <?php } ?>
+                                <?php } ?>
+                                <?php if($sel_report == false){ ?>
+                                  <option value="<?php echo $drop_down_data['id']?>"><?php echo $drop_down_data['name']?></option>
+                                <?php } ?>
+                              <?php } ?>
+                            <?php } ?>
+                          </select>
+                        </div>
+                        <?php } else { ?>
+                          <div class="col-md-3" style="display:none;" id="div_report_data">
+                            <select name="report_data[]" class="form-control" id="report_data" multiple="true">
+                              <option value="">Please Select</option>
+                            </select>
+                          </div>
+                        <?php } ?>-->
+                        
+                        <div class="col">
+                          <input type="submit" class="btn btn-success rcorner header-color" value="Generate">
+                        </div>
+                        
+                     </div>   
+                     
+        </form>
+        
+    <br><br>
+    <h6><span>ZERO MOVEMENT</span></h6>
         
         <?php if(isset($zeromovement_reports) && count($zeromovement_reports) > 0){ ?>
         <br>
        
-        <div class="row">
-          <div class="col-md-12">
-            <p><b>Date Range: </b><?php echo $p_start_date; ?> to <?php echo $p_end_date; ?></p>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-12">
-            <p><b>Store Name: </b><?php echo $storename; ?></p>
-            <p><b>Store Address: </b><?php echo $storeaddress; ?></p>
-            <p><b>Store Phone: </b><?php echo $storephone; ?></p>
-          </div>
-        </div>
-         <div class="row">
-            <div class="col-md-12">
-            <div class="col-md-8">
+       
+      
+        <!-- <div class="row">-->
+        <!--    <div class="col-md-12">-->
+        <!--    <div class="col-md-8">-->
                 
-            </div>   
-            <div class="col-md-4">
-                <tr>
-                 <button type="button" class="btn btn-danger" id="delete_all" title="Delete All" style="border-radius: 0px;"><i class="fa fa-trash"></i>Delete All</button>    
-                  <button type="button" class="btn btn-danger" id="parent_delete" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i>Delete</button>
+        <!--    </div>   -->
+        <!--    <div class="col-md-4">-->
+        <!--        <tr>-->
+        <!--         <button type="button" class="btn btn-danger" id="delete_all" title="Delete All" style="border-radius: 0px;"><i class="fa fa-trash"></i>Delete All</button>    -->
+        <!--          <button type="button" class="btn btn-danger" id="parent_delete" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i>Delete</button>-->
             
-                  <button type="button" class="btn btn-primary" id="save_button" title="Save" style="border-radius: 0px;"><i class="fa fa-save"></i>Deactivate</button>
-                 </tr>    
-            </div>
-            </div>       
-        </div>
-        <div class="row">
-          <div class="col-md-12 table-responsive">
+        <!--          <button type="button" class="btn btn-primary" id="save_button" title="Save" style="border-radius: 0px;"><i class="fa fa-save"></i>Deactivate</button>-->
+        <!--         </tr>    -->
+        <!--    </div>-->
+        <!--    </div>       -->
+        <!--</div>-->
+
           <br>
-            <table class="table table-bordered table-striped table-hover" style="width:100%;">
+            <table class="table   promotionview" >
           
-              <thead class='header'>
-                <tr>
+              <thead>
+                <tr class="th_color text-uppercas">
                   <th style="width: 1px;color:black;"class="text-left">
                       <input type="checkbox"  class="selectAll" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                   </th>    
                   <th style="width: 20%;">Item Name</th>
                   <th style="width: 15%;">SKU</th>
                   <th style="width: 10%;">QOH</th>
-                  <th style="width: 10%;" class="text-right">Cost</th>
-                  <th style="width: 10%;" class="text-right">Price</th>
-                  <th style="width: 10%;" class="text-right">Total cost</th>
+                  <th style="width: 10%;" >Cost</th>
+                  <th style="width: 10%;" >Price</th>
+                  <th style="width: 10%;" >Total cost</th>
                   <th style="width: 10%;">Total Price</th>
                   <th style="width: 10%;">GP%</th>
                  
@@ -240,15 +238,17 @@
                   <?php } ?>
               </tbody>
             </table>
+            
+            
             <?php if(isset($zeromovement_reports)){ ?>
                 {{$zeromovement_reports->links()}}
             <?php } ?>
-          </div>
+          
             <div class="row">
               <div class="col-sm-6 text-left"><?php //echo $pagination; ?></div>
               <div class="col-sm-6 text-right"><?php //echo $results; ?></div>
             </div>
-        </div>
+        
         
         <?php }else{ ?>
           
@@ -261,10 +261,9 @@
             </div>
        
         <?php } ?>
-      </div>
-    </div>
+      
   </div>
-</div>
+
 
 
 <div class="modal fade" id="successModal" role="dialog">
@@ -309,8 +308,7 @@
 
 @endsection
 
-@section('scripts')
-
+@section('page-script')
 <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
@@ -322,13 +320,16 @@
 <script src="{{ asset('javascript/bootbox.min.js')}}"></script>
 <script src="{{ asset('javascript/table-fixed-header.js')}}" ></script>
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
+
 <style type="text/css">
   .table.table-bordered.table-striped.table-hover thead > tr {
     background-color: #2486c6;
     color: #fff;
   }
   .select2-container--default .select2-selection--single{
-    border-radius: 0px !important;
+    border-radius: 9px !important;
     height: 35px !important;
     width
   }
@@ -730,9 +731,9 @@ $(document).ready(function() {
 
     $("#btnPrint").printPage();
 });
-$(window).load(function() {
-    $("div#divLoading").removeClass('show');
-});
+// $(window).load(function() {
+//     $("div#divLoading").removeClass('show');
+// });
 const saveData = (function() {
     const a = document.createElement("a");
     document.body.appendChild(a);
@@ -930,5 +931,29 @@ $( document ).ready(function() {
  
     }
 
+</style>
+<style>
+.rcorner {
+  border-radius:9px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
+.btn_width{
+    width:110px;
+}
 </style>
 @endsection

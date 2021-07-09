@@ -57,7 +57,7 @@ Hourly Sales Report
                         
                         <div class="col" >
                             
-                            <select name="vdepcode[]" class="sample-class"  id="dept_code"  multiple="true" placeholder="Select Department" style="width:275px">
+                            <select name="vdepcode[]" class="sample-class"  id="dept_code"  multiple="true" placeholder="Select Department" style="width:275px" required >
                                                 
                                             <option value="All">All</option>
                                               <?php if(isset($departments) && count($departments) > 0){?>
@@ -223,21 +223,21 @@ Hourly Sales Report
                    data-click-to-select="true">
                                     
                                     <tr class="th_color text-uppercas">
-                                        <th>Date</th>
-                                        <th>Hourly Sales</th>
-                                        <td class="text-right"><b>Amount</b></td>
-                                        <td class="text-center"><b>Transactions</b></td>
+                                        <th class="text-left">DATE</th>
+                                        <th class="text-center">HOURLY SALES</th>
+                                        <th class="text-center"> AMOUNT</th>
+                                        <th class="text-right">TRANSACTION</th>
                                         <!--<td class="text-center"><b>Time Slot</b></td>-->
                                     </tr>
             
                                     <?php foreach($report_hourly as $r) { ?>
                                         
                                         <tr>
-                                            <th><?php echo isset($r['trn_date']) ? $r['trn_date']: 0; ?></th>
-                                            <th><?php echo isset($r['Hours']) ? $r['Hours']: 0; ?></th>
-                                            <td class='text-right'><?php echo "$",isset($r['Amount']) ? $r['Amount']: 0.00; ?></td>
+                                            <th class="text-left"><?php echo isset($r['trn_date']) ? $r['trn_date']: 0; ?></th>
+                                            <th class="text-center"><?php echo isset($r['Hours']) ? $r['Hours']: 0; ?></th>
+                                            <th class="text-center"><?php echo "$",isset($r['Amount']) ? $r['Amount']: 0.00; ?></th>
                                             
-                                            <td class='text-center'><a href="javascript:void(0)" onclick="itemlist('<?= $r['salesids'] ?>', '<?= $r['Hours'] ?>', '<?= $r['trn_date'] ?>');" title="View"><?php echo isset($r['Number']) ? $r['Number']: 0; ?></a></td>
+                                            <th class="text-right" style=" padding-right: 40px;"><a href="javascript:void(0)" onclick="itemlist('<?= $r['salesids'] ?>', '<?= $r['Hours'] ?>', '<?= $r['trn_date'] ?>');" title="View"><?php echo isset($r['Number']) ? $r['Number']: 0; ?></a></th>
                                             
                                         </tr>
         
@@ -305,10 +305,10 @@ Hourly Sales Report
 <link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
 
 <script>
-  $(function(){
+//   $(function(){
 
-    $("div#divLoading").addClass('show');
-  });
+//     $("div#divLoading").addClass('show');
+//   });
   
   window.onload = function () {
 Highcharts.chart('graphContainer', {
@@ -453,9 +453,9 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
+//   $(window).load(function() {
+//     $("div#divLoading").removeClass('show');
+//   });
 </script>
 
 <script type="text/javascript">
@@ -682,7 +682,7 @@ $(document).ready(function() {
    
   }
   .select2.select2-container.select2-container--default{
-  /* width: 100% !important; */
+  /*width: 100% !important;*/
   }
   .select2-container--default .select2-selection--single .select2-selection__rendered{
     line-height: 35px !important;
@@ -849,14 +849,14 @@ $(document).on('submit', '#filter_form', function(event) {
       <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
                 <h3 class="modal-title">Item List</h3>
             </div>
             <div class="modal-body" id="print_item">
                 <center><h4>Hourly Sales Report</h4></center>
                 <div id="trn_detail">
                     <div class="row">
-                      <div class="col-md-1col">
+                      <div class="col-md-12">
                         <div class='col-md-6'>
                             <p><b>Store Name: </b>{{ session()->get('storeName') }} </p>
                         </div>

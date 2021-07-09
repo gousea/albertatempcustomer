@@ -47,7 +47,7 @@ Sales Analytics Report
           @method('post')
             <div class="row">                    
                 <div class="col">
-                    <select name="department[]" class="form-control" id="department_code" multiple="true" placeholder="Select Department" >                        
+                    <select name="department[]" class="form-control" id="department_code" multiple="true" placeholder="Select Department" Required>                        
                        <option value="All">All</option>
                        <?php if(isset($departments) && !empty($departments) ) { ?>
                             <?php foreach($departments as $dep) { ?>
@@ -885,19 +885,7 @@ Sales Analytics Report
     $('.table').fixedHeader({
       topOffset: 0
     });
-  $(document).ready(function(){
-      var total_amount = $('#bottom_total_amount').text();
-      var total_qty = $('#bottom_total_qty').text();
-      var total_cost = $('#bottom_total_cost').text();
-      var total_price = $('#bottom_total_price').text();
-      var gross_profit_percent = $('#bottom_gross_profit_percent').text();
-      
-      $('#total_amount').text(total_amount);
-      $('#total_qty').text(total_qty);
-      $('#total_cost').text(total_cost);
-      $('#total_price').text(total_price);
-      $('#gross_profit_percent').text(gross_profit_percent);
-  });
+ 
 </script>
 <script>
     
@@ -981,5 +969,20 @@ table, .promotionview {
     left: 0%;
 }
 </style>
+<script>
+     $(document).ready(function(){
+      var total_amount = $('#bottom_total_amount').text();
+      var total_qty = $('#bottom_total_qty').text();
+      var total_cost = $('#bottom_total_cost').text();
+      var total_price = $('#bottom_total_price').text();
+      var gross_profit_percent = $('#bottom_gross_profit_percent').text();
+      
+      $('#total_amount').text(total_amount);
+      $('#total_qty').text(total_qty);
+      $('#total_cost').text(total_cost);
+      $('#total_price').text(total_price);
+      $('#gross_profit_percent').text(gross_profit_percent);
+  });
+</script>
     
 @endsection

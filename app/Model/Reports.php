@@ -1332,20 +1332,31 @@ class Reports extends Model
         {
             
             $deptcon=" AND m.vdepcode IN($array_dept)";
+         
         }
+       
         if(isset($array_cat) && $array_cat !='All')
         {
             
-            $catcon=" AND m.vcategorycode IN($array_dept)";
+            $catcon=" AND m.vcategorycode IN($array_cat)";
         }
         
          if(isset($array_sub) && $array_sub !='All')
         {
             
-            $subcon=" AND m.vcategorycode IN($array_dept)";
+            $subcon=" AND m.vcategorycode IN($array_sub)";
         }
-        
-        
+       
+       if($deptcon==""){
+           $deptcon='';
+          
+       }
+       if($subcon==""){
+           $subcon='';
+       }
+       if($catcon==""){
+           $catcon='';
+       }
        
         if($todaydate==date("Y-m-d") && $todaydateend ==date("Y-m-d")){
             
@@ -1360,7 +1371,7 @@ class Reports extends Model
             
             group by date(dtrandate),CONCAT(date_format(dtrandate,'%h:00 %p to ') , date_format(date_add(dtrandate, interval 1 hour),'%h:00 %p')),date_format(dtrandate,'%H') 
             order by date(dtrandate), date_format(dtrandate,'%H')";
-            
+            // dd($sql);
             $query =  DB::connection('mysql_dynamic')->select($sql);
             $result = json_decode(json_encode($query), true); 
     		return $result;
