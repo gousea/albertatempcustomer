@@ -847,9 +847,9 @@
                                       </div>
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required form-inline">
 
-                                        <input type="text" name="book_qoh" maxlength="50" value="<?php echo isset($data['QOH']) ? $data['QOH'] : ''; ?>" placeholder="Book Qoh" id="input-book_qoh" class="form-control adjustment-fields" autocomplete="off" readonly/>
-                                        <?php if (isset($data['error_book_qoh'])) { ?>
-                                            <div class="text-danger"><?php echo $data['error_book_qoh']; ?></div>
+                                        <input type="number" name="book_cost" maxlength="50" value="<?php echo isset($data['dcostprice']) ? number_format((float)$data['dcostprice'], 2) : ''; ?>" placeholder="Book Cost" id="input-book_cost" class="form-control adjustment-fields" autocomplete="off"/>
+                                        <?php if (isset($data['error_book_cost'])) { ?>
+                                            <div class="text-danger"><?php echo $data['error_book_cost']; ?></div>
                                         <?php } ?>
                                           
                                       </div>
@@ -911,7 +911,7 @@
       
                                         <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
                                           <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
-                                          <?php if($data['wicitem'] == '1') $wicitem = 'Y'; else $wicitem ='N'; ?>
+                                          <?php if($data['wicitem'] == '1' || $data['wicitem'] == 'Y') $wicitem = 'Y'; else $wicitem ='N'; ?>
                                             <label class="radio-inline">
                                               <input type="radio" name="wicitem" class="form-control" value="<?php echo $k;?>" <?php if($wicitem == $k) echo "checked"; ?> ><?php echo $array_y_n;?>&nbsp;&nbsp;
                                             </label>
@@ -1126,19 +1126,19 @@
                           <div class="col-md-12 mx-auto">
                               
                             <div class="form-group row">
-                                <div class="col-12 col-md-12 col-sm-2 col-lg-12 p-form">
-                                    <div class="col-2 col-md-2 col-sm-6 col-lg-2">
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                         <label for="inputFirstname" class="p-2 float-right text-uppercase">Image</label>
                                     </div>
-                                    <div class="col-8 col-md-8 col-sm-6 col-lg-8">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <?php if(isset($data['itemimage']) && $data['itemimage'] != ''){?>
-                                        <img src="data:image/gif;base64,<?php echo $data['itemimage'];?>" class="img-responsive" width="100" height="100" alt="" id="showImage" style="margin-left: -30px;">
+                                        <img src="data:image/gif;base64,<?php echo $data['itemimage'];?>" class="img-responsive" width="100" height="100" alt="" id="showImage">
                                         <br>
                                         <button class="btn btn-info btn-sm" id="remove_item_img">Remove</button>
                                         <br><br>
                                         <input type="hidden" name="pre_itemimage" value="<?php echo $data['itemimage'];?>">
                                       <?php } else { ?>
-                                        <img src="{{ asset('image/user-icon-profile.png') }}" class="img-responsive" width="600" height="200" alt="" id="showImage" style="margin-left: -30px;"><br>
+                                        <img src="{{ asset('image/user-icon-profile.png') }}" class="img-responsive" width="200" height="200" alt="" id="showImage"><br>
                                         <input type="hidden" name="pre_itemimage" value="">
                                       <?php } ?>
                                       <input type="file" name="itemimage" accept="image/x-png,image/gif,image/jpeg" onchange="showImages(this)">
@@ -1169,6 +1169,7 @@
                   </div>
 
                   <div id="plcb_options_checkbox_div" style="<?php if($data['plcb_options_checkbox']){ echo 'display: block'; }else{ echo 'display: none'; }?>">
+                    <input type="hidden" name="plcb_options_checkbox" id="plcb_options_checkbox" value='<?= $data['plcb_options_checkbox']; ?>' >
                     <div class="py-3">
                         <div class="row">
                             <div class="col-md-12 mx-auto">
@@ -1406,11 +1407,11 @@
                             <td><input type="checkbox" class="selected_lot_matrix_checkbox" name="selected_lot_matrix[]" value="<?php echo $itempack->idetid; ?>" /></td>
                           <?php } ?>
                           <td>
-                            <input type="text" class="editable adjustment-fields" name="itempacks[<?php echo $k; ?>][vpackname]" value="<?php echo $itempack->vpackname;?>" />
+                            <input type="text" class="editable adjustment-fields input_vpackname" name="itempacks[<?php echo $k; ?>][vpackname]" value="<?php echo $itempack->vpackname;?>" />
                           </td>
                           <td>
                             <?php //echo $itempack->vdesc;?>
-                            <input type="text" class="editable adjustment-fields" name="itempacks[<?php echo $k; ?>][vdesc]" value="<?php echo $itempack->vdesc;?>" />
+                            <input type="text" class="editable adjustment-fields input_vdesc" name="itempacks[<?php echo $k; ?>][vdesc]" value="<?php echo $itempack->vdesc;?>" />
                           </td>
                           <td class="text-left"><?php echo number_format($data['nunitcost'], 2);?></td>
                           <td class="text-left"><?php echo $itempack->ipack;?></td>
@@ -1422,7 +1423,7 @@
                           <td class="text-left">
                             <input type="text" class="editable input_npackprice adjustment-fields" id='input_npackprice' name="itempacks[<?php echo $k; ?>][npackprice]" value="<?php echo $itempack->npackprice; ?>" style="text-align: right;" />
                           </td>
-                          <td class="text-left"><?php echo $itempack->isequence;?></td>
+                          <td class="text-left"><input type="text" class="editable input_isequence adjustment-fields" id='input_isequence' name="itempacks[<?php echo $k; ?>][isequence]" value="<?php echo $itempack->isequence; ?>" style="text-align: right;" /></td>
                           <td class="text-left">
                             <span class="npackmargins"><?php echo $itempack->npackmargin;?></span>
                             <input class="input_npackmargins" type="hidden" name="itempacks[<?php echo $k; ?>][npackmargin]" value="<?php echo $itempack->npackmargin; ?>" />
@@ -1535,7 +1536,7 @@
                           <td class="text-left text-uppercase"><input type="checkbox" class="item_vendor_ids" name="selected_vendor_code[]" value="<?php echo $itemvendor->Id; ?>" /></td>
                           <td class="text-left text-uppercase"><?php echo $itemvendor->vcompanyname;?></td>
                           <td class="text-left text-uppercase">
-                            <input type="text" class="editable" maxlength="100" name="itemvendors[<?php echo $k; ?>][vvendoritemcode]" value="<?php echo $itemvendor->vvendoritemcode; ?>" />
+                            <input type="text" class="editable adjustment-fields input_vvendoritemcode" maxlength="100" name="itemvendors[<?php echo $k; ?>][vvendoritemcode]" value="<?php echo $itemvendor->vvendoritemcode; ?>" onclick="$('input[name*=\'selected_vendor_code\']').prop('checked', this.checked);" />
                           </td>
                           <td class="text-left text-uppercase"><?php echo $itemvendor->vaddress1;?></td>
                           <td class="text-left text-uppercase"><?php echo $itemvendor->vphone;?></td>
@@ -1556,6 +1557,14 @@
           </div>
           
             <div class="tab-pane" id="item_movement_tab">
+                
+                <div class="mytextdiv">
+                    <div class="mytexttitle font-weight-bold text-uppercase">
+                        Item Movement
+                    </div>
+                    <div class="divider font-weight-bold"></div>
+                </div>
+                
                 <?php if(isset($reports) && count($reports['item_data']) > 0){ ?>
                     <br><br>
                     <div class="row">
@@ -1651,7 +1660,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th colspan="1" class="th_color">
+                                            <td colspan="1" class="th_color">
                                                 </td>
                                             <td colspan="2" class="th_color">
                                                 <b class="text-uppercase" style="font-size: 14px;">
@@ -2180,21 +2189,633 @@
                     <br>
                 <?php } ?>
                     <!-- new parent and child relationship // Hanamant B --->
-                <?php foreach ($childreports as $childreports) { ?>
-                    <?php if (isset($childreports) && count($childreports['item_data']) > 0) { ?>
-                    <h3>Child</h3>
+                    
+                <?php if (isset($childreports)) { ?> 
+                    <?php foreach ($childreports as $childreports) { ?>
+                        <?php if (isset($childreports) && count($childreports['item_data']) > 0) { ?>
+                        <h3>Child</h3>
+                        <?php } ?>
+            
+                        <?php if (isset($childreports) && count($childreports['item_data']) > 0) { ?>
+                            <br><br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table promotionview" style="width: 100%;">
+                                            <thead>
+                                                <tr class="header-color">
+                                                    <th colspan="7" class="text-center text-uppercase"><b style="font-size: 16px;"><?php echo $childreports['item_data'][0]['vitemname']; ?> [QOH: CASE <?php echo
+                                                            $childreports['item_data'][0]['IQTYONHAND']; ?> ]</b></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $current_year = date('Y');
+                                                $previous_year = date('Y', strtotime('-1 year'));
+                                                ?>
+                                                <tr class="th_color">
+                                                    <td colspan="2" class="th_color"></td>
+                                                    <td colspan="2" class="th_color">
+                                                        <b class="text-uppercase text-info" style="font-size: 14px;">
+                                                            <?php echo $previous_year; ?> YTD SOLD
+                                                            <?php echo
+                                                            !empty($childreports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
+                                                            $childreports['year_arr_sold'][$previous_year]['total_sold'] : '0'; ?>
+                
+                                                            <?php
+                                                            $value1 =
+                                                            !empty($childreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
+                                                            ? $childreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
+                                                            '0'; /*adjustment */
+                                                            $value2 = !empty($childreports['year_arr_oqoh'][$previous_year]['total_oqoh']) ?
+                                                            $childreports['year_arr_oqoh'][$previous_year]['total_oqoh'] : '0'; /*Opening
+                                                            Qoh Web*/
+                                                            $value3 = !empty($childreports['year_arr_qoh'][$previous_year]['total_qoh']) ?
+                                                            $childreports['year_arr_qoh'][$previous_year]['total_qoh'] : '0'; /*Quick Update
+                                                            web*/
+                                                            $value4 = !empty($childreports['year_arr_inv'][$previous_year]['total_inv']) ?
+                                                            $childreports['year_arr_inv'][$previous_year]['total_inv'] : '0'; /* Parent
+                                                            update*/
+                                                            $value6 = !empty($childreports['year_arr_cqoh'][$previous_year]['total_cqoh']) ?
+                                                            $childreports['year_arr_cqoh'][$previous_year]['total_cqoh'] : '0'; /*Child
+                                                            Upadte*/
+                                                            $value7 = !empty($childreports['year_arr_phqoh'][$previous_year]['total_phqoh'])
+                                                            ? $childreports['year_arr_phqoh'][$previous_year]['total_phqoh'] : '0'; /*Phone
+                                                            update Qoh update by sku api*/
+                                                            $value8 =
+                                                            !empty($childreports['year_arr_ophoqoh'][$previous_year]['total_ophoqoh']) ?
+                                                            $childreports['year_arr_ophoqoh'][$previous_year]['total_ophoqoh'] : '0';
+                                                            /*Opening Qoh by phone */
+                                                            $value9 =
+                                                            !empty($childreports['year_arr_adjustment_phy'][$previous_year]['ptotal_adjustment'])
+                                                            ? $childreports['year_arr_adjustment_phy'][$previous_year]['ptotal_adjustment']
+                                                            : '0';
+                                                            $totaladjpreviousyr = $value1 + $value2 + $value3 + $value4 + $value6 + $value7
+                                                            + $value8 + $value9;
+                                                            ?>
+                
+                
+                
+                
+                                                        </b>
+                                                    </td>
+                
+                
+                                                    <td colspan="2" class="th_color">
+                                                        <b class="text-uppercase" style="font-size: 14px;">
+                                                            <?php echo $previous_year; ?> YTD ADJUSTMENT
+                                                            <?php echo $totaladjpreviousyr; ?>
+                                                            <?php //echo
+                                                            !empty($childreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
+                                                            ? $childreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
+                                                            '0'; ?>
+                                                        </b>
+                                                    </td>
+                
+                                                    <td colspan="2" class="th_color">
+                                                        <b class="text-uppercase" style="font-size: 14px;">
+                                                            <?php echo $previous_year; ?> YTD RECEIVE
+                                                            <?php echo
+                                                            !empty($childreports['year_arr_receive'][$previous_year]['total_receive']) ?
+                                                            $childreports['year_arr_receive'][$previous_year]['total_receive'] : '0'; ?>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr class="th_color">
+                                                    <th colspan="2" class="th_color">
+                                                        </td>
+                                                    <td colspan="2" class="th_color">
+                                                        <b class="text-uppercase" style="font-size: 14px;">
+                                                            <?php echo $current_year; ?> YTD SOLD
+                                                            <?php echo
+                                                            !empty($childreports['year_arr_sold'][$current_year]['total_sold']) ? (int)
+                                                            $childreports['year_arr_sold'][$current_year]['total_sold'] : '0'; ?>
+                                                        </b>
+                                                    </td>
+                
+                
+                                                    <td colspan="2" class="th_color">
+                                                        <b class="text-uppercase" style="font-size: 14px;">
+                                                            <?php echo $current_year; ?> YTD ADJUSTMENT
+                                                            <!--  Old code
+                                                    <?php
+                                    //echo !empty($childreports['year_arr_adjustment'][$current_year]['total_adjustment']) ? $childreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0' ;
+                                    ?>
+                                                -->
+                
+                
+                                                            <?php
+                                                            $value1 =
+                                                            !empty($childreports['year_arr_adjustment'][$current_year]['total_adjustment'])
+                                                            ? $childreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0';
+                                                            /*adjustment */
+                                                            $value2 = !empty($childreports['year_arr_oqoh'][$current_year]['total_oqoh']) ?
+                                                            $childreports['year_arr_oqoh'][$current_year]['total_oqoh'] : '0'; /*Opening Qoh
+                                                            Web*/
+                                                            $value3 = !empty($childreports['year_arr_qoh'][$current_year]['total_qoh']) ?
+                                                            $childreports['year_arr_qoh'][$current_year]['total_qoh'] : '0'; /*Quick Update
+                                                            web*/
+                                                            $value4 = !empty($childreports['year_arr_inv'][$current_year]['total_inv']) ?
+                                                            $childreports['year_arr_inv'][$current_year]['total_inv'] : '0';
+                                                            $value6 = !empty($childreports['year_arr_cqoh'][$current_year]['total_cqoh']) ?
+                                                            $childreports['year_arr_cqoh'][$current_year]['total_cqoh'] : '0'; /*Child
+                                                            Upadte*/
+                                                            $value5 = !empty($childreports['year_arr_pqoh'][$current_year]['total_pqoh']) ?
+                                                            $childreports['year_arr_pqoh'][$current_year]['total_pqoh'] : '0'; /* Parent
+                                                            update*/
+                                                            $value7 = !empty($childreports['year_arr_phqoh'][$current_year]['total_phqoh'])
+                                                            ? $childreports['year_arr_phqoh'][$current_year]['total_phqoh'] : '0'; /*Phone
+                                                            update Qoh update by sku api*/
+                                                            $value8 =
+                                                            !empty($childreports['year_arr_ophoqoh'][$current_year]['total_ophoqoh']) ?
+                                                            $childreports['year_arr_ophoqoh'][$current_year]['total_ophoqoh'] : '0';
+                                                            /*Opening Qoh by phone */
+                                                            $value9 =
+                                                            !empty($childreports['year_arr_adjustment_phy'][$current_year]['ptotal_adjustment'])
+                                                            ? $childreports['year_arr_adjustment_phy'][$current_year]['ptotal_adjustment'] :
+                                                            '0';
+                                                            $TotalAdjustment = $value1 + $value2 + $value3 + $value4 + $value6 + $value7 +
+                                                            $value8 + $value5 + $value9;
+                                                            ?>
+                
+                                                            <?php echo $TotalAdjustment; ?>
+                                                        </b>
+                                                    </td>
+                
+                
+                                                    <td colspan="2" class="th_color">
+                                                        <b class="text-uppercase" style="font-size: 14px;">
+                                                            <?php echo $current_year; ?> YTD RECEIVE
+                                                            <?php echo
+                                                            !empty($childreports['year_arr_receive'][$current_year]['total_receive']) ?
+                                                            $childreports['year_arr_receive'][$current_year]['total_receive'] : '0'; ?>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="2" class="text-center" style="border-right: 1px solid #cdd0d4;">MONTH</th>
+                                                    <th colspan="3" class="text-center" style="border-right: 1px solid #cdd0d4;">PREVIOUS YEAR</th>
+                                                    <th colspan="3" class="text-center" style="border-right: 2px solid #cdd0d4;">CURRENT YEAR</th>
+                
+                                                </tr>
+                
+                                                <?php for ($i = 1; $i <= 12; ++$i) { ?> <tr>
+                                                    <td colspan="2" style="border-right: 1px solid #cdd0d4;">
+                                                        <b><?php echo DateTime::createFromFormat('!m', $i)->format('F'); ?></b>
+                                                    </td>
+                                                    <td colspan="3" style="border-right: 1px solid #cdd0d4;">
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_sold']) ||
+                                                        !empty($childreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_receive'])) { ?>
+                                                        (<?php echo $previous_year; ?>)&nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_sold'])) { ?>
+                
+                                                        SOLD (<?php echo (int)
+                                                        $childreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_sold']; ?>)
+                
+                
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <!-- Adjustment Deatils -->
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i,
+                                                        2, '0', STR_PAD_LEFT)]['ptotal_adjustment'])) { ?>
+                                                        Phy Adj. (<?php echo (int)
+                                                        $childreports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['ptotal_adjustment']; ?>)
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <!-- qoh Deatils
+                                                <?php if (!empty($childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
+                                                    QU Adj (<?php echo (int) $childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
+                                                <?php } else { ?>
+                                                    &nbsp;
+                                                <?php } ?>-->
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_receive'])) { ?>
+                
+                                                        &nbsp;
+                                                        Receive (<?php echo (int)
+                                                        $childreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_receive']; ?>)
+                
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_oqoh'])) { ?>
+                                                        &nbsp;
+                                                        Opening QoH(<?php echo (int)
+                                                        $childreports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_oqoh']; ?>)
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2,
+                                                        '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
+                                                        &nbsp;
+                                                        <?php
+                                                        $adjustvalue = (int)
+                                                        $childreports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_adjustment'];
+                                                        $adjvaluereset += $adjustvalue;
+                                                        ?>
+                
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_qoh'])) { ?>
+                                                        &nbsp;
+                                                        <?php
+                                                        $quickupdatevalue = (int)
+                                                        $childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_qoh'];
+                                                        $adjvaluereset += $quickupdatevalue;
+                                                        ?>
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_inv'])) { ?>
+                                                        &nbsp;
+                                                        <?php
+                                                        $invresetvalue = (int)
+                                                        $childreports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_inv'];
+                                                        $adjvaluereset += $invresetvalue;
+                                                        ?>
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_pqoh'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_pqoh'])) { ?>
+                                                        &nbsp;
+                                                        <?php
+                                                        $pqohvalue = (int) $childreports['month_year_arr_pqoh'][$previous_year][str_pad($i,
+                                                        2, '0', STR_PAD_LEFT)]['total_pqoh'];
+                                                        $adjvaluereset += $pqohvalue;
+                                                        ?>
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                                                        <!---->
+                
+                
+                                                        <!------>
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_cqoh'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_cqoh'])) { ?>
+                                                        &nbsp;
+                                                        <?php
+                                                        $cqohvalue = (int) $childreports['month_year_arr_cqoh'][$previous_year][str_pad($i,
+                                                        2, '0', STR_PAD_LEFT)]['total_cqoh'];
+                                                        $adjvaluereset += $cqohvalue;
+                                                        ?>
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if ($adjvaluereset != 0) { ?>
+                                                        Adj. (<?php
+                                                        echo $adjvaluereset;
+                                                        $adjvaluereset = 0;
+                                                        ?>)
+                
+                                                        <?php } else { ?>
+                
+                                                        <?php $adjvaluereset = 0; ?>
+                
+                                                        <?php } ?>
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_phqoh'])) { ?>
+                                                        &nbsp;
+                                                        Phone Adj. (<?php echo (int)
+                                                        $childreports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_phqoh']; ?>)
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_ophqoh'])) { ?>
+                                                        &nbsp;
+                                                        Opening Qoh Phone. (<?php echo (int)
+                                                        $childreports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_ophqoh']; ?>)
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                
+                                                    </td>
+                
+                                                    <td colspan="3"
+                                                        style="border-right: 1px solid #cdd0d4;border-right: 2px solid #cdd0d4;">
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_sold']) ||
+                                                        !empty($childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_receive'])) { ?>
+                                                        <!-- (<?php
+                                                                //echo $current_year;
+                                                                ?>)&nbsp;-->
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_sold'])) { ?>
+                
+                                                        SOLD (<?php echo (int)
+                                                        $childreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_sold']; ?>)
+                
+                
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_receive'])) { ?>
+                
+                                                        &nbsp;
+                                                        Receive (<?php echo (int)
+                                                        $childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_receive']; ?>)
+                
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_were'])) { ?>
+                
+                                                        &nbsp;
+                                                        WareHouse (<?php echo (int)
+                                                        $childreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_were']; ?>)
+                
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_oqoh'])) { ?>
+                                                        &nbsp;
+                                                        Opening QoH(<?php echo (int)
+                                                        $childreports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_oqoh']; ?>)
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_adjustment_phy'][$current_year][str_pad($i, 2,
+                                                        '0', STR_PAD_LEFT)]['ptotal_adjustment'])) { ?>
+                                                        Phy Adj. (<?php echo (int)
+                                                        $childreports['month_year_arr_adjustment_phy'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['ptotal_adjustment']; ?>)
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <!-- Adjustment Details -->
+                
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2,
+                                                        '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
+                                                        &nbsp;
+                                                        <?php
+                                                        $adjustvalue = (int)
+                                                        $childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_adjustment'];
+                                                        $adjvaluereset += $adjustvalue;
+                                                        ?>
+                
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_qoh'])) { ?>
+                                                        &nbsp;
+                                                        <?php
+                                                        $quickupdatevalue = (int)
+                                                        $childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_qoh'];
+                                                        $adjvaluereset += $quickupdatevalue;
+                                                        ?>
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_inv'])) { ?>
+                                                        &nbsp;
+                                                        <?php
+                                                        $invresetvalue = (int)
+                                                        $childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_inv'];
+                                                        $adjvaluereset += $invresetvalue;
+                                                        ?>
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_pqoh'])) { ?>
+                                                        &nbsp;
+                                                        <?php $pqohvalue = (int)
+                                                        $childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_pqoh'];
+                                                        //$adjvaluereset += $pqohvalue;
+                                                        ?>
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                                                        <!---->
+                
+                
+                                                        <!------>
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_cqoh'])) { ?>
+                                                        &nbsp;
+                                                        <?php $cqohvalue = (int)
+                                                        $childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_cqoh'];
+                                                        // $adjvaluereset += $cqohvalue;
+                                                        ?>
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if ($adjvaluereset != 0) { ?>
+                                                        Adj. (<?php
+                                                        echo $adjvaluereset;
+                                                        $adjvaluereset = 0;
+                                                        ?>)
+                
+                                                        <?php } else { ?>
+                
+                                                        <?php $adjvaluereset = 0; ?>
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_pqoh'])) { ?>
+                                                        &nbsp;
+                                                        Parent Adj. (<?php echo (int)
+                                                        $childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_pqoh']; ?>)
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_cqoh'])) { ?>
+                                                        &nbsp;
+                                                        Tfr to Parent
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_phqoh'])) { ?>
+                                                        &nbsp;
+                                                        Phone Adj. (<?php echo (int)
+                                                        $childreports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_phqoh']; ?>)
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                
+                                                        <?php if
+                                                        (!empty($childreports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_ophqoh'])) { ?>
+                                                        &nbsp;
+                                                        Opening Qoh Phone. (<?php echo (int)
+                                                        $childreports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
+                                                        STR_PAD_LEFT)]['total_ophqoh']; ?>)
+                                                        <?php } else { ?>
+                                                        &nbsp;
+                                                        <?php } ?>
+                                                        <!-- adjustment detail end ------>
+                
+                
+                                                        <!-- old code start
+                
+                                                <?php if (!empty($childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
+                                                    &nbsp;
+                                                    P Adj. (<?php echo (int) $childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment']; ?>)
+                                                <?php } else { ?>
+                                                    &nbsp;
+                                                <?php } ?>
+                
+                                                 <?php if (!empty($childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
+                                                    &nbsp;
+                                                    QU Adj (<?php echo (int) $childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
+                                                <?php } else { ?>
+                                                    &nbsp;
+                                                <?php } ?>
+                
+                                                <?php if (!empty($childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv'])) { ?>
+                                                    &nbsp;
+                                                   IR Adj (<?php echo (int) $childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv']; ?>)
+                                                <?php } else { ?>
+                                                    &nbsp;
+                                                <?php } ?>
+                
+                
+                                                <?php if (!empty($childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh'])) { ?>
+                                                    &nbsp;
+                                                    Child Update QoH(<?php echo (int) $childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh']; ?>)
+                                                <?php } else { ?>
+                                                    &nbsp;
+                                                <?php } ?>
+                
+                                                <?php if (!empty($childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh'])) { ?>
+                                                    &nbsp;
+                                                    Parent Update QoH(<?php echo (int) $childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh']; ?>)
+                                                <?php } else { ?>
+                                                    &nbsp;
+                                                <?php } ?>
+                
+                
+                                                 old code end -->
+                
+                                                    </td>
+                                                    </tr>
+                                                    <?php } ?>
+                
+                                            </tbody>
+                
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <br>
+                            <br>
+                        <?php } ?>
+                        
                     <?php } ?>
+                <?php } ?>
         
-                    <?php if (isset($childreports) && count($childreports['item_data']) > 0) { ?>
+                    <!-- child End-- parent start -->
+                <?php if (isset($parentreports)){ ?>
+                    <?php foreach ($parentreports as $parentreports) { ?>
+                        <?php if (isset($parentreports) && count($parentreports['item_data']) > 0) { ?>
+                        <h3>Parent</h3>
+                        <?php } ?>
+            
+                        <?php if (isset($parentreports) && count($parentreports['item_data']) > 0) { ?>
                         <br><br>
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table" style="border: 1px solid #ccc;">
+                                    <table class="table promotionview" style="width: 100%;">
                                         <thead>
-                                            <tr>
-                                                <th colspan="7" class="text-center text-uppercase"><b style="font-size: 16px;"><?php echo $childreports['item_data'][0]['vitemname']; ?> [QOH: CASE <?php echo
-                                                        $childreports['item_data'][0]['IQTYONHAND']; ?> ]</b></th>
+                                            <tr class="header-color">
+                                                <th colspan="7" class="text-center text-uppercase"><b style="font-size: 16px;"><?php echo $parentreports['item_data'][0]['vitemname']; ?> [QOH: CASE <?php echo
+                                                        $parentreports['item_data'][0]['IQTYONHAND']; ?> ]</b></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -2202,42 +2823,43 @@
                                             $current_year = date('Y');
                                             $previous_year = date('Y', strtotime('-1 year'));
                                             ?>
-                                            <tr>
-                                                <td colspan="2" style="background-color: #fff;"></td>
-                                                <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
+                                            <tr class="th_color">
+                                                <td colspan="2" class="th_color"></td>
+                                                <td colspan="2" class="th_color">
                                                     <b class="text-uppercase text-info" style="font-size: 14px;">
                                                         <?php echo $previous_year; ?> YTD SOLD
                                                         <?php echo
-                                                        !empty($childreports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
-                                                        $childreports['year_arr_sold'][$previous_year]['total_sold'] : '0'; ?>
+                                                        !empty($parentreports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
+                                                        $parentreports['year_arr_sold'][$previous_year]['total_sold'] : '0'; ?>
             
                                                         <?php
                                                         $value1 =
-                                                        !empty($childreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
-                                                        ? $childreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
+                                                        !empty($parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
+                                                        ? $parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
                                                         '0'; /*adjustment */
-                                                        $value2 = !empty($childreports['year_arr_oqoh'][$previous_year]['total_oqoh']) ?
-                                                        $childreports['year_arr_oqoh'][$previous_year]['total_oqoh'] : '0'; /*Opening
+                                                        $value2 = !empty($parentreports['year_arr_oqoh'][$previous_year]['total_oqoh'])
+                                                        ? $parentreports['year_arr_oqoh'][$previous_year]['total_oqoh'] : '0'; /*Opening
                                                         Qoh Web*/
-                                                        $value3 = !empty($childreports['year_arr_qoh'][$previous_year]['total_qoh']) ?
-                                                        $childreports['year_arr_qoh'][$previous_year]['total_qoh'] : '0'; /*Quick Update
-                                                        web*/
-                                                        $value4 = !empty($childreports['year_arr_inv'][$previous_year]['total_inv']) ?
-                                                        $childreports['year_arr_inv'][$previous_year]['total_inv'] : '0'; /* Parent
+                                                        $value3 = !empty($parentreports['year_arr_qoh'][$previous_year]['total_qoh']) ?
+                                                        $parentreports['year_arr_qoh'][$previous_year]['total_qoh'] : '0'; /*Quick
+                                                        Update web*/
+                                                        $value4 = !empty($parentreports['year_arr_inv'][$previous_year]['total_inv']) ?
+                                                        $parentreports['year_arr_inv'][$previous_year]['total_inv'] : '0'; /* Parent
                                                         update*/
-                                                        $value6 = !empty($childreports['year_arr_cqoh'][$previous_year]['total_cqoh']) ?
-                                                        $childreports['year_arr_cqoh'][$previous_year]['total_cqoh'] : '0'; /*Child
+                                                        $value6 = !empty($parentreports['year_arr_cqoh'][$previous_year]['total_cqoh'])
+                                                        ? $parentreports['year_arr_cqoh'][$previous_year]['total_cqoh'] : '0'; /*Child
                                                         Upadte*/
-                                                        $value7 = !empty($childreports['year_arr_phqoh'][$previous_year]['total_phqoh'])
-                                                        ? $childreports['year_arr_phqoh'][$previous_year]['total_phqoh'] : '0'; /*Phone
+                                                        $value7 =
+                                                        !empty($parentreports['year_arr_phqoh'][$previous_year]['total_phqoh']) ?
+                                                        $parentreports['year_arr_phqoh'][$previous_year]['total_phqoh'] : '0'; /*Phone
                                                         update Qoh update by sku api*/
                                                         $value8 =
-                                                        !empty($childreports['year_arr_ophoqoh'][$previous_year]['total_ophoqoh']) ?
-                                                        $childreports['year_arr_ophoqoh'][$previous_year]['total_ophoqoh'] : '0';
+                                                        !empty($parentreports['year_arr_ophoqoh'][$previous_year]['total_ophoqoh']) ?
+                                                        $parentreports['year_arr_ophoqoh'][$previous_year]['total_ophoqoh'] : '0';
                                                         /*Opening Qoh by phone */
                                                         $value9 =
-                                                        !empty($childreports['year_arr_adjustment_phy'][$previous_year]['ptotal_adjustment'])
-                                                        ? $childreports['year_arr_adjustment_phy'][$previous_year]['ptotal_adjustment']
+                                                        !empty($parentreports['year_arr_adjustment_phy'][$previous_year]['ptotal_adjustment'])
+                                                        ? $parentreports['year_arr_adjustment_phy'][$previous_year]['ptotal_adjustment']
                                                         : '0';
                                                         $totaladjpreviousyr = $value1 + $value2 + $value3 + $value4 + $value6 + $value7
                                                         + $value8 + $value9;
@@ -2250,80 +2872,79 @@
                                                 </td>
             
             
-                                                <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
-                                                    <b class="text-uppercase" style="font-size: 14px;">
+                                                <td colspan="2" class="th_color">
+                                                    <b class="text-uppercase text-info" style="font-size: 14px;">
                                                         <?php echo $previous_year; ?> YTD ADJUSTMENT
                                                         <?php echo $totaladjpreviousyr; ?>
                                                         <?php //echo
-                                                        !empty($childreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
-                                                        ? $childreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
+                                                        !empty($parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
+                                                        ? $parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
                                                         '0'; ?>
                                                     </b>
                                                 </td>
             
-                                                <td colspan="2" class="text-left"
-                                                    style="background-color: #fff;border-top: none;border-right: 2px solid #cdd0d4;">
+                                                <td colspan="2" class="th_color">
                                                     <b class="text-uppercase" style="font-size: 14px;">
                                                         <?php echo $previous_year; ?> YTD RECEIVE
                                                         <?php echo
-                                                        !empty($childreports['year_arr_receive'][$previous_year]['total_receive']) ?
-                                                        $childreports['year_arr_receive'][$previous_year]['total_receive'] : '0'; ?>
+                                                        !empty($parentreports['year_arr_receive'][$previous_year]['total_receive']) ?
+                                                        $parentreports['year_arr_receive'][$previous_year]['total_receive'] : '0'; ?>
                                                     </b>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <th colspan="2" style="background-color: #fff;border-top: none;">
+                                            <tr class="th_color">
+                                                <th colspan="2" class="th_color">
                                                     </td>
-                                                <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
-                                                    <b class="text-uppercase" style="font-size: 14px;">
+                                                <td colspan="2" class="text-left" class="th_color">
+                                                    <b class="text-uppercase text-danger" style="font-size: 14px;">
                                                         <?php echo $current_year; ?> YTD SOLD
                                                         <?php echo
-                                                        !empty($childreports['year_arr_sold'][$current_year]['total_sold']) ? (int)
-                                                        $childreports['year_arr_sold'][$current_year]['total_sold'] : '0'; ?>
+                                                        !empty($parentreports['year_arr_sold'][$current_year]['total_sold']) ? (int)
+                                                        $parentreports['year_arr_sold'][$current_year]['total_sold'] : '0'; ?>
                                                     </b>
                                                 </td>
             
             
-                                                <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
-                                                    <b class="text-uppercase" style="font-size: 14px;">
+                                                <td colspan="2" class="text-left" class="th_color">
+                                                    <b class="text-uppercase text-danger" style="font-size: 14px;">
                                                         <?php echo $current_year; ?> YTD ADJUSTMENT
                                                         <!--  Old code
                                                 <?php
-                                //echo !empty($childreports['year_arr_adjustment'][$current_year]['total_adjustment']) ? $childreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0' ;
+                                //echo !empty($parentreports['year_arr_adjustment'][$current_year]['total_adjustment']) ? $parentreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0' ;
                                 ?>
                                             -->
             
             
                                                         <?php
                                                         $value1 =
-                                                        !empty($childreports['year_arr_adjustment'][$current_year]['total_adjustment'])
-                                                        ? $childreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0';
-                                                        /*adjustment */
-                                                        $value2 = !empty($childreports['year_arr_oqoh'][$current_year]['total_oqoh']) ?
-                                                        $childreports['year_arr_oqoh'][$current_year]['total_oqoh'] : '0'; /*Opening Qoh
-                                                        Web*/
-                                                        $value3 = !empty($childreports['year_arr_qoh'][$current_year]['total_qoh']) ?
-                                                        $childreports['year_arr_qoh'][$current_year]['total_qoh'] : '0'; /*Quick Update
+                                                        !empty($parentreports['year_arr_adjustment'][$current_year]['total_adjustment'])
+                                                        ? $parentreports['year_arr_adjustment'][$current_year]['total_adjustment'] :
+                                                        '0'; /*adjustment */
+                                                        $value2 = !empty($parentreports['year_arr_oqoh'][$current_year]['total_oqoh']) ?
+                                                        $parentreports['year_arr_oqoh'][$current_year]['total_oqoh'] : '0'; /*Opening
+                                                        Qoh Web*/
+                                                        $value3 = !empty($parentreports['year_arr_qoh'][$current_year]['total_qoh']) ?
+                                                        $parentreports['year_arr_qoh'][$current_year]['total_qoh'] : '0'; /*Quick Update
                                                         web*/
-                                                        $value4 = !empty($childreports['year_arr_inv'][$current_year]['total_inv']) ?
-                                                        $childreports['year_arr_inv'][$current_year]['total_inv'] : '0';
-                                                        $value6 = !empty($childreports['year_arr_cqoh'][$current_year]['total_cqoh']) ?
-                                                        $childreports['year_arr_cqoh'][$current_year]['total_cqoh'] : '0'; /*Child
+                                                        $value4 = !empty($parentreports['year_arr_inv'][$current_year]['total_inv']) ?
+                                                        $parentreports['year_arr_inv'][$current_year]['total_inv'] : '0';
+                                                        $value6 = !empty($parentreports['year_arr_cqoh'][$current_year]['total_cqoh']) ?
+                                                        $parentreports['year_arr_cqoh'][$current_year]['total_cqoh'] : '0'; /*Child
                                                         Upadte*/
-                                                        $value5 = !empty($childreports['year_arr_pqoh'][$current_year]['total_pqoh']) ?
-                                                        $childreports['year_arr_pqoh'][$current_year]['total_pqoh'] : '0'; /* Parent
+                                                        $value5 = !empty($parentreports['year_arr_pqoh'][$current_year]['total_pqoh']) ?
+                                                        $parentreports['year_arr_pqoh'][$current_year]['total_pqoh'] : '0'; /* Parent
                                                         update*/
-                                                        $value7 = !empty($childreports['year_arr_phqoh'][$current_year]['total_phqoh'])
-                                                        ? $childreports['year_arr_phqoh'][$current_year]['total_phqoh'] : '0'; /*Phone
+                                                        $value7 = !empty($parentreports['year_arr_phqoh'][$current_year]['total_phqoh'])
+                                                        ? $parentreports['year_arr_phqoh'][$current_year]['total_phqoh'] : '0'; /*Phone
                                                         update Qoh update by sku api*/
                                                         $value8 =
-                                                        !empty($childreports['year_arr_ophoqoh'][$current_year]['total_ophoqoh']) ?
-                                                        $childreports['year_arr_ophoqoh'][$current_year]['total_ophoqoh'] : '0';
+                                                        !empty($parentreports['year_arr_ophoqoh'][$current_year]['total_ophoqoh']) ?
+                                                        $parentreports['year_arr_ophoqoh'][$current_year]['total_ophoqoh'] : '0';
                                                         /*Opening Qoh by phone */
                                                         $value9 =
-                                                        !empty($childreports['year_arr_adjustment_phy'][$current_year]['ptotal_adjustment'])
-                                                        ? $childreports['year_arr_adjustment_phy'][$current_year]['ptotal_adjustment'] :
-                                                        '0';
+                                                        !empty($parentreports['year_arr_adjustment_phy'][$current_year]['ptotal_adjustment'])
+                                                        ? $parentreports['year_arr_adjustment_phy'][$current_year]['ptotal_adjustment']
+                                                        : '0';
                                                         $TotalAdjustment = $value1 + $value2 + $value3 + $value4 + $value6 + $value7 +
                                                         $value8 + $value5 + $value9;
                                                         ?>
@@ -2333,20 +2954,21 @@
                                                 </td>
             
             
-                                                <td colspan="2" class="text-left"
-                                                    style="background-color: #fff;border-top: none;border-right: 2px solid #cdd0d4;">
-                                                    <b class="text-uppercase" style="font-size: 14px;">
+                                                <td colspan="2" class="th_color">
+                                                    <b class="text-uppercase text-danger" style="font-size: 14px;">
                                                         <?php echo $current_year; ?> YTD RECEIVE
                                                         <?php echo
-                                                        !empty($childreports['year_arr_receive'][$current_year]['total_receive']) ?
-                                                        $childreports['year_arr_receive'][$current_year]['total_receive'] : '0'; ?>
+                                                        !empty($parentreports['year_arr_receive'][$current_year]['total_receive']) ?
+                                                        $parentreports['year_arr_receive'][$current_year]['total_receive'] : '0'; ?>
                                                     </b>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th colspan="2" class="text-center" style="border-right: 1px solid #cdd0d4;">MONTH</th>
-                                                <th colspan="3" class="text-center" style="border-right: 1px solid #cdd0d4;">PREVIOUS YEAR</th>
-                                                <th colspan="3" class="text-center" style="border-right: 2px solid #cdd0d4;">CURRENT YEAR</th>
+                                                <th colspan="2" style="border-right: 1px solid #cdd0d4;"></th>
+                                                <th colspan="3" class="text-center" style="border-right: 1px solid #cdd0d4;">Previous
+                                                    Year</th>
+                                                <th colspan="3" class="text-center" style="border-right: 2px solid #cdd0d4;">Current
+                                                    Year</th>
             
                                             </tr>
             
@@ -2356,19 +2978,19 @@
                                                 </td>
                                                 <td colspan="3" style="border-right: 1px solid #cdd0d4;">
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_sold']) ||
-                                                    !empty($childreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
+                                                    !empty($parentreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive'])) { ?>
                                                     (<?php echo $previous_year; ?>)&nbsp;
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_sold'])) { ?>
             
                                                     SOLD (<?php echo (int)
-                                                    $childreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_sold']; ?>)
             
             
@@ -2378,29 +3000,29 @@
             
                                                     <!-- Adjustment Deatils -->
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i,
+                                                    (!empty($parentreports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i,
                                                     2, '0', STR_PAD_LEFT)]['ptotal_adjustment'])) { ?>
                                                     Phy Adj. (<?php echo (int)
-                                                    $childreports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['ptotal_adjustment']; ?>)
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
             
                                                     <!-- qoh Deatils
-                                            <?php if (!empty($childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
-                                                QU Adj (<?php echo (int) $childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
+                                            <?php if (!empty($parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
+                                                QU Adj (<?php echo (int) $parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>-->
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive'])) { ?>
             
                                                     &nbsp;
                                                     Receive (<?php echo (int)
-                                                    $childreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive']; ?>)
             
                                                     <?php } else { ?>
@@ -2408,23 +3030,23 @@
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_oqoh'])) { ?>
                                                     &nbsp;
                                                     Opening QoH(<?php echo (int)
-                                                    $childreports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_oqoh']; ?>)
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2,
+                                                    (!empty($parentreports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2,
                                                     '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
                                                     &nbsp;
                                                     <?php
                                                     $adjustvalue = (int)
-                                                    $childreports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_adjustment'];
                                                     $adjvaluereset += $adjustvalue;
                                                     ?>
@@ -2434,12 +3056,12 @@
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_qoh'])) { ?>
                                                     &nbsp;
                                                     <?php
                                                     $quickupdatevalue = (int)
-                                                    $childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_qoh'];
                                                     $adjvaluereset += $quickupdatevalue;
                                                     ?>
@@ -2448,12 +3070,12 @@
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_inv'])) { ?>
                                                     &nbsp;
                                                     <?php
                                                     $invresetvalue = (int)
-                                                    $childreports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_inv'];
                                                     $adjvaluereset += $invresetvalue;
                                                     ?>
@@ -2464,11 +3086,11 @@
             
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_pqoh'][$previous_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_pqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_pqoh'])) { ?>
                                                     &nbsp;
                                                     <?php
-                                                    $pqohvalue = (int) $childreports['month_year_arr_pqoh'][$previous_year][str_pad($i,
+                                                    $pqohvalue = (int) $parentreports['month_year_arr_pqoh'][$previous_year][str_pad($i,
                                                     2, '0', STR_PAD_LEFT)]['total_pqoh'];
                                                     $adjvaluereset += $pqohvalue;
                                                     ?>
@@ -2480,11 +3102,11 @@
             
                                                     <!------>
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_cqoh'][$previous_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_cqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_cqoh'])) { ?>
                                                     &nbsp;
                                                     <?php
-                                                    $cqohvalue = (int) $childreports['month_year_arr_cqoh'][$previous_year][str_pad($i,
+                                                    $cqohvalue = (int) $parentreports['month_year_arr_cqoh'][$previous_year][str_pad($i,
                                                     2, '0', STR_PAD_LEFT)]['total_cqoh'];
                                                     $adjvaluereset += $cqohvalue;
                                                     ?>
@@ -2504,22 +3126,22 @@
             
                                                     <?php } ?>
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_phqoh'])) { ?>
                                                     &nbsp;
                                                     Phone Adj. (<?php echo (int)
-                                                    $childreports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_phqoh']; ?>)
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_ophqoh'])) { ?>
                                                     &nbsp;
                                                     Opening Qoh Phone. (<?php echo (int)
-                                                    $childreports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_ophqoh']; ?>)
                                                     <?php } else { ?>
                                                     &nbsp;
@@ -2531,9 +3153,9 @@
                                                 <td colspan="3"
                                                     style="border-right: 1px solid #cdd0d4;border-right: 2px solid #cdd0d4;">
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_sold']) ||
-                                                    !empty($childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
+                                                    !empty($parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive'])) { ?>
                                                     <!-- (<?php
                                                             //echo $current_year;
@@ -2541,34 +3163,34 @@
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_sold'])) { ?>
             
                                                     SOLD (<?php echo (int)
-                                                    $childreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_sold']; ?>)
             
             
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive'])) { ?>
             
                                                     &nbsp;
                                                     Receive (<?php echo (int)
-                                                    $childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive']; ?>)
             
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_were'])) { ?>
             
                                                     &nbsp;
                                                     WareHouse (<?php echo (int)
-                                                    $childreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_were']; ?>)
             
                                                     <?php } else { ?>
@@ -2577,21 +3199,21 @@
             
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_oqoh'])) { ?>
                                                     &nbsp;
                                                     Opening QoH(<?php echo (int)
-                                                    $childreports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_oqoh']; ?>)
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_adjustment_phy'][$current_year][str_pad($i, 2,
-                                                    '0', STR_PAD_LEFT)]['ptotal_adjustment'])) { ?>
+                                                    (!empty($parentreports['month_year_arr_adjustment_phy'][$current_year][str_pad($i,
+                                                    2, '0', STR_PAD_LEFT)]['ptotal_adjustment'])) { ?>
                                                     Phy Adj. (<?php echo (int)
-                                                    $childreports['month_year_arr_adjustment_phy'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_adjustment_phy'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['ptotal_adjustment']; ?>)
                                                     <?php } else { ?>
                                                     &nbsp;
@@ -2601,12 +3223,12 @@
             
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2,
+                                                    (!empty($parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2,
                                                     '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
                                                     &nbsp;
                                                     <?php
                                                     $adjustvalue = (int)
-                                                    $childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_adjustment'];
                                                     $adjvaluereset += $adjustvalue;
                                                     ?>
@@ -2616,12 +3238,12 @@
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_qoh'])) { ?>
                                                     &nbsp;
                                                     <?php
                                                     $quickupdatevalue = (int)
-                                                    $childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_qoh'];
                                                     $adjvaluereset += $quickupdatevalue;
                                                     ?>
@@ -2630,12 +3252,12 @@
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_inv'])) { ?>
                                                     &nbsp;
                                                     <?php
                                                     $invresetvalue = (int)
-                                                    $childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_inv'];
                                                     $adjvaluereset += $invresetvalue;
                                                     ?>
@@ -2646,11 +3268,11 @@
             
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_pqoh'])) { ?>
                                                     &nbsp;
                                                     <?php $pqohvalue = (int)
-                                                    $childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_pqoh'];
                                                     //$adjvaluereset += $pqohvalue;
                                                     ?>
@@ -2662,13 +3284,13 @@
             
                                                     <!------>
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_cqoh'])) { ?>
                                                     &nbsp;
-                                                    <?php $cqohvalue = (int)
-                                                    $childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
-                                                    STR_PAD_LEFT)]['total_cqoh'];
-                                                    // $adjvaluereset += $cqohvalue;
+                                                    <?php
+                                                    $cqohvalue = (int) $parentreports['month_year_arr_cqoh'][$current_year][str_pad($i,
+                                                    2, '0', STR_PAD_LEFT)]['total_cqoh'];
+                                                    $adjvaluereset += $cqohvalue;
                                                     ?>
                                                     <?php } else { ?>
                                                     &nbsp;
@@ -2683,47 +3305,36 @@
                                                     <?php } else { ?>
             
                                                     <?php $adjvaluereset = 0; ?>
-                                                    <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_pqoh'])) { ?>
                                                     &nbsp;
                                                     Parent Adj. (<?php echo (int)
-                                                    $childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_pqoh']; ?>)
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
             
-            
-            
-                                                    <?php if
-                                                    (!empty($childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
-                                                    STR_PAD_LEFT)]['total_cqoh'])) { ?>
-                                                    &nbsp;
-                                                    Tfr to Parent
-                                                    <?php } else { ?>
-                                                    &nbsp;
                                                     <?php } ?>
-            
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_phqoh'])) { ?>
                                                     &nbsp;
                                                     Phone Adj. (<?php echo (int)
-                                                    $childreports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_phqoh']; ?>)
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
             
                                                     <?php if
-                                                    (!empty($childreports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
+                                                    (!empty($parentreports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_ophqoh'])) { ?>
                                                     &nbsp;
                                                     Opening Qoh Phone. (<?php echo (int)
-                                                    $childreports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
+                                                    $parentreports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_ophqoh']; ?>)
                                                     <?php } else { ?>
                                                     &nbsp;
@@ -2733,38 +3344,38 @@
             
                                                     <!-- old code start
             
-                                            <?php if (!empty($childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
+                                            <?php if (!empty($parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
                                                 &nbsp;
-                                                P Adj. (<?php echo (int) $childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment']; ?>)
+                                                P Adj. (<?php echo (int) $parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>
             
-                                             <?php if (!empty($childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
+                                             <?php if (!empty($parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
                                                 &nbsp;
-                                                QU Adj (<?php echo (int) $childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
+                                                QU Adj (<?php echo (int) $parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>
             
-                                            <?php if (!empty($childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv'])) { ?>
+                                            <?php if (!empty($parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv'])) { ?>
                                                 &nbsp;
-                                               IR Adj (<?php echo (int) $childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv']; ?>)
+                                               IR Adj (<?php echo (int) $parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>
             
             
-                                            <?php if (!empty($childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh'])) { ?>
+                                            <?php if (!empty($parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh'])) { ?>
                                                 &nbsp;
-                                                Child Update QoH(<?php echo (int) $childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh']; ?>)
+                                                Child Update QoH(<?php echo (int) $parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>
             
-                                            <?php if (!empty($childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh'])) { ?>
+                                            <?php if (!empty($parentreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh'])) { ?>
                                                 &nbsp;
-                                                Parent Update QoH(<?php echo (int) $childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh']; ?>)
+                                                Parent Update QoH(<?php echo (int) $parentreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>
@@ -2785,612 +3396,8 @@
             
                         <br>
                         <br>
+                        <?php } ?>
                     <?php } ?>
-        
-        
-                <?php } ?>
-        
-                    <!-- child End-- parent start -->
-        
-                <?php foreach ($parentreports as $parentreports) { ?>
-                    <?php if (isset($parentreports) && count($parentreports['item_data']) > 0) { ?>
-                    <h3>Parent</h3>
-                    <?php } ?>
-        
-                    <?php if (isset($parentreports) && count($parentreports['item_data']) > 0) { ?>
-                    <br><br>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="table-responsive">
-                                <table class="table" style="border: 1px solid #ccc;">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="7" class="text-center text-uppercase"><b style="font-size: 16px;"><?php echo $parentreports['item_data'][0]['vitemname']; ?> [QOH: CASE <?php echo
-                                                    $parentreports['item_data'][0]['IQTYONHAND']; ?> ]</b></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $current_year = date('Y');
-                                        $previous_year = date('Y', strtotime('-1 year'));
-                                        ?>
-                                        <tr>
-                                            <td colspan="2" style="background-color: #fff;"></td>
-                                            <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
-                                                <b class="text-uppercase text-info" style="font-size: 14px;">
-                                                    <?php echo $previous_year; ?> YTD SOLD
-                                                    <?php echo
-                                                    !empty($parentreports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
-                                                    $parentreports['year_arr_sold'][$previous_year]['total_sold'] : '0'; ?>
-        
-                                                    <?php
-                                                    $value1 =
-                                                    !empty($parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
-                                                    ? $parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
-                                                    '0'; /*adjustment */
-                                                    $value2 = !empty($parentreports['year_arr_oqoh'][$previous_year]['total_oqoh'])
-                                                    ? $parentreports['year_arr_oqoh'][$previous_year]['total_oqoh'] : '0'; /*Opening
-                                                    Qoh Web*/
-                                                    $value3 = !empty($parentreports['year_arr_qoh'][$previous_year]['total_qoh']) ?
-                                                    $parentreports['year_arr_qoh'][$previous_year]['total_qoh'] : '0'; /*Quick
-                                                    Update web*/
-                                                    $value4 = !empty($parentreports['year_arr_inv'][$previous_year]['total_inv']) ?
-                                                    $parentreports['year_arr_inv'][$previous_year]['total_inv'] : '0'; /* Parent
-                                                    update*/
-                                                    $value6 = !empty($parentreports['year_arr_cqoh'][$previous_year]['total_cqoh'])
-                                                    ? $parentreports['year_arr_cqoh'][$previous_year]['total_cqoh'] : '0'; /*Child
-                                                    Upadte*/
-                                                    $value7 =
-                                                    !empty($parentreports['year_arr_phqoh'][$previous_year]['total_phqoh']) ?
-                                                    $parentreports['year_arr_phqoh'][$previous_year]['total_phqoh'] : '0'; /*Phone
-                                                    update Qoh update by sku api*/
-                                                    $value8 =
-                                                    !empty($parentreports['year_arr_ophoqoh'][$previous_year]['total_ophoqoh']) ?
-                                                    $parentreports['year_arr_ophoqoh'][$previous_year]['total_ophoqoh'] : '0';
-                                                    /*Opening Qoh by phone */
-                                                    $value9 =
-                                                    !empty($parentreports['year_arr_adjustment_phy'][$previous_year]['ptotal_adjustment'])
-                                                    ? $parentreports['year_arr_adjustment_phy'][$previous_year]['ptotal_adjustment']
-                                                    : '0';
-                                                    $totaladjpreviousyr = $value1 + $value2 + $value3 + $value4 + $value6 + $value7
-                                                    + $value8 + $value9;
-                                                    ?>
-        
-        
-        
-        
-                                                </b>
-                                            </td>
-        
-        
-                                            <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
-                                                <b class="text-uppercase text-info" style="font-size: 14px;">
-                                                    <?php echo $previous_year; ?> YTD ADJUSTMENT
-                                                    <?php echo $totaladjpreviousyr; ?>
-                                                    <?php //echo
-                                                    !empty($parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
-                                                    ? $parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
-                                                    '0'; ?>
-                                                </b>
-                                            </td>
-        
-                                            <td colspan="2" class="text-left"
-                                                style="background-color: #fff;border-top: none;border-right: 2px solid #cdd0d4;">
-                                                <b class="text-uppercase text-info" style="font-size: 14px;">
-                                                    <?php echo $previous_year; ?> YTD RECEIVE
-                                                    <?php echo
-                                                    !empty($parentreports['year_arr_receive'][$previous_year]['total_receive']) ?
-                                                    $parentreports['year_arr_receive'][$previous_year]['total_receive'] : '0'; ?>
-                                                </b>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="2" style="background-color: #fff;border-top: none;">
-                                                </td>
-                                            <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
-                                                <b class="text-uppercase text-danger" style="font-size: 14px;">
-                                                    <?php echo $current_year; ?> YTD SOLD
-                                                    <?php echo
-                                                    !empty($parentreports['year_arr_sold'][$current_year]['total_sold']) ? (int)
-                                                    $parentreports['year_arr_sold'][$current_year]['total_sold'] : '0'; ?>
-                                                </b>
-                                            </td>
-        
-        
-                                            <td colspan="2" class="text-left" style="background-color: #fff;border-top: none;">
-                                                <b class="text-uppercase text-danger" style="font-size: 14px;">
-                                                    <?php echo $current_year; ?> YTD ADJUSTMENT
-                                                    <!--  Old code
-                                            <?php
-                            //echo !empty($parentreports['year_arr_adjustment'][$current_year]['total_adjustment']) ? $parentreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0' ;
-                            ?>
-                                        -->
-        
-        
-                                                    <?php
-                                                    $value1 =
-                                                    !empty($parentreports['year_arr_adjustment'][$current_year]['total_adjustment'])
-                                                    ? $parentreports['year_arr_adjustment'][$current_year]['total_adjustment'] :
-                                                    '0'; /*adjustment */
-                                                    $value2 = !empty($parentreports['year_arr_oqoh'][$current_year]['total_oqoh']) ?
-                                                    $parentreports['year_arr_oqoh'][$current_year]['total_oqoh'] : '0'; /*Opening
-                                                    Qoh Web*/
-                                                    $value3 = !empty($parentreports['year_arr_qoh'][$current_year]['total_qoh']) ?
-                                                    $parentreports['year_arr_qoh'][$current_year]['total_qoh'] : '0'; /*Quick Update
-                                                    web*/
-                                                    $value4 = !empty($parentreports['year_arr_inv'][$current_year]['total_inv']) ?
-                                                    $parentreports['year_arr_inv'][$current_year]['total_inv'] : '0';
-                                                    $value6 = !empty($parentreports['year_arr_cqoh'][$current_year]['total_cqoh']) ?
-                                                    $parentreports['year_arr_cqoh'][$current_year]['total_cqoh'] : '0'; /*Child
-                                                    Upadte*/
-                                                    $value5 = !empty($parentreports['year_arr_pqoh'][$current_year]['total_pqoh']) ?
-                                                    $parentreports['year_arr_pqoh'][$current_year]['total_pqoh'] : '0'; /* Parent
-                                                    update*/
-                                                    $value7 = !empty($parentreports['year_arr_phqoh'][$current_year]['total_phqoh'])
-                                                    ? $parentreports['year_arr_phqoh'][$current_year]['total_phqoh'] : '0'; /*Phone
-                                                    update Qoh update by sku api*/
-                                                    $value8 =
-                                                    !empty($parentreports['year_arr_ophoqoh'][$current_year]['total_ophoqoh']) ?
-                                                    $parentreports['year_arr_ophoqoh'][$current_year]['total_ophoqoh'] : '0';
-                                                    /*Opening Qoh by phone */
-                                                    $value9 =
-                                                    !empty($parentreports['year_arr_adjustment_phy'][$current_year]['ptotal_adjustment'])
-                                                    ? $parentreports['year_arr_adjustment_phy'][$current_year]['ptotal_adjustment']
-                                                    : '0';
-                                                    $TotalAdjustment = $value1 + $value2 + $value3 + $value4 + $value6 + $value7 +
-                                                    $value8 + $value5 + $value9;
-                                                    ?>
-        
-                                                    <?php echo $TotalAdjustment; ?>
-                                                </b>
-                                            </td>
-        
-        
-                                            <td colspan="2" class="text-left"
-                                                style="background-color: #fff;border-top: none;border-right: 2px solid #cdd0d4;">
-                                                <b class="text-uppercase text-danger" style="font-size: 14px;">
-                                                    <?php echo $current_year; ?> YTD RECEIVE
-                                                    <?php echo
-                                                    !empty($parentreports['year_arr_receive'][$current_year]['total_receive']) ?
-                                                    $parentreports['year_arr_receive'][$current_year]['total_receive'] : '0'; ?>
-                                                </b>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="2" style="border-right: 1px solid #cdd0d4;"></th>
-                                            <th colspan="3" class="text-center" style="border-right: 1px solid #cdd0d4;">Previous
-                                                Year</th>
-                                            <th colspan="3" class="text-center" style="border-right: 2px solid #cdd0d4;">Current
-                                                Year</th>
-        
-                                        </tr>
-        
-                                        <?php for ($i = 1; $i <= 12; ++$i) { ?> <tr>
-                                            <td colspan="2" style="border-right: 1px solid #cdd0d4;">
-                                                <b><?php echo DateTime::createFromFormat('!m', $i)->format('F'); ?></b>
-                                            </td>
-                                            <td colspan="3" style="border-right: 1px solid #cdd0d4;">
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_sold']) ||
-                                                !empty($parentreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_receive'])) { ?>
-                                                (<?php echo $previous_year; ?>)&nbsp;
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_sold'])) { ?>
-        
-                                                SOLD (<?php echo (int)
-                                                $parentreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_sold']; ?>)
-        
-        
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <!-- Adjustment Deatils -->
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i,
-                                                2, '0', STR_PAD_LEFT)]['ptotal_adjustment'])) { ?>
-                                                Phy Adj. (<?php echo (int)
-                                                $parentreports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['ptotal_adjustment']; ?>)
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <!-- qoh Deatils
-                                        <?php if (!empty($parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
-                                            QU Adj (<?php echo (int) $parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
-                                        <?php } else { ?>
-                                            &nbsp;
-                                        <?php } ?>-->
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_receive'])) { ?>
-        
-                                                &nbsp;
-                                                Receive (<?php echo (int)
-                                                $parentreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_receive']; ?>)
-        
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_oqoh'])) { ?>
-                                                &nbsp;
-                                                Opening QoH(<?php echo (int)
-                                                $parentreports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_oqoh']; ?>)
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2,
-                                                '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
-                                                &nbsp;
-                                                <?php
-                                                $adjustvalue = (int)
-                                                $parentreports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_adjustment'];
-                                                $adjvaluereset += $adjustvalue;
-                                                ?>
-        
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_qoh'])) { ?>
-                                                &nbsp;
-                                                <?php
-                                                $quickupdatevalue = (int)
-                                                $parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_qoh'];
-                                                $adjvaluereset += $quickupdatevalue;
-                                                ?>
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_inv'])) { ?>
-                                                &nbsp;
-                                                <?php
-                                                $invresetvalue = (int)
-                                                $parentreports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_inv'];
-                                                $adjvaluereset += $invresetvalue;
-                                                ?>
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-        
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_pqoh'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_pqoh'])) { ?>
-                                                &nbsp;
-                                                <?php
-                                                $pqohvalue = (int) $parentreports['month_year_arr_pqoh'][$previous_year][str_pad($i,
-                                                2, '0', STR_PAD_LEFT)]['total_pqoh'];
-                                                $adjvaluereset += $pqohvalue;
-                                                ?>
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-                                                <!---->
-        
-        
-                                                <!------>
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_cqoh'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_cqoh'])) { ?>
-                                                &nbsp;
-                                                <?php
-                                                $cqohvalue = (int) $parentreports['month_year_arr_cqoh'][$previous_year][str_pad($i,
-                                                2, '0', STR_PAD_LEFT)]['total_cqoh'];
-                                                $adjvaluereset += $cqohvalue;
-                                                ?>
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if ($adjvaluereset != 0) { ?>
-                                                Adj. (<?php
-                                                echo $adjvaluereset;
-                                                $adjvaluereset = 0;
-                                                ?>)
-        
-                                                <?php } else { ?>
-        
-                                                <?php $adjvaluereset = 0; ?>
-        
-                                                <?php } ?>
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_phqoh'])) { ?>
-                                                &nbsp;
-                                                Phone Adj. (<?php echo (int)
-                                                $parentreports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_phqoh']; ?>)
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_ophqoh'])) { ?>
-                                                &nbsp;
-                                                Opening Qoh Phone. (<?php echo (int)
-                                                $parentreports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_ophqoh']; ?>)
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-        
-                                            </td>
-        
-                                            <td colspan="3"
-                                                style="border-right: 1px solid #cdd0d4;border-right: 2px solid #cdd0d4;">
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_sold']) ||
-                                                !empty($parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_receive'])) { ?>
-                                                <!-- (<?php
-                                                        //echo $current_year;
-                                                        ?>)&nbsp;-->
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_sold'])) { ?>
-        
-                                                SOLD (<?php echo (int)
-                                                $parentreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_sold']; ?>)
-        
-        
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_receive'])) { ?>
-        
-                                                &nbsp;
-                                                Receive (<?php echo (int)
-                                                $parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_receive']; ?>)
-        
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_were'])) { ?>
-        
-                                                &nbsp;
-                                                WareHouse (<?php echo (int)
-                                                $parentreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_were']; ?>)
-        
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_oqoh'])) { ?>
-                                                &nbsp;
-                                                Opening QoH(<?php echo (int)
-                                                $parentreports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_oqoh']; ?>)
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_adjustment_phy'][$current_year][str_pad($i,
-                                                2, '0', STR_PAD_LEFT)]['ptotal_adjustment'])) { ?>
-                                                Phy Adj. (<?php echo (int)
-                                                $parentreports['month_year_arr_adjustment_phy'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['ptotal_adjustment']; ?>)
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <!-- Adjustment Details -->
-        
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2,
-                                                '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
-                                                &nbsp;
-                                                <?php
-                                                $adjustvalue = (int)
-                                                $parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_adjustment'];
-                                                $adjvaluereset += $adjustvalue;
-                                                ?>
-        
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_qoh'])) { ?>
-                                                &nbsp;
-                                                <?php
-                                                $quickupdatevalue = (int)
-                                                $parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_qoh'];
-                                                $adjvaluereset += $quickupdatevalue;
-                                                ?>
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_inv'])) { ?>
-                                                &nbsp;
-                                                <?php
-                                                $invresetvalue = (int)
-                                                $parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_inv'];
-                                                $adjvaluereset += $invresetvalue;
-                                                ?>
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-        
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_pqoh'])) { ?>
-                                                &nbsp;
-                                                <?php $pqohvalue = (int)
-                                                $parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_pqoh'];
-                                                //$adjvaluereset += $pqohvalue;
-                                                ?>
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-                                                <!---->
-        
-        
-                                                <!------>
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_cqoh'])) { ?>
-                                                &nbsp;
-                                                <?php
-                                                $cqohvalue = (int) $parentreports['month_year_arr_cqoh'][$current_year][str_pad($i,
-                                                2, '0', STR_PAD_LEFT)]['total_cqoh'];
-                                                $adjvaluereset += $cqohvalue;
-                                                ?>
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if ($adjvaluereset != 0) { ?>
-                                                Adj. (<?php
-                                                echo $adjvaluereset;
-                                                $adjvaluereset = 0;
-                                                ?>)
-        
-                                                <?php } else { ?>
-        
-                                                <?php $adjvaluereset = 0; ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_pqoh'])) { ?>
-                                                &nbsp;
-                                                Parent Adj. (<?php echo (int)
-                                                $parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_pqoh']; ?>)
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php } ?>
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_phqoh'])) { ?>
-                                                &nbsp;
-                                                Phone Adj. (<?php echo (int)
-                                                $parentreports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_phqoh']; ?>)
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-        
-                                                <?php if
-                                                (!empty($parentreports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_ophqoh'])) { ?>
-                                                &nbsp;
-                                                Opening Qoh Phone. (<?php echo (int)
-                                                $parentreports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
-                                                STR_PAD_LEFT)]['total_ophqoh']; ?>)
-                                                <?php } else { ?>
-                                                &nbsp;
-                                                <?php } ?>
-                                                <!-- adjustment detail end ------>
-        
-        
-                                                <!-- old code start
-        
-                                        <?php if (!empty($parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
-                                            &nbsp;
-                                            P Adj. (<?php echo (int) $parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment']; ?>)
-                                        <?php } else { ?>
-                                            &nbsp;
-                                        <?php } ?>
-        
-                                         <?php if (!empty($parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
-                                            &nbsp;
-                                            QU Adj (<?php echo (int) $parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
-                                        <?php } else { ?>
-                                            &nbsp;
-                                        <?php } ?>
-        
-                                        <?php if (!empty($parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv'])) { ?>
-                                            &nbsp;
-                                           IR Adj (<?php echo (int) $parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv']; ?>)
-                                        <?php } else { ?>
-                                            &nbsp;
-                                        <?php } ?>
-        
-        
-                                        <?php if (!empty($parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh'])) { ?>
-                                            &nbsp;
-                                            Child Update QoH(<?php echo (int) $parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh']; ?>)
-                                        <?php } else { ?>
-                                            &nbsp;
-                                        <?php } ?>
-        
-                                        <?php if (!empty($parentreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh'])) { ?>
-                                            &nbsp;
-                                            Parent Update QoH(<?php echo (int) $parentreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh']; ?>)
-                                        <?php } else { ?>
-                                            &nbsp;
-                                        <?php } ?>
-        
-        
-                                         old code end -->
-        
-                                            </td>
-                                            </tr>
-                                            <?php } ?>
-        
-                                    </tbody>
-        
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <br>
-                    <br>
-                    <?php } ?>
-                    
                 <?php } ?>
                     <!---parent end --->
         
@@ -4837,10 +4844,10 @@ $("#closeBtn").click(function(){
   });
 
 
-  $(document).on('keyup', '.input_npackprice', function(event) {
+  $(document).on('keyup', '.input_npackprice, function(event) {
       event.preventDefault();
       $(this).closest('tr').find('.selected_lot_matrix_checkbox').attr('checked', 'checked');
-
+        
       var input_npackprice = $(this).val();
 
       var input_npackcost = $(this).closest('tr').find('.input_npackcost').val();
@@ -4881,7 +4888,18 @@ $("#closeBtn").click(function(){
       // }
       this.value = this.value.match(/^\d+\.?\d{0,1}/);
   });
-
+    
+    $(document).on('keypress', '.input_isequence, .input_npackcost, .input_vdesc, .input_vpackname', function(event){
+        
+        $(this).closest('tr').find('.selected_lot_matrix_checkbox').prop('checked', 'checked');
+        
+    });
+    
+    $(document).on('keypress', '.input_vvendoritemcode', function(event){
+        
+        $(this).closest('tr').find('.item_vendor_ids').prop('checked', 'checked');
+        
+    });
 
 </script>
 
@@ -5563,6 +5581,8 @@ $("#closeBtn").click(function(){
           $('#vendor_tab').hide();
           $('#item_movement_tab').hide();
           $('#level_pricing_tab').hide();
+          $('#save_btn_row').hide();
+          
         }else if(tab_s == 'lot_matrix_tab'){
           $('#alot_matrix_tab_li').prop('checked', true);
           $('#lot_matrix_tab').show();
@@ -5571,6 +5591,8 @@ $("#closeBtn").click(function(){
           $('#vendor_tab').hide();
           $('#item_movement_tab').hide();
           $('#level_pricing_tab').hide();
+          $('#save_btn_row').hide();
+          
         }else if(tab_s == 'vendor_tab'){
           $('#vendor_tab_li').prop('checked', true);
           $('#vendor_tab').show();
@@ -5579,6 +5601,8 @@ $("#closeBtn").click(function(){
           $('#item_tab').hide();
           $('#item_movement_tab').hide();
           $('#level_pricing_tab').hide();
+          $('#save_btn_row').hide();
+          
         }else{
           $('#item_tab_li').prop('checked', true);
           $('#item_tab').show();
@@ -5602,6 +5626,8 @@ $("#closeBtn").click(function(){
             $('#vendor_tab').hide();
             $('#item_movement_tab').hide();
             $('#level_pricing_tab').hide();
+            $('#save_btn_row').hide();
+            
           <?php }else if($data['tab_selected'] == 'lot_matrix_tab'){ ?>
             $('#alot_matrix_tab_li').prop('checked', true);
             $('#lot_matrix_tab').show();
@@ -5610,6 +5636,8 @@ $("#closeBtn").click(function(){
             $('#vendor_tab').hide();
             $('#item_movement_tab').hide();
             $('#level_pricing_tab').hide();
+            $('#save_btn_row').hide();
+            
           <?php }else if($data['tab_selected'] == 'vendor_tab'){ ?>
             $('#vendor_tab_li').prop('checked', true);
             $('#vendor_tab').show();
@@ -5618,6 +5646,8 @@ $("#closeBtn").click(function(){
             $('#item_tab').hide();
             $('#item_movement_tab').hide();
             $('#level_pricing_tab').hide();
+            $('#save_btn_row').hide();
+            
           <?php }else { ?>
             $('#item_tab_li').prop('checked', true);
             $('#item_tab').show();
@@ -7180,10 +7210,10 @@ $("#closeBtn").click(function(){
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Delete Item</h4>
-      </div>
+        <div class="modal-header">
+            <h5 class="modal-title">Delete Item</h5>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
       <div class="modal-body">
         <p>Are you Sure?</p>
       </div>
@@ -8061,9 +8091,11 @@ $(document).on('click', "#delete_item_btn", function(){
     if ($('#plcb_options').val()==1){ 
         $('#plcb_options_checkbox_div').show('slow');
         $('#plcb_options').val(0);
+        $('#plcb_options_checkbox').val(1);
     }else{
         $('#plcb_options_checkbox_div').hide('slow');
         $('#plcb_options').val(1);
+        $('#plcb_options_checkbox').val(0);
     }
   });
   
@@ -8087,11 +8119,11 @@ $(document).on('click', "#delete_item_btn", function(){
     //   $('#advance_options_checkbox_div').hide();
     // }
     
-    // if ($('input[name="plcb_options_checkbox"]').prop('checked')==true){ 
-    //     $('#plcb_options_checkbox_div').show();
-    // }else{
-    //   $('#plcb_options_checkbox_div').hide();
-    // }
+    if ($('#plcb_options_checkbox').val()==1){ 
+        $('#plcb_options_checkbox_div').show();
+    }else{
+      $('#plcb_options_checkbox_div').hide();
+    }
   });
 </script>
 

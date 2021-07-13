@@ -1829,7 +1829,8 @@ class Item extends Model
                     try {
                         $sql_query = "UPDATE u".$store.".mst_itempackdetail SET npackcost = '".$datas['npackcost']."', 
                                         vpackname = '" .$datas['vpackname']. "', vdesc = '" .$datas['vdesc']. "',
-                                        npackprice = '" .$datas['npackprice']. "',npackmargin = '" .$datas['npackmargin']. "' 
+                                        npackprice = '" .$datas['npackprice']. "', isequence ='".$datas['isequence']."',
+                                        npackmargin = '" .$datas['npackmargin']. "' 
                                         WHERE  iitemid = '".(int)($iitem_id)."' AND idetid = '".(int)($idet_pack_id)."' ";
                         DB::connection('mysql')->update($sql_query);
                     }

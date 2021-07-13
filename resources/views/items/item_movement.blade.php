@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="collapse navbar-collapse" id="main_nav">
                     <div class="menu">
-                        <span class="font-weight-bold"> Item Movement</span>
+                        <span class="font-weight-bold text-uppercase"> Item Movement</span>
                     </div>
                     <div class="nav-submenu">
                     </div>
@@ -42,7 +42,7 @@
                     <a href="<?php echo $data['print_page']; ?>" id="btnPrint"
                         class="pull-right" style="margin-right:10px;"><i class="fa fa-print" aria-hidden="true"></i>
                         Print</a>
-                    <a id="pdf_export_btn" class="pull-right" style="margin-right:10px; cursor: pointer;"><i
+                    <a href="#" id="pdf_export_btn" class="pull-right" style="margin-right:10px; cursor: pointer;"><i
                             class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a>
                 </div>
             </div>
@@ -1999,8 +1999,8 @@
 
     <style>
         .ui-menu-item-wrapper:hover{
-            color: orangered;
-            border: rgb(235, 121, 29) 2px solid;
+            color: rgb(238, 136, 41);
+            border: rgb(235, 121, 29) 1px solid;
             text-transform: uppercase;
         }
     .autoc {

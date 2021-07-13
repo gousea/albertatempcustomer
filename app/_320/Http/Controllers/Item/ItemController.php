@@ -691,9 +691,14 @@ class ItemController extends Controller
         $data = array();
         if ($request->isMethod('post')) {
             $temp_arr = $input['itemid'];
-            $stores_hq = isset($input['stores_hq']) ? $input['stores_hq'] : [session()->get('sid')] ;
+            // $stores_hq = isset($input['stores_hq']) ? $input['stores_hq'] : [session()->get('sid')] ;
             $item = new Item();
-            $data = $item->deleteItems($temp_arr, $stores_hq);
+            if(isset($input['stores_hq'])){
+                $stores_hq = $input['stores_hq'];
+                $data = $item->deleteItems($temp_arr, $stores_hq);
+            }else{
+                $data = $item->deleteItems($temp_arr);
+            }
             return response(json_encode($data), 200)
                 ->header('Content-Type', 'application/json');
             exit;  
@@ -3674,7 +3679,7 @@ class ItemController extends Controller
         
         $data['cancel'] = url('/320/item/item_list/Active/DESC');
         
-        $data['item_movement_data'] = url('/320/item/item_movement_report/item_movement_data');
+        $data['item_movement_data'] = url('/item/item_movement_report/item_movement_data');
         
         if (isset($iitemid)) {
             
@@ -3907,6 +3912,12 @@ class ItemController extends Controller
             $data['wicitem'] = $item_info['wicitem'];
         } else {
             $data['wicitem'] = '';
+        }
+
+        if($data['wicitem'] == 1 || $data['wicitem'] === 'Y'){
+            $data['wicitem'] = 'Y';
+        }else{ 
+            $data['wicitem'] ='N';
         }
             
         // if (isset($input['vsequence'])) {
@@ -4268,7 +4279,7 @@ class ItemController extends Controller
             $data['unit_id'] = '';
             $data['unit_value'] = '';
         }
-
+        
         if (isset($input['bucket_id']) ) {
             $data['bucket_id'] = $input['bucket_id'];
         } else if (!empty($item_info) && !empty($bucket_data)) {
@@ -5267,12 +5278,12 @@ class ItemController extends Controller
                         DB::connection('mysql_dynamic')->insert("INSERT INTO trn_webadmin_history SET  itemid = '" . $last_iitemid['iitemid'] . "',userid = '" . Auth::user()->id . "',barcode = '" . ($new_item_values['vbarcode']) . "', type = 'Clone', oldamount = '0', newamount = '0',general = '" . $x_general . "', source = 'CloneItem', historydatetime = NOW(),SID = '" . (int)(session()->get('sid'))."'");
                         
                         if($new_item_values['vitemtype'] == 'Lot Matrix'){
-                            $itempacks = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_itempackdetail WHERE iitemid='". (int)$value->iitemid ."' ORDER BY isequence");
+                            $itempacks = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_itempackdetail WHERE iitemid='". (int)$input['clone_item_id'] ."' ORDER BY isequence");
                             $itempacks = isset($itempacks)?(array)$itempacks:[];
                             
                             foreach($itempacks as $itempack){
                                 
-                                $insert_query = "INSERT INTO mst_itempackdetail SET  iitemid = '" . (int)$last_iitemid['iitemid'] . "',`vbarcode` = '" . $itempack['vbarcode'] . "',`vpackname` = '" . $itempack['vpackname'] . "',`vdesc` = '" . $itempack['vdesc'] . "',`ipack` = '" . (int)$itempack['ipack'] . "',`iparentid` = '" . (int)$itempack['iparentid'] . "',`npackcost` = '" . $itempack['npackcost'] . "',`npackprice` = '" . $itempack['npackprice'] . "',`npackmargin` = '" . $itempack['npackmargin'] . "', SID = '" . (int)(session()->get('sid')) . "'";
+                                $insert_query = "INSERT INTO mst_itempackdetail SET  iitemid = '" . (int)$last_iitemid['iitemid'] . "',`vbarcode` = '" . $input['vbarcode'] . "',`vpackname` = '" . $itempack->vpackname . "',`vdesc` = '" . $itempack->vdesc . "',`ipack` = '" . (int)$itempack->ipack . "',`iparentid` = '" . (int)$itempack->iparentid . "',`npackcost` = '" . $itempack->npackcost . "',`npackprice` = '" . $itempack->npackprice . "',`npackmargin` = '" . $itempack->npackmargin . "', SID = '" . (int)(session()->get('sid')) . "'";
                                 DB::connection('mysql_dynamic')->insert($insert_query);
                             }
                         }

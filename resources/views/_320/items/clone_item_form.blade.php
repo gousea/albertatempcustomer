@@ -812,9 +812,9 @@
                                       </div>
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required form-inline">
 
-                                        <input type="text" name="book_qoh" maxlength="50" value="<?php echo isset($data['QOH']) ? $data['QOH'] : ''; ?>" placeholder="Book Qoh" id="input-book_qoh" class="form-control adjustment-fields" autocomplete="off" readonly/>
-                                        <?php if (isset($data['error_book_qoh'])) { ?>
-                                            <div class="text-danger"><?php echo $data['error_book_qoh']; ?></div>
+                                        <input type="number" name="book_cost" maxlength="50" value="<?php echo isset($data['dcostprice']) ? number_format((float)$data['dcostprice'], 2) : ''; ?>" placeholder="Book Cost" id="input-book_cost" class="form-control adjustment-fields" autocomplete="off"/>
+                                        <?php if (isset($data['error_book_cost'])) { ?>
+                                            <div class="text-danger"><?php echo $data['error_book_cost']; ?></div>
                                         <?php } ?>
                                           
                                       </div>
