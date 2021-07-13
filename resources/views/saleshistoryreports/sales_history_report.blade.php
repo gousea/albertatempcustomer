@@ -1,28 +1,38 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title')
-  Sales History Report 
-  
+Sales History Report
 @endsection
 @section('main-content')
-
-  <div id="content">
-      <div class="page-header">
-        <div class="container-fluid">
-            <ul class="breadcrumb">
-                <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-                    <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-                <?php //} ?>
-            </ul>
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase">Sales History Report</span>
+                </div>
+                <div class="nav-submenu">
+                       <?php if(isset($reports['result']) && count($reports['result']) > 0){ ?>
+                       
+                            
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu btn_width "  href="#" id="csv_export_btn_excel" > EXCEL
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu btn_width"  href="#" id="csv_export_btn">CSV
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu btn_width " href="#" id="export_btn_email"  > SEND EMAIL
+                            </a>
+                            
+                        <?php } ?>
+                </div>
+            </div> 
         </div>
-      </div>
+    </nav>
 
-      <div class="container-fluid">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i> Sales History Report</h3>
-            </div>
-            <div class="panel-body">
-                <div class="clearfix"></div>
+
+      <div class="container">
+            <br>
+               <h6><span>SEARCH PARAMETERS </span></h6>
+               
+        <br>
+    
                 <form method="post" id="filter_form">
                 @csrf
                 @method('post')
@@ -44,18 +54,28 @@
                             </select>
                             
                         </div>
-                        <div class='inputBox' id='divWeek' style=''>
-                            <div class='col-sm-2' id='' style=''>
+                        
+                        
+                        <div class='inputBox col-sm-9' id='divWeek' style=''>
+                           <label style=" width: 160px;">
                                 <input type='number' name='input_week' class='form-control' id='inputWeek' placeholder='Weeks (1 - 13)' min='1' max='13' onKeyUp="if(this.value > 13) $(this).val(13)" value="<?php if(isset($weeks)){ echo $weeks; }?>">
-                            </div>
-                            <div class='col-sm-4'style="margin-top: 10px;"><input type=checkbox name='include_current_week' value='yes' <?php if(isset($include_current_week) && ($include_current_week === 'yes')){ echo 'checked';} ?> > Include Current Week (Week No. <?php echo date('W', strtotime('today')); ?>)</div>
+                            </label>
+                                <input type=checkbox name='include_current_week' value='yes' <?php if(isset($include_current_week) && ($include_current_week === 'yes')){ echo 'checked';} ?> > Include Current Week (Week No. <?php echo date('W', strtotime('today')); ?>)
+                            
                         </div>
-                        <div class='inputBox' id='divMonth' style='display: none'>
-                            <div class='col-sm-2' id='' style=''>
+                        
+                        
+                        
+                        <div class=' col-sm-9 inputBox ' id='divMonth' style='display: none'>
+                            <label style=" width: 160px;">
                                 <input type='number'  name='input_month' class='form-control' id='inputMonth' placeholder='Months (1 - 12)' min='1' max='12'  onKeyUp="if(this.value>=12) { $(this).val(12) }"  value="<?php if(isset($months)){ echo $months; }?>">
-                            </div>
-                            <div class='col-sm-4'style="margin-top: 10px;"><input type=checkbox name='include_current_month' value='yes' <?php if(isset($include_current_month) && ($include_current_month === 'yes')){ echo 'checked';} ?> > Include Current Month (<?php echo date('F', strtotime('today')); ?>)</div>
+                         
+                            </label>
+                                  <input type=checkbox name='include_current_month' value='yes' <?php if(isset($include_current_month) && ($include_current_month === 'yes')){ echo 'checked';} ?> > Include Current Month (<?php echo date('F', strtotime('today')); ?>)
+                            
                         </div>
+                        
+                        
                         <div class='col-sm-3 inputBox' id='divYear' style='display: none'>
                             <select class='form-control' id='inputYear' placeholder='Enter the Year Number' name='input_year'>
                                 <option value='<?php echo date("Y",strtotime("-1 year")); ?>' <?php if(isset($year) === date("Y",strtotime("-1 year"))){ echo 'selected'; } ?> ><?php echo date("Y",strtotime("-1 year")); ?></option>
@@ -63,35 +83,35 @@
                             </select>
                             
                         </div>
-                        <div class='inputBox' id='divCustom' style='display: none'>
-                            <div class='col-sm-3'>
-                                <input class='form-control' id='customDateRange' placeholder='Enter Date Range' name='custom_date_range' value='<?php echo isset($custom_date_range);?>' style='width:111%;'>
-                            </div>
+                        
+                        <div class='col-sm-3 inputBox' id='divCustom' style='display: none'>
                             
+                                <input class='form-control' id='customDateRange' placeholder='Enter Date Range' name='custom_date_range' value='<?php echo isset($custom_date_range);?>' style='width:111%;'>
+                          
                         </div>
-                        <div class='col-sm-2'>
-                            <input type='submit' class='btn btn-info' value='Generate'>
-                        </div>
+                        
                     </div>
 
                     <div class='row'>&nbsp;</div>                    
                        
-                        
+                    <h6><span>ITEM FILTER </span></h6>
+                    <br>
                     <div class="row" id="div_item_listing">
-                        <div class="col-md-12">
+                        <div class="col-md-12 ">
                             <div class="box-body table-responsive" style="overflow-x: unset;">
-                            <table id="item_listing" class="table table-bordered table-striped table-hover" style="font-size:9px;">
-                                <thead>
-                                    <tr>
-                                            <th style="width: 15%;position: relative;">ITEM NAME</th>
-                                            <th style="width: 5%;position: relative;">SIZE</th>
-                                            <th>SKU</th>
+                            <table id="item_listing" class="table  table-striped t_body rcorner"  cellspacing="0" cellpadding="0" border="0">
+                                <thead class="rcorner">
+                                    <tr class="headermenublue"  cellspacing="0" cellpadding="0" border="0"  style="border-bottom-color:red">
+                                            <th style="width: 15%;position: relative;border-bottom-color:#286fb7 " >ITEM NAME</th>
+                                           
+                                            <th  style="border-bottom-color:#286fb7 ">SKU</th>
                                             
-                                            <th style="width: 22%;">PRICE</th>
-                                            <th>DEPT.</th>
-                                            <th style="">CATEGORY</th>
-                                            <th style="">SUB CAT</th>
-                                            <th>VENDOR</th>
+                                            <th style="width: 22%;border-bottom-color:#286fb7 ">PRICE</th>
+                                            <th  style="border-bottom-color:#286fb7 ">DEPARTMENT</th>
+                                            <th style="border-bottom-color:#286fb7 ">CATEGORY</th>
+                                            <th style="border-bottom-color:#286fb7 ">SUBCATEGORY</th>
+                                            <th  style="border-bottom-color:#286fb7 ">VENDOR</th>
+                                             <th style="width: 5%;position: relative ;border-bottom-color:#286fb7 ;">SIZE</th>
 
                                     </tr>
                                 </thead>
@@ -100,18 +120,23 @@
                         </div>
                     </div> 
                     
-                    
-                    <!--<div class="container">-->
+                     <div class="row" >
+                          <div class='col-sm-2'>
+                            <input type='submit' class="btn btn-success rcorner header-color" value='Generate'>
+                        </div>
 
-                                
-                                
-                    <!--</div>-->
-
+                     </div>
+                   
                     
                 </form>            
                     
                     
-               <?php if(isset($reports['result']) && count($reports['result']) > 0){ ?>
+           <br>
+               <h6><span>SALES HISTORY </span></h6>
+               
+        <br>            
+                    
+               <?php if(isset($reports_css['result']) && count($reports_css['result']) > 0){ ?>
                
                <div class="row" style="float: right;">   
                     <!--<i class="fa fa-file-excel-o" aria-hidden="true" style = "padding-top: 10px;"></i>-->
@@ -130,13 +155,13 @@
                 <?php }?>
                 <?php if(isset($reports['result']) && count($reports['result']) > 0){ ?>
                     
-                    <table class="table table-bordered table-striped table-hover" id="sorttest" style="width:100%" >
+                    <table class="table-stripe promotionview" id="sorttest" style="width:100%" >
                         <thead>
-                            <tr >
-                                <td >Item Name</td>
-                                <td style="width: 54px;">Size</td>
+                            <tr style="height: 47px;" >
+                                <td  style="width: 54px;" class="th_color text-uppercase" ><b> &nbsp; &nbsp;&nbsp;Item Name <i class="fa fa-filter" aria-hidden="true"></i></b></td>
+                                <td style="width: 54px;" class="th_color text-uppercase" ><b>Size <i class="fa fa-filter" aria-hidden="true"></i></b></td>
                                 <?php foreach($reports['header'] as $h){ ?>
-                                    <td style="width: 54px;"><?php echo $h; ?></td>
+                                    <td style="width: 54px;" class="th_color text-uppercase" ><b><?php echo $h; ?>  <i class="fa fa-filter" aria-hidden="true"></i></b></td>
                                 <?php } ?>                              
                             </tr>
                         </thead>
@@ -144,7 +169,7 @@
                         <tbody>
                             
                             <?php foreach($reports['result'] as $r){ ?>
-                                <tr>
+                                <tr style="height: 47px;">
                                     <?php foreach($r as $k => $v){ 
                                             if($k === 'iitemid'){ continue;}    
                                     ?>
@@ -169,36 +194,38 @@
                             </div>
                         </div>
                 <?php } ?>
-            </div>
-        </div>
+            
+        
       </div>
   </div>
 
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
-<link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" defer></script>
+<!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">-->
+
+<!--<link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" defer></script>-->
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+<!--<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>-->
+<!--<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>-->
 
  
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>
  <link href="https://mottie.github.io/tablesorter/css/theme.default.css" rel="stylesheet">
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ 
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
     
 
- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">-->
  
   <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
@@ -209,7 +236,57 @@
   <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 
 <script src= "//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"> 
-</script> 
+
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
+<!--</script> -->
+<script>
+    $(document).ready(function(){
+        var url = '<?php echo isset($searchitem);?>';
+        var departments_data = "{{$departments}}";
+        var departments = unEntity(departments_data);
+        var categories_data = "{{$categories}}";
+        var categories = unEntity(categories_data);
+        var subcategories_data = "{{$subcategories}}";
+        var subcategories = unEntity(subcategories_data);
+        var suppliers_data = "{{$suppliers}}";
+        var suppliers = unEntity(suppliers_data);
+        var price_select_by_data = "{{$price_select_by}}"; 
+        var price_select_by = unEntity(price_select_by_data);
+        $('#item_listing thead tr').clone(true).appendTo( '#item_listing thead' );
+        $('#item_listing thead tr:eq(1) th').each( function (i) {
+            var title = $(this).text();
+            if(title == 'DEPARTMENT'){
+                $(this).html(departments)
+            }else if(title == "CATEGORY"){
+                $(this).attr('id', 'thCategory');
+                $(this).html(categories);
+            }else if(title == "SUBCATEGORY"){
+                $(this).attr('id', 'thSubCategory');
+                $(this).html(subcategories);
+            }else if(title == 'VENDOR'){
+                $(this).html(suppliers)
+            }else if(title == 'SIZE'){
+                $(this).html('<input type="text" autocomplete="off" id="search_size" name="size" class="search_text_box1" placeholder="Size" value="<?php echo isset($size) ? $size : ''; ?>"/>')
+            }else if(title == 'ITEM NAME'){
+                $(this).html( '<input type="text" autocomplete="off" id="search_item_name" name="item_name" class="search_text_box1" placeholder="Search" value="<?php echo isset($item_name) ? $item_name : ''; ?>"/>' );
+            }else if(title == 'SKU'){
+                $(this).html( '<input type="text" autocomplete="off" id="search_sku" name="barcode" class="search_text_box1" placeholder="Search" value="<?php echo isset($barcode) ? $barcode : ''; ?>"/>' );
+            }else if(title == 'PRICE') {
+                $(this).html(price_select_by);
+            }else{
+                $(this).html( '' );
+            }
+        })
+        $("div#divLoading").removeClass('show');        
+        $("#item_listing_filter").hide();
+        $("#item_listing_processing").remove();
+        $(".dataTables_scrollBody").remove();
+    });
+</script>
 <style type="text/css">
   .table.table-bordered.table-striped.table-hover thead > tr{
          	background: #03a9f4 none repeat scroll 0 0 !important;
@@ -272,7 +349,7 @@
             /*display:block;*/
         }
       .table.table-bordered.table-striped.table-hover thead > tr {
-          background-color: #2486c6;
+          /*background-color: #2486c6;*/
           color: #fff;
           overflow-x: none;
       }
@@ -281,8 +358,8 @@
         }
         
         tr.header > th{
-            background-color: #DCDCDC;
-            border: 1px solid #808080 !important;
+            /*background-color: #DCDCDC;*/
+            /*border: 1px solid #808080 !important;*/
         }
         
         tr.header > th, tr.header > th > span{
@@ -650,52 +727,11 @@
         $("div#divLoading").addClass('show');
     });
     var item_name_list = [];
-    $(window).load(function() {
-        $("div#divLoading").removeClass('show');
-    });    
+    // $(window).load(function() {
+    //     $("div#divLoading").removeClass('show');
+    // });    
     
-    $(document).ready(function(){
-        var url = '<?php echo isset($searchitem);?>';
-        var departments_data = "{{$departments}}";
-        var departments = unEntity(departments_data);
-        var categories_data = "{{$categories}}";
-        var categories = unEntity(categories_data);
-        var subcategories_data = "{{$subcategories}}";
-        var subcategories = unEntity(subcategories_data);
-        var suppliers_data = "{{$suppliers}}";
-        var suppliers = unEntity(suppliers_data);
-        var price_select_by_data = "{{$price_select_by}}"; 
-        var price_select_by = unEntity(price_select_by_data);
-        $('#item_listing thead tr').clone(true).appendTo( '#item_listing thead' );
-        $('#item_listing thead tr:eq(1) th').each( function (i) {
-            var title = $(this).text();
-            if(title == 'DEPT.'){
-                $(this).html(departments)
-            }else if(title == "CATEGORY"){
-                $(this).attr('id', 'thCategory');
-                $(this).html(categories);
-            }else if(title == "SUB CAT"){
-                $(this).attr('id', 'thSubCategory');
-                $(this).html(subcategories);
-            }else if(title == 'VENDOR'){
-                $(this).html(suppliers)
-            }else if(title == 'SIZE'){
-                $(this).html('<input type="text" autocomplete="off" id="search_size" name="size" class="search_text_box1" placeholder="Size" value="<?php echo isset($size) ? $size : ''; ?>"/>')
-            }else if(title == 'ITEM NAME'){
-                $(this).html( '<input type="text" autocomplete="off" id="search_item_name" name="item_name" class="search_text_box1" placeholder="Search" value="<?php echo isset($item_name) ? $item_name : ''; ?>"/>' );
-            }else if(title == 'SKU'){
-                $(this).html( '<input type="text" autocomplete="off" id="search_sku" name="barcode" class="search_text_box1" placeholder="Search" value="<?php echo isset($barcode) ? $barcode : ''; ?>"/>' );
-            }else if(title == 'PRICE') {
-                $(this).html(price_select_by);
-            }else{
-                $(this).html( '' );
-            }
-        })
-        $("div#divLoading").removeClass('show');        
-        $("#item_listing_filter").hide();
-        $("#item_listing_processing").remove();
-        $(".dataTables_scrollBody").remove();
-    });
+    
     function unEntity(str){
         return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
     }
@@ -703,7 +739,9 @@
         var get_item_names_url = "{{route('saleshistoryreport_getiteamname')}}";
         get_item_names_url  = get_item_names_url.replace(/&amp;/g, '&');
         $( "#search_item_name" ).autocomplete({
+            
             source: function( request, response ) {
+                console.log($('#search_item_name').val());
                 var input = {term: $('#search_item_name').val()};
                 $.ajax( {
                   url: get_item_names_url,
@@ -1000,35 +1038,63 @@ button.dt-button:active, div.dt-button:active, a.dt-button:active{
 
 </style>
 <style>
-.tablesorter-header {
-    background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
-    background-position: center right;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    white-space: normal;
-    padding-right:0px; 
-    border-spacing: 0;
-    text-align:left;
-}
-.tablesorter-headerAsc {
-    padding-right:0px; 
-    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
-}
-.tablesorter-headerDesc {
-    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
-    padding-right:0px; 
+/*.tablesorter-header {*/
+/*    background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);*/
+/*    background-position: center right;*/
+/*    background-repeat: no-repeat;*/
+/*    cursor: pointer;*/
+/*    white-space: normal;*/
+/*    padding-right:0px; */
+/*    border-spacing: 0;*/
+/*    text-align:left;*/
+/*}*/
+/*.tablesorter-headerAsc {*/
+/*    padding-right:0px; */
+/*    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);*/
+/*}*/
+/*.tablesorter-headerDesc {*/
+/*    background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);*/
+/*    padding-right:0px; */
     
-}
-.tablesorter .sorter-false {
-    background-image: none;
-    cursor: default;
-    padding: 0px;
-}    
+/*}*/
+/*.tablesorter .sorter-false {*/
+/*    background-image: none;*/
+/*    cursor: default;*/
+/*    padding: 0px;*/
+/*}    */
 
 .th_class{
   border-spacing:0; /* Removes the cell spacing via CSS */
   border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
 }    
+.t_body {background-color: #286fb7;}
+</style>
 
+<style>
+.rcorner {
+  border-radius:9px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
+.tborder{
+    border-width: 0px;
+}
+#category_code ,#sub_category_id,#search_size,#search_sku{
+    width:97px;
+}
 </style>
 @endsection
