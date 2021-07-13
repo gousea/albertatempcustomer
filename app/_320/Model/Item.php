@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\_320\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +19,7 @@ class Item extends Model
     
     public function deleteItems($data, $srotes_hq = null) {
         $return = array();
-       
+        
         if(isset($data) && count($data) > 0){
             if(isset($srotes_hq) &&  $srotes_hq != null){
                 $cntStores = count($srotes_hq);
@@ -1662,7 +1662,8 @@ class Item extends Model
                     try {
                         $sql_query = "UPDATE u".$store.".mst_itempackdetail SET npackcost = '".$datas['npackcost']."', 
                                         vpackname = '" .$datas['vpackname']. "', vdesc = '" .$datas['vdesc']. "',
-                                        npackprice = '" .$datas['npackprice']. "',npackmargin = '" .$datas['npackmargin']. "' 
+                                        npackprice = '" .$datas['npackprice']. "', isequence ='".$datas['isequence']."',
+                                        npackmargin = '" .$datas['npackmargin']. "' 
                                         WHERE  iitemid = '".(int)($iitem_id)."' AND idetid = '".(int)($idet_pack_id)."' ";
                         DB::connection('mysql')->update($sql_query);
                     }
@@ -2446,7 +2447,7 @@ class Item extends Model
                 }
                 
             }else{
-            
+                
                 try {
                         //=============20-11-2020========
                         $itemvendor_exist = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_itemvendor WHERE iitemid= '". (int)$iitemid ."' AND ivendorid='". (int)$previous_item['vsuppliercode'] ."' ");
