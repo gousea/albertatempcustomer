@@ -3890,6 +3890,12 @@ class ItemController extends Controller
             $data['wicitem'] = '';
         }
 
+        if($data['wicitem'] == 1 || $data['wicitem'] === 'Y'){
+            $data['wicitem'] = 'Y';
+        }else{ 
+            $data['wicitem'] ='N';
+        }
+
         // if (isset($input['vsequence'])) {
         //     $data['vsequence'] = $input['vsequence'];
         // } elseif (!empty($item_info)) {
