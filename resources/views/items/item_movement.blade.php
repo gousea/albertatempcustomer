@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="collapse navbar-collapse" id="main_nav">
                     <div class="menu">
-                        <span class="font-weight-bold"> Item Movement</span>
+                        <span class="font-weight-bold text-uppercase"> Item Movement</span>
                     </div>
                     <div class="nav-submenu">
                     </div>
