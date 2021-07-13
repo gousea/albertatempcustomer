@@ -911,7 +911,7 @@
       
                                         <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
                                           <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
-                                          <?php if($data['wicitem'] == '1') $wicitem = 'Y'; else $wicitem ='N'; ?>
+                                          <?php if($data['wicitem'] == '1' || $data['wicitem'] == 'Y') $wicitem = 'Y'; else $wicitem ='N'; ?>
                                             <label class="radio-inline">
                                               <input type="radio" name="wicitem" class="form-control" value="<?php echo $k;?>" <?php if($wicitem == $k) echo "checked"; ?> ><?php echo $array_y_n;?>&nbsp;&nbsp;
                                             </label>
