@@ -5584,7 +5584,7 @@ $("#closeBtn").click(function(){
           $('#save_btn_row').hide();
           
         }else if(tab_s == 'lot_matrix_tab'){
-          $('#alot_matrix_tab_li').prop('checked', true);
+          $('#lot_matrix_tab_li').prop('checked', true);
           $('#lot_matrix_tab').show();
           $('#alias_code_tab').hide();
           $('#item_tab').hide();
@@ -5629,7 +5629,7 @@ $("#closeBtn").click(function(){
             $('#save_btn_row').hide();
             
           <?php }else if($data['tab_selected'] == 'lot_matrix_tab'){ ?>
-            $('#alot_matrix_tab_li').prop('checked', true);
+            $('#lot_matrix_tab_li').prop('checked', true);
             $('#lot_matrix_tab').show();
             $('#alias_code_tab').hide();
             $('#item_tab').hide();

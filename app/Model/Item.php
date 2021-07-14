@@ -1841,7 +1841,7 @@ class Item extends Model
                 }
             }else{
                 try {
-                    $sql_query = "UPDATE mst_itempackdetail SET npackcost = '".$datas['npackcost']."', vpackname = '" .$datas['vpackname']. "', vdesc = '" .$datas['vdesc']. "',npackprice = '" .$datas['npackprice']. "',npackmargin = '" .$datas['npackmargin']. "' WHERE iitemid='". (int)($datas['iitemid']) ."' AND idetid='". (int)($datas['idetid']) ."'";
+                    $sql_query = "UPDATE mst_itempackdetail SET npackcost = '".$datas['npackcost']."', vpackname = '" .$datas['vpackname']. "', vdesc = '" .$datas['vdesc']. "',npackprice = '" .$datas['npackprice']. "',npackmargin = '" .$datas['npackmargin']. "', isequence ='".$datas['isequence']."' WHERE iitemid='". (int)($datas['iitemid']) ."' AND idetid='". (int)($datas['idetid']) ."'";
                     DB::connection('mysql_dynamic')->update($sql_query);
                 }
                 catch (QueryException $e) {
