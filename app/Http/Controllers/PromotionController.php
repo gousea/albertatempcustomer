@@ -1,7 +1,7 @@
 <?php
 
 // namespace App\Http\Controllers;
-namespace App\_320\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Promotion;
@@ -24,7 +24,7 @@ class PromotionController extends Controller
     {   
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "2G");
-        return view('_320.items.promotion');
+        return view('items.promotion');
     }
     
     public function duplicatehqPermission(Request $request){
@@ -255,7 +255,7 @@ class PromotionController extends Controller
         
         /********************/
 
-         return view('_320.items.addpromotion', compact('data'));
+         return view('items.addpromotion', compact('data'));
     }
 
     protected function editForm(Request $request) 
@@ -844,7 +844,7 @@ class PromotionController extends Controller
             $data['selected_discount_items'] = '';
         }
 
-        return view('_320.items.addpromotion', compact('data'));
+        return view('items.addpromotion', compact('data'));
     }
 
 
