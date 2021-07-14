@@ -2884,7 +2884,7 @@
                                                 </td>
             
                                                 <td colspan="2" class="th_color">
-                                                    <b class="text-uppercase " style="font-size: 14px;">
+                                                    <b class="text-uppercase" style="font-size: 14px;">
                                                         <?php echo $previous_year; ?> YTD RECEIVE
                                                         <?php echo
                                                         !empty($parentreports['year_arr_receive'][$previous_year]['total_receive']) ?
@@ -4660,8 +4660,8 @@ $("#closeBtn").click(function(){
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Item Pack</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -4670,7 +4670,7 @@ $("#closeBtn").click(function(){
               <span><b>Pack Name:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" name="vpackname" maxlength="30" required>
+              <input class="form-control adjustment-fields" type="text" name="vpackname" maxlength="30" required>
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4681,7 +4681,7 @@ $("#closeBtn").click(function(){
               <span><b>Description:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" name="vdesc" maxlength="50" >
+              <input class="form-control adjustment-fields" type="text" name="vdesc" maxlength="50" >
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4692,7 +4692,7 @@ $("#closeBtn").click(function(){
               <span><b>Pack Qty:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" name="ipack" id="ipack" required>
+              <input class="form-control adjustment-fields" type="text" name="ipack" id="ipack" required>
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4703,7 +4703,7 @@ $("#closeBtn").click(function(){
               <span><b>Cost Price:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" id="npackcost" name="npackcost" required value="<?php echo isset($data['nunitcost'])? number_format((float)$data['nunitcost'], 2, '.', '') : '';?>" readonly>
+              <input class="form-control adjustment-fields" type="text" id="npackcost" name="npackcost" required value="<?php echo isset($data['nunitcost'])? number_format((float)$data['nunitcost'], 2, '.', '') : '';?>" readonly>
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4714,7 +4714,7 @@ $("#closeBtn").click(function(){
               <span><b>Price:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" id="npackprice" name="npackprice">
+              <input class="form-control adjustment-fields" type="text" id="npackprice" name="npackprice">
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4725,7 +4725,7 @@ $("#closeBtn").click(function(){
               <span><b>Sequence:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" name="isequence">
+              <input class="form-control adjustment-fields" type="text" name="isequence">
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4736,7 +4736,7 @@ $("#closeBtn").click(function(){
               <span><b>Profit Margin(%):&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" id="npackmargin" name="npackmargin" readonly>
+              <input class="form-control adjustment-fields" type="text" id="npackmargin" name="npackmargin" readonly>
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4744,8 +4744,8 @@ $("#closeBtn").click(function(){
           
         </div>
         <div class="modal-footer">
-          <input type="submit" class="btn btn-success" value="Add">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn button-blue basic-button-small" value="Add">
+          <button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;">Close</button>
         </div>
       </div>
     </form>
