@@ -20,13 +20,14 @@
             </div> 
         </div>
     </nav>
-    @if (session()->has('message'))
-        <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>      
-    @endif
+   
     <section class="section-content py-6">
         <div class="container">
+            @if (session()->has('message'))
+                <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>      
+            @endif
             <table id="table_promotions" class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                 <thead  style="background-color: #286fb7!important;">
                     <tr>
