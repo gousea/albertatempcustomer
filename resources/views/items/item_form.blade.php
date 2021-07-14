@@ -4844,7 +4844,7 @@ $("#closeBtn").click(function(){
   });
 
 
-  $(document).on('keyup', '.input_npackprice, function(event) {
+  $(document).on('keyup', '.input_npackprice', function(event) {
       event.preventDefault();
       $(this).closest('tr').find('.selected_lot_matrix_checkbox').attr('checked', 'checked');
         
