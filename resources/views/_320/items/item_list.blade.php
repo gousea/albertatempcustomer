@@ -275,6 +275,7 @@
 
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">
+<script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
 
 <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
 <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -686,6 +687,17 @@ $('#items_status').change(function() {
 <script type="text/javascript">
   $(document).on('click', '#delete_btn', function(event) {
     event.preventDefault();
+
+    if($("input[name='selected[]']:checked").length == 0){
+          bootbox.alert({ 
+              size: 'small',
+              title: "  ", 
+              message: 'Please Select Item to Delete!', 
+              callback: function(){}
+          });
+          return false;
+    }
+
     $('#deleteItemModal').modal('show');
   });
   $(document).on('click', '#calculate_reorderpoint', function(event) {
