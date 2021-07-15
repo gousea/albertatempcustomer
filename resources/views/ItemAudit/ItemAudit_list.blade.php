@@ -29,12 +29,12 @@
             <div class="col-md-12">
                 <form action="{{ route('ItemAuditListForm') }}"  method="GET" id="form_item_search" class="form-inline row">
                     <div class="col-md-2" style="margin-right: 70px;">
-                        <input type='text' class="form-control" name="dates" value="<?php echo isset($start_date) ? $start_date : ''; ?>" id="dates" placeholder="Select Date Range" autocomplete="off" style="width: 220px;" readonly/>
+                        <input type='text' class="form-control adjustment-fields" name="dates" value="<?php echo isset($start_date) ? $start_date : ''; ?>" id="dates" placeholder="Select Date Range" autocomplete="off" style="width: 220px;" readonly/>
                         <input type='hidden' class="form-control" name="start_date" value="<?php echo isset($start_date) ? $start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>
                         <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($end_date) ? $end_date : ''; ?>" id="end_date" placeholder="End Date" autocomplete="off">
                     </div>
                     <div class="col-md-2" >
-                        <select name="userid" class="sample-class"  id="user_code"   placeholder="Users">
+                        <select name="userid" class="sample-class adjustment-fields"  id="user_code"   placeholder="Users">
                             <option value="All">Select User</option>
                             <option value="All"<?php if(isset($_GET['userid']) && $_GET['userid']=='All') echo 'selected="selected"';?>>All</option>
                             <?php if(isset($users) && !empty($users) > 0){?>
@@ -49,7 +49,7 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <select name="itemname" class="sample-class1"  id="itemname"   placeholder="items">
+                        <select name="itemname" class="sample-class1 adjustment-fields"  id="itemname"   placeholder="items">
                             <option value="All">Select Items</option>
                             <option value="All" <?php if(isset($_GET['itemname']) && $_GET['itemname']=='All') echo 'selected="selected"';?>>All</option>
                             <?php if(isset($itemname) && !empty($itemname)){?>
@@ -64,7 +64,7 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <select name="mtype" class="sample-class1"  id="mtype"   placeholder="modification" required>
+                        <select name="mtype" class="sample-class1 adjustment-fields"  id="mtype"   placeholder="modification" required>
                             <option value="">Select modification</option>
                             <option value="Item Type" <?php if(isset($_GET['mtype']) && $_GET['mtype']=='Item Type') echo 'selected="selected"';?>>Item Type</option>
                             <option value="Item Name" <?php if(isset($_GET['mtype']) && $_GET['mtype']=='Item Name') echo 'selected="selected"';?>>Item Name</option>
@@ -88,7 +88,7 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <input type="submit" name="search_filter" value="Generate" class="btn btn-success rcorner header-color" style="margin-right:0px">
+                        <input type="submit" name="search_filter" value="Generate" class="btn btn-success rcorner header-color basic-button-small" style="margin-right:0px">
                     </div>
                 </form>
             </div>

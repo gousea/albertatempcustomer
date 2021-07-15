@@ -1,12 +1,30 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title', 'Physical Inventory Detail')
 
 @section('main-content')
 
 <div id="content">
+
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase">Physical Inventory</span>
+                </div>
+                <div class="nav-submenu">
+                  <button type="button" class="btn btn-gray headerblack basic-button-small text-dark" data-toggle="modal" data-target="#userModal" style="width: 15%">Assign Users</button>
+                  <button title="Commit" class="btn btn-gray headerblack basic-button-small text-dark" id="commit_button" style="width: 13%"><i class="fa fa-save"></i>&nbsp;&nbsp;Commit</button>
+                  <button title="Submit" title="Update" class="btn btn-gray headerblack basic-button-small text-dark"  id="calculate" style="width: 13%">Calculate</button>
+                  <button id="import_csv_button" title="Import Physical Inventory" class="btn btn-gray headerblack basic-button-small text-dark" style="width: 20%"><i class="fa fa-file"></i>&nbsp;&nbsp;Import Inventory</button>
+                  <input type="submit" form="export_csv" id="export_csv_button" title="Export In CSV" value="Export In CSV" class="btn btn-gray headerblack basic-button-small text-dark"style="width: 15%" >
+                  <a type="button" href="<?php echo $data['cancel'];?>" class="btn btn-danger buttonred buttons_menu basic-button-small" style="width: 13%"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+                </div>
+            </div> <!-- navbar-collapse.// -->
+        </div>
+    </nav>
   
-    <div class="container-fluid">
+    <div class="container-fluid section-content">
         
         @if (isset($data['error']))
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>{{ $data['error'] }}
@@ -25,26 +43,9 @@
         @endif
         
         <div class="panel panel-default">
-            <div class="panel-heading head_title">
-                <h3 class="panel-title"><i class="fa fa-list"></i>Physical Inventory</h3>
-            </div>
-            <div class="panel-body">
-                
-                <div class="row" style="padding-bottom: 9px;float: right;">
-                    <div class="col-md-12">
-                        <div class="">
-                            <a href="<?php echo $data['cancel'];?>" class="btn btn-primary"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Cancel</a>
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#userModal">Assign Users</button>
-                            <button title="Commit" class="btn btn-primary" id="commit_button"><i class="fa fa-save"></i>&nbsp;&nbsp;Commit</button>
-                            <!--<input type="submit" form="calculateform" title="Update" class="btn btn-primary"  value="Calculate">   -->  
-                            <button title="Submit" title="Update" class="btn btn-primary"  id="calculate">Calculate</button>
-                            <button id="import_csv_button" title="Import Physical Inventory" class="btn btn-primary" ><i class="fa fa-file"></i>&nbsp;&nbsp;Import Inventory</button>
-                            <input type="submit" form="export_csv" id="export_csv_button" title="Export In CSV" value="Export In CSV" class="btn btn-primary" >
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                
+          
+            <div class="panel-body padding-left-right">
+              
                 <form method="POST" id="calculateform" >
                     @csrf
                     <input type="hidden" name="action" value="<?php echo isset($data['action']) ? $data['action'] : ''; ?>">
@@ -52,116 +53,148 @@
                         
                         <div class="panel-body">
                             
+                          <div class="mytextdiv">
+                            <div class="mytexttitle font-weight-bold text-uppercase">
+                                Physical Info
+                            </div>
+                            <div class="divider font-weight-bold"></div>
+                          </div>
+
+                          <div class="py-3">
                             <div class="row">
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label" for="input-template">Ref. Number</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" name="vrefnumber" maxlength="30" value="<?php echo isset($data['vrefnumber']) ? $data['vrefnumber'] : ''; ?>" placeholder="Ref. Number" class="form-control" required id="vrefnumber" readonly/>
-                                            <input type="hidden" name="ipiid" value="<?php echo $data['ipiid'] ?>" >
-                                            <?php if (isset($data['error_vrefnumber'])) { ?>
-                                                <div class="text-danger"><?php echo $data['error_vrefnumber']; ?></div>
+                                <div class="col-md-12 mx-auto">
+                                    
+                                    <div class="form-group row ">
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                                <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Ref. Number</label>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                              <input type="text" name="vrefnumber" maxlength="30" value="<?php echo isset($data['vrefnumber']) ? $data['vrefnumber'] : ''; ?>" placeholder="Ref. Number" class="form-control adjustment-fields" required id="vrefnumber" readonly/>
+                                              <input type="hidden" name="ipiid" value="<?php echo $data['ipiid'] ?>" >
+                                              <?php if (isset($data['error_vrefnumber'])) { ?>
+                                                  <div class="text-danger"><?php echo $data['error_vrefnumber']; ?></div>
+                                              <?php } ?>
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+          
+                                            <label for="inputCreated" class="p-2 float-right text-uppercase">Title</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                            <input type="text" name="vordertitle" maxlength="50" value="<?php echo isset($data['vordertitle']) ? $data['vordertitle'] : ''; ?>" placeholder="Title" class="form-control adjustment-fields" id="vordertitle" required/>
+                                        
+                                            <?php if (isset($data['error_vordertitle'])) { ?>
+                                              <div class="text-danger"><?php echo $data['error_vordertitle']; ?></div>
                                             <?php } ?>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputReceived" class="p-2 float-right text-uppercase">Status</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                            <input type="text" name="estatus" maxlength="10" value="<?php echo isset($data['estatus']) ? $data['estatus'] : 'Open'; ?>" placeholder="Status" class="form-control adjustment-fields" readonly/>
+                                             
+                                          </div>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                  <div class="form-group required">
-                                    <label class="col-sm-4 control-label" for="input-template">Created Date</label>
-                                    <?php
-                                        if(isset($data['dcreatedate']) && !empty($data['dcreatedate']) && $data['dcreatedate'] != '0000-00-00 00:00:00'){
-                                        
-                                          $dcreatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $data['dcreatedate'])->format('m-d-Y H:i:s');
-                                        }else{
-                                          $dcreatedate = '';
-                                        }
                                     
-                                    ?>
-                                    <div class="col-sm-8">
-                                      <?php if(isset($data['ipiid']) && $data['ipiid'] != ''){?>
-                                        <input type="text" name="dcreatedate" value="<?php echo $dcreatedate;?>" placeholder="Created Date" class="form-control" id="dcreatedate" readonly style="pointer-events: none;" />
-                                      <?php } else { ?>
-                                        <input type="text" name="dcreatedate" value="<?php echo date('m-d-Y H:i:s');?>" placeholder="Created Date" class="form-control" id="dcreatedate" readonly style="pointer-events: none;"/>
-                                      <?php } ?>
-                    
-                                      <?php if (isset($data['error_dcreatedate'])) { ?>
-                                        <div class="text-danger"><?php echo $data['error_dcreatedate']; ?></div>
-                                      <?php } ?>
-                    
-                                    </div>
-                                  </div>
                                 </div>
-                                
                             </div>
-                            
-                            <br>
-                            
+          
                             <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="input-template">Status</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="estatus" maxlength="10" value="<?php echo isset($data['estatus']) ? $data['estatus'] : 'Open'; ?>" placeholder="Status" class="form-control" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group required">
-                                    <?php if(isset($data['action']) && ($data['action'] == 'edit_calculate' || $data['action'] == 'selected_edit_calculate')){ ?>
-                                    <label class="col-sm-4 control-label" for="input-template">Last Calculated Date</label>
-                                    <?php }else{ ?>
-                                        <label class="col-sm-4 control-label" for="input-template">Calculate Date</label>
-                                    <?php }
-                                        if(isset($data['dcalculatedate']) && !empty($data['dcalculatedate']) && $data['dcalculatedate'] != '0000-00-00 00:00:00'){
-                                          $dcalculatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $data['dcalculatedate'])->format('m-d-Y H:i:s');
-                                        }else{
-                                          $dcalculatedate = '';
-                                        }
-                                    
-                                    ?>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="dcalculatedate" value="<?php echo $dcalculatedate;?>" placeholder="" class="form-control" id="dcalculatedate" readonly style="pointer-events: none;"/>
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputInvoice" class="p-2 float-right text-uppercase">Created Date</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <?php
+                                              if(isset($data['dcreatedate']) && !empty($data['dcreatedate']) && $data['dcreatedate'] != '0000-00-00 00:00:00'){
+                                              
+                                                $dcreatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $data['dcreatedate'])->format('m-d-Y H:i:s');
+                                              }else{
+                                                $dcreatedate = '';
+                                              }
+                                          
+                                          ?>
+                                          
+                                          <?php if(isset($data['ipiid']) && $data['ipiid'] != ''){?>
+                                            <input type="text" name="dcreatedate" value="<?php echo $dcreatedate;?>" placeholder="Created Date" class="form-control adjustment-fields" id="dcreatedate" readonly style="pointer-events: none;" />
+                                          <?php } else { ?>
+                                            <input type="text" name="dcreatedate" value="<?php echo date('m-d-Y H:i:s');?>" placeholder="Created Date" class="form-control adjustment-fields" id="dcreatedate" readonly style="pointer-events: none;"/>
+                                          <?php } ?>
+                        
+                                          <?php if (isset($data['error_dcreatedate'])) { ?>
+                                            <div class="text-danger"><?php echo $data['error_dcreatedate']; ?></div>
+                                          <?php } ?>
+
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+
+                                            <?php if(isset($data['action']) && ($data['action'] == 'edit_calculate' || $data['action'] == 'selected_edit_calculate')){ ?>
+                                            <label class="p-2 float-right text-uppercase" for="input-template">Last Calculated Date</label>
+                                            <?php }else{ ?>
+                                                <label class="p-2 float-right text-uppercase" for="input-template">Calculate Date</label>
+                                            <?php }
+                                                if(isset($data['dcalculatedate']) && !empty($data['dcalculatedate']) && $data['dcalculatedate'] != '0000-00-00 00:00:00'){
+                                                  $dcalculatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $data['dcalculatedate'])->format('m-d-Y H:i:s');
+                                                }else{
+                                                  $dcalculatedate = '';
+                                                }
+                                            
+                                            ?>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                          <input type="text" name="dcalculatedate" value="<?php echo $dcalculatedate;?>" placeholder="" class="form-control adjustment-fields" id="dcalculatedate" readonly style="pointer-events: none;"/>
                                         
-                                      <?php if (isset($data['error_dcalculatedate'])) { ?>
-                                        <div class="text-danger"><?php echo $data['error_dcalculatedate']; ?></div>
-                                      <?php } ?>
-                                        
-                                    </div>
+                                          <?php if (isset($data['error_dcalculatedate'])) { ?>
+                                            <div class="text-danger"><?php echo $data['error_dcalculatedate']; ?></div>
+                                          <?php } ?>
+                                        </div>
+                                      </div>
+                                      
                                   </div>
-                                </div>
-                                
+                                  
+                              </div>
                             </div>
-                            
-                            <br>
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group required">
-                                    <label class="col-sm-3 control-label" for="input-template">Title </label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vordertitle" maxlength="50" value="<?php echo isset($data['vordertitle']) ? $data['vordertitle'] : ''; ?>" placeholder="Title" class="form-control" id="vordertitle" required/>
-                                        
-                                      <?php if (isset($data['error_vordertitle'])) { ?>
-                                        <div class="text-danger"><?php echo $data['error_vordertitle']; ?></div>
-                                      <?php } ?>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
+                          </div>
                             
                         </div>
                         
                     </div>
                 </form>
-                <br><br>
-            
+                
+                <div class="mytextdiv">
+                  <div class="mytexttitle font-weight-bold text-uppercase">
+                      Items
+                  </div>
+                  <div class="divider font-weight-bold"></div>
+                </div>
+                
+                <br>
+                
                 <div class="table-responsive">
-                    <table id="item" class="table table-bordered table-hover">
+                    <table id="item" class="table table-hover promotionview" style="width: 100%;">
                             
                         <thead>
-                            <tr>
+                            <tr class="header-color">
                               <th class="text-left text-uppercase">SKU</th>
                               <?php $dynamic_data[] = "vbarcode";?>
                               <th class="text-left text-uppercase">Itemname</th>
@@ -198,9 +231,14 @@
 @endsection
 
 
-@section('scripts')
+@section('page-script')
 
 <style type="text/css">
+
+  .padding-left-right{
+    padding: 0 2% 0 2%;
+  }
+
   .span_field span{
     display: inline-block;
   }
@@ -213,13 +251,15 @@
         pointer-events:none;
     }
 </style>
+
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">
+
 <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
 <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src="{{ asset('javascript/bootbox.min.js') }} "></script>
 
 <!-- DataTables -->
-<script src="{{ asset('javascript/jquery.dataTables.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('javascript/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('javascript/select2/js/select2.min.js') }}"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
