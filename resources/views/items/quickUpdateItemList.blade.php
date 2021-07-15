@@ -8,6 +8,7 @@
 <div id="content">
      <div class="page-header">
         <div class="container-fluid">
+
           <!-- <h1><?php //echo $heading_title; ?></h1> -->
           <ul class="breadcrumb">
             <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -21,7 +22,7 @@
         <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-list"></i> Quick Update of Item</h3>
 		</div>
-		
+
         <div class="panel-body">
             <div class="row" style="padding-bottom: 9px;float: right;">
                 <div class="col-md-12">
@@ -29,6 +30,7 @@
                         <input type="checkbox" name="show_cost_price" value="show_cost_price"
                             style="border: 1px solid #A9A9A9;">&nbsp;&nbsp;<span>Show Unit Cost</span>
                     </div>
+
                     <div style="display: inline-block;">
                         <select class="form-control" name="item_type" id="item_type">
                              <option value="All" selected="selected"> All </option>
@@ -164,7 +166,7 @@
 								<th class="text-left text-uppercase">QOH</th>
 							</tr>
 						</thead>
-						
+
 						<tbody>
 							@foreach ($items as $i => $item)
 								<tr>
@@ -231,7 +233,7 @@
 
 									<td class="text-right td_cost_price" style="width:10%;">
 										<input type="text" class="editable class_unitcost"
-											name="items[{{$i}}][nunitcost]" value={{ number_format($item['nunitcost'], 2) }}
+											name="items[{{$i}}][nunitcost]" value={{  number_format($item['nunitcost'], 2) }}
 											onclick='document.getElementById("items[{{$i}}][select]").setAttribute("checked","checked");'
 											style="width:100%;text-align:right;" />
 									</td>
@@ -259,7 +261,7 @@
 											@endif
 										</select>
 									</td>
-                                    
+
                                     <td class="text-left">
 										<select name="items[{{$i}}][vtax2]" class="form-control"
 											onchange='document.getElementById("items[{{$i}}][select]").setAttribute("checked","checked");'>
@@ -275,12 +277,12 @@
 											@endif
 										</select>
 									</td>
-									
+
 									<td class="text-right" style="width:10%;">
 										<input type="text" class="editable class_qoh"
 											name="items[{{$i}}][iqtyonhand]"
-										
-											value="<?php echo $item['iqtyonhand'] ;?>" 
+
+											value="<?php echo $item['iqtyonhand'] ;?>"
 											onclick='document.getElementById("items[{{$i}}][select]").setAttribute("checked","checked");'
 											style="width:100%;text-align:right;" readonly />
 									</td>
@@ -372,7 +374,7 @@
                             'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                     },
                     data : {depcode:dep, catcode:cat_code},
-                    type : 'POST', 
+                    type : 'POST',
                     success: function(data) {
                         $('#categroy_'+ <?php echo $i; ?>).empty().html(data)
                     }
@@ -380,7 +382,7 @@
             });
         </script>
 @endforeach
-    
+
 <script>
     $(document).ready(function(){
         var item_type = $("#item_type").val();
@@ -395,7 +397,7 @@
         $('#div_search_box').hide();
         $('#div_search_vitem_group').hide();
 		$('#th_cost_price, .td_cost_price').hide();
-		
+
         <?php if(isset($search_radio) && $search_radio == 'category'){ ?>
             $('#div_search_vcategorycode').show();
             $("input[name=search_radio][value='category']").prop('checked', true);
@@ -427,7 +429,7 @@
         <?php } ?>
 
     });
-	
+
 	$(document).on('change', 'input[name="show_cost_price"]', function (event) {
 	    event.preventDefault();
 	    if ($(this).is(":checked")) {
@@ -465,7 +467,7 @@
             $('#div_search_box').hide();
             $('#div_search_vitem_group').hide();
         }
-	}); 
+	});
 
 
 	$(document).on('change', 'select[name="item_type"]', function (event) {
@@ -474,7 +476,7 @@
         var search_vdepcode = $('#search_vdepcode').val();
         var search_vitem_group_id = $('#search_vitem_group_id').val();
         var search_item = $('#search_item').val();
-        
+
         if (search_vcategorycode != "" ) {
              var search_radio = "category";
         }else if (search_vdepcode != "" ) {
@@ -484,9 +486,9 @@
         }else if (search_item != "") {
              var search_radio = "search";
         }else {
-            var search_radio = ""; 
+            var search_radio = "";
         }
-    
+
         // var search_radio = $('input[name="search_radio"]').val();
         if(url.length  > 1){
             url = url + '&search_item_type=' + $(this).val();
@@ -495,7 +497,7 @@
             url = url + '&search_vdepcode=' + search_vdepcode;
             url = url + '&search_vitem_group_id=' + search_vitem_group_id;
             url = url + '&search_item=' + search_item;
-            
+
         }
         else{
             url = url + '?search_item_type=' + $(this).val();
@@ -523,7 +525,7 @@
         } else if (selected_option == 'search') {
             selected_option_value = $('#search_item').val();
         }
-       
+
         var quickupdate_search_item_type = '<?php echo $quickupdate_search_item_type ?>'
         var set_selected_option_session = '<?php echo $set_selected_option_session; ?>';
         set_selected_option_session = set_selected_option_session.replace(/&amp;/g, '&');
@@ -542,9 +544,9 @@
                 console.log(data);
             },
         });
-        
+
     });
-    
+
     $(document).on('click', '#update_button', function (event) {
         // var selected_option = '<?php echo $search_radio;?>';
         var selected_option = $('input:radio[name="search_radio"]:checked').val();
@@ -558,7 +560,7 @@
         } else if (selected_option == 'search') {
             selected_option_value = $('#search_item').val();
         }
-       
+
         var quickupdate_search_item_type = '<?php echo $quickupdate_search_item_type ?>'
         var set_selected_option_session = '<?php echo $set_selected_option_session; ?>';
         set_selected_option_session = set_selected_option_session.replace(/&amp;/g, '&');
@@ -582,13 +584,13 @@
                         $('form#form_item_price_update').submit();
                     <?php } ?>
                 }, 1000);
-                
+
             },
         });
-        
+
     });
-    
-    var stores = []; 
+
+    var stores = [];
     stores.push("{{ session()->get('sid') }}");
      $('#selectAllCheckbox').click(function(){
         if($('#selectAllCheckbox').is(":checked")){
@@ -597,9 +599,9 @@
             $( ".stores" ).prop("checked", false );
         }
     });
-    
+
     $("#save_btn").click(function(){
-        $.each($("input[name='stores']:checked"), function(){            
+        $.each($("input[name='stores']:checked"), function(){
             stores.push($(this).val());
         });
         $("#hidden_store_hq_val").val(stores);
@@ -607,7 +609,7 @@
     });
 
     $(function() { $('input[name="automplete-product"]').focus(); });
-    
+
     function getCategories(depcode,i)
     {
         var category_url = '<?php echo $get_categories_url; ?>';
@@ -620,27 +622,27 @@
                 $('#categroy_'+i).empty().html(data)
             }
         });
-        
+
     }
-    
+
    $(document).on('change','.class_unitprice',function(){
         var $this = $(this);
-        $this.val(parseFloat($this.val()).toFixed(4));  
+        $this.val(parseFloat($this.val()).toFixed(4));
     })
-    
+
     $(document).on('change','.class_unitcost',function(){
         var $this = $(this);
-        $this.val(parseFloat($this.val()).toFixed(4));  
+        $this.val(parseFloat($this.val()).toFixed(4));
     })
-  
+
 </script>
 <style>
     .disable {
         //This makes it not clickable
-        pointer-events:none; 
-        
-       
+        pointer-events:none;
+
+
     }
-    
+
 </style>
 @endsection
