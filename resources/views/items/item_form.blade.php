@@ -9042,36 +9042,36 @@ $(document).on('click', '.formsubmit', function(e){
 
       item_movement_data_url = item_movement_data_url + '?vbarcode='+ vbarcode +'&start_date='+start_date+'&end_date='+end_date+'&data_by='+data_by;
       
-      if(data_by == 'receive')
-          {
-              $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th> <th class="text-right">Qty</th><th class="text-right">Pack Qty</th><th class="text-right">Size</th><th class="text-right">Price</th><th class="text-right">PO Number</th><th>Before QOH</th><th>After QOH</th>');
-          }
-      else if(data_by == 'sold')
-          {
-              $('#item_movement_by_date_selection_table > thead > tr').html('<th id="first_th">Print Receipt</th><th>Action</th><th>Date</th><th class="text-right">Qty</th><th class="text-right">Pack Qty</th><th class="text-right">Size</th><th class="text-right">Price</th><th>Before QOH</th><th>After QOH</th>');
-          }
-      else if(data_by == 'adjustment')
-          {
-            $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>');
-          }
-      else if(data_by == 'adjustment')
-          {
-            $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>');
-          }    
-      else if(data_by == 'openingpos')
-          {
-            $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>');
-          }
-      else if(data_by == 'phoneadjustment')
-          {
-            $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th><th class="text-right">Ref Number</th>');
-          }
-          
-      else if(data_by == 'openingqohphone')
-          {
+        if (data_by == 'receive') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th> <th class="text-right">Qty</th><th class="text-right">Pack Qty</th><th class="text-right">Size</th><th class="text-right">Price</th><th class="text-right">PO Number</th><th>Before QOH</th><th>After QOH</th>'
+            );
+        } else if (data_by == 'sold') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th id="first_th">Print Receipt</th><th>Action</th><th>Date</th><th class="text-right">Qty</th><th class="text-right">Pack Qty</th><th class="text-right">Size</th><th class="text-right">Price</th><th>Before QOH</th><th>After QOH</th>'
+            );
+        } else if (data_by == 'adjustment') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>'
+            );
+        } else if (data_by == 'adjustment') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>'
+            );
+        } else if (data_by == 'openingpos') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>'
+            );
+        } else if (data_by == 'phoneadjustment') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th><th class="text-right">Ref Number</th>'
+            );
+        } else if (data_by == 'openingqohphone') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th><th>Qty</th><th class="text-right">Ref Number</th>');
+        }else if(data_by == 'openingqoh'){
             $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Qty</th><th class="text-right">Ref Number</th>');
-          }
-          
+        }
 
       $.getJSON(item_movement_data_url, function(result){
         
@@ -9232,7 +9232,7 @@ $(document).on('click', '.formsubmit', function(e){
           
         }else{
           
-          $('#item_movement_by_date_selection_table > tbody').append('<tr><td class="text-center" colspan="6">Sorry no data found!</td> </tr>');
+          $('#item_movement_by_date_selection_table > tbody').append('<tr><td class="text-center" colspan="9">Sorry no data found!</td> </tr>');
         }
         $('#item_movement_by_date_selection').show();
         $('#item_movement_by_date_selection_table').show();
@@ -9474,6 +9474,19 @@ $(document).on('click', '.formsubmit', function(e){
 
         // $.cookie("tab_selected", 'level_pricing_tab'); //set cookie tab
       }
+    });
+
+    $(document).on('change', 'select[name="search_by_item"]', function(event) {
+        event.preventDefault();
+
+        if ($(this).val() == 'sold') {
+            $('#item_movement_by_date_selection_table').hide();
+            $('#item_movement_by_date_selection_table #first_th').show();
+        } else {
+            $('#item_movement_by_date_selection_table').hide();
+
+            $('#item_movement_by_date_selection_table #first_th').hide();
+        }
     });
 
   </script>
