@@ -13,13 +13,13 @@ ZERO MOVEMENT Report
                        <?php if(isset($zeromovement_reports) && count($zeromovement_reports) > 0){ ?>
                        
                             <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small btn_width"
-                            id="delete_all" ><i class="fa fa-trash"></i>&nbsp;&nbsp;DELETE ALL</a>
+                            id="delete_all" ><i class="fa fa-trash"></i>DELETE ALL</a>
                             
                                  <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small btn_width"
-                            id="parent_delete" ><i class="fa fa-trash"></i>&nbsp;&nbsp;DELETE </a>
+                            id="parent_delete" ><i class="fa fa-trash"></i>DELETE </a>
                             
-                                 <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small btn_width"
-                            id="save_button" ><i class="fa fa-trash"></i>&nbsp;&nbsp; DEACTIVATE</a>
+                                 <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small btn_width "
+                            id="save_button" ><i class="fa fa-trash"></i>DEACTIVATE</a>
                             
                             <a type="button" class="btn btn-gray headerblack  buttons_menu btn_width " href="{{route('zeromovementreportcsv_export')}}"  id="csv_export_btn" > CSV
                             </a>
@@ -410,7 +410,7 @@ $(document).on('submit', '#filter_form', function(event) {
     if ($('#dept_code').val() == 'null' || $('#dept_code').val() == '') {
         bootbox.alert({
             size: 'small',
-            title: "Attention",
+            //title: "Attention",
             message: "Please Select Department ",
             callback: function() {}
         });
@@ -435,7 +435,7 @@ $(document).on('submit', '#filter_form', function(event) {
         // alert('Please Select Start Date');
         bootbox.alert({
             size: 'small',
-            title: "Attention",
+            // title: "Attention",
             message: "Please Select Start Date",
             callback: function() {}
         });
@@ -446,7 +446,7 @@ $(document).on('submit', '#filter_form', function(event) {
         // alert('Please Select End Date');
         bootbox.alert({
             size: 'small',
-            title: "Attention",
+            // title: "Attention",
             message: "Please Select End Date",
             callback: function() {}
         });
@@ -461,7 +461,7 @@ $(document).on('submit', '#filter_form', function(event) {
         if (d1 > d2) {
             bootbox.alert({
                 size: 'small',
-                title: "Attention",
+                // title: "Attention",
                 message: "Start date must be less then end date!",
                 callback: function() {}
             });
@@ -525,7 +525,7 @@ $(document).ready(function() {
       if($("input[name='selected[]']:checked").length == 0){
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            // title: "Attention", 
             message: 'Please Select Checkbox to Delete!', 
             callback: function(){}
           });
@@ -552,7 +552,7 @@ $(document).ready(function() {
               setTimeout(function(){
                    bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    // title: "Attention", 
                     message: 'Deleted Successfully!!', 
                     callback: function(){}
                   });
@@ -623,7 +623,7 @@ $(document).ready(function() {
               setTimeout(function(){
                    bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    // title: "Attention", 
                     message: 'Deleted All Item Successfully!!', 
                     callback: function(){}
                   });
@@ -666,8 +666,8 @@ $(document).ready(function() {
         if ($("input[name='selected[]']:checked").length == 0) {
             bootbox.alert({
                 size: 'small',
-                title: "Attention",
-                message: 'Please Select Checkbox to Delete!',
+                // title: "Attention",
+                message: 'Please Select Checkbox to Deactivate!',
                 callback: function() {}
             });
             return false;
@@ -690,7 +690,7 @@ $(document).ready(function() {
                         setTimeout(function() {
                             bootbox.alert({
                                 size: 'small',
-                                title: "Attention",
+                                // title: "Attention",
                                 message: 'Deactivated Successfully!',
                                 callback: function() {}
                             });
@@ -823,7 +823,7 @@ $(document).on('change', 'input[name="start_date"],input[name="end_date"]', func
         if (d1 > d2) {
             bootbox.alert({
                 size: 'small',
-                title: "Attention",
+                // title: "Attention",
                 message: "Start date must be less then end date!",
                 callback: function() {}
             });
