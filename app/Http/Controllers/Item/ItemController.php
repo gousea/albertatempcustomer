@@ -1455,7 +1455,7 @@ class ItemController extends Controller
                                         "isparentchild" => "0",
                                         "parentid" => "0",
                                         "parentmasterid" => "0",
-                                        "wicitem" => $input['wicitem'],
+                                        "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
                                         "options_data" => $options_data,
                                         
                                     );
@@ -2425,7 +2425,7 @@ class ItemController extends Controller
                                     "isparentchild" => $input['isparentchild'],
                                     "parentid" => $input['parentid'],
                                     "parentmasterid" => $input['parentmasterid'],
-                                    "wicitem" => $input['wicitem'],
+                                    "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
                                     "options_data" => $options_data
                                 );
                     
@@ -4914,7 +4914,7 @@ class ItemController extends Controller
                                         "isparentchild" => "0",
                                         "parentid" => "0",
                                         "parentmasterid" => "0",
-                                        "wicitem" => $input['wicitem'],
+                                        "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
                                         "options_data" => $options_data,
                                         
                                     );
@@ -5202,7 +5202,7 @@ class ItemController extends Controller
                                         "isparentchild" => "0",
                                         "parentid" => "0",
                                         "parentmasterid" => "0",
-                                        "wicitem" => $input['wicitem'],
+                                        "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
                                         "options_data" => $options_data,
                                         
                                     );     

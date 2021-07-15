@@ -2216,7 +2216,7 @@
                                                 <tr class="th_color">
                                                     <td colspan="2" class="th_color"></td>
                                                     <td colspan="2" class="th_color">
-                                                        <b class="text-uppercase text-info" style="font-size: 14px;">
+                                                        <b class="text-uppercase" style="font-size: 14px;">
                                                             <?php echo $previous_year; ?> YTD SOLD
                                                             <?php echo
                                                             !empty($childreports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
@@ -2826,7 +2826,7 @@
                                             <tr class="th_color">
                                                 <td colspan="2" class="th_color"></td>
                                                 <td colspan="2" class="th_color">
-                                                    <b class="text-uppercase text-info" style="font-size: 14px;">
+                                                    <b class="text-uppercase" style="font-size: 14px;">
                                                         <?php echo $previous_year; ?> YTD SOLD
                                                         <?php echo
                                                         !empty($parentreports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
@@ -2873,7 +2873,7 @@
             
             
                                                 <td colspan="2" class="th_color">
-                                                    <b class="text-uppercase text-info" style="font-size: 14px;">
+                                                    <b class="text-uppercase" style="font-size: 14px;">
                                                         <?php echo $previous_year; ?> YTD ADJUSTMENT
                                                         <?php echo $totaladjpreviousyr; ?>
                                                         <?php //echo
@@ -4660,8 +4660,8 @@ $("#closeBtn").click(function(){
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Item Pack</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -4670,7 +4670,7 @@ $("#closeBtn").click(function(){
               <span><b>Pack Name:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" name="vpackname" maxlength="30" required>
+              <input class="form-control adjustment-fields" type="text" name="vpackname" maxlength="30" required>
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4681,7 +4681,7 @@ $("#closeBtn").click(function(){
               <span><b>Description:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" name="vdesc" maxlength="50" >
+              <input class="form-control adjustment-fields" type="text" name="vdesc" maxlength="50" >
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4692,7 +4692,7 @@ $("#closeBtn").click(function(){
               <span><b>Pack Qty:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" name="ipack" id="ipack" required>
+              <input class="form-control adjustment-fields" type="text" name="ipack" id="ipack" required>
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4703,7 +4703,7 @@ $("#closeBtn").click(function(){
               <span><b>Cost Price:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" id="npackcost" name="npackcost" required value="<?php echo isset($data['nunitcost'])? number_format((float)$data['nunitcost'], 2, '.', '') : '';?>" readonly>
+              <input class="form-control adjustment-fields" type="text" id="npackcost" name="npackcost" required value="<?php echo isset($data['nunitcost'])? number_format((float)$data['nunitcost'], 2, '.', '') : '';?>" readonly>
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4714,7 +4714,7 @@ $("#closeBtn").click(function(){
               <span><b>Price:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" id="npackprice" name="npackprice">
+              <input class="form-control adjustment-fields" type="text" id="npackprice" name="npackprice">
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4725,7 +4725,7 @@ $("#closeBtn").click(function(){
               <span><b>Sequence:&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" name="isequence">
+              <input class="form-control adjustment-fields" type="text" name="isequence">
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4736,7 +4736,7 @@ $("#closeBtn").click(function(){
               <span><b>Profit Margin(%):&nbsp;&nbsp;&nbsp;</b></span>
             </div>
             <div class="col-md-5">
-              <input class="form-control" type="text" id="npackmargin" name="npackmargin" readonly>
+              <input class="form-control adjustment-fields" type="text" id="npackmargin" name="npackmargin" readonly>
             </div>
             <div class="col-md-3"></div>
           </div>
@@ -4744,8 +4744,8 @@ $("#closeBtn").click(function(){
           
         </div>
         <div class="modal-footer">
-          <input type="submit" class="btn btn-success" value="Add">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn button-blue basic-button-small" value="Add">
+          <button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;">Close</button>
         </div>
       </div>
     </form>
@@ -4844,7 +4844,7 @@ $("#closeBtn").click(function(){
   });
 
 
-  $(document).on('keyup', '.input_npackprice, function(event) {
+  $(document).on('keyup', '.input_npackprice', function(event) {
       event.preventDefault();
       $(this).closest('tr').find('.selected_lot_matrix_checkbox').attr('checked', 'checked');
         
@@ -5584,7 +5584,7 @@ $("#closeBtn").click(function(){
           $('#save_btn_row').hide();
           
         }else if(tab_s == 'lot_matrix_tab'){
-          $('#alot_matrix_tab_li').prop('checked', true);
+          $('#lot_matrix_tab_li').prop('checked', true);
           $('#lot_matrix_tab').show();
           $('#alias_code_tab').hide();
           $('#item_tab').hide();
@@ -5629,7 +5629,7 @@ $("#closeBtn").click(function(){
             $('#save_btn_row').hide();
             
           <?php }else if($data['tab_selected'] == 'lot_matrix_tab'){ ?>
-            $('#alot_matrix_tab_li').prop('checked', true);
+            $('#lot_matrix_tab_li').prop('checked', true);
             $('#lot_matrix_tab').show();
             $('#alias_code_tab').hide();
             $('#item_tab').hide();
@@ -9042,36 +9042,36 @@ $(document).on('click', '.formsubmit', function(e){
 
       item_movement_data_url = item_movement_data_url + '?vbarcode='+ vbarcode +'&start_date='+start_date+'&end_date='+end_date+'&data_by='+data_by;
       
-      if(data_by == 'receive')
-          {
-              $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th> <th class="text-right">Qty</th><th class="text-right">Pack Qty</th><th class="text-right">Size</th><th class="text-right">Price</th><th class="text-right">PO Number</th><th>Before QOH</th><th>After QOH</th>');
-          }
-      else if(data_by == 'sold')
-          {
-              $('#item_movement_by_date_selection_table > thead > tr').html('<th id="first_th">Print Receipt</th><th>Action</th><th>Date</th><th class="text-right">Qty</th><th class="text-right">Pack Qty</th><th class="text-right">Size</th><th class="text-right">Price</th><th>Before QOH</th><th>After QOH</th>');
-          }
-      else if(data_by == 'adjustment')
-          {
-            $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>');
-          }
-      else if(data_by == 'adjustment')
-          {
-            $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>');
-          }    
-      else if(data_by == 'openingpos')
-          {
-            $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>');
-          }
-      else if(data_by == 'phoneadjustment')
-          {
-            $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th><th class="text-right">Ref Number</th>');
-          }
-          
-      else if(data_by == 'openingqohphone')
-          {
+        if (data_by == 'receive') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th> <th class="text-right">Qty</th><th class="text-right">Pack Qty</th><th class="text-right">Size</th><th class="text-right">Price</th><th class="text-right">PO Number</th><th>Before QOH</th><th>After QOH</th>'
+            );
+        } else if (data_by == 'sold') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th id="first_th">Print Receipt</th><th>Action</th><th>Date</th><th class="text-right">Qty</th><th class="text-right">Pack Qty</th><th class="text-right">Size</th><th class="text-right">Price</th><th>Before QOH</th><th>After QOH</th>'
+            );
+        } else if (data_by == 'adjustment') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>'
+            );
+        } else if (data_by == 'adjustment') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>'
+            );
+        } else if (data_by == 'openingpos') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th> <th class="text-right">Ref Number</th>'
+            );
+        } else if (data_by == 'phoneadjustment') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th><th>Before QOH</th><th>Qty</th> <th>After QOH</th><th class="text-right">Ref Number</th>'
+            );
+        } else if (data_by == 'openingqohphone') {
+            $('#item_movement_by_date_selection_table > thead > tr').html(
+                '<th>Action</th><th>Date</th><th>Qty</th><th class="text-right">Ref Number</th>');
+        }else if(data_by == 'openingqoh'){
             $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Qty</th><th class="text-right">Ref Number</th>');
-          }
-          
+        }
 
       $.getJSON(item_movement_data_url, function(result){
         
@@ -9232,7 +9232,7 @@ $(document).on('click', '.formsubmit', function(e){
           
         }else{
           
-          $('#item_movement_by_date_selection_table > tbody').append('<tr><td class="text-center" colspan="6">Sorry no data found!</td> </tr>');
+          $('#item_movement_by_date_selection_table > tbody').append('<tr><td class="text-center" colspan="9">Sorry no data found!</td> </tr>');
         }
         $('#item_movement_by_date_selection').show();
         $('#item_movement_by_date_selection_table').show();
@@ -9474,6 +9474,19 @@ $(document).on('click', '.formsubmit', function(e){
 
         // $.cookie("tab_selected", 'level_pricing_tab'); //set cookie tab
       }
+    });
+
+    $(document).on('change', 'select[name="search_by_item"]', function(event) {
+        event.preventDefault();
+
+        if ($(this).val() == 'sold') {
+            $('#item_movement_by_date_selection_table').hide();
+            $('#item_movement_by_date_selection_table #first_th').show();
+        } else {
+            $('#item_movement_by_date_selection_table').hide();
+
+            $('#item_movement_by_date_selection_table #first_th').hide();
+        }
     });
 
   </script>

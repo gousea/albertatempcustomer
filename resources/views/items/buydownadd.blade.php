@@ -1,275 +1,250 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
   Buy Down
 @endsection
 
 @section('main-content')
-
-<div id="content">
-    <style type="text/css">
+<style type="text/css">
     .error {
         color:#f56b6b;
         border-color: #f56b6b;
     }
- .nav.nav-tabs .active a{
-    background-color: #f05a28 !important;
-    color: #fff !important;
-  }
-
-  .nav.nav-tabs li a{
-    color: #fff !important;
-    background-color: #03A9F4;
-  }
-
-  .nav.nav-tabs li a:hover{
-    color: #fff !important;
-    background-color: #f05a28 !important;
-  }
-
-  .nav.nav-tabs li a:hover{
-    color: #fff !important;
-  }
-
-  .add_new_administrations{
-    float: right;
-    margin-right: -35px;
-    margin-top: -30px;
-    cursor: pointer !important;
-    position: relative;
-    z-index: 10;
-  }
-  .add_new_administrations i{
-    cursor: pointer !important;
-  }
-
-  .datetime-block{background:gainsboro;};
-  .row{margin-left:0px !important;margin-right:0px !important;};
-
-  .panel-default .panel-heading {background:#F05430;!important}
-
-    .select2-container .select2-selection--single {
-        height: 32px !important;
+    .bottom{
+        /*display: none;*/
+        margin-top: 20px;
     }
-    /*******select2******/
-    .select2-results__options{
-        font-size:11px !important;
+    .dataTables_info{
+        float: right;
     }
-    .select2-selection__rendered {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 11px;
+    #buydown_name-error{
+        color: red;
     }
-    /********************/
-    .form-control{border-radius: 4px !important;height: 32px !important;}
-    label {font-size: 12px !important;padding-right: 0px !important;}
-    .radio-group{padding-top:6px;}
-    .table.table-bordered.table-striped.table-hover thead > tr{
-     	background: #03a9f4 none repeat scroll 0 0 !important;
-     }
-
-    table#item_listing th td{
-        table-layout: fixed;
-        word-wrap:break-word;
+    #buydown_code-error{
+        color: red;
     }
-
-    /* table tbody tr:nth-child(even) td{*/
-    /*	background-color: #f05a2814;*/
-    /*}*/
-
-
-
+    .pagination{
+        margin-left: 0px !important;
+    }
+    
 </style>
-    <div class="page-header">
-        <div class="container-fluid">
-
+<link rel="stylesheet" href="{{ asset('asset/css/promotion.css') }}">
+<div id="content">
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase" > Buy Down</span>
+                </div>
+            </div> <!-- navbar-collapse.// -->
         </div>
-    </div>
-
-    <div class="container-fluid">
-        @if ($data['error_warning'])
-            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
+    </nav>
+   
+    <section class="section-content py-6">
+        <div class="container">
+            <div class="mytextdiv">
+                <div class="mytexttitle font-weight-bold text-uppercase">
+                    BUYDOWN INFO
+                </div>
+                <div class="divider font-weight-bold"></div>
+            </div>
+            @if ($data['error_warning'])
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            @endif
+            @if ($data['success'])
+                <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ $data['success'] }}
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-        @endif
-        @if ($data['success'])
-            <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ $data['success'] }}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-        @endif
+                </div>
+            @endif
 
-<div class="panel panel-default">
-    <div class="panel-heading head_title" >
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <b>Buy Down</b></h3>
-    </div>
-    <div class="panel-body">
-        <form action="<?php echo $data['action'] ?>" method="post" enctype="multipart/form-data" id="form-buydown" class="form-horizontal">
-            @csrf
-            
-            <?php if(session()->get('hq_sid') == 1){ ?>
-                <input type="hidden" name="stores_hq" id="hidden_stores_hq" val="">
-            <?php } ?>
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="required form-group">
-
-                                        <label class="col-md-4 control-label" for="input-promotion-name">BuyDown Name</label>
-                                        <div class="col-md-8">
-                                            <input type="text" name="buydown_name" autocomplete="off" id="buydown_name" maxlength="100" value="<?php echo isset($data['buydown_id']) ? $data['buydown_name'] : ''; ?>" placeholder="<?php // echo $entry_buydown_name; ?>"  class="form-control disabled-text" />
-                                            <div id="buydown_name_validate"></div>
-                                            @if($data['error_buydown_name'])
-                                                <div class="text-danger">{{ $data['error_buydown_name'] }}</div>
-                                            @endif
-                                        </div>
+            <div class="panel">
+                <form action="<?php echo $data['action'] ?>" method="post" enctype="multipart/form-data" id="form-buydown" class="form-horizontal">
+                    @csrf
+                    <?php if(session()->get('hq_sid') == 1){ ?>
+                        <input type="hidden" name="stores_hq" id="hidden_stores_hq" val="">
+                    <?php } ?>
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputFirstname" class="p-2 float-left text-uppercase">BuyDown Name</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <input type="text" placeholder="BUYDOWN NAME" name="buydown_name" autocomplete="off" id="buydown_name" maxlength="100" value="<?php echo isset($data['buydown_id']) ? $data['buydown_name'] : ''; ?>"   class="form-control promo-fields" />
+                                        <div id="buydown_name_validate"></div>
+                                        @if($data['error_buydown_name'])
+                                            <div class="text-danger">{{ $data['error_buydown_name'] }}</div>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="required form-group">
-                                        <label class="col-md-4 control-label" for="input-promotion-code">BuyDown Code</label>
-                                        <div class="col-md-8">
-                                            <input type="text" name="buydown_code" autocomplete="off" id="buydown_code" maxlength="10" value="<?php echo isset($data['buydown_id']) ? $data['buydown_code'] : ''; ?>" placeholder="<?php  // echo $entry_buydown_code; ?>"  class="form-control disabled-text" />
-                                            <div id="buydown_code_validate"></div>
-                                            @if($data['error_buydown_code'])
-                                                <div class="text-danger">{{ $data['error_buydown_code'] }}</div>
-                                            @endif
-                                        </div>
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputLastname" class="p-2 float-left text-uppercase">BuyDown Code</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <input type="text" placeholder="Buydown Code" name="buydown_code" autocomplete="off" id="buydown_code" maxlength="10" value="<?php echo isset($data['buydown_id']) ? $data['buydown_code'] : ''; ?>"  class="form-control promo-fields" />
+                                        <div id="buydown_code_validate"></div>
+                                        @if($data['error_buydown_code'])
+                                            <div class="text-danger">{{ $data['error_buydown_code'] }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputLastname" class="p-2 float-left text-uppercase">Status</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <select name="status" id="status" class="form-control promo-fields">
+                                            <option value="Active" selected="">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="required form-group">
-                                        <label class="col-md-4 control-label" for="entry_promotion_type">From Date</label>
-                                        <div class="col-md-8">
-                                            <input type="text" name="buydown_from_date" autocomplete="off" id="buydown_from_date"  value="<?php echo isset($data['buydown_id']) ?  date("m-d-Y", strtotime($data['buydown_from_date'])) : ''; ?>" placeholder="<?php // echo $entry_buydown_date; ?>"  class="form-control disabled-text" />
-                                            <div id="buydown_from_date_validate"></div>
-                                              @if($data['error_buydown_from_date'])
-                                                <div class="text-danger">{{ $data['error_buydown_from_date'] }}</div>
-                                            @endif
-                                        </div>
+                            <div class="form-group row">
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputFirstname" class="p-2 float-left text-uppercase">BuyDown Amount</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <input type="text" name="buydown_to_amt" placeholder="BUYDOWN AMOUNT" autocomplete="off" id="buydown_amount" maxlength="10" value="<?php echo isset($data['buydown_id'] ) ? $data['buydown_to_amt'] : ''; ?>"  class="form-control promo-fields" />
+                                        <div id="buydown_amt_validate"></div>
+                                        <div id="buydown_amt"></div>
+                                        @if(isset($data['error_buydown_to_amt']))
+                                            <div class="text-danger">{{ $data['error_buydown_to_amt'] }}</div>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="required form-group">
-                                        <label class="col-md-4 control-label" for="entry_promotion_category">To Date</label>
-                                        <div class="col-md-8">
-                                            <input type="text" name="buydown_to_date" autocomplete="off" id="buydown_to_date" value="<?php echo isset($data['buydown_id']) ? date("m-d-Y", strtotime($data['buydown_to_date'])) : ''; ?>" placeholder="<?php // echo $entry_buydown_code; ?>"  class="form-control disabled-text" />
-                                            <div id="buydown_to_date_validate"></div>
-                                             @if($data['error_buydown_to_date'])
-                                                <div class="text-danger">{{ $data['error_buydown_to_date'] }}</div>
-                                            @endif
-                                        </div>
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputLastname" class="p-2 float-left text-uppercase">From Date</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <input type="text" class="form-control promo-fields"   placeholder="From Date" name="buydown_from_date" autocomplete="off" id="buydown_from_date"  value="<?php echo isset($data['buydown_id']) ?  date("m-d-Y", strtotime($data['buydown_from_date'])) : ''; ?>" />
+                                        <div id="buydown_from_date_validate"></div>
+                                        @if($data['error_buydown_from_date'])
+                                            <div class="text-danger">{{ $data['error_buydown_from_date'] }}</div>
+                                        @endif
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label" for="entry_promotion_category">Buy Down Amount</label>
-                                        <div class="col-md-8">
-                                            <input type="text" name="buydown_to_amt" autocomplete="off" id="buydown_amount" maxlength="10" value="<?php echo isset($data['buydown_id'] ) ? $data['buydown_to_amt'] : ''; ?>" placeholder="<?php // echo $entry_buydown_code; ?>"  class="form-control disabled-text" />
-                                            <div id="buydown_amt_validate"></div>
-                                            <div id="buydown_amt"></div>
-                                            @if(isset($data['error_buydown_to_amt']))
-                                                <div class="text-danger">{{ $data['error_buydown_to_amt'] }}</div>
-                                            @endif
-                                        </div>
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputLastname" class="p-2 float-left text-uppercase">TO DATE</label>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label" for="status">Status</label>
-                                        <div class="col-md-8">
-                                            <select name="status" id="status" class="form-control">
-                                                <option value="Active" selected="">Active</option>
-                                                <option value="Inactive">Inactive</option>
-                                            </select>
-                                        </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <input type="text" name="buydown_to_date" placeholder="TO DATE" autocomplete="off" id="buydown_to_date" value="<?php echo isset($data['buydown_id']) ? date("m-d-Y", strtotime($data['buydown_to_date'])) : ''; ?>"  class="form-control promo-fields" />
+                                        <div id="buydown_to_date_validate"></div>
+                                        @if($data['error_buydown_to_date'])
+                                            <div class="text-danger">{{ $data['error_buydown_to_date'] }}</div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row" id="div_item_listing">
+                        
+                        
+                            <div class="mytextdiv">
+                                <div class="mytexttitle font-weight-bold text-uppercase">
+                                    ADD ITEMS <span class="bg-dark" style="font-size:8px !important; border-radius:5px; color: #fff !important; padding: 5px 10px;">Show Add items</span>
+                                </div>
+                                <div class="divider font-weight-bold"></div>
+                            </div>
+                            
+                            <div class="row mt-3">
                                 <div class="col-md-12">
                                     <div class="box-body table-responsive">
-                                    <b> <span style="float:right;color:red"><lable class="required control-label">NOTE: New search will clear existing search and selected items</lable></span></b>
-                		            <table id="item_listing" class="table table-bordered table-striped table-hover" style="font-size:9px;">
-                		                <thead>
-                		                    <tr>
-                		                        <!--<th style="width: 1px;" class="text-center"><input type="checkbox" id="parent_select" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" style="color: black;"/></th>-->
-                		                        <th style="width: 1px;" class="text-center">
-                		                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" style="color: black;"/>
-                		                        </th>
-                                                <th style="width: 70px;">ITEM NAME</th>
-                                                <th style="width: 70px">SKU</th>
-                                                <th style="width:195px;">PRICE</th>
-                                                <th style="width:55px;">UNIT</th>
-                                                <th style="width:50px;">SIZE</th>
-                                                <!--<th>TYPE</th>-->
-                                                <th style="width:90px;">DEPT.</th>
-                                                <th style="width:90px;">CATEGORY</th>
-                                                <th style="width:90px;">SUB CAT</th>
-                                                <!--<th>SUPPLIER</th>
-                                                <th>MFR</th>-->
-                		                    </tr>
-                		                </thead>
-                		            </table>
-                		        </div>
+                                        <table id="item_listing" class="table" style="font-size:11px; border-collapse: separate; border-spacing:0 5px !important;">
+                                            <thead style="background-color: #286fb7!important;">
+                                                <tr>
+                                                    <!--<th style="width: 1px;" class="text-center"><input type="checkbox" id="parent_select" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" style="color: black;"/></th>-->
+                                                    <th style="width: 1px;" class="text-center">
+                                                        <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" style="color: black;"/>
+                                                    </th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">ITEM NAME</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">SKU</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">PRICE</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">UNIT</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">SIZE</th>
+                                                    <!--<th>TYPE</th>-->
+                                                    <th class="col-xs-1 headername text-uppercase text-light">DEPT.</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">CATEGORY</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">SUB CAT</th>
+                                                    <!--<th>SUPPLIER</th>
+                                                    <th>MFR</th>-->
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
+
+
+                        
+                            <div class="row mt-5 mb-5" style = "justify-content: center;">
                                 <div class="text-center">
                                     <span>
-                                        <input type="button" id="add_to_buy_items" class="btn btn-primary" value="Add to BuyDown">
+                                        <input type="button" id="add_to_buy_items"  style="font-size: 16px; border-radius: 5px; background-color: #286fb7; " class="btn text-light" value="Add to BuyDown">
                                     </span>
-                                    <span style="padding-left:5px;"></span>
-                                    <span style="padding-left:5px;"></span>
                                 </div>
                             </div>
-                            <br>
+                        
+                        
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="box-body table-responsive">
-                                        <table id="item_listing2" class="table table-bordered table-striped table-hover" style="font-size:11px;">
-                                            <thead>
+                                        <table id="item_listing2" class="table" style="font-size:11px; border-collapse: separate; border-spacing:0 5px !important;">
+                                            <thead style="background-color: #286fb7!important;">
                                                 <tr>
                                                     <th style="vertical-align: inherit;" style="width: 1px;" class="text-center">
                                                         <input type="checkbox" id="check_all_buy_items" onclick="$('input[name*=\'added_promotion_items\']').prop('checked', this.checked);" style="color: black;"/>
                                                     </th>
-                                                    <th style="vertical-align: inherit;">ITEM NAME</th>
-                                                    <th style="vertical-align: inherit;">SKU</th>
-                                                    <th style="vertical-align: inherit;">Live Cost</th>
-                                                    <th style="vertical-align: inherit;">Live Price</th>
-                                                    <th style="vertical-align: inherit;">INVOICE COST</th>
-                                                    <th style="vertical-align: inherit;">PRICE BEFORE BUYDOWN</th>
-                                                    <th style="vertical-align: inherit;">BUYDOWN AMOUNT</th>
-                                                    <th style="vertical-align: inherit;">COST AFTER BUYDOWN</th>
-                                                    <th style="vertical-align: inherit;" >PRICE AFTER BUYDOWN</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">ITEM NAME</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">SKU</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">Live Cost</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">Live Price</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">INVOICE COST</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">PRICE BEFORE BUYDOWN</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">BUYDOWN AMOUNT</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light">COST AFTER BUYDOWN</th>
+                                                    <th class="col-xs-1 headername text-uppercase text-light" >PRICE AFTER BUYDOWN</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div style="padding-bottom:10px;"><input type="button" class="btn btn-danger" id="remove_buy_items" value="Remove Buydown Items"></div>
+                                    <div class="d-flex justify-content-center" style="padding-bottom:10px; padding-top: 20px;  ">
+                                        <input type="button" class="btn btn-danger" style="font-size: 16px; border-radius: 5px;"  id="remove_buy_items" value="Remove Buydown Items">
+                                    </div>
                                 </div>
                             </div>
+                            <div class="text-center">
+                                <button type="button"  style="font-size: 16px; border-radius: 5px;" form="form-customer" data-toggle="tooltip" id="submit_budown" title="save" class="btn btn-primary"><i class="fa fa-save"> Save</i></button>
+                                <a href="/buydown"  style="font-size: 16px; border-radius: 5px;" data-toggle="tooltip" title="cancel" class="btn btn-danger"><i class="fa fa-reply"></i> Cancel</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="text-center">
-                        <button type="button" form="form-customer" data-toggle="tooltip" id="submit_budown" title="save" class="btn btn-primary"><i class="fa fa-save"> Save</i></button>
-                        <a href="/buydown" data-toggle="tooltip" title="cancel" class="btn btn-default"><i class="fa fa-reply"></i> Cancel</a>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
+    </section>
 </div>
 
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!--- ERROR MODAL STARTS -->
     <div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
@@ -346,27 +321,27 @@
 
 </style>
 
+
+
 @endsection
 
-@section ('script_files')
+@section('page-script')
 
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
-<link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css') }}" rel="stylesheet" />
-<link type="text/css" href="{{ asset('stylesheet/select2/css/select2.min.css') }}" rel="stylesheet" />
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script src="{{ asset('javascript/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('javascript/dataTables.bootstrap.min.js') }}"></script>
-<script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
-<script src="{{ asset('javascript/select2/js/select2.min.js') }}"></script>
-<script src="{{ asset('javascript/bootstrap-datepicker.js') }}" defer></script>
-<script src="{{ asset('javascript/fancyTable/fancyTable.js') }}"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-@endsection
 
-@section('scripts')
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+
+
+<link type="text/css" href="{{ asset('stylesheet/select2/css/select2.min.css') }}" rel="stylesheet" />
+
+<script src="{{ asset('javascript/select2/js/select2.min.js') }}"></script>
+
 
 
 
@@ -481,9 +456,8 @@
     $(document).on('keyup', ".new_price", function () {
     	var sellingPrice = $(this).parent().prev('td').html();
     	var newPriceVal = this.value;
-
     	var promotionVal = sellingPrice - newPriceVal;
-    // 	$(this).parent().next('td').html(promotionVal);
+        // 	$(this).parent().next('td').html(promotionVal);
     });
 
     $(document).on('change', '#price_select_by', function(){
@@ -491,10 +465,8 @@
         var select_by_value1 = $('#select_by_value1').val() === undefined?'':$('#select_by_value1').val();
         var select_by_value2 = $('#select_by_value2').val() === undefined?'':$('#select_by_value2').val();
 
-
         var html='';
         if(select_by === 'between'){
-
             html = '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box" placeholder="Enter" style="width:40px;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="'+select_by_value1+'"/>';
             html += '<input type="number" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box" placeholder="Amt" style="width:40px;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="'+select_by_value2+'"/>'
 
@@ -602,11 +574,7 @@
             select_by_val2 = parseFloat($('#select_by_value_2').val());
 
             if($('#price_select_by').val() == 'between' && typeof(select_by_val1) != "undefined" && select_by_val1 !== null && typeof(select_by_val2) != "undefined" && select_by_val2 !== null && select_by_val1 >= select_by_val2){
-                    bootbox.alert({
-                                size: 'small',
-                                title: "Attention",
-                                message: "Second value must be greater than first value!",
-                              });
+                alert("Second value must be greater than first value!");
             }
         });
         var priceFilter = {
@@ -779,8 +747,8 @@
                 //     }
                 ]
         });
-            $("#item_listing_filter").hide();
-            $("#item_listing_processing").remove();
+        $("#item_listing_filter").hide();
+        $("#item_listing_processing").remove();
 
         $("#item_listing2_processing").remove();
         $("#item_listing2_filter").hide();
@@ -936,21 +904,17 @@
 
 
         if($('#form-buydown').valid() === false){
-
-            bootbox.alert("Please fill in the mandatory fields to proceed.");
+            alert("Please fill in the mandatory fields to proceed.");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
             return false;
         } else {
-
             clickedAddBuyItems = 1;
             existingBuydownItems = [];
-            // $(".disabled-text").attr('readonly',true);
-            // $(".disabled-select").attr('disabled',true);
             $.each($("input[name='added_buydown_items[]']"), function(){
                 var iitemid = $(this).val();
                 var vbarcode = $(this).data('vbarcode');
                 existingBuydownItems.push({iitemid:iitemid,vbarcode:vbarcode});
             });
-// console.log(existingBuydownItems);
             var existingItems = "";
 
             var sno = 0;
@@ -966,110 +930,68 @@
             })
 
             var error_count = 0;
+            console.log(existingItems);
             if(existingItems != "")
             {
-                // bootbox.confirm({
-                //     message: "The following items already exists in Buydown: <br />" + existingItems + "<br/> Do you want to continue?",
-                //     buttons: {
-                //         confirm: {
-                //             label: 'Yes',
-                //             className: 'btn-success'
-                //         },
-                //         cancel: {
-                //             label: 'No',
-                //             className: 'btn-danger'
-                //         }
-                //     },
-                //     callback: function (result) {
-                //             if(result==true)
-                //             {
-                //                 addToBuyDown();
-                //             }
-                //         }
-                //     });
-                bootbox.alert({
-                    size: "small",
-                    title: "<span class='text-danger'>ALERT</span>",
-                    message: "The following items already exists in Buydown: <br />" + existingItems + "<br/>",
-                    callback: function(){ /* your callback code */ }
-                });
-
+                alert("The following items already exists in Buydown: <br />" + existingItems + "<br/>");
                 error_count++;
             }
             else
             {
                 var validate_item_url = "<?php echo $data['validate_item_url'] ;?>";
                 validate_item_url = validate_item_url.replace(/&amp;/g, '&');
-
-
-
                 var iitemids = [];
                 $.each($("input[name='selected[]']:checked"), function(){
                     iitemids.push($(this).val());
                 });
-
-                $.ajax({
-
-                    url:validate_item_url,
-                    headers: {
-                        'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-                    },
-                    type:'POST',
-                    data:{itemid:iitemids},
-                    dataType:'json',
-                    success:function(response){
-                      console.log(response);
-                        msg = '';
-                        if(response.result != '' && typeof(response.result) != 'undefined'){
-
-                            // $.each(iitemids, this, function(key, value){
-                            $.each($("input[name='selected[]']:checked"), function(){
-                                var checkbox = $(this);
-
-                                var value = $(this).val();
-                                if(jQuery.inArray(value, response.item_ids) !== -1){
-
-                                    checkbox.prop("checked", false);
-                                    $("#parent_select").prop('checked',false);
-                                    error_count++;
+                if(iitemids.length > 0){
+                    $.ajax({
+                        url:validate_item_url,
+                        headers: {
+                            'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                        },
+                        type:'POST',
+                        data:{itemid:iitemids},
+                        dataType:'json',
+                        success:function(response){
+                            msg = '';
+                            if(response.result != '' && typeof(response.result) != 'undefined'){
+                                // $.each(iitemids, this, function(key, value){
+                                $.each($("input[name='selected[]']:checked"), function(){
+                                    var checkbox = $(this);
+                                    var value = $(this).val();
+                                    if(jQuery.inArray(value, response.item_ids) !== -1){
+                                        checkbox.prop("checked", false);
+                                        $("#parent_select").prop('checked',false);
+                                        error_count++;
+                                    }
+                                });
+                                msg = response.msg.join(',');
+                                if(response.length > 1){
+                                    msg  = msg + ' are ';
+                                } else {
+                                   msg = msg + ' is ';
                                 }
-                            });
-
-
-                            msg = response.msg.join(',');
-
-                            if(response.length > 1){
-                                msg  = msg + ' are ';
-                            } else {
-                               msg = msg + ' is ';
+                                msg = msg+" already used in other buydown.";
+                                alert( msg );
                             }
-
-                            msg = msg+" already used in other buydown.";
-
-                            $('#error_msg').text(msg);
-                            $('#errorModal').modal('show');
+    
                         }
+                    });
+                }else {
+                    alert("No item Selected to add to buydown")
+                }
 
-                    }
-                });
-
-                // setTimeout(function(){
-
-                //     addToBuyDown();
-                // }, 2000);
 
             }
-            console.log(error_count);
             if(error_count <= 0){
                 setTimeout(function(){
-
                     addToBuyDown();
                 }, 1000);
             }else{
                 error_count = 0;
                 $('.iitemid').prop('checked', false);
                 $("#parent_select").prop('checked',false);
-                // console.log(error_count);
             }
 
         }
@@ -1140,12 +1062,7 @@
                 $("#form-buydown").submit();
             <?php } ?>
         }else{
-            bootbox.alert({
-                size: "small",
-                title: "<span class='text-danger'>ALERT</span>",
-                message: "No any items are added",
-                callback: function(){ /* your callback code */ }
-            })
+            alert("No any items are added");
             return false;
         }
 

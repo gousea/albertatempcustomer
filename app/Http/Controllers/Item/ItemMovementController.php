@@ -52,9 +52,9 @@ class ItemMovementController extends Controller
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "2G");
 
-		$reports = '';
+		  $reports = '';
 
-		$check = $request->all();
+		  $check = $request->all();
 
         if($check['search_iitemid'] == '' && $check['search_vbarcode'] == '' ){
 
@@ -77,8 +77,8 @@ class ItemMovementController extends Controller
             $data['store_name'] = session()->get('storename');
 
             // 		return view('items.item_movement', compact('data'));
-		    return view('items.item_movement',  compact('data'))->with('message', "No item matching with the search");
-		}
+		      return view('items.item_movement',  compact('data'))->with('message', "No item matching with the search");
+		    }
 
         if (($request->isMethod('post'))) {
 
@@ -171,28 +171,28 @@ class ItemMovementController extends Controller
         return response(json_encode($return), 200)
                   ->header('Content-Type', 'application/json');
 
-    }
+  }
 
     public function item_movement_data(Request $request)
     {
         $return = array();
         $input = $request->all();
 
-        $start_date = explode("/", $input['start_date']);
+        // $start_date = explode("/", $input['start_date']);
         // $start_date = $start_date[0].'-'.$start_date[1].'-'.$start_date[2];
-        $start_date = $start_date[2].'-'.$start_date[0].'-'.$start_date[1];
+        // // $start_date = $start_date[2].'-'.$start_date[0].'-'.$start_date[1];
 
-        $end_date = explode("/", $input['end_date']);
+        // $end_date = explode("/", $input['end_date']);
         // $end_date = $end_date[0].'-'.$end_date[1].'-'.$end_date[2];
-        $end_date = $end_date[2].'-'.$end_date[0].'-'.$end_date[1];
+        // // $end_date = $end_date[2].'-'.$end_date[0].'-'.$end_date[1];
 
-        $input['start_date'] = $start_date;
-        $input['end_date'] = $end_date;
+        // $input['start_date'] = $start_date;
+        // $input['end_date'] = $end_date;
 
         // echo "<pre>";
         // print_r($input);
         // die;
-
+        
         if((isset($input['vbarcode']) && !empty($input['vbarcode'])) && (isset($input['start_date']) && !empty($input['start_date'])) && (isset($input['end_date']) && !empty($input['end_date'])) && (isset($input['data_by']) && !empty($input['data_by']))){
 
             $ItemMovement = new ItemMovement;

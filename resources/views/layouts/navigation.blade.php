@@ -42,16 +42,16 @@
                             </a>
                             <ul class="dropdown-menu main-dropdown">
                                 @if(session()->get('version') == 320)
-                                    
+
                                     <li><a class="dropdown-item sub-dropdown text-uppercase"
                                         href="{{ url(session()->get('version').'/item/item_list/Active/DESC') }}">Items</a></li>
-                                @else 
+                                @else
                                     <li><a class="dropdown-item sub-dropdown text-uppercase"
                                         href="{{ url('/item/item_list/Active/DESC') }}">Items</a></li>
                                 @endif
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Edit Multiple Items</a>
                                 </li>
-                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Quick Update of Items</a>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('quick_update_item') }}">Quick Update of Items</a>
                                 </li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="#">Last Modified Items</a>
                                 </li>

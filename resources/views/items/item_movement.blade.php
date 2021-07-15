@@ -57,7 +57,7 @@
                 <form method="POST" id="filter_form" action="{{ url('item/ItemMovement') }}" class="form-inline">
                     @csrf
                     <div class="form-group mx-sm-2 mb-2">
-                        <input type="text" class="form-control ui-autocomplete-input" name="report_by"
+                        <input type="text" class="form-control ui-autocomplete-input adjustment-fields" name="report_by"
                             value="<?php echo isset($data['report_by']) ? $data['report_by'] : ''; ?>"
                             id="automplete-product" placeholder="Search Item..." required>
                             <input type="hidden" name="search_iitemid" id="search_iitemid"
@@ -68,7 +68,7 @@
                     </div>
                     <div class="form-group mx-sm-4 mb-2">
                         {{-- <input type="submit" class="btn btn-success rcorner header-color" value="Generate"> --}}
-                        <input type="submit" class="btn btn-success rcorner header-color" value="Generate">
+                        <input type="submit" class="btn btn-success rcorner header-color basic-button-small" value="Generate">
                     </div>
                 </form>
             </div>
@@ -1928,16 +1928,16 @@
                     <div class="row">
                         <div class="col-md-2">
                             <input type="text" name="start_date" value="{{ old('start_date') }}" autocomplete="off"
-                                        placeholder="Start Date" id="start_date" class="form-control" readonly/>
+                                        placeholder="Start Date" id="start_date" class="form-control adjustment-fields" readonly/>
                             {{-- <input type="text" class="form-control" name="start_date" id="start_date"
                                 placeholder="Start Date" readonly> --}}
                         </div>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" name="end_date" id="end_date"
+                            <input type="text" class="form-control adjustment-fields" name="end_date" id="end_date"
                                 placeholder="End Date" readonly>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-control" name="search_by_item">
+                            <select class="form-control adjustment-fields" name="search_by_item">
                                 <option value="sold">Sold</option>
                                 <option value="receive">Receive</option>
                                 <option value="adjustment">Adjustment</option>
@@ -1948,12 +1948,12 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <input type="button" class="btn btn-success rcorner header-color item_movement_btn" value="GENERATE">
+                            <input type="button" class="btn btn-success rcorner header-color item_movement_btn basic-button-small" value="GENERATE">
                         </div>
                     </div>
                     <br>
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="item_movement_by_date_selection_table"
+                        <table class="table table-hover promotionview" id="item_movement_by_date_selection_table"
                             style="display: none;">
                             <thead>
                                 <tr class="th_color">
@@ -1988,14 +1988,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+    
     <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
     <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> --}}
+
+    <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
 
     <style>
         .ui-menu-item-wrapper:hover{
@@ -2013,7 +2017,7 @@
     <script>
          $(function(){
             $("#start_date").datepicker({
-                format: 'yyyy-mm-dd',
+                format: 'mm-dd-yyyy',
                 todayHighlight: true,
                 autoclose: true,
                 widgetPositioning:{
@@ -2024,7 +2028,7 @@
         });
         $(function(){
             $("#end_date").datepicker({
-                format: 'yyyy-mm-dd',
+                format: 'mm-dd-yyyy',
                 todayHighlight: true,
                 autoclose: true,
                 widgetPositioning:{
@@ -2293,6 +2297,8 @@
             } else if (data_by == 'openingqohphone') {
                 $('#item_movement_by_date_selection_table > thead > tr').html(
                     '<th>Action</th><th>Date</th><th>Qty</th><th class="text-right">Ref Number</th>');
+            }else if(data_by == 'openingqoh'){
+                $('#item_movement_by_date_selection_table > thead > tr').html('<th>Action</th><th>Date</th><th>Qty</th><th class="text-right">Ref Number</th>');
             }
 
 
