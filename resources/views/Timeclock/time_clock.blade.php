@@ -5,6 +5,11 @@
 @stop
 
 @section('main-content')
+<style>
+    .bootstrap-datetimepicker-widget{
+        width: 300px !important;
+    }
+</style>
 <div id="content">
 <form name="myForm" action="{{ route('time_clock_save') }}" method="get" enctype="multipart/form-data" class="form-horizontal"  >
   <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
@@ -75,6 +80,8 @@
 @endsection
 
 @section('page-script')
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+
 <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
 <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <link type="text/css" href="{{ asset('stylesheet/select2/css/select2.min.css') }}" rel="stylesheet" />
