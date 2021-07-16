@@ -2394,7 +2394,7 @@ class PhysicalInventroyController extends Controller
                     $temp['dunitprice'] = $value['dunitprice'];
                     $temp['unitcost'] = number_format($value['unitcost'], 2);
                     $temp['iqtyonhand'] = $value['iqtyonhand'];
-                    $temp['ndebitqty'] = "<input type='number' class='text-center' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
+                    $temp['ndebitqty'] = "<input type='number' class='text-center adjustment-fields' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
                     $temp['costtotal'] = number_format(($value['iqtyonhand'] * $value['unitcost']), 2);
                     $temp['pricetotal'] = number_format(($value['iqtyonhand'] * $value['dunitprice']), 2);
                     $temp['inv_count'] = $ndebitqty;
@@ -2893,7 +2893,7 @@ class PhysicalInventroyController extends Controller
                     $temp['dunitprice'] = $value['dunitprice'];
                     $temp['unitcost'] = number_format($value['unitcost'], 2);
                     $temp['iqtyonhand'] = $value['iqtyonhand'];
-                    $temp['ndebitqty'] = "<input type='number' class='text-center' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
+                    $temp['ndebitqty'] = "<input type='number' class='text-center adjustment-fields' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
                     $temp['costtotal'] = number_format(($value['iqtyonhand'] * $value['unitcost']), 2);
                     $temp['pricetotal'] = number_format(($value['iqtyonhand'] * $value['dunitprice']), 2);
                     

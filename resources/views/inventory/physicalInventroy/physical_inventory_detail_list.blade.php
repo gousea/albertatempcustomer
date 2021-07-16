@@ -352,13 +352,6 @@ $(document).ready(function() {
 });
 </script>
     
-<script type="text/javascript">
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
-</script>
-    
-    
 
 <!----  Session ----->
 
@@ -471,7 +464,7 @@ $(document).ready(function(){
           // alert('please enter title');
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "please enter title", 
             callback: function(){}
           });
@@ -533,7 +526,7 @@ $(document).ready(function(){
           // alert('please enter title');
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "please enter title", 
             callback: function(){}
           });
@@ -545,7 +538,7 @@ $(document).ready(function(){
             if($('.ndebitqty').val() == ''){
                 bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    title: "  ", 
                     message: "please enter inventory count of all items", 
                     callback: function(){}
                 });
@@ -619,7 +612,7 @@ $(document).ready(function(){
           // alert('please enter title');
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "Please Select File", 
             callback: function(){}
           });
@@ -675,8 +668,8 @@ $(document).ready(function(){
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+        <h6 class="modal-title text-center">Import Physical Inventory</h6>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title text-center">Import Physical Inventory</h4>
       </div>
       <div class="modal-body">
         <form action="<?php echo $data['bulk_import']; ?>" method="post" enctype="multipart/form-data" id="import_physical_inventory">
@@ -689,12 +682,12 @@ $(document).ready(function(){
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <span style="display:inline-block;width:8%;">File: </span> <span style="display:inline-block;width:85%;"><input type="file" name="import_physical_inventory_file" id="import_physical_inventory_file" class="form-control" required></span>
+                <span style="display:inline-block;width:8%;">File: </span> <span style="display:inline-block;width:85%;"><input type="file" name="import_physical_inventory_file" id="import_physical_inventory_file" class="" required></span>
               </div>
             </div>
             <div class="col-md-12 text-center">
               <div class="form-group">
-                <input type="submit" class="btn btn-success" name="import_invt" id="import_invt" value="Import Physical Inventory">&nbsp;<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input type="submit" class="btn button-blue basic-button-medium" name="import_invt" id="import_invt" value="Import Physical Inventory">&nbsp;<button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;">Cancel</button>
               </div>
             </div>
           </div>
@@ -781,8 +774,8 @@ $(document).ready(function(){
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
+          <h6 class="modal-title">Assign Users For Physical Inventory</h6>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Assign Users For Physical Inventory</h4>
         </div>
         <div class="modal-body">
             <div class="row">
@@ -798,10 +791,10 @@ $(document).ready(function(){
                             <div class="form-group">
                                 <form method="POST" enctype="multipart/form-data" >
                                     @csrf
-                                    <table class="table table-bordered table-hover" id="scanned_data_table">
+                                    <table class="table table-hover promotionview" id="scanned_data_table">
                                     
                                         <thead id="txt" style="font-size:12px;">
-                                            <tr>
+                                            <tr class="header-color">
                                                 <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" name="itemid_selected" onchange="$('input[name*=\'selectbox\']').prop('checked', this.checked);" /></th>
                                                 <th class="text-center" style="vertical-align : middle;">User Name</th>
                                             </tr>
@@ -819,7 +812,7 @@ $(document).ready(function(){
                                     <div class="col-md-12 text-center">
                                         <div class="form-group">
                                             <input type="hidden" name="ipiid" id='ipiid_assign' value="<?php echo $data['ipiid'];?>">
-                                            <button type="button" class="btn btn-primary center" id="assign_users_btn" data-dismiss="modal" >Assign</button>
+                                            <button type="button" class="btn button-blue center basic-button-small" id="assign_users_btn" data-dismiss="modal" >Assign</button>
                                         </div>
                                     </div>
                                 </form>

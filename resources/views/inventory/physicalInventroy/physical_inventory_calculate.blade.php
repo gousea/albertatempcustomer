@@ -5,15 +5,32 @@ table td {
     /*white-space: wrap;*/
 }
 </style>
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title', 'Physical Inventory Calculate')
 
 @section('main-content')
 
 <div id="content">
+
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase">Physical Inventory</span>
+                </div>
+                <div class="nav-submenu">
+                  <button type="button" class="btn btn-gray headerblack basic-button-small text-dark" id="report" data-toggle="modal" data-target="#reportModal"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Report</button>
+                  <button title="Commit" class="btn btn-gray headerblack basic-button-small text-dark" id="commit_button" href="#downloadMsgModal" data-backdrop="static" data-toggle="modal"><i class="fa fa-save"></i>&nbsp;&nbsp;Commit</button>
+                  <button title="Update" class="btn btn-gray headerblack basic-button-small text-dark" id="recalculate_all_button" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Re Calculate(All)</button>
+                  <button title="Update" class="btn btn-gray headerblack basic-button-medium text-dark" id="recalculate_selected_button" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Re Calculate(Selected)</button>
+                  <!--<a href="<?= $data['edit_calculate']; ?>" title="Update" class="btn btn-primary" id="edit_button" ><i class="fa fa-save"></i>&nbsp;&nbsp;Re Calculate</a> -->    
+                </div>
+            </div> <!-- navbar-collapse.// -->
+        </div>
+    </nav>
   
-    <div class="container-fluid">
+    <div class="container-fluid section-content">
         @if (isset($data['error_warning']))
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -25,23 +42,9 @@ table td {
         </div>
         @endif
         <div class="panel panel-default">
-            <div class="panel-heading head_title">
-                <h3 class="panel-title"><i class="fa fa-list"></i> Physical Inventory</h3>
-            </div>
-            <div class="panel-body">
+            
+            <div class="panel-body padding-left-right">
                 
-                <div class="row" style="padding-bottom: 9px;float: right;">
-                    <div class="col-md-12">
-                        <div class="">
-                            <button type="button" class="btn btn-primary" id="report" data-toggle="modal" data-target="#reportModal"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;Report</button>
-                            <button title="Commit" class="btn btn-primary" id="commit_button" href="#downloadMsgModal" data-backdrop="static" data-toggle="modal"><i class="fa fa-save"></i>&nbsp;&nbsp;Commit</button>
-                            <button title="Update" class="btn btn-primary" id="recalculate_all_button" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Re Calculate(All)</button>
-                            <button title="Update" class="btn btn-primary" id="recalculate_selected_button" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Re Calculate(Selected)</button>
-                          <!--<a href="<?= $data['edit_calculate']; ?>" title="Update" class="btn btn-primary" id="edit_button" ><i class="fa fa-save"></i>&nbsp;&nbsp;Re Calculate</a> -->    
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
                 <form method="post" id="form-physical_inventory-detail">
                     <div class="panel panel-default">
                         <div class="panel-body">
@@ -176,8 +179,8 @@ table td {
                 <br><br>
                 
                 <div class="panel panel-default">
-                      
-                    <div class="panel-body">
+                        
+                    <div class="panel-body padding-left-right">
                         <div class="row">
                             <div class="col-xs-3">
                                 <p><b>Total Counted Qty: </b><?php echo (int)$data['total_counted']; ?></p>
@@ -294,9 +297,14 @@ table td {
 @endsection
 
 
-@section('scripts')
+@section('page-script')
 
 <style type="text/css">
+
+  .padding-left-right{
+    padding: 0 2% 0 2%;
+  }
+
   .span_field span{
     display: inline-block;
   }
@@ -537,11 +545,6 @@ $(document).ready(function(){
     });
 </script>
 
-<script type="text/javascript">
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
-</script>
 
 <script type="text/javascript">
 $(document).ready(function(){
