@@ -57,10 +57,12 @@ Sales History Report
                         
                         
                         <div class='inputBox col-sm-9' id='divWeek' style=''>
+                            
                            <label style=" width: 160px;">
                                 <input type='number' name='input_week' class='form-control' id='inputWeek' placeholder='Weeks (1 - 13)' min='1' max='13' onKeyUp="if(this.value > 13) $(this).val(13)" value="<?php if(isset($weeks)){ echo $weeks; }?>">
                             </label>
-                                <input type=checkbox name='include_current_week' value='yes' <?php if(isset($include_current_week) && ($include_current_week === 'yes')){ echo 'checked';} ?> > Include Current Week (Week No. <?php echo date('W', strtotime('today')); ?>)
+                            &nbsp;&nbsp;&nbsp;
+                                <input type=checkbox name='include_current_week' value='yes' <?php if(isset($include_current_week) && ($include_current_week === 'yes')){ echo 'checked';} ?> > &nbsp;&nbsp;Include Current Week (Week No. <?php echo date('W', strtotime('today')); ?>)
                             
                         </div>
                         
@@ -71,7 +73,8 @@ Sales History Report
                                 <input type='number'  name='input_month' class='form-control' id='inputMonth' placeholder='Months (1 - 12)' min='1' max='12'  onKeyUp="if(this.value>=12) { $(this).val(12) }"  value="<?php if(isset($months)){ echo $months; }?>">
                          
                             </label>
-                                  <input type=checkbox name='include_current_month' value='yes' <?php if(isset($include_current_month) && ($include_current_month === 'yes')){ echo 'checked';} ?> > Include Current Month (<?php echo date('F', strtotime('today')); ?>)
+                            &nbsp;&nbsp;&nbsp;
+                                  <input type=checkbox name='include_current_month' value='yes' <?php if(isset($include_current_month) && ($include_current_month === 'yes')){ echo 'checked';} ?> > &nbsp;&nbsp;Include Current Month (<?php echo date('F', strtotime('today')); ?>)
                             
                         </div>
                         
@@ -99,19 +102,19 @@ Sales History Report
                     <div class="row" id="div_item_listing">
                         <div class="col-md-12 ">
                             <div class="box-body table-responsive" style="overflow-x: unset;">
-                            <table id="item_listing" class="table  table-striped t_body rcorner"  cellspacing="0" cellpadding="0" border="0">
-                                <thead class="rcorner">
-                                    <tr class="headermenublue"  cellspacing="0" cellpadding="0" border="0"  style="border-bottom-color:red">
-                                            <th style="width: 15%;position: relative;border-bottom-color:#286fb7 " >ITEM NAME</th>
+                            <table id="item_listing" class="table  table-striped t_body " style="border-radius:9px">
+                                <thead>
+                                    <tr class="headermenublue">
+                                            <th style="width: 15%;position: relative;border-bottom-color:#286fb7 ; border: 0px;">ITEM NAME</th>
                                            
-                                            <th  style="border-bottom-color:#286fb7 ">SKU</th>
+                                            <th  style="border-bottom-color:#286fb7 ; border: 0px;" >SKU</th>
                                             
-                                            <th style="width: 22%;border-bottom-color:#286fb7 ">PRICE</th>
-                                            <th  style="border-bottom-color:#286fb7 ">DEPARTMENT</th>
-                                            <th style="border-bottom-color:#286fb7 ">CATEGORY</th>
-                                            <th style="border-bottom-color:#286fb7 ">SUBCATEGORY</th>
-                                            <th  style="border-bottom-color:#286fb7 ">VENDOR</th>
-                                             <th style="width: 5%;position: relative ;border-bottom-color:#286fb7 ;">SIZE</th>
+                                            <th style="width: 22%;border-bottom-color:#286fb7; border: 0px; " >PRICE</th>
+                                            <th style="border-bottom-color:#286fb7; border: 0px; " >DEPARTMENT</th>
+                                            <th style="border-bottom-color:#286fb7; border: 0px; " >CATEGORY</th>
+                                            <th style="border-bottom-color:#286fb7 ; border: 0px;" >SUBCATEGORY</th>
+                                            <th style="border-bottom-color:#286fb7 ; border: 0px;" >VENDOR</th>
+                                            <th style="width: 5%;position: relative ;border-bottom-color:#286fb7 ; border: 0px;" >SIZE</th>
 
                                     </tr>
                                 </thead>
@@ -235,10 +238,11 @@ Sales History Report
   <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 
-<script src= "//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"> 
+<script src= "//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"> </script>
 
 <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
 <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
@@ -1087,7 +1091,7 @@ button.dt-button:active, div.dt-button:active, a.dt-button:active{
 }
 table, .promotionview {
     width: 100% !important;
-    position: relative;
+    position: relative;z
     left: 0%;
 }
 .tborder{
@@ -1095,6 +1099,9 @@ table, .promotionview {
 }
 #category_code ,#sub_category_id,#search_size,#search_sku{
     width:97px;
+}
+.border_carve{
+     border: 0px;
 }
 </style>
 @endsection
