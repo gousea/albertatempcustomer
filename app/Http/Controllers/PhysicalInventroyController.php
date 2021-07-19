@@ -65,7 +65,7 @@ class PhysicalInventroyController extends Controller
             
             $start_from = ($input['start']);
 
-            $select_query = "SELECT * FROM trn_physicalinventory LIMIT ". $input['start'].", ".$limit;
+            $select_query = "SELECT * FROM trn_physicalinventory ORDER BY dcreatedate DESC  LIMIT ". $input['start'].", ".$limit;
 
             $count_select_query = "SELECT COUNT(distinct ipiid) as count FROM trn_physicalinventory";
             $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
@@ -249,73 +249,30 @@ class PhysicalInventroyController extends Controller
         //============= Start Department Data=====================================================
         
         $departments = Department::orderBy('vdepartmentname', 'ASC')->get()->toArray();
-        $departments_html = "";
-        $departments_html = "<select class='form-control' multiple='true' name='dept_code[]' id='dept_code' style='width: 100px;'>'<option value='all'>All</option>";
-        foreach ($departments as $department) {
-            if (isset($vdepcode) && $vdepcode == $department['vdepcode']) {
-                $departments_html .= "<option value='" . $department['vdepcode'] . "' selected='selected'>" . $department['vdepartmentname'] . "</option>";
-            } else {
-                $departments_html .= "<option value='" . $department['vdepcode'] . "'>" . $department['vdepartmentname'] . "</option>";
-            }
-        }
-        $departments_html .= "</select>";
         
-        $data['departments'] = $departments_html;
+        $data['departments'] = $departments;
         
         //=============End Department Data=====================================================
         
         //=============Start Category Data=====================================================
         
         $category = Category::orderBy('vcategoryname', 'ASC')->get()->toArray();
-        $category_html = "";
-        $category_html = "<select class='form-control' multiple='true' name='category_code[]' id='category_code' style='width: 100px;'>'<option value='all'>All</option>";
-        // foreach($category as $category){
-        //     if(isset($vcategorycode) && $vcategorycode == $category['vcategorycode']){
-        //         $category_html .= "<option value='".$category['vcategorycode']."' selected='selected'>".$category['vcategoryname']."</option>";
-        //     } else {
-        //         $category_html .= "<option value='".$category['vcategorycode']."'>".$category['vcategoryname']."</option>";
-        //     }
-        // }
-        $category_html .= "</select>";
-
-        $data['category'] = $category_html;
+        
+        $data['category'] = $category;
         //=============End Category Data=====================================================
 
         //=============Start Sub Category Data=====================================================
 
         $subcategory = SubCategory::orderBy('subcat_name', 'ASC')->get()->toArray();
-        $subcategory_html = "";
-        $subcategory_html = "<select class='form-control' multiple='true' name='subcat_id[]' id='subcat_id' style='width: 100px;'>'<option value='all'>All</option>";
-        // foreach($subcategory as $subcategory){
-        //     if(isset($subcat_id) && $subcat_id == $subcategory['subcat_id']){
-        //         $subcategory_html .= "<option value='".$subcategory['subcat_id']."' selected='selected'>".$subcategory['subcat_name']."</option>";
-        //     } else {
-        //         $subcategory_html .= "<option value='".$subcategory['subcat_id']."'>".$subcategory['subcat_name']."</option>";
-        //     }
-        // }
-        $subcategory_html .= "</select>";
-
-        $data['subcategory'] = $subcategory_html;
+        
+        $data['subcategory'] = $subcategory;
         //=============End Sub Category Data=====================================================
 
         //=============Start Supplier Data=====================================================
 
         $supplier = Vendor::orderBy('vcompanyname', 'ASC')->get()->toArray();
 
-        // echo "<pre>"; print_r($supplier); echo "</pre>"; die;
-
-        $supplier_html = "";
-        $supplier_html = "<select class='form-control' multiple='true' name='supplier_code[]' id='supplier_code' style='width: 100px;'>'<option value='all'>All</option>";
-        foreach ($supplier as $supplier) {
-            if (isset($vsuppliercode) && $vsuppliercode == $supplier['vsuppliercode']) {
-                $supplier_html .= "<option value='" . $supplier['vsuppliercode'] . "' selected='selected'>" . $supplier['vcompanyname'] . "</option>";
-            } else {
-                $supplier_html .= "<option value='" . $supplier['vsuppliercode'] . "'>" . $supplier['vcompanyname'] . "</option>";
-            }
-        }
-        $supplier_html .= "</select>";
-
-        $data['supplier'] = $supplier_html;
+        $data['supplier'] = $supplier;
         //=============End Supplier Data=====================================================
 
         //==============Start Price select By========================================================
@@ -2437,7 +2394,7 @@ class PhysicalInventroyController extends Controller
                     $temp['dunitprice'] = $value['dunitprice'];
                     $temp['unitcost'] = number_format($value['unitcost'], 2);
                     $temp['iqtyonhand'] = $value['iqtyonhand'];
-                    $temp['ndebitqty'] = "<input type='number' class='text-center' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
+                    $temp['ndebitqty'] = "<input type='number' class='text-center adjustment-fields' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
                     $temp['costtotal'] = number_format(($value['iqtyonhand'] * $value['unitcost']), 2);
                     $temp['pricetotal'] = number_format(($value['iqtyonhand'] * $value['dunitprice']), 2);
                     $temp['inv_count'] = $ndebitqty;
@@ -2936,7 +2893,7 @@ class PhysicalInventroyController extends Controller
                     $temp['dunitprice'] = $value['dunitprice'];
                     $temp['unitcost'] = number_format($value['unitcost'], 2);
                     $temp['iqtyonhand'] = $value['iqtyonhand'];
-                    $temp['ndebitqty'] = "<input type='number' class='text-center' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
+                    $temp['ndebitqty'] = "<input type='number' class='text-center adjustment-fields' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
                     $temp['costtotal'] = number_format(($value['iqtyonhand'] * $value['unitcost']), 2);
                     $temp['pricetotal'] = number_format(($value['iqtyonhand'] * $value['dunitprice']), 2);
                     

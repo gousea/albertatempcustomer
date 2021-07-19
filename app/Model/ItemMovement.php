@@ -78,7 +78,7 @@ class ItemMovement extends Model
 		                    FROM trn_physicalinventorydetail tpd left join trn_physicalinventory tp on tp.ipiid = tpd.ipiid where vitemid='". ($data['search_iitemid']) ."'
 		                    AND tp.estatus='Close' AND tp.vtype='Physical' AND (date_format(tp.dcreatedate,'%Y') BETWEEN '".$start_date."' AND '".$end_date."')
 		                    GROUP BY date_format(tp.dcreatedate,'%m-%Y')";
-// 		 dd($sql_ajustment);
+		// 		 dd($sql_ajustment);
 
         $ajustment_pysical = DB::connection('mysql_dynamic')->select($sql_ajustment_pysical);
 
@@ -649,7 +649,7 @@ class ItemMovement extends Model
 
 		$return['year_arr_adjustment_phy'] = $year_arr_adjustment_phy;
 		$return['month_year_arr_adjustment_phy'] = $month_year_arr_adjustment_phy;
-	//	dd($return['month_year_arr_adjustment_phy'] );
+		//	dd($return['month_year_arr_adjustment_phy'] );
 		//Qoh  update Histroy
 		$return['year_arr_qoh'] = $year_arr_qoh;
 		$return['month_year_arr_qoh'] = $month_year_arr_qoh;
@@ -685,26 +685,18 @@ class ItemMovement extends Model
 		$return['month_year_arr_were'] = $month_year_arr_were;
 
 
- //dd($return);
+ 		//dd($return);
 		return $return;
 	}
 
 	public function getItemMovementData($vbarcode,$start_date,$end_date,$data_by) {
-        // echo "----------";
-        // echo $vbarcode;
-        // echo "----------";
-        // echo $start_date;
-        // echo "----------";
-        // echo $end_date;
-        // echo "----------";
-        // echo $data_by;
-        // die;
-        // $start_date = \DateTime::createFromFormat('m-d-Y', $start_date);
+        
+        $start_date = \DateTime::createFromFormat('m-d-Y', $start_date);
 
-        // $start_date = $start_date->format('Y-m-d');
+        $start_date = $start_date->format('Y-m-d');
 
-        // $end_date = \DateTime::createFromFormat('m-d-Y', $end_date);
-        // $end_date = $end_date->format('Y-m-d');
+        $end_date = \DateTime::createFromFormat('m-d-Y', $end_date);
+        $end_date = $end_date->format('Y-m-d');
 
 
         switch ($data_by) {
@@ -852,7 +844,7 @@ class ItemMovement extends Model
 		$end_date = date('Y');
 
 	    $query = "SELECT a.iitemid, a.vitemtype, a.vbarcode, a.vitemname, a.IQTYONHAND as QOH ,a.npack, CASE WHEN a.NPACK = 1 or (a.npack is null)   then a.IQTYONHAND else (Concat(cast(((a.IQTYONHAND div a.NPACK )) as signed), '  (', Mod(a.IQTYONHAND,a.NPACK) ,')') ) end as IQTYONHAND FROM mst_item as a WHERE a.vbarcode='". ($data['search_vbarcode']) ."'";
-    //$query = "SELECT a.iitemid, a.vitemtype, a.vbarcode, a.vitemname, a.npack, a.IQTYONHAND IQTYONHAND FROM mst_item as a WHERE a.vbarcode='". ($data['search_vbarcode']) ."'";
+    	//$query = "SELECT a.iitemid, a.vitemtype, a.vbarcode, a.vitemname, a.npack, a.IQTYONHAND IQTYONHAND FROM mst_item as a WHERE a.vbarcode='". ($data['search_vbarcode']) ."'";
 
 		$query_item = DB::connection('mysql_dynamic')->select($query);
 
@@ -910,7 +902,7 @@ class ItemMovement extends Model
 		                    FROM trn_physicalinventorydetail tpd left join trn_physicalinventory tp on tp.ipiid = tpd.ipiid where vitemid='". ($data['search_iitemid']) ."'
 		                    AND tp.estatus='Close' AND tp.vtype='Physical' AND (date_format(tp.dcreatedate,'%Y') BETWEEN '".$start_date."' AND '".$end_date."')
 		                    GROUP BY date_format(tp.dcreatedate,'%m-%Y')";
-// 		 dd($sql_ajustment);
+		// 		 dd($sql_ajustment);
 
         $ajustment_pysical = DB::connection('mysql_dynamic')->select($sql_ajustment_pysical);
 
@@ -1432,7 +1424,7 @@ class ItemMovement extends Model
 
 		$return['year_arr_adjustment_phy'] = $year_arr_adjustment_phy;
 		$return['month_year_arr_adjustment_phy'] = $month_year_arr_adjustment_phy;
-	//	dd($return['month_year_arr_adjustment_phy'] );
+		//	dd($return['month_year_arr_adjustment_phy'] );
 		//Qoh  update Histroy
 		$return['year_arr_qoh'] = $year_arr_qoh;
 		$return['month_year_arr_qoh'] = $month_year_arr_qoh;
