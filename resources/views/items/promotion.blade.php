@@ -107,13 +107,14 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+        
+        <h5 class="modal-title">Select the stores in which you want to delete the items:</h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Select the stores in which you want to delete the items:</h4>
       </div>
       <div class="modal-body">
-         <table class="table table-bordered">
+         <table class="table promotionview">
             <thead id="table_green_header_tag">
-                <tr>
+                <tr class="header-color">
                     <th>
                         <div class="custom-control custom-checkbox" id="table_green_check">
                             <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
@@ -126,7 +127,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="submit" id="save_btn" class="btn btn-danger" data-dismiss="modal">Delete</button>
+        <button type="submit" id="save_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Delete</button>
         <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
@@ -143,7 +144,7 @@
     <link type="text/css" href="/stylesheet/select2/css/select2.min.css" rel="stylesheet" />
     <script src="/javascript/select2/js/select2.min.js"></script>
 
-
+    <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
 
 
 <script type="text/javascript">
@@ -299,6 +300,17 @@
     
     $(document).on('click', '#delete_btn', function(event) {
         event.preventDefault();
+        
+        if($("input[name='selected[]']:checked").length == 0){
+            bootbox.alert({ 
+                size: 'small',
+                title: "  ", 
+                message: 'Please Select to Delete!', 
+                callback: function(){}
+            });
+            return false;
+        }
+        
         $('#deleteItemModal').modal('show');
     });
     
@@ -476,7 +488,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <input type="submit" class="btn btn-danger" name="deleteItems" value="Delete">
+        <input type="submit" class="btn btn-danger buttonred buttons_menu basic-button-small" name="deleteItems" value="Delete">
       </div>
     </div>
 
