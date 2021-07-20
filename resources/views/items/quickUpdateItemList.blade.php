@@ -418,52 +418,55 @@
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
 <script>
-//     var table = $('#vendor').DataTable({
-//         // "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
-//         "dom": 't<<"float-right"p>><"clear">',
-//         "searching":true,
-//         "destroy": true,
-//         "ordering": false,
-//         "pageLength":10,
-//         "order": [[ 3, "asc" ]]
-//     });
+    var table = $('#vendor').DataTable({
+        // "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
+        "dom": 't<<"float-right"p>><"clear">',
+        "searching":true,
+        "destroy": true,
+        "ordering": false,
+        "pageLength":10,
+        "order": [[ 3, "asc" ]]
+    });
 
-//     $('#sku').on('input', function () {
-//         table.columns(1).search(this.value).draw();
-//     });
-//     $('#item').on('input', function () {
-//         table.columns(2).search(this.value).draw();
-//     });
-//     $('#unit').on('input', function () {
-//         table.columns(3).search(this.value).draw();
-//     });
-//     $('#department').on('input', function () {
-//         table.columns(4).search(this.value).draw();
-//     });
-//     $('#category').on('input', function () {
-//         table.columns(5).search(this.value).draw();
-//     });
-//     $('#unitcost').on('input', function () {
-//         table.columns(6).search(this.value).draw();
-//     });
-//     $('#unitprice').on('input', function () {
-//         table.columns(7).search(this.value).draw();
-//     });
-//     $('#tax1').on('input', function () {
-//         table.columns(8).search(this.value).draw();
-//     });
-//     $('#tax2').on('input', function () {
-//         table.columns(9).search(this.value).draw();
-//     });
-//     $('#qoh').on('input', function () {
-//         table.columns(10).search(this.value).draw();
-//     });
+    $('#sku').on('input', function () {
+        table.columns(1).search(this.value).draw();
+    });
+    $('#item').on('input', function () {
+        table.columns(2).search(this.value).draw();
+    });
+    $('#unit').on('input', function () {
+        table.columns(3).search(this.value).draw();
+    });
+    $('#department').on('input', function () {
+        table.columns(4).search(this.value).draw();
+    });
+    $('#category').on('input', function () {
+        table.columns(5).search(this.value).draw();
+    });
+    $('#unitcost').on('input', function () {
+        table.columns(6).search(this.value).draw();
+    });
+    $('#unitprice').on('input', function () {
+        table.columns(7).search(this.value).draw();
+    });
+    $('#tax1').on('input', function () {
+        table.columns(8).search(this.value).draw();
+    });
+    $('#tax2').on('input', function () {
+        table.columns(9).search(this.value).draw();
+    });
+    $('#qoh').on('input', function () {
+        table.columns(10).search(this.value).draw();
+    });
 
 //   $("#vendor_paginate").addClass("pull-right");
 
 </script>
 
 <style>
+    #vendor_paginate{
+        display: none;
+    }
     .disabled, #item_ellipsis{
         pointer-events:none;
     }
