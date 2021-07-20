@@ -1887,7 +1887,8 @@ class PhysicalInventroyController extends Controller
                         $ndebitextprice = $itotalunit * $itemdetail['nunitcost'];
                         
                         //========for sold item========
-                        $from = $input['dcreatedate'];
+                        $from = \DateTime::createFromFormat('m-d-Y H:i:s', $input['dcreatedate'])->format('Y-m-d H:i:s');
+                        // $from = $input['dcreatedate'];
                         $to = date('Y-m-d H:i:s');
                         $soldqty_sql = "SELECT ifnull(SUM(tsd.ndebitqty), 0) as soldqty FROM trn_salesdetail as tsd LEFT JOIN trn_sales as ts ON(ts.isalesid = tsd.isalesid) WHERE ts.vtrntype='Transaction' AND tsd.vitemcode = '".$item['vbarcode']."' AND ts.dtrandate >= '".$from."' AND ts.dtrandate <= '".$to."' GROUP BY vitemcode ";
                         
@@ -2040,7 +2041,8 @@ class PhysicalInventroyController extends Controller
                         $ndebitextprice = $itotalunit * $itemdetail['nunitcost'];
                         
                         //========for sold item========
-                        $from = $input['dcreatedate'];
+                        $from = \DateTime::createFromFormat('m-d-Y H:i:s', $input['dcreatedate'])->format('Y-m-d H:i:s');
+                        // $from = $input['dcreatedate'];
                         $to = date('Y-m-d H:i:s');
                         $soldqty_sql = "SELECT ifnull(SUM(tsd.ndebitqty), 0) as soldqty FROM trn_salesdetail as tsd LEFT JOIN trn_sales as ts ON(ts.isalesid = tsd.isalesid) WHERE ts.vtrntype='Transaction' AND tsd.vitemcode = '".$item['vbarcode']."' AND ts.dtrandate >= '".$from."' AND ts.dtrandate <= '".$to."' GROUP BY vitemcode ";
                         

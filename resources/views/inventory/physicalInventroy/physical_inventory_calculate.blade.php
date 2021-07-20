@@ -1,9 +1,11 @@
 <style>
     table { table-layout:fixed; }
-table td { 
-    overflow: hidden;
-    /*white-space: wrap;*/
-}
+
+    table td { 
+        overflow: hidden;
+        /*white-space: wrap;*/
+    }
+    
 </style>
 @extends('layouts.layout')
 
@@ -49,183 +51,224 @@ table td {
                     <div class="panel panel-default">
                         <div class="panel-body">
                             
-                            <div class="row">
-                                
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="input-template">Ref. Number</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vrefnumber" maxlength="30" value="<?php echo isset($data['vrefnumber']) ? $data['vrefnumber'] : ''; ?>" placeholder="Ref. Number" class="form-control" required id="vrefnumber" readonly/>
-                                        <input type="hidden" name="ipiid" value="<?php echo $data['ipiid'] ?>" >
-                                          <?php if (isset($data['error_vrefnumber'])) { ?>
-                                            <div class="text-danger"><?php echo $data['error_vrefnumber']; ?></div>
-                                          <?php } ?>
-                                    </div>
-                                  </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                  <div class="form-group required">
-                                    <label class="col-sm-4 control-label" for="input-template">Created Date</label>
-                                    <?php
-                                    if(isset($data['dcreatedate']) && !empty($data['dcreatedate']) && $data['dcreatedate'] != '0000-00-00 00:00:00'){
-                                    
-                                      $dcreatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $data['dcreatedate'])->format('m-d-Y H:i:s');
-                                    }else{
-                                      $dcreatedate = '';
-                                    }
-                                    
-                                    ?>
-                                    <div class="col-sm-8">
-                                      <?php if(isset($data['ipiid']) && $data['ipiid'] != ''){?>
-                                        <input type="text" name="createdate" value="<?php echo $dcreatedate;?>" placeholder="Created Date" class="form-control" id="dcreatedate" readonly style="pointer-events: none;" />
-                                      <?php } else { ?>
-                                        <input type="text" name="createdate" value="<?php echo date('m-d-Y');?>" placeholder="Created Date" class="form-control" id="dcreatedate" readonly style="pointer-events: none;"/>
-                                      <?php } ?>
-                    
-                                      <?php if (isset($data['error_dcreatedate'])) { ?>
-                                        <div class="text-danger"><?php echo $data['error_dcreatedate']; ?></div>
-                                      <?php } ?>
-                    
-                                    </div>
-                                  </div>
-                                </div>
-                                
+                            <div class="mytextdiv">
+                              <div class="mytexttitle font-weight-bold text-uppercase">
+                                  Physical Info
+                              </div>
+                              <div class="divider font-weight-bold"></div>
                             </div>
-                            
-                            <br>
-                            
+
+                          <div class="py-3">
                             <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="input-template">Status</label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="status" maxlength="10" value="<?php echo isset($data['estatus']) ? $data['estatus'] : 'Calculated'; ?>" placeholder="Status" class="form-control" id="estatus" readonly/>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-group required">
-                                    <label class="col-sm-4 control-label" for="input-template">Calculated Date</label>
-                                    <?php
-                                        if(isset($data['dcalculatedate']) && !empty($data['dcalculatedate']) && $data['dcalculatedate'] != '0000-00-00 00:00:00'){
-                                          $dcalculatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $data['dcalculatedate'])->format('m-d-Y H:i:s');
-                                        }else{
-                                          $dcalculatedate = '';
-                                        }
+                                <div class="col-md-12 mx-auto">
                                     
-                                    ?>
-                                    <div class="col-sm-8">
-                                    <?php if(isset($dcalculatedate) && $dcalculatedate != '') { ?>
-                                        <input type="text" name="calculatedate" value="<?php echo $dcalculatedate;?>" placeholder="Calculated Date" class="form-control" id="dcalculatedate" readonly style="pointer-events: none;" />
-                                    <?php } else { ?>  
-                                      <input type="text" name="calculatedate" value="<?php echo date('m-d-Y');?>" placeholder="Calculated Date" class="form-control" id="dcalculatedate" readonly style="pointer-events: none;"/>
-                                    <?php } ?>
-                                      <?php if (isset($data['error_dcalculatedate'])) { ?>
-                                        <div class="text-danger"><?php echo $data['error_dcalculatedate']; ?></div>
-                                      <?php } ?>
-                    
-                                    </div>
-                                  </div>
-                                </div>
-                                
-                            </div>
-                            
-                            <br>
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group required">
-                                    <label class="col-sm-3 control-label" for="input-template">Title </label>
-                                    <div class="col-sm-8">
-                                      <input type="text" name="vordertitle" maxlength="50" value="<?php echo isset($data['vordertitle']) ? $data['vordertitle'] : ''; ?>" placeholder="Title" class="form-control" id="vordertitle" readonly/>
+                                    <div class="form-group row ">
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                                <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Ref. Number</label>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                              <input type="text" name="vrefnumber" maxlength="30" value="<?php echo isset($data['vrefnumber']) ? $data['vrefnumber'] : ''; ?>" placeholder="Ref. Number" class="form-control adjustment-fields" required id="vrefnumber" readonly/>
+                                              <input type="hidden" name="ipiid" value="<?php echo $data['ipiid'] ?>" >
+                                                <?php if (isset($data['error_vrefnumber'])) { ?>
+                                                  <div class="text-danger"><?php echo $data['error_vrefnumber']; ?></div>
+                                                <?php } ?>
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+          
+                                            <label for="inputCreated" class="p-2 float-right text-uppercase">Title</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                            
+                                            <input type="text" name="vordertitle" maxlength="50" value="<?php echo isset($data['vordertitle']) ? $data['vordertitle'] : ''; ?>" placeholder="Title" class="form-control adjustment-fields" id="vordertitle" readonly/>
                                         
-                                      <?php if (isset($data['error_vordertitle'])) { ?>
-                                        <div class="text-danger"><?php echo $data['error_vordertitle']; ?></div>
-                                      <?php } ?>
+                                            <?php if (isset($data['error_vordertitle'])) { ?>
+                                              <div class="text-danger"><?php echo $data['error_vordertitle']; ?></div>
+                                            <?php } ?>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                            
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputReceived" class="p-2 float-right text-uppercase">Status</label>
+                                          </div>
+                                          <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                            <input type="text" name="status" maxlength="10" value="<?php echo isset($data['estatus']) ? $data['estatus'] : 'Calculated'; ?>" placeholder="Status" class="form-control adjustment-fields" id="estatus" readonly/> 
+                                             
+                                          </div>
+                                        </div>
                                     </div>
-                                  </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                  <div class="form-group required">
                                     
-                                    <?php
-                                    if(isset($data['dclosedate']) && !empty($data['dclosedate']) && $data['dclosedate'] != '0000-00-00 00:00:00'){ ?>
-                                        <label class="col-sm-4 control-label" for="input-template">Commited Date</label>
-                                    <?php $dclosedate =  DateTime::createFromFormat('Y-m-d H:i:s', $data['dclosedate'])->format('m-d-Y H:i:s');
-                                    }else{
-                                      $dclosedate = '';
-                                    }
-                                    
-                                    ?>
-                                    <div class="col-sm-8">
-                                    <?php if(isset($dclosedate) && $dclosedate != '') { ?>
-                                        <input type="text" name="dclosedate" value="<?php echo $dclosedate;?>" placeholder="Commited Date" class="form-control" id="dclosedate" readonly style="pointer-events: none;" />
-                                    <?php } ?>  
-                                      
-                                      <?php if (isset($data['error_dcalculatedate'])) { ?>
-                                        <div class="text-danger"><?php echo $data['error_dcalculatedate']; ?></div>
-                                      <?php } ?>
-                    
-                                    </div>
-                                  </div>
                                 </div>
                             </div>
+          
+                            <div class="row">
+                              <div class="col-md-12 mx-auto">
+                                  
+                                  <div class="form-group row">
+                                      
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+        
+                                          <label for="inputInvoice" class="p-2 float-right text-uppercase">Created Date</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <?php
+                                            if(isset($data['dcreatedate']) && !empty($data['dcreatedate']) && $data['dcreatedate'] != '0000-00-00 00:00:00'){
+                                            
+                                              $dcreatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $data['dcreatedate'])->format('m-d-Y H:i:s');
+                                            }else{
+                                              $dcreatedate = '';
+                                            }
+                                            
+                                          ?>
+                                          
+                                          <?php if(isset($data['ipiid']) && $data['ipiid'] != ''){?>
+                                            <input type="text" name="createdate" value="<?php echo $dcreatedate;?>" placeholder="Created Date" class="form-control adjustment-fields" id="dcreatedate" readonly style="pointer-events: none;" />
+                                          <?php } else { ?>
+                                            <input type="text" name="createdate" value="<?php echo date('m-d-Y');?>" placeholder="Created Date" class="form-control adjustment-fields" id="dcreatedate" readonly style="pointer-events: none;"/>
+                                          <?php } ?>
+                        
+                                          <?php if (isset($data['error_dcreatedate'])) { ?>
+                                            <div class="text-danger"><?php echo $data['error_dcreatedate']; ?></div>
+                                          <?php } ?>
+
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+
+                                            <label class="p-2 float-right text-uppercase" for="input-template">Calculated Date</label>
+                                            
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <?php
+                                              if(isset($data['dcalculatedate']) && !empty($data['dcalculatedate']) && $data['dcalculatedate'] != '0000-00-00 00:00:00'){
+                                                $dcalculatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $data['dcalculatedate'])->format('m-d-Y H:i:s');
+                                              }else{
+                                                $dcalculatedate = '';
+                                              }
+                                          
+                                          ?>
+
+                                          <?php if(isset($dcalculatedate) && $dcalculatedate != '') { ?>
+                                              <input type="text" name="calculatedate" value="<?php echo $dcalculatedate;?>" placeholder="Calculated Date" class="form-control adjustment-fields" id="dcalculatedate" readonly style="pointer-events: none;" />
+                                          <?php } else { ?>  
+                                            <input type="text" name="calculatedate" value="<?php echo date('m-d-Y');?>" placeholder="Calculated Date" class="form-control adjustment-fields" id="dcalculatedate" readonly style="pointer-events: none;"/>
+                                          <?php } ?>
+
+                                          <?php if (isset($data['error_dcalculatedate'])) { ?>
+                                            <div class="text-danger"><?php echo $data['error_dcalculatedate']; ?></div>
+                                          <?php } ?>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+
+                                          <?php
+                                            if(isset($data['dclosedate']) && !empty($data['dclosedate']) && $data['dclosedate'] != '0000-00-00 00:00:00'){ ?>
+                                                <label class="col-sm-4 control-label" for="input-template">Commited Date</label>
+                                            <?php $dclosedate =  DateTime::createFromFormat('Y-m-d H:i:s', $data['dclosedate'])->format('m-d-Y H:i:s');
+                                            }else{
+                                              $dclosedate = '';
+                                            }
+                                    
+                                          ?>
+                                            
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                          <?php if(isset($dclosedate) && $dclosedate != '') { ?>
+                                              <input type="text" name="dclosedate" value="<?php echo $dclosedate;?>" placeholder="Commited Date" class="form-control adjustment-fields" id="dclosedate" readonly style="pointer-events: none;" />
+                                          <?php } ?>  
+                                          
+                                          <?php if (isset($data['error_dcalculatedate'])) { ?>
+                                            <div class="text-danger"><?php echo $data['error_dcalculatedate']; ?></div>
+                                          <?php } ?>
+
+                                        </div>
+                                      </div>
+                                      
+                                  </div>
+                                  
+                              </div>
+                            </div>
+                          </div>
                             
                         </div>
                     </div>
                 </form>
-                <br><br>
+                <br>
+
+                <div class="mytextdiv">
+                  <div class="mytexttitle font-weight-bold text-uppercase">
+                      Items Info
+                  </div>
+                  <div class="divider font-weight-bold"></div>
+                </div>
                 
+                <br>
+
                 <div class="panel panel-default">
-                        
+
                     <div class="panel-body padding-left-right">
+
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-md-3">
                                 <p><b>Total Counted Qty: </b><?php echo (int)$data['total_counted']; ?></p>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-md-3">
                                 <p><b>Total Expected Qty: </b><?php echo (int)$data['total_expected']; ?></p>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-md-4">
                                 <p><b>Total Difference Qty: </b><?php echo (int)$data['total_difference']; ?></p>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-md-2">
                                 <p></p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-md-3">
                                 <p><b>Total Counted cost: </b><?php $total_counted_cost = $data['total_counted_cost'] < 0 ? '-$'.number_format(abs($data['total_counted_cost']), 2): '$'.number_format($data['total_counted_cost'], 2); echo $total_counted_cost; ?></p>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-md-3">
                                 <p><b>Total Expected cost: </b><?php $total_expected_cost = $data['total_expected_cost'] < 0 ? '-$'.number_format(abs($data['total_expected_cost']), 2): '$'.number_format($data['total_expected_cost'], 2); echo $total_expected_cost; ?></p>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-md-4">
                                 <p><b>Total Difference cost: </b><?php $total_difference_cost = $data['total_difference_cost'] < 0 ? '-$'.number_format(abs($data['total_difference_cost']), 2): '$'.number_format($data['total_difference_cost'], 2); echo $total_difference_cost; ?></p>
                             </div>
                             
                         </div>
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-md-3">
                                 <p><b>Total Counted price: </b><?php $total_counted_price = $data['total_counted_price'] < 0 ? '-$'.number_format(abs($data['total_counted_price']), 2): '$'.number_format($data['total_counted_price'], 2); echo $total_counted_price; ?></p>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-md-3">
                                 <p><b>Total Expected price: </b><?php $total_expected_price = $data['total_expected_price'] < 0 ? '-$'.number_format(abs($data['total_expected_price']), 2): '$'.number_format($data['total_expected_price'], 2); echo $total_expected_price; ?></p>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-md-4">
                                 <p><b>Total Difference price: </b><?php $total_difference_price = $data['total_difference_price'] < 0 ? '-$'.number_format(abs($data['total_difference_price']), 2): '$'.number_format($data['total_difference_price'], 2); echo $total_difference_price; ?></p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-md-3">
                                 <p></p>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-md-3">
                                 <p></p>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-md-4">
                                 <p><b>Total Profit loss difference: </b><?php $total_profit_loss_difference = $data['total_profit_loss_difference'] < 0 ? '-$'.number_format(abs($data['total_profit_loss_difference']), 2): '$'.number_format($data['total_profit_loss_difference'], 2); echo $total_profit_loss_difference; ?></p>
                             </div>
                         </div>
@@ -236,32 +279,25 @@ table td {
                     
                 <div class="table">
                 
-                    <table id="item" class="table table-bordered table-condensed">
+                    <table id="item" class="table table-bordered table-condensed promotionview" style="width:100%;">
                         
-                        <thead>
-                            <!--<colgroup>
-                                <col>
-                            </colgroup>-->
-                            <tr>
-                                <th class="text-center" rowspan="2" style="vertical-align : middle;">SKU</th>
-                                <th class="text-center" rowspan="2" style="vertical-align : middle;">Item Name</th>
-                                <th class="text-center" colspan="3">Counted</th>
-                                <th class="text-center" colspan="3">Expected</th>
-                                <th class="text-center" colspan="4">Difference</th>
-                                <th class="text-center" rowspan="2" style="vertical-align : middle;">Profit/Loss Diff.</th>
-                            </tr>
-                            <tr>
-                                <th class="text-left text-uppercase" style="vertical-align : middle;">Qty</th>
-                                <th class="text-left text-uppercase" style="vertical-align : middle;">Cost</th>
-                                <th class="text-left text-uppercase" style="vertical-align : middle;">Price</th>
-                                <th class="text-left text-uppercase" style="vertical-align : middle;">Qty <small style="font-size: 8px;">(QOH - Sale)</small></th>
-                                <th class="text-left text-uppercase" style="vertical-align : middle;">Cost</th>
-                                <th class="text-left text-uppercase" style="vertical-align : middle;">Price</th>
-                                <th class="text-left text-uppercase" style="vertical-align : middle; width: 75px !important;">Qty</th>
-                                <th class="text-left text-uppercase" style="vertical-align : middle; width: 75px;">Diff(%)</th>
-                                <th class="text-left text-uppercase" style="vertical-align : middle;">Cost Diff.</th>
-                                <th class="text-left text-uppercase" style="vertical-align : middle;">Price Diff.</th>
-                            </tr>
+                        <thead  class="header-color">
+                            
+                          <tr>
+                            <th class="text-center" style="vertical-align : middle;">SKU</th>
+                            <th class="text-center" style="vertical-align : middle;">Item Name</th>
+                            <th class="text-center">Counted Qty</th>
+                            <th class="text-center">Counted Cost</th>
+                            <th class="text-center">Counted Price</th>
+                            <th class="text-center">Expected Qty<small style="font-size: 8px;">(QOH - Sale)</small></th></th>
+                            <th class="text-center">Expected Cost</th>
+                            <th class="text-center">Expected Price</th>
+                            <th class="text-center">Diff Qty</th>
+                            <th class="text-left text-uppercase" style="vertical-align : middle; width: 75px;">Diff(%)</th>
+                            <th class="text-left text-uppercase" style="vertical-align : middle;">Cost Diff.</th>
+                            <th class="text-left text-uppercase" style="vertical-align : middle;">Price Diff.</th>
+                            <th class="text-center" style="vertical-align : middle;">Profit/Loss Diff.</th>
+                        </tr>
                             
                               <?php $dynamic_data[] = "vbarcode";?>
                               <?php $dynamic_data[] = "vitemname";?>
@@ -327,17 +363,18 @@ table td {
     
     
 </style>
+
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">
+
 <link href="{{ asset('stylesheet/loader.css') }}" rel = "stylesheet">
 
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script src="{{ asset('javascript/bootbox.min.js') }} "></script>
 
 <!-- DataTables -->
-<script src="{{ asset('javascript/jquery.dataTables.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('javascript/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
-
 <!--<script src="/view/javascript/jquery/dataTables.scroller.js"></script>-->
 <script src="https://cdn.datatables.net/scroller/2.0.1/js/dataTables.scroller.min.js"></script>
 <!--<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>-->
@@ -361,7 +398,7 @@ $(document).ready(function(){
     
     
     table =   $("#item").DataTable({
-                "scrollY" : "400px",
+                "scrollY" : "500px",
                 "paging" : true,
                 "info" : false,
                 "iDisplayLength": 20,
@@ -390,21 +427,21 @@ $(document).ready(function(){
                         return json.data;
                     }
                 },
-                "columnDefs": [
-                    { "width": "90px", "targets": 0 },
-                    { "width": "120px", "targets": 1 },
-                    { "width": "41px", "targets": 2 },
-                    { "width": "55px", "targets": 3 },
-                    { "width": "55px", "targets": 4 },
-                    { "width": "90px", "targets": 5 },
-                    { "width": "58px", "targets": 6 },
-                    { "width": "60px", "targets": 7 },
-                    { "width": "63px", "targets": 8 },
-                    { "width": "105px", "targets": 9 },
-                    { "width": "64px", "targets": 10 },
-                    { "width": "83px", "targets": 11 },
-                    { "width": "102px", "targets": 12 }
-                  ],
+                // "columnDefs": [
+                //     { "width": "90px", "targets": 0 },
+                //     { "width": "120px", "targets": 1 },
+                //     { "width": "41px", "targets": 2 },
+                //     { "width": "55px", "targets": 3 },
+                //     { "width": "55px", "targets": 4 },
+                //     { "width": "90px", "targets": 5 },
+                //     { "width": "58px", "targets": 6 },
+                //     { "width": "60px", "targets": 7 },
+                //     { "width": "63px", "targets": 8 },
+                //     { "width": "105px", "targets": 9 },
+                //     { "width": "64px", "targets": 10 },
+                //     { "width": "83px", "targets": 11 },
+                //     { "width": "102px", "targets": 12 }
+                //   ],
                 "deferRender": true,
                 "columns" : data_array,
                 rowCallback: function(row, data, index){ 
@@ -420,11 +457,11 @@ $(document).ready(function(){
                     	$(row).find('td:eq(10)').css('color', 'white');
                     	$(row).find('td:eq(11)').css('background-color', 'red');
                     	$(row).find('td:eq(11)').css('color', 'white');
-                    	$(row).find('td:eq(11)').css('width', '83px');
+                    	// $(row).find('td:eq(11)').css('width', '83px');
                     	$(row).find('td:eq(12)').css('background-color', 'red');
                     	$(row).find('td:eq(12)').css('color', 'white');
-                    	$(row).find('td:eq(12)').css('width', '102px');
-                    	$(row).find('td:eq(1)').css('width', '120px');
+                    	// $(row).find('td:eq(12)').css('width', '102px');
+                    	// $(row).find('td:eq(1)').css('width', '120px');
                     	
                     }else if(parseInt(data['difference']) < 0){
                         $(row).find('td:eq(8)').css('background-color', 'green');
@@ -435,11 +472,11 @@ $(document).ready(function(){
                     	$(row).find('td:eq(10)').css('color', 'white');
                     	$(row).find('td:eq(11)').css('background-color', 'green');
                     	$(row).find('td:eq(11)').css('color', 'white');
-                    	$(row).find('td:eq(11)').css('width', '83px');
+                    	// $(row).find('td:eq(11)').css('width', '83px');
                     	$(row).find('td:eq(12)').css('background-color', 'green');
                     	$(row).find('td:eq(12)').css('color', 'white');
-                    	$(row).find('td:eq(12)').css('width', '102px');
-                    	$(row).find('td:eq(1)').css('width', '120px');
+                    	// $(row).find('td:eq(12)').css('width', '102px');
+                    	// $(row).find('td:eq(1)').css('width', '120px');
                     	
                     }
                 
@@ -631,7 +668,7 @@ $(document).ready(function(){
 });
 </script>
 
-<div class="modal fade" id="successModal" role="dialog">
+  <div class="modal fade" id="successModal" role="dialog">
     <div class="modal-dialog modal-sm">
     
       <!-- Modal content-->
@@ -666,7 +703,7 @@ $(document).ready(function(){
     </div>
   </div>
 
- <div class="modal fade" id="reportModal" role="dialog">
+  <div class="modal fade" id="reportModal" role="dialog">
     <div class="modal-dialog modal-sm">
     
       <!-- Modal content-->
@@ -677,9 +714,9 @@ $(document).ready(function(){
         <div class="modal-body">
             <center><b>Select Type Of Report ?</b></center>
         </div>
-        <div class="modal-footer">
-            <button id="pdf_summery" class="btn btn-primary pull-left" data-dismiss="modal">Summary</button>
-            <a id="pdf_details" class="btn btn-primary" data-dismiss="modal" href="#downloadMsgModal" data-backdrop="static" data-toggle="modal">Details</a>
+        <div class="modal-footer form-inline">
+            <button id="pdf_summery" class="btn button-blue basic-button-small col-md-5" data-dismiss="modal">Summary</button>
+            <a id="pdf_details" class="btn button-blue basic-button-small col-md-5" data-dismiss="modal" href="#downloadMsgModal" data-backdrop="static" data-toggle="modal">Details</a>
         </div>
       </div>
       
