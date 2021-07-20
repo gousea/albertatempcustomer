@@ -219,7 +219,7 @@ Sales History Report
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 <!--<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>-->
 <!--<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 
  
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>
@@ -636,6 +636,8 @@ Sales History Report
           });
       }
     });
+    
+    
     $(document).on('submit', '#filter_form', function(event) {
         var selectBy = $('#selectBy').val();
         if(selectBy === 'm' && $('#inputMonth').val() === ''){
