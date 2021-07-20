@@ -13,12 +13,12 @@
                     <span class="font-weight-bold text-uppercase">Physical Inventory</span>
                 </div>
                 <div class="nav-submenu">
-                  <button type="button" class="btn btn-gray headerblack basic-button-small text-dark" data-toggle="modal" data-target="#userModal" style="width: 15%">Assign Users</button>
+                  <button type="button" class="btn btn-gray headerblack basic-button-small text-dark" id="assign_users" data-toggle="modal" data-target="#userModal" style="width: 15%">Assign Users</button>
                   <button title="Commit" class="btn btn-gray headerblack basic-button-small text-dark" id="commit_button" style="width: 13%"><i class="fa fa-save"></i>&nbsp;&nbsp;Commit</button>
                   <button title="Submit" title="Update" class="btn btn-gray headerblack basic-button-small text-dark"  id="calculate" style="width: 13%">Calculate</button>
-                  <button id="import_csv_button" title="Import Physical Inventory" class="btn btn-gray headerblack basic-button-small text-dark" style="width: 20%"><i class="fa fa-file"></i>&nbsp;&nbsp;Import Inventory</button>
+                  <button id="import_csv_button" title="Import Physical Inventory" class="btn btn-gray headerblack basic-button-small text-dark" id="import_inventory" style="width: 20%"><i class="fa fa-file"></i>&nbsp;&nbsp;Import Inventory</button>
                   <input type="submit" form="export_csv" id="export_csv_button" title="Export In CSV" value="Export In CSV" class="btn btn-gray headerblack basic-button-small text-dark"style="width: 15%" >
-                  <a type="button" href="<?php echo $data['cancel'];?>" class="btn btn-danger buttonred buttons_menu basic-button-small" style="width: 13%"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+                  <a type="button" href="<?php echo $data['cancel'];?>" class="btn btn-danger buttonred buttons_menu basic-button-small" id="cancel_btn" style="width: 13%"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
                 </div>
             </div> <!-- navbar-collapse.// -->
         </div>
@@ -456,6 +456,11 @@ $(document).ready(function(){
     
     if(url_calculate_commit == ''){
         $('#commit_button').hide();
+        $('#assign_users').css('width', '16%');
+        $('#calculate').css('width', '14%');
+        $('#import_csv_button').css('width', '25%');
+        $('#export_csv_button').css('width', '18%');
+        $('#cancel_btn').css('width', '15%');
     }
     
     $(document).on('click', '#commit_button', function(){

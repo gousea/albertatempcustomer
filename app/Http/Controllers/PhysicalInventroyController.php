@@ -1648,6 +1648,7 @@ class PhysicalInventroyController extends Controller
                     }
                 }
                 
+                
                 foreach ($items as $k => $item) 
                 {
                     $itemdetail = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid = '".$item['iitemid']."' ");
@@ -1659,7 +1660,7 @@ class PhysicalInventroyController extends Controller
                     
                     $itotalunit = $item['ndebitqty'];
                     
-                    $ndebitextprice = number_format(floatval($itotalunit), 2)  * number_format(floatval($itemdetail['nunitcost']), 2); 
+                    $ndebitextprice = number_format(floatval($itotalunit), 2, '.', '')  * number_format(floatval($itemdetail['nunitcost']), 2, '.', ''); 
                     
                     //========for sold item========
                     //======vitemcode = vbarcode both same=======
