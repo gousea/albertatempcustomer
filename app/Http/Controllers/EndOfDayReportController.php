@@ -35,9 +35,9 @@ class EndOfDayReportController extends Controller
         session()->put('session_report_new_dept',  $report_new_dept);
         session()->put('session_store',  $store);
         session()->put('session_date',  $date);
+        $graph_data = $splitted_data = [];
         
-        
-        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date'));
+        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date','graph_data'));
         
     }
     public function getlist(Request $request){
@@ -55,6 +55,40 @@ class EndOfDayReportController extends Controller
         
         
         $store=$Reports->getStore();
+        
+        //graph data new 
+        $graph_data = $splitted_data =$dataPoints=[];
+        $data['report_hourly']=$hourly;
+        if(!empty($data['report_hourly']))
+            {
+                
+                foreach($data['report_hourly'] as $report)
+                {
+                    
+                    $graph_data[]     = ["data"=> $report->Amount,"label" => $report->Hours];
+                    
+                }
+                
+                if(!empty($graph_data))
+                {
+                    $splitted_data['lable'] = array_column($graph_data,'label');
+                    $splitted_data['data'] = array_column($graph_data,'data');
+                }
+                
+            }
+            
+          if(!empty($report_new_dept)){
+              foreach($report_new_dept as $v){
+                  $dataPoints[]= ["name"=> $v->vdepatname,"y" => number_format($v->gpp*100,2)];
+                  
+              }    
+          }
+           
+           
+          
+           $graph_data = $splitted_data;
+        //   dd($dataPoints,$dataPoints1);
+         
 
         $url_print = url('/eodreport/print');
         session()->put('session_data',  $data);
@@ -67,7 +101,7 @@ class EndOfDayReportController extends Controller
         
         
         
-        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date','url_print'));
+        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date','url_print','graph_data','dataPoints'));
        
     }
     public function eodPdf()

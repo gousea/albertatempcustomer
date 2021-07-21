@@ -3,9 +3,9 @@
   EOD Report
 @endsection
 @section('main-content')
-
+<?php //dd($dataPoints,$dataPoints1);?>
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-        <div class="container-fluid">
+        <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
                     <span class="font-weight-bold text-uppercase"  style="font-size:15px"> End Of Day Report</span>
@@ -45,8 +45,8 @@
             </div>
         </div>
 
-      
-        <div class="row" style="padding-left: 60px;padding-right: 60px">
+ <div class="container">      
+        <div class="row">
                 <div class="col-md-3" >
                     <button  class="form-control headermenublue rcorner"style="height: 60px; "> <b> $100000 <br>YEAR TO DATE SALES </b></button>
 
@@ -67,13 +67,13 @@
         <br>
             
 
-        <div class="row" style="padding-left: 60px;padding-right: 60px">
+        <div class="row">
                 <div class="col-md-12" >
                     <h6><span>DATE SELECTION </span></h6>
                 </div>    
         </div>
 
-    <form method="post" action="{{ route('EodForm') }}" id="filter_form" class="form-inline" style="padding-left:40px">
+    <form method="post" action="{{ route('EodForm') }}" id="filter_form" class="form-inline" >
           @csrf
                <div class="form-group mx-sm-4 mb-2 " >
                     <input type="text" class="date form-control rcorner"  name="start_date" value="{{ $date ?? '' }}" id="start_date" placeholder="Date" autocomplete="off">
@@ -96,7 +96,8 @@
            
     </form>
         <br>
-    <div class="container-fluid">
+   
+        
         <div class="row" style="padding-left:40px;display:none">
               <div class="col-md-12">
                 <div class='col-md-6'>
@@ -126,7 +127,7 @@
               </div>
         </div>
         
-                    <div class="row" style="padding-left: 40px;padding-right: 60px">
+                    <div class="row">
                              <div class="col-md-4  text-uppercase">
                                   <h6><span><i class="far fa-square "> &nbsp;&nbsp;&nbsp;</i>SALES DETAIL </span></h6>
                                   <table class"tcolor">
@@ -374,7 +375,7 @@
         </div>      
         
         
-                     <div class="row" style="padding-left: 40px;padding-right: 60px">
+                    <div class="row">
                             <div class="col-md-4  text-uppercase">
                                   <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>Productivity</span></h6>
                                         <table class"tcolor">
@@ -441,7 +442,7 @@
                     </div>    
                     
                     
-                      <div class="row" style="padding-left: 40px;padding-right: 60px">
+                    <div class="row" >
                            
                                   <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>HOURLY SALES</span></h6>
                                    <div class="col-md-4  text-uppercase">
@@ -457,13 +458,17 @@
                                               @endforeach
                                             </table>
                                     </div>
-                                    <div class="col-md-6  text-uppercase">
-                                        
+                                    <div class="col-md-8  text-uppercase">
+                                        <?php if($graph_data) { ?>
+                                    
+                                            <div id="graphContainer" ></div>
+                                  
+                                        <?php } ?>
                                     </div>    
                       </div>   
                       
                       
-                      <div class="row" style="padding-left: 40px;padding-right:60px">
+                    <div class="row">
                            
                                   <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>DEPARTMENT SALES</span></h6>
                                    <div class="col-md-8  text-uppercase">
@@ -512,11 +517,16 @@
                                     </table>
                                     </div>
                                     <div class="col-md-4  text-uppercase">
-                                    
+                                        <?php //if($graph_data) { ?>
+                                            <figure class="highcharts-figure">  
+                                            <div id="pieContainer" ></div>
+                                            </figure>    
+                                        <?php //} ?>
                                     </div>    
                       </div>   
        
-    
+ 
+</div>    
 </section>
 
 @endsection
@@ -528,6 +538,18 @@
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.js"></script>
 
     <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+    
+    <script type="text/javascript" src="{{ asset('javascript/chart/highcharts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('javascript/chart/exporting.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('javascript/chart/export-data.js') }}"></script>
+    
+    
+    <!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
+    <!--<script src="https://code.highcharts.com/modules/data.js"></script>-->
+    <!--<script src="https://code.highcharts.com/modules/drilldown.js"></script>-->
+    <!--<script src="https://code.highcharts.com/modules/exporting.js"></script>-->
+    <!--<script src="https://code.highcharts.com/modules/export-data.js"></script>-->
+    <!--<script src="https://code.highcharts.com/modules/accessibility.js"></script>-->
 
 
 <script>
@@ -794,6 +816,173 @@ ul.b {list-style-type: square;}
  
   
 }
+
+</style>
+<script>
+//   $(function(){
+
+//     $("div#divLoading").addClass('show');
+//   });
+  
+  window.onload = function () {
+let chart1 = Highcharts.chart('graphContainer', {
+    chart: {
+        type: 'line',
+        spacingBottom: 30
+    },
+    title: {
+        text: 'Hourly Sales Report'
+    },
+    subtitle: {
+        text: '',
+        floating: true,
+        align: 'right',
+        verticalAlign: 'bottom',
+        y: 15
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'left',
+        verticalAlign: 'top',
+        x: 100,
+        y: 70,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+    },
+    xAxis: {
+        // categories: ['Apples', 'Pears', 'Oranges', 'Bananas', 'Grapes', 'Plums', 'Strawberries', 'Raspberries']
+        categories: <?php echo json_encode($graph_data["lable"] ??'') ?>,
+        title: {
+            text: 'Time Frame'
+        }
+    },
+    yAxis: {
+         min: 0,
+            // max: 140,
+            // tickInterval: 1000,
+        title: {
+            text: 'Amount ($)'
+        },
+        labels: {
+            formatter: function () {
+                return this.value;
+            }
+        }
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>' + '' + '</b><br/>' +
+                this.x + ': ' + this.y;
+        }
+    },
+    plotOptions: {
+        area: {
+            fillOpacity: 0.5
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: "Hourly",
+        // data: [1, 0, 3, 0, 3, 1, 2, 1]
+        data: <?php echo json_encode($graph_data["data"] ??'',JSON_NUMERIC_CHECK ) ?>
+    }],
+    // exporting: {
+    // buttons: {
+    //   contextButton: {
+    //     menuItems: [
+    //         "printChart",
+    //                 "separator",
+    //                 "downloadPNG",
+    //                 "downloadJPEG",
+    //                 "downloadPDF",
+    //                 "downloadSVG",
+    //                 "separator",
+    //                 "downloadCSV",
+    //                 "downloadXLS",
+    //                 //"viewData",
+    //                 // "openInCloud"
+    //                 ]
+    //   }
+    // }
+    // }
+});
+let chart2 =Highcharts.chart('pieContainer', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Department Sales ',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 25
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: false,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            // startAngle: -360,
+            // endAngle: 360,
+            // center: ['50%', '50%'],
+            // size: '100%'
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Department',
+        innerSize: '70%',
+         data: <?php echo json_encode($dataPoints ??'',JSON_NUMERIC_CHECK ) ?>
+         //console.log(data);
+        // data: [
+        //     ['Chrome', 58.9],
+        //     ['Firefox', 13.29],
+        //     ['Internet Explorer', 13],
+        //     ['Edge', 3.78],
+        //     ['Safari', 3.42],
+        //     {
+        //         name: 'Other',
+        //         y: 7.61,
+        //         dataLabels: {
+        //             enabled: false
+        //         }
+        //     }
+        // ]
+    }]
+});
+
+}
+</script>
+
+<style>
+    .highcharts-credits{
+        font-size:0px !important;
+    }
+   
+
+.highcharts-figure, .highcharts-data-table table {
+    min-width: 320px; 
+    max-width: 660px;
+    margin: 1em auto;
+}
+
 
 </style>
 @endsection
