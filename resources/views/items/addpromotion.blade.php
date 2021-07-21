@@ -43,6 +43,9 @@
         color: #333333;
         background-color: #ffffff;
     }
+    
+    
+  
 </style>
 
 <link rel="stylesheet" href="{{ asset('asset/css/promotion.css') }}">
@@ -137,7 +140,7 @@
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Type</label>
                                         </div>
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
-                                            <select style="height: 33px" name="<?php echo isset($data['prom_id']) && $data['prom_id'] ? 'promotion_type_select' : 'promotion_type'; ?>" id="<?php  echo isset($data['prom_id']) && $data['prom_id'] ? 'promotion_type_select' : 'promotion_type'; ?>" <?php echo isset($data['prom_id']) &&  $data['prom_id'] ? "disabled" : ""; ?> class="fform-control promo-fields"> 
+                                            <select style="height: 33px" name="<?php echo isset($data['prom_id']) && $data['prom_id'] ? 'promotion_type_select' : 'promotion_type'; ?>" id="<?php  echo isset($data['prom_id']) && $data['prom_id'] ? 'promotion_type_select' : 'promotion_type'; ?>" <?php echo isset($data['prom_id']) &&  $data['prom_id'] ? "disabled" : ""; ?> class="form-control promo-fields"> 
                                                <option value="">--Select Type--</option>
                                                 @if(!empty($data['promotion_types']))
                                                     @foreach (  $data['promotion_types'] as $val)
@@ -404,7 +407,7 @@
                                     @endif
                                 </div>
                                 
-                                <div class="row">
+                                <div class="row mt-5">
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form"  id="div_discount"  >
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Discounted Value</label>
@@ -434,7 +437,7 @@
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Item Type</label>
                                         </div>
                                         <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group" style="margin-top: 8px;">
-                                            <input type="radio" name="promotion_same_itme" id="id_same_item" value="Same Item" <?php echo isset($data['promotion_same_itme']) && $data['promotion_same_itme'] == "Same Item" ? 'checked' : ''?> required  > <b>Same Item</b>
+                                            <input type="radio" name="promotion_same_itme" id="id_same_item" value="Same Item" <?php echo isset($data['promotion_same_itme']) && $data['promotion_same_itme'] == "Same Item" ? 'checked' : ''?> required  > <b> Same Item</b>
                                         </div>
                                         <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group" style="margin-top: 8px;">
                                             <input type="radio" name="promotion_same_itme" id="id_group_item" value="Group Item" <?php echo isset($data['promotion_same_itme']) && $data['promotion_same_itme'] == "Group Item" ? 'checked' : ''?>  > <b> Group Item</b>
@@ -443,7 +446,7 @@
                                 </div>
 
 
-                                <div class="row">
+                                <div class="row mt-5">
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form"  id="div_discount_limt1"  style="display: none;">
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion_discount_limit</label>
@@ -481,7 +484,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form"   >
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="qty_limit" class="p-2 float-left text-uppercase">Quantity Limit</label>
@@ -520,12 +522,14 @@
                                     </div>
                                 </div>
                                 
-                                <div class="row" id="div_refresh_values" >
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4">
-                                        <input  type="button" id="button_refresh_values" class="btn btn-primary" value="Refresh Values">
-                                    </span>
-                                    <div class="col-md-4"></div>
+                               
+                                
+                                <div class="row justify-content-center" id="div_refresh_values">
+                                    <div class="text-center">
+                                        <span>
+                                            <input  type="button" style="font-size: 16px; border-radius: 5px; background-color: #286fb7; margin-top: 10px;"  id="button_refresh_values" class="btn btn-primary" value="Refresh Values">
+                                        </span>
+                                    </div>
                                 </div>
                                 
                             </div>
@@ -927,7 +931,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
+                <button type="button" class="closeExistingItemModal" id="closeBtn" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">The following items already exists in other promotions:</h4>
             </div>
             <div class="modal-body">
@@ -941,45 +945,30 @@
             </table>
             </div>
             <div class="modal-footer">
-                <button id="save_btn" class="btn btn-success" data-dismiss="modal">Yes</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="cancelExistingItems">Cancel</button>
             </div>
         </div>
     </div>
 </div>
+
+
+
 @endsection
 
 @section ('page-script')
-<link type="text/css" href="/javascript/bootstrap-datepicker.css" rel="stylesheet" />
-<link type="text/css" href="/stylesheet/select2/css/select2.min.css" rel="stylesheet" />
-
-<script src="{{ asset('javascript/fancyTable/fancyTable.js') }}"></script>
-
-
-<!-- new scripts -->
 <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<!--<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
-
-
 <link type="text/css" href="{{ asset('stylesheet/select2/css/select2.min.css') }}" rel="stylesheet" />
-
-<script src="{{ asset('javascript/select2/js/select2.min.js') }}"></script>
-
-
-
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
-
 <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<link type="text/css" href="{{ asset('stylesheet/select2/css/select2.min.css') }}" rel="stylesheet" />
-
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
 
 
+
+<script src="{{ asset('javascript/fancyTable/fancyTable.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="{{ asset('javascript/select2/js/select2.min.js') }}"></script>
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js" type="text/javascript" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
@@ -996,8 +985,10 @@
         $('#promotion_to_time').datetimepicker({
                  format: 'LT'
         });
-        // $('#promotion_from_time').datetimepicker({pickDate: false,format: 'hh:mm A',autoclose: true});
-        // $('#promotion_to_time').datetimepicker({pickDate: false,format: 'hh:mm A',autoclose: true});
+        
+        $("#testexmodal").click(function(){
+                $("#exampleModal").modal('show');
+        })
     });
     $(document).ready(function(){
 	    $("#datetime_div").hide();
@@ -1016,7 +1007,26 @@
         $("#item_listing2_buy_down").hide();
         $("#discountedItem").hide();
         $("#div_customers").hide();
+        
+        var span = document.getElementsByClassName("closeExistingItemModal")[0];
+        
+        span.onclick = function() {
+            $("#existingModel").modal("hide");
+        }
+        
+        $("#cancelExistingItems").click(function(){
+            $("#existingModel").modal("hide");
+        })
+        
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            $("#existingModel").modal("hide");
+          }
+        }
     });
+    
+    
+    
     var get_department_item_ajax,get_category_ajax,get_category_items_ajax,get_group_items_ajax,get_subcategory_ajax,get_sub_category_items_ajax,get_selected_buy_items_ajax ;
     var itemsAddedToBuyItems = new Array();itemsAddedToDiscountedItems = new Array();
     var existingPromItems = new Array();
@@ -2662,13 +2672,12 @@
             if(existingItems != "")
             {
                 
-                var r = confirm("The following items already exists in other promotions: " + existingItems );
-                if (r == true) {
-                    addToPromotions();
-                } 
+                $("#existing_items").html('<tr><td>'+ existingItems +'</td></tr>');
+                $("#existingModel").modal("show");
+                var modal = document.getElementById("existingModel");
+                modal.classList.toggle("show");
                 
-                // $("#existing_items").html('<tr><td>'+ existingItems +'</td></tr>')
-                // $("#existingModel").show();
+                
                 // bootbox.confirm({
                 //     message: "The following items already exists in other promotions: <br />" + existingItems + "<br/> ",
                     
