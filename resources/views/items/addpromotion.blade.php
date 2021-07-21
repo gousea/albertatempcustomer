@@ -5,7 +5,7 @@
     Promotion
 
 @endsection 
- 
+
 @section('main-content')
 <style>
     #promotion_name-error{
@@ -19,6 +19,29 @@
     }
     #promotion_category-error{
         color: red;
+    }
+    #promotion_buy_qty-error{
+        color: red;
+    }
+    #promotion_item_qty_limit-error{
+        color: red;
+    }
+    #promotion_discounted_value-error{
+        color: red;
+    }
+    #promotion_same_itme-error{
+        color: red;
+    }
+    #promotion_slab_price-error{
+        color: red;
+    }
+    
+    body {
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 13px !important;
+        line-height: 1.428571429;
+        color: #333333;
+        background-color: #ffffff;
     }
 </style>
 
@@ -81,7 +104,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Name</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <input type="text" name="promotion_name" autocomplete="off" id="promotion_name" maxlength="100" value="<?php echo isset($data['prom_id']) ? $data['promotion_name'] : ''; ?>" placeholder="Promotion Name" class="form-control promo-fields" />
                                             <div id="promotion_name_validate"></div>
                                             @if (isset($data['error_promotion_name'])) 
@@ -91,9 +114,9 @@
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Name</label>
+                                            <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Code</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <input type="text" name="promotion_code" autocomplete="off" id="promotion_code" maxlength="10" value="<?php echo isset($data['prom_id']) ? $data['promotion_code'] : ''; ?>" placeholder="Promotion Code" <?php echo isset($data['prom_id']) &&  $data['prom_id'] ? "readonly" : ""; ?>  class="form-control promo-fields" />
                                             <div id="promotion_code_validate"></div>
                                             @if (isset($data['error_promotion_code'])) 
@@ -113,8 +136,8 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Type</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            <select name="<?php echo isset($data['prom_id']) && $data['prom_id'] ? 'promotion_type_select' : 'promotion_type'; ?>" id="<?php  echo isset($data['prom_id']) && $data['prom_id'] ? 'promotion_type_select' : 'promotion_type'; ?>" <?php echo isset($data['prom_id']) &&  $data['prom_id'] ? "disabled" : ""; ?> class="fform-control promo-fields"> 
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
+                                            <select style="height: 33px" name="<?php echo isset($data['prom_id']) && $data['prom_id'] ? 'promotion_type_select' : 'promotion_type'; ?>" id="<?php  echo isset($data['prom_id']) && $data['prom_id'] ? 'promotion_type_select' : 'promotion_type'; ?>" <?php echo isset($data['prom_id']) &&  $data['prom_id'] ? "disabled" : ""; ?> class="fform-control promo-fields"> 
                                                <option value="">--Select Type--</option>
                                                 @if(!empty($data['promotion_types']))
                                                     @foreach (  $data['promotion_types'] as $val)
@@ -140,8 +163,8 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Category</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            <select name="promotion_category" id="promotion_category" class="form-control promo-fields">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
+                                            <select style="height: 33px" name="promotion_category" id="promotion_category" class="form-control promo-fields">
                                                 <option value="">--Select Category--</option>
                                                 <option value="Time Bound" <?php echo isset($data['promotion_category']) && $data['promotion_category'] == 'Time Bound' ? 'selected' : '';?> >Time Bound</option>
                                                 <option value="Stock Bound" <?php echo isset($data['promotion_category']) && $data['promotion_category'] == 'Stock Bound' ? 'selected' : '';?>>Stock Bound</option>
@@ -173,7 +196,7 @@
                                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                                 <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion From Date </label>
                                             </div>
-                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 11px">
                                                 <input type="text" readonly name="promotion_from_date" id="promotion_from_date" maxlength="50" value="<?php echo isset($data['promotion_from_date']) ? $data['promotion_from_date'] : ''; ?>" placeholder="" class="form-control  promo-fields" />
                                                 <div id="promotion_from_date_validate" style="color: red"></div>
                                                 @if (isset($data['error_promotion_from_date']))
@@ -185,7 +208,7 @@
                                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                                 <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion To Date </label>
                                             </div>
-                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 11px">
                                                 <input type="text" readonly name="promotion_to_date" id="promotion_to_date" maxlength="50" value="<?php echo isset($data['promotion_to_date']) ? $data['promotion_to_date'] : ''; ?>" placeholder="<?php // echo $entry_promotion_to_date; ?>"  class="form-control promo-fields" />
                                                 <div id="promotion_to_date_validate" style="color: red"></div>
                                                 @if (isset($data['error_promotion_to_date']))
@@ -204,20 +227,22 @@
                                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                                     <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion From Time </label>
                                                 </div>
-                                                <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                                    <input type="text" readonly name="promotion_from_time" id="promotion_from_time" maxlength="50" value="<?php echo isset($data['promotion_from_time']) ? $data['promotion_from_time'] : ''; ?>" placeholder="<?php //echo $entry_promotion_from_time; ?>"  class="form-control promo-fields" />
+                                                <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
+                                                    <input type="text"  name="promotion_from_time" id="promotion_from_time" maxlength="50" value="<?php echo isset($data['promotion_from_time']) ? $data['promotion_from_time'] : ''; ?>" placeholder="<?php //echo $entry_promotion_from_time; ?>"  class="form-control promo-fields" />
                                                     @if (isset($data['error_promotion_from_time'])) 
                                                         <div class="text-danger" style="color: red">{{ $data['error_promotion_from_time'] }}</div>
                                                     @endif
                                                 </div>
+                                                  
+                                                
                                             </div>
 
                                             <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form"  >
                                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                                     <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion To Time </label>
                                                 </div>
-                                                <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                                    <input type="text" readonly name="promotion_to_time" id="promotion_to_time" maxlength="50" value="<?php echo isset($data['promotion_to_time']) ? $data['promotion_to_time'] : ''; ?>" placeholder="<?php //echo $entry_promotion_to_time; ?>" class="form-control promo-fields" />
+                                                <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
+                                                    <input type="text"  name="promotion_to_time" id="promotion_to_time" maxlength="50" value="<?php echo isset($data['promotion_to_time']) ? $data['promotion_to_time'] : ''; ?>" placeholder="<?php //echo $entry_promotion_to_time; ?>" class="form-control promo-fields" />
                                                     @if (isset($data['error_promotion_to_time'])) 
                                                         <div class="text-danger" style="color: red">{{ $data['error_promotion_to_time']}}</div>
                                                     @endif
@@ -289,7 +314,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Buy Qty </label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <input type="number" autocomplete="off" name="promotion_buy_qty" id="promotion_buy_qty" maxlength="50" value="<?php echo isset($data['promotion_buy_qty']) ? $data['promotion_buy_qty'] : ''; ?>" placeholder="<?php //echo $entry_promotion_buy_qty; ?>"  class="form-control promo-fields" />
                                             <div id="promotion_buy_qty_validate"></div>
                                             @if (isset($data['error_promotion_buy_qty']))
@@ -302,7 +327,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Slab Price</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <input type="text" autocomplete="off" name="promotion_slab_price" id="promotion_slab_price" maxlength="50" value="<?php echo isset($data['promotion_slab_price']) ? $data['promotion_slab_price'] : ''; ?>" placeholder="<?php //echo $entry_promotion_slab_price; ?>"  class="form-control decimal_numbers promo-fields" />
                                             @if (isset($data['error_promotion_slab_price'])) 
                                                 <div class="text-danger">{{$data['error_promotion_slab_price']}}</div>
@@ -315,7 +340,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Disc Options</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <select name="promotion_disc_options" id="promotion_disc_options" class="form-control promo-fields">
                                                 <option value="Nth" <?php echo isset($data['promotion_disc_options']) && $data['promotion_disc_options'] == 'Nth' ? 'selected' : '';?>>For n&#x1D57;&#x02B0; item</option>
                                                 <option value="Each" <?php echo isset($data['promotion_disc_options']) && $data['promotion_disc_options'] == 'Each' ? 'selected' : '';?>>For each item</option>
@@ -328,8 +353,8 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Discount Type</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            <select name="promotion_discount_type" id="promotion_discount_type" class="form-control promo-fields">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
+                                            <select style="height: 33px" name="promotion_discount_type" id="promotion_discount_type" class="form-control promo-fields">
                                                 <option value="1" <?php echo isset($data['promotion_discount_type']) && $data['promotion_discount_type'] == '1' ? 'selected' : '';?>>Percentage (%)</option>
                                                 <option value="2" <?php echo isset($data['promotion_discount_type']) && $data['promotion_discount_type'] == '2' ? 'selected' : '';?>>Dollars ($)</option>
                                                 <option value="3" <?php echo isset($data['promotion_discount_type']) && $data['promotion_discount_type'] == '3' ? 'selected' : '';?>>Quantity (Same Item)</option>
@@ -348,7 +373,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Bill Value</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <input type="text" autocomplete="off" name="promotion_bill_value" id="promotion_bill_value" maxlength="50" value="<?php echo isset($data['promotion_bill_value']) ? $data['promotion_bill_value'] : ''; ?>" placeholder="<?php //echo $entry_promotion_bill_value; ?>" class="form-control decimal_numbers promo-fields" />
                                         </div>
                                     </div>
@@ -360,10 +385,10 @@
                                             <div class="col-4 col-md-4 col-sm-4 col-lg-4">
                                                 <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Item Quantity Limit</label>
                                             </div>
-                                            <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                                            <div class="col-4 col-md-4 col-sm-4 col-lg-4" style="margin-top: 8px;">
                                                 <input type="number" autocomplete="off" name="promotion_item_qty_limit" id="promotion_item_qty_limit" maxlength="50" value="<?php echo isset($data['promotion_item_qty_limit']) ? $data['promotion_item_qty_limit'] : ''; ?>" placeholder="<?php echo $entry_promotion_item_quantity_limit??''; ?>"  class="form-control promo-fields" />
                                             </div>
-                                            <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                                            <div class="col-4 col-md-4 col-sm-4 col-lg-4" style="margin-top: 8px;">
                                                 <input type="text" autocomplete="off" name="promotion_item_qty_limit_bal" id="promotion_item_qty_limit_bal" maxlength="50" readonly value="Balance Qty (<?php echo isset($data['promotion_item_qty_limit_bal']) ? $data['promotion_item_qty_limit_bal'] : '-'; ?>)"  class="form-control promo-fields" />
                                             </div>
                                         </div>
@@ -372,7 +397,7 @@
                                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                                 <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Item Quantity Limit</label>
                                             </div>
-                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                                 <input type="number" autocomplete="off" name="promotion_item_qty_limit" id="promotion_item_qty_limit" maxlength="50" value="<?php echo isset($data['promotion_item_qty_limit']) ? $data['promotion_item_qty_limit'] : ''; ?>" placeholder="<?php //echo $entry_promotion_item_quantity_limit; ?>"  class="form-control promo-fields" />
                                             </div>
                                         </div>
@@ -384,7 +409,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Discounted Value</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <input type="text" autocomplete="off" name="promotion_discounted_value" id="promotion_discounted_value" maxlength="50" value="<?php echo isset($data['promotion_discounted_value']) ? $data['promotion_discounted_value'] : ''; ?>" placeholder="<?php //echo $entry_promotion_discounted_value; ?>"  class="form-control decimal_numbers promo-fields" />
                                             @if (isset($data['error_promotion_discounted_value']))
                                                 <div class="text-danger">{{$data['error_promotion_discounted_value']}}</div>
@@ -396,7 +421,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Addl Discount</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <input type="text" autocomplete="off" name="promotion_addl_discount" id="promotion_addl_discount" maxlength="50" value="<?php echo (isset($data['promotion_addl_discount']) && $data['promotion_addl_discount'] != 0) ? $data['promotion_addl_discount'] : ''; ?>" placeholder="<?php //echo $entry_promotion_addl_discount; ?>"  class="form-control decimal_numbers promo-fields" />
                                             @if (isset($data['error_promotion_addl_discount'])) 
                                                 <div class="text-danger">{{$data['error_promotion_addl_discount']}}</div>
@@ -406,13 +431,12 @@
 
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form"  id="div_item_type">
                                         <div class="col-4 col-md-4 col-sm-4 col-lg-4">
-                                            <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Item Type 2</label>
+                                            <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Item Type</label>
                                         </div>
-                                        
-                                        <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group">
+                                        <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group" style="margin-top: 8px;">
                                             <input type="radio" name="promotion_same_itme" id="id_same_item" value="Same Item" <?php echo isset($data['promotion_same_itme']) && $data['promotion_same_itme'] == "Same Item" ? 'checked' : ''?> required  > <b>Same Item</b>
                                         </div>
-                                        <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group">
+                                        <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group" style="margin-top: 8px;">
                                             <input type="radio" name="promotion_same_itme" id="id_group_item" value="Group Item" <?php echo isset($data['promotion_same_itme']) && $data['promotion_same_itme'] == "Group Item" ? 'checked' : ''?>  > <b> Group Item</b>
                                         </div>
                                     </div>
@@ -424,7 +448,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion_discount_limit</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <input type="text" autocomplete="off" name="promotion_discount_limit" id="promotion_discount_limit" maxlength="50" value="<?php echo (isset($data['promotion_discount_limit']) && $data['promotion_discount_limit'] != 0) ? $data['promotion_discount_limit'] : ''; ?>" placeholder="<?php //echo $entry_promotion_discount_limit; ?>" class="form-control decimal_numbers promo-fields" />
                                             @if (isset($data['error_promotion_discount_limit'])) 
                                                 <div class="text-danger">{{$data['error_promotion_discount_limit']}}</div>
@@ -439,7 +463,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Addl. Discount Apply Quantity Limit</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <input type='text' class="form-control promo-fields" name="addl_disc_apply_qty" autocomplete="off" id="addl_disc_apply_qty" placeholder="Default: 0" value="<?php echo (isset($data['addl_disc_apply_qty'])) ? $data['addl_disc_apply_qty'] : "" ; ?>"/>
                                         </div>
                                     </div>
@@ -448,10 +472,10 @@
                                         <div class="col-4 col-md-4 col-sm-4 col-lg-4">
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Item State</label>
                                         </div>
-                                        <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group">
+                                        <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group" style="margin-top: 8px;">
                                             <input type="radio" name="promotion_item_state" value="I" required > <b>Include</b>
                                         </div>
-                                        <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group">
+                                        <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group" style="margin-top: 8px;">
                                             <input type="radio" name="promotion_item_state" value="E" > <b>Exclude</b>
                                         </div>
                                     </div>
@@ -462,7 +486,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="qty_limit" class="p-2 float-left text-uppercase">Quantity Limit</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
                                             <input type='text' class="form-control promo-fields" name="qty_limit" autocomplete="off" id="qty_limit" placeholder="Default: 0" value="<?php echo (isset($data['qty_limit']) && $data['qty_limit'] !== null)?$data['qty_limit']:0; ?>"/>
                                          </div>
                                     </div>
@@ -475,8 +499,8 @@
                                                 </span>
                                             </label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            <select name="allow_reg_price" id="allow_reg_price" class="form-control promo-fields" >
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
+                                            <select style="height: 33px" name="allow_reg_price" id="allow_reg_price" class="form-control promo-fields" >
                                                 <option value="Y" <?php echo ((isset($data['allow_reg_price'])) && ($data['allow_reg_price'] == 'Y')) ? 'selected' : ''?>>Yes</option>
                                                 <option value="N" <?php echo ((isset($data['allow_reg_price'])) && ($data['allow_reg_price']== 'N')) ? 'selected' : ''?>>No</option>
                                             </select>    
@@ -487,8 +511,8 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="qty_limit" class="p-2 float-left text-uppercase">Promotion Status</label>
                                         </div>
-                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            <select name="promotion_status" id="promotion_status" class="form-control promo-fields">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 8px;">
+                                            <select style="height: 33px" name="promotion_status" id="promotion_status" class="form-control promo-fields">
                                                 <option value="Active" <?php echo isset($data['promotion_status']) && $data['promotion_status'] == 'Active' ? 'selected' : ''?>>Active</option>
                                                 <option value="Closed" <?php echo isset($data['promotion_status']) && $data['promotion_status'] == 'Closed' ? 'selected' : ''?>>Closed</option>
                                             </select>
@@ -925,29 +949,20 @@
 </div>
 @endsection
 
-
 @section ('page-script')
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
 <link type="text/css" href="/javascript/bootstrap-datepicker.css" rel="stylesheet" />
 <link type="text/css" href="/stylesheet/select2/css/select2.min.css" rel="stylesheet" />
 
 <script src="{{ asset('javascript/fancyTable/fancyTable.js') }}"></script>
 
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>-->
-<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
-
 
 <!-- new scripts -->
 <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!--<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-
-<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
 
 
 <link type="text/css" href="{{ asset('stylesheet/select2/css/select2.min.css') }}" rel="stylesheet" />
@@ -955,9 +970,35 @@
 <script src="{{ asset('javascript/select2/js/select2.min.js') }}"></script>
 
 
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+
+<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link type="text/css" href="{{ asset('stylesheet/select2/css/select2.min.css') }}" rel="stylesheet" />
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js" type="text/javascript" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
+
     
 
 <script type="text/javascript">
+    $(document).ready(function(){
+        $('#promotion_from_time').datetimepicker({
+                 format: 'LT'
+        });
+        
+        $('#promotion_to_time').datetimepicker({
+                 format: 'LT'
+        });
+        // $('#promotion_from_time').datetimepicker({pickDate: false,format: 'hh:mm A',autoclose: true});
+        // $('#promotion_to_time').datetimepicker({pickDate: false,format: 'hh:mm A',autoclose: true});
+    });
     $(document).ready(function(){
 	    $("#datetime_div").hide();
         $("#time_div").hide();
@@ -1058,12 +1099,9 @@
         
         $('#promotion_from_date').datepicker({format: 'mm-dd-yyyy',autoclose: true});
         $('#promotion_to_date').datepicker({format: 'mm-dd-yyyy',autoclose: true});
-        <?php // if(!$data['prom_id']) {?>
-            // $('#promotion_from_date').datepicker('setDate', 'today');
-            // $('#promotion_to_date').datepicker('setDate', 'today');
-        <?php // }?>
-        $('#promotion_from_time').datetimepicker({pickDate: false,format: 'hh:mm A',autoclose: true});
-        $('#promotion_to_time').datetimepicker({pickDate: false,format: 'hh:mm A',autoclose: true});
+        
+        // $('#promotion_from_time').datetimepicker({pickDate: false,format: 'hh:mm A',autoclose: true});
+        // $('#promotion_to_time').datetimepicker({pickDate: false,format: 'hh:mm A',autoclose: true});
         
         $("#promotion_item_department").select2({dropdownAdapter: $.fn.select2.amd.require('select2/selectAllAdapter'),closeOnSelect:false,placeholder: 'Select Department'});
         $("#promotion_item_category").select2({dropdownAdapter: $.fn.select2.amd.require('select2/selectAllAdapter'),closeOnSelect:false,placeholder: 'Select Category'});
@@ -1655,6 +1693,8 @@
     // 	$(this).parent().next('td').html(promotionVal);
     });
     
+    
+    
     $(document).on('change', '#price_select_by', function(){
         var select_by = $(this).val();
         var select_by_value1 = $('#select_by_value1').val() === undefined?'':$('#select_by_value1').val();
@@ -2047,12 +2087,15 @@
                     ],
                     rowCallback: function(row, data, index){
                       	if(data.prom_id == null || data.prom_id == "null"){
-                        	$(row).find('td:eq(9)').css('background-color', 'green');
-                        	
+                        // 	$(row).find('td:eq(9)').addClass('greenBack');
+                        	 $(row).find('td:eq(9)').html('<p style="background-color: green; border-radius: 5px; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>');
                         }
                         else
                         {
-                            $(row).find('td:eq(9)').css('background-color', 'red');
+                            // $(row).find('td:eq(9)').addClass('redBack');
+                            $(row).find('td:eq(9)').html('<p style="background-color: red;  border-radius: 5px;">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>');
+                            // $(row).find('td:eq(9)').css('background-color', 'red');
+                            
                             
                             if (Object.values(check_existingPromItems).indexOf(data.iitemid) === -1) {
                                 check_existingPromItems.push(data.iitemid);
@@ -2060,7 +2103,9 @@
                             }
                             
                         }
-                        $(row).find('td:eq(9)').html('');
+                        // $(row).find('td:eq(9)').html('<p style="background-color: red"> test red </p>');
+                        // $(".redBack").html('<p style="background-color: red"> test red </p>'); 
+                        // $(".greenBack").html('<p style="background-color: green"> test green </p>');
                   },
                   fnDrawCallback : function() {
                         if ($(this).find('tbody tr').length<=1) {
@@ -2077,9 +2122,11 @@
             });
             $("#item_listing_filter").hide();
             $("#item_listing_processing").remove();
+            $("#item_listing_paginate").addClass("pull-right");
             
-        $("#item_listing2_processing").remove();
-        $("#item_listing2_filter").hide();
+            
+            $("#item_listing2_processing").remove();
+            $("#item_listing2_filter").hide();
             
         $('[data-toggle="tooltip"]').tooltip();
         
