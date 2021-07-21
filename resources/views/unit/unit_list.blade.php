@@ -69,15 +69,15 @@
                         <td data-order="<?php echo $unit['iunitid']; ?>" class="text-center">
                             <span style="display:none;"><?php echo $unit['iunitid']; ?></span>
                             <?php if (in_array($unit['iunitid'], $selected)) { ?>
-                              <input type="checkbox" name="selected[]" id="unit[<?php echo $unit_row; ?>][select]" value="<?php echo $unit['iunitid']; ?>" checked="checked" />
+                              <input type="checkbox" class="selected" name="selected[]" id="unit[<?php echo $unit_row; ?>][select]" value="<?php echo $unit['iunitid']; ?>" checked="checked" />
                             <?php } else { ?>
-                              <input type="checkbox" name="selected[]" id="unit[<?php echo $unit_row; ?>][select]"  value="<?php echo $unit['iunitid']; ?>" />
+                              <input type="checkbox" class="selected" name="selected[]" id="unit[<?php echo $unit_row; ?>][select]"  value="<?php echo $unit['iunitid']; ?>" />
                             <?php } ?>
                         </td>
                         
                         <td class="text-left">
                             <span style="display:none;"><?php echo $unit['vunitcode']; ?></span>
-                            <input type="text" style="border:none;" maxlength="20" class="editable unitcode_c" name="unit[<?php echo $i; ?>][vunitcode]" id="unit[<?php echo $i; ?>][vunitcode]" value="<?php echo $unit['vunitcode']; ?>" onclick='document.getElementById("unit[<?php echo $unit_row; ?>][select]").setAttribute("checked","checked");' />
+                            <input type="text" style="border:none;" maxlength="20" class="editable unitcode_c" name="unit[<?php echo $i; ?>][vunitcode]" id="unit[<?php echo $i; ?>][vunitcode]" value="<?php echo $unit['vunitcode']; ?>" onclick='document.getElementById("unit[<?php echo $unit_row; ?>][select]").checked = true;' />
           
                             <input type="hidden" name="unit[<?php echo $i; ?>][iunitid]" value="<?php echo $unit['iunitid']; ?>" />
       
@@ -85,7 +85,7 @@
       
                         <td class="text-left">
                         <span style="display:none;"><?php echo $unit['vunitname']; ?></span>
-                          <input type="text" maxlength="50" style="border:none;" class="editable unit_c" name="unit[<?php echo $i; ?>][vunitname]" id="unit[<?php echo $i; ?>][vunitname]" value="<?php echo $unit['vunitname']; ?>" onclick='document.getElementById("unit[<?php echo $unit_row; ?>][select]").setAttribute("checked","checked");' />
+                          <input type="text" maxlength="50" style="border:none;" class="editable unit_c" name="unit[<?php echo $i; ?>][vunitname]" id="unit[<?php echo $i; ?>][vunitname]" value="<?php echo $unit['vunitname']; ?>" onclick='document.getElementById("unit[<?php echo $unit_row; ?>][select]").checked = true;' />
       
                         </td>
       
@@ -905,7 +905,17 @@ $('#delete_btn_unit').click(function(){
       $('#form-unit').submit();
     }
   });
+
+
+    $(document).on('click', '.selected', function(){
+      console.log(this.checked);
+      if(this.checked == false){
+        let id = $(this).attr('id');
+        document.getElementById(id).checked = false;
+      }
+    });
 </script>
+
 
 @endsection
 
