@@ -5,7 +5,7 @@
 @endsection
 
 @section('main-content')
-<link rel="stylesheet" href="{{ asset('asset/css/promotion.css') }}">
+
 <div id="content">
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container">
@@ -20,7 +20,7 @@
             </div> 
         </div>
     </nav>
-   
+    
     <section class="section-content py-6">
         <div class="container">
             @if (session()->has('message'))
@@ -28,17 +28,54 @@
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                 </div>      
             @endif
-            <table id="table_promotions" class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
-                <thead  style="background-color: #286fb7!important;">
-                    <tr>
+            <table id="table_promotions" class="table table-hover promotionview" style="width: 100%;">
+                <thead>
+                    <tr class="header-color">
                         <th data-field="state" data-checkbox="true">
                             <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                         </th>
-                        <th class="col-xs-1 headername text-uppercase text-light">Promotion Name</th>
-                        <th class="col-xs-1 headername text-uppercase text-light">Code</th>
-                        <th class="col-xs-1 headername text-uppercase text-light">Type</th>
-                        <th class="col-xs-1 headername text-uppercase text-light">Category</th>
-                        <th class="col-xs-1 headername text-uppercase text-light">Status</th>
+                        
+                        <th class="text-left text-uppercase">&nbsp;&nbsp;Promotion Name
+                            <div class="po-has-search">
+                              <span class="fa fa-search form-control-feedback"></span>
+                              <input type="text" class="form-control table-heading-fields text-center search_text_box" name="prom_name" id="id="check"" placeholder="SEARCH"  >
+                            </div>
+                        </th>
+                        
+                        <th class="text-left text-uppercase">&nbsp;&nbsp;Code
+                            <div class="po-has-search">
+                              <span class="fa fa-search form-control-feedback"></span>
+                              <input type="text" class="form-control table-heading-fields text-center search_text_box" name="prom_code" placeholder="SEARCH" >
+                            </div>
+                        </th>
+                        
+                        <th class="text-left text-uppercase" style="width:20% !important;">Type
+                            <div class="adjustment-has-search" id="header_type">
+                              
+                            </div>
+                        </th>
+                        
+                        <th class="text-left text-uppercase">Category
+                            <div class="adjustment-has-search">
+                                <select class='table-heading-fields' name="prom_category" id="prom_category">
+                                    <option value="">All</option>
+                                    <option value="Time Bound"  >Time Bound</option>
+                                    <option value="Stock Bound" >Stock Bound</option>
+                                    <option value="Open Ended" >Open Ended (On Going)</option>
+                                </select>
+                            </div>
+                        </th>
+                        
+                        <th class="text-left text-uppercase">Status
+                            <div class="adjustment-has-search">
+                                <select class='table-heading-fields' name="prom_status" id="prom_status">
+                                    <option value="">All</option>
+                                    <option value="Active"  >Active</option>
+                                    <option value="Closed" >Closed</option>
+                                    
+                                </select>
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,7 +90,15 @@
   
 
 <style>
-     
+
+    .select2-container .select2-selection--single{
+        height:33px !important;
+        font-size:10px;!important;
+    }
+      
+    .select2-selection{
+        border-radius: 7px !important;
+    }
 </style>
 
 <?php if(session()->get('hq_sid') == 1){ ?>
@@ -62,13 +107,14 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+        
+        <h5 class="modal-title">Select the stores in which you want to delete the items:</h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Select the stores in which you want to delete the items:</h4>
       </div>
       <div class="modal-body">
-         <table class="table table-bordered">
+         <table class="table promotionview">
             <thead id="table_green_header_tag">
-                <tr>
+                <tr class="header-color">
                     <th>
                         <div class="custom-control custom-checkbox" id="table_green_check">
                             <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
@@ -81,7 +127,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="submit" id="save_btn" class="btn btn-danger" data-dismiss="modal">Delete</button>
+        <button type="submit" id="save_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Delete</button>
         <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
@@ -91,12 +137,14 @@
 @endsection
 
 @section('page-script')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/datatables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/datatables.min.js"></script>
+    
+    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">
+    
     <link type="text/css" href="/stylesheet/select2/css/select2.min.css" rel="stylesheet" />
     <script src="/javascript/select2/js/select2.min.js"></script>
 
-
+    <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
 
 
 <script type="text/javascript">
@@ -112,60 +160,38 @@
         var promotion_types = {"1":"Buy N get discount","2":"Buy X get Y at discount","3":"Buy X Get Y Free","4":"Buy first X at discount during a period","5":"X $ off on Y $ Sale Value","6":"N% off on entire sale Value with a limit on the total invoice \/ sale value","7":"N% off on sale value","8":"Product X is discounted on Total Bill Value is > Y","9":"Buy 3 different products get least priced one free","10":"Slab Price","11":"Grouped Item with Customised Price.","12":"Manufacturer Buy Down", "13": "RJR Scan Data", "14": "Altria Scan Data"};
         var types_length  = Object.keys(promotion_types).length;
         
-        $('#table_promotions thead tr').clone(true).appendTo( '#table_promotions thead' );
-        $('#table_promotions thead tr:eq(1) th').each( function (i) {
+        $('#table_promotions thead tr th').each( function (i) {
             
             var title = $(this).text();
-            if(title == "")
-            {
-                $(this).html( '' );
-            }
-            else if(title == "Promotion Name")
-            {
-                $(this).html( '<input type="text" name="prom_name" class="search_text_box" id="check" placeholder="Search" style="color:black;border-radius: 4px;height:28px;"/>' );
-            }
-            else if(title == "Code")
-            {
-                $(this).html( '<input type="text" name="prom_code" class="search_text_box" placeholder="Search" style="color:black;border-radius: 4px;height:28px;"/>' );
-            }
-            else if(title == "Type")
-            {
+            title = title.trim();
+            
+            if(title == "Type")
+            { 
                 var filterList = "";
                 for(var j=1; j<=types_length; j++)
                 {
                     filterList += '<option value="'+j+'" >'+promotion_types[j]+'</option>';
                 }
                 
-                $(this).html('<select class="form-control" name="prom_type" id="prom_type" style="width: 100%;">'+
+                $('#header_type').html('<select class="table-heading-fields" name="prom_type" id="prom_type">'+
                                 '<option value="">All</option>'+
                                 filterList+
                             '</select>');
             }
-            else if(title == "Category")
-            {
-                $(this).html('<select class="form-control" name="prom_category" id="prom_category" style="width: 100%;">'+
-                                '<option value="">All</option>'+
-                                '<option value="Time Bound"  >Time Bound</option>'+
-                                '<option value="Stock Bound" >Stock Bound</option>'+
-                                '<option value="Open Ended" >Open Ended (On Going)</option>'+
-                            '</select>');
-            }
-            else if(title == "Status")
-            {
-                $(this).html('<select class="form-control" name="prom_status" id="prom_status" style="width: 100%;">'+
-                                '<option value="All"  >All</option>'+
-                                '<option value="Active" >Active</option>'+
-                                '<option value="Closed" >Closed</option>'+
-                            '</select>');
-            }
-            else
-            {
-                $(this).html('');
-            }
+            
             
      
             $( '.search_text_box', this ).on( 'keyup change', function () {
-                console.log('done');
+                
+                var self = this;
+                
+                if(self.value != ''){
+                    $(this).closest('div').find('.fa-search').hide();
+                    
+                }else{
+                    $(this).closest('div').find('.fa-search').show();
+                }
+                
                 if ( table.column(i).search() !== this.value ) {
                     table
                     .column(i)
@@ -191,11 +217,11 @@
             "serverSide": true,
             "iDisplayLength": 20,
             "ordering": false,
-            "scrollX": true,
+            // "scrollX": true,
             // "searching": false,
             "autoWidth": false,
             // "aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0,1,2, 3,4,5 ] }],
-            "dom": '<"mysearch"lf>rt<"bottom"ip>',
+            "dom": 't<"bottom col-md-12 row"<"col-md-3"i><"col-md-9"p>>',
             "ajax": {
                 url: search_url,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
@@ -268,11 +294,23 @@
         $("#prom_category").select2();
         $("#prom_status").select2();
         $("#table_promotions_filter").hide();
+        $("#table_promotions_paginate").addClass("pull-right");
     });
     var dataItemOrders = [];
     
     $(document).on('click', '#delete_btn', function(event) {
         event.preventDefault();
+        
+        if($("input[name='selected[]']:checked").length == 0){
+            bootbox.alert({ 
+                size: 'small',
+                title: "  ", 
+                message: 'Please Select to Delete!', 
+                callback: function(){}
+            });
+            return false;
+        }
+        
         $('#deleteItemModal').modal('show');
     });
     
@@ -450,7 +488,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <input type="submit" class="btn btn-danger" name="deleteItems" value="Delete">
+        <input type="submit" class="btn btn-danger buttonred buttons_menu basic-button-small" name="deleteItems" value="Delete">
       </div>
     </div>
 

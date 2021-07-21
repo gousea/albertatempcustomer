@@ -218,8 +218,8 @@ Parent Child
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
+                <h5 class="modal-title">Select the stores in which you want to Add Parent Child relation</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select the stores in which you want to Add Parent Child relation</h4>
               </div>
               <div class="modal-body">
                  <table class="table table-bordered">
@@ -237,7 +237,7 @@ Parent Child
                 </table>
               </div>
               <div class="modal-footer">
-                <button id="adding_btn" class="btn btn-danger" data-dismiss="modal">Add New</button>
+                <button id="adding_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Add New</button>
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
               </div>
             </div>
@@ -251,8 +251,8 @@ Parent Child
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
+                <h5 class="modal-title">Select the stores in which you want to update the items:</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select the stores in which you want to update the items:</h4>
               </div>
               <div class="modal-body">
                  <table class="table table-bordered">
@@ -270,7 +270,7 @@ Parent Child
                 </table>
               </div>
               <div class="modal-footer">
-                <button id="edit_btn" class="btn btn-danger" data-dismiss="modal">Update</button>
+                <button id="edit_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Update</button>
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
               </div>
             </div>
@@ -283,13 +283,13 @@ Parent Child
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
+                <h5 class="modal-title">Select the stores in which you want to Delete parent child relation:</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select the stores in which you want to Delete parent child relation:</h4>
               </div>
               <div class="modal-body">
-                 <table class="table table-bordered">
+                 <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="deleteSelectAllCheckbox" name="" value="" style="background: none !important;">
@@ -302,7 +302,7 @@ Parent Child
                 </table>
               </div>
               <div class="modal-footer">
-                <button id="delete_btn" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                <button id="delete_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Delete</button>
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
               </div>
             </div>

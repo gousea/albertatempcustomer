@@ -128,8 +128,9 @@
                               </th>
                               <?php $dynamic_data[] = "dunitprice";?>
 
-                              <th class="text-left text-uppercase" style="width:38px;" >COST</th>
+                              <th class="text-left text-uppercase no-filter" style="width:38px;" >COST</th>
                               <?php $dynamic_data[] = "unitcost";?>
+                              
                               <?php if(isset($data['itemListings']) && count($data['itemListings'])){ ?>
                                 <?php foreach($data['itemListings'] as $m => $itemListing){ ?>
                                    
@@ -219,6 +220,13 @@
 @endsection
 
 @section('page-script')
+
+    <style>
+        .no-filter{
+            padding-bottom: 44px !important;
+        }
+    
+    </style>
 
     <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
     <link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">

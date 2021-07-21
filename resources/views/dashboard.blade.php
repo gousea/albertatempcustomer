@@ -256,7 +256,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-12 col-xs-4">
+                    {{-- <div class="col-lg-4 col-md-12 col-xs-4">
                         <div class="box box-info">
                             <div class="heading text-muted d-flex justify-content-between">
                                 <h6 class="text-capitalize">weekly top items</h6>
@@ -299,6 +299,58 @@
                                 </div>
                             </div>
                         </div>
+                    </div> --}}
+                    <div class="col-lg-4 col-md-12 col-xs-4">
+                        {{-- <div class="box box-info">
+                            <div class="d-flex justify-content-center" style="display:none;">
+                                <h6 class="text-uppercase">weekly top items</h6>
+                                <!--<a href="#" class="view-more font-weight-bold" id="hide">more</a>-->
+                                <!--<a href="#" class="more">more</a>-->
+                                <!--<a href="#" class="more">More</a>-->
+                            </div>
+                            <p class="disp-cont">
+                                <?php //foreach($output['topItem'] as $topitem){ ?>
+                                    <div class="content text-dark d-flex justify-content-between" id="five">
+                                        <div class="d-text">
+                                            <h6 class="text-uppercase"><?php //echo $topitem->Item; ?></h6>
+                                            <p class="p-text text-secondary"><?php
+                                            // $url = url()->current();
+                                            // $url_data = explode("/dashboard",$url);
+                                            // $urllink = $url_data[0];
+                                            // $product_id = 2;
+                                            // $itemlink = '/item/edit/'.$product_id;
+                                            // $target_url = $url_data[0].$itemlink;
+                                            ?></p>
+                                        </div>
+                                        <div class="d-button">
+                                            <a href="<?php //echo $target_url?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php //echo $topitem->Quantity; ?></a>
+                                            <!--<button type="button" class="bg-primary text-white d-button-text px-4"><?php //echo $topitem->Quantity; ?></button>-->
+                                        </div>
+                                    </div>
+                                <?php //} ?>
+                            </p>
+                            <div class="more-cont" style="display:none;">
+                                <?php //foreach($output['topItem'] as $topitem){ ?>
+                                    <div class="content text-dark d-flex justify-content-between">
+                                        <div class="d-text">
+                                            <h6 class="text-uppercase"><?php //echo $topitem->Item; ?></h6>
+                                            <p class="p-text text-secondary"><?php
+                                            // $url = url()->current();
+                                            // $url_data = explode("/dashboard",$url);
+                                            // $urllink = $url_data[0];
+                                            // $product_id = 2;
+                                            // $itemlink = '/item/edit/'.$product_id;
+                                            // $target_url = $url_data[0].$itemlink;
+                                            ?></p>
+                                        </div>
+                                        <div class="d-button">
+                                            <a href="<?php //echo $target_url?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php //echo $topitem->Quantity; ?></a>
+                                        </div>
+                                    </div>
+                                <?php //} ?>
+                            </div>
+                            <a href="#" class="more" style="padding-left: 250px;">More</a>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -463,5 +515,14 @@
         }, 50);
     });
   </script>
-
+  <script>
+    $(document).ready(function(){
+        $('.more').click(function(e) {
+          e.preventDefault();
+          $(this).text(function(i, t) {
+            return t == 'Less' ? 'More' : 'Less';
+          }).prev('.more-cont').slideToggle()
+        });
+    });
+    </script>
 @endsection

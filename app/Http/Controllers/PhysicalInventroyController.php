@@ -1648,6 +1648,7 @@ class PhysicalInventroyController extends Controller
                     }
                 }
                 
+                
                 foreach ($items as $k => $item) 
                 {
                     $itemdetail = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid = '".$item['iitemid']."' ");
@@ -1659,7 +1660,7 @@ class PhysicalInventroyController extends Controller
                     
                     $itotalunit = $item['ndebitqty'];
                     
-                    $ndebitextprice = number_format(floatval($itotalunit), 2)  * number_format(floatval($itemdetail['nunitcost']), 2); 
+                    $ndebitextprice = number_format(floatval($itotalunit), 2, '.', '')  * number_format(floatval($itemdetail['nunitcost']), 2, '.', ''); 
                     
                     //========for sold item========
                     //======vitemcode = vbarcode both same=======
@@ -1887,7 +1888,8 @@ class PhysicalInventroyController extends Controller
                         $ndebitextprice = $itotalunit * $itemdetail['nunitcost'];
                         
                         //========for sold item========
-                        $from = $input['dcreatedate'];
+                        $from = \DateTime::createFromFormat('m-d-Y H:i:s', $input['dcreatedate'])->format('Y-m-d H:i:s');
+                        // $from = $input['dcreatedate'];
                         $to = date('Y-m-d H:i:s');
                         $soldqty_sql = "SELECT ifnull(SUM(tsd.ndebitqty), 0) as soldqty FROM trn_salesdetail as tsd LEFT JOIN trn_sales as ts ON(ts.isalesid = tsd.isalesid) WHERE ts.vtrntype='Transaction' AND tsd.vitemcode = '".$item['vbarcode']."' AND ts.dtrandate >= '".$from."' AND ts.dtrandate <= '".$to."' GROUP BY vitemcode ";
                         
@@ -2040,7 +2042,8 @@ class PhysicalInventroyController extends Controller
                         $ndebitextprice = $itotalunit * $itemdetail['nunitcost'];
                         
                         //========for sold item========
-                        $from = $input['dcreatedate'];
+                        $from = \DateTime::createFromFormat('m-d-Y H:i:s', $input['dcreatedate'])->format('Y-m-d H:i:s');
+                        // $from = $input['dcreatedate'];
                         $to = date('Y-m-d H:i:s');
                         $soldqty_sql = "SELECT ifnull(SUM(tsd.ndebitqty), 0) as soldqty FROM trn_salesdetail as tsd LEFT JOIN trn_sales as ts ON(ts.isalesid = tsd.isalesid) WHERE ts.vtrntype='Transaction' AND tsd.vitemcode = '".$item['vbarcode']."' AND ts.dtrandate >= '".$from."' AND ts.dtrandate <= '".$to."' GROUP BY vitemcode ";
                         
