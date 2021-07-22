@@ -111,7 +111,7 @@ class PromotionController extends Controller
 
         $input = $request->all();
 
-        // dd($input['prom_id']);
+       // dd($input['prom_id']);
         
         $departments = Department::orderBy('vdepartmentname', 'asc')->get()->toArray();
         $data['departments'] = $departments;
@@ -120,7 +120,6 @@ class PromotionController extends Controller
 
         // ================= to get promotion types =======================
         $promotion_data = $Promotion->getActivePromotionTypes();  
-        
         $promotion_data = array_map(function ($value) {
             return (array)$value;
         }, $promotion_data);
@@ -705,7 +704,7 @@ class PromotionController extends Controller
         if (isset($input['promotion_item_qty_limit'])) {
             $data['promotion_item_qty_limit'] = $input['promotion_item_qty_limit'];
         } elseif (!empty($promotion_info)) {
-            $data['promotion_item_qty_limit'] = $promotion_info['qty_limit'];
+            $data['promotion_item_qty_limit'] = $promotion_info['prom_qty_limit'];
         } else {
             $data['promotion_item_qty_limit'] = '';
         }
@@ -719,12 +718,11 @@ class PromotionController extends Controller
             $data['promotion_item_qty_limit_bal'] = '';
         }
         
-        // promotion_item_qty_limit
         if (isset($input['qty_limit'])) {
             $data['qty_limit'] = $input['qty_limit'];
         } 
-        elseif (!empty($promotion_info) && !empty($promotion_info['prom_qty_limit'])) {
-            $data['qty_limit'] = $promotion_info['prom_qty_limit'];
+        elseif (!empty($promotion_info) && !empty($promotion_info['qty_limit'])) {
+            $data['qty_limit'] = $promotion_info['qty_limit'];
         } else {
             $data['qty_limit'] = 0;
         }
@@ -776,8 +774,6 @@ class PromotionController extends Controller
         } else {
             $data['promotion_status'] = '';
         }
-        
-        
         //  echo "<pre>";print_r($promotion_info);exit;
         if (isset($input['added_promotion_items_text']) && !empty($input['added_promotion_items_text'])) {
             $data['selected_buy_items'] = $this->getSelectedItems($input['added_promotion_items_text']);
@@ -810,16 +806,15 @@ class PromotionController extends Controller
 
 
     public function savepromotion(Request $req){
-        // dd($req->all());
         ini_set('max_execution_time', -1);
         ini_set('memory_limit', '-1');
         $input = $req->all();
         
         if(isset($input['added_promotion_items_text'])){
-            if(count($input['added_promotion_items_text']) > 2000){
-                $req->session()->flash('message','You can not add more than 2000 items!');
-                    return redirect('/promotion');
-            }
+        if(count($input['added_promotion_items_text']) > 2000){
+            $req->session()->flash('message','You can not add more than 2000 items!');
+                return redirect('/promotion');
+        }
         }
         
         if($input['promotion_category'] == "Open Ended" || $input['promotion_category'] == "Stock Bound")
@@ -891,11 +886,11 @@ class PromotionController extends Controller
         
         $qty_limit = $input['qty_limit'];
         
-        
-        $qty_limit = (!is_nan($qty_limit) && ($qty_limit > 0)) ? $qty_limit : 0;
+        $qty_limit = (!is_nan($qty_limit) && ($qty_limit > 0))?$qty_limit:0;
+
         
       
-        $allow_reg_price = $qty_limit > 0 ? $input['allow_reg_price'] : 'Y';
+        $allow_reg_price = $qty_limit > 0?$input['allow_reg_price']:'Y';
 
         if(isset($input['stores_hq'])){
             if($input['stores_hq'] === session()->get('sid')){
@@ -912,28 +907,22 @@ class PromotionController extends Controller
                     $promotion_discounted_value = $input['promotion_discounted_value'];
                 }
                 
+                /*time being fix for promotion by venkat */
+                $promo_qty_limit = ($input['promotion_item_qty_limit'] > 0) ? $input['promotion_item_qty_limit'] : 50;
+                /*time being fix for promotion by venkat */
+                
                 if($input['promotion_category'] == "Open Ended" || $input['promotion_category'] == "Stock Bound")
                 {
-                    if($input['promotion_category'] == "Open Ended"){
-                        
-                        $inser_query = "INSERT INTO u".$store.".trn_promotions(prom_name, prom_code, category, period, start_date,  qty_limit, prom_type_id, buy_qty, same_group, disc_each_nth, bill_value, discount_type_id, discounted_value, addl_disc_cust, qty_limit_bal, discount_limit, slab_price, mfg_discount, mfg_prom_desc, mfg_buydown_desc, mfg_multipack_desc, prom_qty_limit, allow_reg_price, status)
-                        values ('".$input['promotion_name']."', '".$input['promotion_code']."', '".$input['promotion_category']."', '".$input['promotion_period']."', '".$from_date."', '".(int)$input['promotion_item_qty_limit']."', '".$input['promotion_type']."', '".$input['promotion_buy_qty']."', '".$input['promotion_same_itme']."', '".$input['promotion_disc_options']."', '".(float)$input['promotion_bill_value']."', '".$input['promotion_discount_type']."',  '".$promotion_discounted_value."', '".$promotion_addl_discount."', '".(int)$input['promotion_item_qty_limit']."', '".(float)$input['promotion_discount_limit']."', '".(float)$input['promotion_slab_price']."', '".(float)$input['mfg_discount']."', '".$input['mfg_prom_desc']."', '".$input['mfg_buydown_desc']."', '".$input['mfg_multipack_desc']."', '".$qty_limit."', '".$allow_reg_price."', '".$input['promotion_status']."'  ) ";  
-                    }
-                    if($input['promotion_category'] == "Stock Bound"){
-                         
-                        $inser_query = "INSERT INTO u".$store.".trn_promotions(prom_name, prom_code, category, period, start_date,  qty_limit, prom_type_id, buy_qty, same_group, disc_each_nth, bill_value, discount_type_id, discounted_value, addl_disc_cust, qty_limit_bal, discount_limit, slab_price, mfg_discount, mfg_prom_desc, mfg_buydown_desc, mfg_multipack_desc, prom_qty_limit, allow_reg_price, status)
-                        values ('".$input['promotion_name']."', '".$input['promotion_code']."', '".$input['promotion_category']."', '".$input['promotion_period']."', '".$from_date."', '".(int)$input['promotion_item_qty_limit']."', '".$input['promotion_type']."', '".$input['promotion_buy_qty']."', '".$input['promotion_same_itme']."', '".$input['promotion_disc_options']."', '".(float)$input['promotion_bill_value']."', '".$input['promotion_discount_type']."',  '".$promotion_discounted_value."', '".$promotion_addl_discount."', '".(int)$input['promotion_item_qty_limit']."', '".(float)$input['promotion_discount_limit']."', '".(float)$input['promotion_slab_price']."', '".(float)$input['mfg_discount']."', '".$input['mfg_prom_desc']."', '".$input['mfg_buydown_desc']."', '".$input['mfg_multipack_desc']."', '".$qty_limit."', '".$allow_reg_price."', '".$input['promotion_status']."' ) ";  
-                    }
+                    $inser_query = "INSERT INTO u".$store.".trn_promotions(prom_name, prom_code, category, period, start_date,  qty_limit, prom_type_id, buy_qty, same_group, disc_each_nth, bill_value, discount_type_id, discounted_value, addl_disc_cust, qty_limit_bal, discount_limit, slab_price, mfg_discount, mfg_prom_desc, mfg_buydown_desc, mfg_multipack_desc, prom_qty_limit, allow_reg_price, status) 
+                    values ('".$input['promotion_name']."', '".$input['promotion_code']."', '".$input['promotion_category']."', '".$input['promotion_period']."', '".$from_date."', '".$qty_limit."', '".$input['promotion_type']."', '".$input['promotion_buy_qty']."', '".$input['promotion_same_itme']."', '".$input['promotion_disc_options']."', '".(float)$input['promotion_bill_value']."', '".$input['promotion_discount_type']."',  '".$promotion_discounted_value."', '".$promotion_addl_discount."', '".(int)$input['promotion_item_qty_limit']."', '".(float)$input['promotion_discount_limit']."', '".(float)$input['promotion_slab_price']."', '".(float)$input['mfg_discount']."', '".$input['mfg_prom_desc']."', '".$input['mfg_buydown_desc']."', '".$input['mfg_multipack_desc']."', '".(int)$promo_qty_limit."', '".$allow_reg_price."', '".$input['promotion_status']."'  ) ";  
                 }
                 elseif($input['promotion_category'] == "Time Bound")
                 {
-                    $inser_query = "INSERT INTO u".$store.".trn_promotions(prom_name, prom_code, category, period, start_date, end_date, from_time, to_time, qty_limit, prom_type_id, buy_qty, same_group, disc_each_nth, bill_value, discount_type_id, discounted_value, addl_disc_cust, qty_limit_bal, discount_limit, slab_price, mfg_discount, mfg_prom_desc, mfg_buydown_desc, mfg_multipack_desc, prom_qty_limit, allow_reg_price, status)
-                    values ('".$input['promotion_name']."', '".$input['promotion_code']."', '".$input['promotion_category']."', '".$input['promotion_period']."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".(int)$input['promotion_item_qty_limit']."', '".$input['promotion_type']."', '".$input['promotion_buy_qty']."', '".$input['promotion_same_itme']."', '".$input['promotion_disc_options']."', '".(float)$input['promotion_bill_value']."', '".$input['promotion_discount_type']."',  '".$promotion_discounted_value."', '".$promotion_addl_discount."', '".(int)$input['promotion_item_qty_limit']."', '".(float)$input['promotion_discount_limit']."', '".(float)$input['promotion_slab_price']."', '".(float)$input['mfg_discount']."', '".$input['mfg_prom_desc']."', '".$input['mfg_buydown_desc']."', '".$input['mfg_multipack_desc']."', '".$qty_limit."', '".$allow_reg_price."', '".$input['promotion_status']."' ) ";  
+                    $inser_query = "INSERT INTO u".$store.".trn_promotions(prom_name, prom_code, category, period, start_date, end_date, from_time, to_time, qty_limit, prom_type_id, buy_qty, same_group, disc_each_nth, bill_value, discount_type_id, discounted_value, addl_disc_cust, qty_limit_bal, discount_limit, slab_price, mfg_discount, mfg_prom_desc, mfg_buydown_desc, mfg_multipack_desc, prom_qty_limit, allow_reg_price, status) values ('".$input['promotion_name']."', '".$input['promotion_code']."', '".$input['promotion_category']."', '".$input['promotion_period']."', '".$from_date."', '".$to_date."', '".$from_time."', '".$to_time."', '".$qty_limit."', '".$input['promotion_type']."', '".$input['promotion_buy_qty']."', '".$input['promotion_same_itme']."', '".$input['promotion_disc_options']."', '".(float)$input['promotion_bill_value']."', '".$input['promotion_discount_type']."',  '".$promotion_discounted_value."', '".$promotion_addl_discount."', '".(int)$input['promotion_item_qty_limit']."', '".(float)$input['promotion_discount_limit']."', '".(float)$input['promotion_slab_price']."', '".(float)$input['mfg_discount']."', '".$input['mfg_prom_desc']."', '".$input['mfg_buydown_desc']."', '".$input['mfg_multipack_desc']."', '".(int)$promo_qty_limit."', '".$allow_reg_price."', '".$input['promotion_status']."'  ) ";  
                 }
                 else
-                {    
-                    $inser_query = "INSERT INTO u".$store.".trn_promotions(prom_name, prom_code, category, period, qty_limit, prom_type_id, buy_qty, same_group, disc_each_nth, bill_value, discount_type_id, discounted_value, addl_disc_cust, qty_limit_bal, discount_limit, slab_price, mfg_discount, mfg_prom_desc, mfg_buydown_desc, mfg_multipack_desc, prom_qty_limit, allow_reg_price, status)
-                    values ('".$input['promotion_name']."', '".$input['promotion_code']."', '".$input['promotion_category']."', '".$input['promotion_period']."',  '".(int)$input['promotion_item_qty_limit']."', '".$input['promotion_type']."', '".$input['promotion_buy_qty']."', '".$input['promotion_same_itme']."', '".$input['promotion_disc_options']."', '".(float)$input['promotion_bill_value']."', '".$input['promotion_discount_type']."',  '".$promotion_discounted_value."', '".$promotion_addl_discount."', '".(int)$input['promotion_item_qty_limit']."', '".(float)$input['promotion_discount_limit']."', '".(float)$input['promotion_slab_price']."', '".(float)$input['mfg_discount']."', '".$input['mfg_prom_desc']."', '".$input['mfg_buydown_desc']."', '".$input['mfg_multipack_desc']."', '".$qty_limit."', '".$allow_reg_price."', '".$input['promotion_status']."' ) ";  
+                {
+                    $inser_query = "INSERT INTO u".$store.".trn_promotions(prom_name, prom_code, category, period, qty_limit, prom_type_id, buy_qty, same_group, disc_each_nth, bill_value, discount_type_id, discounted_value, addl_disc_cust, qty_limit_bal, discount_limit, slab_price, mfg_discount, mfg_prom_desc, mfg_buydown_desc, mfg_multipack_desc, prom_qty_limit, allow_reg_price, status) values ('".$input['promotion_name']."', '".$input['promotion_code']."', '".$input['promotion_category']."', '".$input['promotion_period']."',  '".$qty_limit."', '".$input['promotion_type']."', '".$input['promotion_buy_qty']."', '".$input['promotion_same_itme']."', '".$input['promotion_disc_options']."', '".(float)$input['promotion_bill_value']."', '".$input['promotion_discount_type']."',  '".$promotion_discounted_value."', '".$promotion_addl_discount."', '".(int)$input['promotion_item_qty_limit']."', '".(float)$input['promotion_discount_limit']."', '".(float)$input['promotion_slab_price']."', '".(float)$input['mfg_discount']."', '".$input['mfg_prom_desc']."', '".$input['mfg_buydown_desc']."', '".$input['mfg_multipack_desc']."', '".(int)$promo_qty_limit."', '".$allow_reg_price."', '".$input['promotion_status']."'  ) ";  
                 }
                 
                 // dd($inser_query);
@@ -974,9 +963,9 @@ class PromotionController extends Controller
                                 // $new_price = $promotion_addl_discount/$input['promotion_buy_qty'];
                                 $new_price = $input['promotion_slab_price']/$input['promotion_buy_qty'];
                                 $new_price = number_format($new_price , 2);
-                                DB::connection('mysql')->insert("INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$store."' ");
+                                DB::connection('mysql')->insert("INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$store."' ");
                             } else {
-                                $insert_data = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$store."' ";
+                                $insert_data = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$store."' ";
                                 DB::connection('mysql')->insert($insert_data);
                             }
                         }  
@@ -997,7 +986,7 @@ class PromotionController extends Controller
             $promotion->from_time =$from_time;
             $promotion->to_time =$to_time;
            // $promotion->qty_limit =$req->input('promotion_item_qty_limit');
-            $promotion->qty_limit =$req->input('promotion_item_qty_limit');
+            $promotion->qty_limit =$qty_limit;
             //new change 
             $promotion->prom_type_id =$req->input('promotion_type');
             $promotion->buy_qty =$req->input('promotion_buy_qty');
@@ -1016,21 +1005,16 @@ class PromotionController extends Controller
             $promotion->mfg_prom_desc =$req->input('mfg_prom_desc');
             $promotion->mfg_buydown_desc =$req->input('mfg_buydown_desc');
             $promotion->mfg_multipack_desc =$req->input('mfg_multipack_desc');
-            
-            
-            //new promotions from vijay
-            // $promotion->mfr_multi_pack =$req->input('manufacturer_multi_pack');
-            // $promotion->coupon_desc =$req->input('coupon_desc');
-            // $promotion->mfr_promotion =$req->input('manufacturer_promotion');
-            // $promotion->mfr_disc_amt =$req->input('manufacturer_disc_amt');
-            // $promotion->buydown_desc =$req->input('buydown_description');
-            // $promotion->account_loyalty =$req->input('account_loyalty');
-            // $promotion->buydown =$req->input('buydown');
-            
-            
             //$promotion->img_url =$req->input('');
            // $promotion->prom_qty_limit = $qty_limit;
-            $promotion->prom_qty_limit = $qty_limit;
+           
+            /*Time being fix for  promotion by venkat*/
+            // $promotion->prom_qty_limit = $req->input('promotion_item_qty_limit');
+            $promotion->prom_qty_limit = ($req->input('promotion_item_qty_limit') > 0) ? $req->input('promotion_item_qty_limit') : 50 ;
+            /*End of Time being fix for  promotion by venkat*/
+           
+           
+            
             $promotion->allow_reg_price = $allow_reg_price;
             $promotion->status =$req->input('promotion_status');
             $promotion->save();
@@ -1103,11 +1087,13 @@ class PromotionController extends Controller
     }
     
     public function updatepromotion(Request $req){
+        //dd(date('Y-m-d H:i:s'));
+        
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', "2G");
-        $input = $req->all();
         
-        // dd($input)
+        
+        $input = $req->all();
         
         if($input['promotion_bill_value']=='NULL' || $input['promotion_bill_value']==''){
             $promotion_bill_value=0;
@@ -1117,11 +1103,11 @@ class PromotionController extends Controller
             $promotion_bill_value=$input['promotion_bill_value'];
         }
         
-
-        
+        if(isset($input['added_promotion_items_text'])){
         if(count($input['added_promotion_items_text']) > 2000){
             $req->session()->flash('message','You can not add more than 2000 items!');
                 return redirect('/promotion');
+        }
         }
         
         // dd($input);
@@ -1140,12 +1126,9 @@ class PromotionController extends Controller
         }
         else
         {
-            // $from_date = date("Y-m-d",strtotime(str_replace('-', '/',$input['promotion_from_date']))) ;
-            // $to_date = date("Y-m-d",strtotime(str_replace('-', '/',$input['promotion_to_date']))) ;
-            
-            $from_date = date("Y-m-d");
-            $to_date = NULL;
-            
+            $from_date = date("Y-m-d",strtotime(str_replace('-', '/',$input['promotion_from_date']))) ;
+            $to_date = date("Y-m-d",strtotime(str_replace('-', '/',$input['promotion_to_date']))) ;
+            //$query .= ", end_date = '$to_date' ";
         }
         
         
@@ -1155,9 +1138,8 @@ class PromotionController extends Controller
             $from_time = date("H:i:s",strtotime($input['promotion_from_time']));
             $to_time  = date("H:i:s",strtotime($input['promotion_to_time']));
         }else {
-            $from_time = date("H:i:s");
+            $from_time = NULL;
             $to_time  = NULL;
-            
         }
         
         
@@ -1224,75 +1206,35 @@ class PromotionController extends Controller
                 
                 if($input['promotion_category'] == "Open Ended" || $input['promotion_category'] == "Stock Bound")
                 {
-                    if($input['promotion_category'] == "Open Ended") {
-                        // $from_date = date("Y-m-d");
-                        $to_date = NULL;
-                        $update_promo_query = "UPDATE u".$store.".trn_promotions  SET  
-                                    prom_name = '".$req->input('promotion_name')."', 
-                                    prom_code = '".$req->input('promotion_code')."', 
-                                    category = '".$req->input('promotion_category')."',
-                                    period ='".$req->input('promotion_period')."',
-                                   
-                                    qty_limit ='".$req->input('promotion_item_qty_limit')."', 
-                                    prom_type_id ='".$req->input('promotion_type')."',
-                                    buy_qty ='".$req->input('promotion_buy_qty')."',
-                                    same_group ='".$req->input('promotion_same_itme')."',
-                                    disc_each_nth ='".$req->input('promotion_disc_options')."',
-                                    bill_value ='".$promotion_bill_value."',
-                                    discount_type_id ='".$req->input('promotion_discount_type')."',
-                                    discounted_value ='".$req->input('promotion_discounted_value')."',
-                                    addl_disc_cust = '".(float)$promotion_addl_discount."',
-                                    qty_limit_bal ='".$req->input('promotion_item_qty_limit')."',
-                                    discount_limit ='".(float)$req->input('promotion_discount_limit')."',
-                                    slab_price ='".(float)$req->input('promotion_slab_price')."',
-                                    mfg_discount ='".(float)$req->input('mfg_discount')."',
-                                    exclude_include ='".$req->input('promotion_item_state')."',
-                                    mfg_prom_desc ='".$req->input('mfg_prom_desc')."',
-                                    mfg_buydown_desc ='".$req->input('mfg_buydown_desc')."',
-                                    mfg_multipack_desc ='".$req->input('mfg_multipack_desc')."',
-                                    prom_qty_limit ='".$qty_limit."',
-                                    allow_reg_price = '".$allow_reg_price."',
-                                    status ='".$req->input('promotion_status')."'
-                                    
-                                    where prom_id = '" . (int)$prom_id . "'   ";
-                                    
-                                 
-                    }
-                    
-                    
-                    if($input['promotion_category'] == "Stock Bound") {
-                        // $from_date = date("Y-m-d");
-                        $to_date = NULL;
-                        $update_promo_query = "UPDATE u".$store.".trn_promotions  SET  
-                                    prom_name = '".$req->input('promotion_name')."', 
-                                    prom_code = '".$req->input('promotion_code')."', 
-                                    category = '".$req->input('promotion_category')."',
-                                    period ='".$req->input('promotion_period')."',
-                                   
-                                    qty_limit ='".$req->input('promotion_item_qty_limit')."', 
-                                    prom_type_id ='".$req->input('promotion_type')."',
-                                    buy_qty ='".$req->input('promotion_buy_qty')."',
-                                    same_group ='".$req->input('promotion_same_itme')."',
-                                    disc_each_nth ='".$req->input('promotion_disc_options')."',
-                                    bill_value ='".$promotion_bill_value."',
-                                    discount_type_id ='".$req->input('promotion_discount_type')."',
-                                    discounted_value ='".$req->input('promotion_discounted_value')."',
-                                    addl_disc_cust = '".(float)$promotion_addl_discount."',
-                                    qty_limit_bal ='".$req->input('promotion_item_qty_limit')."',
-                                    discount_limit ='".(float)$req->input('promotion_discount_limit')."',
-                                    slab_price ='".(float)$req->input('promotion_slab_price')."',
-                                    mfg_discount ='".(float)$req->input('mfg_discount')."',
-                                    exclude_include ='".$req->input('promotion_item_state')."',
-                                    mfg_prom_desc ='".$req->input('mfg_prom_desc')."',
-                                    mfg_buydown_desc ='".$req->input('mfg_buydown_desc')."',
-                                    mfg_multipack_desc ='".$req->input('mfg_multipack_desc')."',
-                                    prom_qty_limit ='".$qty_limit."',
-                                    allow_reg_price = '".$allow_reg_price."',
-                                    status ='".$req->input('promotion_status')."'
-                                    where prom_id = '" . (int)$prom_id . "'   ";
-                                    
-                    }
-                    
+                    // $from_date = date("Y-m-d");
+                    $to_date = NULL;
+                    $update_promo_query = "UPDATE u".$store.".trn_promotions  SET  
+                                prom_name = '".$req->input('promotion_name')."', 
+                                prom_code = '".$req->input('promotion_code')."', 
+                                category = '".$req->input('promotion_category')."',
+                                period ='".$req->input('promotion_period')."',
+                               
+                                qty_limit ='".$qty_limit."',
+                                prom_type_id ='".$req->input('promotion_type')."',
+                                buy_qty ='".$req->input('promotion_buy_qty')."',
+                                same_group ='".$req->input('promotion_same_itme')."',
+                                disc_each_nth ='".$req->input('promotion_disc_options')."',
+                                bill_value ='".$promotion_bill_value."',
+                                discount_type_id ='".$req->input('promotion_discount_type')."',
+                                discounted_value ='".$req->input('promotion_discounted_value')."',
+                                addl_disc_cust = '".(float)$promotion_addl_discount."',
+                                qty_limit_bal ='".$req->input('promotion_item_qty_limit')."',
+                                discount_limit ='".(float)$req->input('promotion_discount_limit')."',
+                                slab_price ='".(float)$req->input('promotion_slab_price')."',
+                                mfg_discount ='".(float)$req->input('mfg_discount')."',
+                                exclude_include ='".$req->input('promotion_item_state')."',
+                                mfg_prom_desc ='".$req->input('mfg_prom_desc')."',
+                                mfg_buydown_desc ='".$req->input('mfg_buydown_desc')."',
+                                mfg_multipack_desc ='".$req->input('mfg_multipack_desc')."',
+                                prom_qty_limit ='".$req->input('promotion_item_qty_limit')."',
+                                allow_reg_price = '".$allow_reg_price."',
+                                status ='".$req->input('promotion_status')."' where prom_id = '" . (int)$prom_id . "'   ";
+                                
                     
                 }
                 elseif($input['promotion_category'] == "Time Bound")
@@ -1304,9 +1246,7 @@ class PromotionController extends Controller
                                 period ='".$req->input('promotion_period')."',
                                 start_date ='".$from_date."',
                                 end_date ='".$to_date."',
-                                from_time =$from_time;
-                                to_time =$to_time;
-                                qty_limit ='".$req->input('promotion_item_qty_limit')."', 
+                                qty_limit ='".$qty_limit."',
                                 prom_type_id ='".$req->input('promotion_type')."',
                                 buy_qty ='".$req->input('promotion_buy_qty')."',
                                 same_group ='".$req->input('promotion_same_itme')."',
@@ -1323,10 +1263,9 @@ class PromotionController extends Controller
                                 mfg_prom_desc ='".$req->input('mfg_prom_desc')."',
                                 mfg_buydown_desc ='".$req->input('mfg_buydown_desc')."',
                                 mfg_multipack_desc ='".$req->input('mfg_multipack_desc')."',
-                                prom_qty_limit ='".$qty_limit."',
+                                prom_qty_limit ='".$req->input('promotion_item_qty_limit')."',
                                 allow_reg_price = '".$allow_reg_price."',
-                                status ='".$req->input('promotion_status')."'
-                                where prom_id = '" . (int)$prom_id . "'   ";
+                                status ='".$req->input('promotion_status')."' where prom_id = '" . (int)$prom_id . "'   ";
     
                 }
                 else
@@ -1336,7 +1275,7 @@ class PromotionController extends Controller
                                 prom_code = '".$req->input('promotion_code')."', 
                                 category = '".$req->input('promotion_category')."',
                                 period ='".$req->input('promotion_period')."',
-                                qty_limit ='".$req->input('promotion_item_qty_limit')."',
+                                qty_limit ='".$qty_limit."',
                                 prom_type_id ='".$req->input('promotion_type')."',
                                 buy_qty ='".$req->input('promotion_buy_qty')."',
                                 same_group ='".$req->input('promotion_same_itme')."',
@@ -1353,17 +1292,17 @@ class PromotionController extends Controller
                                 mfg_prom_desc ='".$req->input('mfg_prom_desc')."',
                                 mfg_buydown_desc ='".$req->input('mfg_buydown_desc')."',
                                 mfg_multipack_desc ='".$req->input('mfg_multipack_desc')."',
-                                prom_qty_limit = '".$qty_limit."',
+                                prom_qty_limit ='".$req->input('promotion_item_qty_limit')."',
                                 allow_reg_price = '".$allow_reg_price."',
-                                status ='".$req->input('promotion_status')."'
-                                where prom_id = '" . (int)$prom_id . "'   ";
+                                status ='".$req->input('promotion_status')."' where prom_id = '" . (int)$prom_id . "'   ";
                     
                 }                           
                 
                 $a = DB::connection('mysql')->update($update_promo_query);
-                // dd($a);
-                //time not updating currect 
+                
+                //time not updating currect dont change 
                 $update_query_time = "UPDATE u".$store.".trn_promotions SET LastUpdate =now() WHERE prom_id = '" . (int)$prom_id . "' ";
+                
                 $query =  DB::connection('mysql')->update($update_query_time);
                 
                 if(!empty($input['added_promotion_items_text']) && $prom_id) {
@@ -1401,10 +1340,10 @@ class PromotionController extends Controller
                                     $new_price = $input['promotion_slab_price']/$input['promotion_buy_qty'];
                                     $new_price = number_format($new_price , 2);
                                     
-                                    $update_query = "UPDATE u".$store.".trn_prom_details SET prom_id='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price = '".$itemDetails['dunitprice'] ."', discounted_price='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID = '".$store."' WHERE `prom_id`={$prom_id} AND barcode='".$itemDetails['vbarcode']."'";
+                                    $update_query = "UPDATE u".$store.".trn_prom_details SET prom_id='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price = '".$itemDetails['dunitprice'] ."', discounted_price='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s')."', SID = '".$store."' WHERE `prom_id`={$prom_id} AND barcode='".$itemDetails['vbarcode']."'";
                                     
                                 } else {
-                                    $update_query = "UPDATE u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price='".$itemDetails['dunitprice']."', discounted_price='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$store."' WHERE prom_id= '".$prom_id."' AND barcode='".$itemDetails['vbarcode']."' ";
+                                    $update_query = "UPDATE u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price='".$itemDetails['dunitprice']."', discounted_price='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$store."' WHERE prom_id= '".$prom_id."' AND barcode='".$itemDetails['vbarcode']."' ";
                                 }	            
                                 $query =  DB::connection('mysql')->update($update_query);
                             }
@@ -1427,9 +1366,9 @@ class PromotionController extends Controller
                                     $new_price = $input['promotion_slab_price']/$input['promotion_buy_qty'];
                                     $new_price = number_format($new_price , 2);
                                     
-                                    $query_insert = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$store."' ";
+                                    $query_insert = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$store."' ";
                                 } else {
-                                    $query_insert = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$store."' ";
+                                    $query_insert = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$store."' ";
                                 }
                                 
                               $query =  DB::connection('mysql')->insert($query_insert);
@@ -1447,7 +1386,7 @@ class PromotionController extends Controller
                             $query =  DB::connection('mysql')->delete($delete_query);
                             
                             $insert_delete_query = "INSERT INTO u".$store.".mst_delete_table (TableName, TableId, Action, LastUpdate, SID) 
-                                                    VALUES('trn_prom_details', '". (int)$et['prom_detail_id'] . "', 'delete', '".date('Y-m-d H:i:s', strtotime("+1 hours"))."', '".$store."')";
+                                                    VALUES('trn_prom_details', '". (int)$et['prom_detail_id'] . "', 'delete', '".date('Y-m-d H:i:s')."', '".$store."')";
                             $query =  DB::connection('mysql')->insert($insert_delete_query);
                         }
                     }
@@ -1527,90 +1466,84 @@ class PromotionController extends Controller
         }else{
             
             if($input['promotion_category'] == "Time Bound"){
-                $prom_id= session()->get('prom_id') ;  
-                
-                $promotion = Promotion::find($prom_id);
-                
-                $promotion->prom_name = $req->input('promotion_name');
-                $promotion->prom_code =$req->input('promotion_code');
-                $promotion->category =$req->input('promotion_category');
-                $promotion->period =$req->input('promotion_period');
-                $promotion->start_date =$from_date;
-                $promotion->end_date =$to_date;
-                $promotion->from_time =$from_time;
-                $promotion->to_time =$to_time;
-                $promotion->qty_limit =$req->input('promotion_item_qty_limit');
-                $promotion->prom_type_id =$req->input('promotion_type');
-                $promotion->buy_qty =$req->input('promotion_buy_qty');
-                $promotion->same_group =$req->input('promotion_same_itme');
-                $promotion->disc_each_nth =$req->input('promotion_disc_options');
-                $promotion->bill_value =$req->input('promotion_bill_value');
-                $promotion->discount_type_id =$req->input('promotion_discount_type');
-                $promotion->discounted_value =$req->input('promotion_discounted_value') ??'0';
-                // $promotion->discounted_item =json_encode($req->input('promotion_discounted_item_text') ?? '';
-                $promotion->addl_disc_cust = $promotion_addl_discount;
-                $promotion->qty_limit_bal =$req->input('promotion_item_qty_limit');
-                $promotion->discount_limit =$req->input('promotion_discount_limit');
-                $promotion->slab_price =$req->input('promotion_slab_price');
-                $promotion->mfg_discount =$req->input('mfg_discount');
-                $promotion->exclude_include =$req->input('promotion_item_state');
-                $promotion->mfg_prom_desc =$req->input('mfg_prom_desc');
-                $promotion->mfg_buydown_desc =$req->input('mfg_buydown_desc');
-                $promotion->mfg_multipack_desc =$req->input('mfg_multipack_desc');
-                //$promotion->img_url =$req->input('');
-                $promotion->prom_qty_limit = $qty_limit;
-                $promotion->allow_reg_price = $allow_reg_price;
-                $promotion->status =$req->input('promotion_status');
-                
-                
-                $promotion->save();
-                
-                //time not updating currect 
-                $update_query_time = "UPDATE trn_promotions SET LastUpdate =now() WHERE prom_id = '" . (int)$prom_id . "'";
-                $query =  DB::connection('mysql_dynamic')->update($update_query_time);
+               $prom_id= session()->get('prom_id') ;  
+            
+            $promotion = Promotion::find($prom_id);
+            
+            $promotion->prom_name = $req->input('promotion_name');
+            $promotion->prom_code =$req->input('promotion_code');
+            $promotion->category =$req->input('promotion_category');
+            $promotion->period =$req->input('promotion_period');
+            $promotion->start_date =$from_date;
+            $promotion->end_date =$to_date;
+            $promotion->from_time =$from_time;
+            $promotion->to_time =$to_time;
+            $promotion->qty_limit =$qty_limit;
+            $promotion->prom_type_id =$req->input('promotion_type');
+            $promotion->buy_qty =$req->input('promotion_buy_qty');
+            $promotion->same_group =$req->input('promotion_same_itme');
+            $promotion->disc_each_nth =$req->input('promotion_disc_options');
+            $promotion->bill_value =$promotion_bill_value;
+            $promotion->discount_type_id =$req->input('promotion_discount_type');
+            $promotion->discounted_value =$req->input('promotion_discounted_value') ??'0';
+           // $promotion->discounted_item =json_encode($req->input('promotion_discounted_item_text') ?? '';
+            $promotion->addl_disc_cust = $promotion_addl_discount;
+            $promotion->qty_limit_bal =$req->input('promotion_item_qty_limit');
+            $promotion->discount_limit =$req->input('promotion_discount_limit');
+            $promotion->slab_price =$req->input('promotion_slab_price');
+            $promotion->mfg_discount =$req->input('mfg_discount');
+            $promotion->exclude_include =$req->input('promotion_item_state');
+            $promotion->mfg_prom_desc =$req->input('mfg_prom_desc');
+            $promotion->mfg_buydown_desc =$req->input('mfg_buydown_desc');
+            $promotion->mfg_multipack_desc =$req->input('mfg_multipack_desc');
+            //$promotion->img_url =$req->input('');
+            $promotion->prom_qty_limit = $req->input('promotion_item_qty_limit');
+            $promotion->allow_reg_price = $allow_reg_price;
+            $promotion->status =$req->input('promotion_status');
+            $promotion->save();
+            
+            //time not updating currect 
+            $update_query_time = "UPDATE trn_promotions SET LastUpdate =now() WHERE prom_id = '" . (int)$prom_id . "'";
+            
+            $query =  DB::connection('mysql_dynamic')->update($update_query_time); 
             }
-            
             else{
+            $prom_id= session()->get('prom_id') ;  
             
-                $prom_id= session()->get('prom_id') ;  
-                
-                $promotion = Promotion::find($prom_id);
-                
-                $promotion->prom_name = $req->input('promotion_name');
-                $promotion->prom_code =$req->input('promotion_code');
-                $promotion->category =$req->input('promotion_category');
-                $promotion->period =$req->input('promotion_period');
-                
-                $promotion->qty_limit =$req->input('promotion_item_qty_limit');
-                $promotion->prom_type_id =$req->input('promotion_type');
-                $promotion->buy_qty =$req->input('promotion_buy_qty');
-                $promotion->same_group =$req->input('promotion_same_itme');
-                $promotion->disc_each_nth =$req->input('promotion_disc_options');
-                $promotion->bill_value =$req->input('promotion_bill_value');
-                $promotion->discount_type_id =$req->input('promotion_discount_type');
-                $promotion->discounted_value =$req->input('promotion_discounted_value') ??'0';
-               // $promotion->discounted_item =json_encode($req->input('promotion_discounted_item_text') ?? '';
-                $promotion->addl_disc_cust = $promotion_addl_discount;
-                $promotion->qty_limit_bal =$req->input('promotion_item_qty_limit');
-                $promotion->discount_limit =$req->input('promotion_discount_limit');
-                $promotion->slab_price =$req->input('promotion_slab_price');
-                $promotion->mfg_discount =$req->input('mfg_discount');
-                $promotion->exclude_include =$req->input('promotion_item_state');
-                $promotion->mfg_prom_desc =$req->input('mfg_prom_desc');
-                $promotion->mfg_buydown_desc =$req->input('mfg_buydown_desc');
-                $promotion->mfg_multipack_desc =$req->input('mfg_multipack_desc');
-                //$promotion->img_url =$req->input('');
-                $promotion->prom_qty_limit = $qty_limit;
-                $promotion->allow_reg_price = $allow_reg_price;
-                $promotion->status =$req->input('promotion_status');
-                
-                
-                
-                $promotion->save();
-                
-                //time not updating currect 
-                $update_query_time = "UPDATE trn_promotions SET LastUpdate =now() WHERE prom_id = '" . (int)$prom_id . "'";
-                $query =  DB::connection('mysql_dynamic')->update($update_query_time);
+            $promotion = Promotion::find($prom_id);
+            
+            $promotion->prom_name = $req->input('promotion_name');
+            $promotion->prom_code =$req->input('promotion_code');
+            $promotion->category =$req->input('promotion_category');
+            $promotion->period =$req->input('promotion_period');
+            $promotion->qty_limit =$qty_limit;
+            $promotion->prom_type_id =$req->input('promotion_type');
+            $promotion->buy_qty =$req->input('promotion_buy_qty');
+            $promotion->same_group =$req->input('promotion_same_itme');
+            $promotion->disc_each_nth =$req->input('promotion_disc_options');
+            $promotion->bill_value =$promotion_bill_value;
+            $promotion->discount_type_id =$req->input('promotion_discount_type');
+            $promotion->discounted_value =$req->input('promotion_discounted_value') ??'0';
+           // $promotion->discounted_item =json_encode($req->input('promotion_discounted_item_text') ?? '';
+            $promotion->addl_disc_cust = $promotion_addl_discount;
+            $promotion->qty_limit_bal =$req->input('promotion_item_qty_limit');
+            $promotion->discount_limit =$req->input('promotion_discount_limit');
+            $promotion->slab_price =$req->input('promotion_slab_price');
+            $promotion->mfg_discount =$req->input('mfg_discount');
+            $promotion->exclude_include =$req->input('promotion_item_state');
+            $promotion->mfg_prom_desc =$req->input('mfg_prom_desc');
+            $promotion->mfg_buydown_desc =$req->input('mfg_buydown_desc');
+            $promotion->mfg_multipack_desc =$req->input('mfg_multipack_desc');
+            //$promotion->img_url =$req->input('');
+            $promotion->prom_qty_limit = $req->input('promotion_item_qty_limit');
+            $promotion->allow_reg_price = $allow_reg_price;
+            $promotion->status =$req->input('promotion_status');
+            $promotion->save();
+            
+            //time not updating currect 
+            $update_query_time = "UPDATE trn_promotions SET LastUpdate =now() WHERE prom_id = '" . (int)$prom_id . "'";
+            //dd($update_query_time);
+            $query =  DB::connection('mysql_dynamic')->update($update_query_time);
             }
         // if(!empty($input['added_promotion_items_text']) && strlen($prom_id)>0)
         // {
@@ -1703,10 +1636,10 @@ class PromotionController extends Controller
                                 $new_price = $input['promotion_slab_price']/$input['promotion_buy_qty'];
                                 $new_price = number_format($new_price , 2);
                                 
-                                $update_query = "UPDATE trn_prom_details SET prom_id='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price = '".$itemDetails['dunitprice'] ."', discounted_price='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID = '".session()->get('sid')."' WHERE `prom_id`={$prom_id} AND barcode='".$itemDetails['vbarcode']."'";
+                                $update_query = "UPDATE trn_prom_details SET prom_id='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price = '".$itemDetails['dunitprice'] ."', discounted_price='".$new_price."', LastUpdate =now() , SID = '".session()->get('sid')."' WHERE `prom_id`={$prom_id} AND barcode='".$itemDetails['vbarcode']."'";
                                 
                             } else {
-                                $update_query = "UPDATE trn_prom_details SET prom_id ='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price='".$itemDetails['dunitprice']."', discounted_price='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".session()->get('sid')."' WHERE prom_id= '".$prom_id."' AND barcode='".$itemDetails['vbarcode']."' ";
+                                $update_query = "UPDATE trn_prom_details SET prom_id ='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price='".$itemDetails['dunitprice']."', discounted_price='".$disc_value."', LastUpdate =now() , SID ='".session()->get('sid')."' WHERE prom_id= '".$prom_id."' AND barcode='".$itemDetails['vbarcode']."' ";
                             }
                             
                             // if(session()->get('sid') == '100763' && $prom_id == '209'){
@@ -1736,9 +1669,9 @@ class PromotionController extends Controller
                               
                                 $new_price = number_format($new_price , 2);
                                 
-                                $query_insert = "INSERT INTO trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".session()->get('sid')."' ";
+                                $query_insert = "INSERT INTO trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate =now() , SID ='".session()->get('sid')."' ";
                             } else {
-                                $query_insert = "INSERT INTO trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".session()->get('sid')."' ";
+                                $query_insert = "INSERT INTO trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate =now() , SID ='".session()->get('sid')."' ";
                             }
                             
                           $query =  DB::connection('mysql_dynamic')->insert($query_insert);
@@ -1755,7 +1688,7 @@ class PromotionController extends Controller
                         $query =  DB::connection('mysql_dynamic')->insert($delete_query);
                         
                         $insert_delete_query = "INSERT INTO mst_delete_table (TableName, TableId, Action, LastUpdate, SID) 
-                                                VALUES('trn_prom_details', '". (int)$et['prom_detail_id'] . "', 'delete', '".date('Y-m-d H:i:s', strtotime("+1 hours"))."', '".session()->get('sid')."')";
+                                                VALUES('trn_prom_details', '". (int)$et['prom_detail_id'] . "', 'delete', now() , '".session()->get('sid')."')";
                         $query =  DB::connection('mysql_dynamic')->insert($insert_delete_query);
                     }
                 }
@@ -2253,10 +2186,14 @@ class PromotionController extends Controller
     {
        
         $input = $req->all();
+
         $return = $datas = array();
+
         // $this->load->model('administration/promotion');
         // $input = $input;
+
         $search = $input['columns'];
+
         $promotion_records = [];
         $total_record_count = 0;
         
@@ -2356,8 +2293,6 @@ class PromotionController extends Controller
         //                             ->where('status',$req->input('prom_status'))->get();
         
         // return $return;
-        
-    
 
         return response()->json($return, 200);
     }
@@ -3183,7 +3118,7 @@ class PromotionController extends Controller
             {
                 if(!empty($value))
                 {
-                    \DB::connection('mysql_dynamic')->insert("INSERT INTO trn_prom_customers SET prom_id ='".$prom_id."', cust_id ='".$value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$itemDetails['SID']."' ");
+                    \DB::connection('mysql_dynamic')->insert("INSERT INTO trn_prom_customers SET prom_id ='".$prom_id."', cust_id ='".$value."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$itemDetails['SID']."' ");
                 }
             }
             
@@ -3274,7 +3209,6 @@ class PromotionController extends Controller
                 
                 
                 // Promotion::find($del)->delete();
-                
                 \DB::connection('mysql_dynamic')->delete("DELETE FROM  trn_promotions WHERE prom_id = '" . (int)$del . "'");
                 
                 \DB::connection('mysql_dynamic')->delete("DELETE FROM  trn_prom_details WHERE prom_id = '" . (int)$del . "'");

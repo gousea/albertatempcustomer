@@ -64,77 +64,109 @@ rel="stylesheet" /> --}}
         <div class="navbar navbar-expand-lg navbar-dark bg-primary headermenublue top">
             <div class="container">
                 <div class="row" style="width: 100%">
-                    {{-- <div class="col-md-12"> --}}
-                        {{-- <div class="col-md-3"> --}}
-                            <div class="col logo">
-                                <img src="{{ asset('asset/img/albertalogo.png') }}" width="30" height="30" alt="">
-                                <a href="#" class="logo-name">ALBERTA POS</a>
-                            </div>
-                        {{-- </div> --}}
-                        {{-- <div class="col-md-3"> --}}
-                            <div class="col date-username">
-                                <p class="nav-item text-items"><?php echo date('l jS \of F Y h:i:s A'); ?></p>
-                                <p class="nav-item text-items" style="margin-top:-15px; margin-bottom: 0px;">
-                                    {{ Auth::user()->fname . ' ' . Auth::user()->lname }}</p>
-                            </div>
-                        {{-- </div> --}}
-                        {{-- <div class="col-md-6"> --}}
-                            <div class="col store">
+                        <div class="col logo">
+                            <img src="{{ asset('asset/img/albertalogo.png') }}" width="30" height="30" alt="">
+                            <a href="#" class="logo-name">ALBERTA POS</a>
+                        </div>
+                    
+                        <div class="col date-username">
+                            <p class="nav-item text-items"><?php echo date('l jS \of F Y h:i:s A'); ?></p>
+                            <p class="nav-item text-items" style="margin-top:-15px; margin-bottom: 0px;">
+                                {{ Auth::user()->fname . ' ' . Auth::user()->lname }}</p>
+                        </div>
+
+                        <?php if(session()->get('hq_sid') == 1 ){ ?>
+                            <div class="col date-username" style="margin-right: -10%">
                                 <ul class="navbar-nav ml-auto col-sm-7 nav-items-list nav-bar-search">
                                     <li class="nav-item dropdown">
                                         <a class="nav-link  dropdown-toggle stores-menu" href="#" id="storename"
-                                            data-toggle="dropdown"> {{ session()->get('storeName') }}
-                                            [{{ session()->get('sid') }}] </a>
+                                            data-toggle="dropdown"> Head Quarters </a>
                                         <ul class="dropdown-menu dropdown-menu-right">
-                                            <li><input type="text" name="" placeholder="search store" class="form-control"
-                                                    id="store_search"></li>
-                                            @if (session()->has('stores'))
-                                                @foreach (session()->get('stores') as $store)
-                                                    <li class="nav-item" id="nav-item">
-                                                        <a class="change_store dropdown-item"
-                                                            style="font-size: 13px; margin-bottom: -5px"
-                                                            href="{{ route('dashboard') }}"
-                                                            onclick="event.preventDefault();
-                                                            document.getElementById('store-form{{ $store->id }}').submit();">
-                                                            <?php if ($store->hq_sid == 1) { ?>
+                                            <li><input type="text" name="" placeholder="search store" class="form-control" id="store_search"></li>
+                                            @if(session()->has('stores_hq'))
+                                                @foreach (session()->get('stores_hq') as $store)
+                                                <li class="nav-item" id="nav-item">
+                                                    <a class="change_store dropdown-item"
+                                                        style="font-size: 13px; margin-bottom: -5px"
+                                                        href="{{ route('dashboard') }}"
+                                                        onclick="event.preventDefault();
+                                                        document.getElementById('store-form{{ $store->id }}').submit();">
+                                                        <?php if ($store->hq_sid == 1) { ?>
                                                             {{ $store->name }} [{{ $store->id }}] [HQ]
-                                                            <?php } else { ?>
+                                                        <?php } else { ?>
                                                             {{ $store->name }} [{{ $store->id }}]
-                                                            <?php } ?>
-
-                                                        </a>
-                                                    </li>
-                                                    <form id="store-form{{ $store->id }}"
-                                                        action="{{ route('dashboard') }}" method="POST"
-                                                        style="display: none;">
-                                                        @csrf
-                                                        <input type="hidden" name="sid" id="sid_{{ $store->id }}"
-                                                            value="{{ $store->id }}">
-                                                    </form>
+                                                        <?php } ?>
+                                                    </a>
+                                                </li>
+                                                <form id="store-form{{ $store->id }}"
+                                                    action="{{ route('dashboard') }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                    <input type="hidden" name="sid" id="sid_{{ $store->id }}"
+                                                        value="{{ $store->id }}">
+                                                </form>
                                                 @endforeach
                                             @endif
                                         </ul>
                                     </li>
-                                    <li class="nav-item"><a href="" title="Settings" class="icons"><i class="fa fa-cog"></i></a>
-                                    </li>
-                                    <li class="nav-item"><a href="" title="Notification" class="icons"><i class="fa fa-bell"
-                                                aria-hidden="true"></i></a></li>
-                                    <li class="nav-item">
-                                        <a style="color: #fff !important;" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                            <i class="fa fa-sign-out fa-lg"></i>
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                            style="display: none;">
-                                            @csrf
-                                        </form>
-                                    </li>
-
                                 </ul>
                             </div>
-                        {{-- </div> --}}
-                    {{-- </div> --}}
+                        <?php } ?>
+                    
+                        <div class="col store">
+                            <ul class="navbar-nav ml-auto col-sm-7 nav-items-list nav-bar-search">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link  dropdown-toggle stores-menu" href="#" id="storename"
+                                        data-toggle="dropdown"> {{ session()->get('storeName') }}
+                                        [{{ session()->get('sid') }}] </a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><input type="text" name="" placeholder="search store" class="form-control"
+                                                id="store_search"></li>
+                                        @if (session()->has('stores'))
+                                            @foreach (session()->get('stores') as $store)
+                                                <li class="nav-item" id="nav-item">
+                                                    <a class="change_store dropdown-item"
+                                                        style="font-size: 13px; margin-bottom: -5px"
+                                                        href="{{ route('dashboard') }}"
+                                                        onclick="event.preventDefault();
+                                                        document.getElementById('store-form{{ $store->id }}').submit();">
+                                                        <?php if ($store->hq_sid == 1) { ?>
+                                                        {{ $store->name }} [{{ $store->id }}] [HQ]
+                                                        <?php } else { ?>
+                                                        {{ $store->name }} [{{ $store->id }}]
+                                                        <?php } ?>
+
+                                                    </a>
+                                                </li>
+                                                <form id="store-form{{ $store->id }}"
+                                                    action="{{ route('dashboard') }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                    <input type="hidden" name="sid" id="sid_{{ $store->id }}"
+                                                        value="{{ $store->id }}">
+                                                </form>
+                                            @endforeach
+                                        @endif
+                                    </ul>
+                                </li>
+                                <li class="nav-item"><a href="" title="Settings" class="icons"><i class="fa fa-cog"></i></a>
+                                </li>
+                                <li class="nav-item"><a href="" title="Notification" class="icons"><i class="fa fa-bell"
+                                            aria-hidden="true"></i></a></li>
+                                <li class="nav-item">
+                                    <a style="color: #fff !important;" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-sign-out fa-lg"></i>
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
+
+                            </ul>
+                        </div>
                 </div>
             </div>
         </div>
