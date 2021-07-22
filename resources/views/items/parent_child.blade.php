@@ -218,13 +218,13 @@ Parent Child
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Select the stores in which you want to Add Parent Child relation</h5>
+                <h6 class="modal-title">Select the stores in which you want to Add Parent Child relation</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
               <div class="modal-body">
-                 <table class="table table-bordered">
+                 <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
@@ -251,13 +251,13 @@ Parent Child
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Select the stores in which you want to update the items:</h5>
+                <h6 class="modal-title">Select the stores in which you want to update the items:</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
               <div class="modal-body">
-                 <table class="table table-bordered">
+                 <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="editSelectAllCheckbox" name="" value="" style="background: none !important;">
@@ -283,7 +283,7 @@ Parent Child
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Select the stores in which you want to Delete parent child relation:</h5>
+                <h6 class="modal-title">Select the stores in which you want to Delete parent child relation:</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
               <div class="modal-body">
@@ -357,7 +357,7 @@ $("#addmore").click(function(){
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -367,7 +367,7 @@ $("#addmore").click(function(){
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -646,7 +646,7 @@ input[type=number] {
                                         var data = '<tr>'+
                                                         '<td>'+
                                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                                '<input type="checkbox" class="checks check custom-control-input deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                                '<input type="checkbox" class="checks check  deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                             '</div>'+
                                                         '</td>'+
                                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -656,7 +656,7 @@ input[type=number] {
                                         var data = '<tr>'+
                                                         '<td>'+
                                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                                '<input type="checkbox" class="checks check custom-control-input deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                                '<input type="checkbox" class="checks check  deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                             '</div>'+
                                                         '</td>'+
                                                         '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -836,7 +836,7 @@ input[type=number] {
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="editstores" name="editstores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  editstores" disabled id="editstores" name="editstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -846,7 +846,7 @@ input[type=number] {
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input editstores"  id="editstores" name="editstores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  editstores"  id="editstores" name="editstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
