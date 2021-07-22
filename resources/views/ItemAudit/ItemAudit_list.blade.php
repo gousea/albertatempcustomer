@@ -358,7 +358,7 @@ $(document).ready(function() {
 
 <style>
     .select2-container--default .select2-selection--single{
-    border-radius: 0px !important;
+    border-radius: 7px !important;
     height: 35px !important;
     width
   }
