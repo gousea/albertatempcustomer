@@ -624,7 +624,7 @@
                 },
             });
         }
-        // setInterval(get_time, 1000);
+         setInterval(get_time, 1000);
     });
   </script>
 @endsection
