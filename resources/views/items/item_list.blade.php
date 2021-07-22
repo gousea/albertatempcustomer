@@ -772,7 +772,7 @@ $('#items_status').change(function() {
                                     var data = '<tr>'+
                                                     '<td>'+
                                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                            '<input type="checkbox" class="checks check custom-control-input stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                            '<input type="checkbox" class="checks check stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                                         '</div>'+
                                                     '</td>'+
                                                     '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -783,7 +783,7 @@ $('#items_status').change(function() {
                                     var data = '<tr>'+
                                                     '<td>'+
                                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                            '<input type="checkbox" class="checks check custom-control-input stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                            '<input type="checkbox" class="checks check stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                                         '</div>'+
                                                     '</td>'+
                                                     '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
