@@ -76,32 +76,53 @@ class EndOfDayReportController extends Controller
                 }
                 
             }
-            
+           
+           
+       
+          
+        $graph_data = $splitted_data;
+        
+              
           if(!empty($report_new_dept)){
               foreach($report_new_dept as $v){
                   $dataPoints[]= ["name"=> $v->vdepatname,"y" => number_format($v->gpp*100,2)];
                   
               }    
           }
-           
-           
           
-           $graph_data = $splitted_data;
-        //   dd($dataPoints,$dataPoints1);
-         
+          //year data EOD
+           
+                $sql_data="select 
+                sum(nnettotal) ytd, 
+                sum(case when e.dstartdatetime >= date_add(curdate(), interval -day(current_date())+1 day) then nnettotal else 0 end) mtd,
+                sum(case when e.dstartdatetime >= date_add(curdate(), interval -dayofweek(current_date())+1 day) then nnettotal else 0 end) wtd
+                from trn_sales 
+                join trn_endofdaydetail d on ibatchid=d.batchid
+                join trn_endofday e on e.id=d.eodid
+                where vtrntype='Transaction' and date(e.dstartdatetime) >= str_to_date('". $date ."','%m-%d-%Y') ";
+	            //dd($sql);
+          
+                $result = DB::connection('mysql_dynamic')->select($sql_data);
+                
+                $week=$result[0]->wtd;
+                $month=$result[0]->mtd;
+                $year=$result[0]->ytd;
+                
+                //
+        
 
-        $url_print = url('/eodreport/print');
-        session()->put('session_data',  $data);
-        session()->put('session_paidout',  $paidout);
-        session()->put('session_hourly',  $hourly);
-        session()->put('session_report_new_dept',  $report_new_dept);
-        session()->put('session_store',  $store);
-        session()->put('session_date',  $date);
+                $url_print = url('/eodreport/print');
+                session()->put('session_data',  $data);
+                session()->put('session_paidout',  $paidout);
+                session()->put('session_hourly',  $hourly);
+                session()->put('session_report_new_dept',  $report_new_dept);
+                session()->put('session_store',  $store);
+                session()->put('session_date',  $date);
 
         
         
         
-        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date','url_print','graph_data','dataPoints'));
+        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date','url_print','graph_data','dataPoints','week','month','year'));
        
     }
     public function eodPdf()
