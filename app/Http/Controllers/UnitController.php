@@ -16,11 +16,11 @@ class UnitController extends Controller
 	}
 	public function edit_list(Request $request) {
         $input = $request->all();
-    //   dd($input);
+    	//   dd($input);
         $model = new Unit();
 		// if (($request->isMethod('POST')) && $this->validateEditList()) {
 		if (($request->isMethod('POST'))) {
-            //print_r($this->request->post['unit']); die;
+            
 			$arr_with_iunitid= array();
 			$arr_without_iunitid = array();
 			$arr_with_stores_hq = array();
@@ -45,7 +45,7 @@ class UnitController extends Controller
 			        $counter++;
 			        $error_string .= $counter.". ".$v['vunitname'].PHP_EOL;
 		        }
-			}
+			} 
 			if($error_string !== ""){
 			 //   $this->error['warning']="The following unit(s) already exist: ".PHP_EOL.$error_string;
 			    $this->error['warning']="This unit already exists ";
@@ -55,10 +55,16 @@ class UnitController extends Controller
 			    $stores = isset($input['stores_hq']) ? $input['stores_hq'] : session()->get('sid')  ;
     			foreach ($arr_with_iunitid as $k => $v) {
     			    
-    				$model->editlistUnits($v['iunitid'],$v, $stores);
+    				$return = $model->editlistUnits($v['iunitid'],$v, $stores);
+
+					if(isset($return['error']) && $return['error'] !== ""){
+						
+						session()->put('error_warning', $return['error']);
+						return redirect(route('unit'));
+					}
     			}
-    			$url = '';
-                session()->put('success', "New unit added successfully!");
+    			
+                session()->put('success', "unit updated successfully!");
                 return redirect(route('unit'));
     		}
 		}
@@ -138,8 +144,9 @@ class UnitController extends Controller
 		$data['button_edit_list'] = 'Update Selected';
 		$data['text_special'] = '<strong>Special:</strong>';
 		$data['token'] = "";
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
+		if (session()->exists('error_warning')) {
+			$data['error_warning'] = session()->get('error_warning');
+			Session::forget('error_warning');
 		} else {
 			$data['error_warning'] = '';
 		}
