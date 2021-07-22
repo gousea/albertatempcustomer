@@ -108,14 +108,16 @@
                 </div>
             <?php } ?>
 
-            <br>
+            <div class="col-md-12">
+                <h6><span>ITEM AUDIT </span></h6>
+            </div>
             <br>
             <div class="row col-md-12">
                 <div class="table-responsive">
                     <table id="vendor" class="table table-hover promotionview dataTable no-footer" style="width: 100%;" role="grid">
                         <?php if(isset($list ) && !empty($list) > 0){ ?>
                             <thead class='header'>
-                                <tr role="row" class="headermenublue">
+                                <tr role="row" class="data_list">
                                     <th width="10%" class="text-left"><?php echo "SKU"; ?></th>
                                     <th width="10%" class="text-left"><?php echo "Item Name" ?></th>
                                     <th width="10%" class="text-left "><?php echo "Modification"; ?></th>
@@ -356,9 +358,28 @@ $(document).ready(function() {
 
 <style>
     .select2-container--default .select2-selection--single{
-    border-radius: 0px !important;
+    border-radius: 7px !important;
     height: 35px !important;
     width
+  }
+
+  .data_list{
+    background-color: #474c53 !important;
+    border-radius: 9px;
+    color: #fff;
+    padding-bottom: 1px;
+  }
+  #view_userid{
+    color: blue;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  #view_userid:hover{
+    color: #286fb7;
+    text-decoration: none;
+    font-weight: bolder;
+    text-decoration: underline;
   }
   .select2.select2-container.select2-container--default{
   width: 100% !important;

@@ -44,7 +44,21 @@
         background-color: #ffffff;
     }
     
-    
+    #unit_id{
+        font-size: 13px !important;
+    }
+    #size_id{
+        font-size: 13px !important;
+    }
+    #dept_code {
+        font-size: 13px !important;
+    }
+    #category_code{
+        font-size: 13px !important;
+    }
+    #sub_category_id{
+        font-size: 13px !important;
+    }
   
 </style>
 
@@ -437,10 +451,10 @@
                                             <label for="inputFirstname" class="p-2 float-left text-uppercase">Promotion Item Type</label>
                                         </div>
                                         <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group" style="margin-top: 8px;">
-                                            <input type="radio" name="promotion_same_itme" id="id_same_item" value="Same Item" <?php echo isset($data['promotion_same_itme']) && $data['promotion_same_itme'] == "Same Item" ? 'checked' : ''?> required  > <b> Same Item</b>
+                                           <b> Same Item</b> <input style="margin-top: 5px" type="radio" name="promotion_same_itme" id="id_same_item" value="Same Item" <?php echo isset($data['promotion_same_itme']) && $data['promotion_same_itme'] == "Same Item" ? 'checked' : ''?> required  > 
                                         </div>
                                         <div class="col-4 col-md-4 col-sm-4 col-lg-4 radio-group" style="margin-top: 8px;">
-                                            <input type="radio" name="promotion_same_itme" id="id_group_item" value="Group Item" <?php echo isset($data['promotion_same_itme']) && $data['promotion_same_itme'] == "Group Item" ? 'checked' : ''?>  > <b> Group Item</b>
+                                            <b> Group Item</b> <input style="margin-top: 5px" type="radio" name="promotion_same_itme" id="id_group_item" value="Group Item" <?php echo isset($data['promotion_same_itme']) && $data['promotion_same_itme'] == "Group Item" ? 'checked' : ''?>  >
                                         </div>
                                     </div>
                                 </div>
@@ -668,7 +682,7 @@
                                                     <lable class="required control-label">NOTE: New search will clear existing search and selected items</lable>
                                                 </span>
                                             </b>
-                                            <table id="item_listing" class="table table-striped table-hover"  style="font-size:9px;width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                                            <table id="item_listing" class="table table-striped table-hover"  style="font-size:13px;width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                                                 <thead style="background-color: #286fb7!important;" >
                                                     <tr>
                                                         <th style="width: 1px;" class="text-center">
@@ -817,10 +831,10 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <span id="submit_promotion" data-toggle="tooltip" class="btn btn-primary" style="font-size: 16px; border-radius: 5px; background-color: #286fb7; margin-top: 10px;"  title="save">Save</span>
+                                <span id="submit_promotion"  class="btn btn-primary" style="font-size: 16px; border-radius: 5px; background-color: #286fb7; margin-top: 10px;"  title="save">Save</span>
                                 <!--<button id="submit_promotion" class="btn btn-primary"><i class="fa fa-save"> Save</i></button>-->
                                 <!--<button type="submit" form="form-customer" data-toggle="tooltip" id="submit_promotion" title="save" class="btn btn-primary"><i class="fa fa-save"> Save</i></button>-->
-                                <a href="{{ '/'.session()->get('version').'/promotion' }}"  data-toggle="tooltip" title="cancel" style="font-size: 16px; border-radius: 5px;  margin-top: 10px;"  class="btn  btn-danger"><i class="fa fa-reply"></i> Cancel</a>
+                                <a href="{{ '/promotion' }}"   title="cancel" style="font-size: 16px; border-radius: 5px;  margin-top: 10px;"  class="btn  btn-danger"><i class="fa fa-reply"></i> Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -930,10 +944,13 @@
 <div id="existingModel" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
+            
             <div class="modal-header">
-                <button type="button" class="closeExistingItemModal" id="closeBtn" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">The following items already exists in other promotions:</h4>
-            </div>
+                <h5 class="modal-title">The following items already exists in other promotions:</h5>
+                <button type="button" class="close closeExistingItemModal" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+          </div>
             <div class="modal-body">
                 <table class="table table-bordered">
                 <thead id="table_green_header_tag">
@@ -945,7 +962,7 @@
             </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="cancelExistingItems">Cancel</button>
+                <button type="button" class="btn btn-danger" id="cancelExistingItems" style="font-size: 16px; padding-left: 10px; padding-right: 10px; ">Cancel</button>
             </div>
         </div>
     </div>
