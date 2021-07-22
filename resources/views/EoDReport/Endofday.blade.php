@@ -52,11 +52,11 @@
 
                 </div>  
                 <div class="col-md-3" >
-                    <button  class="form-control headermenublue rcorner"style="height: 60px; "> <b> $ <?php  if( isset($month) && $month != 'NULL'){ echo $month ; }else{ echo '0.00';} ;?> <br>YEAR TO DATE SALES </b></button>
+                    <button  class="form-control headermenublue rcorner"style="height: 60px; "> <b> $ <?php  if( isset($month) && $month != 'NULL'){ echo $month ; }else{ echo '0.00';} ;?> <br>MONTH TO DATE SALES </b></button>
 
                 </div>    
                 <div class="col-md-3" >
-                    <button  class="form-control headermenublue rcorner"style="height: 60px; "> <b>  $ <?php  if( isset($week) && $week != 'NULL'){ echo $week ; }else{ echo '0.00';} ;?> <br>YEAR TO DATE SALES </b></button>
+                    <button  class="form-control headermenublue rcorner"style="height: 60px; "> <b>  $ <?php  if( isset($week) && $week != 'NULL'){ echo $week ; }else{ echo '0.00';} ;?> <br>WEEK TO DATE SALES </b></button>
 
                 </div>    
                 <div class="col-md-3" >
