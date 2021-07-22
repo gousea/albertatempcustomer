@@ -113,245 +113,101 @@
                 <div class="row mt-3">
                     <div class="col-lg-8 col-md-8 col-xs-8 ">
                         <div class="box box-info">
-                            {{-- <div class="box-header with-border d-flex justify-content-between">
-                                <h4 class="box-title text-capitalize">last 7 day sales</h4>
-                                <div class="box-tools pull-right dropdown">
-                                    <button type="button" class="btn outline-secondary dropdown-toggle btn-sales"
-                                        data-toggle="dropdown">
-                                        On this day
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Normal</a>
-                                        <a class="dropdown-item active" href="#">Active</a>
-                                        <a class="dropdown-item disabled" href="#">Disabled</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-body chart-responsive">
-                                <div class="chart" id="line-chart"
-                                    style="height: 300px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                    <svg height="300" version="1.1" width="512.219" xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        style="overflow: hidden; position: relative; left: -0.5px;">
-                                        <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with
-                                            Raphaël 2.3.0
-                                        </desc>
-                                        <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
-                                        <text x="49.546875" y="261" text-anchor="end" font-family="sans-serif"
-                                            font-size="12px" stroke="none" fill="#888888"
-                                            style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;"
-                                            font-weight="normal">
-                                            <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0
-                                            </tspan>
-                                        </text>
-                                        <path fill="none" stroke="#aaaaaa" d="M62.046875,261H487.21900000000005"
-                                            stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </path>
-                                        <text x="49.546875" y="202" text-anchor="end" font-family="sans-serif"
-                                            font-size="12px" stroke="none" fill="#888888"
-                                            style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;"
-                                            font-weight="normal">
-                                            <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                                5,000</tspan>
-                                        </text>
-                                        <path fill="none" stroke="#aaaaaa" d="M62.046875,202H487.21900000000005"
-                                            stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </path>
-                                        <text x="49.546875" y="143" text-anchor="end" font-family="sans-serif"
-                                            font-size="12px" stroke="none" fill="#888888"
-                                            style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;"
-                                            font-weight="normal">
-                                            <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                                10,000</tspan>
-                                        </text>
-                                        <path fill="none" stroke="#aaaaaa" d="M62.046875,143H487.21900000000005"
-                                            stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </path>
-                                        <text x="49.546875" y="84" text-anchor="end" font-family="sans-serif"
-                                            font-size="12px" stroke="none" fill="#888888"
-                                            style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;"
-                                            font-weight="normal">
-                                            <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                                15,000</tspan>
-                                        </text>
-                                        <path fill="none" stroke="#aaaaaa" d="M62.046875,84H487.21900000000005"
-                                            stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </path>
-                                        <text x="49.546875" y="25" text-anchor="end" font-family="sans-serif"
-                                            font-size="12px" stroke="none" fill="#888888"
-                                            style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;"
-                                            font-weight="normal">
-                                            <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                                20,000</tspan>
-                                        </text>
-                                        <path fill="none" stroke="#aaaaaa" d="M62.046875,25H487.21900000000005"
-                                            stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </path>
-                                        <text x="409.2105056196841" y="273.5" text-anchor="middle" font-family="sans-serif"
-                                            font-size="12px" stroke="none" fill="#888888"
-                                            style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;"
-                                            font-weight="normal" transform="matrix(1,0,0,1,0,7)">
-                                            <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                                2013</tspan>
-                                        </text>
-                                        <text x="220.13031394289186" y="273.5" text-anchor="middle" font-family="sans-serif"
-                                            font-size="12px" stroke="none" fill="#888888"
-                                            style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;"
-                                            font-weight="normal" transform="matrix(1,0,0,1,0,7)">
-                                            <tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                                2012</tspan>
-                                        </text>
-                                        <path fill="none" stroke="#3c8dbc"
-                                            d="M62.046875,229.5412C73.92896354799514,229.2108,97.69314064398542,231.53245,109.57522919198055,228.2196C121.4573177399757,224.90675000000002,145.22149483596598,204.50514644808743,157.1035833839611,203.0384C168.856518795565,201.58759644808742,192.3623896187728,219.34895,204.11532503037668,216.5494C215.86826044198057,213.74984999999998,239.37413126518834,183.43358661202186,251.12706667679223,180.642C263.0091552247874,177.81973661202184,286.7733323207777,191.15875,298.6554208687728,194.094C310.53750941676793,197.02925,334.30168651275824,218.06921420765028,346.18377506075336,204.124C357.9367104723573,190.33036420765026,381.442581295565,91.84023618784529,393.1955167071689,83.1386C404.81929898238155,74.5325861878453,428.06686353280685,125.20556758241756,439.6906458080195,134.89339999999999C451.5727343560146,144.79651758241758,475.3369114520049,154.85015,487.21900000000005,161.50240000000002"
-                                            stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </path>
-                                        <circle cx="62.046875" cy="229.5412" r="4" fill="#3c8dbc" stroke="#ffffff"
-                                            stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </circle>
-                                        <circle cx="109.57522919198055" cy="228.2196" r="4" fill="#3c8dbc" stroke="#ffffff"
-                                            stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </circle>
-                                        <circle cx="157.1035833839611" cy="203.0384" r="4" fill="#3c8dbc" stroke="#ffffff"
-                                            stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </circle>
-                                        <circle cx="204.11532503037668" cy="216.5494" r="4" fill="#3c8dbc" stroke="#ffffff"
-                                            stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </circle>
-                                        <circle cx="251.12706667679223" cy="180.642" r="4" fill="#3c8dbc" stroke="#ffffff"
-                                            stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </circle>
-                                        <circle cx="298.6554208687728" cy="194.094" r="4" fill="#3c8dbc" stroke="#ffffff"
-                                            stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </circle>
-                                        <circle cx="346.18377506075336" cy="204.124" r="4" fill="#3c8dbc" stroke="#ffffff"
-                                            stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </circle>
-                                        <circle cx="393.1955167071689" cy="83.1386" r="4" fill="#3c8dbc" stroke="#ffffff"
-                                            stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                        </circle>
-                                        <circle cx="439.6906458080195" cy="134.89339999999999" r="4" fill="#3c8dbc"
-                                            stroke="#ffffff" stroke-width="1"
-                                            style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                        <circle cx="487.21900000000005" cy="161.50240000000002" r="4" fill="#3c8dbc"
-                                            stroke="#ffffff" stroke-width="1"
-                                            style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
-                                    </svg>
-                                    <div class="morris-hover morris-default-style"
-                                        style="left: 19.0234px; top: 162px; display: none;">
-                                        <div class="morris-hover-row-label">2011 Q1</div>
-                                        <div class="morris-hover-point" style="color: #3c8dbc">
-                                            Item 1: 2,666
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+
                             <!-- /.box-body -->
                             <div class="panel panel-default">
                                 <div class="panel-body padding15">
-                                    <strong><h2 class="md-title" align="center"><sup style="font-size: 20px">Last 7 Day Customer</sup></h2></strong>
+                                    <strong>
+                                        <h2 class="md-title" align="center"><sup style="font-size: 20px">Last 7 Day
+                                                Customer</sup></h2>
+                                    </strong>
                                     <div class="box-body chart-responsive">
-                                            <div class="chart" id="chart" style="height: 300px;"></div>
+                                        <div class="chart" id="chart" style="height: 300px;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="col-lg-4 col-md-12 col-xs-4">
-                        <div class="box box-info">
-                            <div class="heading text-muted d-flex justify-content-between">
-                                <h6 class="text-capitalize">weekly top items</h6>
-                                <a href="#" class="text-capitalize view-more font-weight-bold">view more</a>
-                            </div>
-                            <div class="content text-dark d-flex justify-content-between">
-                                <div class="d-text">
-                                    <h6 class="text-title text-uppercase">News paper</h6>
-                                    <p class="p-text text-secondary">088214896547</p>
-                                </div>
-                                <div class="d-button">
-                                    <button type="button" class="bg-primary text-white d-button-text px-4">706</button>
-                                </div>
-                            </div>
-                            <div class="content text-dark d-flex justify-content-between">
-                                <div class="d-text">
-                                    <h6 class="text-title text-uppercase">News paper</h6>
-                                    <p class="p-text text-secondary">088214896547</p>
-                                </div>
-                                <div class="d-button">
-                                    <button type="button" class="bg-primary text-white d-button-text px-4">706</button>
-                                </div>
-                            </div>
-                            <div class="content text-dark d-flex justify-content-between">
-                                <div class="d-text">
-                                    <h6 class="text-title text-uppercase">News paper</h6>
-                                    <p class="p-text text-secondary">088214896547</p>
-                                </div>
-                                <div class="d-button">
-                                    <button type="button" class="bg-primary text-white d-button-text px-4">706</button>
-                                </div>
-                            </div>
-                            <div class="content text-dark d-flex justify-content-between">
-                                <div class="d-text">
-                                    <h6 class="text-title text-uppercase">News paper</h6>
-                                    <p class="p-text text-secondary">088214896547</p>
-                                </div>
-                                <div class="d-button">
-                                    <button type="button" class="bg-primary text-white d-button-text px-4">706</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+                    <?php
+
+                    ?>
+                    {{-- <div class="col-lg-4 col-md-12 col-xs-4"></div> --}}
                     <div class="col-lg-4 col-md-12 col-xs-4">
-                        {{-- <div class="box box-info">
+                        <div class="box box-info">
                             <div class="d-flex justify-content-center" style="display:none;">
-                                <h6 class="text-uppercase">weekly top items</h6>
+                                <h6 class="text-uppercase">Weekly Top Items</h6>
                                 <!--<a href="#" class="view-more font-weight-bold" id="hide">more</a>-->
                                 <!--<a href="#" class="more">more</a>-->
                                 <!--<a href="#" class="more">More</a>-->
                             </div>
                             <p class="disp-cont">
-                                <?php //foreach($output['topItem'] as $topitem){ ?>
-                                    <div class="content text-dark d-flex justify-content-between" id="five">
-                                        <div class="d-text">
-                                            <h6 class="text-uppercase"><?php //echo $topitem->Item; ?></h6>
-                                            <p class="p-text text-secondary"><?php
-                                            // $url = url()->current();
-                                            // $url_data = explode("/dashboard",$url);
-                                            // $urllink = $url_data[0];
-                                            // $product_id = 2;
-                                            // $itemlink = '/item/edit/'.$product_id;
-                                            // $target_url = $url_data[0].$itemlink;
-                                            ?></p>
-                                        </div>
-                                        <div class="d-button">
-                                            <a href="<?php //echo $target_url?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php //echo $topitem->Quantity; ?></a>
-                                            <!--<button type="button" class="bg-primary text-white d-button-text px-4"><?php //echo $topitem->Quantity; ?></button>-->
-                                        </div>
+                                <?php if(isset($output['topItem'])){ ?>
+                                <?php foreach($output['topItem'] as $topitem){ ?>
+                            <div class="content text-dark d-flex justify-content-between" id="five">
+                                <?php if(isset($topitem->Item)) { ?>
+                                    <div class="d-text">
+                                        <h6 class="text-uppercase"><?php echo $topitem->Item; ?></h6>
+                                        <p class="p-text text-secondary"><?php
+                                        $url = url()->current();
+                                        $url_data = explode('/dashboard', $url);
+                                        $urllink = $url_data[0];
+                                        $product_id = 2;
+                                        $itemlink = '/item/edit/' . $product_id;
+                                        $target_url = $url_data[0] . $itemlink;
+                                        ?></p>
                                     </div>
-                                <?php //} ?>
-                            </p>
-                            <div class="more-cont" style="display:none;">
-                                <?php //foreach($output['topItem'] as $topitem){ ?>
-                                    <div class="content text-dark d-flex justify-content-between">
-                                        <div class="d-text">
-                                            <h6 class="text-uppercase"><?php //echo $topitem->Item; ?></h6>
-                                            <p class="p-text text-secondary"><?php
-                                            // $url = url()->current();
-                                            // $url_data = explode("/dashboard",$url);
-                                            // $urllink = $url_data[0];
-                                            // $product_id = 2;
-                                            // $itemlink = '/item/edit/'.$product_id;
-                                            // $target_url = $url_data[0].$itemlink;
-                                            ?></p>
-                                        </div>
-                                        <div class="d-button">
-                                            <a href="<?php //echo $target_url?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php //echo $topitem->Quantity; ?></a>
-                                        </div>
+                                    <div class="d-button">
+                                        <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php echo $topitem->Quantity; ?></a>
                                     </div>
-                                <?php //} ?>
+                                <?php } else {?>
+                                        <span class="text-justify text-uppercase">No data available </span>
+                                <?php } ?>
                             </div>
-                            <a href="#" class="more" style="padding-left: 250px;">More</a>
-                        </div> --}}
+                            <?php } ?>
+                            <?php }else{ ?>
+                            <div>
+                                <p class="text-justify">No Data Found!!!</p>
+                            </div>
+                            <?php } ?>
+                            </p>
+
+                            <div class="more-cont" style="display:none;">
+                                <?php if(isset($output['topItem'])){ ?>
+                                    <?php foreach($output['topItem'] as $topitem){ ?>
+                                    <div class="content text-dark d-flex justify-content-between">
+                                        <?php if(isset($topitem->Item)) { ?>
+                                            <div class="d-text">
+                                                <h6 class="text-uppercase"><?php echo $topitem->Item; ?></h6>
+                                                <p class="p-text text-secondary"><?php
+                                                $url = url()->current();
+                                                $url_data = explode('/dashboard', $url);
+                                                $urllink = $url_data[0];
+                                                $product_id = 2;
+                                                $itemlink = '/item/edit/' . $product_id;
+                                                $target_url = $url_data[0] . $itemlink;
+                                                ?></p>
+                                            </div>
+                                            <div class="d-button">
+                                                <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4"
+                                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo $topitem->Quantity; ?></a>
+                                            </div>
+                                        <?php } else {?>
+                                                <span class="text-justify text-uppercase">No data available </span>
+                                        <?php } ?>
+                                    </div>
+                                    <?php } ?>
+                                <?php }else{ ?>
+                                <div>
+                                    <p class="text-justify text-uppercase">No Data available!!!</p>
+                                </div>
+                                <?php } ?>
+                            </div>
+                            <?php if(isset($topitem->Item)) { ?>
+                                <a href="#" class="more" style="padding-left: 250px;">More</a>
+                            <?php } ?>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -454,75 +310,75 @@
 @endsection
 
 @section('page-script')
-{{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> --}}
-<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-4 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-{{-- <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script> --}}
-{{-- <link href="/stylesheet/morris.css" rel="stylesheet" type="text/css"/> --}}
-{{-- <link rel="stylesheet" href="{{ asset('asset/css/morris.css') }}"> --}}
-{{-- <link rel="stylesheet" href="{{ asset('asset/js/morris.min.js') }}"> --}}
-{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script> --}}
-{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> --}}
-{{-- <script src="/javascript/morriss/morris.min.js"></script> --}}
+    {{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> --}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    4 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    {{-- <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script> --}}
+    {{-- <link href="/stylesheet/morris.css" rel="stylesheet" type="text/css"/> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('asset/css/morris.css') }}"> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('asset/js/morris.min.js') }}"> --}}
+    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script> --}}
+    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> --}}
+    {{-- <script src="/javascript/morriss/morris.min.js"></script> --}}
 
-<script type="text/javascript">
-    var table = $('#vendor').DataTable({
-        "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
-        "searching":false,
-        "ordering": false,
-        "pageLength":10,
-      });
-      $("#vendor_paginate").addClass("pull-right");
-    $(document).ready(function(){
-      var temp_sevendaysales = '<?php echo json_encode($output['sevendaysales']); ?>';
-      window.sevendaysales = $.parseJSON(temp_sevendaysales);
-      var temp_sevendaysCustomer = '<?php echo json_encode($output['sevendaysCustomer']); ?>';
-      window.sevendaysCustomer = $.parseJSON(temp_sevendaysCustomer);
-      var temp_dailySummary = '<?php echo json_encode($output['dailySummary']); ?>';
-      window.dailySummary = $.parseJSON(temp_dailySummary);
-      var temp_topItem = '<?php echo json_encode($output['topItem']); ?>';
-      window.topItem = $.parseJSON(temp_topItem);
-      var temp_topCategory = '<?php echo json_encode($output['topCategory']); ?>';
-      window.topCategory = $.parseJSON(temp_topCategory);
-      var temp_customer = '<?php echo json_encode($output['customer']); ?>';
-      window.customer = $.parseJSON(temp_customer);
-    });
-  </script>
+    <script type="text/javascript">
+        var table = $('#vendor').DataTable({
+            "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+        });
+        $("#vendor_paginate").addClass("pull-right");
+        $(document).ready(function() {
+            var temp_sevendaysales = '<?php echo json_encode($output['sevendaysales']); ?>';
+            window.sevendaysales = $.parseJSON(temp_sevendaysales);
+            var temp_sevendaysCustomer = '<?php echo json_encode($output['sevendaysCustomer']); ?>';
+            window.sevendaysCustomer = $.parseJSON(temp_sevendaysCustomer);
+            var temp_dailySummary = '<?php echo json_encode($output['dailySummary']); ?>';
+            window.dailySummary = $.parseJSON(temp_dailySummary);
+            var temp_topItem = '<?php echo json_encode($output['topItem']); ?>';
+            window.topItem = $.parseJSON(temp_topItem);
+            var temp_topCategory = '<?php echo json_encode($output['topCategory']); ?>';
+            window.topCategory = $.parseJSON(temp_topCategory);
+            var temp_customer = '<?php echo json_encode($output['customer']); ?>';
+            window.customer = $.parseJSON(temp_customer);
+        });
+    </script>
 
     <script src="{{ asset('javascript/dashboardApi.js') }}"></script>
 
-  <script type="text/javascript">
-    $(window).load(function() {
-      $("div#divLoading").removeClass('show');
-    });
-    $(document).ready(function(){
-        setTimeout(function(){
-            if(window.sevenDaySalesArea !== undefined){
-                window.sevenDaySalesArea.redraw();
-            }
-            if(window.sevenDaysCustomerArea !== undefined){
-                window.sevenDaysCustomerArea.redraw();
-            }
-            if(window.topFiveCategoryBar !== undefined){
-                window.topFiveCategoryBar.redraw();
-            }
-            if(window.topFiveProductBar !== undefined){
-                window.topFiveProductBar.redraw();
-            }
-            if(window.cutomerFlow !== undefined){
-                window.cutomerFlow.redraw();
-            }
-        }, 50);
-    });
-  </script>
-  <script>
-    $(document).ready(function(){
-        $('.more').click(function(e) {
-          e.preventDefault();
-          $(this).text(function(i, t) {
-            return t == 'Less' ? 'More' : 'Less';
-          }).prev('.more-cont').slideToggle()
+    <script type="text/javascript">
+        $(window).load(function() {
+            $("div#divLoading").removeClass('show');
         });
-    });
+        $(document).ready(function() {
+            setTimeout(function() {
+                if (window.sevenDaySalesArea !== undefined) {
+                    window.sevenDaySalesArea.redraw();
+                }
+                if (window.sevenDaysCustomerArea !== undefined) {
+                    window.sevenDaysCustomerArea.redraw();
+                }
+                if (window.topFiveCategoryBar !== undefined) {
+                    window.topFiveCategoryBar.redraw();
+                }
+                if (window.topFiveProductBar !== undefined) {
+                    window.topFiveProductBar.redraw();
+                }
+                if (window.cutomerFlow !== undefined) {
+                    window.cutomerFlow.redraw();
+                }
+            }, 50);
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.more').click(function(e) {
+                e.preventDefault();
+                $(this).text(function(i, t) {
+                    return t == 'Less' ? 'More' : 'Less';
+                }).prev('.more-cont').slideToggle()
+            });
+        });
     </script>
 @endsection

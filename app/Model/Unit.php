@@ -78,33 +78,33 @@ class Unit extends Model
             
             foreach($stores as $store){
                 if(isset($data) && count($data) > 0){
-              //$exist_unit = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_unit WHERE vunitcode = '" . ($data['vunitcode']). "' or  `vunitname` = '" . ($data['vunitname']) . "' or vunitdesc = '" . ($data['vunitdesc']) . "'" );
-                $exist_unit = DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_unit WHERE vunitcode = '" . ($data['vunitcode']). "' or  `vunitname` = '" . ($data['vunitname']) . "'" );
-                 if(count($exist_unit) > 0)
-                 {
-                    $error['error'] = "Already exists";
-                    return $error; 
-                 }
-                 
-              try {
-                DB::connection('mysql')->insert("INSERT INTO u".$store.".mst_unit SET  vunitcode = '" . ($data['vunitcode']) . "',`vunitname` = '" . ($data['vunitname']) . "', vunitdesc = '" . ($data['vunitdesc']) . "',`estatus` = '" . ($data['estatus']) . "',SID = '" . (int)(session()->get('sid'))."'");
-                }
-                catch (\MySQLDuplicateKeyException $e) {
-                    // duplicate entry exception
-                  $error['error'] = $e->getMessage(); 
-                    return $error; 
-                }
-                catch (\MySQLException $e) {
-                    // other mysql exception (not duplicate key entry)
+                    //$exist_unit = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_unit WHERE vunitcode = '" . ($data['vunitcode']). "' or  `vunitname` = '" . ($data['vunitname']) . "' or vunitdesc = '" . ($data['vunitdesc']) . "'" );
+                    $exist_unit = DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_unit WHERE vunitcode = '" . ($data['vunitcode']). "' or  `vunitname` = '" . ($data['vunitname']) . "'" );
+                    if(count($exist_unit) > 0)
+                    {
+                        $error['error'] = "Already exists";
+                        return $error; 
+                    }
+                    
+                    try {
+                        DB::connection('mysql')->insert("INSERT INTO u".$store.".mst_unit SET  vunitcode = '" . ($data['vunitcode']) . "',`vunitname` = '" . ($data['vunitname']) . "', vunitdesc = '" . ($data['vunitdesc']) . "',`estatus` = '" . ($data['estatus']) . "',SID = '" . (int)(session()->get('sid'))."'");
+                    }
+                    catch (\MySQLDuplicateKeyException $e) {
+                        // duplicate entry exception
                     $error['error'] = $e->getMessage(); 
-                    return $error; 
+                        return $error; 
+                    }
+                    catch (\MySQLException $e) {
+                        // other mysql exception (not duplicate key entry)
+                        $error['error'] = $e->getMessage(); 
+                        return $error; 
+                    }
+                    catch (\Exception $e) {
+                        // not a MySQL exception
+                        $error['error'] = $e->getMessage(); 
+                        return $error; 
+                    }
                 }
-                catch (\Exception $e) {
-                    // not a MySQL exception
-                    $error['error'] = $e->getMessage(); 
-                    return $error; 
-                }
-        }
             }
         
         }else{
@@ -116,8 +116,8 @@ class Unit extends Model
                         $error['error'] = "Already exists";
                         return $error; 
                      }
-                  try {
-                    DB::connection('mysql_dynamic')->insert("INSERT INTO mst_unit SET  vunitcode = '" . ($data['vunitcode']) . "',`vunitname` = '" . ($data['vunitname']) . "', vunitdesc = '" . ($data['vunitdesc']) . "',`estatus` = '" . ($data['estatus']) . "',SID = '" . (int)(session()->get('sid'))."'");
+                    try {
+                        DB::connection('mysql_dynamic')->insert("INSERT INTO mst_unit SET  vunitcode = '" . ($data['vunitcode']) . "',`vunitname` = '" . ($data['vunitname']) . "', vunitdesc = '" . ($data['vunitdesc']) . "',`estatus` = '" . ($data['estatus']) . "',SID = '" . (int)(session()->get('sid'))."'");
                     }
                     catch (\MySQLDuplicateKeyException $e) {
                         // duplicate entry exception
@@ -212,15 +212,61 @@ class Unit extends Model
                     foreach($indiUnit_id as $u_id){
                         $unit_id = $u_id->iunitid;
                     }
+
+                    $exist_unit = DB::connection('mysql_dynamic')->select("SELECT * FROM u".$store.".mst_unit WHERE vunitcode = '" . ($data['vunitcode']). "' AND iunitid != '" . (int)$unit_id . "' " );
+                    
+                    if(count($exist_unit) > 0)
+                    {
+                        $return['error'] = "Already exists"; 
+                        return $return;
+                    }
+                    else {
+                        try {
+                            // dd(__LINE__);
+                            $update = "UPDATE u".$store.".mst_unit SET  vunitcode = '" . ($data['vunitcode']) . "', vunitname = '" . ($data['vunitname']) . "', vunitdesc = '" . ($data['vunitdesc']) . "', estatus = '" . ($data['estatus']) . "' WHERE iunitid = '" . (int)$unit_id . "' ";
+                            // array_push($sql, $update);
+                            DB::connection('mysql')->select($update);
+                        }
+                        catch (\MySQLDuplicateKeyException $e) {
+                            // duplicate entry exception
+                        $error['error'] = $e->getMessage(); 
+                            return $error; 
+                        }
+                        catch (\MySQLException $e) {
+                            // other mysql exception (not duplicate key entry)
+                            $error['error'] = $e->getMessage(); 
+                            return $error; 
+                        }
+                        catch (\Exception $e) {
+                            // not a MySQL exception
+                            $error['error'] = $e->getMessage(); 
+                            return $error; 
+                        }
+                    }
+                   
+                }else {
+                     DB::connection('mysql')->insert("INSERT INTO u".$store.".mst_unit SET  vunitcode = '" . ($data['vunitcode']) . "',`vunitname` = '" . ($data['vunitname']) . "', vunitdesc = '" . ($data['vunitdesc']) . "',`estatus` = '" . ($data['estatus']) . "',SID = '" . (int)(session()->get('sid'))."'");
+                }
+                
+            }
+            //dd($sql);
+        }else{
+            if(isset($data) && count($data) > 0){
+
+                $exist_unit = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_unit WHERE vunitcode = '" . ($data['vunitcode']). "' AND iunitid != '" . (int)$iunitid . "' " );
+                dd($exist_unit);
+                if(count($exist_unit) > 0)
+                {
+                    $return['error'] = "Already exists"; 
+                    return $return;
+                }
+                else {
                     try {
-                        // dd(__LINE__);
-                        $update = "UPDATE u".$store.".mst_unit SET  vunitcode = '" . ($data['vunitcode']) . "', vunitname = '" . ($data['vunitname']) . "', vunitdesc = '" . ($data['vunitdesc']) . "', estatus = '" . ($data['estatus']) . "' WHERE iunitid = '" . (int)$unit_id . "' ";
-                        // array_push($sql, $update);
-                        DB::connection('mysql')->select($update);
+                        DB::connection('mysql_dynamic')->update("UPDATE mst_unit SET  vunitcode = '" . ($data['vunitcode']) . "',`vunitname` = '" . ($data['vunitname']) . "', vunitdesc = '" . ($data['vunitdesc']) . "',`estatus` = '" . ($data['estatus']) . "' WHERE iunitid = '" . (int)$iunitid . "'");
                     }
                     catch (\MySQLDuplicateKeyException $e) {
                         // duplicate entry exception
-                       $error['error'] = $e->getMessage(); 
+                    $error['error'] = $e->getMessage(); 
                         return $error; 
                     }
                     catch (\MySQLException $e) {
@@ -233,32 +279,6 @@ class Unit extends Model
                         $error['error'] = $e->getMessage(); 
                         return $error; 
                     }
-                   
-                }else {
-                     DB::connection('mysql')->insert("INSERT INTO u".$store.".mst_unit SET  vunitcode = '" . ($data['vunitcode']) . "',`vunitname` = '" . ($data['vunitname']) . "', vunitdesc = '" . ($data['vunitdesc']) . "',`estatus` = '" . ($data['estatus']) . "',SID = '" . (int)(session()->get('sid'))."'");
-                }
-                
-            }
-            //dd($sql);
-        }else{
-            if(isset($data) && count($data) > 0){
-                try {
-                    DB::connection('mysql_dynamic')->update("UPDATE mst_unit SET  vunitcode = '" . ($data['vunitcode']) . "',`vunitname` = '" . ($data['vunitname']) . "', vunitdesc = '" . ($data['vunitdesc']) . "',`estatus` = '" . ($data['estatus']) . "' WHERE iunitid = '" . (int)$iunitid . "'");
-                }
-                catch (\MySQLDuplicateKeyException $e) {
-                    // duplicate entry exception
-                   $error['error'] = $e->getMessage(); 
-                    return $error; 
-                }
-                catch (\MySQLException $e) {
-                    // other mysql exception (not duplicate key entry)
-                    $error['error'] = $e->getMessage(); 
-                    return $error; 
-                }
-                catch (\Exception $e) {
-                    // not a MySQL exception
-                    $error['error'] = $e->getMessage(); 
-                    return $error; 
                 }
             }
             
