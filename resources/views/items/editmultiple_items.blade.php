@@ -1,23 +1,25 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title', 'Edit Multiple Items')
 
 @section('main-content')
 
 <div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
+    
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase">Edit Items</span>
+                </div>
+                <div class="nav-submenu">
+                  <button title="Update" id='buttonEditMultipleItems' class="btn btn-gray headerblack  buttons_menu" ><i class="fa fa-save"></i>&nbsp;&nbsp;Edit multiple item</button>
+                </div>
+            </div> <!-- navbar-collapse.// -->
         </div>
-    </div>
+    </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid section-content padding-left-right">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -25,48 +27,143 @@
         @endif
         @if ($data['success'])
         <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ $data['success'] }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         @endif
 
         <div class="panel panel-default">
-            <div class="panel-heading head_title">
-                <h3 class="panel-title"><i class="fa fa-list"></i>Edit Items</h3>
-            </div>
+            
             <div class="panel-body">
             
                 <div class="row col-md-12">
-                        <p class="text-warning" style="margin-left:0px; display:inline-block;">
+                        <p class="text-warning col-md-8" style="margin-left:0px; display:inline-block;">
                             <strong>Warning!</strong> If you are filter through serach input box, then after input click FILTER button.
                         </p>
-                    
-                    <div class="" style="display:inline-block; padding-bottom: 12px; float: right;">
-                        <button title="Filter" id='buttonfillter' class="btn btn-primary" ><i class=""></i>&nbsp;&nbsp;FILTER</button>
-                        <button title="Update" id='buttonEditMultipleItems' class="btn btn-primary" ><i class="fa fa-save"></i>&nbsp;&nbsp;Edit multiple item</button>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2" style="display:inline-block; padding-bottom: 12px;">
+                        <button title="Filter" id='buttonfillter' class="btn button-blue basic-button-small" ><i class=""></i>&nbsp;&nbsp;FILTER</button>
+                        
                     </div>
                     
                 </div>
-                <div class="clearfix"></div>
-            
+                
                 <div class="row" id="div_item_listing">
                     <div class="col-md-12">
                         <div class="box-body table-responsive">
-                            <table id="item_listing" class="table table-bordered table-striped table-hover" style="font-size:9px;">
+                            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%; font-size:9px;">
                                 <thead>
-                                    <tr style="font-size: 11px;">
+                                    <tr class="header-color" style="font-size: 11px;">
                                         <th style="width: 1px;" class="text-center">
                                             <input type="checkbox" name="selected_items_id[]" id="main_checkbox" value="" onclick="$('input[name*=\'selected_items_id\']').prop('checked', this.checked);" style="color:black;" checked />
                                         </th>
-                                        <th style="width: 90px;">SKU</th>
-                                        <th style="width: 90px;">Item Name</th>
-                                        <th style="width: 90px;">Department</th>
-                                        <th style="width: 90px;">Category</th>
-                                        <th style="width: 90px;">Sub Category</th>
-                                        <th style="width: 90px;">Item Group</th>
-                                        <th style="width:190px">Price</th>
-                                        <th style="width: 90px;">Tax</th>
-                                        <th style="width: 90px;">Vendor</th>
-                                        <th style="width: 90px;">Food Item</th>
+                                        <th class="text-left text-uppercase" style="width: 10%;">&nbsp;&nbsp;SKU
+                                          <div class="po-has-search">
+                                            <span class="fa fa-search form-control-feedback"></span>
+                                            <input type="text" name="" id="sku" class="form-control table-heading-fields text-center search_text_box" placeholder="SEARCH"  style="width: 110%; padding-left: 5px;">
+                                          </div>
+                                        </th>
+                                        <th class="text-left text-uppercase" style="width: 10%;">&nbsp;&nbsp;Item Name</a>
+                                          <div class="po-has-search">
+                                            <span class="fa fa-search form-control-feedback"></span>
+                                            <input type="text" class="form-control table-heading-fields text-center search_text_box" id="item_name" placeholder="SEARCH"  style="width: 100%; padding-left: 5px;">
+                                          </div>
+                                        </th>
+                                        <th class="text-uppercase no-sort" style="width: 9%; padding-left: 0px;">&nbsp;Department
+                                            <div class="adjustment-has-search">
+                                              <select class='table-heading-fields'  name='dept_code' id='dept_code' style="padding-left: 7px;">
+                                                <option value='all'>All</option>";
+                                                    <?php 
+                                                      foreach($data['departments'] as $department){
+                                                    ?>  
+                                                        <option value='<?=$department['vdepcode']?>'><?=$department['vdepartmentname'] ?></option>;
+                                                    <?php } ?>
+                                              </select>
+                                            </div>
+                                        </th>
+                                        
+                                        <th class="text-uppercase no-sort" style="width: 9%; padding-left: 0px;">Category
+                                            <div class="adjustment-has-search">
+                                              <select class='table-heading-fields' name="category_code" id="category_code" style="padding-left: 7px;">
+                                                <option value='all'>All</option>
+                                                
+                                              </select>
+                                            </div>
+                                        </th>
+                                        <th class="text-uppercase no-sort" style="width: 9%; padding-left: 0px;">Sub Category
+                                            <div class="adjustment-has-search">
+                                              <select class='table-heading-fields' name="sub_category_id" id="sub_category_id" style="padding-left: 7px;">
+                                                <option value='all'>All</option>
+                                                
+                                              </select>
+                                            </div>
+                                        </th>
+                                        <th class="text-uppercase no-sort" style="width: 9%; padding-left: 0px;">Item Group
+                                            <div class="adjustment-has-search">
+                                              <select class='table-heading-fields'  name='item_group' id='item_group_id' style="padding-left: 7px;">
+                                                <option value='all'>All</option>";
+                                                    <?php 
+                                                      foreach($data['itemGroups'] as $itemgroup){
+                                                    ?>  
+                                                        <option value='<?=$itemgroup['iitemgroupid']?>'><?=$itemgroup['vitemgroupname'] ?></option>;
+                                                    <?php } ?>
+                                              </select>
+                                            </div>
+                                        </th>
+                                        
+                                        <th class="text-uppercase no-sort" style="width: 17%; padding-left: 0px;">PRICE
+                                          <div class="adjustment-has-search">
+                                            
+                                            <select class='table-heading-fields' id='price_select_by' name='price_select_by' style='width:55%; padding-left: 5px;'>
+                                              <option value="greater" selected>Greater than</option>
+                                              <option value="less">Less than</option>
+                                              <option value="equal">Equal to</option>
+                                              <option value="between">Between</option>
+                                            </select>
+                                            <span id='selectByValuesSpan'>
+                                              <input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box table-heading-fields' placeholder='Enter Amount' style='width:40%; color:black; height:28px; padding-left: 0px;' value=''/>
+                                            </span>
+                                            
+                                          </div>
+                                        </th>
+                                        
+                                        <th class="text-uppercase no-sort" style="width: 9%; padding-left: 0px;">Tax
+                                            <div class="adjustment-has-search">
+                                                
+                                                <select class='table-heading-fields' name='tax' id='tax' style="padding-left: 0px;">
+                                                    <option value='all'>All Taxes</option>
+                                                    <option value='tax1'>Tax 1</option>
+                                                    <option value='tax2'>Tax 2</option>
+                                                    <option value='tax3'>Tax 3</option>
+                                                    <option value='no'>No Tax</option>
+                                                </select>
+                                                
+                                            </div>
+                                        </th>
+                                        
+                                        <th class="text-uppercase no-sort" style="width: 9%; padding-left: 0px;">Vendor
+                                            <div class="adjustment-has-search">
+                                                <select class='table-heading-fields' name='supplier_code' id='supplier_code' style="padding-left: 7px;">
+                                                  <option value='all'>All</option>
+                                                  <?php
+                                                    foreach($data['suppliers'] as $supplier){
+                                                  ?>
+                                                      <option value="<?=$supplier['isupplierid'] ?>"><?=$supplier['vcompanyname'] ?> </option>
+                                                  <?php } ?>
+                                                </select>
+                                            </div>
+                                        </th>
+                                        
+                                        <th class="text-uppercase no-sort" style="width: 9%; padding-left: 0px;">Food Item
+                                            <div class="adjustment-has-search">
+                                                
+                                                <select class='table-heading-fields' name='food_item' id='food_item' style="padding-left: 7px;">
+                                                    <option value='all'>All</option>
+                                                    <option value='Y'>Yes</option>
+                                                    <option value='N'>No</option>
+                                                </select>
+                                                 
+                                            </div>
+                                        </th>
                                     </tr>
                                 </thead>
                             </table>
@@ -81,40 +178,46 @@
 @endsection
 
 
-@section('scripts')
+@section('page-script')
 
 <style type="text/css">
-  .span_field span{
-    display: inline-block;
-  }
+    .span_field span{
+        display: inline-block;
+    }
+    
+    .padding-left-right{
+        padding: 0 4% 0 4%;
+    }
 </style>
 <style type="text/css">
-        .table.table-bordered.table-striped.table-hover thead > tr{
-            background: #03a9f4 none repeat scroll 0 0 !important;
-        }
-        
-        table#item_listing th td{
-            table-layout: fixed;
-            word-wrap:break-word;
-        }  
-        
-        .scroll-dialog{
-              overflow-y: initial !important
-        }
-        .scroll-body{
-          height: 500px;
-          overflow-y: auto;
-        }
+    .table.table-bordered.table-striped.table-hover thead > tr{
+        background: #03a9f4 none repeat scroll 0 0 !important;
+    }
+    
+    table#item_listing th td{
+        table-layout: fixed;
+        word-wrap:break-word;
+    }  
+    
+    .scroll-dialog{
+          overflow-y: initial !important
+    }
+    .scroll-body{
+      height: 500px;
+      overflow-y: auto;
+    }
 </style>
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">
+
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ asset('javascript/bootbox.min.js') }} "></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
 
-<!-- DataTables -->
-<script src="{{ asset('javascript/jquery.dataTables.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('javascript/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
 
 <script>
 var itemTotalIds;
@@ -134,14 +237,14 @@ $(document).on('change', '#price_select_by', function(){
     var html='';
     if(select_by === 'between'){
         
-        html = '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box" placeholder="Enter" style="color:#000000;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;width:43px;" value="'+select_by_value1+'"/>';
-        html += '<input type="number" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box" placeholder="Amt" style="color:#000000;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;width:43px;" value="'+select_by_value2+'"/>'
+        html = '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box table-heading-fields" placeholder="Enter" style="color:#000000; height:28px; padding-left: 1px; padding-right: 1px; width:43px;" value="'+select_by_value1+'"/>';
+        html += '<input type="number" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box table-heading-fields" placeholder="Amt" style="color:#000000; height:28px; padding-left: 1px; padding-right: 1px; width:43px;" value="'+select_by_value2+'"/>'
         
         $(this).css({'width': 77});
         
     } else {
         
-        html = '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box" placeholder="Enter Amt" style="color:#000000;height:28px;margin-left:5px;width:68px" value="'+select_by_value1+'"/>'
+        html = '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box table-heading-fields" placeholder="Amt" style="color:#000000; height:28px; width:60px; padding-left: 1px;" value="'+select_by_value1+'"/>'
         // $('#selectByValuesSpan').html('not between');
         $(this).css({'width': 100});
     }
@@ -154,14 +257,6 @@ $(document).on('change', '#price_select_by', function(){
 $(document).ready(function() {
     
     var url = "<?php echo $data['searchitem'];?>";
-    // console.log(url);
-    var departments = "<?php echo $data['departments_html'];?>";
-    var itemgroups = "<?php echo $data['itemgroups_html'];?>";
-    var suppliers = "<?php echo $data['suppliers_html'];?>";
-    var food_item = "<?php echo $data['food_item_html'];?>";
-    var tax = "<?php echo $data['tax_html'];?>";
-    
-    var price = "<?php echo $data['price']; ?>";
     
     var price_select_by = $('#price_select_by').val();
     var select_by_val1 = $('#select_by_value_1').val();
@@ -189,57 +284,8 @@ $(document).ready(function() {
     }    
     
     
-    $('#item_listing thead tr').clone(true).removeAttr('style').appendTo( '#item_listing thead' );
-    $('#item_listing thead tr:eq(1) th').each( function (i) {
-        
-        var title = $(this).text();
-        
-        // console.log(title);
-        if(i == 0)
-        {
-            $(this).html( '' );
-        }
-        else if(title == 'Department')
-        {
-            $(this).html(departments);
-        }
-        else if(title == "Tax")
-        {
-            $(this).html(tax)
-        }
-        else if(title == "Category")
-        {
-            $(this).html('<select class="" name="category_code" id="category_code" style="width: 90px; padding: 0px; font-size: 9px;color:#000000;height:28px;"><option value="all">All</option></select>')
-        }
-        else if(title == "Sub Category")
-        {
-            $(this).html('<select class="" name="sub_category_id" id="sub_category_id" style="width: 90px; padding: 0px; font-size: 9px;color:#000000;height:28px;"><option value="all">All</option></select>')
-        }
-        else if(title == "Item Group")
-        {
-            $(this).html(itemgroups)
-        }
-        else if(title == 'Vendor')
-        {
-            $(this).html(suppliers)
-        }
-        else if(title == 'Food Item')
-        {
-            $(this).html(food_item)
-        }
-        else if(title == 'Item Name')
-        {
-            $(this).html( '<input type="text" name="" class="search_text_box" id="item_name" placeholder="Search" style="width:70px;color:black;border-radius: 4px;height:28px;"/>' );
-        } else if(title == 'SKU'){
-            $(this).html( '<input type="text" name="" class="search_text_box" id="sku" placeholder="Search" style="width:70px;color:black;border-radius: 4px;height:28px;"/>' );
-        }
-        else if(title == 'Price') 
-        {
-            $(this).html(price);
-        } else
-        {
-            $(this).html( '' );
-        }
+    
+    $('#item_listing thead tr th').each( function (i) {
         
         
         $(this).on( 'blur', '.search_text_box', function () {
@@ -278,10 +324,10 @@ $(document).ready(function() {
             uncheckedBoxes = {};
             
             table
-            .column(i)
-            .search(
-                searchVal, true, false
-            ).draw();
+                .column(i)
+                .search(
+                    searchVal, true, false
+                ).draw();
             
             $("div#divLoading").addClass('show');
             $('#buttonEditMultipleItems').prop('disabled', true);
@@ -307,8 +353,8 @@ $(document).ready(function() {
     });
     
 
-var showPaginationPrevNextButtons = false;
-var table =   $("#item_listing").DataTable({
+    var showPaginationPrevNextButtons = false;
+    var table =   $("#item_listing").DataTable({
         "bSort": false,
         // "scrollY":"300px",
         // "autoWidth": true,
@@ -322,7 +368,7 @@ var table =   $("#item_listing").DataTable({
             
         ],
         //"autoWidth": true,
-
+        
         "language": {
             search: "_INPUT_",
             searchPlaceholder: "Search..."
@@ -428,14 +474,14 @@ var table =   $("#item_listing").DataTable({
             $("div#divLoading").removeClass('show');
     });
 
-/*$('button').click( function() {
-    var data = table.$('input, select').serialize();
-    alert(
-        "The following data would have been submitted to the server: \n\n"+
-        data.substr( 0, 120 )+'...'
-    );
-    return false;
-} );*/
+        /*$('button').click( function() {
+            var data = table.$('input, select').serialize();
+            alert(
+                "The following data would have been submitted to the server: \n\n"+
+                data.substr( 0, 120 )+'...'
+            );
+            return false;
+        } );*/
 
     $(document).on('change', '#main_checkbox', function(event) {
         event.preventDefault();
@@ -463,35 +509,35 @@ var table =   $("#item_listing").DataTable({
         // console.log(main_checkbox);
     });
 
-$(document).on('click', '.paginate_button', function(event){
-    event.preventDefault();
-    $('#buttonEditMultipleItems').prop('disabled', true);
-    console.log(394);
-    var set_pagination_session_url = "<?php echo $data['set_pagination_session_url']; ?>";
-  
-    set_pagination_session_url = set_pagination_session_url.replace(/&amp;/g, '&');
+    $(document).on('click', '.paginate_button', function(event){
+        event.preventDefault();
+        $('#buttonEditMultipleItems').prop('disabled', true);
+        console.log(394);
+        var set_pagination_session_url = "<?php echo $data['set_pagination_session_url']; ?>";
+      
+        set_pagination_session_url = set_pagination_session_url.replace(/&amp;/g, '&');
+    
+        // set_pagination_session_url = set_pagination_session_url+'&clicked_pagination=1';
+    
+        $.getJSON(set_pagination_session_url, function(result){
+            console.log(result);
+        })
+        .done(console.log(404));
+    });
 
-    // set_pagination_session_url = set_pagination_session_url+'&clicked_pagination=1';
-
-    $.getJSON(set_pagination_session_url, function(result){
-        console.log(result);
-    })
-    .done(console.log(404));
-});
 
 
+    $("#item_listing_filter").hide();
+    $("#item_listing_processing").remove(); 
+    $("#item_listing_paginate").addClass("pull-right");
 
-$("#item_listing_filter").hide();
-$("#item_listing_processing").remove(); 
-// $("#item_listing_paginate").
-
-// console.log(showPaginationPrevNextButtons);
-/*if(showPaginationPrevNextButtons){
-  $("#item_listing_paginate").show();  
-} else {
-  $("#item_listing_paginate").hide(); 
-}*/
-// console.log(showPaginationPrevNextButtons);
+    // console.log(showPaginationPrevNextButtons);
+    /*if(showPaginationPrevNextButtons){
+      $("#item_listing_paginate").show();  
+    } else {
+      $("#item_listing_paginate").hide(); 
+    }*/
+    // console.log(showPaginationPrevNextButtons);
     
 
     
@@ -785,7 +831,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
   });
  </script>
 
- <div id="myModal" class="modal fade" role="dialog">
+ <div id="myModal" class="modal fade" role="dialog" >
   <div class="modal-dialog modal-lg scroll-dialog">
 
     <!-- Modal content-->
@@ -803,13 +849,93 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
           <h4 class="modal-title">Edit Multiple Items</h4>
         </div>
         <div class="modal-body scroll-body">
-          <div class="panel panel-default">
-            <div class="panel-heading"><b>Product</b></div>
+         
+         <div class="panel panel-default">
+            <div class="panel-heading">
+                 <div class="mytextdiv">
+                    <div class="mytexttitle font-weight-bold text-uppercase">
+                        PRICE OPTIONS
+                    </div>
+                    <div class="divider font-weight-bold"></div>
+                </div>
+                <br>
+                
+            </div>
             <div class="panel-body">
-              <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
+              <div class= "row">
+                  <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
+                    <!--<p><span style="width:10%;">Pack:</span>&nbsp;&nbsp;<span style="width:40%;"><input type="text" name="update_npack" value="1" class="form-control"></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_npack_checkbox" value="Y">&nbsp;Update Pack Qty</span></p>-->
+                    
+                   <p>
+                      <span style="width:26%;">COST</span>&nbsp;&nbsp;
+                      
+                      <span style="width:60%;">
+                       <input type="text" name="update_dcostprice" value="0" class="form-control"> 
+                      </span>
+                    </p>
+               
+                   
+                   
+                      <!--<span style="width:42%;"><input type="checkbox" name="update_dcostprice_checkbox" value="Y">&nbsp;Update Zero Cost</span>-->
+                
+                    <p>
+                     <span > 
+                      <input type="checkbox" value="Y" name="update_dcostprice_increment">&nbsp;&nbsp;
+                    </span>
+                      <input type="hidden" name="update_dcostprice_select" value="set as cost">
+                    <span >increment cost ($) </span>
+                    
+                   
+                      
+                      <br><br>
+                      <input type="checkbox" value="Y" name="update_dcostprice_increment_percent">&nbsp;&nbsp;increment cost by (%)
+                    </p>
+                    
+                  </div>
+                  <div class="col-md-4" style=" padding-left: 100px;">
+                        <div class="verticalLine" ></div>
+                  </div>
+                  <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
+                    <!--<p><span style="width:20%;">Selling Unit:</span>&nbsp;&nbsp;<span style="width:30%;"><input type="text" name="update_nsellunit" value="1" class="form-control"></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_nsellunit_checkbox" value="Y">&nbsp;Update Zero Unit</span></p>-->
+                    <!--<p>-->
+                    
+                      <span style="width:20%;">PRICE &nbsp;&nbsp;</span><span style="width:60%;"><input type="text" name="update_dunitprice" value="0" class="form-control"></span>&nbsp;&nbsp;
+                    <!--  <span style="width:45%;"><input type="checkbox" name="update_dunitprice_checkbox" value="Y">&nbsp;Update Zero Price</span>-->
+                    <!--</p>-->
+                    <p>
+                      <span style="width:100%;">
+                          
+                        <input type="hidden" name="update_dunitprice_select" value="set as price">
+                        <br>
+                        <input type="checkbox" value="Y" name="update_dunitprice_increment">&nbsp;&nbsp;increment price ($)<br><br>
+                        <input type="checkbox" value="Y" name="update_dunitprice_increment_percent">&nbsp;&nbsp;increment price by (%)
+                      </span>&nbsp;&nbsp;
+                      <!--<span style="width:20%;">Buydown:</span>&nbsp;&nbsp;<span style="width:30%;">-->
+                      <input type="hidden" name="update_ndiscountper" value="" class="form-control">
+                    </p>
+                  </div>
+             </div>  
+             
+             
+            </div>
+        </div>   
+            
+        <div class="panel panel-default">
+            <div class="panel-heading">    
+            <div class="mytextdiv">
+                    <div class="mytexttitle font-weight-bold text-uppercase">
+                        GENERAL OPTIONS
+                    </div>
+                    <div class="divider font-weight-bold"></div>
+                </div>
+            </div>
+            <br><br>
+            <div class="panel-body">
+              <div class="row text-uppercase">
+              <div class="col-md-4 span_field " style="padding-left:10px;padding-right:10px;">
                 <p>
-                  <span style="width:22%;">Item Type:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Item Type</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_vitemtype" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['item_types']) && count($data['item_types']) > 0){?>
@@ -822,8 +948,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 </p>
                 <p>
                     
-                  <span style="width:22%;">Category:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Category</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_vcategorycode" id="update_vcategorycode" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['categories']) && count($data['categories']) > 0){?>
@@ -835,8 +961,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:22%;">Unit:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Unit</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_vunitcode" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['units']) && count($data['units']) > 0){?>
@@ -848,8 +974,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                <span style="width:22%;">Size:</span>&nbsp;&nbsp;
-                <span style="width:70%;">
+                <span style="width:26%;">Size</span>&nbsp;&nbsp;
+                <span style="width:60%;">
                     <select name="update_vsize" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['sizes']) && count($data['sizes']) > 0){?>
@@ -861,8 +987,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                <span style="width:22%;">Group:</span>&nbsp;&nbsp;
-                <span style="width:70%;">
+                <span style="width:26%;">Group</span>&nbsp;&nbsp;
+                <span style="width:60%;">
                     <select name="update_iitemgroupid" class="form-control">
                     <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['itemGroups']) && count($data['itemGroups']) > 0){?>
@@ -875,8 +1001,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 </p>
               </div>
               <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
-                <p><span style="width:22%;">Department:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                <p><span style="width:26%;">Department</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_vdepcode" id="update_vdepcode" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['departments']) && count($data['departments']) > 0){?>
@@ -890,8 +1016,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 
                 
                 <p>
-                <span style="width:22%;">Sub Category:</span>&nbsp;&nbsp;
-                <span style="width:70%;">
+                <span style="width:26%;">Sub Category</span>&nbsp;&nbsp;
+                <span style="width:60%;">
                     <select name="update_subcat_id" id="update_subcat_id" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['subcategories']) && count($data['subcategories']) > 0 && $data['new_database'] === true){?>
@@ -905,8 +1031,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 
                 
                 <p>
-                <span style="width:22%;">Supplier:</span>&nbsp;&nbsp;
-                <span style="width:70%;">
+                <span style="width:26%;">Supplier</span>&nbsp;&nbsp;
+                <span style="width:60%;">
                     <select name="update_vsuppliercode" id="update_vsuppliercode" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['suppliers']) && count($data['suppliers']) > 0 ){?>
@@ -919,8 +1045,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 </p>
                 
                 <p>
-                  <span style="width:22%;">Tax1:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Tax1</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_vtax1" id="update_vtax1" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
@@ -932,8 +1058,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:22%;">Tax2:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Tax2</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_vtax2" id="update_vtax2" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
@@ -949,8 +1075,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 <p><span style="width:10%;">QOH:</span>&nbsp;&nbsp;<span style="width:40%;"><input type="text" name="update_iqtyonhand" value="0" class="form-control" disabled></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_iqtyonhand" value="Y" disabled>&nbsp;Update Zero QOH</span></p>
                 
                 <p>
-                  <span style="width:22%;">Manufacturer:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Manufacturer</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_manufacturerid" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['manufacturers']) && count($data['manufacturers']) > 0 && $data['new_database'] === true){?>
@@ -963,8 +1089,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 </p>
                 
                 <p>
-                  <span style="width:22%;">Mfg Promo Desc.:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Mfg Promo Desc</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_aisleid" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['aisles']) && count($data['aisles']) > 0 && $data['new_database'] === true){?>
@@ -976,8 +1102,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:22%;">Mfg Buy Down Desc.:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Mfg Buy Down Desc</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_shelfid" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['shelfs']) && count($data['shelfs']) > 0 && $data['new_database'] === true){?>
@@ -989,8 +1115,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:22%;">Mfg MultiPack Desc.:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Mfg MultiPack Desc</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_shelvingid" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['shelvings']) && count($data['shelvings']) > 0 && $data['new_database'] === true){?>
@@ -1002,51 +1128,31 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
               </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading"><b>Price</b></div>
-            <div class="panel-body">
-              <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
-                <p><span style="width:10%;">Pack:</span>&nbsp;&nbsp;<span style="width:40%;"><input type="text" name="update_npack" value="1" class="form-control"></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_npack_checkbox" value="Y">&nbsp;Update Pack Qty</span></p>
-                <p>
-                  <span style="width:10%;">Cost:</span>&nbsp;&nbsp;<span style="width:40%;"><input type="text" name="update_dcostprice" value="0" class="form-control"></span>&nbsp;&nbsp;
-                  <span style="width:42%;"><input type="checkbox" name="update_dcostprice_checkbox" value="Y">&nbsp;Update Zero Cost</span>
-                </p>
-                <p>
-                  <input type="hidden" name="update_dcostprice_select" value="set as cost">
-                  <input type="checkbox" value="Y" name="update_dcostprice_increment">&nbsp;&nbsp;increment cost
-                <br>OR<br>
-                  <input type="checkbox" value="Y" name="update_dcostprice_increment_percent">&nbsp;&nbsp;increment cost by %
-                </p>
-                
-              </div>
+              </div>  
               
-              <div class="col-md-5 span_field" style="padding-left:0px;padding-right:0px;">
-                <p><span style="width:20%;">Selling Unit:</span>&nbsp;&nbsp;<span style="width:30%;"><input type="text" name="update_nsellunit" value="1" class="form-control"></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_nsellunit_checkbox" value="Y">&nbsp;Update Zero Unit</span></p>
-                <p>
-                  <span style="width:20%;">Price:</span>&nbsp;&nbsp;<span style="width:30%;"><input type="text" name="update_dunitprice" value="0" class="form-control"></span>&nbsp;&nbsp;
-                  <span style="width:45%;"><input type="checkbox" name="update_dunitprice_checkbox" value="Y">&nbsp;Update Zero Price</span>
-                </p>
-                <p>
-                  <span style="width:40%;">
-                    <input type="hidden" name="update_dunitprice_select" value="set as price">
-                    <input type="checkbox" value="Y" name="update_dunitprice_increment">&nbsp;&nbsp;increment price<br>OR<br>
-                    <input type="checkbox" value="Y" name="update_dunitprice_increment_percent">&nbsp;&nbsp;increment price by %
-                  </span>&nbsp;&nbsp;
-                  <span style="width:20%;">Buydown:</span>&nbsp;&nbsp;<span style="width:30%;"><input type="text" name="update_ndiscountper" value="" class="form-control"></span>
-                </p>
-              </div>
-             
             </div>
         </div>
+       
+       
+        
         <div class="panel panel-default">
-            <div class="panel-heading"><b>General</b></div>
+            
+            <div class="panel-heading">
+                   <div class="mytextdiv">
+                    <div class="mytexttitle font-weight-bold text-uppercase">
+                        OTHER OPTIONS
+                    </div>
+                    <div class="divider font-weight-bold"></div>
+                </div>
+            </div>
+            <br><br>
+            </div>
             <div class="panel-body">
-              <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
+            <div class="row text-uppercase">   
+              <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
                 <p>
-                  <span style="width:22%;">Food Item:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Food Item</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                       <select name="update_vfooditem" id="update_vfooditem" class="form-control">
                         <option value="no-update">-- No Update --</option>
                         <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
@@ -1058,8 +1164,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </span>
                   </p>
                 <p>
-                  <span style="width:22%;">WCI Item:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">WCI Item</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_wicitem" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['arr_y_n']) && count($data['arr_y_n']) > 0){?>
@@ -1071,8 +1177,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:22%;">Station:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Station</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_stationid" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['stations']) && count($data['stations']) > 0){?>
@@ -1084,8 +1190,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:22%;">Barcode Type:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Barcode Type</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_vbarcodetype" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['barcode_types']) && count($data['barcode_types']) > 0){?>
@@ -1097,8 +1203,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:22%;">Discount:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Discount</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_vdiscount" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['arr_y_n']) && count($data['arr_y_n']) > 0){?>
@@ -1110,8 +1216,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:22%;">Status:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Status</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <select name="update_estatus" class="form-control">
                         <?php if(isset($data['array_status']) && count($data['array_status']) > 0){?>
                           <?php foreach($data['array_status'] as $k => $array_sts){ ?>
@@ -1122,9 +1228,9 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
               </div>
-              <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
+              <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
                 <p>
-                  <span style="width:30%;">Liability:</span>&nbsp;&nbsp;
+                  <span style="width:30%;">Liability</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_liability" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1136,15 +1242,15 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </select>
                   </span>
                 </p>
-                <p><span style="width:31%;">Re-Order Point:</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_ireorderpoint" value="" class="form-control"></span></p>
+                <p><span style="width:31%;">Re-Order Point</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_ireorderpoint" value="" class="form-control"></span></p>
                 <p><span style="width:31%;"></span>&nbsp;&nbsp;<span style="width:60%;"><span style="font-size: 10px;" class="text-small"><b>Enter Reorder Point in Unit.</b></span></span></p>
-                <p><span style="width:31%;">Order Qty Upto:</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_norderqtyupto" value="" class="form-control"></span></p>
+                <p><span style="width:31%;">Order Qty Upto</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_norderqtyupto" value="" class="form-control"></span></p>
                 <p><span style="width:31%;"></span>&nbsp;&nbsp;<span style="width:60%;"><span style="font-size: 10px;" class="text-small"><b>Enter Order Qty Upto in Case.</b></span></span></p>
-                <p><span style="width:31%;">Vintage:</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_vintage" value="" class="form-control"></span></p>
+                <p><span style="width:31%;">Vintage</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_vintage" value="" class="form-control"></span></p>
               </div>
-              <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
+              <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
                 <p>
-                  <span style="width:30%;">Inventory Item:</span>&nbsp;&nbsp;
+                  <span style="width:30%;">Inventory Item</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_visinventory" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1157,7 +1263,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:30%;">Age Verification:</span>&nbsp;&nbsp;
+                  <span style="width:30%;">Age Verification</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vageverify" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1170,14 +1276,14 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:30%;">Bottle Deposit:</span>&nbsp;&nbsp;
+                  <span style="width:30%;">Bottle Deposit</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <input name="update_nbottledepositamt" value="" type="text" class="form-control">
                   </span>
                 </p>
-                <p><span style="width:30%;">Rating:</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_rating" value="" class="form-control"></span></p>
+                <p><span style="width:30%;">Rating</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_rating" value="" class="form-control"></span></p>
                 <p>
-                  <span style="width:30%;">Sales Item:</span>&nbsp;&nbsp;
+                  <span style="width:30%;">Sales Item</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vshowsalesinzreport" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1190,15 +1296,29 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
               </div>
+            </div>   
             </div>
         </div>
+        
         <div class="panel panel-default">
-            <div class="panel-heading"><b>Options</b>&nbsp;&nbsp; <input type="checkbox" name="options_checkbox" value="1"></div>
-            <div class="panel-body" id="options_checkbox_div" style="display: none;">
-              <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
+            <div class="panel-heading">
+               
+               <div class="mytextdiv" style="padding-left:25px;">
+                    <div class="mytexttitle font-weight-bold text-uppercase">
+                        OTHER OPTIONS <input type="checkbox" name="options_checkbox" value="1">
+                    </div>
+                    <div class="divider font-weight-bold"></div>
+                </div>
+               
+            
+            
+        <div class="panel-body" id="options_checkbox_div" style="display: none;">
+              <div class="row text-uppercase">  
+                
+              <div class="col-md-4 span_field" style="padding-left:25px;padding-right:10px;">
                 <p>
-                  <span style="width:22%;">Unit:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Unit</span>
+                  <span style="width:60%;">
                     <select name="update_unit_id" id="update_unit_id" class="form-control">
                       <option value="no-update">-- No Update --</option>
                       <?php if(isset($data['itemsUnits']) && count($data['itemsUnits']) > 0){ ?>
@@ -1210,26 +1330,26 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:22%;">Malt:</span>&nbsp;&nbsp;
-                  <span style="width:70%;">
+                  <span style="width:26%;">Malt</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
                     <input style="margin-top: 10px;" type="checkbox" class="form-control" name="update_malt" value="1">
                   </span>
                 </p>
                 
               </div>
-              <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
+              <div class="col-md-4 span_field" style="padding-left:25px;padding-right:10px;">
 
                 <p>
-                  <span style="width:30%;">Unit Value:</span>&nbsp;&nbsp;
+                  <span style="width:30%;">Unit Value</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                    <input type="text" class="form-control" id="update_unit_value" value="" name="update_unit_value">
                   </span>
                 </p>
                 
               </div>
-              <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
+              <div class="col-md-4 span_field" style="padding-left:25px;padding-right:10px;">
                 <p>
-                  <span style="width:30%;">Bucket:</span>&nbsp;&nbsp;
+                  <span style="width:30%;">Bucket</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_bucket_id" id="update_bucket_id" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1241,6 +1361,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </select>
                   </span>
                 </p>
+              </div>
               </div>
             </div>
         </div>
@@ -1423,14 +1544,15 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
         <h4 class="modal-title">Update Items</h4>
       </div>
       <div class="modal-body ">
-        <div class="text-center alert-danger" style="overflow: hidden;">
-          <p style="font-size: 18px;font-weight: bold;">Total <span id="item_tot"></span> Items</p><br>
-          <strong style="font-size: 16px;">Are You Sure Want to Update Items ?</strong>
+        <div class="text-center alert-danger" style="overflow: hidden; BACKGROUND: WHITE;">
+          <p style="font-size: 18px;font-weight: bold;">TOTAL <span id="item_tot"></span> ITEMS</p><br>
+          <strong style="font-size: 16px;">ARE YOU SURE YOU WANT TO UPDATE? </strong>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-success" id="item_update_sure_btn">Sure</button>
+         <button type="button" class="btn btn-success headermenublue" id="item_update_sure_btn">SURE</button> 
+        <button type="button" class="btn btn-default" data-dismiss="modal">CANCEL</button>
+        
       </div>
     </div>
 
@@ -1784,5 +1906,11 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
     }
 
 </style>
+<style>
+      .verticalLine {
+        border-left: 2px solid blue;
+        height: 150px;
+      }
+    </style>
 @endsection
 
