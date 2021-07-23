@@ -174,8 +174,8 @@
                             <a class="nav-link  dropdown-toggle sub text-uppercase" href="#" data-toggle="dropdown"> SETTINGS
                             </a>
                             <ul class="dropdown-menu main-dropdown">
-                                <li><a class="dropdown-item sub-dropdown text-uppercase"
-                                    href="{{ route('store_setting') }}">Store Setting</a></li>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('store_setting') }}">Store Setting</a></li>
+                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('itemlistdisplay') }}">Item List Display</a></li>  
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('end_of_shift_printing') }}"> POS Settings</a></li>
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('ftpsetting') }}">FTP</a></li>
                             </ul>
