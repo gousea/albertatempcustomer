@@ -68,6 +68,13 @@ class ItemListDisplaysController extends Controller{
             unset($data['defualt_items_listings'][$key]);
         }
         
+        if (($key = array_search('dcostprice', $data['defualt_items_listings'])) !== false) {
+            unset($data['defualt_items_listings'][$key]);
+        }
+        if (($key = array_search('case_price', $data['defualt_items_listings'])) !== false) {
+            unset($data['defualt_items_listings'][$key]);
+        }
+        
 		$data['title_arr'] = array(
             'webstore' => 'Web Store',
             'vitemtype' => 'Item Type',
@@ -81,7 +88,8 @@ class ItemListDisplaysController extends Controller{
             'vsuppliercode' => 'Supplier',
             'iqtyonhand' => 'Qty. on Hand',
             'ireorderpoint' => 'Reorder Point',
-            'dcostprice' => 'Avg. Case Cost',
+            // 'dcostprice' => 'Avg. Case Cost',
+            'case_cost' => 'Avg. Case Cost',
             'dunitprice' => 'Price',
             'nsaleprice' => 'Sale Price',
             'nlevel2' => 'Level 2 Price',
@@ -215,6 +223,13 @@ class ItemListDisplaysController extends Controller{
             unset($data['defualt_items_listings'][$key]);
         }
         
+        if (($key = array_search('dcostprice', $data['defualt_items_listings'])) !== false) {
+            unset($data['defualt_items_listings'][$key]);
+        }
+        if (($key = array_search('case_price', $data['defualt_items_listings'])) !== false) {
+            unset($data['defualt_items_listings'][$key]);
+        }
+        
 		$data['title_arr'] = array(
             'webstore' => 'Web Store',
             'vitemtype' => 'Item Type',
@@ -228,7 +243,8 @@ class ItemListDisplaysController extends Controller{
             'vsuppliercode' => 'Supplier',
             'iqtyonhand' => 'Qty. on Hand',
             'ireorderpoint' => 'Reorder Point',
-            'dcostprice' => 'Avg. Case Cost',
+            // 'dcostprice' => 'Avg. Case Cost',
+            'case_cost' => 'Avg. Case Cost',
             'dunitprice' => 'Price',
             'nsaleprice' => 'Sale Price',
             'nlevel2' => 'Level 2 Price',

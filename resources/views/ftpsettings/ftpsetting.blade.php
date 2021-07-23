@@ -4,7 +4,14 @@
 @endsection
 @section('main-content')
 
-
+<style>
+    .levelpricingFtp{
+        display: none;
+    }
+    .levelpricingEditFtp{
+        display: none;
+    }
+</style>
 <div id="content">
   <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
       <div class="container">
@@ -62,11 +69,8 @@
                 <table id="aisle" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                   <thead style="background-color: #286fb7!important;">
                     <tr>
-                        
                         <td style="width: 1px;color:black;"class="text-center"><input type="checkbox"  onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                      <!-- previous code <td style="width: 1px;" class="text-center"><input type="checkbox"  onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>-->
-                      <td style="" class="col-xs-1 headername text-uppercase text-light"><?php echo 'Manufacturer'; ?></td>
-                      <!-- <td class="text-center"><?php //echo $column_action; ?></td> -->
+                        <td style="" class="col-xs-1 headername text-uppercase pull-left text-light"><?php echo 'Manufacturer'; ?></td>
                     </tr>
                   </thead>
                   <tbody>
@@ -81,7 +85,7 @@
                             <span style="display:none;"><?php echo $ftp['manufacturer']; ?></span>
                             <!-- <input type="text" maxlength="45" class="editable aisle_c" name="aisle[<?php echo $k; ?>][aislename]" id="aisle[<?php echo $k; ?>][aislename]" value="<?php echo $ftp['manufacturer']; ?>" onclick='document.getElementById("aisle[<?php echo $k; ?>][select]").setAttribute("checked","checked");' /> -->
                       
-                      <span>
+                            <span>
                           <?php // echo $ftp['manufacturer'] == 1?'Phillip Morris':'RJ Reynolds'; ?>
                           <?php 
                           switch($ftp['manufacturer']){
@@ -198,7 +202,7 @@
                 </div>
             </div>
 
-            <div class="row mb-3">
+            <div class="row mb-3 levelpricingFtp" id="divAddLevelpricing" >
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Level Pricing</label>
                 <div class="col-sm-10">
                     <select name="ftp[0][level_pricing]" id="level_pricing" class="form-control">
@@ -317,7 +321,9 @@
                     </select>
                 </div>
             </div>
-            <div class="row mb-3">
+            
+            
+            <div class="row mb-3 levelpricingEditFtp" id="divEditLevelpricing">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Level Pricing</label>
                 <div class="col-sm-10">
                     <select name="level_pricing" id="edit_level_pricing" class="form-control">
@@ -388,7 +394,7 @@
       
     </div>
   </div>
-  <div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
+<div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -407,10 +413,7 @@
       </div>
       
     </div>
-  </div>
-
-
-
+</div>
 @endsection
 
 
@@ -523,7 +526,8 @@
 
 
 function addAisle() {
-  $('#addModal').modal('show');
+    $('#divAddLevelpricing').addClass("levelpricingFtp");
+    $('#addModal').modal('show');
 }
 
  $(document).on('submit', 'form#add_new_form', function(event) {
@@ -584,7 +588,8 @@ function addAisle() {
   
   $(document).on('click', '.manufacturer', function(event) {
         
-        $('#divEditLevelpricing').hide();
+        $('#divEditLevelpricing').addClass("levelpricingEditFtp");
+        
         
         var data = {ftp_id : parseInt(this.id)};
         // data['ftp_id'] = parseInt(this.id);
@@ -599,11 +604,6 @@ function addAisle() {
             type : 'GET',
             dataType: 'json',
           success: function(response) {
-            
-            // console.log(352);
-            console.log(response);
-            console.log('-------------------------');
-            
             $("#edit_ftp_id").val(response.ftp_id);
             $("#edit_mfr_retail_no").val(response.mfr_retail_no);
             // $("#edit_manufacturer").val(response.manufacturer);
@@ -620,7 +620,7 @@ function addAisle() {
             $("#edit_level_pricing").val(response.level_pricing);
             
             if(response.purpose == '2'){
-                $('#divEditLevelpricing').show();
+                $('#divEditLevelpricing').removeClass("levelpricingEditFtp");
             }
             
             $('#edit_dept_code').val(response.dept_code).change();
@@ -659,36 +659,36 @@ function addAisle() {
   });
 
 
-  $(document).on('click', '#save_button', function(event) {
-    event.preventDefault();
+//   $(document).on('click', '#save_button', function(event) {
+//     event.preventDefault();
 
-    var edit_url = "{{route('ftpsetting.edit')}}";
+//     var edit_url = "{{route('ftpsetting.edit')}}";
     
-    edit_url = edit_url.replace(/&amp;/g, '&');
+//     edit_url = edit_url.replace(/&amp;/g, '&');
     
-    var all_aisle = true;
-    $('.aisle_c').each(function(){
-      if($(this).val() == ''){
-        // alert('Please Enter Aisle Name');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please Enter Aisle Name!", 
-          callback: function(){}
-        });
-        all_aisle = false;
-        return false;
-      }else{
-        all_aisle = true;
-      }
-    });
+//     var all_aisle = true;
+//     $('.aisle_c').each(function(){
+//       if($(this).val() == ''){
+//         // alert('Please Enter Aisle Name');
+//         bootbox.alert({ 
+//           size: 'small',
+//           title: "Attention", 
+//           message: "Please Enter Aisle Name!", 
+//           callback: function(){}
+//         });
+//         all_aisle = false;
+//         return false;
+//       }else{
+//         all_aisle = true;
+//       }
+//     });
     
-    if(all_aisle == true){
-      $('#form-aisle').attr('action', edit_url);
-      $('#form-aisle').submit();
-      $("div#divLoading").addClass('show');
-    }
-  });
+//     if(all_aisle == true){
+//       $('#form-aisle').attr('action', edit_url);
+//       $('#form-aisle').submit();
+//       $("div#divLoading").addClass('show');
+//     }
+//   });
   
   $(function() {
         
@@ -746,7 +746,7 @@ function addAisle() {
               bootbox.alert({ 
                 size: 'small',
                 title: "Attention", 
-                message: 'Please Select Aisle to Delete!', 
+                message: 'Please Select FTP to Delete!', 
                 callback: function(){}
               });
               return false;
@@ -766,9 +766,6 @@ function addAisle() {
                 contentType: "application/json",
                 dataType: 'json',
               success: function(data) {
-                console.log("-----"); 
-                console.log(data);
-                if(data.success){
                     bootbox.alert({ 
                         size: 'small',
                         title: "Attention", 
@@ -778,15 +775,7 @@ function addAisle() {
                     setTimeout(function(){
                         window.location.reload();
                     }, 3000);
-                }else{
-        
-                  $('#error_msg').html('<strong>'+ data.error +'</strong>');
-                  $("div#divLoading").removeClass('show');
-                  $('#errorModal').modal('show');
-        
-                }
-        
-        
+              
               },
               error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
@@ -808,27 +797,27 @@ function addAisle() {
         }
     }
     
-    $(document).on("change", "#add_purpose", function(){
+    // $(document).on("change", "#add_purpose", function(){
         
+    // });
+    $("#add_purpose").change(function(){
         let purpose = $('#add_purpose').val();
-        
         if(purpose == 2){
-            $('#divLevelpricing').show();
+            $('#divAddLevelpricing').removeClass("levelpricingFtp");
         }else{
-            $('#divLevelpricing').hide();
+            $('#divAddLevelpricing').addClass("levelpricingFtp");
         }
-    });
+    })
     
-     $(document).on("change", "#edit_purpose", function(){
-        
+    
+    $("#edit_purpose").change(function(){
         let edit_purpose = $('#edit_purpose').val();
-        
         if(edit_purpose == 2){
-            $('#divEditLevelpricing').show();
+             $('#divEditLevelpricing').removeClass("levelpricingEditFtp");
         }else{
-            $('#divEditLevelpricing').hide();
+            $('#divEditLevelpricing').addClass("levelpricingEditFtp");
         }
-    });
+    })
 </script>
 
 
