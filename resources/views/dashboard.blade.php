@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="{{ asset('asset/css/dashboard.css') }}">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 
+    <style>
+        .lessContent{
+            display: none;
+        }
+        .moreContent{
+            display: none;
+        }
+    </style>
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
@@ -128,73 +136,75 @@
                             </div>
                         </div>
                     </div>
-                    <?php
-
-                    ?>
-                    {{-- <div class="col-lg-4 col-md-12 col-xs-4"></div> --}}
+                   
+                    
                     <div class="col-lg-4 col-md-12 col-xs-4">
                         <div class="box box-info">
-                            <div class="d-flex justify-content-center" style="display:none;">
-                                <h6 class="text-uppercase">Weekly Top Items</h6>
-                                <!--<a href="#" class="view-more font-weight-bold" id="hide">more</a>-->
-                                <!--<a href="#" class="more">more</a>-->
-                                <!--<a href="#" class="more">More</a>-->
+                            <div class="d-flex justify-content-center">
+                                <h6 class="text-uppercase" style="color:#000">Weekly Top Items</h6>
                             </div>
-                            <p class="disp-cont">
-                                <?php if(isset($output['topItem'])){ ?>
-                                <?php foreach($output['topItem'] as $topitem){ ?>
-                            <div class="content text-dark d-flex justify-content-between" id="five">
-                                <?php if(isset($topitem->Item)) { ?>
-                                    <div class="d-text">
-                                        <h6 class="text-uppercase"><?php echo $topitem->Item; ?></h6>
-                                        <p class="p-text text-secondary"><?php
-                                        $url = url()->current();
-                                        $url_data = explode('/dashboard', $url);
-                                        $urllink = $url_data[0];
-                                        $product_id = 2;
-                                        $itemlink = '/item/edit/' . $product_id;
-                                        $target_url = $url_data[0] . $itemlink;
-                                        ?></p>
-                                    </div>
-                                    <div class="d-button">
-                                        <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php echo $topitem->Quantity; ?></a>
-                                    </div>
-                                <?php } else {?>
-                                        <span class="text-justify text-uppercase">No data available </span>
+                            
+                            
+                            
+                            <div class="disp-cont lessContent" id="lessId">
+                                <?php if(isset($output['topItem'])){  ?>
+                                    <?php for ($i=0; $i < 5; $i++) { ?>
+                                        <div class="content text-dark d-flex justify-content-between" id="five">
+                                            <?php if(isset($output['topItem'][$i]->Item)) { ?>
+                                                <div class="d-text">
+                                                    <?php
+                                                    $url = url()->current();
+                                                    $url_data = explode('/dashboard', $url);
+                                                    $urllink = $url_data[0];
+                                                    $product_id = $output['topItem'][$i]->itemid;
+                                                    $itemlink = '/item/edit/' . $product_id;
+                                                    $target_url = $url_data[0] . $itemlink;
+                                                    ?>
+                                                    <a href="<?php echo $target_url; ?>"><h6 class="text-uppercase"><?php echo $output['topItem'][$i]->Item; ?></h6></a>
+                                                    <a href="<?php echo $target_url; ?>"><p class="text-uppercase" style="font-size:13px;"><?php echo $output['topItem'][$i]->sku; ?></p></a>
+                                                    <!-- <p class="p-text text-secondary"></p> -->
+                                                </div>
+                                                <div class="d-button">
+                                                    <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php echo $output['topItem'][$i]->Quantity; ?></a>
+                                                </div>
+                                            <?php } else {?>
+                                                <span class="text-justify text-uppercase">No data available </span>
+                                            <?php } ?>
+                                        </div>
+                                    <?php } ?>
+                                <?php }else{ ?>
+                                    <div><p class="text-justify">No Data Found!!!</p></div>
                                 <?php } ?>
                             </div>
-                            <?php } ?>
-                            <?php }else{ ?>
-                            <div>
-                                <p class="text-justify">No Data Found!!!</p>
-                            </div>
-                            <?php } ?>
-                            </p>
 
-                            <div class="more-cont" style="display:none;">
+
+                        
+                            
+                            <div class="more-cont moreContent" id="moreId">
                                 <?php if(isset($output['topItem'])){ ?>
                                     <?php foreach($output['topItem'] as $topitem){ ?>
-                                    <div class="content text-dark d-flex justify-content-between">
-                                        <?php if(isset($topitem->Item)) { ?>
-                                            <div class="d-text">
-                                                <h6 class="text-uppercase"><?php echo $topitem->Item; ?></h6>
-                                                <p class="p-text text-secondary"><?php
-                                                $url = url()->current();
-                                                $url_data = explode('/dashboard', $url);
-                                                $urllink = $url_data[0];
-                                                $product_id = 2;
-                                                $itemlink = '/item/edit/' . $product_id;
-                                                $target_url = $url_data[0] . $itemlink;
-                                                ?></p>
+                                        <div class="content text-dark d-flex justify-content-between">
+                                            <?php if(isset($topitem->Item)) { ?>
+                                                <div class="d-text">
+                                                    <?php
+                                                        $url = url()->current();
+                                                        $url_data = explode('/dashboard', $url);
+                                                        $urllink = $url_data[0];
+                                                        $product_id = $topitem->itemid;
+                                                        $itemlink = '/item/edit/' . $product_id;
+                                                        $target_url = $url_data[0] . $itemlink;
+                                                    ?>
+                                                    <a href="<?php echo $target_url; ?>"><h6 class="text-uppercase"><?php echo $topitem->Item; ?></h6></a>
+                                                    <a href="<?php echo $target_url; ?>"><p class="text-uppercase" style="font-size:13px;"><?php echo $topitem->sku; ?></p></a>
                                             </div>
-                                            <div class="d-button">
-                                                <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4"
-                                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo $topitem->Quantity; ?></a>
+                                                <div class="d-button">
+                                                    <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4"
+                                                        style="padding-top: 5px; padding-bottom: 5px;"><?php echo $topitem->Quantity; ?></a>
                                             </div>
-                                        <?php } else {?>
-                                                <span class="text-justify text-uppercase">No data available </span>
-                                        <?php } ?>
-                                    </div>
+                                            <?php } else {?>
+                                                    <span class="text-justify text-uppercase">No data available </span>
+                                            <?php } ?>
+                                        </div>
                                     <?php } ?>
                                 <?php }else{ ?>
                                 <div>
@@ -202,8 +212,11 @@
                                 </div>
                                 <?php } ?>
                             </div>
+                            
+                        
                             <?php if(isset($topitem->Item)) { ?>
-                                <a href="#" class="more" style="padding-left: 250px;">More</a>
+                                <button type="button" class="bg-primary text-white d-button-text px-4" id="moreBtn" style="padding-left: 250px;">More</button>
+                                <button type="button" class="bg-primary text-white d-button-text px-4" id="lessBtn" style="padding-left: 250px;">Less</button>
                             <?php } ?>
                         </div>
                     </div>
@@ -310,16 +323,9 @@
 @endsection
 
 @section('page-script')
-    {{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> --}}
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    4 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    {{-- <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script> --}}
-    {{-- <link href="/stylesheet/morris.css" rel="stylesheet" type="text/css"/> --}}
-    {{-- <link rel="stylesheet" href="{{ asset('asset/css/morris.css') }}"> --}}
-    {{-- <link rel="stylesheet" href="{{ asset('asset/js/morris.min.js') }}"> --}}
-    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script> --}}
-    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> --}}
-    {{-- <script src="/javascript/morriss/morris.min.js"></script> --}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
     <script type="text/javascript">
         var table = $('#vendor').DataTable({
@@ -348,9 +354,9 @@
     <script src="{{ asset('javascript/dashboardApi.js') }}"></script>
 
     <script type="text/javascript">
-        $(window).load(function() {
-            $("div#divLoading").removeClass('show');
-        });
+        // $(window).load(function() {
+        //     $("div#divLoading").removeClass('show');
+        // });
         $(document).ready(function() {
             setTimeout(function() {
                 if (window.sevenDaySalesArea !== undefined) {
@@ -373,12 +379,37 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('.more').click(function(e) {
-                e.preventDefault();
-                $(this).text(function(i, t) {
-                    return t == 'Less' ? 'More' : 'Less';
-                }).prev('.more-cont').slideToggle()
+            $('#lessId').removeClass('lessContent');
+            $('#moreId').addClass('moreContent');
+            $('#lessBtn').hide();
+            $('#moreBtn').click(function() {
+                $('#lessId').addClass('lessContent');
+                $('#moreId').removeClass('moreContent');
+                $('#moreBtn').hide();
+                $('#lessBtn').show();
             });
+            
+            $('#lessBtn').click(function() {
+                $('#lessId').removeClass('lessContent');
+                $('#moreId').addClass('moreContent');
+                $('#lessBtn').hide();
+                $('#moreBtn').show();
+            });
+
+
+            // $('.more').click(function(e) {
+            //     e.preventDefault();
+            //     $(this).text(function(i, t) {
+            //         if(t == 'More'){
+            //             $('#lessId').removeClass('lessContent');
+            //             $('#moreId').addClass('moreContent');
+            //         } else if(t == 'Less'){
+            //             $('#lessId').addClass('lessContent');
+            //             $('#moreId').removeClass('moreContent');
+            //         }
+            //         return t == 'Less' ? 'More' : 'Less';                    
+            //     }).prev('.more-cont').slideToggle()
+            // });
         });
     </script>
 @endsection
