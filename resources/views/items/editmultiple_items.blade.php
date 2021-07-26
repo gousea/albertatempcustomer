@@ -1305,7 +1305,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                
                <div class="mytextdiv" style="padding-left:20px;">
                     <div class="mytexttitle font-weight-bold text-uppercase">
-                        OTHER OPTIONS <input type="checkbox" name="options_checkbox" value="1">
+                        ADVANCE OPTIONS <input type="checkbox" name="options_checkbox" value="1">
                     </div>
                     <div class="divider font-weight-bold"></div>
                 </div>
