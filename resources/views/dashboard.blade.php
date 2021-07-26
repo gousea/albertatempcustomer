@@ -16,9 +16,9 @@
                     <span class="font-weight-bold text-uppercase"> Dashboard</span>
                 </div>
                 <div class="nav-submenu">
-                    {{-- <a type="button" class="btn btn-gray headerblack  buttons_menu text-uppercase"
+                    <a type="button" class="btn btn-gray headerblack  buttons_menu text-uppercase"
                         href="{{ route('dashboardlayout') }}"> Edit layout
-                    </a> --}}
+                    </a> 
                 </div>
             </div> <!-- navbar-collapse.// -->
         </div>
