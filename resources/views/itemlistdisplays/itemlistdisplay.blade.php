@@ -1,165 +1,156 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title') @show
 @section('main-content')
+<style type="text/css">
+  table#itemsort1 tr td, table#itemsort2 tr td{
+    background-color: #fff !important;
+  }
 
-<?php 
-// echo "<pre>";
-// print_r($data);die;
-    // echo $module_name;die;
-
-?>
-
+  
+</style>
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <!-- <h1><?php //echo $heading_title; ?></h1> -->
-      <ul class="breadcrumb">
-        <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-        <?php //} ?>
-      </ul>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo 'Settings List'; ?></h3>
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+      <div class="container">
+          <div class="collapse navbar-collapse" id="main_nav">
+              <div class="menu">
+                  <span class="font-weight-bold text-uppercase" > Settings List</span>
+              </div>
+              <div class="nav-submenu">
+                  <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+
+                  <!-- <a id="save_button" class="btn btn-gray headerblack  buttons_menu " title="Save"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</a> -->
+              </div>
+          </div> <!-- navbar-collapse.// -->
       </div>
-      <div class="panel-body">
+  </nav>
+  <section class="section-content py-6">
+    <div class="container">
+      <div class="panel panel-default">
+        <div class="panel-body">
+      
+        <form action="{{route('itemlistdisplay.edit')}}" method="post" enctype="multipart/form-data" id="form-settings">
+            @csrf
+            @method('post')
 
-        <div class="row" style="padding-bottom: 15px;float: right;">
-          <div class="col-md-12">
-            <div class="">
-              <a id="save_button" class="btn btn-primary" title="Save"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</a>
-            </div>
-          </div>
-        </div>
-        <div class="clearfix"></div>
-    
-      <form action="{{route('itemlistdisplay.edit')}}" method="post" enctype="multipart/form-data" id="form-settings">
-          @csrf
-          @method('post')
-
-        @if (session()->has('message'))
-          <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-          </div>      
-        @endif
-        @if (session()->has('error'))
-          <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-          </div>      
-        @endif
-
-          @if ($errors->any())
-            <div class="alert alert-danger">
-              <ul>
-                @foreach ($errors->all() as $error)
-                  <li>{{$error}}</li>
-                @endforeach
-              </ul>
-            </div>                
+          @if (session()->has('message'))
+            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+          @endif
+          @if (session()->has('error'))
+            <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
           @endif
 
-            <div class="row">
-                
-                <div class="col-md-5">
-                      <div class="form-group">
-                        <label class="control-label">Select Module</label>
-                        <div class="">
-                           <select class="col-md-8 form-control" name="module_name" id="module_name">
-                                <option value="ItemListing" <?php echo $module_name == 'ItemListing' ? 'selected' : ''?>>Items</option>
-                                <option value="Promotion" <?php echo $module_name == 'Promotion' ? 'selected' : ''?>>Promotion</option>
-                                <option value="PurchaseOrder" <?php echo $module_name == 'PurchaseOrder' ? 'selected' : ''?>>Purchase Order</option>
-                            </select>
+            @if ($errors->any())
+              <div class="alert alert-danger">
+                <ul>
+                  @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                  @endforeach
+                </ul>
+              </div>                
+            @endif
+
+              <div class="row">
+                  <div class="col-md-5">
+                        <div class="form-group">
+                          <label class="control-label" style="font-size:16px">Select Module</label>
+                          <div class="">
+                            <select class="col-md-8 form-control" name="module_name" id="module_name">
+                                  <option value="ItemListing" <?php echo $module_name == 'ItemListing' ? 'selected' : ''?>>Items</option>
+                                  <option value="Promotion" <?php echo $module_name == 'Promotion' ? 'selected' : ''?>>Promotion</option>
+                                  <option value="PurchaseOrder" <?php echo $module_name == 'PurchaseOrder' ? 'selected' : ''?>>Purchase Order</option>
+                              </select>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-            </div>
-            <br>
-          <div class="row">
-            <div class="col-md-5">
-              <div class="table-responsive" >
-                <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
-                  <thead>
-                    <tr>
-                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort1\']').prop('checked', this.checked);"/></td>
-                      <td><input type="text" class="form-control itemsort1_search" placeholder="Available Columns" style="border:none;"></td>
-                    </tr>
-                  </thead>
-                </table>
-                <div class="div-table-content">
-                  <table class="table table-bordered table-hover" id="itemsort1">
-                    <tbody>
-                      <?php if(isset($defualt_items_listings) && count($defualt_items_listings) > 0){ ?>
-                        <?php foreach($defualt_items_listings as $defualt_items_listing){ ?>
-                            <tr>
-                              <td class="text-center" style="width:1px;"><input type="checkbox" name="checkbox_itemsort1[]" value="<?php echo $defualt_items_listing;?>"/></td>
-                              <td><?php echo $title_arr[$defualt_items_listing];?></td>
-                            <tr>
-                          
-                        <?php } ?>
-                      <?php } ?>
-                    </tbody>
+                  </div>
+              </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover">
+                      <thead style="background-color: #286fb7!important;" >
+                        <tr>
+                          <td style="width: 1px;" class="text-center">
+                            <input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort1\']').prop('checked', this.checked);"/>
+                          </td>
+                          <td>
+                            <input type="text" class="form-control itemsort1_search" placeholder="Available Columns" style="border:none;"></td>
+                        </tr>
+                      </thead>
                   </table>
+                  <div class="div-table-content" style="height:300px;overflow:auto; margin-top: -15px">
+                    <table class="table table-hover" id="itemsort1" style="border-collapse: separate; border-spacing:0 5px !important;">
+                      <tbody>
+                        <?php if(isset($defualt_items_listings) && count($defualt_items_listings) > 0){ ?>
+                          <?php foreach($defualt_items_listings as $defualt_items_listing){ ?>
+                              <tr>
+                                <td class="text-center" style="width:1px;"><input type="checkbox" name="checkbox_itemsort1[]" value="<?php echo $defualt_items_listing;?>"/></td>
+                                <td><?php echo $title_arr[$defualt_items_listing];?></td>
+                              </tr>
+                          <?php } ?>
+                        <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                     
+                  
+                </div>
+              </div>
+              <div class="col-md-1 text-center" style="margin-top:12%;">
+                <a class="btn btn-primary" style="cursor:pointer" id="add_item_btn"><i class="fa fa-arrow-right fa-3x text-light"></i></a><br><br>
+                <a class="btn btn-primary" style="cursor:pointer" id="remove_item_btn"><i class="fa fa-arrow-left fa-3x text-light"></i></a>
+              </div>
+              <div class="col-md-5">
+                <div class="table-responsive" >
+                  <table class="table-bordered table table-hover">
+                    <thead style="background-color: #286fb7!important;" >
+                      <tr>
+                        <th style="width:1px" class="text-center"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort2\']').prop('checked', this.checked);" /></th>
+                        <th><input type="text" class="form-control itemsort2_search" placeholder="Show column in this order" style="border:none;" readonly></th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <div class="div-table-content" style="height:300px;overflow:auto; margin-top: -15px">
+                    <table class="table table-hover" id="itemsort2" style="border-collapse: separate; border-spacing:0 5px !important;">
+                      <tbody>
+                        <?php if(isset($pre_items_listings)){ ?>
+                          <?php foreach($pre_items_listings as $key => $pre_items_listing){ ?>
+                            <tr>
+                              <td class="text-center" style="width:1px;"><input type="checkbox" name="checkbox_itemsort2[]" value="<?php echo $key;?>"/></td>
+                              <td><?php echo $pre_items_listing;?><input type="hidden" name="itemListings[<?php echo $key;?>]" value="<?php echo $pre_items_listing;?>"></td>
+                            </tr>
+                          <?php } ?>
+                        <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                
+                </div>
+                <div style="margin-top:15px;">
+                  <button type="button" id="move_up_btn" class="btn btn-info" style="background-color:#286fb7 ;">Move Up</button>
+                  <button type="button" id="move_down_btn" class="btn btn-info" style="background-color:#286fb7 ;">Move Down</button>
                 </div>
               </div>
             </div>
-            <div class="col-md-1 text-center" style="margin-top:12%;">
-              <a class="btn btn-primary" style="cursor:pointer" id="add_item_btn"><i class="fa fa-arrow-right fa-3x"></i></a><br><br>
-              <a class="btn btn-primary" style="cursor:pointer" id="remove_item_btn"><i class="fa fa-arrow-left fa-3x"></i></a>
-              
-            </div>
-            <div class="col-md-5">
-              <div class="table-responsive" >
-                <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
-                  <thead>
-                    <tr>
-                      <td style="width:1px" class="text-center"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort2\']').prop('checked', this.checked);" /></td>
-                      <td><input type="text" class="form-control itemsort2_search" placeholder="Show column in this order" style="border:none;" readonly></td>
-                    </tr>
-                  </thead>
-                </table>
-                <div class="div-table-content" style="">
-                  <table class="table table-bordered table-hover" id="itemsort2">
-                    <tbody>
-                      <?php if(isset($pre_items_listings)){ ?>
-                        <?php foreach($pre_items_listings as $key => $pre_items_listing){ ?>
-                          <tr>
-                            <td class="text-center" style="width:1px;"><input type="checkbox" name="checkbox_itemsort2[]" value="<?php echo $key;?>"/></td>
-                            <td><?php echo $pre_items_listing;?><input type="hidden" name="itemListings[<?php echo $key;?>]" value="<?php echo $pre_items_listing;?>"></td>
-                          </tr>
-                        <?php } ?>
-                      <?php } ?>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div style="margin-top:15px;">
-                <button type="button" id="move_up_btn" class="btn btn-info">Move Up</button>
-                <button type="button" id="move_down_btn" class="btn btn-info">Move Down</button>
-              </div>
-            </div>
-          </div>
-        </form>
-        
+          </form>
+          
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 
 @endsection
 
 
 
-@section('scripts')
+@section('page-script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 
-<style type="text/css">
-  table#itemsort1 tr td, table#itemsort2 tr td{
-    background-color: #fff !important;
-  }
-</style>
+
 
 <script type="text/javascript">
  $(document).ready(function($) {
@@ -395,9 +386,7 @@
     }    
   });
 
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
+ 
 </script>
 
 
