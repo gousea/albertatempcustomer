@@ -356,7 +356,7 @@ $(document).ready(function() {
     var showPaginationPrevNextButtons = false;
     var table =   $("#item_listing").DataTable({
         "bSort": false,
-        // "scrollY":"300px",
+        // "scrollY":"350px",
         // "autoWidth": true,
         "fixedHeader": true,
         "processing": true,
@@ -570,7 +570,7 @@ $(document).ready(function() {
                     $("div#divLoading").removeClass('show');
                     // setTimeout(function(){ 
                         
-                    // }, 3000);
+                    // }, 3500);
                     if(data)
                     {
                         $('#category_code').attr("placeholder", "Select Category");
@@ -835,7 +835,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
   <div class="modal-dialog modal-lg scroll-dialog">
 
     <!-- Modal content-->
-    <div class="modal-content">
+    <div class="modal-content" style="width: 1000px;">
       <form action="<?php echo $data['edit_list'];?>" method="post" id="form_item_update">
          @csrf
         @if(session()->get('hq_sid') == 1)
@@ -867,7 +867,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     <!--<p><span style="width:10%;">Pack:</span>&nbsp;&nbsp;<span style="width:40%;"><input type="text" name="update_npack" value="1" class="form-control"></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_npack_checkbox" value="Y">&nbsp;Update Pack Qty</span></p>-->
                     
                    <p>
-                      <span style="width:26%;">COST</span>&nbsp;&nbsp;
+                      <span style="width:35%;font-size:1rem;">COST</span>&nbsp;&nbsp;
                       
                       <span style="width:60%;">
                        <input type="text" name="update_dcostprice" value="0" class="form-control"> 
@@ -896,10 +896,10 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                         <div class="verticalLine" ></div>
                   </div>
                   <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
-                    <!--<p><span style="width:20%;">Selling Unit:</span>&nbsp;&nbsp;<span style="width:30%;"><input type="text" name="update_nsellunit" value="1" class="form-control"></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_nsellunit_checkbox" value="Y">&nbsp;Update Zero Unit</span></p>-->
+                    <!--<p><span style="width:20%;">Selling Unit:</span>&nbsp;&nbsp;<span style="width:35%;font-size:1rem;"><input type="text" name="update_nsellunit" value="1" class="form-control"></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_nsellunit_checkbox" value="Y">&nbsp;Update Zero Unit</span></p>-->
                     <!--<p>-->
                     
-                      <span style="width:20%;">PRICE &nbsp;&nbsp;</span><span style="width:60%;"><input type="text" name="update_dunitprice" value="0" class="form-control"></span>&nbsp;&nbsp;
+                      <span style="width:35%;font-size:1rem;">PRICE &nbsp;&nbsp;</span><span style="width:60%;"><input type="text" name="update_dunitprice" value="0" class="form-control"></span>&nbsp;&nbsp;
                     <!--  <span style="width:45%;"><input type="checkbox" name="update_dunitprice_checkbox" value="Y">&nbsp;Update Zero Price</span>-->
                     <!--</p>-->
                     <p>
@@ -910,7 +910,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                         <input type="checkbox" value="Y" name="update_dunitprice_increment">&nbsp;&nbsp;increment price ($)<br><br>
                         <input type="checkbox" value="Y" name="update_dunitprice_increment_percent">&nbsp;&nbsp;increment price by (%)
                       </span>&nbsp;&nbsp;
-                      <!--<span style="width:20%;">Buydown:</span>&nbsp;&nbsp;<span style="width:30%;">-->
+                      <!--<span style="width:20%;">Buydown:</span>&nbsp;&nbsp;<span style="width:35%;font-size:1rem;">-->
                       <input type="hidden" name="update_ndiscountper" value="" class="form-control">
                     </p>
                   </div>
@@ -934,7 +934,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
               <div class="row text-uppercase">
               <div class="col-md-4 span_field " style="padding-left:10px;padding-right:10px;">
                 <p>
-                  <span style="width:26%;">Item Type</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Item Type</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vitemtype" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -948,7 +948,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 </p>
                 <p>
                     
-                  <span style="width:26%;">Category</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Category</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vcategorycode" id="update_vcategorycode" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -961,7 +961,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:26%;">Unit</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Unit</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vunitcode" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -974,7 +974,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                <span style="width:26%;">Size</span>&nbsp;&nbsp;
+                <span style="width:35%;font-size:1rem;">Size</span>&nbsp;&nbsp;
                 <span style="width:60%;">
                     <select name="update_vsize" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -987,7 +987,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                <span style="width:26%;">Group</span>&nbsp;&nbsp;
+                <span style="width:35%;font-size:1rem;">Group</span>&nbsp;&nbsp;
                 <span style="width:60%;">
                     <select name="update_iitemgroupid" class="form-control">
                     <option value="no-update">-- No Update --</option>
@@ -1001,7 +1001,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 </p>
               </div>
               <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
-                <p><span style="width:26%;">Department</span>&nbsp;&nbsp;
+                <p><span style="width:35%;font-size:1rem;">Department</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vdepcode" id="update_vdepcode" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1016,7 +1016,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 
                 
                 <p>
-                <span style="width:26%;">Sub Category</span>&nbsp;&nbsp;
+                <span style="width:35%;font-size:1rem;">Sub Category</span>&nbsp;&nbsp;
                 <span style="width:60%;">
                     <select name="update_subcat_id" id="update_subcat_id" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1031,7 +1031,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 
                 
                 <p>
-                <span style="width:26%;">Supplier</span>&nbsp;&nbsp;
+                <span style="width:35%;font-size:1rem;">Supplier</span>&nbsp;&nbsp;
                 <span style="width:60%;">
                     <select name="update_vsuppliercode" id="update_vsuppliercode" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1045,7 +1045,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 </p>
                 
                 <p>
-                  <span style="width:26%;">Tax1</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Tax1</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vtax1" id="update_vtax1" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1058,7 +1058,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:26%;">Tax2</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Tax2</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vtax2" id="update_vtax2" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1075,7 +1075,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 <p><span style="width:10%;">QOH:</span>&nbsp;&nbsp;<span style="width:40%;"><input type="text" name="update_iqtyonhand" value="0" class="form-control" disabled></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_iqtyonhand" value="Y" disabled>&nbsp;Update Zero QOH</span></p>
                 
                 <p>
-                  <span style="width:26%;">Manufacturer</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Manufacturer</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_manufacturerid" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1089,7 +1089,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 </p>
                 
                 <p>
-                  <span style="width:26%;">Mfg Promo Desc</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Mfg Promo Desc</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_aisleid" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1102,7 +1102,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:26%;">Mfg Buy Down Desc</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Mfg Buy Down Desc</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_shelfid" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1115,7 +1115,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:26%;">Mfg MultiPack Desc</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Mfg MultiPack Desc</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_shelvingid" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1151,7 +1151,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
             <div class="row text-uppercase">   
               <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
                 <p>
-                  <span style="width:26%;">Food Item</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Food Item</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                       <select name="update_vfooditem" id="update_vfooditem" class="form-control">
                         <option value="no-update">-- No Update --</option>
@@ -1164,7 +1164,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </span>
                   </p>
                 <p>
-                  <span style="width:26%;">WCI Item</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">WCI Item</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_wicitem" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1177,7 +1177,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:26%;">Station</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Station</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_stationid" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1190,7 +1190,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:26%;">Barcode Type</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Barcode Type</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vbarcodetype" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1203,7 +1203,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:26%;">Discount</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Discount</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vdiscount" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1216,7 +1216,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:26%;">Status</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Status</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_estatus" class="form-control">
                         <?php if(isset($data['array_status']) && count($data['array_status']) > 0){?>
@@ -1230,7 +1230,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
               </div>
               <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
                 <p>
-                  <span style="width:30%;">Liability</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Liability</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_liability" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1242,15 +1242,15 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </select>
                   </span>
                 </p>
-                <p><span style="width:31%;">Re-Order Point</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_ireorderpoint" value="" class="form-control"></span></p>
-                <p><span style="width:31%;"></span>&nbsp;&nbsp;<span style="width:60%;"><span style="font-size: 10px;" class="text-small"><b>Enter Reorder Point in Unit.</b></span></span></p>
-                <p><span style="width:31%;">Order Qty Upto</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_norderqtyupto" value="" class="form-control"></span></p>
-                <p><span style="width:31%;"></span>&nbsp;&nbsp;<span style="width:60%;"><span style="font-size: 10px;" class="text-small"><b>Enter Order Qty Upto in Case.</b></span></span></p>
-                <p><span style="width:31%;">Vintage</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_vintage" value="" class="form-control"></span></p>
+                <p><span style="width:35%;font-size:1rem;">Re-Order Point</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_ireorderpoint" value="" class="form-control"></span></p>
+                <p><span style="width:35%;font-size:1rem;"></span>&nbsp;&nbsp;<span style="width:60%;"><span style="font-size: 10px;" class="text-small"><b>Enter Reorder Point in Unit.</b></span></span></p>
+                <p><span style="width:35%;font-size:1rem;">Order Qty Upto</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_norderqtyupto" value="" class="form-control"></span></p>
+                <p><span style="width:35%;font-size:1rem;"></span>&nbsp;&nbsp;<span style="width:60%;"><span style="font-size: 10px;" class="text-small"><b>Enter Order Qty Upto in Case.</b></span></span></p>
+                <p><span style="width:35%;font-size:1rem;">Vintage</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_vintage" value="" class="form-control"></span></p>
               </div>
               <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
                 <p>
-                  <span style="width:30%;">Inventory Item</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Inventory Item</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_visinventory" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1263,7 +1263,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:30%;">Age Verification</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Age Verification</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vageverify" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1276,14 +1276,14 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:30%;">Bottle Deposit</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Bottle Deposit</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <input name="update_nbottledepositamt" value="" type="text" class="form-control">
                   </span>
                 </p>
-                <p><span style="width:30%;">Rating</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_rating" value="" class="form-control"></span></p>
+                <p><span style="width:35%;font-size:1rem;">Rating</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_rating" value="" class="form-control"></span></p>
                 <p>
-                  <span style="width:30%;">Sales Item</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Sales Item</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_vshowsalesinzreport" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1303,7 +1303,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
         <div class="panel panel-default">
             <div class="panel-heading">
                
-               <div class="mytextdiv" style="padding-left:25px;">
+               <div class="mytextdiv" style="padding-left:20px;">
                     <div class="mytexttitle font-weight-bold text-uppercase">
                         OTHER OPTIONS <input type="checkbox" name="options_checkbox" value="1">
                     </div>
@@ -1317,7 +1317,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 
               <div class="col-md-4 span_field" style="padding-left:25px;padding-right:10px;">
                 <p>
-                  <span style="width:26%;">Unit</span>
+                  <span style="width:35%;font-size:1rem;">Unit</span>
                   <span style="width:60%;">
                     <select name="update_unit_id" id="update_unit_id" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1330,9 +1330,9 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                   </span>
                 </p>
                 <p>
-                  <span style="width:26%;">Malt</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Malt</span>&nbsp;&nbsp;
                   <span style="width:60%;">
-                    <input style="margin-top: 10px;" type="checkbox" class="form-control" name="update_malt" value="1">
+                    <input style="" type="checkbox"  name="update_malt" value="1">
                   </span>
                 </p>
                 
@@ -1340,7 +1340,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
               <div class="col-md-4 span_field" style="padding-left:25px;padding-right:10px;">
 
                 <p>
-                  <span style="width:30%;">Unit Value</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Unit Value</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                    <input type="text" class="form-control" id="update_unit_value" value="" name="update_unit_value">
                   </span>
@@ -1349,7 +1349,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
               </div>
               <div class="col-md-4 span_field" style="padding-left:25px;padding-right:10px;">
                 <p>
-                  <span style="width:30%;">Bucket</span>&nbsp;&nbsp;
+                  <span style="width:35%;font-size:1rem;">Bucket</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_bucket_id" id="update_bucket_id" class="form-control">
                       <option value="no-update">-- No Update --</option>
@@ -1763,7 +1763,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
             });
         });
         
-    }, 3000);
+    }, 3500);
     
 });
 

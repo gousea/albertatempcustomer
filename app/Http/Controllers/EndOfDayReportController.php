@@ -37,7 +37,23 @@ class EndOfDayReportController extends Controller
         session()->put('session_date',  $date);
         $graph_data = $splitted_data = [];
         
-        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date','graph_data'));
+        $sql_data="select 
+            	sum(nnettotal) ytd, 
+            	sum(case when e.dstartdatetime >= date_add(curdate(), interval -day(current_date())+1 day) then nnettotal else 0 end) mtd,
+            	sum(case when e.dstartdatetime >= date_add(curdate(), interval -dayofweek(current_date())+1 day) then nnettotal else 0 end) wtd
+            	from trn_sales 
+            	join trn_endofdaydetail d on ibatchid=d.batchid
+            	join trn_endofday e on e.id=d.eodid
+            	where vtrntype='Transaction' and year(e.dstartdatetime) >= year(current_date())";
+          
+        
+                $result = DB::connection('mysql_dynamic')->select($sql_data);
+                
+                $week=$result[0]->wtd;
+                $month=$result[0]->mtd;
+                $year=$result[0]->ytd;
+        
+        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date','graph_data','week','month','year'));
         
     }
     public function getlist(Request $request){
@@ -92,16 +108,26 @@ class EndOfDayReportController extends Controller
           
           //year data EOD
            
-                $sql_data="select 
-                sum(nnettotal) ytd, 
-                sum(case when e.dstartdatetime >= date_add(curdate(), interval -day(current_date())+1 day) then nnettotal else 0 end) mtd,
-                sum(case when e.dstartdatetime >= date_add(curdate(), interval -dayofweek(current_date())+1 day) then nnettotal else 0 end) wtd
-                from trn_sales 
-                join trn_endofdaydetail d on ibatchid=d.batchid
-                join trn_endofday e on e.id=d.eodid
-                where vtrntype='Transaction' and date(e.dstartdatetime) >= str_to_date('". $date ."','%m-%d-%Y') ";
-	            //dd($sql);
+                // $sql_data="select 
+                // sum(nnettotal) ytd, 
+                // sum(case when e.dstartdatetime >= date_add(curdate(), interval -day(current_date())+1 day) then nnettotal else 0 end) mtd,
+                // sum(case when e.dstartdatetime >= date_add(curdate(), interval -dayofweek(current_date())+1 day) then nnettotal else 0 end) wtd
+                // from trn_sales 
+                // join trn_endofdaydetail d on ibatchid=d.batchid
+                // join trn_endofday e on e.id=d.eodid
+                // where vtrntype='Transaction' and date(e.dstartdatetime) >= str_to_date('". $date ."','%m-%d-%Y') ";
+	           // dd($sql_data);
+	           
+	            $sql_data="select 
+            	sum(nnettotal) ytd, 
+            	sum(case when e.dstartdatetime >= date_add(curdate(), interval -day(current_date())+1 day) then nnettotal else 0 end) mtd,
+            	sum(case when e.dstartdatetime >= date_add(curdate(), interval -dayofweek(current_date())+1 day) then nnettotal else 0 end) wtd
+            	from trn_sales 
+            	join trn_endofdaydetail d on ibatchid=d.batchid
+            	join trn_endofday e on e.id=d.eodid
+            	where vtrntype='Transaction' and year(e.dstartdatetime) >= year(current_date())";
           
+        
                 $result = DB::connection('mysql_dynamic')->select($sql_data);
                 
                 $week=$result[0]->wtd;
