@@ -933,20 +933,20 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
             <div class="panel-body">
               <div class="row text-uppercase">
               <div class="col-md-4 span_field " style="padding-left:10px;padding-right:10px;">
-                <p>
-                  <span style="width:35%;font-size:1rem;">Item Type</span>&nbsp;&nbsp;
+                  
+                 <p><span style="width:35%;font-size:1rem;">Department</span>&nbsp;&nbsp;
                   <span style="width:60%;">
-                    <select name="update_vitemtype" class="form-control">
+                    <select name="update_vdepcode" id="update_vdepcode" class="form-control">
                       <option value="no-update">-- No Update --</option>
-                      <?php if(isset($data['item_types']) && count($data['item_types']) > 0){?>
-                        <?php foreach($data['item_types'] as $item_type){ ?>
-                          <option value="<?php echo $item_type;?>"><?php echo $item_type;?></option>
+                      <?php if(isset($data['departments']) && count($data['departments']) > 0){?>
+                        <?php foreach($data['departments'] as $department){?>
+                          <option value="<?php echo $department['vdepcode']; ?>"><?php echo $department['vdepartmentname']; ?></option>
                         <?php } ?>
                       <?php } ?>
                     </select>
                   </span>
                 </p>
-                <p>
+                 <p>
                     
                   <span style="width:35%;font-size:1rem;">Category</span>&nbsp;&nbsp;
                   <span style="width:60%;">
@@ -960,60 +960,6 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </select>
                   </span>
                 </p>
-                <p>
-                  <span style="width:35%;font-size:1rem;">Unit</span>&nbsp;&nbsp;
-                  <span style="width:60%;">
-                    <select name="update_vunitcode" class="form-control">
-                      <option value="no-update">-- No Update --</option>
-                      <?php if(isset($data['units']) && count($data['units']) > 0){?>
-                        <?php foreach($data['units'] as $unit){ ?>
-                          <option value="<?php echo $unit['vunitcode'];?>"><?php echo $unit['vunitname'];?></option>
-                        <?php } ?>
-                      <?php } ?>
-                    </select>
-                  </span>
-                </p>
-                <p>
-                <span style="width:35%;font-size:1rem;">Size</span>&nbsp;&nbsp;
-                <span style="width:60%;">
-                    <select name="update_vsize" class="form-control">
-                      <option value="no-update">-- No Update --</option>
-                      <?php if(isset($data['sizes']) && count($data['sizes']) > 0){?>
-                        <?php foreach($data['sizes'] as $size){ ?>
-                          <option value="<?php echo $size['vsize'];?>"><?php echo $size['vsize'];?></option>
-                        <?php } ?>
-                      <?php } ?>
-                    </select>
-                  </span>
-                </p>
-                <p>
-                <span style="width:35%;font-size:1rem;">Group</span>&nbsp;&nbsp;
-                <span style="width:60%;">
-                    <select name="update_iitemgroupid" class="form-control">
-                    <option value="no-update">-- No Update --</option>
-                      <?php if(isset($data['itemGroups']) && count($data['itemGroups']) > 0){?>
-                        <?php foreach($data['itemGroups'] as $itemGroup){ ?>
-                          <option value="<?php echo $itemGroup['iitemgroupid'];?>"><?php echo $itemGroup['vitemgroupname'];?></option>
-                        <?php } ?>
-                      <?php } ?>
-                    </select>
-                  </span>
-                </p>
-              </div>
-              <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
-                <p><span style="width:35%;font-size:1rem;">Department</span>&nbsp;&nbsp;
-                  <span style="width:60%;">
-                    <select name="update_vdepcode" id="update_vdepcode" class="form-control">
-                      <option value="no-update">-- No Update --</option>
-                      <?php if(isset($data['departments']) && count($data['departments']) > 0){?>
-                        <?php foreach($data['departments'] as $department){?>
-                          <option value="<?php echo $department['vdepcode']; ?>"><?php echo $department['vdepartmentname']; ?></option>
-                        <?php } ?>
-                      <?php } ?>
-                    </select>
-                  </span>
-                </p>
-                
                 
                 <p>
                 <span style="width:35%;font-size:1rem;">Sub Category</span>&nbsp;&nbsp;
@@ -1027,23 +973,63 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                       <?php } ?>
                     </select>
                   </span>
-                </p>
-                
-                
-                <p>
-                <span style="width:35%;font-size:1rem;">Supplier</span>&nbsp;&nbsp;
-                <span style="width:60%;">
-                    <select name="update_vsuppliercode" id="update_vsuppliercode" class="form-control">
+                </p>  
+                <p style="display:none";>
+                  <span style="width:35%;font-size:1rem;">Item Type</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
+                    <select name="update_vitemtype" class="form-control">
                       <option value="no-update">-- No Update --</option>
-                      <?php if(isset($data['suppliers']) && count($data['suppliers']) > 0 ){?>
-                        <?php foreach($data['suppliers'] as $supplier){ ?>
-                          <option value="<?php echo $supplier['vsuppliercode'];?>"><?php echo $supplier['vcompanyname'];?></option>
+                      <?php if(isset($data['item_types']) && count($data['item_types']) > 0){?>
+                        <?php foreach($data['item_types'] as $item_type){ ?>
+                          <option value="<?php echo $item_type;?>"><?php echo $item_type;?></option>
                         <?php } ?>
                       <?php } ?>
                     </select>
                   </span>
                 </p>
-                
+               
+                <p style="display:none;">
+                  <span style="width:35%;font-size:1rem;">Unit</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
+                    <select name="update_vunitcode" class="form-control">
+                      <option value="no-update">-- No Update --</option>
+                      <?php if(isset($data['units']) && count($data['units']) > 0){?>
+                        <?php foreach($data['units'] as $unit){ ?>
+                          <option value="<?php echo $unit['vunitcode'];?>"><?php echo $unit['vunitname'];?></option>
+                        <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </span>
+                </p>
+                <p  style="display:none;">
+                <span style="width:35%;font-size:1rem;">Size</span>&nbsp;&nbsp;
+                <span style="width:60%;">
+                    <select name="update_vsize" class="form-control">
+                      <option value="no-update">-- No Update --</option>
+                      <?php if(isset($data['sizes']) && count($data['sizes']) > 0){?>
+                        <?php foreach($data['sizes'] as $size){ ?>
+                          <option value="<?php echo $size['vsize'];?>"><?php echo $size['vsize'];?></option>
+                        <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </span>
+                </p>
+                <p>
+                <span style="width:35%;font-size:1rem;"> ITEM Group</span>&nbsp;&nbsp;
+                <span style="width:60%;">
+                    <select name="update_iitemgroupid" class="form-control">
+                    <option value="no-update">-- No Update --</option>
+                      <?php if(isset($data['itemGroups']) && count($data['itemGroups']) > 0){?>
+                        <?php foreach($data['itemGroups'] as $itemGroup){ ?>
+                          <option value="<?php echo $itemGroup['iitemgroupid'];?>"><?php echo $itemGroup['vitemgroupname'];?></option>
+                        <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </span>
+                </p>
+              </div>
+              <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
+            
                 <p>
                   <span style="width:35%;font-size:1rem;">Tax1</span>&nbsp;&nbsp;
                   <span style="width:60%;">
@@ -1070,11 +1056,77 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </select>
                   </span>
                 </p>
+                <p>
+                  <span style="width:35%;font-size:1rem;">Food Item</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
+                      <select name="update_vfooditem" id="update_vfooditem" class="form-control">
+                        <option value="no-update">-- No Update --</option>
+                        <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
+                          <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
+                            <option value="<?php echo $k;?>"><?php echo $array_y_n;?></option>
+                          <?php } ?>
+                        <?php } ?>
+                      </select>
+                    </span>
+                </p>
+                <p>
+                <span style="width:35%;font-size:1rem;">VENDOR</span>&nbsp;&nbsp;
+                <span style="width:60%;">
+                    <select name="update_vsuppliercode" id="update_vsuppliercode" class="form-control">
+                      <option value="no-update">-- No Update --</option>
+                      <?php if(isset($data['suppliers']) && count($data['suppliers']) > 0 ){?>
+                        <?php foreach($data['suppliers'] as $supplier){ ?>
+                          <option value="<?php echo $supplier['vsuppliercode'];?>"><?php echo $supplier['vcompanyname'];?></option>
+                        <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </span>
+                </p>
+                
               </div>
+              
+              
               <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
-                <p><span style="width:10%;">QOH:</span>&nbsp;&nbsp;<span style="width:40%;"><input type="text" name="update_iqtyonhand" value="0" class="form-control" disabled></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_iqtyonhand" value="Y" disabled>&nbsp;Update Zero QOH</span></p>
+                  
+                <p> 
+              <span style="width:35%;font-size:1rem;"> UNIT PER CASE</span>
+              &nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_npack" value="1" class="form-control">
+              </span>
+              </p>
                 
                 <p>
+                    <span style="width:35%; font-size:1rem;">QOH:</span>
+                    &nbsp;&nbsp;
+                    <span style="width:60%;"><input type="text" name="update_iqtyonhand" value="0" class="form-control" disabled>
+                    </span>
+                    &nbsp;&nbsp;
+                    <span style="width:45%;display:none">
+                        <input type="checkbox" name="update_iqtyonhand" value="Y" disabled>&nbsp;Update Zero QOH
+                    </span>
+                </p>
+                <p>
+                  <span style="width:35%;font-size:1rem;">Age Verification</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
+                    <select name="update_vageverify" class="form-control">
+                      <option value="no-update">-- No Update --</option>
+                      <?php if(isset($data['ageVerifications']) && count($data['ageVerifications']) > 0){?>
+                        <?php foreach($data['ageVerifications'] as $ageVerification){ ?>
+                          <option value="<?php echo $ageVerification['vvalue'];?>"><?php echo $ageVerification['vname'];?></option>
+                        <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </span>
+                </p>
+               
+                <p> <span style="width:35%;font-size:1rem;">Bottle Deposit</span>&nbsp;&nbsp;
+                  <span style="width:60%;">
+                    <input name="update_nbottledepositamt" value="" type="text" class="form-control">
+                  </span>
+                </p>
+                
+                
+                
+                <p style="display:none;">
                   <span style="width:35%;font-size:1rem;">Manufacturer</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_manufacturerid" class="form-control">
@@ -1087,8 +1139,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </select>
                   </span>
                 </p>
-                
-                <p>
+                <p style="display:none;">
                   <span style="width:35%;font-size:1rem;">Mfg Promo Desc</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_aisleid" class="form-control">
@@ -1101,7 +1152,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </select>
                   </span>
                 </p>
-                <p>
+                <p style="display:none;">
                   <span style="width:35%;font-size:1rem;">Mfg Buy Down Desc</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_shelfid" class="form-control">
@@ -1114,7 +1165,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </select>
                   </span>
                 </p>
-                <p>
+                <p style="display:none;">
                   <span style="width:35%;font-size:1rem;">Mfg MultiPack Desc</span>&nbsp;&nbsp;
                   <span style="width:60%;">
                     <select name="update_shelvingid" class="form-control">
@@ -1135,9 +1186,9 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
        
        
         
-        <div class="panel panel-default">
+        <div class="panel panel-default" style="display:none;">
             
-            <div class="panel-heading">
+            <div class="panel-heading" style="display:none;">
                    <div class="mytextdiv">
                     <div class="mytexttitle font-weight-bold text-uppercase">
                         OTHER OPTIONS
@@ -1147,22 +1198,10 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
             </div>
             <br><br>
             </div>
-            <div class="panel-body">
+            <div class="panel-body" style="display:none;">
             <div class="row text-uppercase">   
               <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
-                <p>
-                  <span style="width:35%;font-size:1rem;">Food Item</span>&nbsp;&nbsp;
-                  <span style="width:60%;">
-                      <select name="update_vfooditem" id="update_vfooditem" class="form-control">
-                        <option value="no-update">-- No Update --</option>
-                        <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
-                          <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
-                            <option value="<?php echo $k;?>"><?php echo $array_y_n;?></option>
-                          <?php } ?>
-                        <?php } ?>
-                      </select>
-                    </span>
-                  </p>
+                
                 <p>
                   <span style="width:35%;font-size:1rem;">WCI Item</span>&nbsp;&nbsp;
                   <span style="width:60%;">
@@ -1262,25 +1301,8 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                     </select>
                   </span>
                 </p>
-                <p>
-                  <span style="width:35%;font-size:1rem;">Age Verification</span>&nbsp;&nbsp;
-                  <span style="width:60%;">
-                    <select name="update_vageverify" class="form-control">
-                      <option value="no-update">-- No Update --</option>
-                      <?php if(isset($data['ageVerifications']) && count($data['ageVerifications']) > 0){?>
-                        <?php foreach($data['ageVerifications'] as $ageVerification){ ?>
-                          <option value="<?php echo $ageVerification['vvalue'];?>"><?php echo $ageVerification['vname'];?></option>
-                        <?php } ?>
-                      <?php } ?>
-                    </select>
-                  </span>
-                </p>
-                <p>
-                  <span style="width:35%;font-size:1rem;">Bottle Deposit</span>&nbsp;&nbsp;
-                  <span style="width:60%;">
-                    <input name="update_nbottledepositamt" value="" type="text" class="form-control">
-                  </span>
-                </p>
+               
+                 
                 <p><span style="width:35%;font-size:1rem;">Rating</span>&nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_rating" value="" class="form-control"></span></p>
                 <p>
                   <span style="width:35%;font-size:1rem;">Sales Item</span>&nbsp;&nbsp;
@@ -1305,12 +1327,15 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                
                <div class="mytextdiv" style="padding-left:20px;">
                     <div class="mytexttitle font-weight-bold text-uppercase">
-                        ADVANCE OPTIONS <input type="checkbox" name="options_checkbox" value="1">
+                        ADVANCE OPTIONS 
+                        <!--<input type="checkbox" name="options_checkbox" value="1">-->
+                         <a class="btn btn-small text-center text-white" id="advance_options_hideshow" style="line-height:5px; width:100px; border-radius:6px; background-color:grey; font-size:9px;">SHOW ADVANCE</a>
+                    &nbsp;
                     </div>
                     <div class="divider font-weight-bold"></div>
                 </div>
                
-            
+            <br>
             
         <div class="panel-body" id="options_checkbox_div" style="display: none;">
               <div class="row text-uppercase">  
@@ -1861,6 +1886,13 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
       $('#options_checkbox_div').hide('slow');
     }
   });
+  
+  //new code hide show
+  
+   $("#advance_options_hideshow").click(function(){
+    $("#options_checkbox_div").toggle();
+  });
+  
   
   $(document).on('change','#update_vdepcode',function(){
       var category_url = "<?php echo $data['get_categories_url']; ?>";
