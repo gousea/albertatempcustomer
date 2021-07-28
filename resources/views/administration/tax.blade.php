@@ -136,13 +136,15 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to update the Tax :</h4>
+              <h6>Select the stores in which you want to update the Tax :</h6> 
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -265,7 +267,7 @@
                             var data = '<tr>'+
                                             '<td>'+
                                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                    '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                    '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                 '</div>'+
                                             '</td>'+
                                             '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -276,7 +278,7 @@
                             var data = '<tr>'+
                                             '<td>'+
                                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                    '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                    '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                 '</div>'+
                                             '</td>'+
                                             '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+

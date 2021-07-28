@@ -148,13 +148,15 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Update the Age :</h4>
+              <h6>Select the stores in which you want to Update the Age :</h6> 
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -258,7 +260,7 @@ $(document).on('click','#save_button', function(){
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -269,7 +271,7 @@ $(document).on('click','#save_button', function(){
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -290,6 +292,7 @@ $(document).on('click','#save_button', function(){
               contentType: 'application/json',
               data: JSON.stringify(avArr), // access in body
               success: function(result) {
+                  avArr = [];
                 location.reload();
               },
               error: function (msg) {
@@ -346,37 +349,30 @@ $('#Edit_btn_age').click(function(){
           url: '/ageverification',
           contentType: 'application/json',
           data: JSON.stringify({data:avArr, stores_hq: edit_stores}), // access in body
-    }).success(function (e) {
+          success: function (msg) {
+            avArr = [];
             location.reload();
-    }).fail(function (msg) {
-           
-        //console.log('FAIL');
-        let mssg = '<div class="alert alert-danger">';
-        
-        //console.log(msg);
-        let errors = msg.responseJSON;
-        //console.log(errors);
-
-        $.each(errors, function(k, err){
-        //   console.log(err);
-          $.each(err, function(key, error){
-            // console.log(error);
-            mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-          });
-        });
-
-        mssg += '</div>';
-    
-        
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: mssg, 
-            callback: function(){location.reload(true);}
-        });
-        
-        $("div#divLoading").removeClass('show');
+          },
+          error:function (msg) {
+                    let mssg = '<div class="alert alert-danger">';
+                    let errors = msg.responseJSON;
+            
+                    $.each(errors, function(k, err){
+                      $.each(err, function(key, error){
+                        mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+                      });
+                    });
+            
+                    mssg += '</div>';
+                    
+                    $('#error_msg').html(mssg);
+                    $("div#divLoading").removeClass('show');
+                    $('#errorModal').modal('show');
+                    location.reload(true);
+                    $("div#divLoading").removeClass('show');
+          }
     });
+    
 });
 
     // Serch Code

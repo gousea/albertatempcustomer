@@ -216,19 +216,21 @@
     <div id="myModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content"> 
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to add the Manufacturer :</h4>
+              <h6>Select the stores in which you want to add the Manufacturer :</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
-          <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+          <div class="modal-body mb-2">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
-                                <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
+                                <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" >
                             </div>
                         </th>
                         <th colspan="2" id="table_green_header">Select All</th>
@@ -239,7 +241,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input stores" id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check  stores" id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -259,17 +261,21 @@
     
     <div id="EditModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
-         Modal content
+   
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Edit the Manufacturer :</h4>
-            <span style="color: #03A9F4">(Please Note: If a Manufacturer not exists in any of the stores those Manufacturer will be created)</span>
+              <h6 class="modal-title">Select the stores in which you want to Edit the Manufacturer : 
+              <span style="color: #03A9F4">(Please Note: If a Manufacturer not exists in any of the stores those Manufacturer will be created)</span>
+              </h6>
+             
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
-          <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+          <div class="modal-body mb-2">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -284,7 +290,7 @@
           </div>
           <div class="modal-footer">
             <button id="Edit_btn_size" class="btn btn-danger" data-dismiss="modal">Update</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
           </div>
         </div>
     
@@ -293,15 +299,16 @@
     
      <div id="DeleteModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
-         Modal content
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to delete the Size :</h4>
+              <h6 class="modal-title">Select the stores in which you want to delete the Size :</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
-          <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+          <div class="modal-body mb-2">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -430,7 +437,7 @@ $("#closeBtn").click(function(){
                                     var data = '<tr>'+
                                                     '<td>'+
                                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                            '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                            '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                         '</div>'+
                                                     '</td>'+
                                                     '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
@@ -441,7 +448,7 @@ $("#closeBtn").click(function(){
                                     var data = '<tr>'+
                                                     '<td>'+
                                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                            '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                            '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                         '</div>'+
                                                     '</td>'+
                                                     '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -539,12 +546,9 @@ $("#closeBtn").click(function(){
                 },
                 data: {data:avArr, stores_hq: edit_stores},
                 success: function(result){
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Success", 
-                        message: "Size Updated Successfully", 
-                        callback: function(){location.reload(true);}
-                    });
+                    $('#success_msg').html('<strong>"Size Updated Successfully"</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#successModal').modal('show');
                 }
         });
     });
@@ -651,7 +655,7 @@ $("#closeBtn").click(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
@@ -662,7 +666,7 @@ $("#closeBtn").click(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
