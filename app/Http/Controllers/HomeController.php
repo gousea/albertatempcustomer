@@ -482,6 +482,9 @@ class HomeController extends Controller
             // 24 hours customer 
             $url_customer = $api.'/api/admin/customer?fdate='.$fdate.'&tdate='.$tdate.'&token='.$token.'&sid='.$store_id;
             $output['customer'] = $this->getchartsValues($url_customer);
+
+            $select_query = "SELECT * FROM inslocdb.news_update";
+            $output['news_update'] = DB::connection()->select($select_query);
             
             $output['date'] = $date;
         }
