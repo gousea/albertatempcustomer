@@ -266,6 +266,15 @@ $(document).ready(function() {
     var select_by_val1 = $('#select_by_value_1').val();
     var select_by_val2 = $('#select_by_value_2').val();
     
+    $( '.search_text_box', this ).on( 'keyup change', function () {
+            
+            if(this.value != ''){
+                $(this).closest('div').find('.fa-search').hide();
+                
+            }else{
+                $(this).closest('div').find('.fa-search').show();
+            }
+    });
     
     $(document).on('input', '#select_by_value_2, #select_by_value_1', function(){
         
@@ -293,6 +302,13 @@ $(document).ready(function() {
         
         
         $(this).on( 'blur', '.search_text_box', function () {
+            
+            if(this.value != ''){
+                $(this).closest('div').find('.fa-search').hide();
+                
+            }else{
+                $(this).closest('div').find('.fa-search').show();
+            }
             
             var selectBy = $("#price_select_by").val();
             var val1 = $("#select_by_value_1").val();
@@ -1484,7 +1500,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
     var itemIds = keys.filter(function(key){
         return uncheckedBoxes[key]
         });*/
-
+        console.log(items_total_ids);
       $.ajax({
         url : add_remove_ids_url,
         headers: {
