@@ -206,6 +206,10 @@
       height: 500px;
       overflow-y: auto;
     }
+
+    .padding-left-right{
+      padding: 0 2% 0 2%;
+    }
 </style>
 
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
@@ -832,10 +836,10 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
  </script>
 
  <div id="myModal" class="modal fade" role="dialog" >
-  <div class="modal-dialog modal-lg scroll-dialog">
+  <div class="modal-dialog modal-xl scroll-dialog">
 
     <!-- Modal content-->
-    <div class="modal-content" style="width: 1000px;">
+    <div class="modal-content">
       <form action="<?php echo $data['edit_list'];?>" method="post" id="form_item_update">
          @csrf
         @if(session()->get('hq_sid') == 1)
@@ -845,9 +849,9 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
         <input type="hidden" name="search_radio_btn" value="<?php echo isset($data['search_radio'])? $data['search_radio']: ''; ?>">
         <input type="hidden" name="search_find_btn" value="<?php echo isset($data['search_find'])? $data['search_find']: ''; ?>">
         <div class="modal-header">
+          <h5 class="modal-title">Edit Multiple Items</h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Multiple Items</h4>
-        </div>
+         </div>
         <div class="modal-body scroll-body">
          
          <div class="panel panel-default">
@@ -861,7 +865,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 <br>
                 
             </div>
-            <div class="panel-body">
+            <div class="panel-body padding-left-right">
               <div class= "row">
                   <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
                     <!--<p><span style="width:10%;">Pack:</span>&nbsp;&nbsp;<span style="width:40%;"><input type="text" name="update_npack" value="1" class="form-control"></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_npack_checkbox" value="Y">&nbsp;Update Pack Qty</span></p>-->
@@ -930,7 +934,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                 </div>
             </div>
             <br><br>
-            <div class="panel-body">
+            <div class="panel-body padding-left-right">
               <div class="row text-uppercase">
               <div class="col-md-4 span_field " style="padding-left:10px;padding-right:10px;">
                   
@@ -1198,7 +1202,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
             </div>
             <br><br>
             </div>
-            <div class="panel-body" style="display:none;">
+            <div class="panel-body padding-left-right" style="display:none;">
             <div class="row text-uppercase">   
               <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
                 
@@ -1337,7 +1341,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                
             <br>
             
-        <div class="panel-body" id="options_checkbox_div" style="display: none;">
+        <div class="panel-body padding-left-right" id="options_checkbox_div" style="display: none;">
               <div class="row text-uppercase">  
                 
               <div class="col-md-4 span_field" style="padding-left:25px;padding-right:10px;">
@@ -1392,7 +1396,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
         </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info" id="update_item_btn">Update</button>
+          <button type="button" class="btn headermenublue basic-button-small" id="update_item_btn">Update</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -1406,15 +1410,17 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+        <h5 class="modal-title row">Select the stores in which you want to add the Items:</h5>
         <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Select the stores in which you want to add the Items:</h4>
-        <span style="color:skyblue">Note: In child store if item exists then it will update otherwise it will update only in HQ</span>
       </div>
-    
+        <div>
+            <span style="color:skyblue">Note: In child store if item exists then it will update otherwise it will update only in HQ</span>
+            
+        </div>
       <div class="modal-body">
-         <table class="table table-bordered">
+         <table class="table promotionview">
             <thead id="table_green_header_tag">
-                <tr>
+                <tr class="header-color">
                     <th>
                         <div class="custom-control custom-checkbox" id="table_green_check">
                             <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
@@ -1428,7 +1434,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
         <div id="loader"></div>
       </div>
       <div class="modal-footer">
-        <button id="save_btn" class="btn btn-danger" data-dismiss="modal">Save</button>
+        <button id="save_btn" class="btn btn-danger buttonred basic-button-small" data-dismiss="modal">Save</button>
         <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
     </div>
@@ -1521,12 +1527,6 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
 </script>
 
 <script type="text/javascript">
-  $(window).load(function() {
-    $("div#divLoading").addClass('show');
-  });
-</script>
-
-<script type="text/javascript">
   $(document).on('click', 'input[name="update_dcostprice_increment"],input[name="update_dcostprice_increment_percent"]', function(event) {
     //event.preventDefault();
 
@@ -1564,10 +1564,10 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Update Items</h4>
-      </div>
+        <div class="modal-header">
+            <h5 class="modal-title">Update Items</h5>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
       <div class="modal-body ">
         <div class="text-center alert-danger" style="overflow: hidden; BACKGROUND: WHITE;">
           <p style="font-size: 18px;font-weight: bold;">TOTAL <span id="item_tot"></span> ITEMS</p><br>
@@ -1575,7 +1575,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
         </div>
       </div>
       <div class="modal-footer">
-         <button type="button" class="btn btn-success headermenublue" id="item_update_sure_btn">SURE</button> 
+         <button type="button" class="btn headermenublue basic-button-small" id="item_update_sure_btn">SURE</button> 
         <button type="button" class="btn btn-default" data-dismiss="modal">CANCEL</button>
         
       </div>
@@ -1816,7 +1816,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores"  id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  editstores"  id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>'+
@@ -1827,7 +1827,7 @@ $(document).on('keypress keyup blur', 'input[name="update_dcostprice"],input[nam
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
