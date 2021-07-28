@@ -145,9 +145,9 @@
                             </div>
                             
                             
-                            
                             <div class="disp-cont lessContent" id="lessId">
-                                <?php if(isset($output['topItem'])){  ?>
+                                <?php if(isset($output['topItem']) && count($output['topItem']->data) != 0){  ?>
+                                    
                                     <?php for ($i=0; $i < 5; $i++) { ?>
                                         <div class="content text-dark d-flex justify-content-between" id="five">
                                             <?php if(isset($output['topItem'][$i]->Item)) { ?>
