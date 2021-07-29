@@ -163,13 +163,13 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to Add New Item Group:
+            <span style="color: blue;">Note: Please make sure all the items are exists in child store also</span></h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Add New Item Group:</h4>
-            <span style="color: blue;">Note: Please make sure all the items are exists in child store also</span>
           </div>
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+            <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -184,7 +184,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input stores" id="stores" name="stores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check  stores" id="stores" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
