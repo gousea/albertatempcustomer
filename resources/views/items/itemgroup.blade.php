@@ -111,7 +111,7 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <h6 class="modal-title">Select the stores in which you want to delete the vendor:</h6>
+            <h6 class="modal-title">Select the stores in which you want to delete the Item Group:</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
