@@ -506,10 +506,10 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title">Select the stores in which you want to Edit the Department:</h6>
+                    <h6 class="modal-title">Select the stores in which you want to Edit the Department:
                     <span style="color: #03A9F4">(Please Note: If a Department not exists in any of the stores those
                         department will be created)</span>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button></h6>
                 </div>
 
                 <div class="modal-body">
