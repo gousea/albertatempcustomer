@@ -236,7 +236,7 @@
                     <tr class="header-color">
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
-                                <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
+                                <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important; margin-left: -30px;">
                             </div>
                         </th>
                         <th colspan="2" id="table_green_header">Select All</th>

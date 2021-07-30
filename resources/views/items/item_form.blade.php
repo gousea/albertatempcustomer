@@ -7237,12 +7237,12 @@ $("#closeBtn").click(function(){
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to delete the items:</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to delete the items:</h4>
           </div>
           <form id='deleteItemForm'>
             <div class="modal-body">
-                <table class="table table-bordered">
+                <table class="table promotionview">
                     <thead id="table_green_header_tag">
                         <tr>
                             <th>
