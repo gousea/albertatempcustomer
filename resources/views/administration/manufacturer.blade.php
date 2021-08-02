@@ -425,7 +425,7 @@ $("#closeBtn").click(function(){
   $(document).on('click','#save_button', function(e){
       
     e.preventDefault();
-    $("div#divLoading").addClass('show');
+    
     $('.mfrName').each(function(){
         var allManufactures = [];         
         allManufactures.push($(this).val());
@@ -540,6 +540,9 @@ $("#closeBtn").click(function(){
     });
     
     $('#Edit_btn_manufacturer').click(function(){
+        
+        $("div#divLoading").addClass('show');
+        
         $.each($("input[name='editstores']:checked"), function(){            
             edit_stores.push($(this).val());
         });

@@ -289,8 +289,8 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button id="Edit_btn_size" class="btn btn-danger" data-dismiss="modal">Update</button>
-            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+            <button id="Edit_btn_size" class="btn btn-danger buttons_menu " data-dismiss="modal">Update</button>
+            <button type="button" class="btn btn-outline-primary buttons_menu" data-dismiss="modal">Close</button>
           </div>
         </div>
     
@@ -402,7 +402,7 @@ $("#closeBtn").click(function(){
         e.preventDefault();
         var edit_url = '{{route('size.edit_list')}}';
         edit_url = edit_url.replace(/&amp;/g, '&');
-        $("div#divLoading").addClass('show');
+        
         var avArr = [];
         $("input[name='selected[]']:checked").each(function () {
           var id = $(this).val();
@@ -527,7 +527,8 @@ $("#closeBtn").click(function(){
         });
         $("#edit_hidden_store_hq_val").val(edit_stores.join(","));
         
-       
+        $('#divLoading').addClass('show'); 
+        
         var avArr = [];
         $("input[name='selected[]']:checked").each(function () {
           var id = $(this).val();
@@ -549,6 +550,10 @@ $("#closeBtn").click(function(){
                     $('#success_msg').html('<strong>"Size Updated Successfully"</strong>');
                     $("div#divLoading").removeClass('show');
                     $('#successModal').modal('show');
+                    
+                    setTimeout(function(){
+                        window.location.reload();
+                    }, 2000);
                 }
         });
     });
