@@ -131,8 +131,6 @@
                             </div>
                         </div>
                     </div>
-                   
-                    
                     <div class="col-lg-4 col-md-12 col-xs-4">
                         <div class="box box-info">
                             <div class="d-flex justify-content-center">
@@ -245,121 +243,57 @@
                             <?php } ?>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
-        <section id="table-data">
-            <div class="container">
-                <div class="row">
-                    <div class="col-8">
-                        {{-- <table data-toggle="table" data-classes="table table-hover table-condensed employeeview"
-                            data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-pagination="true"
-                            class=""> --}}
-                        <table id="vendor" class="table table-hover promotionview" style="width: 100%;">
-                            <thead>
-                                <tr class="header-colors">
-                                    <th class="col-xs-1 headername text-capitalize" data-field="timestamp">timestamp
-                                    </th>
-                                    <th class="col-xs-1 headername text-capitalize" data-field="transaction_id">transaction
-                                        id
-                                    </th>
-                                    <th class="col-xs-6 headername text-capitalize" data-field="amount">amount
-                                    </th>
-                                    <th class="col-xs-6 headername text-capitalize" data-field="tender_type">tender type
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-body">
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>Cash</td>
-                                </tr>
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>EBT</td>
-                                </tr>
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>Cash</td>
-                                </tr>
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>Cash</td>
-                                </tr>
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>Cash</td>
-                                </tr>
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>Cash</td>
-                                </tr>
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>EBT</td>
-                                </tr>
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>Cash</td>
-                                </tr>
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>Cash</td>
-                                </tr>
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>EBT</td>
-                                </tr>
-                                <tr id="tr-id-2" class="tr-class-2">
-                                    <td>9:30 AM</td>
-                                    <td>#74615</td>
-                                    <td>$200</td>
-                                    <td>Cash</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        
+        <div class="col-8">
+            <div class="table-responsive">
+                <table id="vendor" class="table table-hover promotionview" style="width: 100%">
+                    <thead>
+                        <tr class="header-color">
+                            <th class="col-xs-1 headername text-uppercase" style="width: 300px;">timestamp</th>
+                            <th class="col-xs-1 headername text-uppercase" style="width: 300px;">transaction id</th>
+                            <th class="col-xs-6 headername text-uppercase" style="width: 300px;">amount</th>
+                            <th class="col-xs-6 headername text-uppercase" style="width: 300px;">tender type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($output['trn_sales_data'] as $sales_data)
+                            <tr id="customer-row">
+                                <td><span>{{ $sales_data->sales_timestamp }}</span></td> 
+                                <td><span>{{ $sales_data->transaction_id }}</span></td>
+                                <td><span>{{ $sales_data->sales_amount }}</span></td>
+                                <td><span>{{ $sales_data->tender_type }}</span></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-        </section>
+        </div>
     </div>
 
 @endsection
 
 @section('page-script')
     
+    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
     <script type="text/javascript">
+
         var table = $('#vendor').DataTable({
+            // "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
             "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
-            "searching": false,
+            "searching":false,
+            "destroy": true,
             "ordering": false,
-            "pageLength": 10,
+            "pageLength":10
         });
+
         $("#vendor_paginate").addClass("pull-right");
+
         $(document).ready(function() {
             var temp_sevendaysales = '<?php echo json_encode($output['sevendaysales']); ?>';
             window.sevendaysales = $.parseJSON(temp_sevendaysales);
