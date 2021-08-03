@@ -249,7 +249,7 @@
                 </div>
             </div>
         </section>
-        <section id="table-data">
+        <!-- <section id="table-data">
             <div class="container">
                 <div class="row">
                     <div class="col-8">
@@ -342,7 +342,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
     </div>
 
 @endsection

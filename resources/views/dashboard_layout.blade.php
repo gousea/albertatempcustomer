@@ -134,8 +134,7 @@
                                 </div>
                                 <div id="menu1" class="container tab-pane fade"><br>
                                     <h3>Dashboard Sorting</h3>
-                                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                        aliquip ex ea commodo consequat.</p>
+                                    <p>This is dashboard sorting</p>
                                 </div>
                             </div>
 
