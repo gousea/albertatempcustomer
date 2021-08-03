@@ -7244,7 +7244,7 @@ $("#closeBtn").click(function(){
             <div class="modal-body">
                 <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="deleteItemSelectAllCheckbox" name="" value="" style="background: none !important;">

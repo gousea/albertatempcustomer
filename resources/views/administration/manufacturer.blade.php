@@ -677,7 +677,7 @@ $("#closeBtn").click(function(){
             mfr_code:code
           });
         });
-        $("div#divLoading").addClass('show');
+        
         <?php if(session()->get('hq_sid') == 1){ ?>
             $.ajax({
                   url: "<?php echo url('/manufacturer/duplicatemanufacurer'); ?>",
@@ -814,6 +814,8 @@ $('#deleteSelectAllCheckbox').click(function(){
 });
 
 $('#delete_btn_manufacturer').click(function(){
+    
+    $("div#divLoading").addClass('show');
     var avArr = [];
     $.each($("input[name='deletestores']:checked"), function(){            
         deletestores.push($(this).val());

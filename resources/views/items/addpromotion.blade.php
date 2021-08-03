@@ -873,13 +873,13 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select the stores in which you want to update the items:</h4>
+                    <h6 class="modal-title">Select the stores in which you want to update the items:</h6>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
               <div class="modal-body">
-                 <table class="table table-bordered">
+                <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="editSelectAllCheckbox" name="" value="" style="background: none !important;">
@@ -904,14 +904,14 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select the stores in which you want to add the Promotion:</h4>
+                    <h6 class="modal-title">Select the stores in which you want to add the Promotion:</h6>
+                    <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
               </div>
             
               <div class="modal-body">
-                 <table class="table table-bordered">
+                <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
@@ -983,7 +983,7 @@
 
 <script src="{{ asset('javascript/fancyTable/fancyTable.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+{{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> --}}
 <script src="{{ asset('javascript/select2/js/select2.min.js') }}"></script>
 <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js" type="text/javascript" ></script>
