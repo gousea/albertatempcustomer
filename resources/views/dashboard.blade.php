@@ -168,7 +168,7 @@
                                             </div>
                                         <?php } ?>
                                     <?php }else{ ?>
-                                        <div><p class="text-justify">No Data Found!!!</p></div>
+                                        <div><p class="text-justify" style="text-align:center; font-size: 16px;">No Data Found!!!</p></div>
                                     <?php } ?>
                                 <?php } else { ?>
                                     <?php if(isset($output['topItem']) ){  ?>
@@ -197,7 +197,7 @@
                                             </div>
                                         <?php } ?>
                                     <?php }else{ ?>
-                                        <div><p class="text-justify">No Data Found!!!</p></div>
+                                        <div><p class="text-justify" style="text-align:center; font-size: 16px;">No Data Found!!!</p></div>
                                     <?php } ?>
                                 <?php } ?>
                             </div>
@@ -249,7 +249,7 @@
                 </div>
             </div>
         </section>
-        <!-- <section id="table-data">
+        <section id="table-data">
             <div class="container">
                 <div class="row">
                     <div class="col-8">
@@ -342,7 +342,7 @@
                     </div>
                 </div>
             </div>
-        </section> -->
+        </section>
     </div>
 
 @endsection
