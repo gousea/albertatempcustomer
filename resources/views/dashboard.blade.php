@@ -83,7 +83,7 @@
                                     <i class="fa fa-th-large fa-3x text-muted transperent-icons" aria-hidden="true"></i>
                                 </div>
                                 <div class="text-numbers">
-                                    <p class="buttons_menu a font-weight-bold">14</p>
+                                    <p class="buttons_menu a font-weight-bold">{{ $output['total_item']->totalitem }}</p>
                                     <p class="buttons_menu c text-muted font-weight-bold">New Items Added</p>
                                 </div>
                                 <br>
