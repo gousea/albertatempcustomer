@@ -16,8 +16,8 @@
                 <span class="font-weight-bold text-uppercase"><?php echo "Vendor Create"; ?></span>
             </div>
             <div class="nav-submenu">
-                <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
-                    class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
+                <button type="submit" id="form-vendor"  class="btn btn-gray headerblack  buttons_menu"><i
+                    class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
                 <a style="pointer-events:all;" href="{{ route('vendors') }}" data-toggle="tooltip" title="<?php //echo $button_cancel; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
             </div>
         </div> <!-- navbar-collapse.// -->

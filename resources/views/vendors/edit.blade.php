@@ -18,8 +18,8 @@
                     <span class="font-weight-bold text-uppercase"><?php echo "Vendor Edit"; ?></span>
                 </div>
                 <div class="nav-submenu">
-                    <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
-                            class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
+                    <button type="submit" id="form-vendor" class="btn btn-gray headerblack  buttons_menu"><i
+                            class="fa fa-save" ></i>&nbsp;&nbsp;Save</button>
                     <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"
                         href="{{ route('vendors') }}"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel
                     </a>
