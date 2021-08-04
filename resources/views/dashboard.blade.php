@@ -166,7 +166,7 @@
                                             </div>
                                         <?php } ?>
                                     <?php }else{ ?>
-                                        <div><p class="text-justify" style="text-align:center; font-size: 16px;">No Data Found!!!</p></div>
+                                        <div><p class="text-justify" style="text-align: center !important; font-size: 16px;">No Data Found!!!</p></div>
                                     <?php } ?>
                                 <?php } else { ?>
                                     <?php if(isset($output['topItem']) ){  ?>
@@ -195,7 +195,7 @@
                                             </div>
                                         <?php } ?>
                                     <?php }else{ ?>
-                                        <div><p class="text-justify" style="text-align:center; font-size: 16px;">No Data Found!!!</p></div>
+                                        <div><p class="text-justify" style="text-align: center !important; font-size: 16px;">No Data Found!!!</p></div>
                                     <?php } ?>
                                 <?php } ?>
                             </div>
