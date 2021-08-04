@@ -952,14 +952,14 @@
                 </button>
           </div>
             <div class="modal-body">
-                <table class="table table-bordered">
-                <thead id="table_green_header_tag">
-                    <tr>
-                        <th id="table_green_header">Existing Items</th>
-                    </tr>
-                </thead>
-                <tbody id="existing_items"></tbody>
-            </table>
+                <table class="table promotionview">
+                    <thead id="table_green_header_tag">
+                        <tr class="header-color">
+                            <th id="table_green_header">Existing Items</th>
+                        </tr>
+                    </thead>
+                    <tbody id="existing_items"></tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="cancelExistingItems" style="font-size: 16px; padding-left: 10px; padding-right: 10px; ">Cancel</button>
@@ -2922,7 +2922,7 @@
                                     var data = '<tr>'+
                                                     '<td>'+
                                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                            '<input type="checkbox" class="checks check custom-control-input editStores" disabled id="hq_sid_{{ $stores->id }}" name="editStores" value="{{ $stores->id }}">'+
+                                                            '<input type="checkbox" class="checks check editStores" disabled id="hq_sid_{{ $stores->id }}" name="editStores" value="{{ $stores->id }}">'+
                                                         '</div>'+
                                                     '</td>'+
                                                     '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (This Promotion or Item does not exist)</span></td>'+
@@ -2933,7 +2933,7 @@
                                     var data = '<tr>'+
                                                     '<td>'+
                                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                            '<input type="checkbox" class="checks check custom-control-input editStores"  id="else_hq_sid_{{ $stores->id }}" name="editStores" value="{{ $stores->id }}">'+
+                                                            '<input type="checkbox" class="checks check editStores"  id="else_hq_sid_{{ $stores->id }}" name="editStores" value="{{ $stores->id }}">'+
                                                         '</div>'+
                                                     '</td>'+
                                                     '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -2963,7 +2963,7 @@
                                     var data = '<tr>'+
                                                     '<td>'+
                                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                            '<input type="checkbox" class="checks check custom-control-input stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                            '<input type="checkbox" class="checks check stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                                             
                                                         '</div>'+
                                                     '</td>'+
@@ -2975,7 +2975,7 @@
                                     var data = '<tr>'+
                                                     '<td>'+
                                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                            '<input type="checkbox" class="checks check custom-control-input stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                            '<input type="checkbox" class="checks check stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                                         '</div>'+
                                                     '</td>'+
                                                     '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+

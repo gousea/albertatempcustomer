@@ -720,7 +720,7 @@ $('#items_status').change(function() {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <input type="submit" class="btn btn-danger" name="deleteItems" value="Delete">
+        <input type="submit" class="btn btn-danger buttonred buttons_menu basic-button-small" name="deleteItems" value="Delete">
       </div>
     </div>
 
