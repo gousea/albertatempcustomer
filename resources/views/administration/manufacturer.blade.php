@@ -443,7 +443,6 @@ $("#closeBtn").click(function(){
     
     // var subcatids = []; 
     
-    $("div#divLoading").addClass('show');
     var avArr = [];
    $("input[name='selected[]']:checked").each(function () {
       var id = $(this).val();
