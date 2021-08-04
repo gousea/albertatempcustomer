@@ -488,7 +488,7 @@ class HomeController extends Controller
 
             $sid = $request->session()->get('sid');
             $trn_sales_query = "SELECT isalesid AS transaction_id, dtrandate as sales_timestamp, ntaxabletotal as sales_amount, vtendertype as tender_type FROM u".$sid.".trn_sales limit 100";
- 		    $output['trn_sales_data'] = DB::connection()->select($trn_sales_query); 
+ 		    $output['trn_sales_data'] = DB::connection()->select($trn_sales_query);  
             
             $output['date'] = $date;
         }
