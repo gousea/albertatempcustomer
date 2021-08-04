@@ -177,7 +177,7 @@ class DashboardController extends Controller
         $select_query = "SELECT t1.status as usermenu_status, t1.usermenu_id, t2.menu_name as menu_name, t2.menu_des as menu_des, t2.menu_link as menu_link
         FROM $sid.quick_links t1
         INNER JOIN $sid.menu_table t2 ON t1.menu_id = t2.menu_id
-        WHERE t1.status = 'Active'";
+        WHERE t1.status = 'Active' and t2.menu_link != 'null'";
         $sql_excute = DB::connection('mysql_dynamic')->select($select_query);
         // dd($sql_excute);
         $return = json_decode(json_encode($sql_excute), true);

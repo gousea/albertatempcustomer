@@ -244,11 +244,14 @@
 
             // var max_per_row = 4;
             // var item_count = 0;
+            
             var popup = '';
             var i = 0;
             var div = "<div class='col-md-8 mx-auto'>";
             $.each(data, function(index) {
                 console.log(data[index]);
+                // var datlink = data[index].menu_link;
+                var datlink = "https://gitcustomer.albertapayments.com/"+ data[index].menu_link;
                 // alert(data[index].menu_name);
                 i++;
                 // if (i = )
@@ -257,7 +260,7 @@
                     // "<h5 class='font-weight-bold text-uppercase mt-3 mb-4 footerheader'>Links</h5>" +
                     "<ul class='list-unstyled footerlinksdata'>" +
                     "<li>" +
-                    "<a href=" + data[index].menu_link + " class='footerlink'>" +
+                    "<a href=" + datlink +" class='footerlink'>" +
                     data[index].menu_name +
                     "</a>" +
                     "</li>" +
