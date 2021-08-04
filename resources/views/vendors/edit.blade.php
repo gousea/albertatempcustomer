@@ -18,7 +18,7 @@
                     <span class="font-weight-bold text-uppercase"><?php echo "Vendor Edit"; ?></span>
                 </div>
                 <div class="nav-submenu">
-                    <button type="submit" id="form-vendor" class="btn btn-gray headerblack  buttons_menu"><i
+                    <button type="button" id="form-vendor" class="btn btn-gray headerblack  buttons_menu"><i
                             class="fa fa-save" ></i>&nbsp;&nbsp;Save</button>
                     <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"
                         href="{{ route('vendors') }}"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel
@@ -334,7 +334,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check  stores" id="hq_sid_{{ $stores->id }}" name="hq_sid_{{ $stores->id }}" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check  stores" id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -490,6 +490,8 @@
             $.each($("input[name='stores']:checked"), function(){
                 stores.push($(this).val());
             });
+            
+            console.log(stores);
             $("#hidden_store_hq_val").val(stores);
             $('#vendorForm').submit();
         })

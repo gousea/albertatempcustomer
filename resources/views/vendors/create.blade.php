@@ -16,11 +16,11 @@
                 <span class="font-weight-bold text-uppercase"><?php echo "Vendor Create"; ?></span>
             </div>
             <div class="nav-submenu">
-                <button type="submit" id="form-vendor"  class="btn btn-gray headerblack  buttons_menu"><i
+                <button type="button" id="form-vendor"  class="btn btn-gray headerblack  buttons_menu"><i
                     class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
                 <a style="pointer-events:all;" href="{{ route('vendors') }}" data-toggle="tooltip" title="<?php //echo $button_cancel; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
             </div>
-        </div> <!-- navbar-collapse.// -->
+        </div> 
     </div>
 </nav>
 
@@ -479,7 +479,6 @@
                     setTimeout(function(){
                         $("#vcompanyname_error").text("");
                         $("#form-vendor").attr("disabled", false);
-
                     }, 3000);
                 }
             }
@@ -514,7 +513,6 @@
             if(vcompanyname === ''){
                 $("#vcompanyname_error").text("Vendor Name is required!");
             }else {
-
                 var edi = $('#EDISelector').val();
                 var vendor_formate = $('input[name="vendor_format"]:checked').val();
 
