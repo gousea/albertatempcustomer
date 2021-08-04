@@ -30,6 +30,14 @@
 
     <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"></script>
 
+    <style>
+        .loginCard{
+            display: none;
+        }
+        .verifyCard {
+             display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -69,7 +77,7 @@
                             here for more information</button>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-5 loginCard" id="loginFormCard">
                     <div class="card" id="card">
                         <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
                         <div class="card-body text-center">
@@ -91,7 +99,7 @@
                                 @csrf
                                 <div class="form-group mt-5">
                                     <input type="email" name="vemail" value="" placeholder="Email ID"
-                                        id="input-password" class="form-control" />
+                                        id="input_email" class="form-control" readonly />
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" value="" placeholder="Password"
@@ -105,6 +113,27 @@
                         </div>
                     </div>
 
+                </div>
+                <div class="col-md-5 verifyCard" id="versionCard">
+                    <div class="card" id="card">
+                        <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
+                        <div class="card-body text-center">
+                            <p class="card-title text-capitalize m-auto text-center">
+                                <span class="text-uppercase text-primary font-weight-bold">login</span>
+                                to your account to manage your back office
+                            </p>
+                            <form class="checkVersion" id="checkVersionForm">
+                                <div class="form-group mt-5">
+                                    <input type="email" name="vemail" value="" placeholder="Email ID"
+                                        id="vemail" class="form-control" />
+                                </div>
+
+                                <button type="button"
+                                    class="btn btn-primary btn-block login-btns text-white font-weight-bold text-uppercase" id="proceedBtn">Proceed</button>
+                            </form>
+                            <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -120,6 +149,40 @@
         $(document).on('click', '#forgotten_link', function(event) {
             event.preventDefault();
             $('#forgottenModal').modal('show');
+        });
+        
+        $(document).ready(function(){
+            $('#versionCard').removeClass('verifyCard');
+            
+            $("#proceedBtn").click(function(){
+                var vemail = $("#vemail").val();
+                if(vemail){
+                    $.ajax({
+                        url : '<?php echo url('/checkVersion'); ?>',
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                        type : 'POST',
+                        data: {vemail: vemail }, // access in body
+                        success : function(data) {    
+                            if(data >= 320){
+                                $('#loginFormCard').removeClass('loginCard');
+                                $('#versionCard').addClass('verifyCard');
+                                $("#input_email").val(vemail);
+                            }else {
+                                window.location.replace("https://tempcustomer.albertapayments.com/?vemail="+vemail)
+                            }
+                            
+                        },
+                        error : function(request,error)
+                        {
+                            // alert("Request: "+JSON.stringify(request));
+                            return false;
+                        }
+                    });
+                }else {
+                    alert("Please enter email to proceed");
+                    return false;
+                }
+            })
         });
 
     </script>
