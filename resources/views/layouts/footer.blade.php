@@ -249,7 +249,7 @@
             var i = 0;
             var div = "<div class='col-md-8 mx-auto'>";
             $.each(data, function(index) {
-                console.log(data[index]);
+                console.log(data[index]); 
                 // var datlink = data[index].menu_link;
                 var datlink = "https://gitcustomer.albertapayments.com/"+ data[index].menu_link;
                 // alert(data[index].menu_name);
