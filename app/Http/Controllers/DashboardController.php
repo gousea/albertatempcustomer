@@ -179,6 +179,7 @@ class DashboardController extends Controller
         INNER JOIN $sid.menu_table t2 ON t1.menu_id = t2.menu_id
         WHERE t1.status = 'Active'";
         $sql_excute = DB::connection('mysql_dynamic')->select($select_query);
+        // dd($sql_excute);
         $return = json_decode(json_encode($sql_excute), true);
         return $return;
     }

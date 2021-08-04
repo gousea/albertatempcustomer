@@ -487,7 +487,7 @@ class HomeController extends Controller
             $output['news_update'] = DB::connection()->select($select_query);
 
             $sid = $request->session()->get('sid');
-            $trn_sales_query = "SELECT isalesid AS transaction_id, dtrandate as sales_timestamp, ntaxabletotal as sales_amount, vtendertype as tender_type FROM 'u".$sid."'.trn_sales limit 100";
+            $trn_sales_query = "SELECT isalesid AS transaction_id, dtrandate as sales_timestamp, ntaxabletotal as sales_amount, vtendertype as tender_type FROM u".$sid.".trn_sales limit 100";
  		    $output['trn_sales_data'] = DB::connection('mysql_dynamic')->select($trn_sales_query);
             
             $output['date'] = $date;

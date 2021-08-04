@@ -248,7 +248,7 @@
             var i = 0;
             var div = "<div class='col-md-8 mx-auto'>";
             $.each(data, function(index) {
-                // alert(data[index].usermenu_id);
+                console.log(data[index]);
                 // alert(data[index].menu_name);
                 i++;
                 // if (i = )
