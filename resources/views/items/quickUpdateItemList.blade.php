@@ -5,7 +5,6 @@
 @endsection
 
 @section('main-content')
-{{-- <form action="{{ route('quick_update_item') }}" method="post" id="form_item_search"> --}}
 <form action="{{ route('quick_update_item_edit') }}" method="post" id="form_item_price_update">
     @csrf
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue menu">
@@ -17,7 +16,7 @@
                     </div>
                     <div class="nav-submenu">
                         <div style="display: inline-block;">
-                            <button title="Update" class="btn btn-gray headerblack buttons_menu" id="update_button"><i
+                            <button title="Update" type="button" class="btn btn-gray headerblack buttons_menu" id="update_button"><i
                                     class="fa fa-save"></i>&nbsp;&nbsp;Update</button>
                         </div>
                     </div>
@@ -29,121 +28,7 @@
     <div id="content" class="section-content menu">
         <div class="container-fluid">
             <div class="panel panel-default">
-                    <div class="row" style="padding-bottom: 9px;float: right;">
-                        <div class="col-md-12">
-                            {{-- <div style="display: inline-block;">
-                                <input type="checkbox" name="show_cost_price" value="show_cost_price"
-                                    style="border: 1px solid #A9A9A9;">&nbsp;&nbsp;<span>Show Unit Cost</span>
-                            </div> --}}
-
-                            {{-- <div style="display: inline-block;">
-                                <select class="form-control" name="item_type" id="item_type">
-                                    <option value="All" selected="selected"> All </option>
-                                    @if(isset($item_types))
-                                        @foreach($item_types as $item_type)
-                                            @if(isset($search_item_type) && $search_item_type == $item_type)
-                                                <option value="{{ $item_type }}" selected="selected"> {{ $item_type }} </option>
-                                            @else
-                                                <option value="{{ $item_type }}">{{ $item_type }}</option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div> --}}
-
-                            {{-- <div style="display: inline-block;">
-                                <button title="Update" class="btn btn-primary" id="update_button"><i
-                                        class="fa fa-save"></i>&nbsp;&nbsp;Update</button>
-                            </div> --}}
-                        </div>
-                    </div>
-
-                {{-- <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-2" style="width:12%;">
-                                <input type="radio" id="radio_category" name="search_radio" value="category" checked>&nbsp;&nbsp;<span
-                                    style="margin-top:3px;position:absolute;">Category</span>
-                            </div>
-                            <div class="col-md-2" style="width:12%;">
-                                <input type="radio" id="radio_department" name="search_radio" value="department">&nbsp;&nbsp;<span
-                                    style="margin-top:3px;position:absolute;">Department</span>
-                            </div>
-                            <div class="col-md-2" style="width:12%;">
-                                <input type="radio" id="radio_item_group" name="search_radio" value="item_group">&nbsp;&nbsp;<span
-                                    style="margin-top:3px;position:absolute;">Item Group</span>
-                            </div>
-                            <div class="col-md-2" style="width:12%;">
-                                <input type="radio" id="radio_search" name="search_radio" value="search">&nbsp;&nbsp;<span
-                                    style="margin-top:3px;position:absolute;">Search</span>
-                            </div>
-                        </div><br><br>
-                        <div class="row">
-                            <div class="col-md-4" id="div_search_vcategorycode">
-                                <span style="display:inline-block;width:20%;"><b>Category</b></span>&nbsp;&nbsp;
-                                <select
-                                    name="search_vcategorycode" id="search_vcategorycode" class="form-control"
-                                    style="display:inline-block;width:70%;">
-                                    <option value="" >Select Category</option>
-                                    @if(isset($categories) && count($categories) > 0)
-                                        @foreach($categories as $category)
-                                        <option value={{ $category->vcategorycode }}
-                                            {{  (isset($search_vcategorycode) && $search_vcategorycode == $category->vcategorycode ) ? 'selected'  : '' }} >
-                                            {{ $category->vcategoryname }} </option>
-                                        @endforeach>
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-md-4" id="div_search_vdepcode">
-                                <span style="display:inline-block;width:25%;"><b>Department</b></span>&nbsp;&nbsp;
-                                <select
-                                    name="search_vdepcode" id="search_vdepcode" class="form-control"
-                                    style="display:inline-block;width:60%;">
-                                    <option value="" >Select Department</option>
-                                    @if(isset($departments) && count($departments) > 0)
-                                        @foreach($departments as $department)
-                                            <option value={{ $department->vdepcode }}
-                                                {{ (isset($search_vdepcode) && $search_vdepcode == $department->vdepcode )  ? 'selected'  : '' }}>
-                                                {{ $department->vdepartmentname }}
-                                            </option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-md-4" id="div_search_vitem_group">
-                                <span style="display:inline-block;width:25%;"><b>Item Group</b></span>&nbsp;&nbsp;
-                                <select
-                                    name="search_vitem_group_id" id="search_vitem_group_id" class="form-control"
-                                    style="display:inline-block;width:60%;">
-                                    <option value="" >Select Item Group</option>
-                                    @if( isset($itemGroups) && count($itemGroups) > 0 )
-                                        @foreach( $itemGroups as $itemGroup ){
-                                        <option value= {{ $itemGroup->iitemgroupid }}
-                                            {{ (isset($search_vitem_group_id) && ($search_vitem_group_id == $itemGroup->iitemgroupid) ) ? 'selected'  : ''  }}>
-                                            {{ $itemGroup->vitemgroupname }}
-                                        </option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-md-4" id="div_search_box">
-                                <span style="display:inline-block;width:25%;"><b>Search Item</b></span>&nbsp;&nbsp;
-                                <input
-                                    name="search_item" id="search_item"
-                                    class="form-control"
-                                    style="display:inline-block;width:60%;" value="{{ isset($search_item) ? $search_item : '' }}">
-                            </div>
-                            <div class="col-md-2">
-                                <input type="hidden" name="search_item_type" id="item_type_hidden" value="">
-                                <input type="submit"  name="search_filter" value="Filter" class="btn btn-info">
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                <br>
                 <div class="table-responsive">
-                    {{-- <form action="{{ route('quick_update_item_edit') }}" method="post" id="form_item_price_update">
-                        @csrf --}}
                         <input type="hidden" name="search_item_type" value={{ $search_item_type }}>
                         @if(session()->get('hq_sid') == 1)
                             <input type="hidden" id="hidden_store_hq_val" name="stores_hq" value="">
@@ -191,24 +76,13 @@
                                                 <input type="text" class="form-control table-heading-fields" placeholder="UNIT COST" id="unitcost" style="width: 115px;">
                                             </div>
                                         </th>
-                                        <!--<th class="text-right headername text-uppercase" id="th_cost_price">Unit Cost-->
-                                        <!--    <div class="form-group has-search">-->
-                                        <!--        <span class="fa fa-search form-control-feedback"></span>-->
-                                        <!--        <input type="text" class="form-control table-heading-fields" placeholder="UNIT COST" id="unitcost" style="width: 60px;">-->
-                                        <!--    </div>-->
-                                        <!--</th>-->
+                                      
                                         <th class="text-left headername text-uppercase">Unit Price
                                             <div class="form-group has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control table-heading-fields" placeholder="UNIT PRICE" id="unitprice" style="width: 115px;">
                                             </div>
                                         </th>
-                                        <!--<th class="text-right headername text-uppercase">Unit Price-->
-                                        <!--    <div class="form-group has-search">-->
-                                        <!--        <span class="fa fa-search form-control-feedback"></span>-->
-                                        <!--        <input type="text" class="form-control table-heading-fields" placeholder="UNIT PRICE" id="unitprice" style="width: 60px;">-->
-                                        <!--    </div>-->
-                                        <!--</th>-->
                                         <th class="text-left headername text-uppercase">Tax 1
                                             <div class="form-group has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
@@ -358,9 +232,8 @@
                                 @endif
                             </tbody>
                         </table>
-                    {{-- </form> --}}
                 </div>
-                {{$items->links()}}
+                {{$items->links()}} 
             </div>
         </div>
     </div>
@@ -371,13 +244,13 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-              <h6 class="modal-title">Select the stores in which you want to delete the vendor:
-              <span style="color:blue">Note: The item which are present in child store only will get updated</span></h6>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h6 class="modal-title">Select the stores in which you want to delete the vendor:
+            <span style="color:blue">Note: The item which are present in child store only will get updated</span></h6>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
-            <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
-                <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -392,7 +265,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check  stores" id="stores" name="stores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check stores" id="stores" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -666,6 +539,14 @@
     });
 
     $(document).on('click', '#update_button', function (event) {
+        
+        <?php if(session()->get('hq_sid') == 1) { ?>
+            $("div#divLoading").removeClass('show');
+            $("#myModal").modal('show');
+        <?php } else { ?>
+            $('form#form_item_price_update').submit();
+        <?php } ?>
+        
         // var selected_option = '<?php echo $search_radio;?>';
         var selected_option = $('input:radio[name="search_radio"]:checked').val();
         var selected_option_value = '';
@@ -682,27 +563,22 @@
         var quickupdate_search_item_type = '<?php echo $quickupdate_search_item_type ?>'
         var set_selected_option_session = '<?php echo $set_selected_option_session; ?>';
         set_selected_option_session = set_selected_option_session.replace(/&amp;/g, '&');
+        //  alert(selected_option);
         console.log(selected_option);
-        $("div#divLoading").addClass('show');
+        // $("div#divLoading").addClass('show');
+        
         $.ajax({
             url: set_selected_option_session,
             data: {
                 _token: "{{ csrf_token() }}",
-                selected_option         : selected_option,
+                // selected_option         : selected_option,
                 selected_option_value   : selected_option_value,
                 quickupdate_search_item_type: quickupdate_search_item_type,
             },
             type: 'POST',
             success: function (data) {
-                setTimeout( function() {
-                    <?php if(session()->get('hq_sid') == 1) { ?>
-                        $("div#divLoading").removeClass('show');
-                        $("#myModal").modal('show');
-                    <?php } else { ?>
-                        $('form#form_item_price_update').submit();
-                    <?php } ?>
-                }, 1000);
-
+               
+                
             },
         });
 
@@ -756,10 +632,7 @@
 </script>
 <style>
     .disable {
-        //This makes it not clickable
         pointer-events:none;
-
-
     }
 
 </style>
