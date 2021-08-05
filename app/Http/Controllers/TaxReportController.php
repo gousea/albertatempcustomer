@@ -138,7 +138,7 @@ class TaxReportController extends Controller
        
       $data_row .= 'Total Tax,'.'$'.number_format((float)$reports['TAX'], 2, '.', '').PHP_EOL;
       
-      $data_row .= 'Gross Sales,'.'$'.number_format((float)($reports['Tax1Sales'] + (float)$reports['Tax2Sales'] + (float)$reports['Tax3Sales']+$reports['NONTAX'] + $reports['TAX']), 2, '.', '').PHP_EOL;
+      $data_row .= 'Gross Sales,'.'$'.number_format((float)($reports['NNETTOTAL']), 2, '.', '').PHP_EOL;
 
         $file_name_csv = 'end-of-day-report.csv';
 
