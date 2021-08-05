@@ -213,7 +213,7 @@ class Unit extends Model
                         $unit_id = $u_id->iunitid;
                     }
 
-                    $exist_unit = DB::connection('mysql_dynamic')->select("SELECT * FROM u".$store.".mst_unit WHERE vunitcode = '" . ($data['vunitcode']). "' AND iunitid != '" . (int)$unit_id . "' " );
+                    $exist_unit = DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_unit WHERE vunitcode = '" . ($data['vunitcode']). "' AND iunitid != '" . (int)$unit_id . "' " );
                     
                     if(count($exist_unit) > 0)
                     {
@@ -254,7 +254,7 @@ class Unit extends Model
             if(isset($data) && count($data) > 0){
 
                 $exist_unit = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_unit WHERE vunitcode = '" . ($data['vunitcode']). "' AND iunitid != '" . (int)$iunitid . "' " );
-                dd($exist_unit);
+                
                 if(count($exist_unit) > 0)
                 {
                     $return['error'] = "Already exists"; 

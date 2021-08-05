@@ -271,17 +271,20 @@
       <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Add New Buydown:</h4>
-            <span style="color: blue;">Note: Please make sure all the items are exists in child store also</span>
-            <br>
-            <span style="color: red;">Note: Items present in any active buydowns will not be added</span>
-          </div>
+            <div class="modal-header">
+                <h6 class="modal-title">Select the stores in which you want to Add New Buydown:</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div>
+                <span style="color: blue;">Note: Please make sure all the items are exists in child store also</span>
+                <br>
+                <span style="color: red;">Note: Items present in any active buydowns will not be added</span>
+                
+            </div>
           <div class="modal-body">
-             <table class="table table-bordered">
+            <table class="table promotionview">
                 <thead id="table_green_header_tag">
-                    <tr>
+                    <tr class="header-color">
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
                                 <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
@@ -295,7 +298,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input stores" id="stores" name="stores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check stores" id="stores" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -330,9 +333,10 @@
 <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
 <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
+{{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+ --}}
 
 <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>

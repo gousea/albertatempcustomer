@@ -163,19 +163,47 @@ class VendorController extends Controller
                                 $vendor = DB::connection("mysql")->statement($update_vendor_sql);
 
                         }else {
-
-
+                            // dd($input);
+                            if(isset($input['remove_last_digit']) && !empty($input['remove_last_digit'])) {
+                                $remove_last_digit = $input['remove_last_digit'];
+                            }else {
+                                $remove_last_digit = 0;
+                            }
+                            
+                            if(isset($input['check_digit']) && !empty($input['check_digit'])) {
+                                $check_digit = $input['check_digit'];
+                            }else {
+                                $check_digit = 0;
+                            }
+                            
+                            if(isset($input['upc_convert']) && !empty($input['upc_convert'])) {
+                                $upc_convert = $input['upc_convert'];
+                            }else {
+                                $upc_convert = 0;
+                            }
+                            
+                            if(isset($input['remove_first_digit']) && !empty($input['remove_first_digit'])) {
+                                $remove_first_digit = $input['remove_first_digit'];
+                            }else {
+                                $remove_first_digit = 0;
+                            }
+                            
+                            
                              $insert_vendor_sql = "INSERT INTO u".$stores[$i].".mst_supplier (vcompanyname, vvendortype, vfnmae, vlname, vcode,
                                 vaddress1, vcity, vstate, vphone, vzip, vcountry, vemail, plcbtype, edi, estatus,upc_convert, remove_first_digit,
-                                remove_last_digit,check_digit,SID)
+                                remove_last_digit,check_digit, vendor_format, SID)
                                 VALUES ( '".$input['vcompanyname']."',
-                                '".$input['vvendortype']."', '".$input['vfnmae']."', '".$input['vlname']."', '".$input['vcode']."', '".$input['vaddress1']."',
-                                '".$input['vcity']."', '".$input['vstate']."', '".$input['vphone']."', '".$input['vzip']."', '".$input['vcountry']."', '".$input['vemail']."', '".$input['plcbtype']."',
+                                '".$input['vvendortype']."', '".$input['vfnmae']."', '".$input['vlname']."',
+                                '".$input['vcode']."', '".$input['vaddress1']."',
+                                '".$input['vcity']."', '".$input['vstate']."', '".$input['vphone']."', '".$input['vzip']."', '".$input['vcountry']."', 
+                                '".$input['vemail']."', '".$input['plcbtype']."',
                                 '".$input['edi']."', '".$input['estatus']."',
-                                '".isset($input['upc_convert']) ? $input['upc_convert']:''."',
-                                 '".isset($input['remove_first_digit'])?$input['remove_first_digit']:''."',
-                                '".isset($input['remove_last_digit'])?$input['remove_last_digit']:''."',  '".isset($input['check_digit'])?$input['check_digit']:''."', '".$vendor_format."',  '".$stores[$i]."' ) ";
-
+                                '".$upc_convert."',
+                                '".$remove_first_digit."',
+                                '". $remove_last_digit."',  
+                                '".$check_digit."', 
+                                '".$vendor_format."',  '".$stores[$i]."' ) ";
+                            // dd($insert_vendor_sql);
 
                             $vendor = DB::connection("mysql")->statement($insert_vendor_sql);
                             $sup_query = "Select isupplierid from u".$stores[$i].".mst_supplier ORDER BY  isupplierid DESC LIMIT 1";
@@ -337,6 +365,7 @@ class VendorController extends Controller
     public function update(Request $request, Vendor $vendor, $isupplierid)
     {
         $input = $request->all();
+        
 
         $vcompany_name_data = Vendor::select('vcompanyname')->where('isupplierid', '=', $isupplierid )->get();
         $vcompany_name = $vcompany_name_data[0]->vcompanyname;
@@ -360,6 +389,46 @@ class VendorController extends Controller
                         }
 
                         $vendor_format = isset($input['vendor_format']) ? $input['vendor_format'] : 'OTHERS';
+                        
+                        
+
+                        if(isset($input['upc_convert']) )
+                        {
+                            $upc_convert=$input['upc_convert'];
+        
+                        }
+                        else{
+        
+                            $upc_convert= 0;
+                        }
+                        
+                        if(isset($input['remove_first_digit']) )
+                        {
+                            $remove_first_digit=$input['remove_first_digit'];
+        
+                        }
+                        else{
+        
+                            $remove_first_digit='N';
+                        }
+        
+                        if(isset($input['remove_last_digit']) )
+                        {
+                            $remove_last_digit=$input['remove_last_digit'];
+                        }
+                        else{
+                            $remove_last_digit='N';
+                        }
+        
+                        if(isset($input['check_digit']) && $input['upc_convert']!='A'  )
+                        {
+                            $check_digit=$input['check_digit'];
+                        }
+                        else{
+                            $check_digit='N';
+                        }
+                        
+                        
 
                         $update_vendor_sql = "UPDATE u".$stores[$i].".mst_supplier SET
                                                 vcompanyname    = '".$input['vcompanyname']."',
@@ -376,10 +445,10 @@ class VendorController extends Controller
                                                 vemail          = '".$input['vemail']."',
                                                 plcbtype        = '".$input['plcbtype']."',
                                                 edi             = '".$input['edi']."',
-                                                upc_convert     = '".$input['upc_convert']."',
-                                                remove_first_digit= '".$input['remove_first_digit']."',
-                                                remove_last_digit= '".$input['remove_last_digit']."',
-                                                check_digit     = '".$input['check_digit']."',
+                                                upc_convert     = '".$upc_convert."',
+                                                remove_first_digit= '".$remove_first_digit."',
+                                                remove_last_digit= '".$remove_last_digit."',
+                                                check_digit     = '".$check_digit."',
                                                 vendor_format   = '".$vendor_format."',
                                                 estatus         = '".$input['estatus']."',
                                                 SID             = '".$stores[$i]."' where vcompanyname = '".$vcompany_name."' ";
@@ -458,30 +527,7 @@ class VendorController extends Controller
          return redirect('vendors')->with('message', 'Vendor Updated Successfully');
     }
 
-    // public function update(Request $request, Vendor $vendor, $isupplierid)
-    // {
-    //     $input = $request->all();
-
-    //     $vendor =  Vendor::where('isupplierid', '=', $isupplierid )->update([
-    //                             'vcompanyname' => $input['vcompanyname'],
-    //                             'vvendortype' => $input['vvendortype'],
-    //                             'vfnmae' => $input['vfnmae'],
-    //                             'vlname' => $input['vlname'],
-    //                             'vcode' => $input['vcode'],
-    //                             'vaddress1' => $input['vaddress1'],
-    //                             'vcity' => $input['vcity'],
-    //                             'vstate' => $input['vstate'],
-    //                             'vphone' => $input['vphone'],
-    //                             'vzip' => $input['vzip'],
-    //                             'vcountry' => $input['vcountry'],
-    //                             'vemail' => $input['vemail'],
-    //                             'plcbtype' => $input['plcbtype'],
-    //                             'edi' => $input['edi'],
-    //                             'estatus' => $input['estatus'],
-    //                             'SID' => session()->get('sid'),
-    //                         ]);
-    //     return redirect('vendors')->with('message', 'Vendor Updated Successfully');
-    // }
+    
 
 
 

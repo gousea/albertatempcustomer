@@ -227,7 +227,7 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Select the stores in which you want to delete the items:</h5>
+            <h6 class="modal-title">Select the stores in which you want to delete the items:</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
@@ -236,7 +236,7 @@
                     <tr class="header-color">
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
-                                <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
+                                <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important; margin-left: -30px;">
                             </div>
                         </th>
                         <th colspan="2" id="table_green_header">Select All</th>
@@ -720,7 +720,7 @@ $('#items_status').change(function() {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <input type="submit" class="btn btn-danger" name="deleteItems" value="Delete">
+        <input type="submit" class="btn btn-danger buttonred buttons_menu basic-button-small" name="deleteItems" value="Delete">
       </div>
     </div>
 

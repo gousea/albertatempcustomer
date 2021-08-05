@@ -171,13 +171,15 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to add the Manufacturer :</h4>
+            <h6 class="modal-title">Select the stores in which you want to add the Manufacturer :</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -192,7 +194,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input stores" id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check  stores" id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -215,14 +217,17 @@
          Modal content
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Edit the Manufacturer :</h4>
-            <span style="color: #03A9F4">(Please Note: If a Manufacturer not exists in any of the stores those Manufacturer will be created)</span>
+              <h6 class="modal-title">Select the stores in which you want to Edit the Manufacturer :
+                    <span style="color: #03A9F4">(Please Note: If a Manufacturer not exists in any of the stores those Manufacturer will be created)</span>
+              </h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -249,13 +254,15 @@
          Modal content
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to delete the Manufacturer :</h4>
+            <h6 class="modal-title">Select the stores in which you want to delete the Manufacturer :</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -418,7 +425,7 @@ $("#closeBtn").click(function(){
   $(document).on('click','#save_button', function(e){
       
     e.preventDefault();
-    $("div#divLoading").addClass('show');
+    
     $('.mfrName').each(function(){
         var allManufactures = [];         
         allManufactures.push($(this).val());
@@ -436,7 +443,6 @@ $("#closeBtn").click(function(){
     
     // var subcatids = []; 
     
-    $("div#divLoading").addClass('show');
     var avArr = [];
    $("input[name='selected[]']:checked").each(function () {
       var id = $(this).val();
@@ -453,7 +459,7 @@ $("#closeBtn").click(function(){
         $('#warning_msg').html("You did not select anything");
         $("div#divLoading").removeClass('show');
         $('#warningModal').modal('show');
-        location.reload(true);
+        
         return false;
     }else{
         <?php if(session()->get('hq_sid') == 1){ ?>
@@ -473,7 +479,7 @@ $("#closeBtn").click(function(){
                             var data = '<tr>'+
                                             '<td>'+
                                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                    '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                    '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                 '</div>'+
                                             '</td>'+
                                             '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -484,7 +490,7 @@ $("#closeBtn").click(function(){
                             var data = '<tr>'+
                                             '<td>'+
                                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                    '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                    '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                 '</div>'+
                                             '</td>'+
                                             '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -533,6 +539,9 @@ $("#closeBtn").click(function(){
     });
     
     $('#Edit_btn_manufacturer').click(function(){
+        
+        $("div#divLoading").addClass('show');
+        
         $.each($("input[name='editstores']:checked"), function(){            
             edit_stores.push($(this).val());
         });
@@ -555,32 +564,28 @@ $("#closeBtn").click(function(){
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
                 contentType: 'application/json',
                 data: JSON.stringify({data: avArr, stores_hq: edit_stores}),
-            });
-            
-            request.success(function(msg){
-                 location.reload();
-            })
-            
-            request.done(function( msg ) {
-                $("div#divLoading").removeClass('show');
-            });
-             
-            request.fail(function( msg ) {
-              let mssg = '<div class="alert alert-danger">';
-                let errors = msg.responseJSON;
-                $.each(errors, function(k, err){
-                  $.each(err, function(key, error){
-                    mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-                  });
-                });
-        
-                mssg += '</div>';
+                success: function(msg){
+                    avArr = [];
+                    location.reload();
+                },
+                error: function( msg ) {
+                      let mssg = '<div class="alert alert-danger">';
+                        let errors = msg.responseJSON;
+                        $.each(errors, function(k, err){
+                          $.each(err, function(key, error){
+                            mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+                          });
+                        });
                 
-                $('#error_msg').html(mssg);
-                $("div#divLoading").removeClass('show');
-                $('#errorModal').modal('show');
-                location.reload(true);
+                        mssg += '</div>';
+                        
+                        $('#error_msg').html(mssg);
+                        $("div#divLoading").removeClass('show');
+                        $('#errorModal').modal('show');
+                      
+                }
             });
+            
     });
 
   // Serch Code
@@ -671,7 +676,7 @@ $("#closeBtn").click(function(){
             mfr_code:code
           });
         });
-        $("div#divLoading").addClass('show');
+        
         <?php if(session()->get('hq_sid') == 1){ ?>
             $.ajax({
                   url: "<?php echo url('/manufacturer/duplicatemanufacurer'); ?>",
@@ -687,7 +692,7 @@ $("#closeBtn").click(function(){
                                     var data = '<tr>'+
                                                     '<td>'+
                                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                            '<input type="checkbox" class="checks check custom-control-input deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                            '<input type="checkbox" class="checks check  deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                         '</div>'+
                                                     '</td>'+
                                                     '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Manufacturer does not exist)</span></td>'+
@@ -698,7 +703,7 @@ $("#closeBtn").click(function(){
                                     var data = '<tr>'+
                                                     '<td>'+
                                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                            '<input type="checkbox" class="checks check custom-control-input deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                            '<input type="checkbox" class="checks check  deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                         '</div>'+
                                                     '</td>'+
                                                     '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -808,6 +813,8 @@ $('#deleteSelectAllCheckbox').click(function(){
 });
 
 $('#delete_btn_manufacturer').click(function(){
+    
+    $("div#divLoading").addClass('show');
     var avArr = [];
     $.each($("input[name='deletestores']:checked"), function(){            
         deletestores.push($(this).val());

@@ -262,13 +262,13 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to add the SubCategory :</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to add the SubCategory :</h4>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -297,14 +297,14 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to Edit the SubCategory :
+            <span style="color: #03A9F4">(Please Note: If a SubCategory not exists in any of the stores those subcategory will be created)</span></h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Edit the SubCategory :</h4>
-            <span style="color: #03A9F4">(Please Note: If a SubCategory not exists in any of the stores those subcategory will be created)</span>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -319,7 +319,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input editstores" id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check  editstores" id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -342,13 +342,13 @@
          Modal content
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to delete the Sub Category :</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to delete the Sub Category :</h4>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -417,7 +417,6 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-    
     $('#add_vsubcategoryname, .subcategories_c').on('keypress', function (event) {
         var regex = new RegExp("^[a-zA-Z0-9. _]+$");
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -426,7 +425,6 @@ $(document).ready(function(){
            return false;
         }
     });
-    
 })
 
 
@@ -485,7 +483,7 @@ $(document).ready(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
@@ -496,7 +494,7 @@ $(document).ready(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -625,7 +623,7 @@ $("#closeBtn").click(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
@@ -636,7 +634,7 @@ $("#closeBtn").click(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -772,7 +770,7 @@ $("#closeBtn").click(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Sub Category does not exist)</span></td>'+
@@ -783,7 +781,7 @@ $("#closeBtn").click(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -904,28 +902,13 @@ $('#delete_btn_category').click(function(){
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
-                if(data.success){
-                  var successMsg ='';
-                    $('#success_msg').html('<strong>Sub category Deleted successfully</strong>');
-                    $("div#divLoading").removeClass('show');
-                    $('#successModal').modal('show');
-                    setTimeout(function(){
-                      $('#successModal').modal('hide');
-                      window.location.reload();
-                    }, 3000);
-                }else{
-                    var errorMsg = '';
-                    $.each(data.error_msg, function (k, v){
-                        errorMsg += v+'<br/>';
-                    });
-                    $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
-                    $("div#divLoading").removeClass('show');
-                    $('#errorModal').modal('show');
-                    setTimeout(function(){
-                        $('#errorModal').modal('hide');
-                        window.location.reload();
-                    }, 4000);
-                }
+                $('#success_msg').html('<strong>Sub category Deleted successfully</strong>');
+                $("div#divLoading").removeClass('show');
+                $('#successModal').modal('show');
+                setTimeout(function(){
+                  $('#successModal').modal('hide');
+                  window.location.reload();
+                }, 3000);
             },
             error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
@@ -938,6 +921,8 @@ $('#delete_btn_category').click(function(){
                 $('#error_alias').html('<strong>'+ error_show +'</strong>');
                 $('#errorModal').modal('show');
                 return false;
+                
+                    
             }
         });
 });

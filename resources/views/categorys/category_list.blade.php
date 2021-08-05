@@ -328,13 +328,14 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to add the Category :</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to add the Category :</h4>
           </div>
 
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+              <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
+              
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -349,7 +350,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input stores" id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check  stores" id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -372,14 +373,14 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to Edit the Category :
+            <span style="color: #03A9F4">(Please Note: If a Category not exists in any of the stores those category will be created)</span></h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Edit the Category :</h4>
-            <span style="color: #03A9F4">(Please Note: If a Category not exists in any of the stores those category will be created)</span>
           </div>
 
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+              <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -406,13 +407,13 @@
          Modal content
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to delete the Category :</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to delete the Category :</h4>
           </div>
 
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+              <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -614,7 +615,7 @@ $(document).on('click', '#save_button', function(event) {
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
@@ -625,7 +626,7 @@ $(document).on('click', '#save_button', function(event) {
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -757,7 +758,7 @@ $(document).on('click', '#save_button', function(event) {
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
@@ -768,7 +769,7 @@ $(document).on('click', '#save_button', function(event) {
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -921,8 +922,8 @@ $('#delete_btn_category').click(function(){
                 if(data['success_msg']){
                     var successMsg ='';
                     // $('#success_msg').html('<strong>'+ data['success_msg'] +'</strong>');
-                    $("div#divLoading").removeClass('show');
-                    $('#successModal').modal('show');
+                    // $("div#divLoading").removeClass('show');
+                    // $('#successModal').modal('show');
                     bootbox.alert({
                         size: 'small',
                         title: "Attention",

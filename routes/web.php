@@ -28,6 +28,10 @@ Route::get('/', function () {
     }
 });
 
+
+// checkVersion
+Route::post('/checkVersion', 'CheckVersionController@checkVersion')->name('checkVersion');
+
 /*Route::get('/', ['middleware' => 'guest', function()
 {
     return view('auth.login');

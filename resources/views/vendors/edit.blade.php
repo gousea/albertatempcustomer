@@ -18,8 +18,8 @@
                     <span class="font-weight-bold text-uppercase"><?php echo "Vendor Edit"; ?></span>
                 </div>
                 <div class="nav-submenu">
-                    <button type="submit" id="saveCustomer" class="btn btn-gray headerblack  buttons_menu"><i
-                            class="fa fa-save" id="myButton"></i>&nbsp;&nbsp;Save</button>
+                    <button type="button" id="form-vendor" class="btn btn-gray headerblack  buttons_menu"><i
+                            class="fa fa-save" ></i>&nbsp;&nbsp;Save</button>
                     <a type="button" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase"
                         href="{{ route('vendors') }}"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel
                     </a>
@@ -312,14 +312,14 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to add the Vendor:
+            <span style="color: #03A9F4">(Please Note: If a vendor already exists in any of the stores those vendors will be updated)</span></h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to add the Vendor:</h4>
-            <span style="color: #03A9F4">(Please Note: If a vendor already exists in any of the stores those vendors will be updated)</span>
           </div>
 
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+            <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -334,7 +334,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input stores" id="hq_sid_{{ $stores->id }}" name="hq_sid_{{ $stores->id }}" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check  stores" id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -490,6 +490,8 @@
             $.each($("input[name='stores']:checked"), function(){
                 stores.push($(this).val());
             });
+            
+            console.log(stores);
             $("#hidden_store_hq_val").val(stores);
             $('#vendorForm').submit();
         })

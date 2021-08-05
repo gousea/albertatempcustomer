@@ -1516,7 +1516,7 @@
                   <table class="table table-hover promotionview" style="width:70%;">
                     <thead>
                       <tr class="header-color">
-                        <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_vendor_code\']').prop('checked', this.checked);" /></td>
+                        <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_vendor_code\']').prop('checked', this.checked);" /></th>
                         <th class="text-left text-uppercase">Vendor Name</th>
                         <th class="text-left text-uppercase">Vendor Item Code</th>
                         <th class="text-left text-uppercase">Address</th>
@@ -1551,7 +1551,7 @@
             </form>
               <div class="row">
                 <div class="col-md-12">
-                  <button id="updateAllvendorsAssigned" class="btn btn-primary" <?php if(isset($data['itemvendors']) && count($data['itemvendors']) == 0){ ?> disabled="true" <?php } ?> > Update </button>
+                  <button id="updateAllvendorsAssigned" class="btn button-blue basic-button-small text-uppercase" <?php if(isset($data['itemvendors']) && count($data['itemvendors']) == 0){ ?> disabled="true" <?php } ?> > Update </button>
                 </div>
               </div>
           </div>
@@ -3594,7 +3594,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to update the items: </h4>
+                <h6 class="modal-title">Select the stores in which you want to update the items: </h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
               <div class="modal-body">
@@ -3625,7 +3625,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to add the Items:</h4>
+                <h6 class="modal-title">Select the stores in which you want to add the Items:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -3664,7 +3664,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h4>
+                <h6 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
               </div>
             
@@ -3707,7 +3707,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h4>
+                <h6 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -3743,7 +3743,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h4>
+                <h6 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -3776,7 +3776,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to update the items: </h4>
+                <h6 class="modal-title">Select the stores in which you want to update the items: </h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -3807,13 +3807,13 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
+                <h6 class="modal-title">Select the stores in which you want to update the items: </h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select the stores in which you want to update the items: </h4>
               </div>
               <div class="modal-body">
-                 <table class="table table-bordered">
+                <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="deleteLotMatrixSelectAllCheckbox" name="" value="" style="background: none !important;">
@@ -3877,7 +3877,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want assign vendors.</h4>
+                <h6 class="modal-title">Select the stores in which you want assign vendors.</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -3909,7 +3909,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want assign vendors.</h4>
+                <h6 class="modal-title">Select the stores in which you want assign vendors.</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -7237,14 +7237,14 @@ $("#closeBtn").click(function(){
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to delete the items:</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to delete the items:</h4>
           </div>
           <form id='deleteItemForm'>
             <div class="modal-body">
-                <table class="table table-bordered">
+                <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="deleteItemSelectAllCheckbox" name="" value="" style="background: none !important;">
