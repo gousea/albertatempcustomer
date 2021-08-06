@@ -77,7 +77,7 @@
                             here for more information</button>
                     </div>
                 </div>
-                <div class="col-md-5 loginCard" id="loginFormCard">
+                <div class="col-md-5">
                     <div class="card" id="card">
                         <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
                         <div class="card-body text-center">
@@ -99,7 +99,7 @@
                                 @csrf
                                 <div class="form-group mt-5">
                                     <input type="email" name="vemail" value="" placeholder="Email ID"
-                                        id="input_email" class="form-control" readonly />
+                                        id="input_email" class="form-control"  />
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" value="" placeholder="Password"
@@ -114,27 +114,7 @@
                     </div>
 
                 </div>
-                <div class="col-md-5 verifyCard" id="versionCard">
-                    <div class="card" id="card">
-                        <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
-                        <div class="card-body text-center">
-                            <p class="card-title text-capitalize m-auto text-center">
-                                <span class="text-uppercase text-primary font-weight-bold">login</span>
-                                to your account to manage your back office
-                            </p>
-                            <form class="checkVersion" id="checkVersionForm">
-                                <div class="form-group mt-5">
-                                    <input type="email" name="vemail" value="" placeholder="Email ID"
-                                        id="vemail" class="form-control" />
-                                </div>
-
-                                <button type="button"
-                                    class="btn btn-primary btn-block login-btns text-white font-weight-bold text-uppercase" id="proceedBtn">Proceed</button>
-                            </form>
-                            <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
-                        </div>
-                    </div>
-                </div>
+           
             </div>
         </div>
     </div>
