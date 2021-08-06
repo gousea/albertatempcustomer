@@ -77,7 +77,7 @@
                             here for more information</button>
                     </div>
                 </div>
-                <div class="col-md-5 loginCard" id="loginFormCard">
+                <div class="col-md-5">
                     <div class="card" id="card">
                         <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
                         <div class="card-body text-center">
