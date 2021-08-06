@@ -7,7 +7,7 @@ Tax Collection Summary
         <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold text-uppercase"> TAX REPORT</span>
+                    <span class="font-weight-bold text-uppercase"> TAX REPORT </span>
                 </div>
                  <div class="nav-submenu">
                          <?php if(isset($reports) && count($reports) > 0){ ?>
