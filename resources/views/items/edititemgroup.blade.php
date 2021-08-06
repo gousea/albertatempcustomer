@@ -186,7 +186,7 @@
             <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
-            <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
                 <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
@@ -556,31 +556,33 @@ $(document).on('click','#save_button_group', function(e){
             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
             url: '/updatedata',
             contentType: 'application/json',
-            data: JSON.stringify({grpid: grpid, grpname:grpName, barcodes: avArr, stores_hq:edit_stores }) // access in body
-        }).success(function (e) {
-            location.replace('/itemgroup');
-        }).fail(function (msg) {
-            let mssg = '<div class="alert alert-danger">';
-            let errors = msg.responseJSON;
-            $.each(errors, function(k, err){
-                $.each(err, function(key, error){
-                    mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-                });
-            });
-            mssg += '</div>';
-            bootbox.alert({ 
-                size: 'small',
-                title: "  ", 
-                message: mssg, 
-                callback: function(){
-                    // location.reload(true);
-                }
-            });
-            $("div#divLoading").removeClass('show');
-      
-        }).done(function (msg) {
-            // console.log('DONE');
-            $("div#divLoading").removeClass('show');
+            data: JSON.stringify({grpid: grpid, grpname:grpName, barcodes: avArr, stores_hq:edit_stores }),
+            success: function (e) { 
+                  location.replace('/itemgroup');
+            },
+            error: function (msg) {
+                        let mssg = '<div class="alert alert-danger">';
+                        let errors = msg.responseJSON;
+                        $.each(errors, function(k, err){
+                            $.each(err, function(key, error){
+                                mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+                            });
+                        });
+                        mssg += '</div>';
+                        bootbox.alert({ 
+                            size: 'small',
+                            title: "  ", 
+                            message: mssg, 
+                            callback: function(){
+                                // location.reload(true);
+                            }
+                        });
+                        $("div#divLoading").removeClass('show');
+                  
+            }
+            
+            
+            
         });
         
     })
