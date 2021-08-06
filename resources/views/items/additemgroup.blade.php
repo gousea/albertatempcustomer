@@ -504,10 +504,11 @@ $('#save_btn').click(function(){
         headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
         url: '/savedata',
         contentType: 'application/json',
-        data: JSON.stringify({groupname: grpName, barcodes: avArr, stores_hq:stores }) // access in body
-    }).success(function (e) {
-         location.replace('/itemgroup');
-    }).fail(function (msg) {
+        data: JSON.stringify({groupname: grpName, barcodes: avArr, stores_hq:stores }), // access in body
+        success : function (e) {
+          location.replace('/itemgroup');
+        }
+     }).fail(function (msg) {
         //console.log('FAIL');
         let mssg = '<div class="alert alert-danger">';
         //console.log(msg);
