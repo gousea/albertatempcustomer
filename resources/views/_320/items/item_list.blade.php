@@ -227,13 +227,13 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to delete the items:</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to delete the items:</h4>
           </div>
           <div class="modal-body">
-             <table class="table table-bordered">
+            <table class="table promotionview">
                 <thead id="table_green_header_tag">
-                    <tr>
+                  <tr class="header-color">
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
                                 <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
@@ -246,7 +246,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button type="submit" id="save_btn" class="btn btn-danger" data-dismiss="modal">Delete</button>
+            <button type="submit" id="save_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Delete</button>
             <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
           </div>
         </div>
