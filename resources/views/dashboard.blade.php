@@ -249,6 +249,9 @@
         
         <div class="col-8">
             <div class="table-responsive">
+                <div class="heading text-muted">
+                    <h6>TOP 10 TRANSACTION</h6>
+                </div>
                 <table id="vendor" class="table table-hover promotionview" style="width: 100%">
                     <thead>
                         <tr class="header-color">
