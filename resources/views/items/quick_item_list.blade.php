@@ -13,7 +13,7 @@
                   <span class="font-weight-bold text-uppercase fontvalue"> Quick Items</span>
               </div>
               <div class="nav-submenu">
-                <button title="Update" class="btn btn-gray headerblack  buttons_menu" id="update_button"><i class="fa fa-save"></i>&nbsp;&nbsp;Update</button>
+                <button title="Update" type="button" class="btn btn-gray headerblack  buttons_menu" id="update_button"><i class="fa fa-save"></i>&nbsp;&nbsp;Update</button>
               </div>
           </div> <!-- navbar-collapse.// -->
       </div>
@@ -260,7 +260,8 @@ $("#save_btn").click(function(){
     $.each($("input[name='stores']:checked"), function(){
         stores.push($(this).val());
     });
-    $("#hidden_store_hq_val").val(stores);
+    $("#edit_hidden_store_hq_val").val(stores);
+    
     $('#form-quick-item').submit();
     $("div#divLoading").addClass('show');
 });
@@ -377,7 +378,7 @@ if(all_itemgroupname == true){
         $.each($("input[name='stores']:checked"), function(){
             stores.push($(this).val());
         });
-        $("#hidden_store_hq_val").val(stores);
+        $("#edit_hidden_store_hq_val").val(stores);
         $('#form-quick-item').submit();
         $("div#divLoading").addClass('show');
     });
