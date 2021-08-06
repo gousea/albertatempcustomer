@@ -99,7 +99,7 @@
                                 @csrf
                                 <div class="form-group mt-5">
                                     <input type="email" name="vemail" value="" placeholder="Email ID"
-                                        id="input_email" class="form-control" readonly />
+                                        id="input_email" class="form-control"  />
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" value="" placeholder="Password"
