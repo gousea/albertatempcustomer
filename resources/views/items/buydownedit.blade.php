@@ -202,8 +202,8 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button type="button"  style="font-size: 16px; border-radius: 5px;" form="form-customer" data-toggle="tooltip" id="submit_budown" title="save" class="btn btn-primary"><i class="fa fa-save"> Save</i></button>
-                                    <a href="/buydown"  style="font-size: 16px; border-radius: 5px;" data-toggle="tooltip" title="cancel" class="btn btn-danger"><i class="fa fa-reply"></i> Cancel</a>
+                                    <button type="button"  style="font-size: 16px; border-radius: 5px;" form="form-customer"  id="submit_budown" title="save" class="btn btn-primary"><i class="fa fa-save"> Save</i></button>
+                                    <a href="/buydown"  style="font-size: 16px; border-radius: 5px;"  title="cancel" class="btn btn-danger"><i class="fa fa-reply"></i> Cancel</a>
                                 </div>
                             </div>
                     </form>
