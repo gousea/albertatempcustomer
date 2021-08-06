@@ -5,11 +5,13 @@
 @stop
 
 @section('main-content')
+
 <style>
     .bootstrap-datetimepicker-widget{
         width: 300px !important;
     }
 </style>
+
 <div id="content">
 <form name="myForm" action="{{ route('time_clock_save') }}" method="get" enctype="multipart/form-data" class="form-horizontal"  >
   <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
@@ -97,6 +99,11 @@
 
 
 <script>
+
+$(document).ready(function(){
+    $("#Submit").attr("disabled", true );
+})
+
 var range = document.getElementById('date_range');
 
 var m= document.getElementById('m');
@@ -174,19 +181,16 @@ function getWeek(offset) {
              contentType: "application/json",
             dataType: 'HTML',
             success: function(data) {
-            if(data){
-                $("thead#history_items").html(data);
-                 $('.datetimepicker3').datetimepicker({
-                   
-                     format: 'LT'
-                });
-                       
-               
-            }else{
-               $("#history_items").html(data);
-                
-            }
-            
+                if(data){
+                    $("#Submit").attr("disabled", false );
+                    $("thead#history_items").html(data);
+                     $('.datetimepicker3').datetimepicker({
+                         format: 'LT'
+                    });
+                }else{
+                    $("#Submit").attr("disabled", true );
+                   $("#history_items").html(data);
+                }
             }
 
         });
