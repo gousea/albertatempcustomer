@@ -3594,7 +3594,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to update the items: </h4>
+                <h6 class="modal-title">Select the stores in which you want to update the items: </h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
               <div class="modal-body">
@@ -3625,7 +3625,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to add the Items:</h4>
+                <h6 class="modal-title">Select the stores in which you want to add the Items:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -3664,7 +3664,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h4>
+                <h6 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
               </div>
             
@@ -3707,7 +3707,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h4>
+                <h6 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -3743,7 +3743,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h4>
+                <h6 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -3776,7 +3776,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want to update the items: </h4>
+                <h6 class="modal-title">Select the stores in which you want to update the items: </h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -3808,7 +3808,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select the stores in which you want to update the items: </h4>
+                <h6 class="modal-title">Select the stores in which you want to update the items: </h6>
               </div>
               <div class="modal-body">
                  <table class="table table-bordered">
@@ -3841,7 +3841,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">In the following stores this vendor is not present.</h4>
+                <h6 class="modal-title">In the following stores this vendor is not present.</h6>
                 <h5>Do you want to Add?</h5>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
@@ -3877,7 +3877,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want assign vendors.</h4>
+                <h6 class="modal-title">Select the stores in which you want assign vendors.</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
               </div>
@@ -3909,7 +3909,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Select the stores in which you want assign vendors.</h4>
+                <h6 class="modal-title">Select the stores in which you want assign vendors.</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
                 
               </div>
