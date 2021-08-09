@@ -65,8 +65,8 @@ rel="stylesheet" /> --}}
             <div class="container">
                 <div class="row" style="width: 100%">
                         <div class="col logo">
-                            <img src="{{ asset('asset/img/albertalogo.png') }}" width="30" height="30" alt="">
-                            <a href="#" class="logo-name">ALBERTA POS</a>
+                            <a href="/" class="logo-name"><img src="{{ asset('asset/img/albertalogo.png') }}" width="30" height="30" alt="">
+                            ALBERTA POS</a>
                         </div>
                     
                         <div class="col date-username">
