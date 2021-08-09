@@ -888,7 +888,7 @@ setInterval(function() {
     if($('.time').prop("checked") == true){
         $('#time_start').show();
         $('#start_dt').prop('required', true);
-        $('#termination_dt').prop('required', true);
+        // $('#termination_dt').prop('required', true);
         // document.getElementById("Submit").disabled = false;
     }
 
@@ -1012,7 +1012,7 @@ $('.time').click(function () {
         $("#time_start").hide();
         $("#input_tc_pass").removeAttr("required", false);
         $("#input_start_dt").attr("required", "false");
-        $("#input_termination_dt").attr("required", "false");
+       $("#input_termination_dt").attr("required", "false");
     }
 });
 

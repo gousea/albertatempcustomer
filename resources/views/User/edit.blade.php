@@ -934,7 +934,7 @@ setInterval(function() {
     if($('.time').prop("checked") == true){
         $('#time_start').show();
         $('#start_dt').prop('required', true);
-        $('#termination_dt').prop('required', true);
+       // $('#termination_dt').prop('required', true);
         // $("#input-re-mwpassword").attr("required", "required");
         // $("#input-mwpassword").attr("required", "required");
         // $('#start_dt').prop('required', true);
