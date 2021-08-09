@@ -1046,7 +1046,12 @@ class BuyDownController extends Controller
         $buydown_items = BuyDownDetail::where('buydown_id', '=', $buydown_id)->get();
        
 
-        $buydown_info = $buydown_inf[0];
+        
+        if(!empty($buydown_inf[0])  && isset($buydown_inf[0])){
+            $buydown_info = $buydown_inf[0];
+        }else {
+            $buydown_info = [];
+        }
 
         return view('items.buydownedit', compact('data', 'buydown_info', 'buydown_items'));
 
