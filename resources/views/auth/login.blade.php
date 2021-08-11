@@ -38,8 +38,7 @@
              display: none;
         }
         .login-img{
-            padding: 15px 15px;
-            margin: 15px 15px;
+           
         }
     </style>
 </head>
@@ -69,15 +68,14 @@
                         <p class="text-capitalize login-texts">atm</p>
                         <p class="text-capitalize login-conts">easy, safe, secure</p>
                     </div>
-                    {{-- <div class="icons-content-text text-center text-white">
-                        <img src="{{asset('image/outline_local_atm_white_24dp.png')}}"/>
-                        <p class="text-capitalize login-texts">atm</p>
-                        <p class="text-capitalize login-conts">easy, safe, secure</p>
-                    </div> --}}
+                    <div class="icons-content-text text-center text-white">
+                        <img src="{{asset('image/outline_shopping_cart_white_24dp.png')}}"/>
+                        <p class="text-capitalize login-texts">Express Checkout</p>
+                        <p class="text-capitalize login-conts">Start busting lines!</p>
+                    </div>
                     <div class="d-flex justify-content-center mb-5">
-                        <button
-                            class="login-btn text-capitalize bg-white text-primary text-center font-weight-bold">click
-                            here for more information</button>
+                        <a type="button" href="www.albertapayments.com" class="login-btn text-capitalize bg-white text-primary text-center font-weight-bold">click
+                            here for more information</a>
                     </div>
             </div>
             <div class="col-5">
