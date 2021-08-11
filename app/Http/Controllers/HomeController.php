@@ -101,13 +101,8 @@ class HomeController extends Controller
             
             //for the version setting into session
             $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_id FROM mst_version ORDER BY ver_id DESC LIMIT 1 ");
-            if(!empty($version_latest[0]) && isset($version_latest[0])){
-                $version_db = $version_latest[0];
-                session()->put('version',  $version_db->ver_id);
-            }else{
-                session()->put('version',  320);
-            }
-           
+            $version_db = $version_latest[0];
+            session()->put('version',  $version_db->ver_id);
             //==end of version  code
             
             // list of stores for HQ
@@ -339,15 +334,8 @@ class HomeController extends Controller
                 
                 //for the version setting into session
                 $version_latest= DB::connection('mysql')->select("SELECT ver_id FROM ".$data[$i]->db_name.".mst_version ORDER BY ver_id DESC LIMIT 1 ");
-                
-                if(!empty($version_latest[0]) && isset($version_latest[0])){
-                    $version_db = $version_latest[0];
-                    session()->put('version',  $version_db->ver_id);
-                }else{
-                    session()->put('version',  320);
-                }
-                // $version_db = $version_latest[0];
-                // session()->put('version',  $version_db->ver_id);
+                $version_db = $version_latest[0];
+                session()->put('version',  $version_db->ver_id);
                 //====end of version code 
                 
                 // added to get list HQ Stores
@@ -495,7 +483,7 @@ class HomeController extends Controller
             $url_customer = $api.'/api/admin/customer?fdate='.$fdate.'&tdate='.$tdate.'&token='.$token.'&sid='.$store_id;
             $output['customer'] = $this->getchartsValues($url_customer);
 
-            $select_query = "SELECT * FROM inslocdb.news_update";
+            $select_query = "SELECT * FROM inslocdb.news_update ORDER BY news_sequence";
             $output['news_update'] = DB::connection()->select($select_query);
 
             $sid = $request->session()->get('sid');

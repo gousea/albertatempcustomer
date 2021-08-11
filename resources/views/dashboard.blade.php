@@ -15,7 +15,7 @@
         }
         .moreContent{
             display: none;
-        } 
+        }
     </style>
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container">
@@ -32,7 +32,6 @@
         </div>
     </nav>
     <div class="container section-content">
-    <?php if(session()->get('hq_sid') == 1){ ?>
         <div class="col-md-12 col-xs-12 store-news">
             <div class="row">
                 <div class="col-lg-8 col-md-12 col-xs-8 pr-5">
@@ -43,7 +42,8 @@
                         <div class="grid-container">
                             <div class="box grid-item1">
                                 <div class="icons">
-                                    <i class="fa fa-eye fa-3x text-muted transperent-icons" aria-hidden="true"></i>
+                                    {{-- <i class="fa fa-eye fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
+                                    <img src="{{asset('image/outline_today_black_24dp.png')}}" style="opacity: 0.3"/>
                                 </div>
                                 <div class="text-numbers">
                                     {{-- <p class="buttons_menu a font-weight-bold">$2,193.00</p> --}}
@@ -53,7 +53,8 @@
                             </div>
                             <div class="box grid-item2">
                                 <div class="icons">
-                                    <i class="fa fa-cutlery fa-3x text-muted transperent-icons" aria-hidden="true"></i>
+                                    {{-- <i class="fa fa-cutlery fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
+                                    <img src="{{asset('image/outline_date_range_black_24dp.png')}}" style="opacity: 0.3"/>
                                 </div>
                                 <div class="text-numbers">
                                     <p class="buttons_menu a font-weight-bold">$ {{ $output['sales']['week'] }}</p>
@@ -61,8 +62,9 @@
                                 </div>
                             </div>
                             <div class="box grid-item3">
-                                <div class="icons">
-                                    <i class="fa fa-clock-o fa-3x text-muted transperent-icons" aria-hidden="true"></i>
+                                <div class="icons"> 
+                                    <img src="{{asset('image/outline_schedule_black_24dp.png')}}" style="opacity: 0.3"/>
+                                    {{-- <i class="fa fa-clock-o fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
                                 </div>
                                 <div class="text-numbers">
                                     <p class="buttons_menu a font-weight-bold">{{ $output['customers']['today'] }}</p>
@@ -71,7 +73,8 @@
                             </div>
                             <div class="box grid-item4">
                                 <div class="icons">
-                                    <i class="fa fa-users fa-3x text-muted transperent-icons" aria-hidden="true"></i>
+                                    {{-- <i class="fa fa-users fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
+                                    <img src="{{asset('image/outline_groups_black_24dp.png')}}" style="opacity: 0.3"/>
                                 </div>
                                 <div class="text-numbers">
                                     <p class="buttons_menu a font-weight-bold">{{ $output['customers']['week'] }}</p>
@@ -81,7 +84,8 @@
                             <div class="box grid-item5">
                                 <div class="icons">
                                     {{-- <i class="fa fa-eye fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
-                                    <i class="fa fa-th-large fa-3x text-muted transperent-icons" aria-hidden="true"></i>
+                                    {{-- <i class="fa fa-th-large fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
+                                    <img src="{{asset('image/outline_add_business_black_24dp.png')}}" style="opacity: 0.3"/>
                                 </div>
                                 <div class="text-numbers">
                                     <p class="buttons_menu a font-weight-bold">{{ $output['total_item']->totalitem }}</p>
@@ -275,7 +279,6 @@
                 </table>
             </div>
         </div>
-    <?php } ?>                            
     </div>
 
 @endsection

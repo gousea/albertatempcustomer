@@ -13,10 +13,10 @@
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css" rel="stylesheet"
-        type="text/css" />
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css" rel="stylesheet"
+        type="text/css" /> --}}
+    {{-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> --}}
 
     <link rel="stylesheet" href="{{ asset('asset/css/login.css') }}">
 
@@ -37,87 +37,89 @@
         .verifyCard {
              display: none;
         }
+        .login-img{
+            padding: 15px 15px;
+            margin: 15px 15px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="bg-light">
+
+    <div class="container-fluid bg-light" id="login-container">
+        <div class="row">
         <div id="divLoading" class="show"></div>
-        <div class="container-fluid " id="login-container">
-            <div class="row no-gutters">
-                <div class="col-md-7">
+            <div class="col-7">
                     <div class="login-content text-capitalize">
                         <h3 class="text-white text-center">check out all our other products & services</h3>
                     </div>
-                    <div class="icons-content-text text-center text-white">
-                        <i class="fa fa-cutlery fa-3x" aria-hidden="true"></i>
+                    <div class="icons-content-text text-center text-white login-img">
+                        <img src="{{asset('image/outline_credit_card_white_24dp.png')}}"/>
                         <p class="text-capitalize login-texts">Card Processing</p>
                         <p class="text-capitalize login-conts">we will meet or beat your current card processing rates!
                         </p>
                     </div>
-                    <div class="icons-content-text text-center text-white">
-                        <i class="fa fa-gift fa-3x" aria-hidden="true"></i>
+                    <div class="icons-content-text text-center text-white login-img">
+                        <img src="{{asset('image/outline_restaurant_white_24dp.png')}}"/>
                         <p class="text-capitalize login-texts">food ordering kiosk</p>
                         <p class="text-capitalize login-conts">running your business, not your wallet</p>
                     </div>
-                    <div class="icons-content-text text-center text-white">
-                        <i class="fa fa-cutlery fa-3x" aria-hidden="true"></i>
+                    <div class="icons-content-text text-center text-white login-img">
+                        <img src="{{asset('image/outline_local_atm_white_24dp.png')}}"/>
                         <p class="text-capitalize login-texts">atm</p>
                         <p class="text-capitalize login-conts">easy, safe, secure</p>
                     </div>
-                    <div class="icons-content-text text-center text-white">
-                        <i class="fa fa-cutlery fa-3x" aria-hidden="true"></i>
+                    {{-- <div class="icons-content-text text-center text-white">
+                        <img src="{{asset('image/outline_local_atm_white_24dp.png')}}"/>
                         <p class="text-capitalize login-texts">atm</p>
                         <p class="text-capitalize login-conts">easy, safe, secure</p>
-                    </div>
-
+                    </div> --}}
                     <div class="d-flex justify-content-center mb-5">
                         <button
                             class="login-btn text-capitalize bg-white text-primary text-center font-weight-bold">click
                             here for more information</button>
                     </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="card" id="card">
+            </div>
+            <div class="col-5">
+                <div class="card" id="card">
+                    <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
+                    <div class="card-body text-center">
+                        <p class="card-title text-capitalize m-auto text-center">
+                            <span class="text-uppercase text-primary font-weight-bold">login</span>
+                            to your account to manage your back office
+                        </p>
+                        @error('vemail')
+                            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $message }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        @enderror
+                        @error('password')
+                            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $message }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        @enderror
+                        <form method="POST" action="{{ route('login') }}" class="login-form">
+                            @csrf
+                            <div class="form-group mt-5">
+                                <input type="email" name="vemail" value="" placeholder="Email ID"
+                                    id="input_email" class="form-control"  />
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" value="" placeholder="Password"
+                                    id="input-password" class="form-control" />
+                            </div>
+
+                            <button type="submit"
+                                class="btn btn-primary btn-block login-btns text-white font-weight-bold text-uppercase">Login</button>
+                        </form>
                         <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
-                        <div class="card-body text-center">
-                            <p class="card-title text-capitalize m-auto text-center">
-                                <span class="text-uppercase text-primary font-weight-bold">login</span>
-                                to your account to manage your back office
-                            </p>
-                            @error('vemail')
-                                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $message }}
-                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                </div>
-                            @enderror
-                            @error('password')
-                                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $message }}
-                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                </div>
-                            @enderror
-                            <form method="POST" action="{{ route('login') }}" class="login-form">
-                                @csrf
-                                <div class="form-group mt-5">
-                                    <input type="email" name="vemail" value="" placeholder="Email ID"
-                                        id="input_email" class="form-control"  />
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" value="" placeholder="Password"
-                                        id="input-password" class="form-control" />
-                                </div>
-
-                                <button type="submit"
-                                    class="btn btn-primary btn-block login-btns text-white font-weight-bold text-uppercase">Login</button>
-                            </form>
-                            <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
-                        </div>
                     </div>
-
                 </div>
-           
             </div>
         </div>
     </div>
+
+    
 
 
     <script>
