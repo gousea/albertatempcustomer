@@ -101,8 +101,13 @@ class HomeController extends Controller
             
             //for the version setting into session
             $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_id FROM mst_version ORDER BY ver_id DESC LIMIT 1 ");
-            $version_db = $version_latest[0];
-            session()->put('version',  $version_db->ver_id);
+            if(!empty($version_latest[0]) && isset($version_latest[0])){
+                $version_db = $version_latest[0];
+                session()->put('version',  $version_db->ver_id);
+            }else{
+                session()->put('version',  320);
+            }
+           
             //==end of version  code
             
             // list of stores for HQ
@@ -334,8 +339,15 @@ class HomeController extends Controller
                 
                 //for the version setting into session
                 $version_latest= DB::connection('mysql')->select("SELECT ver_id FROM ".$data[$i]->db_name.".mst_version ORDER BY ver_id DESC LIMIT 1 ");
-                $version_db = $version_latest[0];
-                session()->put('version',  $version_db->ver_id);
+                
+                if(!empty($version_latest[0]) && isset($version_latest[0])){
+                    $version_db = $version_latest[0];
+                    session()->put('version',  $version_db->ver_id);
+                }else{
+                    session()->put('version',  320);
+                }
+                // $version_db = $version_latest[0];
+                // session()->put('version',  $version_db->ver_id);
                 //====end of version code 
                 
                 // added to get list HQ Stores

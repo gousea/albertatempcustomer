@@ -15,7 +15,7 @@
         }
         .moreContent{
             display: none;
-        }
+        } 
     </style>
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container">
@@ -32,6 +32,7 @@
         </div>
     </nav>
     <div class="container section-content">
+    <?php if(session()->get('hq_sid') == 1){ ?>
         <div class="col-md-12 col-xs-12 store-news">
             <div class="row">
                 <div class="col-lg-8 col-md-12 col-xs-8 pr-5">
@@ -274,6 +275,7 @@
                 </table>
             </div>
         </div>
+    <?php } ?>                            
     </div>
 
 @endsection
