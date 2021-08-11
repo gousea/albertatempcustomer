@@ -379,6 +379,7 @@ class HomeController extends Controller
     
 
     private function get_dashboard_data($request, $store_id){
+        // dd("adfasdf");
         // dd(date('Y-m-d H:i:s'));
         $date = date('Y-m-d');
         
@@ -414,7 +415,8 @@ class HomeController extends Controller
 
 		$data_curl = json_decode($data_curl);
 		
-        // 		dd($data_curl);
+
+        		// dd($data_curl);
 		
         if(isset($data_curl->error)){
             $output['sales']['today'] = 0;
@@ -428,6 +430,24 @@ class HomeController extends Controller
             $output['void']['today'] = 0;
             $output['void']['yesterday'] = 0;
             $output['void']['week'] = 0;
+
+            // $output['total_item']['item'] = 0;
+
+            // $output['news_update'] = 0;
+
+            $select_query = "SELECT * FROM inslocdb.news_update ORDER BY news_sequence";
+            $output['news_update'] = DB::connection()->select($select_query);
+
+            $sid = $request->session()->get('sid');
+            $trn_sales_query = "SELECT isalesid AS transaction_id, dtrandate as sales_timestamp, ntaxabletotal as sales_amount, vtendertype as tender_type FROM u".$sid.".trn_sales limit 100";
+ 		    $output['trn_sales_data'] = DB::connection()->select($trn_sales_query);  
+
+
+            $mst_item_query = "SELECT count(iitemid) as totalitem FROM u".$sid.".mst_item";
+ 		    $total_item = DB::connection()->select($mst_item_query);  
+             
+            $output['total_item'] = $total_item[0];
+
             
             $output['date'] = $fdate;
             
@@ -442,6 +462,8 @@ class HomeController extends Controller
             $output['topCategory'] = [];
     
             $output['customer'] = [];
+
+            // $output['total_item'] = [];
         }else {
             $token = $data_curl->token;
 
@@ -455,7 +477,7 @@ class HomeController extends Controller
             $output['customers'] = $this->getCustomers($date, $request);
             $output['void'] = $this->getVoid($date, $request);
     
-            
+            // dd($output);
             //seven day sales
             $url_7daysales = $api.'/api/admin/7daysSales?fdate='.$fdate.'&tdate='.$tdate.'&token='.$token.'&sid='.$store_id;
     		$output['sevendaysales'] = $this->getchartsValues($url_7daysales);
@@ -490,8 +512,10 @@ class HomeController extends Controller
             $trn_sales_query = "SELECT isalesid AS transaction_id, dtrandate as sales_timestamp, ntaxabletotal as sales_amount, vtendertype as tender_type FROM u".$sid.".trn_sales limit 100";
  		    $output['trn_sales_data'] = DB::connection()->select($trn_sales_query);  
 
+
             $mst_item_query = "SELECT count(iitemid) as totalitem FROM u".$sid.".mst_item";
  		    $total_item = DB::connection()->select($mst_item_query);  
+             
             $output['total_item'] = $total_item[0];
             $output['date'] = $date;
         }

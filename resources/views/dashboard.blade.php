@@ -141,66 +141,68 @@
                             <div class="d-flex justify-content-center">
                                 <h6 class="text-uppercase" style="color:#000">Weekly Top Items</h6>
                             </div>
-                            
-                            
                             <div class="disp-cont lessContent" id="lessId">
-                            <?php  if(isset($output['topItem']->data) ){  ?>
-                                    <?php if(isset($output['topItem']) && count($output['topItem']->data) != 0){   ?>
-                                        <?php for ($i=0; $i < 5; $i++) { ?>
-                                            <div class="content text-dark d-flex justify-content-between" id="five">
-                                                <?php if(isset($output['topItem'][$i]->Item)) { ?>
-                                                    <div class="d-text">
-                                                        <?php
-                                                        $url = url()->current();
-                                                        $url_data = explode('/dashboard', $url);
-                                                        $urllink = $url_data[0];
-                                                        $product_id = $output['topItem'][$i]->itemid;
-                                                        $itemlink = '/item/edit/' . $product_id;
-                                                        $target_url = $url_data[0] . $itemlink;
-                                                        ?>
-                                                        <a href="<?php echo $target_url; ?>"><h6 class="text-uppercase"><?php echo $output['topItem'][$i]->Item; ?></h6></a>
-                                                        <a href="<?php echo $target_url; ?>"><p class="text-uppercase" style="font-size:13px;"><?php echo $output['topItem'][$i]->sku; ?></p></a>
-                                                        <!-- <p class="p-text text-secondary"></p> -->
-                                                    </div>
-                                                    <div class="d-button">
-                                                        <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php echo $output['topItem'][$i]->Quantity; ?></a>
-                                                    </div>
-                                                <?php } else {?>
-                                                    <span class="text-justify text-uppercase">No data available </span>
-                                                <?php } ?>
-                                            </div>
+                                <?php if(empty($output['topItem'])){ ?>
+                                    <span class="text-justify text-uppercase">No data available </span>
+                                <?php }else{ ?>
+                                <?php  if(isset($output['topItem']->data) ){  ?>
+                                        <?php if(isset($output['topItem']) && count($output['topItem']->data) != 0){   ?>
+                                            <?php for ($i=0; $i < 5; $i++) { ?>
+                                                <div class="content text-dark d-flex justify-content-between" id="five">
+                                                    <?php if(isset($output['topItem'][$i]->Item)) { ?>
+                                                        <div class="d-text">
+                                                            <?php
+                                                            $url = url()->current();
+                                                            $url_data = explode('/dashboard', $url);
+                                                            $urllink = $url_data[0];
+                                                            $product_id = $output['topItem'][$i]->itemid;
+                                                            $itemlink = '/item/edit/' . $product_id;
+                                                            $target_url = $url_data[0] . $itemlink;
+                                                            ?>
+                                                            <a href="<?php echo $target_url; ?>"><h6 class="text-uppercase"><?php echo $output['topItem'][$i]->Item; ?></h6></a>
+                                                            <a href="<?php echo $target_url; ?>"><p class="text-uppercase" style="font-size:13px;"><?php echo $output['topItem'][$i]->sku; ?></p></a>
+                                                            <!-- <p class="p-text text-secondary"></p> -->
+                                                        </div>
+                                                        <div class="d-button">
+                                                            <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php echo $output['topItem'][$i]->Quantity; ?></a>
+                                                        </div>
+                                                    <?php } else {?>
+                                                        <span class="text-justify text-uppercase">No data available </span>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+                                        <?php }else{ ?>
+                                            <div><p class="text-justify" style="text-align: center !important; font-size: 16px;">No Data Found!!!</p></div>
                                         <?php } ?>
-                                    <?php }else{ ?>
-                                        <div><p class="text-justify" style="text-align: center !important; font-size: 16px;">No Data Found!!!</p></div>
-                                    <?php } ?>
-                                <?php } else { ?>
-                                    <?php if(isset($output['topItem']) ){  ?>
-                                        <?php for ($i=0; $i < 5; $i++) { ?>
-                                            <div class="content text-dark d-flex justify-content-between" id="five">
-                                                <?php if(isset($output['topItem'][$i]->Item)) { ?>
-                                                    <div class="d-text">
-                                                        <?php
-                                                        $url = url()->current();
-                                                        $url_data = explode('/dashboard', $url);
-                                                        $urllink = $url_data[0];
-                                                        $product_id = $output['topItem'][$i]->itemid;
-                                                        $itemlink = '/item/edit/' . $product_id;
-                                                        $target_url = $url_data[0] . $itemlink;
-                                                        ?>
-                                                        <a href="<?php echo $target_url; ?>"><h6 class="text-uppercase"><?php echo $output['topItem'][$i]->Item; ?></h6></a>
-                                                        <a href="<?php echo $target_url; ?>"><p class="text-uppercase" style="font-size:13px;"><?php echo $output['topItem'][$i]->sku; ?></p></a>
-                                                        <!-- <p class="p-text text-secondary"></p> -->
-                                                    </div>
-                                                    <div class="d-button">
-                                                        <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php echo $output['topItem'][$i]->Quantity; ?></a>
-                                                    </div>
-                                                <?php } else {?>
-                                                    <span class="text-justify text-uppercase">No data available </span>
-                                                <?php } ?>
-                                            </div>
+                                    <?php } else { ?>
+                                        <?php if(isset($output['topItem']) ){  ?>
+                                            <?php for ($i=0; $i < 5; $i++) { ?>
+                                                <div class="content text-dark d-flex justify-content-between" id="five">
+                                                    <?php if(isset($output['topItem'][$i]->Item)) { ?>
+                                                        <div class="d-text">
+                                                            <?php
+                                                            $url = url()->current();
+                                                            $url_data = explode('/dashboard', $url);
+                                                            $urllink = $url_data[0];
+                                                            $product_id = $output['topItem'][$i]->itemid;
+                                                            $itemlink = '/item/edit/' . $product_id;
+                                                            $target_url = $url_data[0] . $itemlink;
+                                                            ?>
+                                                            <a href="<?php echo $target_url; ?>"><h6 class="text-uppercase"><?php echo $output['topItem'][$i]->Item; ?></h6></a>
+                                                            <a href="<?php echo $target_url; ?>"><p class="text-uppercase" style="font-size:13px;"><?php echo $output['topItem'][$i]->sku; ?></p></a>
+                                                            <!-- <p class="p-text text-secondary"></p> -->
+                                                        </div>
+                                                        <div class="d-button">
+                                                            <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4" style="padding-top: 5px; padding-bottom: 5px;"><?php echo $output['topItem'][$i]->Quantity; ?></a>
+                                                        </div>
+                                                    <?php } else {?>
+                                                        <span class="text-justify text-uppercase">No data available </span>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+                                        <?php }else{ ?>
+                                            <div><p class="text-justify" style="text-align: center !important; font-size: 16px;">No Data Found!!!</p></div>
                                         <?php } ?>
-                                    <?php }else{ ?>
-                                        <div><p class="text-justify" style="text-align: center !important; font-size: 16px;">No Data Found!!!</p></div>
                                     <?php } ?>
                                 <?php } ?>
                             </div>
