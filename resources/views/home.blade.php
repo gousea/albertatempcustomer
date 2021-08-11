@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in! vccbvgvhgvvghvhv
+                    You are logged in! vacd
                 </div>
             </div>
         </div>
