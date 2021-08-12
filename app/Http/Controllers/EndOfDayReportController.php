@@ -16,6 +16,7 @@ class EndOfDayReportController extends Controller
 
     public function index(){
         
+        error_reporting(0);
         ini_set('max_execution_time', -1);
       
         $date=date("m-d-Y");
@@ -58,8 +59,9 @@ class EndOfDayReportController extends Controller
     }
     public function getlist(Request $request){
         
-
-       ini_set('max_execution_time', -1);
+        error_reporting(0);
+        
+        ini_set('max_execution_time', -1);
         $input = $request->all();
         $date=$input['start_date'];
         $Reports = new Reports;
@@ -153,7 +155,7 @@ class EndOfDayReportController extends Controller
     }
     public function eodPdf()
     {
-       
+         error_reporting(0);
         ini_set('max_execution_time', -1);
         ini_set('memory_limit', '-1');
         
@@ -191,6 +193,7 @@ class EndOfDayReportController extends Controller
     public function print()
     
     {
+         error_reporting(0);
         ini_set('max_execution_time', -1);
         $report_sale_new= session()->get('session_data') ;
         $report_paidout_new= session()->get('session_paidout') ;
@@ -203,6 +206,7 @@ class EndOfDayReportController extends Controller
 
     }
     public function csv(){
+         error_reporting(0);
         ini_set('max_execution_time', -1);
         $data_row = '';
         
