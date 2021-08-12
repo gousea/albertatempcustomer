@@ -74,7 +74,7 @@
                         <p class="text-capitalize login-conts">Start busting lines!</p>
                     </div>
                     <div class="d-flex justify-content-center mb-5">
-                        <a type="button" href="www.albertapayments.com" class="login-btn text-capitalize bg-white text-primary text-center font-weight-bold">click
+                        <a type="button" href="https://www.albertapayments.com" class="login-btn text-capitalize bg-white text-primary text-center font-weight-bold">click
                             here for more information</a>
                     </div>
             </div>
@@ -110,7 +110,7 @@
                             <button type="submit"
                                 class="btn btn-primary btn-block login-btns text-white font-weight-bold text-uppercase">Login</button>
                         </form>
-                        <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta">
+                        {{-- <img class="card-img-top" src="{{ asset('asset/img/alberta-logo.png') }}" alt="Alberta"> --}}
                     </div>
                 </div>
             </div>
