@@ -146,7 +146,7 @@
                                     <li><a class="dropdown-item sub-dropdown text-uppercase"
                                             href="{{ route('shelving') }}">Shelving </a></li>
                                     <li><a class="dropdown-item sub-dropdown text-uppercase"
-                                            href="{{ route('store/edit') }}">Store </a></li>
+                                            href="{{ route('store.edit') }}">Store </a></li>
                                 @endif
                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('tax') }}">
                                         Tax</a></li>
