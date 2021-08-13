@@ -24,22 +24,24 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" type="text/javascript"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" type="text/javascript">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"
         type="text/javascript"></script>
 
     <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"></script>
 
     <style>
-        .loginCard{
+        .loginCard {
             display: none;
         }
+
         .verifyCard {
-             display: none;
+            display: none;
         }
-        .login-img{
-           
-        }
+
+        .login-img {}
+
     </style>
 </head>
 
@@ -47,36 +49,37 @@
 
     <div class="container-fluid bg-light" id="login-container">
         <div class="row">
-        <div id="divLoading" class="show"></div>
+            <div id="divLoading" class="show"></div>
             <div class="col-7">
-                    <div class="login-content text-capitalize">
-                        <h3 class="text-white text-center">check out all our other products & services</h3>
-                    </div>
-                    <div class="icons-content-text text-center text-white login-img">
-                        <img src="{{asset('image/outline_credit_card_white_24dp.png')}}"/>
-                        <p class="text-capitalize login-texts">Card Processing</p>
-                        <p class="text-capitalize login-conts">we will meet or beat your current card processing rates!
-                        </p>
-                    </div>
-                    <div class="icons-content-text text-center text-white login-img">
-                        <img src="{{asset('image/outline_restaurant_white_24dp.png')}}"/>
-                        <p class="text-capitalize login-texts">food ordering kiosk</p>
-                        <p class="text-capitalize login-conts">running your business, not your wallet</p>
-                    </div>
-                    <div class="icons-content-text text-center text-white login-img">
-                        <img src="{{asset('image/outline_local_atm_white_24dp.png')}}"/>
-                        <p class="text-capitalize login-texts">atm</p>
-                        <p class="text-capitalize login-conts">easy, safe, secure</p>
-                    </div>
-                    <div class="icons-content-text text-center text-white">
-                        <img src="{{asset('image/outline_shopping_cart_white_24dp.png')}}"/>
-                        <p class="text-capitalize login-texts">Express Checkout</p>
-                        <p class="text-capitalize login-conts">Start busting lines!</p>
-                    </div>
-                    <div class="d-flex justify-content-center mb-5">
-                        <a type="button" href="https://www.albertapayments.com" class="login-btn text-capitalize bg-white text-primary text-center font-weight-bold">click
-                            here for more information</a>
-                    </div>
+                <div class="login-content text-capitalize">
+                    <h3 class="text-white text-center">check out all our other products & services</h3>
+                </div>
+                <div class="icons-content-text text-center text-white login-img">
+                    <img src="{{ asset('image/outline_credit_card_white_24dp.png') }}" />
+                    <p class="text-capitalize login-texts font-weight-bold">Card Processing</p>
+                    <p class="text-capitalize login-conts">we will meet or beat your current card processing rates!
+                    </p>
+                </div>
+                <div class="icons-content-text text-center text-white login-img">
+                    <img src="{{ asset('image/outline_restaurant_white_24dp.png') }}" />
+                    <p class="text-capitalize login-texts font-weight-bold">food ordering kiosk</p>
+                    <p class="text-capitalize login-conts">running your business, not your wallet</p>
+                </div>
+                <div class="icons-content-text text-center text-white login-img">
+                    <img src="{{ asset('image/outline_local_atm_white_24dp.png') }}" />
+                    <p class="text-capitalize login-texts font-weight-bold">atm</p>
+                    <p class="text-capitalize login-conts">easy, safe, secure</p>
+                </div>
+                <div class="icons-content-text text-center text-white">
+                    <img src="{{ asset('image/outline_shopping_cart_white_24dp.png') }}" />
+                    <p class="text-capitalize login-texts font-weight-bold">Express Checkout</p>
+                    <p class="text-capitalize login-conts">Start busting lines!</p>
+                </div>
+                <div class="d-flex justify-content-center mb-5">
+                    <a type="button" href="https://www.albertapayments.com"
+                        class="login-btn text-capitalize bg-white text-primary text-center font-weight-bold">click
+                        here for more information</a>
+                </div>
             </div>
             <div class="col-5">
                 <div class="card" id="card">
@@ -99,8 +102,8 @@
                         <form method="POST" action="{{ route('login') }}" class="login-form">
                             @csrf
                             <div class="form-group mt-5">
-                                <input type="email" name="vemail" value="" placeholder="Email ID"
-                                    id="input_email" class="form-control"  />
+                                <input type="email" name="vemail" value="" placeholder="Email ID" id="input_email"
+                                    class="form-control" />
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" value="" placeholder="Password"
@@ -117,7 +120,7 @@
         </div>
     </div>
 
-    
+
 
 
     <script>
@@ -130,41 +133,45 @@
             event.preventDefault();
             $('#forgottenModal').modal('show');
         });
-        
-        $(document).ready(function(){
+
+        $(document).ready(function() {
             $('#versionCard').removeClass('verifyCard');
-            
-            $("#proceedBtn").click(function(){
+
+            $("#proceedBtn").click(function() {
                 var vemail = $("#vemail").val();
-                if(vemail){
+                if (vemail) {
                     $.ajax({
-                        url : '<?php echo url('/checkVersion'); ?>',
-                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                        type : 'POST',
-                        data: {vemail: vemail }, // access in body
-                        success : function(data) {    
-                            if(data >= 320){
+                        url: '<?php echo url('/checkVersion'); ?>',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        type: 'POST',
+                        data: {
+                            vemail: vemail
+                        }, // access in body
+                        success: function(data) {
+                            if (data >= 320) {
                                 $('#loginFormCard').removeClass('loginCard');
                                 $('#versionCard').addClass('verifyCard');
                                 $("#input_email").val(vemail);
-                            }else {
-                                window.location.replace("https://tempcustomer.albertapayments.com/?vemail="+vemail)
+                            } else {
+                                window.location.replace(
+                                    "https://tempcustomer.albertapayments.com/?vemail=" +
+                                    vemail)
                             }
-                            
+
                         },
-                        error : function(request,error)
-                        {
+                        error: function(request, error) {
                             // alert("Request: "+JSON.stringify(request));
                             return false;
                         }
                     });
-                }else {
+                } else {
                     alert("Please enter email to proceed");
                     return false;
                 }
             })
         });
-
     </script>
     <script type="text/javascript">
         $(window).load(function() {
@@ -174,7 +181,6 @@
         $(window).on('beforeunload', function() {
             $("div#divLoading").addClass('show');
         });
-
     </script>
 
 
