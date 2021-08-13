@@ -24,6 +24,7 @@ class TaxReportController extends Controller
    
     public function getlist(Request $request){
 
+        error_reporting(0);
         $input = $request->all();
         $p_start_date=$input['start_date'];
         $p_end_date=$input['end_date'];
