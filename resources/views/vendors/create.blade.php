@@ -217,16 +217,17 @@
                         </div>
                         <div class="divider font-weight-bold"></div>
                     </div>
+                    <br />
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group" style="font-size:15px;">
                                 {{-- <label class="col-sm-4 control-label" for="input-country">EDI Settings</label> --}}
                                 <div class="col-sm-4">
                                     <!-- <br><br><span><b> UPCA TO UPCE</b></span>
-                                              <br>
-                                             <br>
-                                             <input type="checkbox" id="upc_convert" name="upc_convert" value="Y" >
-                                             <label for="convert"> convert</label> -->
+                                                  <br>
+                                                 <br>
+                                                 <input type="checkbox" id="upc_convert" name="upc_convert" value="Y" >
+                                                 <label for="convert"> convert</label> -->
 
                                 </div>
                             </div>
