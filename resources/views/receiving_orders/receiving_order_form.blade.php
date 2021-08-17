@@ -776,25 +776,25 @@
     
   $(function(){
     $('input[name="dcreatedate"]').datepicker({
-      format: 'mm-dd-yyyy',
+      dateFormat: 'dd-mm-yy',
       todayHighlight: true,
       autoclose: true,
     });
 
     $('input[name="dreceiveddate"]').datepicker({
-      format: 'mm-dd-yyyy',
+      dateFormat: 'dd-mm-yy',
       todayHighlight: true,
       autoclose: true,
     });
 
     $('input[name="custom_start_date"]').datepicker({
-      format: 'mm-dd-yyyy',
+      dateFormat: 'dd-mm-yy',
       todayHighlight: true,
       autoclose: true,
     });
 
     $('input[name="custom_end_date"]').datepicker({
-      format: 'mm-dd-yyyy',
+      dateFormat: 'dd-mm-yy',
       todayHighlight: true,
       autoclose: true,
     });
@@ -965,7 +965,7 @@
 
 {{-- <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> --}}
 {{-- <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
-<script src = "https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
     $(function() {
         <?php if(isset($data['items']) && count($data['items']) > 0){?>
