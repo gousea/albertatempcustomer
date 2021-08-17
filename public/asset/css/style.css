@@ -6,22 +6,22 @@ body {
     /* font-family: 'san'; */
 }
 
-#divLoading{
-    display : block;
+#divLoading {
+    display: block;
 }
-#divLoading.show{
-    display : block;
-    position : fixed;
+#divLoading.show {
+    display: block;
+    position: fixed;
     z-index: 100;
-    background-image : url('/image/loading1.gif');
-    background-color:#666;
-    opacity : 0.9;
-    background-repeat : no-repeat;
-    background-position : center;
-    left : 0;
-    bottom : 0;
-    right : 0;
-    top : 0;
+    background-image: url("/image/loading1.gif");
+    background-color: #666;
+    opacity: 0.9;
+    background-repeat: no-repeat;
+    background-position: center;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
     background-size: 100px !important;
 }
 
@@ -279,7 +279,7 @@ footer {
     background-color: #474d53;
     min-height: 250px;
     padding: 10px 0px 25px 0px;
-    margin-top: 40px;
+    /* margin-top: 40px; */
 }
 
 footer p {
@@ -303,7 +303,7 @@ input::-webkit-input-placeholder {
 .table-heading-fields,
 .table-heading-fields::-webkit-input-placeholder {
     font-size: 13px;
-    padding-left: 20px;
+    /* padding-left: 20px; */
     border-radius: 7px;
     width: 80%;
     height: 33px;
@@ -732,8 +732,7 @@ header,
     }
 
     .required .control-label {
-        content:"*";
-        color:red;
-      }
-
+        content: "*";
+        color: red;
+    }
 }
