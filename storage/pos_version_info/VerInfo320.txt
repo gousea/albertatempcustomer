@@ -1,0 +1,11 @@
+Alberta POS Version 3.2.0
+
+Bugs Resolved :- 
+
+1.  Buydown amount issue resolved.
+2.  
+
+New Fetures Added :- 
+
+1.  Conveyance Charge functionality added.  
+2.  
