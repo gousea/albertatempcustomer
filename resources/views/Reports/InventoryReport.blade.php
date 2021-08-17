@@ -60,7 +60,7 @@ Inventory On Hand Report
                                     <div class="form-group ">
                                       
                                             <select name="vdepcode[]" class="sample-class"  id="dept_code"  multiple="true" required>
-                                               <!--tion value="All">All</option>-->
+                                               <option value="All">All</option>
                                                 <?php if(isset($departments) && count($departments) > 0){?>
                                                     <?php foreach($departments as $department){ ?>
                                                     <option value="<?= $department['vdepcode'] ?>" <?php if(isset($vdepcode) && !empty($vdepcode) && in_array($department['vdepcode'], $vdepcode) ){ ?> selected <?php }?> ><?= $department['vdepartmentname']; ?></option>
