@@ -1732,7 +1732,11 @@
         
                                         </tr>
         
-                                        <?php for ($i = 1; $i <= 12; ++$i) { ?> <tr>
+                                        <?php 
+                                            $adjvaluereset = 0;
+                                            for ($i = 1; $i <= 12; ++$i) { 
+                                        ?> 
+                                        <tr>
                                             <td colspan="2" style="border-right: 1px solid #cdd0d4;">
                                                 <b><?php echo DateTime::createFromFormat('!m', $i)->format('F'); ?></b>
                                             </td>
