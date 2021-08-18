@@ -113,7 +113,7 @@
                                 <th class="text-left text-uppercase"><a class="btn font-weight-bold" id="sorting" style="color:white; font-size:11px;">&nbsp;&nbsp;Item Name</a>
                                   <div class="po-has-search">
                                     <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control table-heading-fields text-center search_text_box" name="item_search" placeholder="SEARCH"  style="width: 100%; padding-left: 5px;">
+                                    <input type="text" class="form-control table-heading-fields text-center search_text_box" name="item_search" placeholder="SEARCH"  style="width: 100%; padding-left: 5px; max-width: 200px;">
                                   </div>
                                 </th>
                                 <th class="text-left text-uppercase no-sort no-filter">Item Type</th>
@@ -121,7 +121,7 @@
                                 <th class="text-left text-uppercase no-sort">&nbsp;&nbsp;SKU
                                   <div class="po-has-search">
                                     <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" name="sku_search" class="form-control table-heading-fields text-center search_text_box" placeholder="SEARCH"  style="width: 110%; padding-left: 5px;">
+                                    <input type="text" name="sku_search" class="form-control table-heading-fields text-center search_text_box" placeholder="SEARCH"  style="width: 110%; padding-left: 5px; max-width: 200px;">
                                   </div>
                                 </th>
                                 <?php $dynamic_data[] = "vbarcode";?>
