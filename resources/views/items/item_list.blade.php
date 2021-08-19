@@ -47,6 +47,12 @@
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
                 <span class="font-weight-bold text-uppercase"> Items</span>
+                  <b>Show &nbsp</b> 
+                      <select name="items_status" id="items_status">
+                          <option value="All" <?php echo ($data['show_items']=='ALL')? "selected" : "";?>>All</option>
+                          <option value="Active" <?php echo ($data['show_items']=='Active')? "selected" : "";?>>Active</option>
+                          <option value="Inactive" <?php echo ($data['show_items']=='Inactive')? "selected" : "";?>>Inactive</option>
+                      </select>
             </div>
             <div class="nav-submenu">
 
@@ -74,25 +80,7 @@
       </div>
       @endif
       <div class="panel panel-default itemsData">
-        
         <div class="panel-body">
-          <div class="row" style="padding-bottom: 15px;">
-              
-              <div class="col-md-8 pull-right">
-                  <b>Show &nbsp</b> <select name="items_status" id="items_status">
-                          <option value="All" <?php echo ($data['show_items']=='ALL')? "selected" : "";?>>All</option>
-                          <option value="Active" <?php echo ($data['show_items']=='Active')? "selected" : "";?>>Active</option>
-                          <option value="Inactive" <?php echo ($data['show_items']=='Inactive')? "selected" : "";?>>Inactive</option>
-                      </select>
-                  <span>
-                      
-              </div>
-            
-
-          </div>
-          
-                
-      
           <div class="box-body table-responsive">
                   <table id="item_listing" class="table table-hover promotionview" style="font-size:11px; width:100%;">
                       <thead>

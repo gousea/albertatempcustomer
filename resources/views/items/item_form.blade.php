@@ -3,6 +3,14 @@
 @section('title', 'Items')
 
 @section('main-content')
+<style>
+.page-footer{
+  margin-top: 30px;
+}
+.modal-title{
+  font-size: 15px;
+}
+</style>
 
 <div id="content">
 
@@ -20,11 +28,11 @@
               <a type="submit" id="cancel_button" href="{{ $data['cancel'] }}" data-toggle="tooltip" title="Cancel" class="btn btn-danger buttonred buttons_menu basic-button-small cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
               
             </div>
-        </div> <!-- navbar-collapse.// -->
+        </div> 
     </div>
   </nav>
 
-  <div class="container-fluid section-content">
+  <div class="container section-content">
       
     @if ($data['error_warning'])
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
@@ -285,12 +293,6 @@
                                   <?php
 
                                     if(isset($data['new_costprice']) && $data['new_costprice'] >0 && isset($data['dunitprice'])){    
-                                      
-                                      // echo "new_costprice: $new_costprice";
-                                      // echo "npack: $npack";
-                                      
-                                      
-                                        // $nunit_cost = $data['new_costprice']/$data['npack'];
                                         $nunit_cost = (int)$data['npack'] !== 0?(int)($data['new_costprice']/$data['npack']):0;
                                         $nunit_cost = round($nunit_cost, 2);
                                       
@@ -1410,7 +1412,6 @@
                             <input type="text" class="editable adjustment-fields input_vpackname" name="itempacks[<?php echo $k; ?>][vpackname]" value="<?php echo $itempack->vpackname;?>" />
                           </td>
                           <td>
-                            <?php //echo $itempack->vdesc;?>
                             <input type="text" class="editable adjustment-fields input_vdesc" name="itempacks[<?php echo $k; ?>][vdesc]" value="<?php echo $itempack->vdesc;?>" />
                           </td>
                           <td class="text-left"><?php echo number_format($data['nunitcost'], 2);?></td>
@@ -1643,8 +1644,7 @@
                                                 <b class="text-uppercase" style="font-size: 14px;">
                                                     <?php echo $previous_year; ?> YTD ADJUSTMENT
                                                     <?php echo $totaladjpreviousyr; ?>
-                                                    <?php //echo
-                                                    !empty($reports['year_arr_adjustment'][$previous_year]['total_adjustment']) ?
+                                                    <?php !empty($reports['year_arr_adjustment'][$previous_year]['total_adjustment']) ?
                                                     $reports['year_arr_adjustment'][$previous_year]['total_adjustment'] : '0'; ?>
                                                 </b>
                                             </td>
@@ -1675,13 +1675,6 @@
                                             <td colspan="2" class="th_color">
                                                 <b class="text-uppercase" style="font-size: 14px;">
                                                     <?php echo $current_year; ?> YTD ADJUSTMENT
-                                                    <!--  Old code
-                                            <?php
-                            //echo !empty($reports['year_arr_adjustment'][$current_year]['total_adjustment']) ? $reports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0' ;
-                            ?>
-                                        -->
-        
-        
                                                     <?php
                                                     $value1 =
                                                     !empty($reports['year_arr_adjustment'][$current_year]['total_adjustment']) ?
@@ -1919,11 +1912,7 @@
                                                 STR_PAD_LEFT)]['total_sold']) ||
                                                 !empty($reports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_receive'])) { ?>
-                                                <!-- (<?php
-                                                        //echo $current_year;
-                                                        ?>)&nbsp;-->
                                                 <?php } ?>
-        
                                                 <?php if
                                                 (!empty($reports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_sold'])) { ?>
@@ -2034,7 +2023,6 @@
                                                 <?php $pqohvalue = (int)
                                                 $reports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_pqoh'];
-                                                //$adjvaluereset += $pqohvalue;
                                                 ?>
                                                 <?php } else { ?>
                                                 &nbsp;
@@ -2050,7 +2038,6 @@
                                                 <?php $cqohvalue = (int)
                                                 $reports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_cqoh'];
-                                                // $adjvaluereset += $cqohvalue;
                                                 ?>
                                                 <?php } else { ?>
                                                 &nbsp;
@@ -2192,7 +2179,7 @@
                     <br>
                     <br>
                 <?php } ?>
-                    <!-- new parent and child relationship // Hanamant B --->
+                    <!-- new parent and child relationship --->
                     
                 <?php if (isset($childreports)) { ?> 
                     <?php foreach ($childreports as $childreports) { ?>
@@ -2269,7 +2256,7 @@
                                                         <b class="text-uppercase" style="font-size: 14px;">
                                                             <?php echo $previous_year; ?> YTD ADJUSTMENT
                                                             <?php echo $totaladjpreviousyr; ?>
-                                                            <?php //echo
+                                                            <?php 
                                                             !empty($childreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
                                                             ? $childreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
                                                             '0'; ?>
@@ -2301,13 +2288,6 @@
                                                     <td colspan="2" class="th_color">
                                                         <b class="text-uppercase" style="font-size: 14px;">
                                                             <?php echo $current_year; ?> YTD ADJUSTMENT
-                                                            <!--  Old code
-                                                    <?php
-                                    //echo !empty($childreports['year_arr_adjustment'][$current_year]['total_adjustment']) ? $childreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0' ;
-                                    ?>
-                                                -->
-                
-                
                                                             <?php
                                                             $value1 =
                                                             !empty($childreports['year_arr_adjustment'][$current_year]['total_adjustment'])
@@ -2548,9 +2528,6 @@
                                                         STR_PAD_LEFT)]['total_sold']) ||
                                                         !empty($childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_receive'])) { ?>
-                                                        <!-- (<?php
-                                                                //echo $current_year;
-                                                                ?>)&nbsp;-->
                                                         <?php } ?>
                 
                                                         <?php if
@@ -2665,7 +2642,6 @@
                                                         <?php $pqohvalue = (int)
                                                         $childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_pqoh'];
-                                                        //$adjvaluereset += $pqohvalue;
                                                         ?>
                                                         <?php } else { ?>
                                                         &nbsp;
@@ -2681,7 +2657,6 @@
                                                         <?php $cqohvalue = (int)
                                                         $childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_cqoh'];
-                                                        // $adjvaluereset += $cqohvalue;
                                                         ?>
                                                         <?php } else { ?>
                                                         &nbsp;
@@ -2880,7 +2855,7 @@
                                                     <b class="text-uppercase" style="font-size: 14px;">
                                                         <?php echo $previous_year; ?> YTD ADJUSTMENT
                                                         <?php echo $totaladjpreviousyr; ?>
-                                                        <?php //echo
+                                                        <?php 
                                                         !empty($parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
                                                         ? $parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
                                                         '0'; ?>
@@ -2912,14 +2887,7 @@
                                                 <td colspan="2" class="text-left" class="th_color">
                                                     <b class="text-uppercase text-danger" style="font-size: 14px;">
                                                         <?php echo $current_year; ?> YTD ADJUSTMENT
-                                                        <!--  Old code
-                                                <?php
-                                //echo !empty($parentreports['year_arr_adjustment'][$current_year]['total_adjustment']) ? $parentreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0' ;
-                                ?>
-                                            -->
-            
-            
-                                                        <?php
+                                                       <?php
                                                         $value1 =
                                                         !empty($parentreports['year_arr_adjustment'][$current_year]['total_adjustment'])
                                                         ? $parentreports['year_arr_adjustment'][$current_year]['total_adjustment'] :
@@ -3161,9 +3129,6 @@
                                                     STR_PAD_LEFT)]['total_sold']) ||
                                                     !empty($parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive'])) { ?>
-                                                    <!-- (<?php
-                                                            //echo $current_year;
-                                                            ?>)&nbsp;-->
                                                     <?php } ?>
             
                                                     <?php if
@@ -3278,7 +3243,6 @@
                                                     <?php $pqohvalue = (int)
                                                     $parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_pqoh'];
-                                                    //$adjvaluereset += $pqohvalue;
                                                     ?>
                                                     <?php } else { ?>
                                                     &nbsp;
@@ -3983,7 +3947,7 @@
     }
     
     .disabled {
-        pointer-events:none; //This makes it not clickable
+        pointer-events:none; 
  
     }
   
@@ -4010,8 +3974,6 @@
   }
   
   
-  
-    //   For vendor update for head Quaters
   <?php if(session()->get('hq_sid') == 1){  ?>
     $("#ivendorid").change(function(){
         var vsuppliercode = $("#ivendorid").val();
@@ -4104,7 +4066,6 @@ $("#closeBtn").click(function(){
           $('.notLottery').show();
           $('.Lottery').hide();
       }else if($(this).val() == 'Instant'){
-          // console.log($(this).val());
           $('.notLottery').hide();
           $('.Lottery').show();
       }else{
@@ -4141,7 +4102,6 @@ $("#closeBtn").click(function(){
         }
 
         $('#input-unitcost').val(unitcost);
-        //input-profit-margin
     
         if(unitpercase!= '' && avg_case_cost != '' && $('#input-Selling Price').val() !=''){
           var sell_price = $('#input-Selling-Price').val();
@@ -4167,13 +4127,6 @@ $("#closeBtn").click(function(){
     });
 
     $(document).on('keypress', '#nbottledepositamt', function(event) {
-    
-      // var character = String.fromCharCode(event.keyCode)
-      // var newValue = this.value + character; 
-      // if (isNaN(newValue) || parseFloat(newValue) * 100 % 1 > 0) {
-      //     event.preventDefault();
-      //     return false;
-      // }
         this.value = this.value.match(/^\d+\.?\d{0,2}/);
     });
 
@@ -4191,19 +4144,6 @@ $("#closeBtn").click(function(){
         var level2_gross_profit;
         var level3_gross_profit;
         var level4_gross_profit;
-        
-        // if(buyDown != ''){
-        //     gross_profit = selling_price - (new_costprice - buyDown);
-        //     level2_gross_profit = level2_selling_price - (new_costprice - buyDown);
-        //     level3_gross_profit = level3_selling_price - (new_costprice - buyDown);
-        //     level4_gross_profit = level4_selling_price - (new_costprice - buyDown);
-        // }else{
-        //     gross_profit = selling_price - new_costprice;
-        //     level2_gross_profit = level2_selling_price - new_costprice;
-        //     level3_gross_profit = level3_selling_price - new_costprice;
-        //     level4_gross_profit = level4_selling_price - new_costprice;
-        // }
-        
         var sellingunit = $('#input-sellingunit').val();
                 
         var unitcost = parseFloat(new_costprice/sellingunit).toFixed(2);
@@ -4255,11 +4195,6 @@ $("#closeBtn").click(function(){
         $('#dunit_price').val(selling_price);
     });
   
-  
-  
-  
-    //buy down
-  
   $(document).on('keyup', '#input_buydown', function(event) {
     event.preventDefault();
 
@@ -4299,7 +4234,6 @@ $("#closeBtn").click(function(){
     $('#input-gross-profit2').val(prof_mar2.toFixed(2));
     $('#input-gross-profit3').val(prof_mar3.toFixed(2));
     $('#input-gross-profit4').val(prof_mar4.toFixed(2));
-    //buy down
   });
   
   
@@ -4314,7 +4248,6 @@ $("#closeBtn").click(function(){
     
         var sid = "<?php echo $data['sid'];?>";
         var url = $(this).attr('action');
-        // var url = $(this).attr('action')+"&sid="+sid;
         var data = {};
     
         data['vitemcode']  = $(this).find('input[name=vitemcode]').val();
@@ -4338,14 +4271,14 @@ $("#closeBtn").click(function(){
                     $('#success_alias').html('<strong>'+ data.success +'</strong>');
                     $('#successAliasModal').modal('show');   
                 }
-                $.cookie("tab_selected", 'alias_code_tab'); //set cookie tab
+                $.cookie("tab_selected", 'alias_code_tab'); 
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
                 var error_show = '';
                 if(response_error.error){
                     error_show = response_error.error;
@@ -4382,7 +4315,6 @@ $("#closeBtn").click(function(){
         
         var sid = "<?php echo $data['sid'];?>";
         var url = '<?php echo $data['add_alias_code']; ?>';
-        // var url = $(this).attr('action')+"&sid="+sid;
         var vitemcode = '<?php echo isset($data['vbarcode']) ? $data['vbarcode'] : ''; ?>';
         var vsku = '<?php echo isset($data['vbarcode']) ? $data['vbarcode'] : ''; ?>';
         var stores_hq = $("#alias_stores_hq").val();
@@ -4409,14 +4341,14 @@ $("#closeBtn").click(function(){
                     $('#successAliasModal').modal('show');   
                 }
                 
-                $.cookie("tab_selected", 'alias_code_tab'); //set cookie tab
+                $.cookie("tab_selected", 'alias_code_tab'); 
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
                 var error_show = '';
                 if(response_error.error){
                     error_show = response_error.error;
@@ -4547,14 +4479,14 @@ $("#closeBtn").click(function(){
                         $('#successAliasModal').modal('show');
                     }
                     
-                    $.cookie("tab_selected", 'alias_code_tab'); //set cookie tab
+                    $.cookie("tab_selected", 'alias_code_tab'); 
                     setTimeout(function(){
                         window.location.reload();
                         $("div#divLoading").addClass('show');
                     }, 3000);
                 },
-                error: function(xhr) { // if error occured
-                    var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+                error: function(xhr) { 
+                    var  response_error = $.parseJSON(xhr.responseText); 
                   
                     var error_show = '';
             
@@ -4622,14 +4554,14 @@ $("#closeBtn").click(function(){
                         $('#successAliasModal').modal('show');
                     }
                     
-                    $.cookie("tab_selected", 'alias_code_tab'); //set cookie tab
+                    $.cookie("tab_selected", 'alias_code_tab'); 
                     setTimeout(function(){
                         window.location.reload();
                         $("div#divLoading").addClass('show');
                     }, 3000);
                 },
-                error: function(xhr) { // if error occured
-                    var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+                error: function(xhr) { 
+                    var  response_error = $.parseJSON(xhr.responseText); 
                   
                     var error_show = '';
             
@@ -4797,8 +4729,6 @@ $("#closeBtn").click(function(){
       }else{
         percent = 0;
       }
-        
-      // percent = (percent/(npackprice*100)).toFixed(2);
       percent = ((percent/npackprice)*100).toFixed(2);
 
       $('#npackmargin').val(percent);
@@ -4838,8 +4768,6 @@ $("#closeBtn").click(function(){
       }
 
       percent = ((percent/npackprice)*100).toFixed(2);
-      // percent = (percent/(npackprice*100)).toFixed(2);
-      
       $('#npackmargin').val(percent);
     }else{
       $('#npackmargin').val('');
@@ -4872,24 +4800,10 @@ $("#closeBtn").click(function(){
   });
 
   $(document).on('keypress', '#input_npackcost', function(event){
-      
-      // var character = String.fromCharCode(event.keyCode)
-      // var newValue = this.value + character;
-      // if (isNaN(newValue) || parseFloat(newValue) * 100 % 1 > 0) {
-      //     event.preventDefault();
-      //     return false;
-      // }
       this.value = this.value.match(/^\d+\.?\d{0,1}/);
   });
 
   $(document).on('keypress', '#input_npackprice', function(event){
-      
-      // var character = String.fromCharCode(event.keyCode)
-      // var newValue = this.value + character;
-      // if (isNaN(newValue) || parseFloat(newValue) * 100 % 1 > 0) {
-      //     event.preventDefault();
-      //     return false;
-      // }
       this.value = this.value.match(/^\d+\.?\d{0,1}/);
   });
     
@@ -4993,16 +4907,15 @@ $("#closeBtn").click(function(){
                     $('#error_alias').html('<strong>'+ data.error +'</strong>');
                     $('#addLotItemModal').modal('hide');
                     $('#errorAliasModal').modal('show');
-                    // return false;
                 }
-                $.cookie("tab_selected", 'lot_matrix_tab'); //set cookie tab
+                $.cookie("tab_selected", 'lot_matrix_tab'); 
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
           
                 var error_show = '';
               
@@ -5073,16 +4986,15 @@ $("#closeBtn").click(function(){
                     $('#error_alias').html('<strong>'+ data.error +'</strong>');
                     $('#addLotItemModal').modal('hide');
                     $('#errorAliasModal').modal('show');
-                    // return false;
                 }
-                $.cookie("tab_selected", 'lot_matrix_tab'); //set cookie tab
+                $.cookie("tab_selected", 'lot_matrix_tab'); 
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
           
                 var error_show = '';
               
@@ -5170,15 +5082,15 @@ $("#closeBtn").click(function(){
     
                 $('#success_alias').html('<strong>'+ data.success +'</strong>');
                 $('#successAliasModal').modal('show');
-                $.cookie("tab_selected", 'lot_matrix_tab'); //set cookie tab
+                $.cookie("tab_selected", 'lot_matrix_tab'); 
                 setTimeout(function(){
                    window.location.reload();
                    $("div#divLoading").addClass('show');
                 }, 3000);
          
             },
-            error: function(xhr) { // if error occured
-                  var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                  var  response_error = $.parseJSON(xhr.responseText); 
                   
                   var error_show = '';
             
@@ -5240,15 +5152,15 @@ $("#closeBtn").click(function(){
     
                 $('#success_alias').html('<strong>'+ data.success +'</strong>');
                 $('#successAliasModal').modal('show');
-                $.cookie("tab_selected", 'lot_matrix_tab'); //set cookie tab
+                $.cookie("tab_selected", 'lot_matrix_tab'); 
                 setTimeout(function(){
                    window.location.reload();
                    $("div#divLoading").addClass('show');
                 }, 3000);
          
             },
-            error: function(xhr) { // if error occured
-                  var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                  var  response_error = $.parseJSON(xhr.responseText); 
                   
                   var error_show = '';
             
@@ -5419,15 +5331,15 @@ $("#closeBtn").click(function(){
 
       $('#success_alias').html('<strong>'+ data.success +'</strong>');
       $('#successAliasModal').modal('show');
-      $.cookie("tab_selected", 'slab_price_tab'); //set cookie tab
+      $.cookie("tab_selected", 'slab_price_tab'); 
       setTimeout(function(){
        window.location.reload();
        $("div#divLoading").addClass('show');
       }, 3000);
       
     },
-    error: function(xhr) { // if error occured
-      var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+    error: function(xhr) { 
+      var  response_error = $.parseJSON(xhr.responseText); 
       
       var error_show = '';
 
@@ -5474,32 +5386,7 @@ $("#closeBtn").click(function(){
 
       $('#success_alias').html('<strong>'+ data.success +'</strong>');
       $('#successAliasModal').modal('show');
-      $.cookie("tab_selected", 'parent_tab'); //set cookie tab
-      /*setTimeout(function(){
-       window.location.reload();
-       $("div#divLoading").addClass('show');
-      }, 3000);*/
-      
- /*   },
-    error: function(xhr) { // if error occured
-      var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-      
-      var error_show = '';
-
-      if(response_error.error){
-        error_show = response_error.error;
-      }else if(response_error.validation_error){
-        error_show = response_error.validation_error[0];
-      }
-
-      $('#error_alias').html('<strong>'+ error_show +'</strong>');
-      $('#errorAliasModal').modal('show');
-      return false;
-    }
-  });
-
-});
-*/
+      $.cookie("tab_selected", 'parent_tab'); 
 </script>
 
 <script type="text/javascript">
@@ -5542,15 +5429,15 @@ $("#closeBtn").click(function(){
       
       $('#success_alias').html('<strong>'+ data.success +'</strong>');
       $('#successAliasModal').modal('show');
-      $.cookie("tab_selected", 'parent_tab'); //set cookie tab
+      $.cookie("tab_selected", 'parent_tab'); 
       setTimeout(function(){
        window.location.reload();
        $("div#divLoading").addClass('show');
       }, 3000);
       
     },
-    error: function(xhr) { // if error occured
-      var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+    error: function(xhr) { 
+      var  response_error = $.parseJSON(xhr.responseText); 
       
       var error_show = '';
 
@@ -5575,8 +5462,6 @@ $("#closeBtn").click(function(){
       $('[data-toggle="tooltip"]').tooltip(); 
       if ((!!$.cookie('tab_selected')) && ($.cookie('tab_selected') != '')) {
         var tab_s = $.cookie('tab_selected');
-          // have cookie
-        
         if(tab_s == 'alias_code_tab'){
           $('#alias_code_tab_li').prop('checked', true);
           $('#alias_code_tab').show();
@@ -5617,7 +5502,6 @@ $("#closeBtn").click(function(){
           $('#level_pricing_tab').hide();
         }
       } else {
-        // no cookie 
         var tab_selected = "<?= $data['tab_selected']; ?>";
         
         <?php if(isset($data['tab_selected']) && !empty($data['tab_selected'])){?>
@@ -5706,8 +5590,6 @@ $("#closeBtn").click(function(){
       var prof_mar2 = ((level2_gross_profit/level2_selling_price)*100);
       var prof_mar3 = ((level3_gross_profit/level3_selling_price)*100);
       var prof_mar4 = ((level4_gross_profit/level4_selling_price)*100);
-      // console.log(unitcost);
-      // console.log(buyDown);
       if(new_costprice != '' && new_costprice > 0 ){
           
           if(selling_price != '' & isFinite(prof_mar)){
@@ -5746,37 +5628,33 @@ $("#closeBtn").click(function(){
           $('#input-gross-profit3').val();
           $('#input-gross-profit4').val();
       }
-      
-      // console.log(buyDown);
-      
-
   });
 
 </script>
 
 <script type="text/javascript">
   $(document).on('submit', 'form#form-item1', function(e) {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", ''); 
   });
 
   $(document).on('submit', 'form#form-item-lot-matrix-list1', function() {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", ''); 
   });
 
   $(document).on('submit', 'form#form-item-vendor', function() {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", ''); 
   });
 
   $(document).on('submit', 'form#form-item-vendor-list', function() {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", ''); 
   });
 
   $(document).on('submit', 'form#form-item-slab-price-list', function() {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", ''); 
   });
 
   $(document).on('click', '#cancel_button, #menu li a, .breadcrumb li a', function() {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", ''); 
   });
 
   $(document).on('keypress keyup blur', '#input-unitpercase', function(event) {
@@ -5813,7 +5691,7 @@ $("#closeBtn").click(function(){
     }
     
   }); 
-  //$(document).on('keypress keyup blur', 'input[name="dcostprice"],input[name="nlevel2"],input[name="nlevel3"],input[name="nlevel4"],input[name="dunitprice"],input[name="ndiscountper"],input[name="nprice"],input[name="npackprice"]', function(event) {
+
 
   $(document).on('keypress keyup blur', 'input[name="dcostprice"],input[name="nlevel2"],input[name="nlevel3"],input[name="nlevel4"],input[name="ndiscountper"],input[name="nprice"],input[name="npackprice"]', function(event) {
 
@@ -5886,8 +5764,6 @@ $("#closeBtn").click(function(){
   }
 </style>
 
-// <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script type="text/javascript">
   $('select[name="vitemtype"]').select2();
   $('select[name="taxlist[]"]').select2();
@@ -5987,8 +5863,8 @@ $("#closeBtn").click(function(){
          $('#successAliasModal').modal('hide');
         }, 3000);
       },
-      error: function(xhr) { // if error occured
-        var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+      error: function(xhr) { 
+        var  response_error = $.parseJSON(xhr.responseText); 
         
         var error_show = '';
 
@@ -6120,6 +5996,7 @@ $("#closeBtn").click(function(){
       
     </div>
   </div>
+  
 <!-- Modal Add-->
 
 <!-- Modal Add New Sub Category -->
