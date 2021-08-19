@@ -4,6 +4,25 @@
     Customer
 @stop
 
+<style>
+    .has-search .form-control {
+        padding-left: 2.375rem;
+    }
+
+    .has-search .form-control-feedback {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 2.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: #aaa;
+    }
+
+</style>
+
 @section('main-content')
 
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue menu">
@@ -43,7 +62,7 @@
                         <thead>
                             <tr class="header-color">
                                 <th class="text-center"><input type="checkbox"
-                                        onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                                        onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" id="selectAll" /></th>
 
                                 <th class="col-xs-1 headername text-uppercase">Customer
                                     {{-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-filter" aria-hidden="true"></i> --}}
@@ -168,7 +187,16 @@
             "destroy": true,
             "ordering": false,
             "pageLength":10,
-            "order": [[ 3, "asc" ]]
+            "ordering" : false,
+            "order": [[ 1, "asc" ]]
+        });
+
+        $("#selectAll").click(function() {
+            var cols = table.column(0).nodes(),
+                state = this.checked;
+            for (var i = 0; i < cols.length; i += 1) {
+                cols[i].querySelector("input[type='checkbox']").checked = state;
+            }
         });
 
         $('#customer').on('input', function () {

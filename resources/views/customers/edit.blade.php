@@ -37,6 +37,7 @@
                 <div class="divider font-weight-bold"></div>
             </div>
         </div>
+        <br/>
         <form action="{{ route('customers.update', $customer->icustomerid) }}" method="post" enctype="multipart/form-data"
             id="form-customer" class="form-horizontal">
             @csrf
@@ -273,6 +274,7 @@
                     <div class="divider font-weight-bold"></div>
                 </div>
             </div>
+            <br/>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 mx-auto">

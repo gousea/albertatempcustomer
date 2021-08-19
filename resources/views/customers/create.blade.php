@@ -50,6 +50,7 @@ class="form-horizontal">
                 <div class="divider font-weight-bold"></div>
             </div>
         </div>
+        <br/>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 mx-auto">
@@ -272,6 +273,7 @@ class="form-horizontal">
                     <div class="divider font-weight-bold"></div>
                 </div>
             </div>
+            <br/>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 mx-auto">
