@@ -24,6 +24,10 @@
           font-size:10px;
       }
       
+      .headerwhite{
+          margin-left:10px;
+      }
+      
       
       #items_status + span.select2-container{
           max-width: 20%;  
@@ -47,15 +51,15 @@
         <div class="collapse navbar-collapse" id="main_nav">
             <div class="menu">
                 <span class="font-weight-bold text-uppercase"> Items</span>
-                  <b>Show &nbsp</b> 
-                      <select name="items_status" id="items_status">
-                          <option value="All" <?php echo ($data['show_items']=='ALL')? "selected" : "";?>>All</option>
-                          <option value="Active" <?php echo ($data['show_items']=='Active')? "selected" : "";?>>Active</option>
-                          <option value="Inactive" <?php echo ($data['show_items']=='Inactive')? "selected" : "";?>>Inactive</option>
-                      </select>
             </div>
-            <div class="nav-submenu">
-
+            
+            <div class="nav-submenu d-flex">
+                <b style="top: 9px; position: relative; right: 7px;">Show &nbsp</b> 
+                <select name="items_status" id="items_status">
+                    <option value="All" <?php echo ($data['show_items']=='ALL')? "selected" : "";?>>All</option>
+                    <option value="Active" <?php echo ($data['show_items']=='Active')? "selected" : "";?>>Active</option>
+                    <option value="Inactive" <?php echo ($data['show_items']=='Inactive')? "selected" : "";?>>Inactive</option>
+                </select>
               <?php if(session()->get('hq_sid') != 1){ ?>
                 <button type="button" class="btn btn-dark headerwhite buttons_menu basic-button-small" data-toggle="modal" data-target="#importItemModal"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Import Items</button>
               <?php } ?>
