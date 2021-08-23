@@ -54,7 +54,7 @@
             </div>
             
             <div class="nav-submenu d-flex">
-                <b style="top: 9px; position: relative; right: 7px;">Show &nbsp</b> 
+                <b style="top: 9px; position: relative; right: 7px; text-transform: uppercase; font-weight: 800">Show &nbsp</b> 
                 <select name="items_status" id="items_status">
                     <option value="All" <?php echo ($data['show_items']=='ALL')? "selected" : "";?>>All</option>
                     <option value="Active" <?php echo ($data['show_items']=='Active')? "selected" : "";?>>Active</option>
