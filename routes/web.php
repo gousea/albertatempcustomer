@@ -1030,7 +1030,7 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         // PROMOTION REPORT ROUTE
         Route::GET('/promotionreport', 'PromotionReportController@index')->name('PromotionReport');
         Route::POST('/promotionreport_form', 'PromotionReportController@get_data')->name('PromotionReportForm');
-        
+        Route::GET('/promotionreport', 'PromotionReportController@csv')->name('PromotionReportCsv');
         
    
    

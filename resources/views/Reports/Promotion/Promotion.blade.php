@@ -11,7 +11,7 @@ PROMOTION REPORT
                     <span class="font-weight-bold text-uppercase"> Promotion Report</span>
                 </div>
                 <div class="nav-submenu">
-                       <?php if(isset($report_paid_out) && count($report_paid_out) > 0){ ?>
+                       <?php if(isset($promo_data) && count($promo_data) > 0){ ?>
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
                             </a>
                              <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('Paidoutprint')}}" id="btnPrint">PRINT
@@ -78,7 +78,7 @@ PROMOTION REPORT
                       <?php if(isset($promo_list) && count($promo_list) > 0){?>
                         <?php foreach($promo_list as $promo){ ?>
                         
-                         <?php if(isset($selected_reg) && $selected_reg == $promo->prom_id){ ?>
+                         <?php if(isset($selected_promid) && $selected_promid == $promo->prom_id){ ?>
                         
                            <option value="<?php echo $promo->prom_id;?>" selected="selected"><?php echo $promo->prom_name;?></option>
                           
@@ -486,7 +486,7 @@ $(document).ready(function() {
 
         $("div#divLoading").addClass('show');
 
-          var csv_export_url = '<?php echo route('Paidoutcsv'); ?>';
+          var csv_export_url = '<?php echo route('PromotionReportCsv'); ?>';
         
           csv_export_url = csv_export_url.replace(/&amp;/g, '&');
 
@@ -496,7 +496,7 @@ $(document).ready(function() {
           }).done(function(response){
             
             const data = response,
-            fileName = "Paidoutcsv.csv";
+            fileName = "promotion.csv";
 
             saveData(data, fileName);
             $("div#divLoading").removeClass('show');
