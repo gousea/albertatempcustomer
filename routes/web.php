@@ -1024,6 +1024,16 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::get('/salesanalyticsreport_getcategory', 'SalesAnalyticsReportController@getcategories')->name('salesanalyticsreport_getcategory');
         Route::get('/salesanalyticsreport_getsubcategory', 'SalesAnalyticsReportController@get_subcategories')->name('salesanalyticsreport_getsubcategory');
         Route::get('/salesanalyticsreport_getprintpage', 'SalesAnalyticsReportController@print_page')->name('salesanalyticsreport_getprintpage');
+   
+
+         
+        // PROMOTION REPORT ROUTE
+        Route::GET('/promotionreport', 'PromotionReportController@index')->name('PromotionReport');
+        Route::POST('/promotionreport_form', 'PromotionReportController@get_data')->name('PromotionReportForm');
+        
+        
+   
+   
     });
 
     /*================= General Module Routes =========================*/
