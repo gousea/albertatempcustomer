@@ -3880,6 +3880,8 @@
 
 
 @section('page-script')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <style type="text/css">
 
@@ -3924,7 +3926,7 @@
   
 </style>
 
-<script src = "https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<!-- <script src = "https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
 <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>

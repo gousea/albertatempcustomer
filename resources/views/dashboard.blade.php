@@ -165,7 +165,7 @@
                             </div>
                             <div class="d-button">
                                 <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4"
-                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo $output['topItem'][$i]->Quantity; ?></a>
+                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo floatval($output['topItem'][$i]->Quantity); ?></a>
                             </div>
                             <?php } else {?>
                             <span class="text-justify text-uppercase">No data available </span>
@@ -202,7 +202,7 @@
                             </div>
                             <div class="d-button">
                                 <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4"
-                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo $output['topItem'][$i]->Quantity; ?></a>
+                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo floatval($output['topItem'][$i]->Quantity); ?></a>
                             </div>
                             <?php } else {?>
                             <span class="text-justify text-uppercase">No data available </span>
@@ -245,7 +245,7 @@
                             </div>
                             <div class="d-button">
                                 <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4"
-                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo $topitem->Quantity; ?></a>
+                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo floatval($topitem->Quantity); ?></a>
                             </div>
                             <?php } else {?>
                             <span class="text-justify text-uppercase">No data available </span>
