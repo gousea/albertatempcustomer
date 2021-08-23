@@ -4,6 +4,15 @@
 
 @section('main-content')
 
+<style>
+.page-footer{
+  margin-top: 30px;
+}
+.modal-title{
+  font-size: 15px;
+}
+</style>
+
 <div id="content">
 
   <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
@@ -24,7 +33,7 @@
     </div>
   </nav>
 
-  <div class="container-fluid section-content">
+  <div class="container section-content">
       
     @if ($data['error_warning'])
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
@@ -285,12 +294,6 @@
                                   <?php
 
                                     if(isset($data['new_costprice']) && $data['new_costprice'] >0 && isset($data['dunitprice'])){    
-                                      
-                                      // echo "new_costprice: $new_costprice";
-                                      // echo "npack: $npack";
-                                      
-                                      
-                                        // $nunit_cost = $data['new_costprice']/$data['npack'];
                                         $nunit_cost = (int)$data['npack'] !== 0?(int)($data['new_costprice']/$data['npack']):0;
                                         $nunit_cost = round($nunit_cost, 2);
                                       
@@ -1410,7 +1413,6 @@
                             <input type="text" class="editable adjustment-fields input_vpackname" name="itempacks[<?php echo $k; ?>][vpackname]" value="<?php echo $itempack->vpackname;?>" />
                           </td>
                           <td>
-                            <?php //echo $itempack->vdesc;?>
                             <input type="text" class="editable adjustment-fields input_vdesc" name="itempacks[<?php echo $k; ?>][vdesc]" value="<?php echo $itempack->vdesc;?>" />
                           </td>
                           <td class="text-left"><?php echo number_format($data['nunitcost'], 2);?></td>
@@ -1643,8 +1645,7 @@
                                                 <b class="text-uppercase" style="font-size: 14px;">
                                                     <?php echo $previous_year; ?> YTD ADJUSTMENT
                                                     <?php echo $totaladjpreviousyr; ?>
-                                                    <?php //echo
-                                                    !empty($reports['year_arr_adjustment'][$previous_year]['total_adjustment']) ?
+                                                    <?php !empty($reports['year_arr_adjustment'][$previous_year]['total_adjustment']) ?
                                                     $reports['year_arr_adjustment'][$previous_year]['total_adjustment'] : '0'; ?>
                                                 </b>
                                             </td>
@@ -1675,13 +1676,6 @@
                                             <td colspan="2" class="th_color">
                                                 <b class="text-uppercase" style="font-size: 14px;">
                                                     <?php echo $current_year; ?> YTD ADJUSTMENT
-                                                    <!--  Old code
-                                            <?php
-                            //echo !empty($reports['year_arr_adjustment'][$current_year]['total_adjustment']) ? $reports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0' ;
-                            ?>
-                                        -->
-        
-        
                                                     <?php
                                                     $value1 =
                                                     !empty($reports['year_arr_adjustment'][$current_year]['total_adjustment']) ?
@@ -1919,9 +1913,6 @@
                                                 STR_PAD_LEFT)]['total_sold']) ||
                                                 !empty($reports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_receive'])) { ?>
-                                                <!-- (<?php
-                                                        //echo $current_year;
-                                                        ?>)&nbsp;-->
                                                 <?php } ?>
         
                                                 <?php if
@@ -2034,15 +2025,10 @@
                                                 <?php $pqohvalue = (int)
                                                 $reports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_pqoh'];
-                                                //$adjvaluereset += $pqohvalue;
                                                 ?>
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-                                                <!---->
-        
-        
-                                                <!------>
                                                 <?php if
                                                 (!empty($reports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_cqoh'])) { ?>
@@ -2050,7 +2036,6 @@
                                                 <?php $cqohvalue = (int)
                                                 $reports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_cqoh'];
-                                                // $adjvaluereset += $cqohvalue;
                                                 ?>
                                                 <?php } else { ?>
                                                 &nbsp;
@@ -2192,7 +2177,7 @@
                     <br>
                     <br>
                 <?php } ?>
-                    <!-- new parent and child relationship // Hanamant B --->
+                    <!-- new parent and child relationship --->
                 
                 <?php if (isset($childreports)) { ?>   
                     <?php foreach ($childreports as $childreports) { ?>
@@ -2269,8 +2254,7 @@
                                                         <b class="text-uppercase" style="font-size: 14px;">
                                                             <?php echo $previous_year; ?> YTD ADJUSTMENT
                                                             <?php echo $totaladjpreviousyr; ?>
-                                                            <?php //echo
-                                                            !empty($childreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
+                                                            <?php !empty($childreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
                                                             ? $childreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
                                                             '0'; ?>
                                                         </b>
@@ -2301,14 +2285,7 @@
                                                     <td colspan="2" class="th_color">
                                                         <b class="text-uppercase" style="font-size: 14px;">
                                                             <?php echo $current_year; ?> YTD ADJUSTMENT
-                                                            <!--  Old code
-                                                    <?php
-                                    //echo !empty($childreports['year_arr_adjustment'][$current_year]['total_adjustment']) ? $childreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0' ;
-                                    ?>
-                                                -->
-                
-                
-                                                            <?php
+                                                          <?php
                                                             $value1 =
                                                             !empty($childreports['year_arr_adjustment'][$current_year]['total_adjustment'])
                                                             ? $childreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0';
@@ -2548,9 +2525,6 @@
                                                         STR_PAD_LEFT)]['total_sold']) ||
                                                         !empty($childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_receive'])) { ?>
-                                                        <!-- (<?php
-                                                                //echo $current_year;
-                                                                ?>)&nbsp;-->
                                                         <?php } ?>
                 
                                                         <?php if
@@ -2665,15 +2639,10 @@
                                                         <?php $pqohvalue = (int)
                                                         $childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_pqoh'];
-                                                        //$adjvaluereset += $pqohvalue;
                                                         ?>
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                                                        <!---->
-                
-                
-                                                        <!------>
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_cqoh'])) { ?>
@@ -2681,7 +2650,6 @@
                                                         <?php $cqohvalue = (int)
                                                         $childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_cqoh'];
-                                                        // $adjvaluereset += $cqohvalue;
                                                         ?>
                                                         <?php } else { ?>
                                                         &nbsp;
@@ -2880,8 +2848,7 @@
                                                     <b class="text-uppercase" style="font-size: 14px;">
                                                         <?php echo $previous_year; ?> YTD ADJUSTMENT
                                                         <?php echo $totaladjpreviousyr; ?>
-                                                        <?php //echo
-                                                        !empty($parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
+                                                        <?php !empty($parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
                                                         ? $parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
                                                         '0'; ?>
                                                     </b>
@@ -2912,13 +2879,7 @@
                                                     <b class="text-uppercase text-danger" style="font-size: 14px;">
                                                         <?php echo $current_year; ?> YTD ADJUSTMENT
                                                         <!--  Old code
-                                                <?php
-                                //echo !empty($parentreports['year_arr_adjustment'][$current_year]['total_adjustment']) ? $parentreports['year_arr_adjustment'][$current_year]['total_adjustment'] : '0' ;
-                                ?>
-                                            -->
-            
-            
-                                                        <?php
+                                                      <?php
                                                         $value1 =
                                                         !empty($parentreports['year_arr_adjustment'][$current_year]['total_adjustment'])
                                                         ? $parentreports['year_arr_adjustment'][$current_year]['total_adjustment'] :
@@ -3160,9 +3121,6 @@
                                                     STR_PAD_LEFT)]['total_sold']) ||
                                                     !empty($parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive'])) { ?>
-                                                    <!-- (<?php
-                                                            //echo $current_year;
-                                                            ?>)&nbsp;-->
                                                     <?php } ?>
             
                                                     <?php if
@@ -3277,15 +3235,10 @@
                                                     <?php $pqohvalue = (int)
                                                     $parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_pqoh'];
-                                                    //$adjvaluereset += $pqohvalue;
                                                     ?>
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-                                                    <!---->
-            
-            
-                                                    <!------>
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_cqoh'])) { ?>
@@ -3983,7 +3936,7 @@
     }
     
     .disabled {
-        pointer-events:none; //This makes it not clickable
+        pointer-events:none; 
  
     }
   
@@ -4009,9 +3962,6 @@
     }
   }
   
-  
-  
-    //   For vendor update for head Quaters
   <?php if(session()->get('hq_sid') == 1){  ?>
     $("#ivendorid").change(function(){
         var vsuppliercode = $("#ivendorid").val();
@@ -4104,7 +4054,6 @@ $("#closeBtn").click(function(){
           $('.notLottery').show();
           $('.Lottery').hide();
       }else if($(this).val() == 'Instant'){
-          // console.log($(this).val());
           $('.notLottery').hide();
           $('.Lottery').show();
       }else{
@@ -4141,8 +4090,6 @@ $("#closeBtn").click(function(){
         }
 
         $('#input-unitcost').val(unitcost);
-        //input-profit-margin
-    
         if(unitpercase!= '' && avg_case_cost != '' && $('#input-Selling Price').val() !=''){
           var sell_price = $('#input-Selling-Price').val();
           
@@ -4161,19 +4108,11 @@ $("#closeBtn").click(function(){
           }
     
           var pro_margin = ((per/sell_price) * 100).toFixed(2);
-        //   $('#input-profit-margin').val(pro_margin);
         }
         
     });
 
     $(document).on('keypress', '#nbottledepositamt', function(event) {
-    
-      // var character = String.fromCharCode(event.keyCode)
-      // var newValue = this.value + character; 
-      // if (isNaN(newValue) || parseFloat(newValue) * 100 % 1 > 0) {
-      //     event.preventDefault();
-      //     return false;
-      // }
         this.value = this.value.match(/^\d+\.?\d{0,2}/);
     });
 
@@ -4191,19 +4130,6 @@ $("#closeBtn").click(function(){
         var level2_gross_profit;
         var level3_gross_profit;
         var level4_gross_profit;
-        
-        // if(buyDown != ''){
-        //     gross_profit = selling_price - (new_costprice - buyDown);
-        //     level2_gross_profit = level2_selling_price - (new_costprice - buyDown);
-        //     level3_gross_profit = level3_selling_price - (new_costprice - buyDown);
-        //     level4_gross_profit = level4_selling_price - (new_costprice - buyDown);
-        // }else{
-        //     gross_profit = selling_price - new_costprice;
-        //     level2_gross_profit = level2_selling_price - new_costprice;
-        //     level3_gross_profit = level3_selling_price - new_costprice;
-        //     level4_gross_profit = level4_selling_price - new_costprice;
-        // }
-        
         var sellingunit = $('#input-sellingunit').val();
                 
         var unitcost = parseFloat(new_costprice/sellingunit).toFixed(2);
@@ -4255,10 +4181,7 @@ $("#closeBtn").click(function(){
         $('#dunit_price').val(selling_price);
     });
   
-  
-  
-  
-    //buy down
+
   
   $(document).on('keyup', '#input_buydown', function(event) {
     event.preventDefault();
@@ -4299,7 +4222,6 @@ $("#closeBtn").click(function(){
     $('#input-gross-profit2').val(prof_mar2.toFixed(2));
     $('#input-gross-profit3').val(prof_mar3.toFixed(2));
     $('#input-gross-profit4').val(prof_mar4.toFixed(2));
-    //buy down
   });
   
   
@@ -4314,7 +4236,6 @@ $("#closeBtn").click(function(){
     
         var sid = "<?php echo $data['sid'];?>";
         var url = $(this).attr('action');
-        // var url = $(this).attr('action')+"&sid="+sid;
         var data = {};
     
         data['vitemcode']  = $(this).find('input[name=vitemcode]').val();
@@ -4338,14 +4259,14 @@ $("#closeBtn").click(function(){
                     $('#success_alias').html('<strong>'+ data.success +'</strong>');
                     $('#successAliasModal').modal('show');   
                 }
-                $.cookie("tab_selected", 'alias_code_tab'); //set cookie tab
+                $.cookie("tab_selected", 'alias_code_tab'); 
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
                 var error_show = '';
                 if(response_error.error){
                     error_show = response_error.error;
@@ -4382,7 +4303,6 @@ $("#closeBtn").click(function(){
         
         var sid = "<?php echo $data['sid'];?>";
         var url = '<?php echo $data['add_alias_code']; ?>';
-        // var url = $(this).attr('action')+"&sid="+sid;
         var vitemcode = '<?php echo isset($data['vbarcode']) ? $data['vbarcode'] : ''; ?>';
         var vsku = '<?php echo isset($data['vbarcode']) ? $data['vbarcode'] : ''; ?>';
         var stores_hq = $("#alias_stores_hq").val();
@@ -4409,14 +4329,14 @@ $("#closeBtn").click(function(){
                     $('#successAliasModal').modal('show');   
                 }
                 
-                $.cookie("tab_selected", 'alias_code_tab'); //set cookie tab
+                $.cookie("tab_selected", 'alias_code_tab'); 
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
                 var error_show = '';
                 if(response_error.error){
                     error_show = response_error.error;
@@ -4547,14 +4467,14 @@ $("#closeBtn").click(function(){
                         $('#successAliasModal').modal('show');
                     }
                     
-                    $.cookie("tab_selected", 'alias_code_tab'); //set cookie tab
+                    $.cookie("tab_selected", 'alias_code_tab'); 
                     setTimeout(function(){
                         window.location.reload();
                         $("div#divLoading").addClass('show');
                     }, 3000);
                 },
-                error: function(xhr) { // if error occured
-                    var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+                error: function(xhr) { 
+                    var  response_error = $.parseJSON(xhr.responseText); 
                   
                     var error_show = '';
             
@@ -4622,14 +4542,14 @@ $("#closeBtn").click(function(){
                         $('#successAliasModal').modal('show');
                     }
                     
-                    $.cookie("tab_selected", 'alias_code_tab'); //set cookie tab
+                    $.cookie("tab_selected", 'alias_code_tab'); 
                     setTimeout(function(){
                         window.location.reload();
                         $("div#divLoading").addClass('show');
                     }, 3000);
                 },
-                error: function(xhr) { // if error occured
-                    var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+                error: function(xhr) { 
+                    var  response_error = $.parseJSON(xhr.responseText); 
                   
                     var error_show = '';
             
@@ -4797,8 +4717,6 @@ $("#closeBtn").click(function(){
       }else{
         percent = 0;
       }
-        
-      // percent = (percent/(npackprice*100)).toFixed(2);
       percent = ((percent/npackprice)*100).toFixed(2);
 
       $('#npackmargin').val(percent);
@@ -4838,8 +4756,6 @@ $("#closeBtn").click(function(){
       }
 
       percent = ((percent/npackprice)*100).toFixed(2);
-      // percent = (percent/(npackprice*100)).toFixed(2);
-      
       $('#npackmargin').val(percent);
     }else{
       $('#npackmargin').val('');
@@ -4872,24 +4788,10 @@ $("#closeBtn").click(function(){
   });
 
   $(document).on('keypress', '#input_npackcost', function(event){
-      
-      // var character = String.fromCharCode(event.keyCode)
-      // var newValue = this.value + character;
-      // if (isNaN(newValue) || parseFloat(newValue) * 100 % 1 > 0) {
-      //     event.preventDefault();
-      //     return false;
-      // }
       this.value = this.value.match(/^\d+\.?\d{0,1}/);
   });
 
   $(document).on('keypress', '#input_npackprice', function(event){
-      
-      // var character = String.fromCharCode(event.keyCode)
-      // var newValue = this.value + character;
-      // if (isNaN(newValue) || parseFloat(newValue) * 100 % 1 > 0) {
-      //     event.preventDefault();
-      //     return false;
-      // }
       this.value = this.value.match(/^\d+\.?\d{0,1}/);
   });
   
@@ -4994,16 +4896,15 @@ $("#closeBtn").click(function(){
                     $('#error_alias').html('<strong>'+ data.error +'</strong>');
                     $('#addLotItemModal').modal('hide');
                     $('#errorAliasModal').modal('show');
-                    // return false;
                 }
-                $.cookie("tab_selected", 'lot_matrix_tab'); //set cookie tab
+                $.cookie("tab_selected", 'lot_matrix_tab'); 
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
           
                 var error_show = '';
               
@@ -5074,16 +4975,15 @@ $("#closeBtn").click(function(){
                     $('#error_alias').html('<strong>'+ data.error +'</strong>');
                     $('#addLotItemModal').modal('hide');
                     $('#errorAliasModal').modal('show');
-                    // return false;
                 }
-                $.cookie("tab_selected", 'lot_matrix_tab'); //set cookie tab
+                $.cookie("tab_selected", 'lot_matrix_tab'); 
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
           
                 var error_show = '';
               
@@ -5171,15 +5071,15 @@ $("#closeBtn").click(function(){
     
                 $('#success_alias').html('<strong>'+ data.success +'</strong>');
                 $('#successAliasModal').modal('show');
-                $.cookie("tab_selected", 'lot_matrix_tab'); //set cookie tab
+                $.cookie("tab_selected", 'lot_matrix_tab'); 
                 setTimeout(function(){
                    window.location.reload();
                    $("div#divLoading").addClass('show');
                 }, 3000);
          
             },
-            error: function(xhr) { // if error occured
-                  var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                  var  response_error = $.parseJSON(xhr.responseText); 
                   
                   var error_show = '';
             
@@ -5241,15 +5141,15 @@ $("#closeBtn").click(function(){
     
                 $('#success_alias').html('<strong>'+ data.success +'</strong>');
                 $('#successAliasModal').modal('show');
-                $.cookie("tab_selected", 'lot_matrix_tab'); //set cookie tab
+                $.cookie("tab_selected", 'lot_matrix_tab'); 
                 setTimeout(function(){
                    window.location.reload();
                    $("div#divLoading").addClass('show');
                 }, 3000);
          
             },
-            error: function(xhr) { // if error occured
-                  var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                  var  response_error = $.parseJSON(xhr.responseText); 
                   
                   var error_show = '';
             
@@ -5389,194 +5289,13 @@ $("#closeBtn").click(function(){
   });
 </script>
 
-<script type="text/javascript">
-/*  $(document).on('submit', 'form#delete_slab_price_items', function(event) {
-    event.preventDefault();
-    
-    var url = $(this).attr('action');
-    var data = {};
-
-    if($("input[name='selected_slab_price[]']:checked").length == 0){
-      $('#error_alias').html('<strong>Select Items to delete</strong>');
-      $('#errorAliasModal').modal('show');
-      return false;
-    }
-
-    $("input[name='selected_slab_price[]']:checked").each(function (i)
-    {
-      data[i] = parseInt($(this).val());
-    });
-
-    $.ajax({
-      url : url,
-      headers: {
-                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-      },
-      data : JSON.stringify(data),
-      type : 'POST',
-      contentType: "application/json",
-      dataType: 'json',
-    success: function(data) {
-
-      $('#success_alias').html('<strong>'+ data.success +'</strong>');
-      $('#successAliasModal').modal('show');
-      $.cookie("tab_selected", 'slab_price_tab'); //set cookie tab
-      setTimeout(function(){
-       window.location.reload();
-       $("div#divLoading").addClass('show');
-      }, 3000);
-      
-    },
-    error: function(xhr) { // if error occured
-      var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-      
-      var error_show = '';
-
-      if(response_error.error){
-        error_show = response_error.error;
-      }else if(response_error.validation_error){
-        error_show = response_error.validation_error[0];
-      }
-
-      $('#error_alias').html('<strong>'+ error_show +'</strong>');
-      $('#errorAliasModal').modal('show');
-      return false;
-    }
-  });
-    return false;
-  });
-  */
-</script>
-
-<script type="text/javascript">
-/*  $(document).on('submit', 'form#form_add_parent_item', function(event) {
-    event.preventDefault();
-
-    
-    var url = $(this).attr('action');
-    var data = {};
-    
-    var parent_item_id = $(this).find('select[name="parent_item_id"]').val();
-    var child_item_id = $(this).find('input[name="child_item_id"]').val();
-
-    data['parent_item_id'] = parent_item_id;
-    data['child_item_id'] = child_item_id;
-    
-    $.ajax({
-      url : url,
-      headers: {
-                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-      },
-      data : JSON.stringify(data),
-      type : 'POST',
-      contentType: "application/json",
-      dataType: 'json',
-    success: function(data) {
-
-      $('#success_alias').html('<strong>'+ data.success +'</strong>');
-      $('#successAliasModal').modal('show');
-      $.cookie("tab_selected", 'parent_tab'); //set cookie tab
-      /*setTimeout(function(){
-       window.location.reload();
-       $("div#divLoading").addClass('show');
-      }, 3000);*/
-      
- /*   },
-    error: function(xhr) { // if error occured
-      var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-      
-      var error_show = '';
-
-      if(response_error.error){
-        error_show = response_error.error;
-      }else if(response_error.validation_error){
-        error_show = response_error.validation_error[0];
-      }
-
-      $('#error_alias').html('<strong>'+ error_show +'</strong>');
-      $('#errorAliasModal').modal('show');
-      return false;
-    }
-  });
-
-});
-*/
-</script>
-
-<script type="text/javascript">
-/*  $(document).on('submit', 'form#remove_parent_item', function(event) {
-    event.preventDefault();
-    
-    var url = $(this).attr('action');
-
-    var data = {};
-    var selected_parent_item = []
-
-    var iitemid = $(this).find('input[name="iitemid"]').val();
-
-    if($("input[name='selected_parent_item[]']:checked").length == 0){
-      $('#error_alias').html('<strong>Select Items to Remove</strong>');
-      $('#errorAliasModal').modal('show');
-      return false;
-    }
-
-    $("input[name='selected_parent_item[]']:checked").each(function (i)
-    {
-      selected_parent_item[i] = parseInt($(this).val());
-    });
-
-    var selected_parent_item_id =selected_parent_item[0];
-
-    data['iitemid'] = iitemid;
-    data['selected_parent_item_id'] = selected_parent_item_id;
-    
-    $.ajax({
-      url : url,
-      headers: {
-                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-      },
-      data : JSON.stringify(data),
-      type : 'POST',
-      contentType: "application/json",
-      dataType: 'json',
-    success: function(data) {
-      
-      $('#success_alias').html('<strong>'+ data.success +'</strong>');
-      $('#successAliasModal').modal('show');
-      $.cookie("tab_selected", 'parent_tab'); //set cookie tab
-      setTimeout(function(){
-       window.location.reload();
-       $("div#divLoading").addClass('show');
-      }, 3000);
-      
-    },
-    error: function(xhr) { // if error occured
-      var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-      
-      var error_show = '';
-
-      if(response_error.error){
-        error_show = response_error.error;
-      }else if(response_error.validation_error){
-        error_show = response_error.validation_error[0];
-      }
-
-      $('#error_alias').html('<strong>'+ error_show +'</strong>');
-      $('#errorAliasModal').modal('show');
-      return false;
-    }
-  });
-
-});
-*/
-</script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
+    $('#ui-tooltip-0').hide();
       $('[data-toggle="tooltip"]').tooltip(); 
       if ((!!$.cookie('tab_selected')) && ($.cookie('tab_selected') != '')) {
         var tab_s = $.cookie('tab_selected');
-          // have cookie
         
         if(tab_s == 'alias_code_tab'){
           $('#alias_code_tab_li').prop('checked', true);
@@ -5618,7 +5337,6 @@ $("#closeBtn").click(function(){
           $('#level_pricing_tab').hide();
         }
       } else {
-        // no cookie 
         var tab_selected = "<?= $data['tab_selected']; ?>";
         
         <?php if(isset($data['tab_selected']) && !empty($data['tab_selected'])){?>
@@ -5707,8 +5425,6 @@ $("#closeBtn").click(function(){
       var prof_mar2 = ((level2_gross_profit/level2_selling_price)*100);
       var prof_mar3 = ((level3_gross_profit/level3_selling_price)*100);
       var prof_mar4 = ((level4_gross_profit/level4_selling_price)*100);
-      // console.log(unitcost);
-      // console.log(buyDown);
       if(new_costprice != '' && new_costprice > 0 ){
           
           if(selling_price != '' & isFinite(prof_mar)){
@@ -5747,37 +5463,33 @@ $("#closeBtn").click(function(){
           $('#input-gross-profit3').val();
           $('#input-gross-profit4').val();
       }
-      
-      // console.log(buyDown);
-      
-
   });
 
 </script>
 
 <script type="text/javascript">
   $(document).on('submit', 'form#form-item1', function(e) {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", ''); 
   });
 
   $(document).on('submit', 'form#form-item-lot-matrix-list1', function() {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('submit', 'form#form-item-vendor', function() {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('submit', 'form#form-item-vendor-list', function() {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('submit', 'form#form-item-slab-price-list', function() {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('click', '#cancel_button, #menu li a, .breadcrumb li a', function() {
-    $.cookie("tab_selected", ''); //set cookie tab
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('keypress keyup blur', '#input-unitpercase', function(event) {
@@ -5814,7 +5526,6 @@ $("#closeBtn").click(function(){
     }
     
   }); 
-  //$(document).on('keypress keyup blur', 'input[name="dcostprice"],input[name="nlevel2"],input[name="nlevel3"],input[name="nlevel4"],input[name="dunitprice"],input[name="ndiscountper"],input[name="nprice"],input[name="npackprice"]', function(event) {
 
   $(document).on('keypress keyup blur', 'input[name="dcostprice"],input[name="nlevel2"],input[name="nlevel3"],input[name="nlevel4"],input[name="ndiscountper"],input[name="nprice"],input[name="npackprice"]', function(event) {
 
@@ -5887,8 +5598,6 @@ $("#closeBtn").click(function(){
   }
 </style>
 
-// <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script type="text/javascript">
   $('select[name="vitemtype"]').select2();
   $('select[name="taxlist[]"]').select2();
@@ -6012,7 +5721,6 @@ $("#closeBtn").click(function(){
         
         var sid = "<?php echo $data['sid'];?>";
         var url = '<?php echo $data['get_categories']; ?>';
-            // url += "&sid="+sid;
             url = url.replace(/&amp;/g, '&');  
         
         $.ajax({
@@ -6025,18 +5733,13 @@ $("#closeBtn").click(function(){
             contentType: "application/json",
             dataType: 'text json',
             success: function(response) {
-        
-                // console.log(response);
                 var category_html = '';
                 if(response.length > 0){
                     $('select[name="vcategorycode"]').select2().empty().select2({data: response});
                 }
-                // console.log(categoryId);
                 $('#category_code').val(categoryId).trigger('change.select2');
             },
             error: function(xhr) { 
-                // if error occured
-                // console.log(xhr);
                 return false;
             }
         });
@@ -6128,9 +5831,6 @@ $("#closeBtn").click(function(){
 <script type="text/javascript">
    $(document).on('click', '#add_new_subcategory', function(event) {
     event.preventDefault();
-    // console.log($("#category_code option:selected").text());
-    
-    
     var cat_code = $("#category_code").val();
     
     if(cat_code == ""){
@@ -6145,8 +5845,6 @@ $("#closeBtn").click(function(){
     } else {
         $("#span_cat_name").html($("#category_code option:selected").text());
         $('form#subcategory_add_new_form').find('#add_subcat_name').val('');
-        //$('form#category_add_new_form').find('#category_add_vdescription').val('');
-
         $('#addModalSubCatogory').modal('show');
     }
     
@@ -6155,9 +5853,6 @@ $("#closeBtn").click(function(){
   
   $(document).on('submit', 'form#subcategory_add_new_form', function(event) {
         event.preventDefault();
-        
-        //console.log("The function is called");
-        
         if($(this).find('#add_subcat_name').val() == ''){
           alert('Please enter subcategory name!');
           return false;
@@ -6205,8 +5900,8 @@ $("#closeBtn").click(function(){
             }, 3000);
         },
     
-        error: function(xhr) { // if error occured
-            var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+        error: function(xhr) { 
+            var  response_error = $.parseJSON(xhr.responseText); 
             
             var error_show = '';
     
@@ -6227,7 +5922,6 @@ $("#closeBtn").click(function(){
         input['cat_id'] = cat_id;
         
         var url = '<?php echo $data['get_subcategories_url']; ?>';
-            // url += "&sid="+sid;
             url = url.replace(/&amp;/g, '&');  
         
         $.ajax({
@@ -6240,19 +5934,14 @@ $("#closeBtn").click(function(){
             contentType: "application/json",
             dataType: 'text json',
             success: function(response) {
-        
-                // console.log(response);
                 var category_html = '';
                 if(response.length > 0){
-                   // console.log(subcat_id);
                     $('select[name="subcat_id"]').select2().empty().select2({data: response});
                 }
                 console.log(subcategoryId);
                 $('#subcat_id').val(subcategoryId).trigger('change.select2');
             },
             error: function(xhr) { 
-                // if error occured
-                // console.log(xhr);
                 return false;
             }
         });
@@ -6423,8 +6112,8 @@ $("#closeBtn").click(function(){
           $('#successAliasModal').modal('hide');
           }, 3000);
         },
-        error: function(xhr) { // if error occured
-          var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+        error: function(xhr) { 
+          var  response_error = $.parseJSON(xhr.responseText); 
           
           var error_show = '';
 
@@ -6442,8 +6131,6 @@ $("#closeBtn").click(function(){
       setTimeout(function(){
         var get_new_manufacturer = "<?php echo $data['get_new_manufacturer'];?>";
         get_new_manufacturer = get_new_manufacturer.replace(/&amp;/g, '&');
-        // get_new_manufacturer = get_new_manufacturer+"&sid="+sid;
-
         $.getJSON(get_new_manufacturer, function(datas) {
           $('select[name="manufacturer_id"]').empty();
           var department_html = '';
@@ -6493,8 +6180,8 @@ $("#closeBtn").click(function(){
          $('#successAliasModal').modal('hide');
         }, 3000);
       },
-      error: function(xhr) { // if error occured
-        var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+      error: function(xhr) { 
+        var  response_error = $.parseJSON(xhr.responseText); 
         
         var error_show = '';
 
@@ -6512,8 +6199,6 @@ $("#closeBtn").click(function(){
       setTimeout(function(){
         var get_new_department = "<?php echo $data['get_new_department'];?>";
         get_new_department = get_new_department.replace(/&amp;/g, '&');
-        // get_new_department = get_new_department+"&sid="+sid;
-
         $.getJSON(get_new_department, function(datas) {
           $('select[name="vdepcode"]').empty();
           var department_html = '';
@@ -6626,8 +6311,8 @@ $("#closeBtn").click(function(){
          $('#successAliasModal').modal('hide');
         }, 3000);
       },
-      error: function(xhr) { // if error occured
-        var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+      error: function(xhr) { 
+        var  response_error = $.parseJSON(xhr.responseText); 
         
         var error_show = '';
 
@@ -6645,8 +6330,6 @@ $("#closeBtn").click(function(){
       setTimeout(function(){
         var get_new_size = "<?php echo $data['get_new_size'];?>";
         get_new_size = get_new_size.replace(/&amp;/g, '&');
-        // get_new_size = get_new_size+"&sid="+sid;
-
         $.getJSON(get_new_size, function(datas) {
           $('select[name="vsize"]').empty();
           var size_html = '';
@@ -6741,8 +6424,8 @@ $("#closeBtn").click(function(){
          $('#successAliasModal').modal('hide');
         }, 3000);
       },
-      error: function(xhr) { // if error occured
-        var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+      error: function(xhr) { 
+        var  response_error = $.parseJSON(xhr.responseText); 
         
         var error_show = '';
 
@@ -6760,8 +6443,6 @@ $("#closeBtn").click(function(){
       setTimeout(function(){
         var get_new_group = "<?php echo $data['get_new_group'];?>";
         get_new_group = get_new_group.replace(/&amp;/g, '&');
-        // get_new_group = get_new_group+"&sid="+sid;
-
         $.getJSON(get_new_group, function(datas) {
           $('select[name="iitemgroupid"]').empty();
           var group_html = '';
@@ -6880,8 +6561,8 @@ $("#closeBtn").click(function(){
          $('#successAliasModal').modal('hide');
         }, 3000);
       },
-      error: function(xhr) { // if error occured
-        var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+      error: function(xhr) { 
+        var  response_error = $.parseJSON(xhr.responseText); 
         
         var error_show = '';
 
@@ -6899,8 +6580,6 @@ $("#closeBtn").click(function(){
       setTimeout(function(){
         var get_new_supplier = "<?php echo $data['get_new_supplier'];?>";
         get_new_supplier = get_new_supplier.replace(/&amp;/g, '&');
-        // get_new_supplier = get_new_supplier+"&sid="+sid;
-
         $.getJSON(get_new_supplier, function(datas) {
           $('select[name="vsuppliercode"]').empty();
           var supplier_html = '';
@@ -7135,8 +6814,6 @@ $("#closeBtn").click(function(){
                 });
             },
             select: function(e, ui) {
-            //   $('form#form_add_parent_item select[name="parent_item_id"]').val(ui.item.id);
-            
               $('form#form_add_parent_item select[name="parent_item_id"]').append(new Option(ui.item.value, ui.item.id));
               $('form#form_add_parent_item select[name="parent_item_id"]').val(ui.item.id);
               $('#form_add_parent_item').submit();
@@ -7151,7 +6828,6 @@ $("#closeBtn").click(function(){
             
         var sid = "<?php echo $data['sid'];?>";
             var url = '<?php echo $data['get_categories']; ?>';
-                // url += "&sid="+sid;
                 url = url.replace(/&amp;/g, '&');
                 
         <?php if(isset($data['vdepcode']) && $data['vcategorycode']){ ?>
@@ -7170,14 +6846,11 @@ $("#closeBtn").click(function(){
                 contentType: "application/json",
                 dataType: 'text json',
                 success: function(response) {
-                        
-                    // console.log(response);
                     if(response.length > 0){
                         $("#span_dept_name").html($("#dept_code option:selected").text());
                         $("#category_dept_name").val($("#dept_code option:selected").text());
                         $("#category_dept_code").val(deptCode);
                         $('select[name="vcategorycode"]').select2().empty().select2({data: response});
-                        // $('#category_code').val(categoryCode);
                         $('#category_code').val(categoryCode).trigger('change.select2');
                         
                     }
@@ -7187,8 +6860,6 @@ $("#closeBtn").click(function(){
                     }, 3000);
                 },
                 error: function(xhr) { 
-                    // if error occured
-                    // console.log(xhr);
                     return false;
                 }
             });
@@ -7338,7 +7009,6 @@ $("#closeBtn").click(function(){
         $('#deleteStoresItemModal').modal('show');
     <?php } else{ ?>
         $('#deleteItemModal').modal('hide');
-        // $("div#divLoading").addClass('show');
         var d = JSON.stringify({ itemid: dataItemOrders});
         $.ajax({
             url : url,
@@ -7371,8 +7041,8 @@ $("#closeBtn").click(function(){
                     }, 3000);
                 }
             },
-            error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
                 var error_show = '';
                 if(response_error.error){
                   error_show = response_error.error;
@@ -7414,8 +7084,6 @@ $(document).on('click', "#delete_item_btn", function(){
     
     var delete_url = "<?php echo $data['delete']; ?>";
     delete_url = delete_url.replace(/&amp;/g, '&');
-    
-    // dataItemOrders.push(hq_stores);
     var d = JSON.stringify({ itemid: dataofitems, stores_hq:delte_item_store});
     $('#deleteItemModal').modal('hide');
     $.ajax({
@@ -7449,8 +7117,8 @@ $(document).on('click', "#delete_item_btn", function(){
                     }, 3000);
                 }
             },
-            error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+            error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
                 var error_show = '';
                 if(response_error.error){
                   error_show = response_error.error;
@@ -7550,17 +7218,6 @@ $(document).on('click', "#delete_item_btn", function(){
             var vvendoritemcode = $('form#form-item-vendor').find('input[name="vvendoritemcode"]').val();
             var ivendorid = $('form#form-item-vendor').find('select[name="ivendorid"]').val();
             var ivendorid_name = $('form#form-item-vendor').find('select[name="ivendorid"] option:selected').text();
-        
-            // if(vvendoritemcode == ''){
-            //   bootbox.alert({ 
-            //     size: 'small',
-            //     title: "  ", 
-            //     message: 'Please Enter Vendor Item Code', 
-            //     callback: function(){}
-            //   });
-            //   return false;
-            // }
-        
             if(ivendorid == ''){
               bootbox.alert({ 
                 size: 'small',
@@ -7601,8 +7258,8 @@ $(document).on('click', "#delete_item_btn", function(){
                 }
                 
               },
-              error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+              error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
                 
                 var error_show = '';
         
@@ -7688,8 +7345,8 @@ $(document).on('click', "#delete_item_btn", function(){
                  $('form#form-item-vendor').submit();
                 }
               },
-              error: function(xhr) { // if error occured
-                var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+              error: function(xhr) { 
+                var  response_error = $.parseJSON(xhr.responseText); 
                 var error_show = '';
                 if(response_error.error){
                   error_show = response_error.error;
@@ -7711,7 +7368,6 @@ $(document).on('click', "#delete_item_btn", function(){
   });
   
   $("#updateAllvendorsAssigned").click(function(){
-    // e.preventDefault();
     <?php if(session()->get('hq_sid') == 1) { ?>
         selected_vendor_code = [];
         $.each($("input[name='selected_vendor_code[]']:checked"), function(){            
@@ -7778,7 +7434,6 @@ $(document).on('click', "#delete_item_btn", function(){
       });
       
       $("#vendor_update_stores").val(updateStores.join(","));
-      // console.log(updateStores.join(","));
       $('form#form-item-vendor-list').submit();
   });
 </script>
@@ -7828,8 +7483,8 @@ $(document).on('click', "#delete_item_btn", function(){
          window.location.reload();
         }, 3000);
       },
-      error: function(xhr) { // if error occured
-        var  response_error = $.parseJSON(xhr.responseText); //decode the response array
+      error: function(xhr) { 
+        var  response_error = $.parseJSON(xhr.responseText); 
         
         var error_show = '';
 
@@ -7845,7 +7500,6 @@ $(document).on('click', "#delete_item_btn", function(){
          $('#errorAliasModal').modal('hide');
          window.location.reload();
         }, 3000);
-       // return false;
       }
     });
   });
@@ -7892,14 +7546,8 @@ $(document).on('click', "#delete_item_btn", function(){
       return false;
     }
 
-    //=========commented on 18-02-20=======
-    //  per = 100 - per;
-    //  if (per == 0){
-    
-    
     var new_costprice = $('#input-new_cost').val();
     var selling_price = ((new_costprice*100)/(100-prof_mar));
-    // console.log(selling_price);
     selling_price = selling_price.toFixed(2);
     
      $('input[name="dunitprice"]').val(selling_price);
@@ -8118,13 +7766,6 @@ $(document).on('click', "#delete_item_btn", function(){
   
   
   $(document).ready(function(){
-      
-    // if ($('input[name="advance_options_checkbox"]').prop('checked')==true){ 
-    //     $('#advance_options_checkbox_div').show();
-    // }else{
-    //   $('#advance_options_checkbox_div').hide();
-    // }
-    
     if ($('#plcb_options_checkbox').val()==1){ 
         $('#plcb_options_checkbox_div').show();
     }else{
@@ -8144,8 +7785,6 @@ $(document).on('click', "#delete_item_btn", function(){
   
   
     $("#dept_code").change(function(){
-      
-        // console.log($(this).text);
         var deptCode = $(this).val();
     
         
@@ -8157,7 +7796,6 @@ $(document).on('click', "#delete_item_btn", function(){
     
             var sid = "<?php echo $data['sid'];?>";
             var url = '<?php echo $data['get_categories']; ?>';
-                // url += "&sid="+sid;
                 url = url.replace(/&amp;/g, '&');
     
     
@@ -8172,8 +7810,6 @@ $(document).on('click', "#delete_item_btn", function(){
                 contentType: "application/json",
                 dataType: 'text json',
                 success: function(response) {
-            
-                    // console.log(response);
                     if(response.length > 0){
                         $("#span_dept_name").html($("#dept_code option:selected").text());
                         $("#category_dept_name").val($("#dept_code option:selected").text());
@@ -8186,8 +7822,6 @@ $(document).on('click', "#delete_item_btn", function(){
                     }, 3000);
                 },
                 error: function(xhr) { 
-                    // if error occured
-                    // console.log(xhr);
                     return false;
                 }
             });
@@ -8195,8 +7829,6 @@ $(document).on('click', "#delete_item_btn", function(){
     });
     
      $("#category_code").change(function(){
-      
-        // console.log($(this).text);
         var cat_id = $(this).val();
     
         
@@ -8204,11 +7836,8 @@ $(document).on('click', "#delete_item_btn", function(){
         input['cat_id'] = cat_id;
         
         if(cat_id != ""){
-        //      console.log(deptCode);
-    
             var sid = "<?php echo $data['sid'];?>";
             var url = '<?php echo $data['get_subcategories_url']; ?>';
-                // url += "&sid="+sid;
                 url = url.replace(/&amp;/g, '&');
     
     
@@ -8223,11 +7852,7 @@ $(document).on('click', "#delete_item_btn", function(){
                 contentType: "application/json",
                 dataType: 'text json',
                 success: function(response) {
-                
-                    // console.log(response);
                     if(response.length > 0){
-                        // $("#span_dept_name").html($("#dept_code option:selected").text());
-                        // $("#category_dept_name").val($("#dept_code option:selected").text());
                          $("#category_code").val(cat_id);
                         $('#subcat_id').select2('destroy').empty().select2({data: response});
                     }
@@ -8237,8 +7862,6 @@ $(document).on('click', "#delete_item_btn", function(){
                     }, 3000);
                 },
                 error: function(xhr) { 
-                    // if error occured
-                    // console.log(xhr);
                     return false;
                 }
             });
@@ -8425,8 +8048,6 @@ $(document).on('click', "#delete_item_btn", function(){
             var selling_price = ((new_costprice*100)/(100-prof_mar));
             
             selling_price = selling_price.toFixed(2);
-            //  revenue = revenue.toFixed(2);
-            // console.log(per);
              $('input[name="nlevel2"]').val(selling_price);
              $('input[name="gross_profit2"]').val(prof_mar.toFixed(2));
         
@@ -8461,8 +8082,6 @@ $(document).on('click', "#delete_item_btn", function(){
             var selling_price = ((new_costprice*100)/(100-prof_mar));
             
             selling_price = selling_price.toFixed(2);
-            //  revenue = revenue.toFixed(2);
-            // console.log(per);
              $('input[name="nlevel3"]').val(selling_price);
              $('input[name="gross_profit3"]').val(prof_mar.toFixed(2));
         
@@ -8495,7 +8114,6 @@ $(document).on('click', "#delete_item_btn", function(){
             
             var new_costprice = $('#input-new_cost').val();
             var selling_price = ((new_costprice*100)/(100-prof_mar));
-            // console.log(selling_price);
             selling_price = selling_price.toFixed(2);
             
              $('input[name="nlevel4"]').val(selling_price);
@@ -8512,17 +8130,7 @@ $(document).on('click', "#delete_item_btn", function(){
             $('.Lottery').show();   
         }
         
-        
-        // ========onchange cost =========
-        
         $(document).on('keyup', '#input-new_cost, #input-sellingunit', function(event){
-            
-            // var character = String.fromCharCode(event.keyCode)
-            // var newValue = this.value + character; 
-            // if (isNaN(newValue) || parseFloat(newValue) * 100 % 1 > 0) {
-            //     event.preventDefault();
-            //     return false;
-            // }
             this.value = this.value.match(/^\d+\.?\d{0,2}/);
             
             var buyDown = $('input[name="ndiscountper"]').val();
@@ -8564,8 +8172,6 @@ $(document).on('click', "#delete_item_btn", function(){
             var prof_mar2 = ((level2_gross_profit/level2_selling_price)*100);
             var prof_mar3 = ((level3_gross_profit/level3_selling_price)*100);
             var prof_mar4 = ((level4_gross_profit/level4_selling_price)*100);
-            // console.log(gross_profit);
-            // gross_profit = gross_profit.toFixed(2);
             
             if(sellingunit != ''){
                 if(selling_price != '' & !isNaN(prof_mar) & isFinite(prof_mar)){
@@ -8623,7 +8229,6 @@ $(document).on('click', '.formsubmit', function(e){
     var selling_price = parseFloat($('#input-Selling_Price').val());
     
     if(new_costprice > selling_price){
-          // alert('Please Select End Date');
           $("div#divLoading").removeClass('show');
           bootbox.alert({ 
             size: 'small',
@@ -8633,9 +8238,6 @@ $(document).on('click', '.formsubmit', function(e){
           });
          return false;
     }
-        
-    
-    // esle{
         var iqtyonhand = $('input[name="iqtyonhand"]').val();
         var itemtype = $('select[name="vitemtype"]').val();
         
@@ -8732,7 +8334,6 @@ $(document).on('click', '.formsubmit', function(e){
             }else{
                 $(".show").hide();
                 $("div#divLoading").removeClass('show');
-                // return false;
                 e.stopPropagation();
             }
         }else{
@@ -8823,32 +8424,7 @@ $(document).on('click', '.formsubmit', function(e){
                 $('form#form-item1').submit();
             <?php } ?>
         }
-    // }
-    
 });
-
-// function formsubmit(){
-// $(document).on('click', '.formsubmit', function(e){
-    
-//     var iqtyonhand = $('input[name="iqtyonhand"]').val();
-//     var itemtype = $('select[name="vitemtype"]').val();
-//     if((typeof(iqtyonhand) == "undefined" || iqtyonhand == null || iqtyonhand == '') && itemtype != 'Instant'){
-        
-//         var result = confirm('Qty On Hand is empty. Do you really want to submit ?');
-        
-//         if(result == true){
-//             $('form#form-item').submit();
-//         }else{
-//             $(".show").hide();
-//             $("div#divLoading").removeClass('show');
-//             // return false;
-//             e.stopPropagation();
-//         }
-//     }else{
-//         $('form#form-item').submit();
-//     }
-
-// });
 
   $(window).on('beforeunload', function(){
 
@@ -9005,7 +8581,6 @@ $(document).on('click', '.formsubmit', function(e){
       var data_by = $('select[name="search_by_item"]').val();
 
       if($('#start_date').val() == ''){
-        // alert('Please Select Start Date');
         bootbox.alert({ 
           size: 'small',
           title: "  ", 
@@ -9016,7 +8591,6 @@ $(document).on('click', '.formsubmit', function(e){
       }
 
       if($('#end_date').val() == ''){
-        // alert('Please Select End Date');
         bootbox.alert({ 
           size: 'small',
           title: "  ", 
@@ -9295,15 +8869,6 @@ $(document).on('click', '.formsubmit', function(e){
             }
         });
         
-        // edit_stores.push("{{ session()->get('sid') }}");
-        // $('#selectAllCheckbox').click(function(){
-        //     if($('#selectAllCheckbox').is(":checked")){
-        //         $(".stores").prop( "checked", true );
-        //     }else{
-        //         $( ".stores" ).prop("checked", false );
-        //     }
-        // });
-        
         $('#update_btn').click(function(){
             $.each($("input[name='editstores']:checked"), function(){            
                 edit_stores.push($(this).val());
@@ -9318,16 +8883,6 @@ $(document).on('click', '.formsubmit', function(e){
         });
         
         $(document).ready(function(){
-            
-            // $('#input_itemname').on('keypress', function (event) {
-            //     var regex = new RegExp("^[A-Za-z0-9 _]*[A-Za-z]+[A-Za-z0-9 _]*$");
-            //     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-            //     if (!regex.test(key)) {
-            //       event.preventDefault();
-            //       return false;
-            //     }
-            // });
-            
             $('#add_vdepartmentname, #add_vcategoryname, #add_subcat_name').on('keypress', function (event) {
                 var regex = new RegExp("^[a-zA-Z0-9. _]+$");
                 var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -9336,11 +8891,7 @@ $(document).on('click', '.formsubmit', function(e){
                    return false;
                 }
             });
-
-
-            
         });
-        
 </script>
 
   <script>
@@ -9362,8 +8913,6 @@ $(document).on('click', '.formsubmit', function(e){
         $('#level_pricing_tab').hide();
 
         $('#save_btn_row').hide();
-
-        // $.cookie("tab_selected", 'alias_code_tab'); //set cookie tab
       }
     });
 
@@ -9385,8 +8934,6 @@ $(document).on('click', '.formsubmit', function(e){
         $('#level_pricing_tab').hide();
 
         $('#save_btn_row').show();
-
-        // $.cookie("tab_selected", 'item_tab'); //set cookie tab
       }
     });
 
@@ -9408,8 +8955,6 @@ $(document).on('click', '.formsubmit', function(e){
         $('#level_pricing_tab').hide();
 
         $('#save_btn_row').hide();
-
-        // $.cookie("tab_selected", 'lot_matrix_tab'); //set cookie tab
       }
     });
 
@@ -9431,8 +8976,6 @@ $(document).on('click', '.formsubmit', function(e){
         $('#level_pricing_tab').hide();
 
         $('#save_btn_row').hide();
-
-        // $.cookie("tab_selected", 'vendor_tab'); //set cookie tab
       }
     });
 
@@ -9454,8 +8997,6 @@ $(document).on('click', '.formsubmit', function(e){
         $('#level_pricing_tab').hide();
 
         $('#save_btn_row').hide();
-
-        // $.cookie("tab_selected", 'item_movement_tab'); //set cookie tab
       }
     });
 
@@ -9477,8 +9018,6 @@ $(document).on('click', '.formsubmit', function(e){
         $('#item_tab').hide();
         
         $('#save_btn_row').hide();
-        
-        // $.cookie("tab_selected", 'level_pricing_tab'); //set cookie tab
       }
     });
 
