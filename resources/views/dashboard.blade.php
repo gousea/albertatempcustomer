@@ -17,6 +17,11 @@
         .moreContent {
             display: none;
         }
+        #print{
+            color: -webkit-link;
+            cursor: pointer;
+            text-decoration: underline;
+        }
 
     </style>
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
@@ -165,7 +170,7 @@
                             </div>
                             <div class="d-button">
                                 <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4"
-                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo $output['topItem'][$i]->Quantity; ?></a>
+                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo floatval($output['topItem'][$i]->Quantity); ?></a>
                             </div>
                             <?php } else {?>
                             <span class="text-justify text-uppercase">No data available </span>
@@ -202,7 +207,7 @@
                             </div>
                             <div class="d-button">
                                 <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4"
-                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo $output['topItem'][$i]->Quantity; ?></a>
+                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo floatval($output['topItem'][$i]->Quantity); ?></a>
                             </div>
                             <?php } else {?>
                             <span class="text-justify text-uppercase">No data available </span>
@@ -245,7 +250,7 @@
                             </div>
                             <div class="d-button">
                                 <a href="<?php echo $target_url; ?>" class="bg-primary text-white d-button-text px-4"
-                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo $topitem->Quantity; ?></a>
+                                    style="padding-top: 5px; padding-bottom: 5px;"><?php echo floatval($topitem->Quantity); ?></a>
                             </div>
                             <?php } else {?>
                             <span class="text-justify text-uppercase">No data available </span>
@@ -288,7 +293,8 @@
                         @foreach ($output['trn_sales_data'] as $sales_data)
                             <tr id="customer-row">
                                 <td><span>{{ $sales_data->sales_timestamp }}</span></td>
-                                <td><span>{{ $sales_data->transaction_id }}</span></td>
+                                <td><a class="print-sales" id="print" data-id="<?php echo $sales_data->isalesid;?>">{{ $sales_data->transaction_id }} </a></td>
+                                <!-- <td><span>{{ $sales_data->transaction_id }}</span></td> -->
                                 <td><span>{{ $sales_data->sales_amount }}</span></td>
                                 <td><span>{{ $sales_data->tender_type }}</span></td>
                             </tr>
@@ -299,6 +305,22 @@
         </div>
     </div>
 
+    <div class="modal fade" id="view_salesdetail_model" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">        
+        <div class="modal-body" id="printme">          
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary btnPrint" data-dismiss="modal" >Print</button>
+      </div>
+      </div>
+    </div>
+  </div>
+
+    
+
 @endsection
 
 @section('page-script')
@@ -306,6 +328,45 @@
     <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+
+    
+<script type="text/javascript">
+
+
+
+$(document).on('click', '.print-sales', function(event) {
+  event.preventDefault();
+  var reportdata_url = '<?php echo route('dashboardsalevalue'); ?>';
+  reportdata_url  = reportdata_url.replace(/&amp;/g, '&');
+
+  var salesid =$(this).attr("data-id");
+
+  $("div#divLoading").addClass('show');
+
+  $.ajax({
+      
+      url     : reportdata_url,
+      data    : {salesid:salesid},
+      type    : 'GET',
+      
+  }).done(function(response){
+      var  response = $.parseJSON(response); //decode the response array
+    
+      if(response.code == 1 ){
+          $("div#divLoading").removeClass('show');
+          $('.modal-body').html(response.data);
+          $('#view_salesdetail_model').modal('show');
+      
+      }else if(response.code == 0){
+          alert('Something Went Wrong!!!');
+          $("div#divLoading").removeClass('show');
+          return false;
+    }		
+  });
+
+});
+</script>
 
     <script type="text/javascript">
         var table = $('#vendor').DataTable({

@@ -11,6 +11,10 @@
 .modal-title{
   font-size: 15px;
 }
+.item-space{
+  padding-right: 50px;
+  padding-left: 20px;
+}
 </style>
 
 <div id="content">
@@ -67,7 +71,7 @@
           <div class="divider font-weight-bold"></div>
         </div>
 
-        <div class="py-3">
+        <!-- <div class="py-3">
           <div class="row">
               <div class="col-md-12 mx-auto">
                   
@@ -130,6 +134,39 @@
               </div>
           </div>
 
+        </div> -->
+
+        <div class="container pt-3">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-2 item-space">
+                    <input type="checkbox" name="for_general" maxlength="30" id="item_tab_li" />
+                    <label for="inputFirstname" class="p-2 text-uppercase">Item</label>
+                </div>
+                <div class="col-xs-2 item-space">
+                    <input type="checkbox" name="for_item" maxlength="30" id="alias_code_tab_li" <?php if(!isset($data['iitemid']) || empty($data['iitemid'])){?> style="pointer-events:none;" <?php } ?> />
+                    <label for="inputFirstname" class="p-2 text-uppercase">Add Alias Code</label>
+                </div>
+                <div class="col-xs-2 item-space">
+                    <input type="checkbox" name="for_item" maxlength="30" id="lot_matrix_tab_li" <?php if(isset($data['vitemtype']) && $data['vitemtype'] != 'Lot Matrix'){ ?> style="pointer-events:none;" <?php } ?> />
+                    <label for="inputFirstname" class="p-2 text-uppercase">Lot Matrix</label>
+                </div>
+                <div class="col-xs-2 item-space">
+                    <input type="checkbox" name="for_item" maxlength="30" id="vendor_tab_li" <?php if(!isset($data['iitemid']) || empty($data['iitemid'])){?> style="pointer-events:none;" <?php } ?> />
+                    <label for="inputFirstname" class="p-2 text-uppercase">Vendor</label>
+                </div>
+                <div class="col-xs-2 item-space">
+                    <input type="checkbox" name="for_item" maxlength="30" id="item_movement_tab_li" <?php if(!isset($data['iitemid']) || empty($data['iitemid'])){?> style="pointer-events:none;" <?php } ?> />
+                    <label for="inputFirstname" class="p-2 text-uppercase">Item Movement</label>
+                </div>
+                <div class="col-xs-2 item-space">
+                    <input type="checkbox" name="for_item" maxlength="30" id="level_pricing_tab_li" <?php if(!isset($data['iitemid']) ){?> style="pointer-events:none;" <?php } ?> />
+                    <label for="inputFirstname" class="p-2 text-uppercase">Level Pricing</label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         
 
@@ -209,10 +246,10 @@
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Item Name</label>
                                     </div>
-                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="display: inline-table;">
                                       
                                       <input type="text" style="display: inline-block;width: 82%;" name="vitemname" maxlength="100" value="<?php echo isset($data['vitemname']) ? $data['vitemname'] : ''; ?>" placeholder="Item Name" id="input_itemname" class="form-control adjustment-fields" />
-                                      <button class="btn btn-sm btn-info" title="Add Description" id="add_description" style="display: inline-block;width: 15%">..</button>
+                                      <button class="btn btn-sm btn-info" title="Add Description" id="add_description" style="display: inline-block;width: 18%">..</button>
                                       <input type="hidden" id="description_value" name="vdescription" maxlength="100" value="<?php echo isset($data['vdescription']) ? $data['vdescription'] : ''; ?>" placeholder="Description" >
                                       
                                       <?php if (isset($data['error_vitemname'])) { ?>
@@ -252,12 +289,12 @@
   
                                     <label for="inputCreated" class="p-2 float-right text-uppercase">Cost</label>
                                   </div>
-                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required" style="display: inline-table;">
 
                                     <input type="text" name="new_costprice" style="display: inline-block;width: 82%;" value="<?php echo isset($data['new_costprice']) && !empty($data['new_costprice']) ? number_format((float)$data['new_costprice'], 2) : ''; ?>" placeholder="New Cost" id="input-new_cost" class="form-control adjustment-fields"/>
                                     
                                     <input type='hidden' id='input-unitcost' value=''>
-                                    <button class="btn btn-sm btn-info" id="add_cost" style="display: inline-block;width: 15%" title="Add Costs">..</button>
+                                    <button class="btn btn-sm btn-info" id="add_cost" style="display: inline-block;width: 18%" title="Add Costs">..</button>
                                     <input type="hidden" id="avgcost_value" name="dcostprice" value="<?php echo isset($data['dcostprice']) ? $data['dcostprice'] : ''; ?>" placeholder="Avg. Case Cost" class="form-control" autocomplete="off"/> 
                                     <input type="hidden" id="lastcost_value" name="last_costprice" value="<?php echo isset($data['last_costprice']) ? $data['last_costprice'] : ''; ?>" placeholder="Last Cost" class="form-control" readonly/>
                                         
@@ -272,10 +309,10 @@
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputReceived" class="p-2 float-right text-uppercase">Price</label>
                                   </div>
-                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required" style="display: inline-table;">
 
                                     <input type="text" style="display: inline-block;width: 82%;" id="input-Selling_Price" name="dunitprice" value="<?php echo isset($data['dunitprice']) ? $data['dunitprice'] : ''; ?>" placeholder="Selling Price" class="form-control adjustment-fields" autocomplete="off"/>
-                                    <button class="btn btn-sm btn-info" id="add_pricelevel" title="Add Description" style="display: inline-block;width: 15%">..</button>
+                                    <button class="btn btn-sm btn-info" id="add_pricelevel" title="Add Description" style="display: inline-block;width: 18%">..</button>
                                     <input type="hidden" id="nlevel2_value" name="nlevel2" value="<?php echo isset($data['nlevel2']) ? $data['nlevel2'] : ''; ?>" class="form-control" />
                                     <input type="hidden" id="nlevel3_value" name="nlevel3" value="<?php echo isset($data['nlevel3']) ? $data['nlevel3'] : ''; ?>" class="form-control" />
                                     <input type="hidden" id="nlevel4_value" name="nlevel4" value="<?php echo isset($data['nlevel4']) ? $data['nlevel4'] : ''; ?>" class="form-control"/>
@@ -327,12 +364,12 @@
                                     }
 
                                   ?>
-                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="display: inline-table;">
                                     
                                       <!--<span style="display: inline-block;width: 87%;"><input type="text" name="gross_profit" value="<?php echo $percent;?>" placeholder="" id="input-profit-margin" class="form-control" readonly /></span>
                                     <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn"><button class="btn btn-sm btn-info" title="">..</button></span>-->
                                     <input type="text" style="display: inline-block;width: 82%;" name="gross_profit" value="<?php echo $percent;?>" placeholder="" id="input-profit-margin" class="form-control adjustment-fields" readonly />
-                                    <button class="btn btn-sm btn-info" id="selling_price_calculation_btn" title="Calculate Selling Price" style="display: inline-block;width: 15%">..</button>
+                                    <button class="btn btn-sm btn-info" id="selling_price_calculation_btn" title="Calculate Selling Price" style="display: inline-block;width: 18%">..</button>
                                       
                                   </div>
                                 </div>
@@ -349,7 +386,7 @@
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
                                           <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Department</label>
                                       </div>
-                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required" style="display: inline-table;">
 
                                         <span style="display: inline-block;width: 79%;">
                                           <select name="vdepcode" class="form-control adjustment-fields" id="dept_code" style="display: inline-block;width: 79% !important;">
@@ -367,7 +404,7 @@
                                           </select>
                                         </span>
                                       <!--<span style="display: inline-block;width: 10%" title="Add Department" id="add_new_department"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
-                                      <button class="btn btn-success btn-sm" id="add_new_department" style="display: inline-block;width: 18%;"><i class="fa fa-plus-square" aria-hidden="true" ></i></button>
+                                      <button class="btn btn-success btn-sm" id="add_new_department" style="display: inline-block;width: 21%; position: relative; right: 15%;"><i class="fa fa-plus-square" aria-hidden="true" ></i></button>
                                       <?php if (isset($data['error_vdepcode'])) { ?>
                                         <div class="text-danger"><?php echo $data['error_vdepcode']; ?></div>
                                       <?php } ?>
@@ -379,7 +416,7 @@
     
                                       <label for="inputNumber" class="p-2 float-right text-uppercase">Category</label>
                                     </div>
-                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required" style="display: inline-table;">
                                       <span style="display: inline-block;width: 79%;">
                                         <select name="vcategorycode" class="form-control adjustment-fields" id="category_code"
                                             <?php
@@ -405,7 +442,7 @@
                                         </select>
                                       </span>
                                       <!--<span style="display: inline-block;width: 10%" title="Add Category" id="add_new_category"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
-                                      <button class="btn btn-success btn-sm" style="display: inline-block;width: 18%" title="Add Category" id="add_new_category"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                      <button class="btn btn-success btn-sm" style="display: inline-block;width: 21%" title="Add Category" id="add_new_category"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
                                       <?php if (isset($data['error_vcategorycode'])) { ?>
                                         <div class="text-danger"><?php echo $data['error_vcategorycode']; ?></div>
                                       <?php } ?>
@@ -416,7 +453,7 @@
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Sub Category</label>
                                     </div>
-                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="display: inline-table;">
                                       
                                       <span style="display: inline-block;width: 79%;">
                                         <select name="subcat_id" class="form-control adjustment-fields" id="subcat_id"
@@ -443,7 +480,7 @@
                                         </select>
                                       </span>
                                       <!--<span style="display: inline-block;width: 10%" title="Add Sub Category" id="add_new_subcategory"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
-                                      <button class="btn btn-success btn-sm" style="display: inline-block;width: 18%" title="Add Sub Category" id="add_new_subcategory"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                      <button class="btn btn-success btn-sm" style="display: inline-block;width: 21%" title="Add Sub Category" id="add_new_subcategory"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
                                       <?php if (isset($data['error_subcat_id'])) { ?>
                                         <div class="text-danger"><?php echo $data['error_subcat_id']; ?></div>
                                       <?php } ?>
@@ -463,7 +500,7 @@
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
                                           <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Supplier</label>
                                       </div>
-                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required" style="display: inline-table;">
 
                                         <span style="display: inline-block;width: 79%;">
                                           <select name="vsuppliercode" class="form-control adjustment-fields">
@@ -480,7 +517,7 @@
                                           </select>
                                         </span>
                                         <!--<span style="display: inline-block;width: 10%" title="Add Supplier" id="add_new_supplier"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
-                                        <button class="btn btn-success btn-sm" style="display: inline-block;width: 18%" title="Add Supplier" id="add_new_supplier"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                        <button class="btn btn-success btn-sm" style="display: inline-block;width: 21%" title="Add Supplier" id="add_new_supplier"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
                                         <?php if (isset($data['error_vsuppliercode'])) { ?>
                                           <div class="text-danger"><?php echo $data['error_vsuppliercode']; ?></div>
                                         <?php } ?>
@@ -543,7 +580,7 @@
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
                                           <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Size</label>
                                       </div>
-                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required" style="display: inline-table;">
 
                                         <span style="display: inline-block;width: 79%;">
                                           <select name="vsize" class="form-control adjustment-fields">
@@ -560,7 +597,7 @@
                                           </select>
                                         </span>
                                   
-                                        <button class="btn btn-success btn-sm" style="display: inline-block;width: 18%" title="Add Size" id="add_new_size"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                        <button class="btn btn-success btn-sm" style="display: inline-block;width: 21%" title="Add Size" id="add_new_size"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
                                           
                                       </div>
                                   </div>
