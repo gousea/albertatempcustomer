@@ -30,14 +30,14 @@
                 <a href="<?php echo $data['clone_item']; ?>" data-toggle="tooltip" title="Clone Item" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate"><i class="fa fa-clone"></i>&nbsp;&nbsp;Clone</a>
               <?php } ?>
               <a type="submit" id="cancel_button" href="{{ $data['cancel'] }}" data-toggle="tooltip" title="Cancel" class="btn btn-danger buttonred buttons_menu basic-button-small cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
-              
+
             </div>
-        </div> 
+        </div>
     </div>
   </nav>
 
   <div class="container section-content">
-      
+
     @if ($data['error_warning'])
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -48,17 +48,17 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     @endif
-    
+
     <div class="panel panel-default">
-      
+
       <div class="panel-body padding-left-right">
 
         <?php if(isset($data['visited_zero_movement_report']) && $data['visited_zero_movement_report'] =="Yes"){?>
           <span style="float:right"> <a href="<?php echo $data['zero_movement_item_link'] ;?>" > << Back to Zero Movement Report</a></span>
         <?php }?>
-  
-  
-  
+
+
+
         <?php if(isset($data['visited_below_cost_report']) && $data['visited_below_cost_report'] =="Yes"){?>
             <span style="float:right"> <a href="<?php echo $data['below_cost_item_link'] ;?>" > << Back to Below Cost Report</a></span>
         <?php }?>
@@ -104,7 +104,7 @@
       </div>
 
         <div class="responsive">
-          
+
           <form action="{{ $data['action'] }}" method="post" enctype="multipart/form-data" id="form-item1" class="form-horizontal">
             @csrf
             <div class="tab-pane active" id="item_tab">
@@ -127,20 +127,20 @@
               @if(session()->get('hq_sid') == 1)
                     <input type="hidden" id="hidden_store_hq_val" name="stores_hq" value="">
               @endif
-                                            
+
               <div class="mytextdiv">
                 <div class="mytexttitle font-weight-bold text-uppercase">
                     Item Info
                 </div>
                 <div class="divider font-weight-bold"></div>
               </div>
-                    
+
                 <div>
 
                     <div class="py-3">
                       <div class="row">
                           <div class="col-md-12 mx-auto">
-                              
+
                               <div class="form-group row ">
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
@@ -159,12 +159,12 @@
                                             <?php } ?>
                                           <?php } ?>
                                         </select>
-                                          
+
                                       </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-    
+
                                       <label for="inputNumber" class="p-2 float-right text-uppercase">SKU</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
@@ -175,66 +175,66 @@
                                     </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form notLottery">
-                                      
+
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Item Name</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="display: inline-table;">
-                                      
+
                                       <input type="text" style="display: inline-block;width: 82%;" name="vitemname" maxlength="100" value="<?php echo isset($data['vitemname']) ? $data['vitemname'] : ''; ?>" placeholder="Item Name" id="input_itemname" class="form-control adjustment-fields" />
                                       <button class="btn btn-sm btn-info" title="Add Description" id="add_description" style="display: inline-block;width: 18%">..</button>
                                       <input type="hidden" id="description_value" name="vdescription" maxlength="100" value="<?php echo isset($data['vdescription']) ? $data['vdescription'] : ''; ?>" placeholder="Description" >
-                                      
+
                                       <?php if (isset($data['error_vitemname'])) { ?>
                                           <div class="text-danger"><?php echo $data['error_vitemname']; ?></div>
                                       <?php } ?>
-                                       
+
                                     </div>
                                   </div>
 
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form Lottery" style="display:none">
-                                      
+
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Ticket Name</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                      
+
                                       <input type="text" name="ticket_name" maxlength="50" value="<?php echo isset($data['vitemname']) ? $data['vitemname'] : ''; ?>" placeholder="Ticket Name" id="input-ticket_name" class="form-control adjustment-fields" autocomplete="off" />
-                                      
+
                                       <?php if (isset($data['error_ticket_name'])) { ?>
                                         <div class="text-danger"><?php echo $data['error_ticket_name']; ?></div>
                                       <?php } ?>
-                                       
+
                                     </div>
                                   </div>
                               </div>
-                              
+
                           </div>
                       </div>
-    
+
                       <div class="row notLottery">
                         <div class="col-md-12 mx-auto">
-                            
+
                             <div class="form-group row">
-                                
+
                                 <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-  
+
                                     <label for="inputCreated" class="p-2 float-right text-uppercase">Cost</label>
                                   </div>
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required" style="display: inline-table;">
 
                                     <input type="text" name="new_costprice" style="display: inline-block;width: 82%;" value="<?php echo isset($data['new_costprice']) && !empty($data['new_costprice']) ? number_format((float)$data['new_costprice'], 2) : ''; ?>" placeholder="New Cost" id="input-new_cost" class="form-control adjustment-fields"/>
-                                    
+
                                     <input type='hidden' id='input-unitcost' value=''>
                                     <button class="btn btn-sm btn-info" id="add_cost" style="display: inline-block;width: 18%" title="Add Costs">..</button>
-                                    <input type="hidden" id="avgcost_value" name="dcostprice" value="<?php echo isset($data['dcostprice']) ? $data['dcostprice'] : ''; ?>" placeholder="Avg. Case Cost" class="form-control" autocomplete="off"/> 
+                                    <input type="hidden" id="avgcost_value" name="dcostprice" value="<?php echo isset($data['dcostprice']) ? $data['dcostprice'] : ''; ?>" placeholder="Avg. Case Cost" class="form-control" autocomplete="off"/>
                                     <input type="hidden" id="lastcost_value" name="last_costprice" value="<?php echo isset($data['last_costprice']) ? $data['last_costprice'] : ''; ?>" placeholder="Last Cost" class="form-control" readonly/>
-                                        
+
                                     <?php if (isset($data['error_new_costprice'])) { ?>
                                         <div class="text-danger"><?php echo $data['error_new_costprice']; ?></div>
                                     <?php } ?>
-                                    
+
                                   </div>
                                 </div>
 
@@ -256,64 +256,64 @@
                                 </div>
 
                                 <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                    
+
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                     <label for="inputStatus" class="p-2 float-right text-uppercase">GP%</label>
                                   </div>
 
                                   <?php
 
-                                    if(isset($data['new_costprice']) && $data['new_costprice'] >0 && isset($data['dunitprice'])){    
+                                    if(isset($data['new_costprice']) && $data['new_costprice'] >0 && isset($data['dunitprice'])){
                                         $nunit_cost = (int)$data['npack'] !== 0?(int)($data['new_costprice']/$data['npack']):0;
                                         $nunit_cost = round($nunit_cost, 2);
-                                      
+
                                       if(isset($ndiscountper)){
                                         $percent = $data['dunitprice'] - ($nunit_cost-$ndiscountper);
                                       }else{
                                         $percent = (float)$data['dunitprice'] - (float)$nunit_cost;
                                       }
-                                      
+
                                       $percent = ($percent > 0) ? $percent : 0;
-                                      
+
                                       if($percent > 0){
                                         $percent = $percent;
                                       }else{
                                         $percent = 0;
                                       }
-                                      
+
                                       if($data['dunitprice'] == 0 || $data['dunitprice'] == '0.0000'){
                                         $dunitprice = 1;
                                       }else{
                                           $dunitprice = $data['dunitprice'];
                                       }
-                                     
+
                                       $percent = (((float)$percent/(float)$dunitprice) * 100);
-                                      
-                                      
+
+
                                       $percent = number_format((float)$percent, 2, ".", '');
-            
+
                                     }else{
                                       $percent = 0.00;
                                     }
 
                                   ?>
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="display: inline-table;">
-                                    
+
                                       <!--<span style="display: inline-block;width: 87%;"><input type="text" name="gross_profit" value="<?php echo $percent;?>" placeholder="" id="input-profit-margin" class="form-control" readonly /></span>
                                     <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn"><button class="btn btn-sm btn-info" title="">..</button></span>-->
                                     <input type="text" style="display: inline-block;width: 82%;" name="gross_profit" value="<?php echo $percent;?>" placeholder="" id="input-profit-margin" class="form-control adjustment-fields" readonly />
                                     <button class="btn btn-sm btn-info" id="selling_price_calculation_btn" title="Calculate Selling Price" style="display: inline-block;width: 18%">..</button>
-                                      
+
                                   </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                       </div>
 
                       <div class="row notLottery">
                           <div class="col-md-12 mx-auto">
-                              
+
                               <div class="form-group row ">
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
@@ -323,7 +323,7 @@
 
                                         <span style="display: inline-block;width: 79%;">
                                           <select name="vdepcode" class="form-control adjustment-fields" id="dept_code" style="display: inline-block;width: 79% !important;">
-                                              
+
                                             <option value="">Select Department</option>
                                             <?php if(isset($data['departments']) && count($data['departments']) > 0){?>
                                               <?php foreach($data['departments'] as $department){ ?>
@@ -337,16 +337,16 @@
                                           </select>
                                         </span>
                                       <!--<span style="display: inline-block;width: 10%" title="Add Department" id="add_new_department"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
-                                      <button class="btn btn-success btn-sm" id="add_new_department" style="display: inline-block;width: 21%; position: relative; right: 15%;"><i class="fa fa-plus-square" aria-hidden="true" ></i></button>
+                                      <button class="btn btn-success btn-sm" id="add_new_department" style="display: inline-block;width: 21%; position: relative; left: 0%;"><i class="fa fa-plus-square" aria-hidden="true" ></i></button>
                                       <?php if (isset($data['error_vdepcode'])) { ?>
                                         <div class="text-danger"><?php echo $data['error_vdepcode']; ?></div>
                                       <?php } ?>
-                                          
+
                                       </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-    
+
                                       <label for="inputNumber" class="p-2 float-right text-uppercase">Category</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required" style="display: inline-table;">
@@ -356,11 +356,11 @@
                                                 if(!isset($data['vcategorycode'])){
                                                     echo "disabled='true'";
                                                 }
-                                            
+
                                             ?>
                                         >
                                             <option value="">Select Category</option>
-                                            
+
                                             <?php if(isset($data['categories']) && count($data['categories']) > 0 && isset($data['vcategorycode'])){?>
                                                 <?php foreach($data['categories'] as $category){ ?>
                                                     <?php echo "DB: ".$data['vcategorycode']." Current: ".$category['vcategorycode']; ?>
@@ -371,7 +371,7 @@
                                                     <?php } ?>
                                                 <?php } ?>
                                             <?php } ?>
-                                          
+
                                         </select>
                                       </span>
                                       <!--<span style="display: inline-block;width: 10%" title="Add Category" id="add_new_category"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
@@ -382,26 +382,26 @@
                                     </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                      
+
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Sub Category</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6" style="display: inline-table;">
-                                      
+
                                       <span style="display: inline-block;width: 79%;">
                                         <select name="subcat_id" class="form-control adjustment-fields" id="subcat_id"
                                             <?php
                                                 if(!isset($data['vcategorycode'])){
                                                     echo "disabled='true'";
                                                 }
-                                            
+
                                             ?>
                                         >
                                             <option value="">Select Sub Category</option>
-                                            
+
                                             <?php if(isset($data['subcategories']) && count($data['subcategories']) > 0 && isset($data['subcat_id'])){?>
                                                 <?php foreach($data['subcategories'] as $subcategory){ ?>
-                                                
+
                                                     <?php if($data['subcat_id'] == $subcategory['subcat_id']){ ?>
                                                         <option value="<?php echo $subcategory['subcat_id'];?>" selected="selected"><?php echo $subcategory['subcat_name'];?></option>
                                                     <?php } else { ?>
@@ -409,7 +409,7 @@
                                                     <?php } ?>
                                                 <?php } ?>
                                             <?php } ?>
-                                          
+
                                         </select>
                                       </span>
                                       <!--<span style="display: inline-block;width: 10%" title="Add Sub Category" id="add_new_subcategory"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
@@ -417,17 +417,17 @@
                                       <?php if (isset($data['error_subcat_id'])) { ?>
                                         <div class="text-danger"><?php echo $data['error_subcat_id']; ?></div>
                                       <?php } ?>
-                                       
+
                                     </div>
                                   </div>
                               </div>
-                              
+
                           </div>
                       </div>
 
                       <div class="row notLottery">
                           <div class="col-md-12 mx-auto">
-                              
+
                               <div class="form-group row ">
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
@@ -454,12 +454,12 @@
                                         <?php if (isset($data['error_vsuppliercode'])) { ?>
                                           <div class="text-danger"><?php echo $data['error_vsuppliercode']; ?></div>
                                         <?php } ?>
-                                          
+
                                       </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-    
+
                                       <label for="inputNumber" class="p-2 float-right text-uppercase">Taxable</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
@@ -477,12 +477,12 @@
                                     </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                      
+
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Unit</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                      
+
                                       <select name="vunitcode" class="form-control adjustment-fields">
                                         <option value="">Select Unit</option>
                                         <?php if(isset($data['units']) && count($data['units']) > 0){?>
@@ -501,13 +501,13 @@
                                     </div>
                                   </div>
                               </div>
-                              
+
                           </div>
                       </div>
 
                       <div class="row notLottery">
                           <div class="col-md-12 mx-auto">
-                              
+
                               <div class="form-group row ">
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
@@ -529,14 +529,14 @@
                                             <?php } ?>
                                           </select>
                                         </span>
-                                  
+
                                         <button class="btn btn-success btn-sm" style="display: inline-block;width: 21%" title="Add Size" id="add_new_size"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
-                                          
+
                                       </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-    
+
                                       <label for="inputNumber" class="p-2 float-right text-uppercase">Manufaturer</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
@@ -555,12 +555,12 @@
                                     </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                      
+
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Age Verification</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                      
+
                                       <select name="vageverify" class="form-control adjustment-fields">
                                         <!--<option value="">--Select Age Verification--</option>-->
                                         <option value="0">None</option>
@@ -574,17 +574,17 @@
                                             <?php } ?>
                                         <?php } ?>
                                       </select>
-                                       
+
                                     </div>
                                   </div>
                               </div>
-                              
+
                           </div>
                       </div>
 
                       <div class="row notLottery">
                           <div class="col-md-12 mx-auto">
-                              
+
                               <div class="form-group row ">
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
@@ -592,7 +592,7 @@
                                       </div>
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
-                                        <?php 
+                                        <?php
                                             if(isset($data['nsellunit']) && $data['nsellunit'] != ''){
                                               $nsellunit = $data['nsellunit'];
                                             }else{
@@ -600,17 +600,17 @@
                                             }
                                         ?>
                                         <input type="text" name="nsellunit" value="<?php echo $nsellunit; ?>" placeholder="Selling Unit" id="input-sellingunit" class="form-control adjustment-fields" <?php if(isset($data['vitemtype']) && $data['vitemtype'] == 'Lot Matrix'){?> readonly <?php } ?> />
-                                          
+
                                       </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-    
+
                                       <label for="inputNumber" class="p-2 float-right text-uppercase">Unit Per Case</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
-                                      <?php 
+                                      <?php
                                         if(isset($data['npack']) && $data['npack'] != ''){
                                           $npack = $data['npack'];
                                         }elseif($data['npack'] != 0){
@@ -623,19 +623,19 @@
                                     </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                      
+
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Qty on Hand</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                      
+
                                       <?php if(isset($data['edit_page'])){?>
                                         <?php
-                                        
+
                                           if($data['iqtyonhand'] != 0 && $data['iqtyonhand']!='' && $data['npack']!=0){
                                             $quotient = (int)($data['iqtyonhand'] / $data['npack']);
                                             $remainder = $data['iqtyonhand'] % $data['npack'];
-                                              
+
                                             $qty_on_hand = ''.$quotient .' ('.$remainder.')';
                                           }
                                           else{
@@ -650,17 +650,17 @@
                                       <?php }else{?>
                                           <input type="text" name="iqtyonhand" value="<?php echo isset($data['iqtyonhand']) ? $data['iqtyonhand'] : ''; ?>" class="form-control adjustment-fields" placeholder="Qty on Hand"  autocomplete="off"/>
                                       <?php }?>
-                                       
+
                                     </div>
                                   </div>
                               </div>
-                              
+
                           </div>
                       </div>
 
                       <div class="row notLottery">
                           <div class="col-md-12 mx-auto">
-                              
+
                               <div class="form-group row ">
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
@@ -669,10 +669,10 @@
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
                                         <select name="itemPromotionid" id="promotionid" class="form-control adjustment-fields">
-                                
+
                                           <?php if(isset($data['itemPromotion']) && count($data['itemPromotion']) > 0){?>
                                               <?php foreach($data['itemPromotion'] as $itemPromo){ ?>
-                                              
+
                                               <?php if(isset($data['prom_id']) && $data['prom_id'] == $itemPromo->prom_id){ ?>
                                                 <option value="<?php echo $itemPromo->prom_id;?>" selected="selected"><?php echo $itemPromo->prom_name;?></option>
                                               <?php } else { ?>
@@ -681,14 +681,14 @@
                                               <?php } ?>
                                           <?php }else{ ?>
                                               <option>None</option>
-                                          <?php } ?> 
-                                        </select> 
-                                          
+                                          <?php } ?>
+                                        </select>
+
                                       </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-    
+
                                       <label for="inputNumber" class="p-2 float-right text-uppercase">Buydown</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
@@ -697,30 +697,30 @@
                                     </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                      
+
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Parent Barcode</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                      
-                                      <?php if(isset($data['itemparentitems']) && !empty($data['itemparentitems'])) { 
-                        
+
+                                      <?php if(isset($data['itemparentitems']) && !empty($data['itemparentitems'])) {
+
                                           $Parent_barcode = $data['itemparentitems']->vitemname.' ['.$data['itemparentitems']->vbarcode.']';
                                         }
                                       ?>
 
                                       <input type="text" name="Parent_barcode" maxlength="50" value="<?php echo isset($Parent_barcode) ? $Parent_barcode : ''; ?>" placeholder="Parent Barcode" class="form-control small adjustment-fields" style="font-size:12px;" readonly >
-                                       
+
                                     </div>
                                   </div>
                               </div>
-                              
+
                           </div>
                       </div>
 
                       <div class="row notLottery">
                           <div class="col-md-12 mx-auto">
-                              
+
                               <div class="form-group row ">
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
@@ -735,38 +735,38 @@
                                             </label>
                                           <?php } ?>
                                         <?php } ?>
-                                          
+
                                       </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-    
+
                                       <label for="inputNumber" class="p-2 float-right text-uppercase">Bottle Deposit</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
-                                      
+
                                       <input name="nbottledepositamt" id="nbottledepositamt" value="<?php echo isset($data['nbottledepositamt']) ? $data['nbottledepositamt'] : '0.00'; ?>" type="text" class="form-control adjustment-fields">
                                     </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                      
+
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Gross Markup</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                      
+
                                       <input type="text" name="discount_price" maxlength="50" value="<?php echo isset($data['bydown']) ? $data['bydown'] : ''; ?>" placeholder="Gross Markup" id="input-discount_price" class="form-control adjustment-fields" <?php if(isset($data['bydown']) && isset($data['edit_page'])){?>readonly <?php } ?> readonly/>
-                                                                             
+
                                     </div>
                                   </div>
                               </div>
-                              
+
                           </div>
                       </div>
 
                       <div class="row Lottery" style="display:none">
                           <div class="col-md-12 mx-auto">
-                              
+
                               <div class="form-group row ">
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
@@ -778,12 +778,12 @@
                                         <?php if (isset($data['error_ticket_price'])) { ?>
                                             <div class="text-danger"><?php echo $data['error_ticket_price']; ?></div>
                                         <?php } ?>
-                                          
+
                                       </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-    
+
                                       <label for="inputNumber" class="p-2 float-right text-uppercase">Games Per Book</label>
                                     </div>
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
@@ -794,7 +794,7 @@
                                     </div>
                                   </div>
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                      
+
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputVendor" class="p-2 float-right text-uppercase">Book Qoh</label>
                                     </div>
@@ -802,17 +802,17 @@
                                       <input type="text" name="book_qoh" maxlength="50" value="<?php echo isset($data['QOH']) ? $data['QOH'] : ''; ?>" placeholder="Book Qoh" id="input-book_qoh" class="form-control adjustment-fields" autocomplete="off" readonly/>
                                       <?php if (isset($data['error_book_qoh'])) { ?>
                                           <div class="text-danger"><?php echo $data['error_book_qoh']; ?></div>
-                                      <?php } ?>                                      
+                                      <?php } ?>
                                     </div>
                                   </div>
                               </div>
-                              
+
                           </div>
                       </div>
 
                       <div class="row Lottery" style="display:none">
                           <div class="col-md-12 mx-auto">
-                              
+
                               <div class="form-group row ">
                                   <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
@@ -824,17 +824,17 @@
                                         <?php if (isset($data['error_book_cost'])) { ?>
                                             <div class="text-danger"><?php echo $data['error_book_cost']; ?></div>
                                         <?php } ?>
-                                          
+
                                       </div>
                                   </div>
-                                  
+
                               </div>
-                              
+
                           </div>
                       </div>
                     </div>
-                    
-                    
+
+
                 </div>
 
                 <div class="notLottery">
@@ -848,20 +848,20 @@
                     <div class="divider font-weight-bold"></div>
                     <input type="hidden" value="1" name="advance_options" id="advance_options">
                   </div>
-                  
+
                     <div id="advance_options_checkbox_div" style="display: none;">
-                        
+
                       <div class="py-3">
                         <div class="row">
                             <div class="col-md-12 mx-auto">
-                                
+
                                 <div class="form-group row">
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-right text-uppercase">Status</label>
                                         </div>
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            
+
                                           <select name="estatus" class="form-control adjustment-fields">
                                             <?php if(isset($data['array_status']) && count($data['array_status']) > 0){?>
                                               <?php foreach($data['array_status'] as $k => $array_sts){ ?>
@@ -877,11 +877,11 @@
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-      
+
                                         <label for="inputLastname" class="p-2 float-right text-uppercase">WIC</label>
                                       </div>
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-inline">
-      
+
                                         <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
                                           <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
                                           <?php if($data['wicitem'] == '1' || $data['wicitem'] == 'Y') $wicitem = 'Y'; else $wicitem ='N'; ?>
@@ -893,7 +893,7 @@
                                       </div>
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                        
+
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                         <label for="inputLastname" class="p-2 float-right text-uppercase">Discount</label>
                                       </div>
@@ -912,10 +912,10 @@
                                       </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-12 mx-auto">
 
@@ -925,24 +925,24 @@
                                             <label for="inputFirstname" class="p-2 float-right text-uppercase">Reorder Duration</label>
                                         </div>
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            
+
                                           <input type="text" name="reorder_duration" maxlength="45" value="<?php echo isset($data['reorder_duration']) ? $data['reorder_duration'] : ''; ?>" placeholder="Reorder Duration" id="input_reorder_duration" class="form-control adjustment-fields"  />
                                           <span class="text-small" style="position: absolute"><b>Enter Order Duration in Days.</b></span>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-      
+
                                         <label for="inputLastname" class="p-2 float-right text-uppercase">Re-Order Point</label>
                                       </div>
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-      
+
                                         <input type="text" style="display: inline-block;"  name="ireorderpoint" value="<?php echo isset($data['ireorderpoint']) ? $data['ireorderpoint'] : ''; ?>" placeholder="Re-Order Point" id="input_reorderpoint" class="form-control adjustment-fields"  />
                                         <span class="text-small" ><b>Enter Reorder Point in Unit.</b></span>
                                       </div>
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                        
+
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                         <label for="inputLastname" class="p-2 float-right text-uppercase">Order Qty Upto</label>
                                       </div>
@@ -952,26 +952,26 @@
                                       </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12 mx-auto">
-                                
+
                                 <div class="form-group row">
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-right text-uppercase">Aisle</label>
                                         </div>
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            
+
                                           <select name="aisleid" class="form-control adjustment-fields">
                                             <option value="">Select Mfg. Promo Desc</option>
                                             <?php if(isset($data['aisles']) && count((array)$data['aisles']) > 0){?>
                                               <?php foreach($data['aisles'] as $aisle){ ?>
                                                 <?php if(isset($data['aisleid']) && $data['aisleid'] == $aisle->Id) {?>
-                                                
+
                                                   <option value="<?php echo $aisle->Id;?>" selected="selected"><?php echo $aisle->aislename;?></option>
                                                 <?php } else { ?>
                                                   <option value="<?php echo $aisle->Id;?>"><?php echo $aisle->aislename;?></option>
@@ -983,11 +983,11 @@
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-      
+
                                         <label for="inputLastname" class="p-2 float-right text-uppercase">Mfg Buy Down Desc.</label>
                                       </div>
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-      
+
                                         <select name="shelfid" class="form-control adjustment-fields">
                                             <option value="">Select Mfg Buy Down Desc.</option>
                                             <?php if(isset($data['shelfs']) && count((array)$data['shelfs']) > 0){?>
@@ -1003,7 +1003,7 @@
                                       </div>
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                        
+
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                         <label for="inputLastname" class="p-2 float-right text-uppercase">Mfg MultiPack Desc.</label>
                                       </div>
@@ -1019,24 +1019,24 @@
                                             <?php } ?>
                                             <?php } ?>
                                           <?php } ?>
-                                        </select> 
+                                        </select>
                                       </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12 mx-auto">
-                                
+
                                 <div class="form-group row">
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-right text-uppercase">Barcode Type</label>
                                         </div>
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            
+
                                           <select name="vbarcodetype" class="form-control adjustment-fields">
                                             <?php if(isset($data['barcode_types']) && count($data['barcode_types']) > 0){?>
                                               <?php foreach($data['barcode_types'] as $barcode_type){ ?>
@@ -1052,11 +1052,11 @@
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-      
+
                                         <label for="inputLastname" class="p-2 float-right text-uppercase">Station</label>
                                       </div>
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-      
+
                                         <select name="stationid" class="form-control adjustment-fields">
                                           <option value="">--Select Station--</option>
                                           <?php if(isset($data['stations']) && count($data['stations']) > 0){?>
@@ -1072,7 +1072,7 @@
                                       </div>
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                        
+
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                         <label for="inputLastname" class="p-2 float-right text-uppercase">Show Image</label>
                                       </div>
@@ -1091,13 +1091,13 @@
                                       </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
 
                         <div class="row">
                           <div class="col-md-12 mx-auto">
-                              
+
                             <div class="form-group row">
                                 <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
@@ -1117,18 +1117,18 @@
                                       <input type="file" name="itemimage" accept="image/x-png,image/gif,image/jpeg" onchange="showImages(this)">
                                     </div>
                                 </div>
-                                
+
                             </div>
-      
+
                           </div>
                         </div>
-                        
+
                       </div>
-                        
+
                     </div>
                 </div>
                 <br>
-                
+
                 <div class="notLottery">
 
                   <div class="mytextdiv">
@@ -1146,14 +1146,14 @@
                     <div class="py-3">
                         <div class="row">
                             <div class="col-md-12 mx-auto">
-                                
+
                                 <div class="form-group row">
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                             <label for="inputFirstname" class="p-2 float-right text-uppercase">Unit</label>
                                         </div>
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                            
+
                                           <select name="unit_id" class="form-control adjustment-fields">
                                             <option value="">-- Select Unit --</option>
                                             <?php if(isset($data['itemsUnits']) && count($data['itemsUnits']) > 0){ ?>
@@ -1173,20 +1173,20 @@
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-      
+
                                         <label for="inputLastname" class="p-2 float-right text-uppercase">Unit Value</label>
                                       </div>
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-      
+
                                         <input type="text" class="form-control adjustment-fields" value="<?php echo isset($data['unit_value']) ? $data['unit_value'] : ''; ?>" name="unit_value">
-                                        
+
                                         <?php if (isset($data['error_unit_value'])) { ?>
                                           <div class="text-danger"><?php echo $data['error_unit_value']; ?></div>
                                         <?php } ?>
                                       </div>
                                     </div>
                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                        
+
                                       <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                         <label for="inputLastname" class="p-2 float-right text-uppercase">Bucket</label>
                                       </div>
@@ -1209,13 +1209,13 @@
                                       </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
 
                         <div class="row">
                           <div class="col-md-12 mx-auto">
-                              
+
                             <div class="form-group row">
                                 <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
@@ -1225,15 +1225,15 @@
                                       <input style="margin-top: 10px;" type="checkbox" class="" name="malt" value="1" <?php if($data['malt']){ echo 'checked'; }?>>
                                     </div>
                                 </div>
-                                
+
                             </div>
-      
+
                           </div>
                         </div>
                     </div>
                   </div>
                 </div>
-                
+
             </div>
           </form>
           <br>
@@ -1247,14 +1247,14 @@
               <?php } ?>
             </div>
           </div>
-                    
+
           <div class="tab-pane" id="alias_code_tab">
             <form action="<?php echo $data['add_alias_code']; ?>" method="post" enctype="multipart/form-data" id="form-item-alias-code" class="form-horizontal">
               @csrf
               <?php if(isset($data['iitemid'])){?>
                 <input type="hidden" name="iitemid" value="<?php echo $data['iitemid'];?>">
               <?php } ?>
-              
+
               <div class="mytextdiv">
                 <div class="mytexttitle font-weight-bold text-uppercase">
                     Alias Code
@@ -1263,10 +1263,10 @@
               </div>
 
               <div class="py-3">
-                  
+
                 <div class="row">
                   <div class="col-md-12 mx-auto">
-                      
+
                     <div class="form-group row">
                         <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
@@ -1285,7 +1285,7 @@
                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                               <input type="submit" name="Alias_code" value="Add Alias Code" class="btn button-blue basic-button-small">
                             </div>
-                            
+
                         </div>
                     </div>
 
@@ -1334,7 +1334,7 @@
               </div>
             </form>
           </div>
-          
+
           <div class="tab-pane" id="lot_matrix_tab">
             <div class="row">
               <div class="col-md-4">
@@ -1348,7 +1348,7 @@
             <br><br>
             <form action="<?php echo $data['lot_matrix_editlist']; ?>" method="post" enctype="multipart/form-data" id="form-item-lot-matrix-list1" class="form-horizontal">
                 @csrf
-                
+
                 <?php if(session()->get('hq_sid') == 1) { ?>
                     <input type="hidden" id="store_hq_for_edit" name="store_hq_for_edit" value="" >
                 <?php } ?>
@@ -1436,14 +1436,14 @@
               <div class="py-3">
                   <div class="row">
                       <div class="col-md-12 mx-auto">
-                          
+
                           <div class="form-group row">
                               <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputFirstname" class="p-2 float-right text-uppercase">Vendor Item Code:&nbsp;&nbsp;</label>
                                   </div>
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                      
+
                                     <input type="text" name="vvendoritemcode" maxlength="100" class="form-control adjustment-fields" required>
                                   </div>
                               </div>
@@ -1465,16 +1465,16 @@
                                 </div>
                               </div>
                               <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                  
+
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                   <input type="button" id="form-item-vendor-submit-btn" name="Assign" value="Assign" class="btn button-blue basic-button-small text-uppercase">
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                  <button class="btn buttonred basic-button-small text-uppercase" id="delete_item_vendor_btn">Delete</button>                                    
+                                  <button class="btn buttonred basic-button-small text-uppercase" id="delete_item_vendor_btn">Delete</button>
                                 </div>
                               </div>
                           </div>
-                          
+
                       </div>
                   </div>
 
@@ -1527,25 +1527,25 @@
                 </div>
               </div>
           </div>
-          
+
             <div class="tab-pane" id="item_movement_tab">
-                
+
                 <div class="mytextdiv">
                     <div class="mytexttitle font-weight-bold text-uppercase">
                         Item Movement
                     </div>
                     <div class="divider font-weight-bold"></div>
                 </div>
-                
+
                 <?php if(isset($reports) && count($reports['item_data']) > 0){ ?>
                     <br><br>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                
+
                                 <table id="vendor" class="table table-hover promotionview dataTable no-footer" style="width: 100%;" role="grid">
                                     <thead>
-        
+
                                         <?php if (isset($parentreports) && !empty($parentreports)) { ?>
                                             <tr class="headermenublue">
                                                 <th colspan="1"></th>
@@ -1578,7 +1578,7 @@
                                                     <?php echo
                                                     !empty($reports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
                                                     $reports['year_arr_sold'][$previous_year]['total_sold'] : '0'; ?>
-        
+
                                                     <?php
                                                     $value1 =
                                                     !empty($reports['year_arr_adjustment'][$previous_year]['total_adjustment']) ?
@@ -1609,8 +1609,8 @@
                                                     ?>
                                                 </b>
                                             </td>
-        
-        
+
+
                                             <td colspan="2" class="th_color">
                                                 <b class="text-uppercase" style="font-size: 14px;">
                                                     <?php echo $previous_year; ?> YTD ADJUSTMENT
@@ -1619,7 +1619,7 @@
                                                     $reports['year_arr_adjustment'][$previous_year]['total_adjustment'] : '0'; ?>
                                                 </b>
                                             </td>
-        
+
                                             <td colspan="2" class="th_color"
                                                 style="background-color: #fff;border-top: none;border-right: 2px solid #cdd0d4;">
                                                 <b class="text-uppercase" style="font-size: 14px;">
@@ -1641,8 +1641,8 @@
                                                     $reports['year_arr_sold'][$current_year]['total_sold'] : '0'; ?>
                                                 </b>
                                             </td>
-        
-        
+
+
                                             <td colspan="2" class="th_color">
                                                 <b class="text-uppercase" style="font-size: 14px;">
                                                     <?php echo $current_year; ?> YTD ADJUSTMENT
@@ -1674,12 +1674,12 @@
                                                     $TotalAdjustment = $value1 + $value2 + $value3 + $value4 + $value6 + $value7 +
                                                     $value8 + $value5 + $value9;
                                                     ?>
-        
+
                                                     <?php echo $TotalAdjustment; ?>
                                                 </b>
                                             </td>
-        
-        
+
+
                                             <td colspan="2" class="th_color">
                                                 <b class="text-uppercase" style="font-size: 14px;">
                                                     <?php echo $current_year; ?> YTD RECEIVE
@@ -1693,13 +1693,13 @@
                                             <th colspan="2" class="text-center" style="border-right: 1px solid #cdd0d4;">MONTH</th>
                                             <th colspan="3" class="text-center" style="border-right: 1px solid #cdd0d4;">PREVIOUS YEAR</th>
                                             <th colspan="3" class="text-center" style="border-right: 2px solid #cdd0d4;">CURRENT YEAR</th>
-        
+
                                         </tr>
-                                        
-                                        <?php 
+
+                                        <?php
                                             $adjvaluereset = 0;
-                                            for ($i = 1; $i <= 12; ++$i) { 
-                                        ?> 
+                                            for ($i = 1; $i <= 12; ++$i) {
+                                        ?>
                                         <tr>
                                             <td colspan="2" style="border-right: 1px solid #cdd0d4;">
                                                 <b><?php echo DateTime::createFromFormat('!m', $i)->format('F'); ?></b>
@@ -1712,20 +1712,20 @@
                                                 STR_PAD_LEFT)]['total_receive'])) { ?>
                                                 (<?php echo $previous_year; ?>)&nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_sold'])) { ?>
-        
+
                                                 SOLD (<?php echo (int)
                                                 $reports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_sold']; ?>)
-        
-        
+
+
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <!-- Adjustment Deatils -->
                                                 <?php if
                                                 (!empty($reports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i, 2,
@@ -1736,27 +1736,27 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <!-- qoh Deatils
                                         <?php if (!empty($reports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
                                             QU Adj (<?php echo (int) $reports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
                                         <?php } else { ?>
                                             &nbsp;
                                         <?php } ?>-->
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_receive'])) { ?>
-        
+
                                                 &nbsp;
                                                 Receive (<?php echo (int)
                                                 $reports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_receive']; ?>)
-        
+
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_oqoh'])) { ?>
@@ -1767,7 +1767,7 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_adjustment'])) { ?>
@@ -1778,11 +1778,11 @@
                                                 STR_PAD_LEFT)]['total_adjustment'];
                                                 $adjvaluereset += $adjustvalue;
                                                 ?>
-        
+
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_qoh'])) { ?>
@@ -1795,7 +1795,7 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_inv'])) { ?>
@@ -1808,9 +1808,9 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
-        
-        
+
+
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_pqoh'][$previous_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_pqoh'])) { ?>
@@ -1824,8 +1824,8 @@
                                                 &nbsp;
                                                 <?php } ?>
                                                 <!---->
-        
-        
+
+
                                                 <!------>
                                                 <?php if
                                                 (!empty($reports['month_year_arr_cqoh'][$previous_year][str_pad($i, 2, '0',
@@ -1839,17 +1839,17 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if (isset($adjvaluereset) && $adjvaluereset != 0) { ?>
                                                 Adj. (<?php
                                                 echo $adjvaluereset;
                                                 $adjvaluereset = 0;
                                                 ?>)
-        
+
                                                 <?php } else { ?>
-        
+
                                                 <?php $adjvaluereset = 0; ?>
-        
+
                                                 <?php } ?>
                                                 <?php if
                                                 (!empty($reports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
@@ -1861,7 +1861,7 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_ophqoh'])) { ?>
@@ -1872,10 +1872,10 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
-        
+
+
                                             </td>
-        
+
                                             <td colspan="3"
                                                 style="border-right: 1px solid #cdd0d4;border-right: 2px solid #cdd0d4;">
                                                 <?php if
@@ -1887,39 +1887,39 @@
                                                 <?php if
                                                 (!empty($reports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_sold'])) { ?>
-        
+
                                                 SOLD (<?php echo (int)
                                                 $reports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_sold']; ?>)
-        
-        
+
+
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_receive'])) { ?>
-        
+
                                                 &nbsp;
                                                 Receive (<?php echo (int)
                                                 $reports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_receive']; ?>)
-        
+
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_were'])) { ?>
-        
+
                                                 &nbsp;
                                                 WareHouse (<?php echo (int)
                                                 $reports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_were']; ?>)
-        
+
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
-        
+
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_oqoh'])) { ?>
@@ -1930,7 +1930,7 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_adjustment_phy'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['ptotal_adjustment'])) { ?>
@@ -1940,10 +1940,10 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <!-- Adjustment Details -->
-        
-        
+
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_adjustment'])) { ?>
@@ -1954,11 +1954,11 @@
                                                 STR_PAD_LEFT)]['total_adjustment'];
                                                 $adjvaluereset += $adjustvalue;
                                                 ?>
-        
+
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_qoh'])) { ?>
@@ -1971,7 +1971,7 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_inv'])) { ?>
@@ -1984,9 +1984,9 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
-        
-        
+
+
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_pqoh'])) { ?>
@@ -1999,8 +1999,8 @@
                                                 &nbsp;
                                                 <?php } ?>
                                                 <!---->
-        
-        
+
+
                                                 <!------>
                                                 <?php if
                                                 (!empty($reports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
@@ -2013,18 +2013,18 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if ($adjvaluereset != 0) { ?>
                                                 Adj. (<?php
                                                 echo $adjvaluereset;
                                                 $adjvaluereset = 0;
                                                 ?>)
-        
+
                                                 <?php } else { ?>
-        
+
                                                 <?php $adjvaluereset = 0; ?>
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_pqoh'])) { ?>
@@ -2035,7 +2035,7 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if (isset($parentreports) && !empty($parentreports)) { ?>
                                                 <?php if
                                                 (!empty($reports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
@@ -2045,9 +2045,9 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php } else { ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_cqoh'])) { ?>
@@ -2058,8 +2058,8 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php }} ?>
-        
-        
+
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_phqoh'])) { ?>
@@ -2070,7 +2070,7 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_ophqoh'])) { ?>
@@ -2081,7 +2081,7 @@
                                                 <?php } else { ?>
                                                 &nbsp;
                                                 <?php } ?>
-        
+
                                                 <?php if
                                                 (!empty($reports['month_year_arr_posqoh'][$current_year][str_pad($i, 2, '0',
                                                 STR_PAD_LEFT)]['total_posqoh'])) { ?>
@@ -2093,55 +2093,55 @@
                                                 &nbsp;
                                                 <?php } ?>
                                                 <!-- adjustment detail end ------>
-        
-        
+
+
                                                 <!-- old code start
-        
+
                                         <?php if (!empty($reports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
                                             &nbsp;
                                             P Adj. (<?php echo (int) $reports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment']; ?>)
                                         <?php } else { ?>
                                             &nbsp;
                                         <?php } ?>
-        
+
                                          <?php if (!empty($reports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
                                             &nbsp;
                                             QU Adj (<?php echo (int) $reports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
                                         <?php } else { ?>
                                             &nbsp;
                                         <?php } ?>
-        
+
                                         <?php if (!empty($reports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv'])) { ?>
                                             &nbsp;
                                            IR Adj (<?php echo (int) $reports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv']; ?>)
                                         <?php } else { ?>
                                             &nbsp;
                                         <?php } ?>
-        
-        
+
+
                                         <?php if (!empty($reports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh'])) { ?>
                                             &nbsp;
                                             Child Update QoH(<?php echo (int) $reports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh']; ?>)
                                         <?php } else { ?>
                                             &nbsp;
                                         <?php } ?>
-        
+
                                         <?php if (!empty($reports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh'])) { ?>
                                             &nbsp;
                                             Parent Update QoH(<?php echo (int) $reports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh']; ?>)
                                         <?php } else { ?>
                                             &nbsp;
                                         <?php } ?>
-        
-        
+
+
                                          old code end -->
-        
+
                                             </td>
                                             </tr>
                                             <?php } ?>
-        
+
                                     </tbody>
-        
+
                                 </table>
                             </div>
                         </div>
@@ -2151,13 +2151,13 @@
                     <br>
                 <?php } ?>
                     <!-- new parent and child relationship --->
-                    
-                <?php if (isset($childreports)) { ?> 
+
+                <?php if (isset($childreports)) { ?>
                     <?php foreach ($childreports as $childreports) { ?>
                         <?php if (isset($childreports) && count($childreports['item_data']) > 0) { ?>
                         <h3>Child</h3>
                         <?php } ?>
-            
+
                         <?php if (isset($childreports) && count($childreports['item_data']) > 0) { ?>
                             <br><br>
                             <div class="row">
@@ -2183,7 +2183,7 @@
                                                             <?php echo
                                                             !empty($childreports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
                                                             $childreports['year_arr_sold'][$previous_year]['total_sold'] : '0'; ?>
-                
+
                                                             <?php
                                                             $value1 =
                                                             !empty($childreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
@@ -2215,25 +2215,25 @@
                                                             $totaladjpreviousyr = $value1 + $value2 + $value3 + $value4 + $value6 + $value7
                                                             + $value8 + $value9;
                                                             ?>
-                
-                
-                
-                
+
+
+
+
                                                         </b>
                                                     </td>
-                
-                
+
+
                                                     <td colspan="2" class="th_color">
                                                         <b class="text-uppercase" style="font-size: 14px;">
                                                             <?php echo $previous_year; ?> YTD ADJUSTMENT
                                                             <?php echo $totaladjpreviousyr; ?>
-                                                            <?php 
+                                                            <?php
                                                             !empty($childreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
                                                             ? $childreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
                                                             '0'; ?>
                                                         </b>
                                                     </td>
-                
+
                                                     <td colspan="2" class="th_color">
                                                         <b class="text-uppercase" style="font-size: 14px;">
                                                             <?php echo $previous_year; ?> YTD RECEIVE
@@ -2254,8 +2254,8 @@
                                                             $childreports['year_arr_sold'][$current_year]['total_sold'] : '0'; ?>
                                                         </b>
                                                     </td>
-                
-                
+
+
                                                     <td colspan="2" class="th_color">
                                                         <b class="text-uppercase" style="font-size: 14px;">
                                                             <?php echo $current_year; ?> YTD ADJUSTMENT
@@ -2292,12 +2292,12 @@
                                                             $TotalAdjustment = $value1 + $value2 + $value3 + $value4 + $value6 + $value7 +
                                                             $value8 + $value5 + $value9;
                                                             ?>
-                
+
                                                             <?php echo $TotalAdjustment; ?>
                                                         </b>
                                                     </td>
-                
-                
+
+
                                                     <td colspan="2" class="th_color">
                                                         <b class="text-uppercase" style="font-size: 14px;">
                                                             <?php echo $current_year; ?> YTD RECEIVE
@@ -2311,9 +2311,9 @@
                                                     <th colspan="2" class="text-center" style="border-right: 1px solid #cdd0d4;">MONTH</th>
                                                     <th colspan="3" class="text-center" style="border-right: 1px solid #cdd0d4;">PREVIOUS YEAR</th>
                                                     <th colspan="3" class="text-center" style="border-right: 2px solid #cdd0d4;">CURRENT YEAR</th>
-                
+
                                                 </tr>
-                
+
                                                 <?php for ($i = 1; $i <= 12; ++$i) { ?> <tr>
                                                     <td colspan="2" style="border-right: 1px solid #cdd0d4;">
                                                         <b><?php echo DateTime::createFromFormat('!m', $i)->format('F'); ?></b>
@@ -2326,20 +2326,20 @@
                                                         STR_PAD_LEFT)]['total_receive'])) { ?>
                                                         (<?php echo $previous_year; ?>)&nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_sold'])) { ?>
-                
+
                                                         SOLD (<?php echo (int)
                                                         $childreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_sold']; ?>)
-                
-                
+
+
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <!-- Adjustment Deatils -->
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i,
@@ -2350,27 +2350,27 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <!-- qoh Deatils
                                                 <?php if (!empty($childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
                                                     QU Adj (<?php echo (int) $childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
                                                 <?php } else { ?>
                                                     &nbsp;
                                                 <?php } ?>-->
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_receive'])) { ?>
-                
+
                                                         &nbsp;
                                                         Receive (<?php echo (int)
                                                         $childreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_receive']; ?>)
-                
+
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_oqoh'])) { ?>
@@ -2381,7 +2381,7 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2,
                                                         '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
@@ -2392,11 +2392,11 @@
                                                         STR_PAD_LEFT)]['total_adjustment'];
                                                         $adjvaluereset += $adjustvalue;
                                                         ?>
-                
+
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_qoh'])) { ?>
@@ -2410,7 +2410,7 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_inv'])) { ?>
@@ -2424,9 +2424,9 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
-                
-                
+
+
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_pqoh'][$previous_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_pqoh'])) { ?>
@@ -2440,8 +2440,8 @@
                                                         &nbsp;
                                                         <?php } ?>
                                                         <!---->
-                
-                
+
+
                                                         <!------>
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_cqoh'][$previous_year][str_pad($i, 2, '0',
@@ -2455,17 +2455,17 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if ($adjvaluereset != 0) { ?>
                                                         Adj. (<?php
                                                         echo $adjvaluereset;
                                                         $adjvaluereset = 0;
                                                         ?>)
-                
+
                                                         <?php } else { ?>
-                
+
                                                         <?php $adjvaluereset = 0; ?>
-                
+
                                                         <?php } ?>
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
@@ -2477,7 +2477,7 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_ophqoh'])) { ?>
@@ -2488,10 +2488,10 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
-                
+
+
                                                     </td>
-                
+
                                                     <td colspan="3"
                                                         style="border-right: 1px solid #cdd0d4;border-right: 2px solid #cdd0d4;">
                                                         <?php if
@@ -2500,43 +2500,43 @@
                                                         !empty($childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_receive'])) { ?>
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_sold'])) { ?>
-                
+
                                                         SOLD (<?php echo (int)
                                                         $childreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_sold']; ?>)
-                
-                
+
+
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_receive'])) { ?>
-                
+
                                                         &nbsp;
                                                         Receive (<?php echo (int)
                                                         $childreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_receive']; ?>)
-                
+
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_were'])) { ?>
-                
+
                                                         &nbsp;
                                                         WareHouse (<?php echo (int)
                                                         $childreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_were']; ?>)
-                
+
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
-                
+
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_oqoh'])) { ?>
@@ -2547,7 +2547,7 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_adjustment_phy'][$current_year][str_pad($i, 2,
                                                         '0', STR_PAD_LEFT)]['ptotal_adjustment'])) { ?>
@@ -2557,10 +2557,10 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <!-- Adjustment Details -->
-                
-                
+
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2,
                                                         '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
@@ -2571,11 +2571,11 @@
                                                         STR_PAD_LEFT)]['total_adjustment'];
                                                         $adjvaluereset += $adjustvalue;
                                                         ?>
-                
+
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_qoh'])) { ?>
@@ -2589,7 +2589,7 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_inv'])) { ?>
@@ -2603,9 +2603,9 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
-                
-                
+
+
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_pqoh'])) { ?>
@@ -2618,8 +2618,8 @@
                                                         &nbsp;
                                                         <?php } ?>
                                                         <!---->
-                
-                
+
+
                                                         <!------>
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
@@ -2632,18 +2632,18 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if ($adjvaluereset != 0) { ?>
                                                         Adj. (<?php
                                                         echo $adjvaluereset;
                                                         $adjvaluereset = 0;
                                                         ?>)
-                
+
                                                         <?php } else { ?>
-                
+
                                                         <?php $adjvaluereset = 0; ?>
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_pqoh'])) { ?>
@@ -2654,9 +2654,9 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
-                
-                
+
+
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_cqoh'])) { ?>
@@ -2665,7 +2665,7 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_phqoh'])) { ?>
@@ -2676,7 +2676,7 @@
                                                         <?php } else { ?>
                                                         &nbsp;
                                                         <?php } ?>
-                
+
                                                         <?php if
                                                         (!empty($childreports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
                                                         STR_PAD_LEFT)]['total_ophqoh'])) { ?>
@@ -2688,74 +2688,74 @@
                                                         &nbsp;
                                                         <?php } ?>
                                                         <!-- adjustment detail end ------>
-                
-                
+
+
                                                         <!-- old code start
-                
+
                                                 <?php if (!empty($childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
                                                     &nbsp;
                                                     P Adj. (<?php echo (int) $childreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment']; ?>)
                                                 <?php } else { ?>
                                                     &nbsp;
                                                 <?php } ?>
-                
+
                                                  <?php if (!empty($childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
                                                     &nbsp;
                                                     QU Adj (<?php echo (int) $childreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
                                                 <?php } else { ?>
                                                     &nbsp;
                                                 <?php } ?>
-                
+
                                                 <?php if (!empty($childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv'])) { ?>
                                                     &nbsp;
                                                    IR Adj (<?php echo (int) $childreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv']; ?>)
                                                 <?php } else { ?>
                                                     &nbsp;
                                                 <?php } ?>
-                
-                
+
+
                                                 <?php if (!empty($childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh'])) { ?>
                                                     &nbsp;
                                                     Child Update QoH(<?php echo (int) $childreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh']; ?>)
                                                 <?php } else { ?>
                                                     &nbsp;
                                                 <?php } ?>
-                
+
                                                 <?php if (!empty($childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh'])) { ?>
                                                     &nbsp;
                                                     Parent Update QoH(<?php echo (int) $childreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh']; ?>)
                                                 <?php } else { ?>
                                                     &nbsp;
                                                 <?php } ?>
-                
-                
+
+
                                                  old code end -->
-                
+
                                                     </td>
                                                     </tr>
                                                     <?php } ?>
-                
+
                                             </tbody>
-                
+
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                
+
                             <br>
                             <br>
                         <?php } ?>
-                        
+
                     <?php } ?>
                 <?php } ?>
-        
+
                     <!-- child End-- parent start -->
                 <?php if (isset($parentreports)){ ?>
                     <?php foreach ($parentreports as $parentreports) { ?>
                         <?php if (isset($parentreports) && count($parentreports['item_data']) > 0) { ?>
                         <h3>Parent</h3>
                         <?php } ?>
-            
+
                         <?php if (isset($parentreports) && count($parentreports['item_data']) > 0) { ?>
                         <br><br>
                         <div class="row">
@@ -2781,7 +2781,7 @@
                                                         <?php echo
                                                         !empty($parentreports['year_arr_sold'][$previous_year]['total_sold']) ? (int)
                                                         $parentreports['year_arr_sold'][$previous_year]['total_sold'] : '0'; ?>
-            
+
                                                         <?php
                                                         $value1 =
                                                         !empty($parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
@@ -2814,25 +2814,25 @@
                                                         $totaladjpreviousyr = $value1 + $value2 + $value3 + $value4 + $value6 + $value7
                                                         + $value8 + $value9;
                                                         ?>
-            
-            
-            
-            
+
+
+
+
                                                     </b>
                                                 </td>
-            
-            
+
+
                                                 <td colspan="2" class="th_color">
                                                     <b class="text-uppercase" style="font-size: 14px;">
                                                         <?php echo $previous_year; ?> YTD ADJUSTMENT
                                                         <?php echo $totaladjpreviousyr; ?>
-                                                        <?php 
+                                                        <?php
                                                         !empty($parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'])
                                                         ? $parentreports['year_arr_adjustment'][$previous_year]['total_adjustment'] :
                                                         '0'; ?>
                                                     </b>
                                                 </td>
-            
+
                                                 <td colspan="2" class="th_color">
                                                     <b class="text-uppercase" style="font-size: 14px;">
                                                         <?php echo $previous_year; ?> YTD RECEIVE
@@ -2853,8 +2853,8 @@
                                                         $parentreports['year_arr_sold'][$current_year]['total_sold'] : '0'; ?>
                                                     </b>
                                                 </td>
-            
-            
+
+
                                                 <td colspan="2" class="text-left" class="th_color">
                                                     <b class="text-uppercase text-danger" style="font-size: 14px;">
                                                         <?php echo $current_year; ?> YTD ADJUSTMENT
@@ -2891,12 +2891,12 @@
                                                         $TotalAdjustment = $value1 + $value2 + $value3 + $value4 + $value6 + $value7 +
                                                         $value8 + $value5 + $value9;
                                                         ?>
-            
+
                                                         <?php echo $TotalAdjustment; ?>
                                                     </b>
                                                 </td>
-            
-            
+
+
                                                 <td colspan="2" class="th_color">
                                                     <b class="text-uppercase text-danger" style="font-size: 14px;">
                                                         <?php echo $current_year; ?> YTD RECEIVE
@@ -2912,9 +2912,9 @@
                                                     Year</th>
                                                 <th colspan="3" class="text-center" style="border-right: 2px solid #cdd0d4;">Current
                                                     Year</th>
-            
+
                                             </tr>
-            
+
                                             <?php for ($i = 1; $i <= 12; ++$i) { ?> <tr>
                                                 <td colspan="2" style="border-right: 1px solid #cdd0d4;">
                                                     <b><?php echo DateTime::createFromFormat('!m', $i)->format('F'); ?></b>
@@ -2927,20 +2927,20 @@
                                                     STR_PAD_LEFT)]['total_receive'])) { ?>
                                                     (<?php echo $previous_year; ?>)&nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_sold'])) { ?>
-            
+
                                                     SOLD (<?php echo (int)
                                                     $parentreports['month_year_arr_sold'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_sold']; ?>)
-            
-            
+
+
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <!-- Adjustment Deatils -->
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_adjustment_phy'][$previous_year][str_pad($i,
@@ -2951,27 +2951,27 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <!-- qoh Deatils
                                             <?php if (!empty($parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
                                                 QU Adj (<?php echo (int) $parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>-->
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive'])) { ?>
-            
+
                                                     &nbsp;
                                                     Receive (<?php echo (int)
                                                     $parentreports['month_year_arr_receive'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive']; ?>)
-            
+
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_oqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_oqoh'])) { ?>
@@ -2982,7 +2982,7 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_adjustment'][$previous_year][str_pad($i, 2,
                                                     '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
@@ -2993,11 +2993,11 @@
                                                     STR_PAD_LEFT)]['total_adjustment'];
                                                     $adjvaluereset += $adjustvalue;
                                                     ?>
-            
+
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_qoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_qoh'])) { ?>
@@ -3011,7 +3011,7 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_inv'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_inv'])) { ?>
@@ -3025,9 +3025,9 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
-            
-            
+
+
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_pqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_pqoh'])) { ?>
@@ -3041,8 +3041,8 @@
                                                     &nbsp;
                                                     <?php } ?>
                                                     <!---->
-            
-            
+
+
                                                     <!------>
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_cqoh'][$previous_year][str_pad($i, 2, '0',
@@ -3056,17 +3056,17 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if ($adjvaluereset != 0) { ?>
                                                     Adj. (<?php
                                                     echo $adjvaluereset;
                                                     $adjvaluereset = 0;
                                                     ?>)
-            
+
                                                     <?php } else { ?>
-            
+
                                                     <?php $adjvaluereset = 0; ?>
-            
+
                                                     <?php } ?>
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_phqoh'][$previous_year][str_pad($i, 2, '0',
@@ -3078,7 +3078,7 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_ophqoh'][$previous_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_ophqoh'])) { ?>
@@ -3089,10 +3089,10 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
-            
+
+
                                                 </td>
-            
+
                                                 <td colspan="3"
                                                     style="border-right: 1px solid #cdd0d4;border-right: 2px solid #cdd0d4;">
                                                     <?php if
@@ -3101,43 +3101,43 @@
                                                     !empty($parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive'])) { ?>
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_sold'])) { ?>
-            
+
                                                     SOLD (<?php echo (int)
                                                     $parentreports['month_year_arr_sold'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_sold']; ?>)
-            
-            
+
+
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive'])) { ?>
-            
+
                                                     &nbsp;
                                                     Receive (<?php echo (int)
                                                     $parentreports['month_year_arr_receive'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_receive']; ?>)
-            
+
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_were'])) { ?>
-            
+
                                                     &nbsp;
                                                     WareHouse (<?php echo (int)
                                                     $parentreports['month_year_arr_were'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_were']; ?>)
-            
+
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
-            
+
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_oqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_oqoh'])) { ?>
@@ -3148,7 +3148,7 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_adjustment_phy'][$current_year][str_pad($i,
                                                     2, '0', STR_PAD_LEFT)]['ptotal_adjustment'])) { ?>
@@ -3158,10 +3158,10 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <!-- Adjustment Details -->
-            
-            
+
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2,
                                                     '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
@@ -3172,11 +3172,11 @@
                                                     STR_PAD_LEFT)]['total_adjustment'];
                                                     $adjvaluereset += $adjustvalue;
                                                     ?>
-            
+
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_qoh'])) { ?>
@@ -3190,7 +3190,7 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_inv'])) { ?>
@@ -3204,9 +3204,9 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
-            
-            
+
+
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_pqoh'])) { ?>
@@ -3219,8 +3219,8 @@
                                                     &nbsp;
                                                     <?php } ?>
                                                     <!---->
-            
-            
+
+
                                                     <!------>
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0',
@@ -3234,17 +3234,17 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if ($adjvaluereset != 0) { ?>
                                                     Adj. (<?php
                                                     echo $adjvaluereset;
                                                     $adjvaluereset = 0;
                                                     ?>)
-            
+
                                                     <?php } else { ?>
-            
+
                                                     <?php $adjvaluereset = 0; ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_pqoh'])) { ?>
@@ -3255,7 +3255,7 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php } ?>
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_phqoh'][$current_year][str_pad($i, 2, '0',
@@ -3267,7 +3267,7 @@
                                                     <?php } else { ?>
                                                     &nbsp;
                                                     <?php } ?>
-            
+
                                                     <?php if
                                                     (!empty($parentreports['month_year_arr_ophqoh'][$current_year][str_pad($i, 2, '0',
                                                     STR_PAD_LEFT)]['total_ophqoh'])) { ?>
@@ -3279,67 +3279,67 @@
                                                     &nbsp;
                                                     <?php } ?>
                                                     <!-- adjustment detail end ------>
-            
-            
+
+
                                                     <!-- old code start
-            
+
                                             <?php if (!empty($parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment'])) { ?>
                                                 &nbsp;
                                                 P Adj. (<?php echo (int) $parentreports['month_year_arr_adjustment'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_adjustment']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>
-            
+
                                              <?php if (!empty($parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh'])) { ?>
                                                 &nbsp;
                                                 QU Adj (<?php echo (int) $parentreports['month_year_arr_qoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_qoh']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>
-            
+
                                             <?php if (!empty($parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv'])) { ?>
                                                 &nbsp;
                                                IR Adj (<?php echo (int) $parentreports['month_year_arr_inv'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_inv']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>
-            
-            
+
+
                                             <?php if (!empty($parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh'])) { ?>
                                                 &nbsp;
                                                 Child Update QoH(<?php echo (int) $parentreports['month_year_arr_pqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_pqoh']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>
-            
+
                                             <?php if (!empty($parentreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh'])) { ?>
                                                 &nbsp;
                                                 Parent Update QoH(<?php echo (int) $parentreports['month_year_arr_cqoh'][$current_year][str_pad($i, 2, '0', STR_PAD_LEFT)]['total_cqoh']; ?>)
                                             <?php } else { ?>
                                                 &nbsp;
                                             <?php } ?>
-            
-            
+
+
                                              old code end -->
-            
+
                                                 </td>
                                                 </tr>
                                                 <?php } ?>
-            
+
                                         </tbody>
-            
+
                                     </table>
                                 </div>
                             </div>
                         </div>
-            
+
                         <br>
                         <br>
                         <?php } ?>
                     <?php } ?>
                 <?php } ?>
                     <!---parent end --->
-        
+
                 <?php if (isset($reports) && count($reports['item_data']) > 0) { ?>
                     <div class="row">
                         <div class="col-md-12" id="item_movement_by_date_selection">
@@ -3388,16 +3388,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-        
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-        
+
                 <?php } ?>
             </div>
-            
+
             <div class="tab-pane" id="level_pricing_tab">
               <div class="mytextdiv">
                 <div class="mytexttitle font-weight-bold text-uppercase">
@@ -3405,18 +3405,18 @@
                 </div>
                 <div class="divider font-weight-bold"></div>
               </div>
-               
+
               <div class="py-3">
                   <div class="row">
                       <div class="col-md-12 mx-auto">
-                          
+
                           <div class="form-group row">
                               <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputFirstname" class="p-2 float-right text-uppercase">Cost&nbsp;&nbsp;</label>
                                   </div>
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                      
+
                                     <input type="text" value="<?php echo isset($data['new_costprice']) && !empty($data['new_costprice']) ? number_format((float)$data['new_costprice'], 2) : ''; ?>" placeholder="New Cost" id="new_cost" class="form-control adjustment-fields" readonly/>
                                   </div>
                               </div>
@@ -3430,22 +3430,22 @@
                                   <input type="text" value="<?php echo isset($data['dunitprice']) ? $data['dunitprice'] : ''; ?>" id="dunit_price" class="form-control adjustment-fields" readonly/>
                                 </div>
                               </div>
-                              
+
                           </div>
-                          
+
                       </div>
                   </div>
 
                   <div class="row">
                       <div class="col-md-12 mx-auto">
-                          
+
                           <div class="form-group row">
                               <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputFirstname" class="p-2 float-right text-uppercase">Level 2 Price</label>
                                   </div>
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                      
+
                                     <input type="text" class="form-control adjustment-fields" name="nlevel2" value="<?php echo isset($data['nlevel2']) ? $data['nlevel2'] : ''; ?>" placeholder="Level 2 Price" id="tab_input_level2price" />
                                   </div>
                               </div>
@@ -3460,30 +3460,30 @@
                                 </div>
                               </div>
                               <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                  
+
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                   <label for="inputLastname" class="p-2 float-right text-uppercase">Level 4 Price</label>
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                  
+
                                   <input type="text" name="nlevel4" value="<?php echo isset($data['nlevel4']) ? $data['nlevel4'] : ''; ?>" placeholder="Level 4 Price" id="tab_input_level4price" class="form-control adjustment-fields"/>
                                 </div>
                               </div>
                           </div>
-                          
+
                       </div>
                   </div>
 
                   <div class="row">
                       <div class="col-md-12 mx-auto">
-                          
+
                           <div class="form-group row">
                               <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                       <label for="inputFirstname" class="p-2 float-right text-uppercase">Gross Profit(%)</label>
                                   </div>
                                   <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                      
+
                                     <span style="display: inline-block;width: 85%;"><input type="text" name="gross_profit2" value="" placeholder="" id="tab-gross-profit2" class="form-control adjustment-fields" readonly /></span>
                                     <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn_l2"><button class="btn btn-sm btn-info" title="">..</button></span>
                                   </div>
@@ -3500,30 +3500,30 @@
                                 </div>
                               </div>
                               <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
-                                  
+
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                   <label for="inputLastname" class="p-2 float-right text-uppercase">Gross Profit(%)</label>
                                 </div>
                                 <div class="col-6 col-md-6 col-sm-6 col-lg-6">
-                                  
+
                                   <span style="display: inline-block;width: 85%;"><input type="text" name="gross_profit4" value="" placeholder="" id="tab-gross-profit4" class="form-control adjustment-fields" readonly /></span>
                                   <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn_l4"><button class="btn btn-sm btn-info" title="">..</button></span>
                                 </div>
                               </div>
                           </div>
-                          
+
                       </div>
                   </div>
               </div>
-                
+
             </div>
-            
+
         </div>
-        
+
       </div>
     </div>
   </div>
-  
+
 </div>
 
 <?php if(session()->get('hq_sid') == 1){ ?>
@@ -3566,9 +3566,9 @@
               <div class="modal-header">
                 <h6 class="modal-title">Select the stores in which you want to add the Items:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-                
+
               </div>
-            
+
               <div class="modal-body">
                  <table class="table promotionview">
                     <thead id="table_green_header_tag">
@@ -3582,7 +3582,7 @@
                         </tr>
                     </thead>
                     <tbody id="new_item_data_stores">
-                        
+
                     </tbody>
                 </table>
               </div>
@@ -3591,7 +3591,7 @@
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
               </div>
             </div>
-        
+
           </div>
         </div>
     <?php } ?>
@@ -3606,7 +3606,7 @@
                 <h6 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
               </div>
-            
+
               <div class="modal-body">
                  <table class="table promotionview">
                     <thead id="table_green_header_tag">
@@ -3638,7 +3638,7 @@
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
               </div>
             </div>
-        
+
           </div>
         </div>
     <div id="deleteAlaisModal" class="modal fade" role="dialog">
@@ -3648,9 +3648,9 @@
               <div class="modal-header">
                 <h6 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-                
+
               </div>
-            
+
               <div class="modal-body">
                  <table class="table promotionview">
                     <thead id="table_green_header_tag">
@@ -3671,7 +3671,7 @@
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
               </div>
             </div>
-        
+
           </div>
         </div>
 <?php } ?>
@@ -3684,9 +3684,9 @@
               <div class="modal-header">
                 <h6 class="modal-title">Select the stores in which you want to add the Items Alias Code:</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-                
+
               </div>
-            
+
               <div class="modal-body">
                  <table class="table promotionview">
                     <thead id="table_green_header_tag">
@@ -3707,7 +3707,7 @@
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
               </div>
             </div>
-        
+
           </div>
         </div>
     <div id="editLotMatrixModal" class="modal fade" role="dialog">
@@ -3717,7 +3717,7 @@
               <div class="modal-header">
                 <h6 class="modal-title">Select the stores in which you want to update the items: </h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                
+
               </div>
               <div class="modal-body">
                  <table class="table promotionview">
@@ -3783,9 +3783,9 @@
                 <h4 class="modal-title">In the following stores this vendor is not present.</h4>
                 <h5>Do you want to Add?</h5>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-                
+
               </div>
-            
+
               <div class="modal-body">
                  <table class="table promotionview">
                     <thead id="table_green_header_tag">
@@ -3806,10 +3806,10 @@
                 <button id="cancel_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Cancel</button>
               </div>
             </div>
-        
+
           </div>
         </div>
-        
+
     <?php if(session()->get('hq_sid') == 1){ ?>
         <div id="vendorAssignModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -3818,9 +3818,9 @@
               <div class="modal-header">
                 <h6 class="modal-title">Select the stores in which you want assign vendors.</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-                
+
               </div>
-            
+
               <div class="modal-body">
                  <table class="table promotionview">
                     <thead id="table_green_header_tag">
@@ -3840,7 +3840,7 @@
                 <button id="vendor_assign_btn" class="btn btn-success basic-button-small" data-dismiss="modal">Assign</button>
               </div>
             </div>
-        
+
           </div>
         </div>
         <div id="vendorAssignUpdateModal" class="modal fade" role="dialog">
@@ -3850,7 +3850,7 @@
               <div class="modal-header">
                 <h6 class="modal-title">Select the stores in which you want assign vendors.</h6>
                 <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-                
+
               </div>
               <div class="modal-body">
                  <table class="table promotionview">
@@ -3871,7 +3871,7 @@
                 <button id="vendor_itemcode_update" class="btn btn-success basic-button-small" data-dismiss="modal">Update</button>
               </div>
             </div>
-        
+
           </div>
         </div>
     <?php } ?>
@@ -3888,7 +3888,7 @@
   .padding-left-right{
     padding: 0 2% 0 2%;
   }
-  
+
     .th_color{
         background-color: #474c53 !important;
         color: #fff;
@@ -3898,14 +3898,14 @@
     float: right;
     margin-right: -35px;
     margin-top: -30px;
-    cursor: pointer !important; 
+    cursor: pointer !important;
     position: relative;
     z-index: 10;
   }
   .add_new_administrations i{
-    cursor: pointer !important; 
+    cursor: pointer !important;
   }
-  
+
   /*-----for remove up/down arrows from input type number--------*/
   /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
@@ -3918,12 +3918,12 @@
     input[type=number] {
         -moz-appearance: textfield;
     }
-    
+
     .disabled {
-        pointer-events:none; 
- 
+        pointer-events:none;
+
     }
-  
+
 </style>
 
 <!-- <script src = "https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
@@ -3945,8 +3945,8 @@
         reader.readAsDataURL(input.files[0]);
     }
   }
-  
-  
+
+
   <?php if(session()->get('hq_sid') == 1){  ?>
     $("#ivendorid").change(function(){
         var vsuppliercode = $("#ivendorid").val();
@@ -3982,7 +3982,7 @@
           });
     });
 <?php } ?>
-    
+
 var vendorStores = [];
 $('#selectAllCheckboxVendor').click(function(){
     if($('#selectAllCheckboxVendor').is(":checked")){
@@ -3991,16 +3991,16 @@ $('#selectAllCheckboxVendor').click(function(){
         $( ".vendorstores" ).prop("checked", false );
     }
 });
-        
-        
+
+
 $("#vendor_save_btn").click(function(){
-    $.each($('input[name="vendorstores"]:checked'), function(){            
+    $.each($('input[name="vendorstores"]:checked'), function(){
         vendorStores.push($(this).val());
     });
     console.log(vendorStores);
     var vsuppliercode = $("#ivendorid").val();
     var d = JSON.stringify({ stores_hq: vendorStores, vendorecode:vsuppliercode});
-    
+
     vendorStores = [];
     $.ajax({
         url : "<?php echo url('/item/addVendorsFromitems'); ?>",
@@ -4015,9 +4015,9 @@ $("#vendor_save_btn").click(function(){
            alert("succesfully added vendors in the selected stores");
         },
     });
-  
+
 });
-    
+
 $("#closeBtn").click(function(){
     $("div#divLoading").removeClass('show');
 });
@@ -4033,7 +4033,7 @@ $("#closeBtn").click(function(){
 
 <script type="text/javascript">
     $(document).on('change', 'select[name="vitemtype"]', function(event) {
-      event.preventDefault(); 
+      event.preventDefault();
       if($(this).val() == 'Lot Matrix'){
           $('#input-sellingunit').attr('readonly', 'readonly');
           $('.notLottery').show();
@@ -4050,9 +4050,9 @@ $("#closeBtn").click(function(){
 
     $(document).on('keyup', '#input-unitpercase', function(event) {
         event.preventDefault();
-    
+
         var unitpercase = $(this).val();
-    
+
         if($('select[name="vitemtype"]').val() == 'Lot Matrix'){
           if(unitpercase == ''){
             $('#input-sellingunit').val('');
@@ -4061,13 +4061,13 @@ $("#closeBtn").click(function(){
             $('#input-sellingunit').val($(this).val());
           }
         }
-    
+
         var avg_case_cost = $('#input-avg_case_cost').val();
-    
+
         if(avg_case_cost == ''){
           avg_case_cost = 0;
         }
-    
+
         var unitcost = '0.0000';
         if(unitpercase != ''){
           var unitcost = avg_case_cost / unitpercase;
@@ -4075,14 +4075,14 @@ $("#closeBtn").click(function(){
         }
 
         $('#input-unitcost').val(unitcost);
-    
+
         if(unitpercase!= '' && avg_case_cost != '' && $('#input-Selling Price').val() !=''){
           var sell_price = $('#input-Selling-Price').val();
-          
-          
+
+
           var buyDown = $('input[name="ndiscountper"]').val();
           var per = sell_price - ($('#input-unitcost').val()-buyDown);
-    
+
           if(sell_price == 0 || sell_price == ''){
             sell_price = 1;
           }
@@ -4092,11 +4092,11 @@ $("#closeBtn").click(function(){
           }else{
             per = 0;
           }
-    
+
           var pro_margin = ((per/sell_price) * 100).toFixed(2);
         //   $('#input-profit-margin').val(pro_margin);
         }
-        
+
     });
 
     $(document).on('keypress', '#nbottledepositamt', function(event) {
@@ -4104,7 +4104,7 @@ $("#closeBtn").click(function(){
     });
 
     $(document).on('keyup', '#input-Selling_Price', function(event) {
-        
+
         this.value = this.value.match(/^\d+\.?\d{0,2}/);
 
         var buyDown = $('input[name="ndiscountper"]').val();
@@ -4118,9 +4118,9 @@ $("#closeBtn").click(function(){
         var level3_gross_profit;
         var level4_gross_profit;
         var sellingunit = $('#input-sellingunit').val();
-                
+
         var unitcost = parseFloat(new_costprice/sellingunit).toFixed(2);
-        
+
         if(buyDown != ''){
             gross_profit = selling_price - (unitcost - buyDown);
             level2_gross_profit = level2_selling_price - (unitcost - buyDown);
@@ -4132,42 +4132,42 @@ $("#closeBtn").click(function(){
             level3_gross_profit = level3_selling_price - unitcost;
             level4_gross_profit = level4_selling_price - unitcost;
         }
-        
+
         var prof_mar = ((gross_profit/selling_price)*100);
         var prof_mar2 = ((level2_gross_profit/level2_selling_price)*100);
         var prof_mar3 = ((level3_gross_profit/level3_selling_price)*100);
         var prof_mar4 = ((level4_gross_profit/level4_selling_price)*100);
-        
+
         if(selling_price != '' && selling_price != 0){
             $('input[name="gross_profit"]').val(prof_mar.toFixed(2));
         }else{
-            $('input[name="gross_profit"]').val();   
+            $('input[name="gross_profit"]').val();
         }
-        if(level2_selling_price != ''){ 
+        if(level2_selling_price != ''){
             $('#input-gross-profit2').val(prof_mar2.toFixed(2));
         }
         if(level3_selling_price != ''){
             $('#input-gross-profit3').val(prof_mar3.toFixed(2));
         }
         if(level4_selling_price != ''){
-            $('#input-gross-profit4').val(prof_mar4.toFixed(2));  
+            $('#input-gross-profit4').val(prof_mar4.toFixed(2));
         }
-        
+
         if(level2_selling_price = '' || level2_selling_price == 0){
             $('#input-level2price').val(selling_price);
         }
-        
+
         if(level3_selling_price = '' || level3_selling_price == 0){
             $('#input-level3price').val(selling_price);
         }
-        
+
         if(level4_selling_price = '' || level4_selling_price == 0){
             $('#input-level4price').val(selling_price);
         }
-        
+
         $('#dunit_price').val(selling_price);
     });
-  
+
   $(document).on('keyup', '#input_buydown', function(event) {
     event.preventDefault();
 
@@ -4181,11 +4181,11 @@ $("#closeBtn").click(function(){
     var level2_gross_profit;
     var level3_gross_profit;
     var level4_gross_profit;
-    
+
     var sellingunit = $('#input-sellingunit').val();
-            
+
     var unitcost = parseFloat(new_costprice/sellingunit).toFixed(2);
-    
+
     if(buyDown != ''){
         gross_profit = selling_price - (unitcost - buyDown);
         level2_gross_profit = level2_selling_price - (unitcost - buyDown);
@@ -4197,19 +4197,19 @@ $("#closeBtn").click(function(){
         level3_gross_profit = level3_selling_price - unitcost;
         level4_gross_profit = level4_selling_price - unitcost;
     }
-    
+
     var prof_mar = ((gross_profit/selling_price)*100);
     var prof_mar2 = ((level2_gross_profit/level2_selling_price)*100);
     var prof_mar3 = ((level3_gross_profit/level3_selling_price)*100);
     var prof_mar4 = ((level4_gross_profit/level4_selling_price)*100);
-    
+
     $('input[name="gross_profit"]').val(prof_mar.toFixed(2));
     $('#input-gross-profit2').val(prof_mar2.toFixed(2));
     $('#input-gross-profit3').val(prof_mar3.toFixed(2));
     $('#input-gross-profit4').val(prof_mar4.toFixed(2));
   });
-  
-  
+
+
 </script>
 
 <script type="text/javascript">
@@ -4218,15 +4218,15 @@ $("#closeBtn").click(function(){
     <?php if(session()->get('hq_sid') == 1){  ?>
         $('#aliaModalStores').modal('show');
     <?php  } else { ?>
-    
+
         var sid = "<?php echo $data['sid'];?>";
         var url = $(this).attr('action');
         var data = {};
-    
+
         data['vitemcode']  = $(this).find('input[name=vitemcode]').val();
         data['vsku']  = $(this).find('input[name=vsku]').val();
         data['valiassku']  = $(this).find('input[name=valiassku]').val();
-    
+
         $.ajax({
             url : url,
             headers: {
@@ -4242,23 +4242,23 @@ $("#closeBtn").click(function(){
                     $('#errorAliasModal').modal('show');
                 }else{
                     $('#success_alias').html('<strong>'+ data.success +'</strong>');
-                    $('#successAliasModal').modal('show');   
+                    $('#successAliasModal').modal('show');
                 }
-                $.cookie("tab_selected", 'alias_code_tab'); 
+                $.cookie("tab_selected", 'alias_code_tab');
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { 
-                var  response_error = $.parseJSON(xhr.responseText); 
+            error: function(xhr) {
+                var  response_error = $.parseJSON(xhr.responseText);
                 var error_show = '';
                 if(response_error.error){
                     error_show = response_error.error;
             }else if(response_error.validation_error){
                 error_show = response_error.validation_error[0];
             }
-    
+
             $('#error_alias').html('<strong>'+ error_show +'</strong>');
             $('#errorAliasModal').modal('show');
             return false;
@@ -4267,9 +4267,9 @@ $("#closeBtn").click(function(){
         return false;
     <?php } ?>
   });
-  
-  
-    var aliasStores = []; 
+
+
+    var aliasStores = [];
     aliasStores.push("{{ session()->get('sid') }}");
     $('#selectAllCheckboxAlias').click(function(){
         if($('#selectAllCheckboxAlias').is(":checked")){
@@ -4277,24 +4277,24 @@ $("#closeBtn").click(function(){
         }else{
             $( ".stores" ).prop("checked", false );
         }
-    }); 
-        
+    });
+
     $('#alias_save_btn').click(function(){
         $('#aliaModalStores').modal('hide');
-        $.each($("input[name='stores']:checked"), function(){            
+        $.each($("input[name='stores']:checked"), function(){
             aliasStores.push($(this).val());
         });
         $("#alias_stores_hq").val(aliasStores);
-        
+
         var sid = "<?php echo $data['sid'];?>";
         var url = '<?php echo $data['add_alias_code']; ?>';
         var vitemcode = '<?php echo isset($data['vbarcode']) ? $data['vbarcode'] : ''; ?>';
         var vsku = '<?php echo isset($data['vbarcode']) ? $data['vbarcode'] : ''; ?>';
         var stores_hq = $("#alias_stores_hq").val();
         var valiassku = $("#valiassku").val();
-       
+
         var data = {vitemcode: vitemcode, vsku: vsku, stores_hq: stores_hq, valiassku: valiassku};
-    
+
         $.ajax({
             url : url,
             headers: {
@@ -4305,30 +4305,30 @@ $("#closeBtn").click(function(){
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
-                
+
                 if(data.error){
                     $('#error_alias').html('<strong>'+ data.error +'</strong>');
                     $('#errorAliasModal').modal('show');
                 }else{
                     $('#success_alias').html('<strong>'+ data.success +'</strong>');
-                    $('#successAliasModal').modal('show');   
+                    $('#successAliasModal').modal('show');
                 }
-                
-                $.cookie("tab_selected", 'alias_code_tab'); 
+
+                $.cookie("tab_selected", 'alias_code_tab');
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { 
-                var  response_error = $.parseJSON(xhr.responseText); 
+            error: function(xhr) {
+                var  response_error = $.parseJSON(xhr.responseText);
                 var error_show = '';
                 if(response_error.error){
                     error_show = response_error.error;
             }else if(response_error.validation_error){
                 error_show = response_error.validation_error[0];
             }
-    
+
             $('#error_alias').html('<strong>'+ error_show +'</strong>');
             $('#errorAliasModal').modal('show');
             return false;
@@ -4341,7 +4341,7 @@ $("#closeBtn").click(function(){
 <!-- Modal -->
   <div class="modal fade" id="successAliasModal" role="dialog">
     <div class="modal-dialog modal-sm">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header" style="border-bottom:none;">
@@ -4353,12 +4353,12 @@ $("#closeBtn").click(function(){
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>
   <div class="modal fade" id="errorAliasModal" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog modal-sm">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header" style="border-bottom:none;">
@@ -4370,11 +4370,11 @@ $("#closeBtn").click(function(){
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>
 
-  
+
 <script type="text/javascript">
   $(document).on('submit', 'form#form-item-alias-list', function(event) {
     event.preventDefault();
@@ -4392,8 +4392,8 @@ $("#closeBtn").click(function(){
     {
       data[i] = parseInt($(this).val());
     });
-    
-    
+
+
     <?php if(session()->get('hq_sid') == 1){?>
         $("div#divLoading").removeClass('show');
         $.ajax({
@@ -4451,36 +4451,36 @@ $("#closeBtn").click(function(){
                         $('#success_alias').html('<strong>'+ data.success +'</strong>');
                         $('#successAliasModal').modal('show');
                     }
-                    
-                    $.cookie("tab_selected", 'alias_code_tab'); 
+
+                    $.cookie("tab_selected", 'alias_code_tab');
                     setTimeout(function(){
                         window.location.reload();
                         $("div#divLoading").addClass('show');
                     }, 3000);
                 },
-                error: function(xhr) { 
-                    var  response_error = $.parseJSON(xhr.responseText); 
-                  
+                error: function(xhr) {
+                    var  response_error = $.parseJSON(xhr.responseText);
+
                     var error_show = '';
-            
+
                     if(response_error.error){
                         error_show = response_error.error;
                     }else if(response_error.validation_error){
                         error_show = response_error.validation_error[0];
                     }
-            
+
                     $('#error_alias').html('<strong>'+ error_show +'</strong>');
                     $('#errorAliasModal').modal('show');
                     return false;
                 }
         });
-     
+
     <?php  } ?>
-    
+
     return false;
   });
-  
-  
+
+
     var stores_hq_delete_alias = [];
     stores_hq_delete_alias.push("{{ session()->get('sid') }}");
     $('#deleteAliasSelectAllCheckbox').click(function(){
@@ -4490,25 +4490,25 @@ $("#closeBtn").click(function(){
             $( ".deletealiasstores" ).prop("checked", false );
         }
     });
-    
+
     $("#delete_alias_btn").click(function(){
-        $.each($("input[name='deletealiasstores']:checked"), function(){            
+        $.each($("input[name='deletealiasstores']:checked"), function(){
             stores_hq_delete_alias.push($(this).val());
         });
         var url = '<?php echo url('/item/delete_alias_code'); ?>';
         var data = {};
-    
+
         if($("input[name='selected_alias[]']:checked").length == 0){
           $('#error_alias').html('<strong>Select Aliassku to delete</strong>');
           $('#errorAliasModal').modal('show');
           return false;
         }
-    
+
         $("input[name='selected_alias[]']:checked").each(function (i)
         {
           data[i] = parseInt($(this).val());
         });
-    
+
          $.ajax({
                 url : url,
                 headers: {
@@ -4526,24 +4526,24 @@ $("#closeBtn").click(function(){
                         $('#success_alias').html('<strong>'+ data.success +'</strong>');
                         $('#successAliasModal').modal('show');
                     }
-                    
-                    $.cookie("tab_selected", 'alias_code_tab'); 
+
+                    $.cookie("tab_selected", 'alias_code_tab');
                     setTimeout(function(){
                         window.location.reload();
                         $("div#divLoading").addClass('show');
                     }, 3000);
                 },
-                error: function(xhr) { 
-                    var  response_error = $.parseJSON(xhr.responseText); 
-                  
+                error: function(xhr) {
+                    var  response_error = $.parseJSON(xhr.responseText);
+
                     var error_show = '';
-            
+
                     if(response_error.error){
                         error_show = response_error.error;
                     }else if(response_error.validation_error){
                         error_show = response_error.validation_error[0];
                     }
-            
+
                     $('#error_alias').html('<strong>'+ error_show +'</strong>');
                     $('#errorAliasModal').modal('show');
                     return false;
@@ -4650,7 +4650,7 @@ $("#closeBtn").click(function(){
             <div class="col-md-3"></div>
           </div>
           <br>
-          
+
         </div>
         <div class="modal-footer">
           <input type="submit" class="btn button-blue basic-button-small" value="Add">
@@ -4677,7 +4677,7 @@ $("#closeBtn").click(function(){
       $('#npackcost').val(unitcost);
       return false;
     }
-    
+
     var npackcost = 0;
 
     if(ipack != '' && unitcost != ''){
@@ -4690,7 +4690,7 @@ $("#closeBtn").click(function(){
 
       var npackcost = $('#npackcost').val();
       var npackprice = $('#npackprice').val();
-      
+
       var percent = npackprice - npackcost;
 
       if(npackprice == '' || npackprice == 0 ){
@@ -4745,14 +4745,14 @@ $("#closeBtn").click(function(){
     }else{
       $('#npackmargin').val('');
     }
-  
+
   });
 
 
   $(document).on('keyup', '.input_npackprice', function(event) {
       event.preventDefault();
       $(this).closest('tr').find('.selected_lot_matrix_checkbox').attr('checked', 'checked');
-        
+
       var input_npackprice = $(this).val();
 
       var input_npackcost = $(this).closest('tr').find('.input_npackcost').val();
@@ -4779,17 +4779,17 @@ $("#closeBtn").click(function(){
   $(document).on('keypress', '#input_npackprice', function(event){
       this.value = this.value.match(/^\d+\.?\d{0,1}/);
   });
-    
+
     $(document).on('keypress', '.input_isequence, .input_npackcost, .input_vdesc, .input_vpackname', function(event){
-        
+
         $(this).closest('tr').find('.selected_lot_matrix_checkbox').prop('checked', 'checked');
-        
+
     });
-    
+
     $(document).on('keypress', '.input_vvendoritemcode', function(event){
-        
+
         $(this).closest('tr').find('.item_vendor_ids').prop('checked', 'checked');
-        
+
     });
 
 </script>
@@ -4797,7 +4797,7 @@ $("#closeBtn").click(function(){
 
 <script type="text/javascript">
   $(document).on('submit', 'form#add_lot_matrix', function(event) {
-    
+
     event.preventDefault();
     var sid = "<?php echo $data['sid'];?>";
     var url = $(this).attr('action');
@@ -4814,10 +4814,10 @@ $("#closeBtn").click(function(){
     data['npackmargin'] = $('form#add_lot_matrix').find('input[name="npackmargin"]').val();
     if(parseFloat(data['npackcost']) > parseFloat(data['npackprice']) ){
          $("div#divLoading").removeClass('show');
-          bootbox.alert({ 
+          bootbox.alert({
             size: 'small',
-            title: "  ", 
-            message: "Cost Is Higher Than Price!", 
+            title: "  ",
+            message: "Cost Is Higher Than Price!",
             callback: function(){}
           });
          return false;
@@ -4881,34 +4881,34 @@ $("#closeBtn").click(function(){
                     $('#addLotItemModal').modal('hide');
                     $('#errorAliasModal').modal('show');
                 }
-                $.cookie("tab_selected", 'lot_matrix_tab'); 
+                $.cookie("tab_selected", 'lot_matrix_tab');
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { 
-                var  response_error = $.parseJSON(xhr.responseText); 
-          
+            error: function(xhr) {
+                var  response_error = $.parseJSON(xhr.responseText);
+
                 var error_show = '';
-              
+
                 if(response_error.error){
                     error_show = response_error.error;
                 }else if(response_error.validation_error){
                     error_show = response_error.validation_error[0];
                 }
-        
+
                 $('#error_alias').html('<strong>'+ error_show +'</strong>');
                 $('#errorAliasModal').modal('show');
                 return false;
             }
         });
-        
+
     <?php } ?>
     return false;
-    
+
   });
-  
+
     var stores_hq_lot = [];
     stores_hq_lot.push("{{ session()->get('sid') }}");
     $('#lomatrixSelectAllCheckboxAlias').click(function(){
@@ -4918,9 +4918,9 @@ $("#closeBtn").click(function(){
             $( ".lotstores" ).prop("checked", false );
         }
     });
-  
+
   $("#lot_matrix_save_btn").click(function(){
-      
+
         var sid = "<?php echo $data['sid'];?>";
         var url = '<?php echo url("/item/add_lot_matrix"); ?>';
         var data = {};
@@ -4934,13 +4934,13 @@ $("#closeBtn").click(function(){
         data['npackprice'] = $('form#add_lot_matrix').find('input[name="npackprice"]').val();
         data['isequence'] = $('form#add_lot_matrix').find('input[name="isequence"]').val();
         data['npackmargin'] = $('form#add_lot_matrix').find('input[name="npackmargin"]').val();
-        
-        $.each($("input[name='lotstores']:checked"), function(){            
+
+        $.each($("input[name='lotstores']:checked"), function(){
             stores_hq_lot.push($(this).val());
         });
-        
+
         data['stores_hq_lot'] = stores_hq_lot;
-        
+
         $.ajax({
             url : url,
             headers: {
@@ -4960,23 +4960,23 @@ $("#closeBtn").click(function(){
                     $('#addLotItemModal').modal('hide');
                     $('#errorAliasModal').modal('show');
                 }
-                $.cookie("tab_selected", 'lot_matrix_tab'); 
+                $.cookie("tab_selected", 'lot_matrix_tab');
                 setTimeout(function(){
                     window.location.reload();
                     $("div#divLoading").addClass('show');
                 }, 3000);
             },
-            error: function(xhr) { 
-                var  response_error = $.parseJSON(xhr.responseText); 
-          
+            error: function(xhr) {
+                var  response_error = $.parseJSON(xhr.responseText);
+
                 var error_show = '';
-              
+
                 if(response_error.error){
                     error_show = response_error.error;
                 }else if(response_error.validation_error){
                     error_show = response_error.validation_error[0];
                 }
-        
+
                 $('#error_alias').html('<strong>'+ error_show +'</strong>');
                 $('#errorAliasModal').modal('show');
                 return false;
@@ -5002,7 +5002,7 @@ $("#closeBtn").click(function(){
     {
       data[i] = parseInt($(this).val());
     });
-    
+
     <?php if(session()->get('hq_sid') == 1){?>
         $("div#divLoading").removeClass('show');
         $.ajax({
@@ -5052,27 +5052,27 @@ $("#closeBtn").click(function(){
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
-    
+
                 $('#success_alias').html('<strong>'+ data.success +'</strong>');
                 $('#successAliasModal').modal('show');
-                $.cookie("tab_selected", 'lot_matrix_tab'); 
+                $.cookie("tab_selected", 'lot_matrix_tab');
                 setTimeout(function(){
                    window.location.reload();
                    $("div#divLoading").addClass('show');
                 }, 3000);
-         
+
             },
-            error: function(xhr) { 
-                  var  response_error = $.parseJSON(xhr.responseText); 
-                  
+            error: function(xhr) {
+                  var  response_error = $.parseJSON(xhr.responseText);
+
                   var error_show = '';
-            
+
                   if(response_error.error){
                     error_show = response_error.error;
                   }else if(response_error.validation_error){
                     error_show = response_error.validation_error[0];
                   }
-            
+
                   $('#error_alias').html('<strong>'+ error_show +'</strong>');
                   $('#errorAliasModal').modal('show');
                   return false;
@@ -5082,7 +5082,7 @@ $("#closeBtn").click(function(){
 
     return false;
   });
-  
+
     var stores_hq_delete_lot = [];
     stores_hq_delete_lot.push("{{ session()->get('sid') }}");
     $('#deleteLotMatrixSelectAllCheckbox').click(function(){
@@ -5092,22 +5092,22 @@ $("#closeBtn").click(function(){
             $( ".deletelotstores" ).prop("checked", false );
         }
     });
-    
+
     $("#delete_lot_matrix_btn").click(function(){
-        $.each($("input[name='deletelotstores']:checked"), function(){            
+        $.each($("input[name='deletelotstores']:checked"), function(){
             stores_hq_delete_lot.push($(this).val());
         });
-        
+
         var sid = "<?php echo $data['sid'];?>";
         var url = '<?php echo url('/item/delete_lot_matrix'); ?>';
         var data = {};
-    
+
         if($("input[name='selected_lot_matrix[]']:checked").length == 0){
             $('#error_alias').html('<strong>Select Lot Items to delete</strong>');
             $('#errorAliasModal').modal('show');
             return false;
         }
-    
+
         $("input[name='selected_lot_matrix[]']:checked").each(function (i)
         {
           data[i] = parseInt($(this).val());
@@ -5122,41 +5122,41 @@ $("#closeBtn").click(function(){
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
-    
+
                 $('#success_alias').html('<strong>'+ data.success +'</strong>');
                 $('#successAliasModal').modal('show');
-                $.cookie("tab_selected", 'lot_matrix_tab'); 
+                $.cookie("tab_selected", 'lot_matrix_tab');
                 setTimeout(function(){
                    window.location.reload();
                    $("div#divLoading").addClass('show');
                 }, 3000);
-         
+
             },
-            error: function(xhr) { 
-                  var  response_error = $.parseJSON(xhr.responseText); 
-                  
+            error: function(xhr) {
+                  var  response_error = $.parseJSON(xhr.responseText);
+
                   var error_show = '';
-            
+
                   if(response_error.error){
                     error_show = response_error.error;
                   }else if(response_error.validation_error){
                     error_show = response_error.validation_error[0];
                   }
-            
+
                   $('#error_alias').html('<strong>'+ error_show +'</strong>');
                   $('#errorAliasModal').modal('show');
                   return false;
             }
         });
-        
+
     });
 </script>
 
 <script type="text/javascript">
     $(document).on('click',"#save_pack_edit_index", function(){
         $("div#divLoading").removeClass('show');
-        var data = {}; 
-        
+        var data = {};
+
         if($("input[name='selected_lot_matrix[]']:checked").length == 0){
             $('#error_alias').html('<strong>Select Lot Items to Edit</strong>');
             $('#errorAliasModal').modal('show');
@@ -5167,9 +5167,9 @@ $("#closeBtn").click(function(){
         {
           data[i] = parseInt($(this).val());
         });
-        
+
         <?php if(session()->get('hq_sid') == 1){ ?>
-         
+
             $.ajax({
                 url: "<?php echo url('/item/duplicatehqlotedititems'); ?>",
                 method: 'post',
@@ -5210,7 +5210,7 @@ $("#closeBtn").click(function(){
             $("#form-item-lot-matrix-list1").submit();
         <?php } ?>
     });
-    
+
     var stores_hq_edit_lot = [];
     stores_hq_edit_lot.push("{{ session()->get('sid') }}");
     $('#editLotMatrixSelectAllCheckbox').click(function(){
@@ -5220,12 +5220,12 @@ $("#closeBtn").click(function(){
             $( ".editlotstores" ).prop("checked", false );
         }
     });
-    
+
     $("#update_lot_matrix_btn").click(function(){
-        $.each($("input[name='editlotstores']:checked"), function(){            
+        $.each($("input[name='editlotstores']:checked"), function(){
             stores_hq_edit_lot.push($(this).val());
         });
-        
+
         $("#store_hq_for_edit").val(stores_hq_edit_lot);
         $("#form-item-lot-matrix-list1").submit();
     });
@@ -5276,7 +5276,7 @@ $("#closeBtn").click(function(){
 <script type="text/javascript">
 /*  $(document).on('submit', 'form#delete_slab_price_items', function(event) {
     event.preventDefault();
-    
+
     var url = $(this).attr('action');
     var data = {};
 
@@ -5304,16 +5304,16 @@ $("#closeBtn").click(function(){
 
       $('#success_alias').html('<strong>'+ data.success +'</strong>');
       $('#successAliasModal').modal('show');
-      $.cookie("tab_selected", 'slab_price_tab'); 
+      $.cookie("tab_selected", 'slab_price_tab');
       setTimeout(function(){
        window.location.reload();
        $("div#divLoading").addClass('show');
       }, 3000);
-      
+
     },
-    error: function(xhr) { 
-      var  response_error = $.parseJSON(xhr.responseText); 
-      
+    error: function(xhr) {
+      var  response_error = $.parseJSON(xhr.responseText);
+
       var error_show = '';
 
       if(response_error.error){
@@ -5336,16 +5336,16 @@ $("#closeBtn").click(function(){
 /*  $(document).on('submit', 'form#form_add_parent_item', function(event) {
     event.preventDefault();
 
-    
+
     var url = $(this).attr('action');
     var data = {};
-    
+
     var parent_item_id = $(this).find('select[name="parent_item_id"]').val();
     var child_item_id = $(this).find('input[name="child_item_id"]').val();
 
     data['parent_item_id'] = parent_item_id;
     data['child_item_id'] = child_item_id;
-    
+
     $.ajax({
       url : url,
       headers: {
@@ -5359,13 +5359,13 @@ $("#closeBtn").click(function(){
 
       $('#success_alias').html('<strong>'+ data.success +'</strong>');
       $('#successAliasModal').modal('show');
-      $.cookie("tab_selected", 'parent_tab'); 
+      $.cookie("tab_selected", 'parent_tab');
 </script>
 
 <script type="text/javascript">
 /*  $(document).on('submit', 'form#remove_parent_item', function(event) {
     event.preventDefault();
-    
+
     var url = $(this).attr('action');
 
     var data = {};
@@ -5388,7 +5388,7 @@ $("#closeBtn").click(function(){
 
     data['iitemid'] = iitemid;
     data['selected_parent_item_id'] = selected_parent_item_id;
-    
+
     $.ajax({
       url : url,
       headers: {
@@ -5399,19 +5399,19 @@ $("#closeBtn").click(function(){
       contentType: "application/json",
       dataType: 'json',
     success: function(data) {
-      
+
       $('#success_alias').html('<strong>'+ data.success +'</strong>');
       $('#successAliasModal').modal('show');
-      $.cookie("tab_selected", 'parent_tab'); 
+      $.cookie("tab_selected", 'parent_tab');
       setTimeout(function(){
        window.location.reload();
        $("div#divLoading").addClass('show');
       }, 3000);
-      
+
     },
-    error: function(xhr) { 
-      var  response_error = $.parseJSON(xhr.responseText); 
-      
+    error: function(xhr) {
+      var  response_error = $.parseJSON(xhr.responseText);
+
       var error_show = '';
 
       if(response_error.error){
@@ -5433,7 +5433,7 @@ $("#closeBtn").click(function(){
 <script type="text/javascript">
   $(document).ready(function(){
     $('#ui-tooltip-0').hide();
-      $('[data-toggle="tooltip"]').tooltip(); 
+      $('[data-toggle="tooltip"]').tooltip();
       if ((!!$.cookie('tab_selected')) && ($.cookie('tab_selected') != '')) {
         var tab_s = $.cookie('tab_selected');
         if(tab_s == 'alias_code_tab'){
@@ -5445,7 +5445,7 @@ $("#closeBtn").click(function(){
           $('#item_movement_tab').hide();
           $('#level_pricing_tab').hide();
           $('#save_btn_row').hide();
-          
+
         }else if(tab_s == 'lot_matrix_tab'){
           $('#lot_matrix_tab_li').prop('checked', true);
           $('#lot_matrix_tab').show();
@@ -5455,7 +5455,7 @@ $("#closeBtn").click(function(){
           $('#item_movement_tab').hide();
           $('#level_pricing_tab').hide();
           $('#save_btn_row').hide();
-          
+
         }else if(tab_s == 'vendor_tab'){
           $('#vendor_tab_li').prop('checked', true);
           $('#vendor_tab').show();
@@ -5465,7 +5465,7 @@ $("#closeBtn").click(function(){
           $('#item_movement_tab').hide();
           $('#level_pricing_tab').hide();
           $('#save_btn_row').hide();
-          
+
         }else{
           $('#item_tab_li').prop('checked', true);
           $('#item_tab').show();
@@ -5477,9 +5477,9 @@ $("#closeBtn").click(function(){
         }
       } else {
         var tab_selected = "<?= $data['tab_selected']; ?>";
-        
+
         <?php if(isset($data['tab_selected']) && !empty($data['tab_selected'])){?>
-          
+
           <?php if($data['tab_selected'] == 'alias_code_tab'){ ?>
             $('#alias_code_tab_li').prop('checked', true);
             $('#alias_code_tab').show();
@@ -5489,7 +5489,7 @@ $("#closeBtn").click(function(){
             $('#item_movement_tab').hide();
             $('#level_pricing_tab').hide();
             $('#save_btn_row').hide();
-            
+
           <?php }else if($data['tab_selected'] == 'lot_matrix_tab'){ ?>
             $('#lot_matrix_tab_li').prop('checked', true);
             $('#lot_matrix_tab').show();
@@ -5499,7 +5499,7 @@ $("#closeBtn").click(function(){
             $('#item_movement_tab').hide();
             $('#level_pricing_tab').hide();
             $('#save_btn_row').hide();
-            
+
           <?php }else if($data['tab_selected'] == 'vendor_tab'){ ?>
             $('#vendor_tab_li').prop('checked', true);
             $('#vendor_tab').show();
@@ -5509,7 +5509,7 @@ $("#closeBtn").click(function(){
             $('#item_movement_tab').hide();
             $('#level_pricing_tab').hide();
             $('#save_btn_row').hide();
-            
+
           <?php }else { ?>
             $('#item_tab_li').prop('checked', true);
             $('#item_tab').show();
@@ -5520,7 +5520,7 @@ $("#closeBtn").click(function(){
             $('#level_pricing_tab').hide();
           <?php } ?>
 
-        <?php }else{ ?> 
+        <?php }else{ ?>
           $('#item_tab_li').prop('checked', true);
           $('#item_tab').show();
           $('#vendor_tab').hide();
@@ -5530,9 +5530,9 @@ $("#closeBtn").click(function(){
           $('#level_pricing_tab').hide();
         <?php } ?>
       }
-      
-      
-    
+
+
+
       var buyDown = $('input[name="ndiscountper"]').val();
       var new_costprice = $('#input-new_cost').val();
       var selling_price = $('#input-Selling_Price').val();
@@ -5543,11 +5543,11 @@ $("#closeBtn").click(function(){
       var level2_gross_profit;
       var level3_gross_profit;
       var level4_gross_profit;
-      
+
       var sellingunit = $('#input-sellingunit').val();
-              
+
       var unitcost = parseFloat(new_costprice/sellingunit).toFixed(2);
-      
+
       if(buyDown != ''){
           gross_profit = selling_price - (unitcost - buyDown);
           level2_gross_profit = level2_selling_price - (unitcost - buyDown);
@@ -5559,19 +5559,19 @@ $("#closeBtn").click(function(){
           level3_gross_profit = level3_selling_price - unitcost;
           level4_gross_profit = level4_selling_price - unitcost;
       }
-      
+
       var prof_mar = ((gross_profit/selling_price)*100);
       var prof_mar2 = ((level2_gross_profit/level2_selling_price)*100);
       var prof_mar3 = ((level3_gross_profit/level3_selling_price)*100);
       var prof_mar4 = ((level4_gross_profit/level4_selling_price)*100);
       if(new_costprice != '' && new_costprice > 0 ){
-          
+
           if(selling_price != '' & isFinite(prof_mar)){
               $('input[name="gross_profit"]').val(prof_mar.toFixed(2));
           }else{
               $('input[name="gross_profit"]').val('');
           }
-          
+
           if(level2_selling_price != '' && level2_selling_price > 0 ){
               $('#input-gross-profit2').val(prof_mar2.toFixed(2));
               $('#tab-gross-profit2').val(prof_mar2.toFixed(2));
@@ -5579,7 +5579,7 @@ $("#closeBtn").click(function(){
               $('#input-gross-profit2').val();
               $('#tab-gross-profit2').val();
           }
-          
+
           if(level3_selling_price != '' && level3_selling_price > 0 ){
               $('#input-gross-profit3').val(prof_mar3.toFixed(2));
               $('#tab-gross-profit3').val(prof_mar3.toFixed(2));
@@ -5587,7 +5587,7 @@ $("#closeBtn").click(function(){
               $('#input-gross-profit3').val();
               $('#tab-gross-profit3').val();
           }
-          
+
           if(level4_selling_price != '' && level4_selling_price > 0 ){
               $('#input-gross-profit4').val(prof_mar4.toFixed(2));
               $('#tab-gross-profit4').val(prof_mar4.toFixed(2));
@@ -5596,7 +5596,7 @@ $("#closeBtn").click(function(){
               $('#tab-gross-profit4').val();
           }
       }else{
-          
+
           $('input[name="gross_profit"]').val();
           $('#input-gross-profit2').val();
           $('#input-gross-profit3').val();
@@ -5608,27 +5608,27 @@ $("#closeBtn").click(function(){
 
 <script type="text/javascript">
   $(document).on('submit', 'form#form-item1', function(e) {
-    $.cookie("tab_selected", ''); 
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('submit', 'form#form-item-lot-matrix-list1', function() {
-    $.cookie("tab_selected", ''); 
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('submit', 'form#form-item-vendor', function() {
-    $.cookie("tab_selected", ''); 
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('submit', 'form#form-item-vendor-list', function() {
-    $.cookie("tab_selected", ''); 
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('submit', 'form#form-item-slab-price-list', function() {
-    $.cookie("tab_selected", ''); 
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('click', '#cancel_button, #menu li a, .breadcrumb li a', function() {
-    $.cookie("tab_selected", ''); 
+    $.cookie("tab_selected", '');
   });
 
   $(document).on('keypress keyup blur', '#input-unitpercase', function(event) {
@@ -5637,8 +5637,8 @@ $("#closeBtn").click(function(){
     if ((event.which < 48 || event.which > 57)) {
         event.preventDefault();
     }
-    
-  }); 
+
+  });
 
   $(document).on('keypress keyup blur', '.slab_price_iqty', function(event) {
 
@@ -5646,7 +5646,7 @@ $("#closeBtn").click(function(){
     if ((event.which < 48 || event.which > 57)) {
         event.preventDefault();
     }
-    
+
   });
 
   $(document).on('keypress keyup blur', 'input[name="nbottledepositamt"], .slab_price_nprice,.input_npackprice', function(event) {
@@ -5654,8 +5654,8 @@ $("#closeBtn").click(function(){
     if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
       event.preventDefault();
     }
-    
-  });  
+
+  });
 
   $(document).on('keypress keyup blur', 'input[name="iqtyonhand"], input[name="norderqtyupto"],input[name="iqty"],input[name="ipack"],input[name="ireorderpoint"],input[name="isequence"]', function(event) {
 
@@ -5663,8 +5663,8 @@ $("#closeBtn").click(function(){
     if ((event.which < 48 || event.which > 57)) {
         event.preventDefault();
     }
-    
-  }); 
+
+  });
 
 
   $(document).on('keypress keyup blur', 'input[name="dcostprice"],input[name="nlevel2"],input[name="nlevel3"],input[name="nlevel4"],input[name="ndiscountper"],input[name="nprice"],input[name="npackprice"]', function(event) {
@@ -5705,7 +5705,7 @@ $("#closeBtn").click(function(){
         }
       }
     }
-  });  
+  });
 
 </script>
 
@@ -5728,7 +5728,7 @@ $("#closeBtn").click(function(){
   .select2-container--default .select2-selection--single{
     border-radius: 7px !important;
     height: 35px !important;
-    
+
   }
   .select2.select2-container.select2-container--default{
   width: 100% !important;
@@ -5756,7 +5756,7 @@ $("#closeBtn").click(function(){
   $('select[name="subcat_id"]').select2();
   $('select[name="manufacturer_id"]').select2();
   $('select[name="itemPromotionid"]').select2();
-  
+
 </script>
 
 <script type="text/javascript">
@@ -5774,33 +5774,33 @@ $("#closeBtn").click(function(){
 <script type="text/javascript">
   $(document).on('click', '#add_new_category', function(event) {
     event.preventDefault();
-    
+
     var deptCode = $("#dept_code").val();
-    
+
     if(deptCode == ""){
-        
+
         $('#success_alias').html('<strong>Please select a Department !!</strong>');
         $('#successAliasModal').modal('show');
 
         setTimeout(function(){
          $('#successAliasModal').modal('hide');
         }, 3000);
-        
+
     } else {
         $('form#category_add_new_form').find('#add_vcategoryname').val('');
         $('form#category_add_new_form').find('#category_add_vdescription').val('');
-        
+
         $('#category_dept_name').val($("#dept_code option:selected").text());
         $('#category_dept_code').val($("#dept_code").val());
         $('#addModalCatogory').modal('show');
     }
-    
-    
+
+
   });
 
   $(document).on('submit', 'form#category_add_new_form', function(event) {
     event.preventDefault();
-    
+
     if($(this).find('#add_vcategoryname').val() == ''){
       alert('Please enter category name!');
       return false;
@@ -5817,7 +5817,7 @@ $("#closeBtn").click(function(){
     data[0]['vcategorttype'] = $(this).find('select[name="vcategorttype"]').val();
     data[0]['isequence'] = $(this).find('input[name="isequence"]').val();
     data[0]['dept_code'] = $("#dept_code").val();
-    
+
       $.ajax({
         url : url,
         headers: {
@@ -5837,9 +5837,9 @@ $("#closeBtn").click(function(){
          $('#successAliasModal').modal('hide');
         }, 3000);
       },
-      error: function(xhr) { 
-        var  response_error = $.parseJSON(xhr.responseText); 
-        
+      error: function(xhr) {
+        var  response_error = $.parseJSON(xhr.responseText);
+
         var error_show = '';
 
         if(response_error.error){
@@ -5847,23 +5847,23 @@ $("#closeBtn").click(function(){
         }else if(response_error.validation_error){
           error_show = response_error.validation_error[0];
         }
-        
+
         $('#error_alias').html('<strong>'+ error_show +'</strong>');
         $('#errorAliasModal').modal('show');
         return false;
       }
     });
       setTimeout(function(){
-          
+
         var input = {};
         var deptCode = $("#dept_code").val();
         input['dept_code'] = deptCode;
-        
+
         var sid = "<?php echo $data['sid'];?>";
         var url = '<?php echo $data['get_categories']; ?>';
             // url += "&sid="+sid;
-            url = url.replace(/&amp;/g, '&');  
-        
+            url = url.replace(/&amp;/g, '&');
+
         $.ajax({
             url : url,
             headers: {
@@ -5874,7 +5874,7 @@ $("#closeBtn").click(function(){
             contentType: "application/json",
             dataType: 'text json',
             success: function(response) {
-        
+
                 // console.log(response);
                 var category_html = '';
                 if(response.length > 0){
@@ -5883,7 +5883,7 @@ $("#closeBtn").click(function(){
                 // console.log(categoryId);
                 $('#category_code').val(categoryId).trigger('change.select2');
             },
-            error: function(xhr) { 
+            error: function(xhr) {
                 // if error occured
                 // console.log(xhr);
                 return false;
@@ -5896,7 +5896,7 @@ $("#closeBtn").click(function(){
 <!-- Modal Add -->
   <div class="modal fade" id="addModalCatogory" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -5913,7 +5913,7 @@ $("#closeBtn").click(function(){
                       <label for="inputLastname" class="p-2 float-right text-uppercase">Name</label>
                   </div>
                   <div class="col-9 col-md-9 col-sm-9 col-lg-9">
-                    
+
                     <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_vcategoryname" name="vcategoryname">
                   </div>
               </div>
@@ -5926,7 +5926,7 @@ $("#closeBtn").click(function(){
                   </div>
                   <div class="col-9 col-md-9 col-sm-9 col-lg-9">
                     <textarea maxlength="100" name="vdescription" id="category_add_vdescription" class="form-control adjustment-fields"></textarea>
-                    
+
                   </div>
               </div>
             </div>
@@ -5953,7 +5953,7 @@ $("#closeBtn").click(function(){
                   <div class="col-9 col-md-9 col-sm-9 col-lg-9">
                     <input type="text" name="category_dept_name" id="category_dept_name" class="form-control adjustment-fields" value="" disabled="true">
                     <input type="hidden" name="category_dept_code" id="category_dept_code" class="form-control" value="<?php echo isset($data['vdepcode'])?$data['vdepcode']:''; ?>">
-                    
+
                   </div>
               </div>
             </div>
@@ -5967,10 +5967,10 @@ $("#closeBtn").click(function(){
           </form>
         </div>
       </div>
-      
+
     </div>
   </div>
-  
+
 <!-- Modal Add-->
 
 <!-- Modal Add New Sub Category -->
@@ -5979,10 +5979,10 @@ $("#closeBtn").click(function(){
    $(document).on('click', '#add_new_subcategory', function(event) {
     event.preventDefault();
     // console.log($("#category_code option:selected").text());
-    
-    
+
+
     var cat_code = $("#category_code").val();
-    
+
     if(cat_code == ""){
         $("#span_cat_name").html($("#category_code option:selected").text());
         $('#success_alias').html('<strong>Please select a Category !!</strong>');
@@ -5991,7 +5991,7 @@ $("#closeBtn").click(function(){
         setTimeout(function(){
          $('#successAliasModal').modal('hide');
         }, 3000);
-        
+
     } else {
         $("#span_cat_name").html($("#category_code option:selected").text());
         $('form#subcategory_add_new_form').find('#add_subcat_name').val('');
@@ -5999,40 +5999,40 @@ $("#closeBtn").click(function(){
 
         $('#addModalSubCatogory').modal('show');
     }
-    
-    
+
+
   });
-  
+
   $(document).on('submit', 'form#subcategory_add_new_form', function(event) {
         event.preventDefault();
-        
+
         //console.log("The function is called");
-        
+
         if($(this).find('#add_subcat_name').val() == ''){
           alert('Please enter subcategory name!');
           return false;
         }
 
         var url = $(this).attr('action');
-    
+
         var data = new Array();
         var subcategoryId;
-    
+
         data[0]={};
         data[0]['subcat_name'] = $(this).find('#add_subcat_name').val();
-        
+
         if($("#category_code").val() == '' || $("#category_code").val() == '--Select Category--'){
-          bootbox.alert({ 
+          bootbox.alert({
             size: 'small',
-            title: "  ", 
-            message: "Please Select Category!", 
+            title: "  ",
+            message: "Please Select Category!",
             callback: function(){}
           });
           return false;
         }
         console.log($("#category_code").val());
         data[0]['cat_id'] = $("#category_code").val();
-        
+
       $.ajax({
         url : url,
         headers: {
@@ -6043,29 +6043,29 @@ $("#closeBtn").click(function(){
         contentType: "application/json",
         dataType: 'json',
         success: function(resp) {
-            
+
             subcategoryId = resp.subcat_id;
             console.log(subcategoryId);
             $('#success_alias').html('<strong>'+ resp.success +'</strong>');
             $('#addModalSubCatogory').modal('hide');
             $('#successAliasModal').modal('show');
-    
+
             setTimeout(function(){
              $('#successAliasModal').modal('hide');
             }, 3000);
         },
-    
+
         error: function(xhr) { // if error occured
             var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-            
+
             var error_show = '';
-    
+
             if(response_error.error){
               error_show = response_error.error;
             }else if(response_error.validation_error){
               error_show = response_error.validation_error[0];
             }
-    
+
             $('#error_alias').html('<strong>'+ error_show +'</strong>');
             $('#errorAliasModal').modal('show');
             return false;
@@ -6075,11 +6075,11 @@ $("#closeBtn").click(function(){
         var input = {};
         var cat_id = $("#category_code").val();
         input['cat_id'] = cat_id;
-        
+
         var url = '<?php echo $data['get_subcategories_url']; ?>';
             // url += "&sid="+sid;
-            url = url.replace(/&amp;/g, '&');  
-        
+            url = url.replace(/&amp;/g, '&');
+
         $.ajax({
             url : url,
             headers: {
@@ -6090,7 +6090,7 @@ $("#closeBtn").click(function(){
             contentType: "application/json",
             dataType: 'text json',
             success: function(response) {
-        
+
                 // console.log(response);
                 var category_html = '';
                 if(response.length > 0){
@@ -6100,7 +6100,7 @@ $("#closeBtn").click(function(){
                 console.log(subcategoryId);
                 $('#subcat_id').val(subcategoryId).trigger('change.select2');
             },
-            error: function(xhr) { 
+            error: function(xhr) {
                 // if error occured
                 // console.log(xhr);
                 return false;
@@ -6112,7 +6112,7 @@ $("#closeBtn").click(function(){
 
   <div class="modal fade" id="addModalSubCatogory" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -6134,7 +6134,7 @@ $("#closeBtn").click(function(){
               </div>
             </div>
             <br>
-            
+
             <br>
             <div class="row">
               <div class="col-md-12 text-center">
@@ -6145,7 +6145,7 @@ $("#closeBtn").click(function(){
           </form>
         </div>
       </div>
-      
+
     </div>
   </div>
 
@@ -6154,7 +6154,7 @@ $("#closeBtn").click(function(){
 <!-- Modal Add Manufacuturer-->
   <div class="modal fade" id="addModalManufacturer" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -6171,7 +6171,7 @@ $("#closeBtn").click(function(){
                   <div class="col-md-2">
                     <label>Name</label>
                   </div>
-                  <div class="col-md-10">  
+                  <div class="col-md-10">
                     <input type="text" maxlength="50" class="form-control" id="add_mfr_name" name="mfr_name">
                   </div>
                 </div>
@@ -6184,7 +6184,7 @@ $("#closeBtn").click(function(){
                   <div class="col-md-2">
                     <label>Code</label>
                   </div>
-                  <div class="col-md-10">  
+                  <div class="col-md-10">
                     <input type="text" maxlength="10" name="mfr_code" id="add_mfr_code" class="form-control"></textarea>
                   </div>
                 </div>
@@ -6200,7 +6200,7 @@ $("#closeBtn").click(function(){
           </form>
         </div>
       </div>
-      
+
     </div>
   </div>
 <!-- Modal Add Manufacturer-->
@@ -6213,35 +6213,35 @@ $("#closeBtn").click(function(){
 
     $('#addModalDepartment').modal('show');
   });
-    
+
     $(document).on('click', '#add_new_manufacturer', function(event) {
         event.preventDefault();
-    
+
         $('form#manufacturer_add_new_form').find('#add_mfr_name').val('');
         $('form#manufacturer_add_new_form').find('#add_mfr_code').val('');
-    
+
         $('#addModalManufacturer').modal('show');
       });
-      
-    
+
+
   $(document).on('submit', 'form#manufacturer_add_new_form', function(event) {
     event.preventDefault();
-    
+
     if($(this).find('#add_mfr_name').val() == ''){
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
-        title: "  ", 
-        message: "Please Enter Manufacturer Name!", 
+        title: "  ",
+        message: "Please Enter Manufacturer Name!",
         callback: function(){}
       });
       return false;
     }
-    
+
     if($(this).find('#add_mfr_code').val() == ''){
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
-        title: "  ", 
-        message: "Please Enter Manufacturer Code!", 
+        title: "  ",
+        message: "Please Enter Manufacturer Code!",
         callback: function(){}
       });
       return false;
@@ -6275,7 +6275,7 @@ $("#closeBtn").click(function(){
         },
         error: function(xhr) { // if error occured
           var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-          
+
           var error_show = '';
 
           if(response_error.error){
@@ -6304,10 +6304,10 @@ $("#closeBtn").click(function(){
         });
       }, 3000);
   });
-      
+
   $(document).on('submit', 'form#department_add_new_form', function(event) {
     event.preventDefault();
-    
+
     if($(this).find('#add_vdepartmentname').val() == ''){
       alert('Please enter department name!');
       return false;
@@ -6322,7 +6322,7 @@ $("#closeBtn").click(function(){
     data[0]['vdepartmentname'] = $(this).find('#add_vdepartmentname').val();
     data[0]['vdescription'] = $(this).find('#department_add_vdescription').val();
     data[0]['isequence'] = $(this).find('input[name="isequence"]').val();
-    
+
       $.ajax({
         url : url,
         headers: {
@@ -6334,7 +6334,7 @@ $("#closeBtn").click(function(){
         dataType: 'json',
       success: function(data) {
         var department_id = data.department_id;
-        
+
         $('#success_alias').html('<strong>'+ data.success +'</strong>');
         $('#addModalDepartment').modal('hide');
         $('#successAliasModal').modal('show');
@@ -6345,7 +6345,7 @@ $("#closeBtn").click(function(){
       },
       error: function(xhr) { // if error occured
         var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-        
+
         var error_show = '';
 
         if(response_error.error){
@@ -6374,14 +6374,14 @@ $("#closeBtn").click(function(){
         });
       }, 3000);
   });
-  
-  
+
+
 </script>
 
 <!-- Modal Add -->
   <div class="modal fade" id="addModalDepartment" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -6393,7 +6393,7 @@ $("#closeBtn").click(function(){
              @csrf
             <input type="hidden" name="isequence" value="0">
             <div class="row">
-              
+
               <div class="col-12 col-md-12 col-sm-12 col-lg-12 p-form">
                   <div class="col-3 col-md-3 col-sm-3 col-lg-3">
                       <label for="inputLastname" class="p-2 float-right text-uppercase">Name</label>
@@ -6405,7 +6405,7 @@ $("#closeBtn").click(function(){
             </div>
             <br>
             <div class="row">
-              
+
               <div class="col-12 col-md-12 col-sm-12 col-lg-12 p-form">
                   <div class="col-3 col-md-3 col-sm-3 col-lg-3">
                       <label for="inputLastname" class="p-2 float-right text-uppercase">Description</label>
@@ -6426,7 +6426,7 @@ $("#closeBtn").click(function(){
           </form>
         </div>
       </div>
-      
+
     </div>
   </div>
 <!-- Modal Add-->
@@ -6444,7 +6444,7 @@ $("#closeBtn").click(function(){
 
   $(document).on('submit', 'form#size_add_new_form', function(event) {
     event.preventDefault();
-    
+
     if($(this).find('#add_vsize').val() == ''){
       alert('Please enter size!');
       return false;
@@ -6456,7 +6456,7 @@ $("#closeBtn").click(function(){
 
     data[0]={};
     data[0]['vsize'] = $(this).find('#add_vsize').val();
-    
+
       $.ajax({
         url : url,
         headers: {
@@ -6467,7 +6467,7 @@ $("#closeBtn").click(function(){
         contentType: "application/json",
         dataType: 'json',
       success: function(data) {
-        
+
         $('#success_alias').html('<strong>'+ data.success +'</strong>');
         $('#addModalSize').modal('hide');
         $('#successAliasModal').modal('show');
@@ -6478,7 +6478,7 @@ $("#closeBtn").click(function(){
       },
       error: function(xhr) { // if error occured
         var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-        
+
         var error_show = '';
 
         if(response_error.error){
@@ -6512,7 +6512,7 @@ $("#closeBtn").click(function(){
 <!-- Modal Add -->
   <div class="modal fade" id="addModalSize" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -6542,7 +6542,7 @@ $("#closeBtn").click(function(){
           </form>
         </div>
       </div>
-      
+
     </div>
   </div>
 <!-- Modal Add-->
@@ -6558,7 +6558,7 @@ $("#closeBtn").click(function(){
 
   $(document).on('submit', 'form#group_add_new_form', function(event) {
     event.preventDefault();
-    
+
     if($(this).find('#add_vitemgroupname').val() == ''){
       alert('Please enter group name!');
       return false;
@@ -6571,7 +6571,7 @@ $("#closeBtn").click(function(){
     data[0]={};
     data[0]['vitemgroupname'] = $(this).find('#add_vitemgroupname').val();
     data[0]['etransferstatus'] = '';
-    
+
       $.ajax({
         url : url,
         headers: {
@@ -6582,7 +6582,7 @@ $("#closeBtn").click(function(){
         contentType: "application/json",
         dataType: 'json',
       success: function(data) {
-        
+
         $('#success_alias').html('<strong>'+ data.success +'</strong>');
         $('#addModalGroup').modal('hide');
         $('#successAliasModal').modal('show');
@@ -6593,7 +6593,7 @@ $("#closeBtn").click(function(){
       },
       error: function(xhr) { // if error occured
         var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-        
+
         var error_show = '';
 
         if(response_error.error){
@@ -6627,7 +6627,7 @@ $("#closeBtn").click(function(){
 <!-- Modal Add -->
   <div class="modal fade" id="addModalGroup" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -6643,12 +6643,12 @@ $("#closeBtn").click(function(){
                   <div class="col-md-2">
                     <label>Name</label>
                   </div>
-                  <div class="col-md-10">  
+                  <div class="col-md-10">
                     <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_vitemgroupname" name="vitemgroupname">
                   </div>
                 </div>
               </div>
-              
+
             </div>
             <br>
             <div class="row">
@@ -6660,7 +6660,7 @@ $("#closeBtn").click(function(){
           </form>
         </div>
       </div>
-      
+
     </div>
   </div>
 <!-- Modal Add-->
@@ -6685,12 +6685,12 @@ $("#closeBtn").click(function(){
 
   $(document).on('submit', 'form#supplier_add_new_form', function(event) {
     event.preventDefault();
-    
+
     if($(this).find('#add_vcompanyname').val() == ''){
       alert('Please enter vendor name!');
       return false;
     }
- 
+
     var url = $(this).attr('action');
 
     var data = new Array();
@@ -6721,7 +6721,7 @@ $("#closeBtn").click(function(){
         contentType: "application/json",
         dataType: 'json',
       success: function(data) {
-        
+
         $('#success_alias').html('<strong>'+ data.success +'</strong>');
         $('#addModalSupplier').modal('hide');
         $('#successAliasModal').modal('show');
@@ -6732,7 +6732,7 @@ $("#closeBtn").click(function(){
       },
       error: function(xhr) { // if error occured
         var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-        
+
         var error_show = '';
 
         if(response_error.error){
@@ -6769,14 +6769,14 @@ $("#closeBtn").click(function(){
     if ((event.which < 48 || event.which > 57)) {
         event.preventDefault();
     }
-    
-  }); 
+
+  });
 </script>
 
 <!-- Modal Add -->
   <div class="modal fade" id="addModalSupplier" role="dialog">
     <div class="modal-dialog modal-lg">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -6786,7 +6786,7 @@ $("#closeBtn").click(function(){
         <div class="modal-body small">
           <form action="<?php echo $data['add_new_supplier']; ?>" method="post" id="supplier_add_new_form">
               @csrf
-            
+
             <div class="form-group row">
               <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
                   <div class="col-4 col-md-4 col-sm-4 col-lg-4">
@@ -6801,14 +6801,14 @@ $("#closeBtn").click(function(){
                       <label for="inputLastname" class="p-2 float-right text-uppercase">Vendor Type</label>
                   </div>
                   <div class="col-8 col-md-8 col-sm-8 col-lg-8">
-                    <select name="vvendortype" class="form-control adjustment-fields"> 
+                    <select name="vvendortype" class="form-control adjustment-fields">
                     <option value="Vendor">Vendor</option>
                     <option value="Other">Other</option>
                   </select>
                   </div>
               </div>
             </div>
-            
+
             <br>
             <div class="form-group row">
               <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
@@ -6920,7 +6920,7 @@ $("#closeBtn").click(function(){
                     </select>
                   </div>
               </div>
-              
+
             </div>
             <br>
             <div class="row">
@@ -6932,7 +6932,7 @@ $("#closeBtn").click(function(){
           </form>
         </div>
       </div>
-      
+
     </div>
   </div>
 <!-- Modal Add-->
@@ -6948,10 +6948,10 @@ $("#closeBtn").click(function(){
   $(document).on('change', 'select[name="visinventory"]', function(event) {
     event.preventDefault();
     if($(this).val() == 'No'){
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
-        title: "  ", 
-        message: "Your existing inventory is zero!", 
+        title: "  ",
+        message: "Your existing inventory is zero!",
         callback: function(){}
       });
     }
@@ -6960,12 +6960,12 @@ $("#closeBtn").click(function(){
 
 <script>
     $(function() {
-        
+
         var parent_child_search_url = '<?php echo $data['parent_child_search'];?>';
-        
+
         parent_child_search_url = parent_child_search_url.replace(/&amp;/g, '&');
-        
-        
+
+
         $( "#search_parent_sku" ).autocomplete({
             minLength: 2,
             source: function(req, add) {
@@ -6986,30 +6986,30 @@ $("#closeBtn").click(function(){
             },
             select: function(e, ui) {
             //   $('form#form_add_parent_item select[name="parent_item_id"]').val(ui.item.id);
-            
+
               $('form#form_add_parent_item select[name="parent_item_id"]').append(new Option(ui.item.value, ui.item.id));
               $('form#form_add_parent_item select[name="parent_item_id"]').val(ui.item.id);
               $('#form_add_parent_item').submit();
             }
         });
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
         var sid = "<?php echo $data['sid'];?>";
             var url = '<?php echo $data['get_categories']; ?>';
                 // url += "&sid="+sid;
                 url = url.replace(/&amp;/g, '&');
-                
+
         <?php if(isset($data['vdepcode']) && $data['vcategorycode']){ ?>
             var input = {};
             var deptCode = <?php echo $data['vdepcode']; ?>;
             var categoryCode = '<?php echo $data['vcategorycode']; ?>';
             input['dept_code'] = deptCode;
-                
+
             $.ajax({
                 url : url,
                 headers: {
@@ -7020,7 +7020,7 @@ $("#closeBtn").click(function(){
                 contentType: "application/json",
                 dataType: 'text json',
                 success: function(response) {
-                        
+
                     // console.log(response);
                     if(response.length > 0){
                         $("#span_dept_name").html($("#dept_code option:selected").text());
@@ -7029,14 +7029,14 @@ $("#closeBtn").click(function(){
                         $('select[name="vcategorycode"]').select2().empty().select2({data: response});
                         // $('#category_code').val(categoryCode);
                         $('#category_code').val(categoryCode).trigger('change.select2');
-                        
+
                     }
-                        
+
                     setTimeout(function(){
                         $('#successAliasModal').modal('hide');
                     }, 3000);
                 },
-                error: function(xhr) { 
+                error: function(xhr) {
                     // if error occured
                     // console.log(xhr);
                     return false;
@@ -7045,8 +7045,8 @@ $("#closeBtn").click(function(){
         <?php }  else {?>
             $('select[name="vcategorycode"]').select2();
         <?php } ?>
-        
-        
+
+
     });
 </script>
 
@@ -7076,10 +7076,10 @@ $("#closeBtn").click(function(){
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         <button type="button" id="delete_item_single"  class="btn btn-danger">Delete</button>
         <!--<button type="button" class="btn btn-default" data-dismiss="modal">Delete</button>-->
-        
+
         <!--<input type="button" class="btn btn-danger" name="deleteItems" value="Delete">-->
-        
-        
+
+
       </div>
     </div>
 
@@ -7110,7 +7110,7 @@ $("#closeBtn").click(function(){
                     </thead >
                     <tbody id="delete_item_data_stores"></tbody>
                 </table>
-            </div>  
+            </div>
           </form>
           <div class="modal-footer">
             <button type="button" id="delete_item_btn" class="btn btn-danger" data-dismiss="modal">Delete</button>
@@ -7125,27 +7125,27 @@ $("#closeBtn").click(function(){
 <script type="text/javascript">
   $(document).on('click', '#delete_item_single', function(event) {
     event.preventDefault();
-    
+
     var data = {};
     var dataItemOrders =  [];
     var url = '<?php echo $data['delete']; ?>';
     url = url.replace(/&amp;/g, '&');
-    
+
     <?php if(isset($data['iitemid']) && $data['iitemid'] != ''){?>
         var item_id = '<?php echo $data['iitemid']; ?>';
         data[0] = parseInt(item_id);
         dataItemOrders.push(parseInt(item_id));
     <?php } else { ?>
-        bootbox.alert({ 
+        bootbox.alert({
             size: 'small',
-            title: "  ", 
-            message: 'Something Went Wrong!', 
+            title: "  ",
+            message: 'Something Went Wrong!',
             callback: function(){}
         });
         return false;
     <?php } ?>
-    
-    
+
+
     <?php if(session()->get('hq_sid') == 1) { ?>
         $('#deleteItemModal').modal('hide');
         $.ajax({
@@ -7168,7 +7168,7 @@ $("#closeBtn").click(function(){
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                                             '</tr>';
                                         $('#deleteItemSelectAllCheckbox').attr('disabled', true);
-                                  
+
                             } else {
                                 var data = '<tr>'+
                                                 '<td>'+
@@ -7200,19 +7200,19 @@ $("#closeBtn").click(function(){
             dataType: 'json',
             success: function(data) {
                 if(data.error){
-                    bootbox.alert({ 
+                    bootbox.alert({
                         size: 'small',
-                        title: "  ", 
-                        message: data.error, 
+                        title: "  ",
+                        message: data.error,
                         callback: function(){}
                     });
-                    
+
                     $("div#divLoading").removeClass('show');
                     return false;
                 }else{
                     $("div#divLoading").removeClass('show');
                     $('#deleteItemSuccessModal').modal('show');
-                    
+
                     setTimeout(function(){
                       var url_redirect = '<?php echo $data['current_url']; ?>';
                       url_redirect = url_redirect.replace(/&amp;/g, '&');
@@ -7228,10 +7228,10 @@ $("#closeBtn").click(function(){
                 }else if(response_error.validation_error){
                   error_show = response_error.validation_error[0];
                 }
-                bootbox.alert({ 
+                bootbox.alert({
                   size: 'small',
-                  title: "  ", 
-                  message: error_show, 
+                  title: "  ",
+                  message: error_show,
                   callback: function(){}
                 });
                 $("div#divLoading").removeClass('show');
@@ -7242,7 +7242,7 @@ $("#closeBtn").click(function(){
 });
 
 
-var delte_item_store = []; 
+var delte_item_store = [];
 delte_item_store.push("{{ session()->get('sid') }}");
 $('#deleteItemSelectAllCheckbox').click(function(){
     if($('#deleteItemSelectAllCheckbox').is(":checked")){
@@ -7251,19 +7251,19 @@ $('#deleteItemSelectAllCheckbox').click(function(){
         $( ".deleteitemstores" ).prop("checked", false );
     }
 });
-        
+
 
 $(document).on('click', "#delete_item_btn", function(){
     event.preventDefault();
     var dataofitems =  [];
     dataofitems.push(parseInt('<?php echo $data['iitemid']; ?>'));
-    $.each($("input[name='deleteitemstores']:checked"), function(){            
+    $.each($("input[name='deleteitemstores']:checked"), function(){
         delte_item_store.push($(this).val());
-    }); 
-    
+    });
+
     var delete_url = "<?php echo $data['delete']; ?>";
     delete_url = delete_url.replace(/&amp;/g, '&');
-    
+
     // dataItemOrders.push(hq_stores);
     var d = JSON.stringify({ itemid: dataofitems, stores_hq:delte_item_store});
     $('#deleteItemModal').modal('hide');
@@ -7278,19 +7278,19 @@ $(document).on('click', "#delete_item_btn", function(){
             dataType: 'json',
             success: function(data) {
                 if(data.error){
-                    bootbox.alert({ 
+                    bootbox.alert({
                         size: 'small',
-                        title: "  ", 
-                        message: data.error, 
+                        title: "  ",
+                        message: data.error,
                         callback: function(){}
                     });
-                    
+
                     $("div#divLoading").removeClass('show');
                     return false;
                 }else{
                     $("div#divLoading").removeClass('show');
                     $('#deleteItemSuccessModal').modal('show');
-                    
+
                     setTimeout(function(){
                       var url_redirect = '<?php echo $data['current_url']; ?>';
                       url_redirect = url_redirect.replace(/&amp;/g, '&');
@@ -7306,17 +7306,17 @@ $(document).on('click', "#delete_item_btn", function(){
                 }else if(response_error.validation_error){
                   error_show = response_error.validation_error[0];
                 }
-                bootbox.alert({ 
+                bootbox.alert({
                   size: 'small',
-                  title: "  ", 
-                  message: error_show, 
+                  title: "  ",
+                  message: error_show,
                   callback: function(){}
                 });
                 $("div#divLoading").removeClass('show');
                 return false;
             }
     });
-    
+
 });
 
 </script>
@@ -7324,7 +7324,7 @@ $(document).on('click', "#delete_item_btn", function(){
 
 <div class="modal fade" id="deleteItemSuccessModal" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog modal-sm">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header" style="border-bottom:none;">
@@ -7336,7 +7336,7 @@ $(document).on('click', "#delete_item_btn", function(){
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>
 
@@ -7352,10 +7352,10 @@ $(document).on('click', "#delete_item_btn", function(){
         var vvendoritemcode = $('form#form-item-vendor').find('input[name="vvendoritemcode"]').val();
         var ivendorid = $('form#form-item-vendor').find('select[name="ivendorid"]').val();
         var ivendorid_name = $('form#form-item-vendor').find('select[name="ivendorid"] option:selected').text();
-        
+
         dataItemOrders  = [];
         dataItemOrders.push(ivendorid, ivendorid_name, item_id, vvendoritemcode);
-                    
+
         $.ajax({
             url: "<?php echo url('/item/duplicatehqitemvendorassign'); ?>",
             method: 'post',
@@ -7376,7 +7376,7 @@ $(document).on('click', "#delete_item_btn", function(){
                                             '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                                         '</tr>';
                                     $('#selectAllCheckbox').attr('disabled', true);
-                                          
+
                         } else {
                             var data = '<tr>'+
                                             '<td>'+
@@ -7392,39 +7392,39 @@ $(document).on('click', "#delete_item_btn", function(){
                     $('#data_vendor_stores').html(popup);
                 }
         });
-            
+
         $('#vendorAssignModal').modal('show');
     <?php  } else { ?>
             var item_id = $('form#form-item-vendor').find('input[name="iitemid"]').val();
             var vvendoritemcode = $('form#form-item-vendor').find('input[name="vvendoritemcode"]').val();
             var ivendorid = $('form#form-item-vendor').find('select[name="ivendorid"]').val();
             var ivendorid_name = $('form#form-item-vendor').find('select[name="ivendorid"] option:selected').text();
-        
+
             // if(vvendoritemcode == ''){
-            //   bootbox.alert({ 
+            //   bootbox.alert({
             //     size: 'small',
-            //     title: "  ", 
-            //     message: 'Please Enter Vendor Item Code', 
+            //     title: "  ",
+            //     message: 'Please Enter Vendor Item Code',
             //     callback: function(){}
             //   });
             //   return false;
             // }
-        
+
             if(ivendorid == ''){
-              bootbox.alert({ 
+              bootbox.alert({
                 size: 'small',
-                title: "  ", 
-                message: 'Please Select Vendor', 
+                title: "  ",
+                message: 'Please Select Vendor',
                 callback: function(){}
               });
               return false;
             }
-        
+
             var post_data = {iitemid:item_id,vvendoritemcode:vvendoritemcode,ivendorid:ivendorid};
-        
+
             var check_vendor_item_code_url = '<?php echo $data['check_vendor_item_code']; ?>';
             check_vendor_item_code_url = check_vendor_item_code_url.replace(/&amp;/g, '&');
-        
+
             $.ajax({
               url : check_vendor_item_code_url,
               headers: {
@@ -7435,48 +7435,48 @@ $(document).on('click', "#delete_item_btn", function(){
               contentType: "application/json",
               dataType: 'json',
               success: function(data) {
-                
+
                 if(data.error && vvendoritemcode != ""){
-                  bootbox.alert({ 
+                  bootbox.alert({
                     size: 'small',
-                    title: "  ", 
-                    message: 'Vendor Item Code "'+vvendoritemcode+'" Already Exist For '+ivendorid_name+' Vendor', 
+                    title: "  ",
+                    message: 'Vendor Item Code "'+vvendoritemcode+'" Already Exist For '+ivendorid_name+' Vendor',
                     callback: function(){}
                   });
                   return false;
-        
+
                 }else{
                  $('form#form-item-vendor').submit();
                 }
-                
+
               },
               error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-                
+
                 var error_show = '';
-        
+
                 if(response_error.error){
                   error_show = response_error.error;
                 }else if(response_error.validation_error){
                   error_show = response_error.validation_error[0];
                 }
-        
-                bootbox.alert({ 
+
+                bootbox.alert({
                   size: 'small',
-                  title: "  ", 
-                  message: error_show, 
+                  title: "  ",
+                  message: error_show,
                   callback: function(){}
                 });
-        
+
                 $("div#divLoading").removeClass('show');
-        
+
                 return false;
               }
             });
             return false;
     <?php } ?>
   });
-  
+
     var vendorstoreAssign = []
     vendorstoreAssign.push("{{ session()->get('sid') }}");
     $('#selectAllCheckboxVendorAssign').click(function(){
@@ -7486,25 +7486,25 @@ $(document).on('click', "#delete_item_btn", function(){
             $( ".vendorstoreAssign" ).prop("checked", false );
         }
     });
-  
-  
+
+
   $("#vendor_assign_btn").click(function(){
-      
-        $.each($("input[name='vendorstoreAssign']:checked"), function(){            
+
+        $.each($("input[name='vendorstoreAssign']:checked"), function(){
             vendorstoreAssign.push($(this).val());
         });
-        
+
         $("#hiddenvendorAssignsave").val(vendorstoreAssign);
-        
+
         var item_id = $('form#form-item-vendor').find('input[name="iitemid"]').val();
         var vvendoritemcode = $('form#form-item-vendor').find('input[name="vvendoritemcode"]').val();
         var ivendorid = $('form#form-item-vendor').find('select[name="ivendorid"]').val();
         var ivendorid_name = $('form#form-item-vendor').find('select[name="ivendorid"] option:selected').text();
         if(ivendorid == ''){
-          bootbox.alert({ 
+          bootbox.alert({
             size: 'small',
-            title: "  ", 
-            message: 'Please Select Vendor', 
+            title: "  ",
+            message: 'Please Select Vendor',
             callback: function(){}
           });
           return false;
@@ -7514,7 +7514,7 @@ $(document).on('click', "#delete_item_btn", function(){
         vendorstoreAssign.push("{{ session()->get('sid') }}");
         var check_vendor_item_code_url = '<?php echo $data['check_vendor_item_code']; ?>';
             check_vendor_item_code_url = check_vendor_item_code_url.replace(/&amp;/g, '&');
-            
+
         $.ajax({
               url : check_vendor_item_code_url,
               headers: {
@@ -7526,10 +7526,10 @@ $(document).on('click', "#delete_item_btn", function(){
               dataType: 'json',
               success: function(data) {
                 if(data.error && vvendoritemcode != ""){
-                  bootbox.alert({ 
+                  bootbox.alert({
                     size: 'small',
-                    title: "  ", 
-                    message: 'Vendor Item Code "'+vvendoritemcode+'" Already Exist For '+ivendorid_name+' Vendor', 
+                    title: "  ",
+                    message: 'Vendor Item Code "'+vvendoritemcode+'" Already Exist For '+ivendorid_name+' Vendor',
                     callback: function(){}
                   });
                   return false;
@@ -7545,25 +7545,25 @@ $(document).on('click', "#delete_item_btn", function(){
                 }else if(response_error.validation_error){
                   error_show = response_error.validation_error[0];
                 }
-                bootbox.alert({ 
+                bootbox.alert({
                   size: 'small',
-                  title: "  ", 
-                  message: error_show, 
+                  title: "  ",
+                  message: error_show,
                   callback: function(){}
                 });
                 $("div#divLoading").removeClass('show');
                 return false;
               }
         });
-        
+
             return false;
   });
-  
+
   $("#updateAllvendorsAssigned").click(function(){
     // e.preventDefault();
     <?php if(session()->get('hq_sid') == 1) { ?>
         selected_vendor_code = [];
-        $.each($("input[name='selected_vendor_code[]']:checked"), function(){            
+        $.each($("input[name='selected_vendor_code[]']:checked"), function(){
             selected_vendor_code.push($(this).val());
         });
         $.ajax({
@@ -7588,7 +7588,7 @@ $(document).on('click', "#delete_item_btn", function(){
                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                                     '</tr>';
                                 $('#selectAllCheckbox').attr('disabled', true);
-                          
+
                     } else {
                         var data = '<tr>'+
                                         '<td>'+
@@ -7601,14 +7601,14 @@ $(document).on('click', "#delete_item_btn", function(){
                     }
                     popup = popup + data;
                 @endforeach
-                $('#update_vendor_itemcode').html(popup);    
+                $('#update_vendor_itemcode').html(popup);
             }
         });
         $("#vendorAssignUpdateModal").modal('show');
     <?php } else { ?>
         $('#form-item-vendor-list').submit();
     <?php }?>
-    
+
   });
 
   var updateStores = [];
@@ -7622,10 +7622,10 @@ $(document).on('click', "#delete_item_btn", function(){
   });
 
   $("#vendor_itemcode_update").click(function(){
-      $.each($("input[name='storesUpdateitemcode']:checked"), function(){            
+      $.each($("input[name='storesUpdateitemcode']:checked"), function(){
           updateStores.push($(this).val());
       });
-      
+
       $("#vendor_update_stores").val(updateStores.join(","));
       // console.log(updateStores.join(","));
       $('form#form-item-vendor-list').submit();
@@ -7641,10 +7641,10 @@ $(document).on('click', "#delete_item_btn", function(){
     var data = {};
 
     if($("input[name='selected_vendor_code[]']:checked").length == 0){
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
-        title: "  ", 
-        message: 'Please Select Vendor Code to Delete!', 
+        title: "  ",
+        message: 'Please Select Vendor Code to Delete!',
         callback: function(){}
       });
       return false;
@@ -7654,7 +7654,7 @@ $(document).on('click', "#delete_item_btn", function(){
     {
       data[i] = parseInt($(this).val());
     });
-    
+
     $("div#divLoading").addClass('show');
 
     $.ajax({
@@ -7667,7 +7667,7 @@ $(document).on('click', "#delete_item_btn", function(){
         contentType: "application/json",
         dataType: 'json',
       success: function(data) {
-        
+
         $('#success_alias').html('<strong>'+ data.success +'</strong>');
         $("div#divLoading").removeClass('show');
         $('#successAliasModal').modal('show');
@@ -7679,7 +7679,7 @@ $(document).on('click', "#delete_item_btn", function(){
       },
       error: function(xhr) { // if error occured
         var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-        
+
         var error_show = '';
 
         if(response_error.error){
@@ -7719,10 +7719,10 @@ $(document).on('click', "#delete_item_btn", function(){
     event.preventDefault();
 
     if($("input[name='percent_selling_price']").val() == ''){
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
-        title: "  ", 
-        message: 'Please Enter Profit Margin!', 
+        title: "  ",
+        message: 'Please Enter Profit Margin!',
         callback: function(){}
       });
       return false;
@@ -7732,10 +7732,10 @@ $(document).on('click', "#delete_item_btn", function(){
     var prof_mar = parseFloat($("input[name='percent_selling_price']").val());
 
     if(per == '0' || per == 0){
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
-        title: "  ", 
-        message: 'Profit Margin Should not be Zero!', 
+        title: "  ",
+        message: 'Profit Margin Should not be Zero!',
         callback: function(){}
       });
       return false;
@@ -7744,20 +7744,20 @@ $(document).on('click', "#delete_item_btn", function(){
     //=========commented on 18-02-20=======
     //  per = 100 - per;
     //  if (per == 0){
-    
-    
+
+
     var new_costprice = $('#input-new_cost').val();
     var selling_price = ((new_costprice*100)/(100-prof_mar));
     // console.log(selling_price);
     selling_price = selling_price.toFixed(2);
-    
+
      $('input[name="dunitprice"]').val(selling_price);
      $('input[name="gross_profit"]').val(prof_mar.toFixed(2));
 
      $('#sellingPercentageModal').modal('hide');
 
   });
-  
+
 </script>
 
 <!-- Modal -->
@@ -7777,7 +7777,7 @@ $(document).on('click', "#delete_item_btn", function(){
           <button type="button" class="btn button-blue basic-button-small" id="selling_percent_calculate_btn">Calculate</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </p>
-        
+
       </div>
     </div>
 
@@ -7810,7 +7810,7 @@ $(document).on('click', "#delete_item_btn", function(){
           <button type="button" class="btn button-blue basic-button-small" id="save_description_btn">Save</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </p>
-        
+
       </div>
     </div>
 
@@ -7889,7 +7889,7 @@ $(document).on('click', "#delete_item_btn", function(){
           <button type="button" class="btn button-blue basic-button-small" id="save_price_btn">Save</button>
           <button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;">Cancel</button>
         </p>
-        
+
       </div>
     </div>
 
@@ -7922,12 +7922,12 @@ $(document).on('click', "#delete_item_btn", function(){
                 <input type="text" name="avgcost" name="dcostprice" value="<?php echo isset($data['dcostprice']) ? $data['dcostprice'] : ''; ?>" placeholder="Avg. Case Cost" id="input-avg_case_cost" class="form-control adjustment-fields" autocomplete="off" <?php if(isset($data['isparentchild']) && $data['isparentchild'] == 1){?> readonly <?php } ?>  />
             </div>
         </div>
-        
+
         <p class="text-center">
           <button type="button" class="btn button-blue basic-button-small" id="save_cost_btn">Save</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </p>
-        
+
       </div>
     </div>
 
@@ -7943,7 +7943,7 @@ $(document).on('click', "#delete_item_btn", function(){
 <script type="text/javascript">
   $(document).on('click', '#plcb_options_hideshow', function(event) {
     event.preventDefault();
-    if ($('#plcb_options').val()==1){ 
+    if ($('#plcb_options').val()==1){
         $('#plcb_options_checkbox_div').show('slow');
         $('#plcb_options').val(0);
         $('#plcb_options_checkbox').val(1);
@@ -7953,10 +7953,10 @@ $(document).on('click', "#delete_item_btn", function(){
         $('#plcb_options_checkbox').val(0);
     }
   });
-  
+
   $(document).on('click', '#advance_options_hideshow', function(event) {
     event.preventDefault();
-    if ($('#advance_options').val()==1){ 
+    if ($('#advance_options').val()==1){
         $('#advance_options_checkbox_div').show('slow');
         $('#advance_options').val(0);
     }else{
@@ -7964,17 +7964,17 @@ $(document).on('click', "#delete_item_btn", function(){
         $('#advance_options').val(1);
     }
   });
-  
-  
+
+
   $(document).ready(function(){
-      
-    // if ($('input[name="advance_options_checkbox"]').prop('checked')==true){ 
+
+    // if ($('input[name="advance_options_checkbox"]').prop('checked')==true){
     //     $('#advance_options_checkbox_div').show();
     // }else{
     //   $('#advance_options_checkbox_div').hide();
     // }
-    
-    if ($('#plcb_options_checkbox').val()==1){ 
+
+    if ($('#plcb_options_checkbox').val()==1){
         $('#plcb_options_checkbox_div').show();
     }else{
       $('#plcb_options_checkbox_div').hide();
@@ -7985,32 +7985,32 @@ $(document).on('click', "#delete_item_btn", function(){
 <script type="text/javascript">
   /*$('input[name="vitemname"]').keypress(function(event) {
     var character = String.fromCharCode(event.keyCode);
-    var t = isValid(character); 
+    var t = isValid(character);
       if(!t){
         event.preventDefault();
-      }    
+      }
   });*/
-  
-  
+
+
     $("#dept_code").change(function(){
-      
+
         // console.log($(this).text);
         var deptCode = $(this).val();
-    
-        
+
+
         var input = {};
         input['dept_code'] = deptCode;
-        
+
         if(deptCode != ""){
          console.log(deptCode);
-    
+
             var sid = "<?php echo $data['sid'];?>";
             var url = '<?php echo $data['get_categories']; ?>';
                 // url += "&sid="+sid;
                 url = url.replace(/&amp;/g, '&');
-    
-    
-    
+
+
+
             $.ajax({
                 url : url,
                 headers: {
@@ -8021,7 +8021,7 @@ $(document).on('click', "#delete_item_btn", function(){
                 contentType: "application/json",
                 dataType: 'text json',
                 success: function(response) {
-            
+
                     // console.log(response);
                     if(response.length > 0){
                         $("#span_dept_name").html($("#dept_code option:selected").text());
@@ -8029,12 +8029,12 @@ $(document).on('click', "#delete_item_btn", function(){
                         $("#category_dept_code").val(deptCode);
                         $('select[name="vcategorycode"]').select2().empty().select2({data: response});
                     }
-            
+
                     setTimeout(function(){
                         $('#successAliasModal').modal('hide');
                     }, 3000);
                 },
-                error: function(xhr) { 
+                error: function(xhr) {
                     // if error occured
                     // console.log(xhr);
                     return false;
@@ -8042,26 +8042,26 @@ $(document).on('click', "#delete_item_btn", function(){
             });
         }
     });
-    
+
      $("#category_code").change(function(){
-      
+
         // console.log($(this).text);
         var cat_id = $(this).val();
-    
-        
+
+
         var input = {};
         input['cat_id'] = cat_id;
-        
+
         if(cat_id != ""){
         //      console.log(deptCode);
-    
+
             var sid = "<?php echo $data['sid'];?>";
             var url = '<?php echo $data['get_subcategories_url']; ?>';
                 // url += "&sid="+sid;
                 url = url.replace(/&amp;/g, '&');
-    
-    
-              
+
+
+
             $.ajax({
                 url : url,
                 headers: {
@@ -8072,7 +8072,7 @@ $(document).on('click', "#delete_item_btn", function(){
                 contentType: "application/json",
                 dataType: 'text json',
                 success: function(response) {
-                
+
                     // console.log(response);
                     if(response.length > 0){
                         // $("#span_dept_name").html($("#dept_code option:selected").text());
@@ -8080,12 +8080,12 @@ $(document).on('click', "#delete_item_btn", function(){
                          $("#category_code").val(cat_id);
                         $('#subcat_id').select2('destroy').empty().select2({data: response});
                     }
-            
+
                     setTimeout(function(){
                         $('#successAliasModal').modal('hide');
                     }, 3000);
                 },
-                error: function(xhr) { 
+                error: function(xhr) {
                     // if error occured
                     // console.log(xhr);
                     return false;
@@ -8099,68 +8099,68 @@ $(document).on('click', "#delete_item_btn", function(){
     });
 
   $(document).ready(function(){
-    
+
     $(document).on('click', '#add_description', function(event) {
       event.preventDefault();
       $('#descriptionModal').modal('show');
     });
-    
+
     $(document).on('click', '#add_cost', function(event) {
       event.preventDefault();
       $('#costModal').modal('show');
     });
-    
+
     $(document).on('click', '#add_pricelevel', function(event) {
       event.preventDefault();
       $('#levelPricingModal').modal('show');
     });
-    
+
     $(document).on('click', '#save_description_btn', function(event) {
-      
+
       var description_value = $('#input-description').val();
       $('#description_value').val(description_value);
       $('#descriptionModal').modal('hide');
     });
-    
+
     $(document).on('click', '#save_price_btn', function(event) {
-      
+
       var nlevel2_value = $('#input-level2price').val();
       var nlevel3_value = $('#input-level3price').val();
       var nlevel4_value = $('#input-level4price').val();
-      
+
       $('#nlevel2_value').val(nlevel2_value);
       $('#nlevel3_value').val(nlevel3_value);
       $('#nlevel4_value').val(nlevel4_value);
-      
+
       $('#levelPricingModal').modal('hide');
     });
-    
+
     $(document).on('click', '#save_cost_btn', function(event) {
-      
+
       var lastcost_value = $('#input-lastcost').val();
       var avgcost_value = $('#input-avg_case_cost').val();
-      
+
       $('#lastcost_value').val(lastcost_value);
       $('#avgcost_value').val(avgcost_value);
-      
+
       $('#costModal').modal('hide');
     });
-    
+
     $(document).on('click', '#selling_price_calculation_btn_l2', function(event) {
       event.preventDefault();
       $('#sellingPercentageModal2').modal('show');
     });
-    
+
     $(document).on('click', '#selling_price_calculation_btn_l3', function(event) {
       event.preventDefault();
       $('#sellingPercentageModal3').modal('show');
     });
-    
+
     $(document).on('click', '#selling_price_calculation_btn_l4', function(event) {
       event.preventDefault();
       $('#sellingPercentageModal4').modal('show');
     });
-    
+
   });
 </script>
 
@@ -8181,7 +8181,7 @@ $(document).on('click', "#delete_item_btn", function(){
           <button type="button" class="btn button-blue basic-button-small" id="selling_percent_calculate_btn_l2">Calculate</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </p>
-        
+
       </div>
     </div>
 
@@ -8206,7 +8206,7 @@ $(document).on('click', "#delete_item_btn", function(){
           <button type="button" class="btn button-blue basic-button-small" id="selling_percent_calculate_btn_l3">Calculate</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </p>
-        
+
       </div>
     </div>
 
@@ -8231,7 +8231,7 @@ $(document).on('click', "#delete_item_btn", function(){
           <button type="button" class="btn button-blue basic-button-small" id="selling_percent_calculate_btn_l4">Calculate</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </p>
-        
+
       </div>
     </div>
 
@@ -8240,182 +8240,182 @@ $(document).on('click', "#delete_item_btn", function(){
 
 <script>
     $(document).ready(function(){
-        
+
         @if(!isset($data['itemPromotion']) || count($data['itemPromotion']) == 1 ||count($data['itemPromotion']) == 0)
             $("#promotionid").prop("disabled",true);
         @endif
         $(".disPro").prop("disabled",true);
-        
+
         $(document).on('click', '#selling_percent_calculate_btn_l2', function(){
-            
+
             if($("input[name='percent_selling_price_l2']").val() == ''){
-              bootbox.alert({ 
+              bootbox.alert({
                 size: 'small',
-                title: "  ", 
-                message: 'Please Enter Profit Margin!', 
+                title: "  ",
+                message: 'Please Enter Profit Margin!',
                 callback: function(){}
               });
               return false;
             }
-        
+
             var prof_mar = parseFloat($("input[name='percent_selling_price_l2']").val());
-        
+
             if(prof_mar == '0' || prof_mar == 0){
-              bootbox.alert({ 
+              bootbox.alert({
                 size: 'small',
-                title: "  ", 
-                message: 'Profit Margin Should not be Zero!', 
+                title: "  ",
+                message: 'Profit Margin Should not be Zero!',
                 callback: function(){}
               });
               return false;
-            } 
-            
+            }
+
             var new_costprice = $('#input-new_cost').val();
             var selling_price = ((new_costprice*100)/(100-prof_mar));
-            
+
             selling_price = selling_price.toFixed(2);
             //  revenue = revenue.toFixed(2);
             // console.log(per);
              $('input[name="nlevel2"]').val(selling_price);
              $('input[name="gross_profit2"]').val(prof_mar.toFixed(2));
-        
+
              $('#sellingPercentageModal2').modal('hide');
         });
-        
+
         $(document).on('click', '#selling_percent_calculate_btn_l3', function(){
-            
+
             if($("input[name='percent_selling_price_l3']").val() == ''){
-              bootbox.alert({ 
+              bootbox.alert({
                 size: 'small',
-                title: "  ", 
-                message: 'Please Enter Profit Margin!', 
+                title: "  ",
+                message: 'Please Enter Profit Margin!',
                 callback: function(){}
               });
               return false;
             }
-        
+
             var prof_mar = parseFloat($("input[name='percent_selling_price_l3']").val());
-        
+
             if(prof_mar == '0' || prof_mar == 0){
-              bootbox.alert({ 
+              bootbox.alert({
                 size: 'small',
-                title: "  ", 
-                message: 'Profit Margin Should not be Zero!', 
+                title: "  ",
+                message: 'Profit Margin Should not be Zero!',
                 callback: function(){}
               });
               return false;
-            } 
-            
+            }
+
             var new_costprice = $('#input-new_cost').val();
             var selling_price = ((new_costprice*100)/(100-prof_mar));
-            
+
             selling_price = selling_price.toFixed(2);
             //  revenue = revenue.toFixed(2);
             // console.log(per);
              $('input[name="nlevel3"]').val(selling_price);
              $('input[name="gross_profit3"]').val(prof_mar.toFixed(2));
-        
+
              $('#sellingPercentageModal3').modal('hide');
         });
-        
+
         $(document).on('click', '#selling_percent_calculate_btn_l4', function(){
-            
+
             if($("input[name='percent_selling_price_l4']").val() == ''){
-              bootbox.alert({ 
+              bootbox.alert({
                 size: 'small',
-                title: "  ", 
-                message: 'Please Enter Profit Margin!', 
+                title: "  ",
+                message: 'Please Enter Profit Margin!',
                 callback: function(){}
               });
               return false;
             }
-        
+
             var prof_mar = parseFloat($("input[name='percent_selling_price_l4']").val());
-        
+
             if(prof_mar == '0' || prof_mar == 0){
-              bootbox.alert({ 
+              bootbox.alert({
                 size: 'small',
-                title: "  ", 
-                message: 'Profit Margin Should not be Zero!', 
+                title: "  ",
+                message: 'Profit Margin Should not be Zero!',
                 callback: function(){}
               });
               return false;
-            } 
-            
+            }
+
             var new_costprice = $('#input-new_cost').val();
             var selling_price = ((new_costprice*100)/(100-prof_mar));
             // console.log(selling_price);
             selling_price = selling_price.toFixed(2);
-            
+
              $('input[name="nlevel4"]').val(selling_price);
              $('input[name="gross_profit4"]').val(prof_mar.toFixed(2));
-        
+
              $('#sellingPercentageModal4').modal('hide');
         });
-        
+
         var itemtype = '<?php echo $data['vitemtype'] ?>';
-        
+
         if(itemtype == 'Instant'){
-         
+
             $('.notLottery').hide();
-            $('.Lottery').show();   
+            $('.Lottery').show();
         }
-        
-        
+
+
         // ========onchange cost =========
-        
+
         $(document).on('keyup', '#input-new_cost, #input-sellingunit', function(event){
-            
+
             // var character = String.fromCharCode(event.keyCode)
-            // var newValue = this.value + character; 
+            // var newValue = this.value + character;
             // if (isNaN(newValue) || parseFloat(newValue) * 100 % 1 > 0) {
             //     event.preventDefault();
             //     return false;
             // }
             this.value = this.value.match(/^\d+\.?\d{0,2}/);
-            
+
             var buyDown = $('input[name="ndiscountper"]').val();
             var new_costprice = $('#input-new_cost').val();
             var selling_price = $('#input-Selling_Price').val();
-            
+
             var level2_selling_price = $('#input-level2price').val();
             var level3_selling_price = $('#input-level3price').val();
             var level4_selling_price = $('#input-level4price').val();
-            
+
             var sellingunit = $('#input-sellingunit').val();
-            
+
             if(sellingunit === '0'){
                 $('#input-sellingunit').val(1);
             }
-            
+
             var unitcost = parseFloat(new_costprice/sellingunit).toFixed(2);
-            
+
             var gross_profit;
             var level2_gross_profit;
             var level3_gross_profit;
             var level4_gross_profit;
-            
+
             if(buyDown != ''){
-                
+
                 gross_profit = selling_price - (unitcost - buyDown);
                 level2_gross_profit = level2_selling_price - (unitcost - buyDown);
                 level3_gross_profit = level3_selling_price - (unitcost - buyDown);
                 level4_gross_profit = level4_selling_price - (unitcost - buyDown);
             }else{
-                
+
                 gross_profit = selling_price - unitcost;
                 level2_gross_profit = level2_selling_price - unitcost;
                 level3_gross_profit = level3_selling_price - unitcost;
                 level4_gross_profit = level4_selling_price - unitcost;
             }
-            
+
             var prof_mar = ((gross_profit/selling_price)*100);
             var prof_mar2 = ((level2_gross_profit/level2_selling_price)*100);
             var prof_mar3 = ((level3_gross_profit/level3_selling_price)*100);
             var prof_mar4 = ((level4_gross_profit/level4_selling_price)*100);
             // console.log(gross_profit);
             // gross_profit = gross_profit.toFixed(2);
-            
+
             if(sellingunit != ''){
                 if(selling_price != '' & !isNaN(prof_mar) & isFinite(prof_mar)){
                     $('input[name="gross_profit"]').val(prof_mar.toFixed(2));
@@ -8427,36 +8427,36 @@ $(document).on('click', "#delete_item_btn", function(){
                     $('#input-gross-profit3').val(prof_mar3.toFixed(2));
                 }
                 if(level4_selling_price != ''){
-                    $('#input-gross-profit4').val(prof_mar4.toFixed(2));  
+                    $('#input-gross-profit4').val(prof_mar4.toFixed(2));
                 }
             }
-            
+
             $('#new_cost').val(new_costprice);
         });
-        
+
         $(document).on('focusout', '#input-new_cost', function () {
-            
+
             var new_costprice = $('#input-new_cost').val();
             if(new_costprice == 0){
                 $('#input-new_cost').val('0.00');
             }else{
-             $('#input-new_cost').val(parseFloat(new_costprice).toFixed(2)); 
+             $('#input-new_cost').val(parseFloat(new_costprice).toFixed(2));
             }
         });
-        
+
         var check = $('#lot_matrix_tab_li').hasClass('active');
         if(check){
             $('.formsubmit').attr('disabled', true);
         }
     });
-    
-    function isEmail() { 
-        
+
+    function isEmail() {
+
         var email = $('#add_vemail').val()
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        
+
         var result = regex.test(email);
-        
+
         if(result == false && email != ''){
             $('#email_error').text("Incorrect format");
             $('#save_supplier').prop('disabled', true);
@@ -8465,32 +8465,32 @@ $(document).on('click', "#delete_item_btn", function(){
             $('#save_supplier').prop('disabled', false);
         }
     }
-    
+
 
 $(document).on('click', '.formsubmit', function(e){
     var new_costprice = parseFloat($('#input-new_cost').val());
     var selling_price = parseFloat($('#input-Selling_Price').val());
-    
+
     if(new_costprice > selling_price){
           // alert('Please Select End Date');
           $("div#divLoading").removeClass('show');
-          bootbox.alert({ 
+          bootbox.alert({
             size: 'small',
-            title: "  ", 
-            message: "Cost Is Higher Than Price!", 
+            title: "  ",
+            message: "Cost Is Higher Than Price!",
             callback: function(){}
           });
          return false;
     }
-        
-    
+
+
     // esle{
         var iqtyonhand = $('input[name="iqtyonhand"]').val();
         var itemtype = $('select[name="vitemtype"]').val();
-        
+
         if((typeof(iqtyonhand) == "undefined" || iqtyonhand == null || iqtyonhand == '') && itemtype != 'Instant'){
             var result = confirm('Qty On Hand is empty. Do you really want to submit ?');
-            
+
             if(result == true){
                 <?php if(session()->get('hq_sid') == 1) { ?>
                     $("div#divLoading").removeClass('show');
@@ -8556,7 +8556,7 @@ $(document).on('click', '.formsubmit', function(e){
                                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (SKU already exist)</span></td>'+
                                                             '</tr>';
                                                         $('#selectAllCheckbox').attr('disabled', true);
-                                                  
+
                                             } else {
                                                 var data = '<tr>'+
                                                                 '<td>'+
@@ -8611,7 +8611,7 @@ $(document).on('click', '.formsubmit', function(e){
                                                             '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                                                         '</tr>';
                                                     $('#editSelectAllCheckbox').attr('disabled', true);
-                                              
+
                                         } else {
                                             var data = '<tr>'+
                                                             '<td>'+
@@ -8649,7 +8649,7 @@ $(document).on('click', '.formsubmit', function(e){
                                                             '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (SKU already exist)</span></td>'+
                                                         '</tr>';
                                                     $('#selectAllCheckbox').attr('disabled', true);
-                                              
+
                                         } else {
                                             var data = '<tr>'+
                                                             '<td>'+
@@ -8673,18 +8673,18 @@ $(document).on('click', '.formsubmit', function(e){
             <?php } ?>
         }
     // }
-    
+
 });
 
 // function formsubmit(){
 // $(document).on('click', '.formsubmit', function(e){
-    
+
 //     var iqtyonhand = $('input[name="iqtyonhand"]').val();
 //     var itemtype = $('select[name="vitemtype"]').val();
 //     if((typeof(iqtyonhand) == "undefined" || iqtyonhand == null || iqtyonhand == '') && itemtype != 'Instant'){
-        
+
 //         var result = confirm('Qty On Hand is empty. Do you really want to submit ?');
-        
+
 //         if(result == true){
 //             $('form#form-item').submit();
 //         }else{
@@ -8703,14 +8703,14 @@ $(document).on('click', '.formsubmit', function(e){
 
       var url = '<?php echo $data['unset_visited_below_zero']; ?>';
       url = url.replace(/&amp;/g, '&');
-      
+
       $.ajax({
           url : url,
           headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
           },
           type : 'POST',
-          
+
           success: function(data) {
               console.log(data);
               console.log("done");
@@ -8720,8 +8720,8 @@ $(document).on('click', '.formsubmit', function(e){
               console.log("Not done");
           }
       });
-      
-      
+
+
   });
 
   $(document).on('click', '#lot_matrix_tab_li, #vendor_tab_li, #alias_code_tab_li, #item_tab_li', function(){
@@ -8738,38 +8738,38 @@ $(document).on('click', '.formsubmit', function(e){
   });
 
   $(document).on('input', '#input-level2price, #input-level3price, #input-level4price', function(){
-      
+
       var buyDown = $('input[name="ndiscountper"]').val();
       var new_costprice = $('#input-new_cost').val();
       var level2_selling_price = $('#input-level2price').val();
       var level3_selling_price = $('#input-level3price').val();
       var level4_selling_price = $('#input-level4price').val();
-      
+
       var sellingunit = $('#input-sellingunit').val();
-      
+
       var unitcost = parseFloat(new_costprice/sellingunit).toFixed(2);
 
       var gross_profit;
       var level2_gross_profit;
       var level3_gross_profit;
       var level4_gross_profit;
-      
+
       if(buyDown != ''){
-          
+
           level2_gross_profit = level2_selling_price - (unitcost - buyDown);
           level3_gross_profit = level3_selling_price - (unitcost - buyDown);
           level4_gross_profit = level4_selling_price - (unitcost - buyDown);
       }else{
-          
+
           level2_gross_profit = level2_selling_price - unitcost;
           level3_gross_profit = level3_selling_price - unitcost;
           level4_gross_profit = level4_selling_price - unitcost;
       }
-      
+
       var prof_mar2 = ((level2_gross_profit/level2_selling_price)*100);
       var prof_mar3 = ((level3_gross_profit/level3_selling_price)*100);
       var prof_mar4 = ((level4_gross_profit/level4_selling_price)*100);
-      
+
       if(level2_selling_price != '' && level2_selling_price != 0){
           $('#input-gross-profit2').val(prof_mar2.toFixed(2));
       }
@@ -8777,52 +8777,52 @@ $(document).on('click', '.formsubmit', function(e){
           $('#input-gross-profit3').val(prof_mar3.toFixed(2));
       }
       if(level4_selling_price != '' && level4_selling_price != 0){
-          $('#input-gross-profit4').val(prof_mar4.toFixed(2));  
+          $('#input-gross-profit4').val(prof_mar4.toFixed(2));
       }
-      
+
       $('#tab_input_level2price').val(level2_selling_price);
       $('#tab_input_level3price').val(level3_selling_price);
       $('#tab_input_level4price').val(level4_selling_price);
-      
+
       $('#nlevel2_value').val(level2_selling_price);
       $('#nlevel3_value').val(level3_selling_price);
       $('#nlevel4_value').val(level4_selling_price);
-              
+
   });
 
   $(document).on('input', '#tab_input_level2price, #tab_input_level3price, #tab_input_level4price', function(){
-      
+
       var buyDown = $('input[name="ndiscountper"]').val();
       var new_costprice = $('#input-new_cost').val();
       var level2_selling_price = $('#tab_input_level2price').val();
       var level3_selling_price = $('#tab_input_level3price').val();
       var level4_selling_price = $('#tab_input_level4price').val();
-      
+
       var sellingunit = $('#input-sellingunit').val();
-      
+
       var unitcost = parseFloat(new_costprice/sellingunit).toFixed(2);
 
       var gross_profit;
       var level2_gross_profit;
       var level3_gross_profit;
       var level4_gross_profit;
-      
+
       if(buyDown != ''){
-          
+
           level2_gross_profit = level2_selling_price - (unitcost - buyDown);
           level3_gross_profit = level3_selling_price - (unitcost - buyDown);
           level4_gross_profit = level4_selling_price - (unitcost - buyDown);
       }else{
-          
+
           level2_gross_profit = level2_selling_price - unitcost;
           level3_gross_profit = level3_selling_price - unitcost;
           level4_gross_profit = level4_selling_price - unitcost;
       }
-      
+
       var prof_mar2 = ((level2_gross_profit/level2_selling_price)*100);
       var prof_mar3 = ((level3_gross_profit/level3_selling_price)*100);
       var prof_mar4 = ((level4_gross_profit/level4_selling_price)*100);
-      
+
       if(level2_selling_price != '' && level2_selling_price != 0){
           $('#input-gross-profit2').val(prof_mar2.toFixed(2));
       }
@@ -8830,17 +8830,17 @@ $(document).on('click', '.formsubmit', function(e){
           $('#input-gross-profit3').val(prof_mar3.toFixed(2));
       }
       if(level4_selling_price != '' && level4_selling_price != 0){
-          $('#input-gross-profit4').val(prof_mar4.toFixed(2));  
+          $('#input-gross-profit4').val(prof_mar4.toFixed(2));
       }
-      
+
       $('#input-level2price').val(level2_selling_price);
       $('#input-level3price').val(level3_selling_price);
       $('#input-level4price').val(level4_selling_price);
-      
+
       $('#nlevel2_value').val(level2_selling_price);
       $('#nlevel3_value').val(level3_selling_price);
       $('#nlevel4_value').val(level4_selling_price);
-              
+
   });
 
 
@@ -8855,10 +8855,10 @@ $(document).on('click', '.formsubmit', function(e){
 
       if($('#start_date').val() == ''){
         // alert('Please Select Start Date');
-        bootbox.alert({ 
+        bootbox.alert({
           size: 'small',
-          title: "  ", 
-          message: "Please Select Start Date", 
+          title: "  ",
+          message: "Please Select Start Date",
           callback: function(){}
         });
         return false;
@@ -8866,10 +8866,10 @@ $(document).on('click', '.formsubmit', function(e){
 
       if($('#end_date').val() == ''){
         // alert('Please Select End Date');
-        bootbox.alert({ 
+        bootbox.alert({
           size: 'small',
-          title: "  ", 
-          message: "Please Select End Date", 
+          title: "  ",
+          message: "Please Select End Date",
           callback: function(){}
         });
         return false;
@@ -8878,25 +8878,25 @@ $(document).on('click', '.formsubmit', function(e){
       if($('input[name="start_date"]').val() != '' && $('input[name="end_date"]').val() != ''){
 
           var d1 = Date.parse($('input[name="start_date"]').val());
-          var d2 = Date.parse($('input[name="end_date"]').val()); 
-          
+          var d2 = Date.parse($('input[name="end_date"]').val());
+
           if(d1 > d2){
-              bootbox.alert({ 
+              bootbox.alert({
                 size: 'small',
-                title: "  ", 
-                message: "Start date must be less then end date!", 
+                title: "  ",
+                message: "Start date must be less then end date!",
                 callback: function(){}
               });
           return false;
           }
       }
-      
+
       var item_movement_data_url = '<?php echo $data['item_movement_data']; ?>';
-    
+
       item_movement_data_url = item_movement_data_url.replace(/&amp;/g, '&');
 
       item_movement_data_url = item_movement_data_url + '?vbarcode='+ vbarcode +'&start_date='+start_date+'&end_date='+end_date+'&data_by='+data_by;
-      
+
         if (data_by == 'receive') {
             $('#item_movement_by_date_selection_table > thead > tr').html(
                 '<th>Action</th><th>Date</th> <th class="text-right">Qty</th><th class="text-right">Pack Qty</th><th class="text-right">Size</th><th class="text-right">Price</th><th class="text-right">PO Number</th><th>Before QOH</th><th>After QOH</th>'
@@ -8929,12 +8929,12 @@ $(document).on('click', '.formsubmit', function(e){
         }
 
       $.getJSON(item_movement_data_url, function(result){
-        
+
         $("div#divLoading").addClass('show');
-          
+
         var html = '';
         $('#item_movement_by_date_selection_table > tbody').empty();
-          
+
         if(result.length){
           var total_qty = total_amount = 0;
           $.each(result,function(i, v) {
@@ -8955,27 +8955,27 @@ $(document).on('click', '.formsubmit', function(e){
             else if(data_by == 'adjustment'){
                 if(v.vtype=='Conv Case')
                 {
-                  html +='Conv. Case to Unit';  
+                  html +='Conv. Case to Unit';
                 }
                 else{
                 html +=v.vtype;
                 }
-            
+
             }
             else if(data_by == 'phoneadjustment'){
               html +='Phone Adjustment';
-            
+
             }
             else if(data_by == 'openingqohphone'){
               html +='Opening QoH Phone';
-            
+
             }
             else if(data_by == 'openingpos'){
               html +='Opening Qoh WEB';
-            
+
             }
-            
-            
+
+
             html += '</td>';
             html += '<td>';
             html += v.ddate;
@@ -8985,7 +8985,7 @@ $(document).on('click', '.formsubmit', function(e){
                 html += parseInt(v.beforeQOH);
                 html += '</td>';
             }
-            
+
             html += '<td class="text-right">';
             html += parseInt(v.items_count);
             total_qty += parseInt(v.items_count);
@@ -9041,14 +9041,14 @@ $(document).on('click', '.formsubmit', function(e){
                 html += v.vrefnumber;
                 html += '</td>';
             }
-            
+
             if(data_by =='openingqoh')
             {
                 html += '<td class="text-right">';
                 html += v.vrefnumber;
                 html += '</td>';
             }
-            
+
             if(data_by =='phoneadjustment')
             {
                 html += '<td class="text-right">';
@@ -9065,10 +9065,10 @@ $(document).on('click', '.formsubmit', function(e){
             {
                 html += '<td class="text-right">';
                 html += v.vrefnumber;
-              
+
                 html += '</td>';
             }
-            
+
             html += '</tr>';
           });
           if(data_by == 'sold')
@@ -9084,14 +9084,14 @@ $(document).on('click', '.formsubmit', function(e){
           }
           console.log(html);
           $('#item_movement_by_date_selection_table > tbody').append(html);
-          
+
         }else{
-          
+
           $('#item_movement_by_date_selection_table > tbody').append('<tr><td class="text-center" colspan="9">Sorry no data found!</td> </tr>');
         }
         $('#item_movement_by_date_selection').show();
         $('#item_movement_by_date_selection_table').show();
-          
+
         $("div#divLoading").removeClass('show');
 
       });
@@ -9124,16 +9124,16 @@ $(document).on('click', '.formsubmit', function(e){
                 $( ".itemstores" ).prop("checked", false );
             }
         });
-        
+
         $('#save_btn').click(function(){
-            $.each($("input[name='itemstores']:checked"), function(){            
+            $.each($("input[name='itemstores']:checked"), function(){
                 itemstores.push($(this).val());
             });
             console.log(itemstores);
             $("#hidden_store_hq_val").val(itemstores);
             $('form#form-item1').submit();
         })
-        
+
         var edit_stores = []
         edit_stores.push("{{ session()->get('sid') }}");
         $('#editSelectAllCheckbox').click(function(){
@@ -9143,7 +9143,7 @@ $(document).on('click', '.formsubmit', function(e){
                 $( ".editstores" ).prop("checked", false );
             }
         });
-        
+
         // edit_stores.push("{{ session()->get('sid') }}");
         // $('#selectAllCheckbox').click(function(){
         //     if($('#selectAllCheckbox').is(":checked")){
@@ -9152,22 +9152,22 @@ $(document).on('click', '.formsubmit', function(e){
         //         $( ".stores" ).prop("checked", false );
         //     }
         // });
-        
+
         $('#update_btn').click(function(){
-            $.each($("input[name='editstores']:checked"), function(){            
+            $.each($("input[name='editstores']:checked"), function(){
                 edit_stores.push($(this).val());
             });
             console.log(edit_stores);
             $("#hidden_store_hq_val").val(edit_stores);
             $('form#form-item1').submit();
         });
-        
+
         $("#closeBtn").click(function(){
             $("div#divLoading").removeClass('show');
         });
-        
+
         $(document).ready(function(){
-            
+
             // $('#input_itemname').on('keypress', function (event) {
             //     var regex = new RegExp("^[A-Za-z0-9 _]*[A-Za-z]+[A-Za-z0-9 _]*$");
             //     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -9176,7 +9176,7 @@ $(document).on('click', '.formsubmit', function(e){
             //       return false;
             //     }
             // });
-            
+
             $('#add_vdepartmentname, #add_vcategoryname, #add_subcat_name').on('keypress', function (event) {
                 var regex = new RegExp("^[a-zA-Z0-9. _]+$");
                 var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -9187,9 +9187,9 @@ $(document).on('click', '.formsubmit', function(e){
             });
 
 
-            
+
         });
-        
+
 </script>
 
   <script>
@@ -9248,7 +9248,7 @@ $(document).on('click', '.formsubmit', function(e){
         $('#vendor_tab_li').prop('checked', false);
         $('#item_movement_tab_li').prop('checked', false);
         $('#level_pricing_tab_li').prop('checked', false);
-        
+
         $('#lot_matrix_tab').show();
         $('#alias_code_tab').hide();
         $('#item_tab').hide();
@@ -9271,7 +9271,7 @@ $(document).on('click', '.formsubmit', function(e){
         $('#lot_matrix_tab_li').prop('checked', false);
         $('#item_movement_tab_li').prop('checked', false);
         $('#level_pricing_tab_li').prop('checked', false);
-        
+
         $('#vendor_tab').show();
         $('#lot_matrix_tab').hide();
         $('#alias_code_tab').hide();
@@ -9294,7 +9294,7 @@ $(document).on('click', '.formsubmit', function(e){
         $('#lot_matrix_tab_li').prop('checked', false);
         $('#vendor_tab_li').prop('checked', false);
         $('#level_pricing_tab_li').prop('checked', false);
-        
+
         $('#item_movement_tab').show();
         $('#vendor_tab').hide();
         $('#lot_matrix_tab').hide();
@@ -9317,7 +9317,7 @@ $(document).on('click', '.formsubmit', function(e){
         $('#lot_matrix_tab_li').prop('checked', false);
         $('#vendor_tab_li').prop('checked', false);
         $('#item_movement_tab_li').prop('checked', false);
-        
+
         $('#level_pricing_tab').show();
         $('#item_movement_tab').hide();
         $('#vendor_tab').hide();
