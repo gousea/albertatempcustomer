@@ -11,7 +11,7 @@ class PromotionReportController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');                                              // AUTHENTICATION 
+        $this->middleware('auth');                                            
     }
     
     
@@ -21,9 +21,9 @@ class PromotionReportController extends Controller
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "2G");
       
-        // PROMOTION NAME AND PROMOTION  ID DATA 
-        $promocode = DB::connection("mysql_dynamic")->select("SELECT  prom_id , prom_name FROM trn_promotions");
+        $promocode=$this->get_promotionName();
         $data['promo_list']=$promocode;
+        
         
         return view('Reports.Promotion.Promotion',$data);                       // VIEW FILE 
         
@@ -39,6 +39,7 @@ class PromotionReportController extends Controller
         $sdate=$input['start_date'];
         $edate=$input['end_date'];
         $data['selected_promid'] =$prom_id ?? '';
+        
         //for selected date disply
         $startdate= DateTime::createFromFormat('Y-m-d',$input['start_date']);
         $data['p_start_date'] =$startdate->format('m-d-Y');
@@ -54,11 +55,12 @@ class PromotionReportController extends Controller
                 	where date(start_date) >= '".$sdate."' and (end_date is null or end_date <= '".$edate."') 
                 	and tp.prom_id = $prom_id) p on tsd.vitemcode = p.barcode
                 where vtrntype='Transaction' and date(dtrandate) between '".$sdate."' and '".$edate."'";
-        //dd($SQL);       
+      
+      
         $promodata= DB::connection("mysql_dynamic")->select($SQL);
         $data['promo_data']=$promodata;
         
-        $promocode = DB::connection("mysql_dynamic")->select("SELECT  prom_id , prom_name FROM trn_promotions");
+        $promocode=$this->get_promotionName();
         $data['promo_list']=$promocode;
         
         //CSV PRINT AND PDF DATA
@@ -139,6 +141,30 @@ class PromotionReportController extends Controller
         echo $content;
         exit;
     
+    }
+    
+    public function pdf(){
+        ini_set('max_execution_time', 0);
+        $data= session()->get('session_data') ;
+        
+        $pdf = PDF::loadView('Reports.Promotion.promotionpdf',$data);
+        
+        return $pdf->download('promotion.pdf');
+
+        
+    
+    }
+    public function print_data(){
+        ini_set('max_execution_time', 0);
+        $data= session()->get('session_data') ;
+    
+        return view('Reports.Promotion.promotionpdf',$data);  
+    }
+    
+    public function get_PromotionName(){
+         $promocode = DB::connection("mysql_dynamic")->select("SELECT  prom_id , prom_name FROM trn_promotions");
+         return $promocode;
+         
     }
 }
 

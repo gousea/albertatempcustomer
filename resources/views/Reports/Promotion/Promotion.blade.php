@@ -14,9 +14,9 @@ PROMOTION REPORT
                        <?php if(isset($promo_data) && count($promo_data) > 0){ ?>
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
                             </a>
-                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('Paidoutprint')}}" id="btnPrint">PRINT
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('PromotionReportprint')}}" id="btnPrint">PRINT
                             </a>
-                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('PromotionReportpdf')}}" > PDF
                             </a>
                         <?php } ?>
                 </div>
@@ -420,7 +420,7 @@ $(document).ready(function() {
 
         $("div#divLoading").addClass('show');
 
-        var pdf_export_url = '<?php echo route('Paidoutpdf'); ?>';
+        var pdf_export_url = '<?php echo route('PromotionReportpdf'); ?>';
       
         pdf_export_url = pdf_export_url.replace(/&amp;/g, '&');
 
@@ -431,7 +431,7 @@ $(document).ready(function() {
           if (req.readyState === 4 && req.status === 200) {
 
             if (typeof window.navigator.msSaveBlob === 'function') {
-              window.navigator.msSaveBlob(req.response, "Paidoutpdf.pdf");
+              window.navigator.msSaveBlob(req.response, "PromotionReportpdf.pdf");
             } else {
               var blob = req.response;
               var link = document.createElement('a');
