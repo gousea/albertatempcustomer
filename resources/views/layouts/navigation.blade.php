@@ -223,6 +223,8 @@
                                     <li><a class="dropdown-item sub-dropdown text-uppercase"
                                             href="{{ route('zeromovementreport') }}"> Zero Movement Report </a>
                                     </li>
+                                    <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('PromotionReport') }}"> Promotion Report </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endif

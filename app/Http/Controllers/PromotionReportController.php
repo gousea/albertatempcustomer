@@ -166,6 +166,7 @@ class PromotionReportController extends Controller
          return $promocode;
          
     }
+    
 }
 
 ?>
