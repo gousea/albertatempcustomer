@@ -123,10 +123,11 @@ PROMOTION REPORT
                                
                     </tr>
                           
-                            <?php $total=0;?>
+                            <?php $total=$tqty=$tdprice=0;?>
                             <?php foreach($promo_data as $v){
                                 $total= $total+$v->DISCOUNTED_AMOUNT; 
-                             
+                                $tqty=$tqty+$v->QTY;
+                                $tdprice=$tdprice+$v->DISCOUNTED_PRICE;
                                 } ?>
                              
                      <tr class="header-color"> 
@@ -136,8 +137,8 @@ PROMOTION REPORT
                                 <th></th>
                                 <th></th>
                                 <th><?php echo "$",number_format($total,2); ?></th>
-                                <th></th>
-                                <th></th>
+                                <th> <?php echo "$",number_format($tdprice,2); ?></th>
+                                <th> <?php echo $tqty; ?></th>
                                 <th></th>
                                 </tr>
                     </thead>              
