@@ -55,7 +55,7 @@
                         <div class="col-md-12">
                             <div class="box-body table-responsive">
                                 <table id="item_listing" class="table table-striped table-hover promotionview"
-                                    style="width: 100%; font-size:9px;">
+                                    style="width: 100%; font-size:13px;">
                                     <thead>
                                         <tr class="header-color" style="font-size: 11px;">
                                             <th style="width: 1px;" class="text-center">
