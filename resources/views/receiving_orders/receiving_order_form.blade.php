@@ -776,13 +776,13 @@
     
   $(function(){
     $('input[name="dcreatedate"]').datepicker({
-      dateFormat: 'dd-mm-yy',
+      dateFormat: 'mm-dd-yy',
       todayHighlight: true,
       autoclose: true,
     });
 
     $('input[name="dreceiveddate"]').datepicker({
-      dateFormat: 'dd-mm-yy',
+      dateFormat: 'mm-dd-yy',
       todayHighlight: true,
       autoclose: true,
     });
@@ -794,7 +794,7 @@
     });
 
     $('input[name="custom_end_date"]').datepicker({
-      dateFormat: 'dd-mm-yy',
+      dateFormat: 'mm-dd-yy',
       todayHighlight: true,
       autoclose: true,
     });
