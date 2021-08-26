@@ -26,7 +26,7 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="main_nav">
                     <div class="menu">
-                        <span class="font-weight-bold text-uppercase"> Item</span>
+                        <span class="font-weight-bold text-uppercase"> Item  - <?php echo isset($data['vitemname']) ? $data['vitemname'] : ''; ?></span>
                     </div>
                     <div class="nav-submenu">
                         <button class="btn btn-gray headerblack  buttons_menu save_btn_rotate formsubmit">Save</button>
