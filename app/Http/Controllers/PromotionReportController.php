@@ -47,13 +47,23 @@ class PromotionReportController extends Controller
         $enddate= DateTime::createFromFormat('Y-m-d',$input['end_date']);
         $data['p_end_date'] =$enddate->format('m-d-Y');
     
-        $SQL="select tsd.idettrnid TRANSACTION_NO, tsd.LastUpdate TDATE ,p.barcode SKU ,tsd.vitemname ITEMNAME ,p.unit_price PRICE,
-                tsd.ndiscountamt DISCOUNTED_AMOUNT,p.discounted_price DISCOUNTED_PRICE , ndebitqty QTY from trn_sales ts
+        // $SQL="select tsd.idettrnid TRANSACTION_NO, tsd.LastUpdate TDATE ,p.barcode SKU ,tsd.vitemname ITEMNAME ,p.unit_price PRICE,
+        //         tsd.ndiscountamt DISCOUNTED_AMOUNT,p.discounted_price DISCOUNTED_PRICE , ndebitqty QTY from trn_sales ts
+        //         join trn_salesdetail tsd on  ts.isalesid=tsd.isalesid
+        //         join (select prom_name, barcode ,discounted_price,tpd.unit_price from trn_promotions tp
+        //         	join trn_prom_details tpd on tp.prom_id = tpd.prom_id 
+        //         	where date(start_date) >= '".$sdate."' and (end_date is null or end_date <= '".$edate."') 
+        //         	and tp.prom_id = $prom_id) p on tsd.vitemcode = p.barcode
+        //         where vtrntype='Transaction' and date(dtrandate) between '".$sdate."' and '".$edate."'";
+        
+        
+          $SQL="select tsd.idettrnid TRANSACTION_NO, tsd.LastUpdate TDATE ,p.barcode SKU ,tsd.vitemname ITEMNAME ,p.unit_price PRICE,
+                (p.unit_price*ndebitqty - p.discounted_price*ndebitqty) as DISCOUNTED_AMOUNT,
+                p.discounted_price DISCOUNTED_PRICE , ndebitqty QTY from trn_sales ts
                 join trn_salesdetail tsd on  ts.isalesid=tsd.isalesid
                 join (select prom_name, barcode ,discounted_price,tpd.unit_price from trn_promotions tp
                 	join trn_prom_details tpd on tp.prom_id = tpd.prom_id 
-                	where date(start_date) >= '".$sdate."' and (end_date is null or end_date <= '".$edate."') 
-                	and tp.prom_id = $prom_id) p on tsd.vitemcode = p.barcode
+                	where tp.prom_id = $prom_id) p on tsd.vitemcode = p.barcode
                 where vtrntype='Transaction' and date(dtrandate) between '".$sdate."' and '".$edate."'";
       
       
@@ -166,7 +176,6 @@ class PromotionReportController extends Controller
          return $promocode;
          
     }
-    
 }
 
 ?>

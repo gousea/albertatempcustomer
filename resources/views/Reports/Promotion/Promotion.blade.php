@@ -70,8 +70,8 @@ PROMOTION REPORT
                             </div>
                             
                 <div class=" mx-sm-2 mb-2">
-               <select name="prom_id" class="form-control "   id="prom_id">
-                   <option value ='' >Select Promotion</option>
+               <select name="prom_id" class="form-control "   id="prom_id" required>
+                   <option value =''  >Select Promotion</option>
                    <!--<option value='All' selected="selected">All </option>-->
                     
                     
