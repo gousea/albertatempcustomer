@@ -161,7 +161,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
                                           <input type="text" name="dcreatedate" value="<?php echo isset($data['dcreatedate']) ? $data['dcreatedate'] : date('m-d-Y'); ?>" placeholder="Created" id="input_created" class="form-control adjustment-fields" required/>
-                                          
+                                          <span>mm-dd-yyyy</span>
                                         </div>
                                       </div>
 
@@ -172,6 +172,7 @@
                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
                                             <input type="text" name="dreceiveddate" value="<?php echo isset($data['dreceiveddate']) ? $data['dreceiveddate'] : date('m-d-Y'); ?>" placeholder="Received" id="input_received" class="form-control adjustment-fields" required/>
+                                            <span>mm-dd-yyyy</span>
                                         </div>
                                       </div>
 
