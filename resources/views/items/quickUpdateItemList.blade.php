@@ -5,6 +5,21 @@
 @endsection
 
 @section('main-content')
+<form action="{{ route('quick_update_item') }}" method="post" id="form_item_search">
+@csrf
+
+    <input type="hidden" name="sku" value="">
+    <input type="hidden" name="item" value="">
+    <input type="hidden" name="unit" value="">
+    <input type="hidden" name="department" value="">
+    <input type="hidden" name="category" value="">
+    <input type="hidden" name="unitcost" value="">
+    <input type="hidden" name="unitprice" value="">
+    <input type="hidden" name="tax1" value="">
+    <input type="hidden" name="tax2" value="">
+    <input type="hidden" name="qoh" value="">
+                                
+</form>
 <form action="{{ route('quick_update_item_edit') }}" method="post" id="form_item_price_update">
     @csrf
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue menu">
@@ -26,9 +41,18 @@
     </nav>
 
     <div id="content" class="section-content menu">
-        <div class="container-fluid">
-            <div class="panel panel-default">
-                <div class="table-responsive">
+        <div class="container-fluid" style="zoom:90%;">
+            <div class="panel panel-default padding-left-right">
+                
+                <div class="panel-body row">
+                    <span class="col-md-11" style="float:left;color:red">
+                        <lable class="required control-label">NOTE: For filter, after giving inputs for filter click on the filter button</lable>
+                    </span>
+                    <input type="submit" class="btn btn-primary button-blue basic-button-small col-md-1" id="search_filter" form="form_item_search" value="FILTER" style="float:right;">
+                </div>
+                
+                <div class="">
+                    
                         <input type="hidden" name="search_item_type" value={{ $search_item_type }}>
                         @if(session()->get('hq_sid') == 1)
                             <input type="hidden" id="hidden_store_hq_val" name="stores_hq" value="">
@@ -43,62 +67,88 @@
                                             SKU
                                             <div class="form-group has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="SKU" id="sku" style="width: 100px;">
+                                                <input type="text" class="form-control table-heading-fields" placeholder="SKU" id="sku" value="<?php echo $filter_data['sku'] ?>" style="width: 100px;">
                                             </div>
                                         </th>
                                         <th class="text-left headername text-uppercase">Item
                                             <div class="form-group has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="ITEM" id="item" style="width: 100px;">
+                                                <input type="text" class="form-control table-heading-fields" placeholder="ITEM" id="item" value="<?php echo $filter_data['item'] ?>" style="width: 100px;">
                                             </div>
                                         </th>
                                         <th class="text-left headername text-uppercase">Unit
                                             <div class="form-group has-search">
-                                                <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="UNIT" id="unit" style="width: 100px;">
+                                                <select class='table-heading-fields' id="unit" style="width: 100px;">
+                                                    <option value='all'>All</option>";
+                                                        <?php 
+                                                          foreach($units as $unit){
+                                                        ?>  
+                                                            <option value='<?=$unit['vunitcode']?>' <?php if($filter_data['unit'] == $unit['vunitcode']){ echo"selected"; } ?> ><?=$unit['vunitname'] ?></option>;
+                                                        <?php } ?>
+                                                </select>
+                                                
                                             </div>
                                         </th>
                                         <th class="text-left headername text-uppercase">Department
                                             <div class="form-group has-search">
-                                                <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="DEPARTMENT" id="department" style="width: 130px;">
+                                                <select class='table-heading-fields' id='department' style="width: 130px;">
+                                                    <option value='all'>All</option>";
+                                                        <?php 
+                                                          foreach($departments as $department){
+                                                        ?>  
+                                                            <option value='<?=$department->vdepcode?>' <?php if($filter_data['department'] == $department->vdepcode){ echo"selected"; } ?> ><?=$department->vdepartmentname ?></option>;
+                                                        <?php } ?>
+                                                </select>
+                                                
                                             </div>
                                         </th>
                                         <th class="text-left headername text-uppercase">Category
                                             <div class="form-group has-search">
-                                                <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="CATEGORY" id="category" style="width: 115px;">
+                                                <select class='table-heading-fields' id="category" style="width: 115px;">
+                                                    <option value='all'>All</option>
+                                                    
+                                                </select>
+                                                
                                             </div>
                                         </th>
                                         <th class="text-left headername text-uppercase" id="th_cost_price">Unit Cost
                                             <div class="form-group has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="UNIT COST" id="unitcost" style="width: 115px;">
+                                                <input type="text" class="form-control table-heading-fields" placeholder="UNIT COST" id="unitcost" value="<?php echo $filter_data['unitcost'] ?>" style="width: 115px;">
                                             </div>
                                         </th>
                                       
                                         <th class="text-left headername text-uppercase">Unit Price
                                             <div class="form-group has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="UNIT PRICE" id="unitprice" style="width: 115px;">
+                                                <input type="text" class="form-control table-heading-fields" placeholder="UNIT PRICE" id="unitprice" value="<?php echo $filter_data['unitprice'] ?>" style="width: 115px;">
                                             </div>
                                         </th>
                                         <th class="text-left headername text-uppercase">Tax 1
                                             <div class="form-group has-search">
-                                                <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="TAX 1" id="tax1" style="width: 100px;">
+                                                
+                                                <select class="table-heading-fields" id="tax1" style="width: 100px;">
+                                                    <option value="all">Select</option>
+                                                    <option value="Y" <?php if($filter_data['tax1'] == 'Y'){ echo"selected"; } ?>>YES</option>
+                                                    <option value="N" <?php if($filter_data['tax1'] == 'N'){ echo"selected"; } ?>>NO</option>
+                                                </select>
+                                                
                                             </div>
                                         </th>
                                         <th class="text-left headername text-uppercase">Tax 2
                                             <div class="form-group has-search">
-                                                <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="TAX 2" id="tax2" style="width: 100px;">
+                                                <select class="table-heading-fields" id="tax2" style="width: 100px;">
+                                                    <option value="all">Select</option>
+                                                    <option value="Y" <?php if($filter_data['tax2'] == 'Y'){ echo"selected"; } ?>>YES</option>
+                                                    <option value="N" <?php if($filter_data['tax2'] == 'N'){ echo"selected"; } ?>>NO</option>
+                                                </select>
+                                                
                                             </div>
                                         </th>
                                         <th class="text-left headername text-uppercase">QOH
                                             <div class="form-group has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="QOH" id="qoh" style="width: 100px;">
+                                                <input type="text" class="form-control table-heading-fields" placeholder="QOH" value="<?php echo $filter_data['qoh'] ?>" id="qoh" style="width: 100px;">
                                             </div>
                                         </th>
                                     </tr>
@@ -128,7 +178,7 @@
 
                                             <td class="text-left">
                                                 <select name="items[{{$i}}][vdepartmentname]" class="editable form-control" id="dept_code_{{$i}}"
-                                                    onclick='document.getElementById("items[{{$i}}][select]").setAttribute("checked","checked");'
+                                                    onclick='document.getElementById("items[{{$i}}][select]").checked = true;'
                                                     @if($new_database !== false)
                                                     onchange='getCategories(this.options[this.selectedIndex].value,{{$i}})'
                                                     @endif style="width:100%;text-align:right;">
@@ -150,7 +200,7 @@
                                             <td class="text-left">
                                                 <select id="categroy_{{ $i }}" name="items[{{$i}}][vcategoryname]"
                                                     class="editable form-control"
-                                                    onclick='document.getElementById("items[{{$i}}][select]").setAttribute("checked","checked");'
+                                                    onclick='document.getElementById("items[{{$i}}][select]").checked = true;'
                                                     style="width:100%;text-align:right;">
                                                     <option value="">--Select Category--</option>
                                                     @if(count($categories) > 0)
@@ -171,7 +221,7 @@
                                             <td class="text-right td_cost_price" style="width:10%;">
                                                 <input type="text" class="editable class_unitcost"
                                                     name="items[{{$i}}][nunitcost]" value={{  number_format($item['nunitcost'], 2) }}
-                                                    onclick='document.getElementById("items[{{$i}}][select]").setAttribute("checked","checked");'
+                                                    onclick='document.getElementById("items[{{$i}}][select]").checked = true;'
                                                     style="width:100%;text-align:right;" />
                                             </td>
 
@@ -179,13 +229,13 @@
                                                 <input type="text" class="editable class_unitprice"
                                                     name="items[{{$i}}][dunitprice]"
                                                     value={{ $item['dunitprice'] }}
-                                                    onclick='document.getElementById("items[{{$i}}][select]").setAttribute("checked","checked");'
+                                                    onclick='document.getElementById("items[{{$i}}][select]").checked = true;'
                                                     style="width:100%;text-align:right;" />
                                             </td>
 
                                             <td class="text-left">
                                                 <select name="items[{{$i}}][vtax1]" class="form-control"
-                                                    onchange='document.getElementById("items[{{$i}}][select]").setAttribute("checked","checked");'>
+                                                    onchange='document.getElementById("items[{{$i}}][select]").checked = true;'>
                                                     @if (isset($array_yes_no) && count($array_yes_no) > 0)
                                                         @foreach($array_yes_no as $k => $array_y_n)
                                                             @if ($k == $item['vtax1'])
@@ -201,7 +251,7 @@
 
                                             <td class="text-left">
                                                 <select name="items[{{$i}}][vtax2]" class="form-control"
-                                                    onchange='document.getElementById("items[{{$i}}][select]").setAttribute("checked","checked");'>
+                                                    onchange='document.getElementById("items[{{$i}}][select]").checked = true;'>
                                                     @if (isset($array_yes_no) && count($array_yes_no) > 0)
                                                         @foreach($array_yes_no as $k => $array_y_n)
                                                             @if ($k == $item['vtax2'])
@@ -220,7 +270,7 @@
                                                     name="items[{{$i}}][iqtyonhand]"
 
                                                     value="<?php echo $item['iqtyonhand'] ;?>"
-                                                    onclick='document.getElementById("items[{{$i}}][select]").setAttribute("checked","checked");'
+                                                    onclick='document.getElementById("items[{{$i}}][select]").checked = true;'
                                                     style="width:100%;text-align:right;" readonly />
                                             </td>
                                         </tr>
@@ -235,9 +285,12 @@
                 </div>
                 {{$items->links()}} 
             </div>
+            <br>
         </div>
     </div>
+
 </form>
+
 <?php if(session()->get('hq_sid') == 1){ ?>
     <div id="myModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -290,51 +343,6 @@
 @section('page-script')
 <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
-<script>
-    var table = $('#vendor').DataTable({
-        // "dom": 't<"bottom col-md-12 row"<"col-md-2"i><"col-md-3"l><"col-md-7"p>>',
-        "dom": 't<<"float-right"p>><"clear">',
-        "searching":true,
-        "destroy": true,
-        "ordering": false,
-        "pageLength":10,
-        "order": [[ 3, "asc" ]]
-    });
-
-    $('#sku').on('input', function () {
-        table.columns(1).search(this.value).draw();
-    });
-    $('#item').on('input', function () {
-        table.columns(2).search(this.value).draw();
-    });
-    $('#unit').on('input', function () {
-        table.columns(3).search(this.value).draw();
-    });
-    $('#department').on('input', function () {
-        table.columns(4).search(this.value).draw();
-    });
-    $('#category').on('input', function () {
-        table.columns(5).search(this.value).draw();
-    });
-    $('#unitcost').on('input', function () {
-        table.columns(6).search(this.value).draw();
-    });
-    $('#unitprice').on('input', function () {
-        table.columns(7).search(this.value).draw();
-    });
-    $('#tax1').on('input', function () {
-        table.columns(8).search(this.value).draw();
-    });
-    $('#tax2').on('input', function () {
-        table.columns(9).search(this.value).draw();
-    });
-    $('#qoh').on('input', function () {
-        table.columns(10).search(this.value).draw();
-    });
-
-//   $("#vendor_paginate").addClass("pull-right");
-
-</script>
 
 <style>
     #vendor_paginate{
@@ -348,6 +356,10 @@
     }
     .panel-default nav{
         margin-bottom: 50px;
+    }
+    
+    .padding-left-right {
+        padding: 0 2% 0 2%;
     }
 </style>
 <script src="/javascript/bootbox.min.js" defer=""></script>
@@ -382,45 +394,7 @@
 </script>
 
 <script>
-    $(document).ready(function(){
-        $('#div_search_vcategorycode').hide();
-        $('#div_search_vdepcode').hide();
-        $('#div_search_box').hide();
-        $('#div_search_vitem_group').hide();
-		$('#th_cost_price, .td_cost_price').hide();
-
-        <?php if(isset($search_radio) && $search_radio == 'category'){ ?>
-            $('#div_search_vcategorycode').show();
-            $("input[name=search_radio][value='category']").prop('checked', true);
-            <?php if(isset($search_find) && !empty($search_find)){ ?>
-                var search_find = '{{ $search_find }}';
-                $('#search_vcategorycode').val(search_find);
-            <?php } ?>
-        <?php }else if(isset($search_radio) && $search_radio == 'department'){ ?>
-            $('#div_search_vdepcode').show();
-            $("input[name=search_radio][value='department']").prop('checked', true);
-            <?php if(isset($search_find) && !empty($search_find)){ ?>
-                var search_find = '{{ $search_find }}';
-                $('#search_vdepcode').val(search_find);
-            <?php } ?>
-        <?php }else if(isset($search_radio) && $search_radio == 'item_group'){ ?>
-            $('#div_search_vitem_group').show();
-            $("input[name=search_radio][value='item_group']").prop('checked', true);
-            <?php if(isset($search_find) && !empty($search_find)){ ?>
-                var search_find = '{{ $search_find }}';
-                $('#search_vitem_group_id').val(search_find);
-            <?php } ?>
-        <?php }else if(isset($search_radio) && $search_radio == 'search'){ ?>
-            $('#div_search_box').show();
-            $("input[name=search_radio][value='search']").prop('checked', true);
-            <?php if(isset($search_find) && !empty($search_find)){ ?>
-                var search_find = '{{ $search_find }}';
-                $('#search_item').val(search_find);
-            <?php } ?>
-        <?php } ?>
-
-    });
-
+    
 	$(document).on('change', 'input[name="show_cost_price"]', function (event) {
 	    event.preventDefault();
 	    if ($(this).is(":checked")) {
@@ -430,114 +404,7 @@
 	    }
 	});
 
-    $(document).on('change', 'input:radio[name="search_radio"]', function(event) {
-        event.preventDefault();
-        if ($(this).is(':checked') && $(this).val() == 'category') {
-            $('#div_search_vcategorycode').show();
-            $('#div_search_vdepcode').hide();
-            $('#div_search_box').hide();
-            $('#div_search_vitem_group').hide();
-        }else if ($(this).is(':checked') && $(this).val() == 'department') {
-            $('#div_search_vdepcode').show();
-            $('#div_search_vcategorycode').hide();
-            $('#div_search_box').hide();
-            $('#div_search_vitem_group').hide();
-        }else if ($(this).is(':checked') && $(this).val() == 'item_group') {
-            $('#div_search_vitem_group').show();
-            $('#div_search_vdepcode').hide();
-            $('#div_search_vcategorycode').hide();
-            $('#div_search_box').hide();
-        }else if ($(this).is(':checked') && $(this).val() == 'search') {
-            $('#div_search_box').show();
-            $('#div_search_vdepcode').hide();
-            $('#div_search_vcategorycode').hide();
-            $('#div_search_vitem_group').hide();
-        }else {
-            $('#div_search_vcategorycode').show();
-            $('#div_search_vdepcode').hide();
-            $('#div_search_box').hide();
-            $('#div_search_vitem_group').hide();
-        }
-	});
-
-
-	$(document).on('change', 'select[name="item_type"]', function (event) {
-        var url = window.location.hash.split('?');
-        var search_vcategorycode = $('#search_vcategorycode').val();
-        var search_vdepcode = $('#search_vdepcode').val();
-        var search_vitem_group_id = $('#search_vitem_group_id').val();
-        var search_item = $('#search_item').val();
-
-        if (search_vcategorycode != "" ) {
-             var search_radio = "category";
-        }else if (search_vdepcode != "" ) {
-             var search_radio = "department";
-        }else if ( search_vitem_group_id != "") {
-            var search_radio = "item_group";
-        }else if (search_item != "") {
-             var search_radio = "search";
-        }else {
-            var search_radio = "";
-        }
-
-        // var search_radio = $('input[name="search_radio"]').val();
-        if(url.length  > 1){
-            url = url + '&search_item_type=' + $(this).val();
-            url = url + '&search_radio=' + search_radio;
-            url = url + '&search_vcategorycode=' + search_vcategorycode;
-            url = url + '&search_vdepcode=' + search_vdepcode;
-            url = url + '&search_vitem_group_id=' + search_vitem_group_id;
-            url = url + '&search_item=' + search_item;
-
-        }
-        else{
-            url = url + '?search_item_type=' + $(this).val();
-            url = url + '&search_radio=' + search_radio;
-            url = url + '&search_vcategorycode=' + search_vcategorycode;
-            url = url + '&search_vdepcode=' + search_vdepcode;
-            url = url + '&search_vitem_group_id=' + search_vitem_group_id;
-            url = url + '&search_item=' + search_item;
-        }
-	    var current_url = '<?php echo $current_url;?>';
-	    current_url = current_url + url;
-	    window.location.href = url;
-	});
-
-    $(document).on('click', '.page-link', function (event) {
-        // var selected_option = '<?php echo $search_radio;?>';
-        var selected_option = $('input:radio[name="search_radio"]:checked').val();
-        var selected_option_value = '';
-        if (selected_option == 'category') {
-            selected_option_value = $('#search_vcategorycode').val();
-        } else if (selected_option == 'department') {
-            selected_option_value = $('#search_vdepcode').val();
-        } else if (selected_option == 'item_group') {
-            selected_option_value = $('#search_vitem_group_id').val();
-        } else if (selected_option == 'search') {
-            selected_option_value = $('#search_item').val();
-        }
-
-        var quickupdate_search_item_type = '<?php echo $quickupdate_search_item_type ?>'
-        var set_selected_option_session = '<?php echo $set_selected_option_session; ?>';
-        set_selected_option_session = set_selected_option_session.replace(/&amp;/g, '&');
-        console.log(selected_option);
-        $("div#divLoading").addClass('show');
-        $.ajax({
-            url: set_selected_option_session,
-            data: {
-                _token: "{{ csrf_token() }}",
-                selected_option         : selected_option,
-                selected_option_value   : selected_option_value,
-                quickupdate_search_item_type: quickupdate_search_item_type,
-            },
-            type: 'POST',
-            success: function (data) {
-                console.log(data);
-            },
-        });
-
-    });
-
+    
     $(document).on('click', '#update_button', function (event) {
         
         <?php if(session()->get('hq_sid') == 1) { ?>
@@ -547,40 +414,6 @@
             $('form#form_item_price_update').submit();
         <?php } ?>
         
-        // var selected_option = '<?php echo $search_radio;?>';
-        var selected_option = $('input:radio[name="search_radio"]:checked').val();
-        var selected_option_value = '';
-        if (selected_option == 'category') {
-            selected_option_value = $('#search_vcategorycode').val();
-        } else if (selected_option == 'department') {
-            selected_option_value = $('#search_vdepcode').val();
-        } else if (selected_option == 'item_group') {
-            selected_option_value = $('#search_vitem_group_id').val();
-        } else if (selected_option == 'search') {
-            selected_option_value = $('#search_item').val();
-        }
-
-        var quickupdate_search_item_type = '<?php echo $quickupdate_search_item_type ?>'
-        var set_selected_option_session = '<?php echo $set_selected_option_session; ?>';
-        set_selected_option_session = set_selected_option_session.replace(/&amp;/g, '&');
-        //  alert(selected_option);
-        console.log(selected_option);
-        // $("div#divLoading").addClass('show');
-        
-        $.ajax({
-            url: set_selected_option_session,
-            data: {
-                _token: "{{ csrf_token() }}",
-                // selected_option         : selected_option,
-                selected_option_value   : selected_option_value,
-                quickupdate_search_item_type: quickupdate_search_item_type,
-            },
-            type: 'POST',
-            success: function (data) {
-               
-                
-            },
-        });
 
     });
 
@@ -627,7 +460,62 @@
     $(document).on('change','.class_unitcost',function(){
         var $this = $(this);
         $this.val(parseFloat($this.val()).toFixed(4));
-    })
+    });
+    
+    $(document).on('submit', 'form#form_item_search', function(){
+        event.preventDefault();
+        
+        let sku= $('#sku').val();
+        let item= $('#item').val();
+        let unit= $('#unit').val();
+        let department= $('#department').val();
+        let category= $('#category').val();
+        let unitcost= $('#unitcost').val();
+        let unitprice= $('#unitprice').val();
+        let tax1= $('#tax1').val();
+        let tax2= $('#tax2').val();
+        let qoh= $('#qoh').val();
+        
+        $('input[name="sku"]').val(sku);
+        $('input[name="item"]').val(item);
+        $('input[name="unit"]').val(unit);
+        $('input[name="department"]').val(department);
+        $('input[name="category"]').val(category);
+        $('input[name="unitcost"]').val(unitcost);
+        $('input[name="unitprice"]').val(unitprice);
+        $('input[name="tax1"]').val(tax1);
+        $('input[name="tax2"]').val(tax2);
+        $('input[name="qoh"]').val(qoh);
+        
+        $('#form_item_search')[0].submit();
+        
+    });
+    
+    $(document).on('change', '#department', function(){
+        
+        let depcode = $(this).val();
+        var category_url = '<?php echo $get_categories_url; ?>';
+        category_url = category_url.replace(/&amp;/g, '&');
+        $.ajax({
+            url : category_url,
+            data : {depcode:depcode,_token: "{{ csrf_token() }}",},
+            type : 'POST',
+            success: function(data) {
+                $('#category').empty().html(data)
+            }
+        }); 
+    });
+    
+    $(document).on('input', '.table-heading-fields', function(){
+        var self = this;
+                
+        if(self.value != ''){
+            $(this).closest('div').find('.fa-search').hide();
+            
+        }else{
+            $(this).closest('div').find('.fa-search').show();
+        } 
+    });
 
 </script>
 <style>

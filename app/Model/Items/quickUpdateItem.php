@@ -46,115 +46,108 @@ class quickUpdateItem extends Model
         return $result;
     }
 
-    public function getItems_new($itemdata)
-    {
+    // public function getItems_new($itemdata)
+    // {
 
-        $query = Item::from('mst_item as a')
-            ->select(
-               'a.iitemid','a.vitemtype','a.vitemname','a.vbarcode',
-                'a.vcategorycode','a.vdepcode','a.vsuppliercode','a.vunitcode',
-                'a.iqtyonhand','a.vtax1','a.vtax2','a.dcostprice',
-                'a.nunitcost','a.dunitprice','a.visinventory','a.isparentchild',
-                'mc.vcategoryname','md.vdepartmentname','ms.vcompanyname', 'mu.vunitname',
-                DB::raw("CASE
-                        WHEN a.NPACK = 1 or (a.npack is null)   then a.IQTYONHAND
-                        else (Concat(cast(((a.IQTYONHAND div a.NPACK )) as signed), '  (', Mod(a.IQTYONHAND,a.NPACK) ,')') ) end as IQTYONHAND,
-                        case isparentchild
-                        when 0 then a.VITEMNAME
-                        when 1 then Concat(a.VITEMNAME,' [Child]')
-                        when 2 then  Concat(a.VITEMNAME,' [Parent]') end   as VITEMNAME")
-            )
-            ->leftjoin('mst_category as mc', 'mc.vcategorycode', '=', 'a.vcategorycode')
-            ->leftjoin('mst_department as md', 'md.vdepcode', '=', 'a.vdepcode')
-            ->leftjoin('mst_supplier as ms', 'ms.vsuppliercode', '=', 'a.vsuppliercode')
-            ->leftjoin('mst_unit as mu', 'mu.vunitcode', '=', 'a.vunitcode')
-            ->where('a.estatus', 'Active');
+    //     $query = Item::from('mst_item as a')
+    //         ->select(
+    //           'a.iitemid','a.vitemtype','a.vitemname','a.vbarcode',
+    //             'a.vcategorycode','a.vdepcode','a.vsuppliercode','a.vunitcode',
+    //             'a.iqtyonhand','a.vtax1','a.vtax2','a.dcostprice',
+    //             'a.nunitcost','a.dunitprice','a.visinventory','a.isparentchild',
+    //             'mc.vcategoryname','md.vdepartmentname','ms.vcompanyname', 'mu.vunitname',
+    //             DB::raw("CASE
+    //                     WHEN a.NPACK = 1 or (a.npack is null)   then a.IQTYONHAND
+    //                     else (Concat(cast(((a.IQTYONHAND div a.NPACK )) as signed), '  (', Mod(a.IQTYONHAND,a.NPACK) ,')') ) end as IQTYONHAND,
+    //                     case isparentchild
+    //                     when 0 then a.VITEMNAME
+    //                     when 1 then Concat(a.VITEMNAME,' [Child]')
+    //                     when 2 then  Concat(a.VITEMNAME,' [Parent]') end   as VITEMNAME")
+    //         )
+    //         ->leftjoin('mst_category as mc', 'mc.vcategorycode', '=', 'a.vcategorycode')
+    //         ->leftjoin('mst_department as md', 'md.vdepcode', '=', 'a.vdepcode')
+    //         ->leftjoin('mst_supplier as ms', 'ms.vsuppliercode', '=', 'a.vsuppliercode')
+    //         ->leftjoin('mst_unit as mu', 'mu.vunitcode', '=', 'a.vunitcode')
+    //         ->where('a.estatus', 'Active');
 
-        if (!empty($itemdata['search_radio'])) {
-            if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'category') {
-                $query->where('a.vcategorycode', $itemdata['search_find']);
-            } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'department') {
-                $query->where('a.vdepcode', $itemdata['search_find']);
-            } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'item_group') {
-                $searchValue = $itemdata['search_find'];
-                $query->leftJoin('itemgroupdetail as b', function ($join) use ($searchValue) {
-                    // $join->on('b.vsku', '=', 'a.vbarcode');
-                    $join->on('b.iitemgroupid', '=', '$searchValue');
-                });
-                $query->where('b.vsku', '=', 'a.vbarcoe');
-            } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'search') {
-                $query->where('a.vitemname', 'like', '%' . $itemdata["search_find"] . '%');
-            }
-        }
-        if (!empty($itemdata['search_item_type'])) {
-            $query->where('a.vitemtype', $itemdata['search_item_type']);
-        }
-        $qeuryResult = $query->paginate(20);
-        return $qeuryResult;
-    }
+    //     if (!empty($itemdata['search_radio'])) {
+    //         if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'category') {
+    //             $query->where('a.vcategorycode', $itemdata['search_find']);
+    //         } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'department') {
+    //             $query->where('a.vdepcode', $itemdata['search_find']);
+    //         } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'item_group') {
+    //             $searchValue = $itemdata['search_find'];
+    //             $query->leftJoin('itemgroupdetail as b', function ($join) use ($searchValue) {
+    //                 // $join->on('b.vsku', '=', 'a.vbarcode');
+    //                 $join->on('b.iitemgroupid', '=', '$searchValue');
+    //             });
+    //             $query->where('b.vsku', '=', 'a.vbarcoe');
+    //         } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'search') {
+    //             $query->where('a.vitemname', 'like', '%' . $itemdata["search_find"] . '%');
+    //         }
+    //     }
+    //     if (!empty($itemdata['search_item_type'])) {
+    //         $query->where('a.vitemtype', $itemdata['search_item_type']);
+    //     }
+    //     $qeuryResult = $query->paginate(20);
+    //     return $qeuryResult;
+    // }
 
     public function getItems($itemdata = array()) {
-
-
-        if(isset($itemdata['search_radio']) && $itemdata['search_radio'] == "category" ){
-
-            $itemdata['search_find'] =  isset($itemdata['search_vcategorycode']) ? $itemdata['search_vcategorycode'] : '' ;
-
-        }elseif(isset($itemdata['search_radio']) && $itemdata['search_radio'] == "department"){
-            $itemdata['search_find'] =  isset($itemdata['search_vdepcode']) ? $itemdata['search_vdepcode'] : '' ;
-        }elseif(isset($itemdata['search_radio']) && $itemdata['search_radio'] == "item_group"){
-            $itemdata['search_find'] =  isset($itemdata['search_vitem_group_id']) ? $itemdata['search_vitem_group_id'] : '';
-        }elseif(isset($itemdata['search_radio']) && $itemdata['search_radio'] == "search"){
-            $itemdata['search_find'] =  isset($itemdata['search_item']) ? $itemdata['search_item'] : '';
-        }else{
-            $itemdata['search_find'] = "";
-        }
-
+        // dd($itemdata);
         $datas = array();
-        $sql_total_string = $sql_string = '';
-
-
-        if (!empty($itemdata['search_radio'])) {
-
-            if(!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'category'){
-                $sql_string .= " WHERE a.estatus='Active' AND a.vcategorycode= ". ($itemdata['search_find']);
-
-                if($itemdata['search_item_type']!='All'){
-                $sql_string .= " AND a.vitemtype= '". ($itemdata['search_item_type'])."'";
-                }
-            }else if(!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'department'){
-                $sql_string .= " WHERE a.estatus='Active' AND a.vdepcode= ". ($itemdata['search_find']);
-                if($itemdata['search_item_type']!='All'){
-                    $sql_string .= " AND a.vitemtype= '". ($itemdata['search_item_type'])."'";
-                }
-            }else if(!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'item_group'){
-                $sql_string.=", itemgroupdetail as b";
-                $sql_total_string.=", itemgroupdetail as b";
-                $sql_string .= " WHERE a.estatus='Active' AND b.iitemgroupid= '". ($itemdata['search_find'])."' AND b.vsku=a.vbarcode";
-                $sql_total_string .= " WHERE a.estatus='Active' AND b.iitemgroupid= '". ($itemdata['search_find'])."' AND b.vsku=a.vbarcode";
-
-                if($itemdata['search_item_type']!='All'){
-                    $sql_string .= " AND a.vitemtype= '". ($itemdata['search_item_type'])."'";
-                }
-
-            }else if(!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'search'){
-                $sql_string .= " WHERE a.estatus='Active' AND (a.vitemname LIKE  '%" .($itemdata['search_find']). "%' OR  a.vbarcode LIKE  '%" .($itemdata['search_find']). "%' OR  ma.valiassku LIKE  '%" .($itemdata['search_find']). "%')";
-
-                if($itemdata['search_item_type']!='All'){
-                    $sql_string .= " AND a.vitemtype= '". ($itemdata['search_item_type'])."'";
-                }
-            } else{
-                if($itemdata['search_item_type'] == "All"){
-                    $sql_string .= " WHERE a.estatus='Active'  ";
-                }else {
-
-                    $sql_string .= " WHERE a.estatus='Active' AND a.vitemtype= '". ($itemdata['search_item_type'])."' ";
-                }
+        $sql_total_string = $sql_string = "WHERE a.estatus='Active'";
+        
+        if (isset($itemdata['sku']) && isset($itemdata['item']) && isset($itemdata['unit']) && isset($itemdata['department']) && isset($itemdata['category']) && isset($itemdata['unitcost']) && isset($itemdata['unitprice']) && isset($itemdata['tax1']) && isset($itemdata['tax2']) && isset($itemdata['qoh'])) {
+            
+            if(isset($itemdata['category']) && !empty($itemdata['category']) && $itemdata['category'] != 'all'){
+                $sql_string .= " AND a.vcategorycode= '". ($itemdata['category']) ."' ";
             }
-        }else{
-            $sql_string .= " WHERE a.estatus='Active' AND a.vitemtype= '". ($itemdata['search_item_type'])."'";
+            
+            if(isset($itemdata['department']) && !empty($itemdata['department']) && $itemdata['department'] != 'all'){
+                $sql_string .= " AND a.vdepcode= '". ($itemdata['department']) ."' ";
+            }
+            
+            if(isset($itemdata['unit']) && !empty($itemdata['unit']) && $itemdata['unit'] != 'all'){
+                $sql_string .= " AND a.vunitcode= '". ($itemdata['unit']) ."' ";
+            }
+            
+            if(isset($itemdata['unitcost']) && !empty($itemdata['unitcost'])){
+                $sql_string .= " AND a.nunitcost= '". ($itemdata['unitcost']) ."' ";
+            }
+            
+            if(isset($itemdata['unitprice']) && !empty($itemdata['unitprice'])){
+                $sql_string .= " AND a.dunitprice= '". ($itemdata['unitprice']) ."' ";
+            }
+            
+            if(isset($itemdata['tax1']) && !empty($itemdata['tax1']) && $itemdata['tax1'] != 'all'){
+                $sql_string .= " AND a.vtax1= '". ($itemdata['tax1']) ."' ";
+            }
+            
+            if(isset($itemdata['tax2']) && !empty($itemdata['tax2']) && $itemdata['tax2'] != 'all'){
+                $sql_string .= " AND a.vtax2= '". ($itemdata['tax2']) ."' ";
+            }
+            
+            if(isset($itemdata['qoh']) && !empty($itemdata['qoh'])){
+                $sql_string .= " AND a.iqtyonhand= '". ($itemdata['qoh']) ."' ";
+            }
+            
+            if(isset($itemdata['item']) && !empty($itemdata['item'])){
+                $sql_string .= " AND a.vitemname LIKE  '%" .($itemdata['item']). "%' ";
+            }
+            
+            if(isset($itemdata['sku']) && !empty($itemdata['sku'])){
+                $sql_string .= " AND (a.vbarcode LIKE  '%" .($itemdata['sku']). "%' OR  ma.valiassku LIKE  '%" .($itemdata['sku']). "%') ";
+            }
+            
             $sql_string .= ' ORDER BY a.LastUpdate DESC';
-
+            
+        }
+        
+        else{
+            
+            $sql_string .= ' ORDER BY a.LastUpdate DESC';
+            
             if (isset($itemdata['start']) || isset($itemdata['limit'])) {
                 if ($itemdata['start'] < 0) {
                     $itemdata['start'] = 0;
@@ -166,14 +159,14 @@ class quickUpdateItem extends Model
             }
 
         }
-
+        
         $sql_query = "SELECT DISTINCT a.iitemid, a.vitemtype, a.vitemname, a.vbarcode, a.vcategorycode, a.vdepcode, a.vsuppliercode, a.vunitcode,
         a.vtax1, a.vtax2, a.dcostprice, a.nunitcost, a.dunitprice, a.visinventory, a.isparentchild, mc.vcategoryname,
         md.vdepartmentname, ms.vcompanyname, mu.vunitname ,
-
+        
         case a.isparentchild  when 1 then   Mod(p.iqtyonhand,p.NPACK)  else
         (Concat(cast(((a.iqtyonhand div a.NPACK )) as signed), '  (', Mod(a.iqtyonhand,a.NPACK) ,')') )end as iqtyonhand ,
-
+        
         case a.isparentchild when 0
         then a.VITEMNAME  when 1 then Concat(a.VITEMNAME,' [Child]') when 2 then  Concat(a.VITEMNAME,' [Parent]') end   as VITEMNAME
         FROM mst_item as a LEFT JOIN mst_category mc ON(mc.vcategorycode=a.vcategorycode)
@@ -182,10 +175,9 @@ class quickUpdateItem extends Model
         LEFT JOIN mst_itemalias ma ON(ma.vsku=a.vbarcode)
         LEFT JOIN mst_unit mu ON(mu.vunitcode=a.vunitcode)
         LEFT JOIN mst_item p ON a.parentid = p.iitemid $sql_string ";
-
-
+        
         $query = DB::connection('mysql_dynamic')->select($sql_query);
-
+        
         return $query;
     }
 
