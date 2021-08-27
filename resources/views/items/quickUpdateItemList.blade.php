@@ -145,12 +145,12 @@
                                                 
                                             </div>
                                         </th>
-                                        <th class="text-left headername text-uppercase">QOH
-                                            <div class="form-group has-search">
-                                                <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control table-heading-fields" placeholder="QOH" value="<?php echo $filter_data['qoh'] ?>" id="qoh" style="width: 100px;">
-                                            </div>
-                                        </th>
+                                        <!--<th class="text-left headername text-uppercase">QOH-->
+                                        <!--    <div class="form-group has-search">-->
+                                        <!--        <span class="fa fa-search form-control-feedback"></span>-->
+                                        <!--        <input type="text" class="form-control table-heading-fields" placeholder="QOH" value="<?php echo $filter_data['qoh'] ?>" id="qoh" style="width: 100px;">-->
+                                        <!--    </div>-->
+                                        <!--</th>-->
                                     </tr>
                                 </thead>
 
@@ -265,14 +265,14 @@
                                                 </select>
                                             </td>
 
-                                            <td class="text-right" style="width:10%;">
-                                                <input type="text" class="editable class_qoh"
-                                                    name="items[{{$i}}][iqtyonhand]"
+                                            <!--<td class="text-right" style="width:10%;">-->
+                                            <!--    <input type="text" class="editable class_qoh"-->
+                                            <!--        name="items[{{$i}}][iqtyonhand]"-->
 
-                                                    value="<?php echo $item['iqtyonhand'] ;?>"
-                                                    onclick='document.getElementById("items[{{$i}}][select]").checked = true;'
-                                                    style="width:100%;text-align:right;" readonly />
-                                            </td>
+                                            <!--        value="<?php echo $item['iqtyonhand'] ;?>"-->
+                                            <!--        onclick='document.getElementById("items[{{$i}}][select]").checked = true;'-->
+                                            <!--        style="width:100%;text-align:right;" readonly />-->
+                                            <!--</td>-->
                                         </tr>
                                     @endforeach
                                 @else
