@@ -239,7 +239,7 @@ class ScanDataReport extends Model
                             
                             mst_supplier as msupplier, 
                             mst_unit as u  
-                    WHERE CHAR_LENGTH(tsd.vitemcode) > 6 
+                    WHERE CHAR_LENGTH(tsd.vitemcode) > 5 
                     AND u.vunitcode = mi.vunitcode 
                     AND tsd.isalesid=ts.isalesid AND ms.istoreid=ts.istoreid AND mi.vbarcode=tsd.vitemcode 
                     AND msupplier.vsuppliercode=mi.vsuppliercode AND date_format(ts.dtrandate,'%Y-%m-%d') >= '".$week_starting_date."' 
@@ -335,7 +335,7 @@ class ScanDataReport extends Model
 		           )  as prom 
              
                 on mi.vbarcode = prom.vitemcode, mst_supplier as msupplier, 
-                mst_unit as u WHERE CHAR_LENGTH(tsd.vitemcode) > 6 
+                mst_unit as u WHERE CHAR_LENGTH(tsd.vitemcode) > 5 
                 AND u.vunitcode = mi.vunitcode AND tsd.isalesid=ts.isalesid  
                 AND ms.istoreid=ts.istoreid AND mi.vbarcode=tsd.vitemcode 
                 AND (ts.vtrntype = 'Transaction') 
