@@ -3,6 +3,7 @@
   EOD Report
 @endsection
 @section('main-content')
+
 <?php //dd($dataPoints,$dataPoints1);?>
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
         <div class="container">
@@ -15,7 +16,7 @@
                    
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
                             </a>
-                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="btnPrint" >PRINT
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{route('Eodprint')}}" id="btnPrint" >PRINT
                             </a>
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="#" > PDF
                             </a>
@@ -33,7 +34,7 @@
                 <a id="pdf_export_btn" href="" class="" style="margin-right:10px;">
                     <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
                 </a>
-                <a  id="btnPrint" href="" class="" style="margin-right:10px;">
+                <a  id="btnPrint2" href="" class="" style="margin-right:10px;">
                     <i class="fa fa-print" aria-hidden="true"></i> Print
                 </a>
                 <a id="csv_export_btn" href="" class="" style="margin-right:10px;">
@@ -281,7 +282,7 @@
                                     @if($data[0]->CashTender+$data[0]->CouponTender+$data[0]->CreditCardTender !=0)
                                       <tr>
                                            <td class="text-right bg_table"> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;TENDER TOTAL</td>
-                                           <td class="text-right bg_table"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}} {{$data[0]->GrandTotal}}  </button></td>
+                                           <td class="text-right bg_table"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CashTender+$data[0]->CouponTender+$data[0]->CreditCardTender}} </button></td>
                                         </tr> 
                                      @endif    
                                    </table>
@@ -550,7 +551,13 @@
     <!--<script src="https://code.highcharts.com/modules/exporting.js"></script>-->
     <!--<script src="https://code.highcharts.com/modules/export-data.js"></script>-->
     <!--<script src="https://code.highcharts.com/modules/accessibility.js"></script>-->
+    <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
 
+<script>  
+$(document).ready(function() {
+  $("#btnPrint").printPage();
+});
+</script> 
 
 <script>
 
@@ -706,32 +713,32 @@ function myFunction(x) {
         
     });
 
-    $(document).on('click', '#btnPrint', function(e){
-        e.preventDefault();
-        $("div#divLoading").addClass('show');
-        $.ajax({
-                type: 'GET',
-                url: '/eodreport/print',
-                // data: formData,
-                dataType: 'html',
-                success: function (reponse) {
-                    $("div#divLoading").removeClass('show');
+//   $(document).on('click', '#btnPrint', function(e){
+//         e.preventDefault();
+//         $("div#divLoading").addClass('show');
+//         $.ajax({
+//                 type: 'GET',
+//                 url: '/eodreport/print',
+//                 // data: formData,
+//                 dataType: 'html',
+//                 success: function (reponse) {
+//                     $("div#divLoading").removeClass('show');
 
-                    var originalContents = document.body.innerHTML;
+//                     var originalContents = document.body.innerHTML;
 
-                    document.body.innerHTML = reponse;
+//                     document.body.innerHTML = reponse;
 
-                    window.print();
+//                     window.print();
 
-                    document.body.innerHTML = originalContents;
-                },
-                error: function (data) {
-                    $("div#divLoading").removeClass('show');
+//                     document.body.innerHTML = originalContents;
+//                 },
+//                 error: function (data) {
+//                     $("div#divLoading").removeClass('show');
 
-                    console.log('Error:', data);
-                }
-            });
-    });
+//                     console.log('Error:', data);
+//                 }
+//             });
+//     });
 
 
     $(document).on("click", "#csv_export_btn", function (event) {
