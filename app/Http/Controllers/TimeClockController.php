@@ -35,7 +35,7 @@ class TimeClockController extends Controller
     public function update(Request $request){
        
         $input = $request->all();
-        // dd($input);
+     
        
         $id=$input['emp_id'];
         
@@ -43,7 +43,7 @@ class TimeClockController extends Controller
        
         $end=$input['end'];
         $tc_login_id_list=$input['tc_login_id'];
-        //$sun_date=$input['sunday_date'];
+       
         
        
         
