@@ -965,46 +965,86 @@
                                         <!--<p><span style="width:10%;">Pack:</span>&nbsp;&nbsp;<span style="width:40%;"><input type="text" name="update_npack" value="1" class="form-control"></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_npack_checkbox" value="Y">&nbsp;Update Pack Qty</span></p>-->
 
                                         <p>
-                                            <span style="width:35%;font-size:1rem;">COST</span>&nbsp;&nbsp;
+                                            <span>
+                                                <input type="radio" name="update_dcostprice_increment" id="cost_checkbox" class="c_checkbox">
+                                            </span>
+                                            <span style="width:60%; text-transform:uppercase;" class="font-style-13px">COST</span>
 
-                                            <span style="width:60%;">
-                                                <input type="text" name="update_dcostprice" value="0" class="form-control">
+                                            <span style="width:30%;">
+                                                <input type="text" name="cost_checkbox" value="0" class="form-control font-style-13px" id="cost" readonly>
                                             </span>
                                         </p>
-
-
-
-                                        <!--<span style="width:42%;"><input type="checkbox" name="update_dcostprice_checkbox" value="Y">&nbsp;Update Zero Cost</span>-->
 
                                         <p>
                                             <span>
-                                                <input type="checkbox" value="Y"
-                                                    name="update_dcostprice_increment">&nbsp;&nbsp;
+                                                <input type="radio" name="update_dcostprice_increment" id="increment_cost" class="c_checkbox">
                                             </span>
-                                            <input type="hidden" name="update_dcostprice_select" value="set as cost">
-                                            <span>increment cost ($) </span>
+                                            <span style="width:60%; text-transform:uppercase;" class="font-style-13px">increment cost
+                                                ($)</span>
 
+                                            <span style="width:30%;">
+                                                <input type="text" name="increment_cost" value="0" class="form-control font-style-13px" id="inc_cost" readonly>
+                                            </span>
+                                        </p>
 
+                                        <p>
+                                            <span>
+                                                <input type="radio" name="update_dcostprice_increment" id="increment_cost_dollar" class="c_checkbox">
+                                            </span>
+                                            <span style="width:60%; text-transform:uppercase;">increment cost
+                                                by (%)</span>
 
-                                            <br><br>
-                                            <input type="checkbox" value="Y"
-                                                name="update_dcostprice_increment_percent">&nbsp;&nbsp;increment cost by (%)
+                                            <span style="width:30%;">
+                                                <input type="text" name="increment_cost_dollar" value="0" class="form-control font-style-13px" id="inc_cost_dol" readonly>
+                                            </span>
                                         </p>
 
                                     </div>
-                                    <div class="col-md-4" style=" padding-left: 100px;">
+                                    <div class="col-md-4" style=" padding-left: 170px;">
                                         <div class="verticalLine"></div>
                                     </div>
                                     <div class="col-md-4 span_field" style="padding-left:10px;padding-right:10px;">
                                         <!--<p><span style="width:20%;">Selling Unit:</span>&nbsp;&nbsp;<span style="width:35%;font-size:1rem;"><input type="text" name="update_nsellunit" value="1" class="form-control"></span>&nbsp;&nbsp;<span style="width:45%;"><input type="checkbox" name="update_nsellunit_checkbox" value="Y">&nbsp;Update Zero Unit</span></p>-->
                                         <!--<p>-->
 
-                                        <span style="width:35%;font-size:1rem;">PRICE &nbsp;&nbsp;</span><span
-                                            style="width:60%;"><input type="text" name="update_dunitprice" value="0"
-                                                class="form-control"></span>&nbsp;&nbsp;
+                                        <p>
+                                            <span>
+                                                <input type="radio" value="price" name="price" class="p_checkbox" id="price_checkbox">
+                                            </span>
+                                            <span style="width:60%;font-size:1rem;">PRICE</span>
+                                            <span style="width:30%;"><input type="text" name="price_checkbox" value="0"
+                                                    class="form-control" id="price" readonly>
+                                            </span>
+                                        </p>
                                         <!--  <span style="width:45%;"><input type="checkbox" name="update_dunitprice_checkbox" value="Y">&nbsp;Update Zero Price</span>-->
                                         <!--</p>-->
                                         <p>
+                                            <span>
+                                                <input type="radio" value="increment_price" name="price" class="p_checkbox" id="increment_price">
+                                            </span>
+                                            <span style="width:60%;font-size:1rem; text-transform:uppercase;">increment
+                                                price
+                                                ($)</span>
+
+                                            <span style="width:30%;">
+                                                <input type="text" name="increment_price" value="0" class="form-control" id="inc_price" readonly>
+                                            </span>
+                                        </p>
+
+                                        <p>
+                                            <span>
+                                                <input type="radio" value="increment_price_dollar" name="price" class="p_checkbox" id="increment_price_dollar">
+                                            </span>
+                                            <span style="width:60%;font-size:1rem; text-transform:uppercase;">increment
+                                                price
+                                                by (%)</span>
+
+                                            <span style="width:30%;">
+                                                <input type="text" name="increment_price_dollar" value="0" class="form-control" id="inc_price_dol" readonly>
+                                            </span>
+                                        </p>
+
+                                        {{-- <p>
                                             <span style="width:100%;">
 
                                                 <input type="hidden" name="update_dunitprice_select" value="set as price">
@@ -1018,7 +1058,7 @@
                                             </span>&nbsp;&nbsp;
                                             <!--<span style="width:20%;">Buydown:</span>&nbsp;&nbsp;<span style="width:35%;font-size:1rem;">-->
                                             <input type="hidden" name="update_ndiscountper" value="" class="form-control">
-                                        </p>
+                                        </p> --}}
                                     </div>
                                 </div>
 
@@ -1040,9 +1080,9 @@
                                 <div class="row text-uppercase">
                                     <div class="col-md-4 span_field " style="padding-left:10px;padding-right:10px;">
 
-                                        <p><span style="width:35%;font-size:1rem;">Department</span>&nbsp;&nbsp;
+                                        <p><span style="width:35%;" class="font-style-13px">Department</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
-                                                <select name="update_vdepcode" id="update_vdepcode" class="form-control">
+                                                <select name="update_vdepcode" id="update_vdepcode" class="form-control font-style-13px">
                                                     <option value="no-update">-- No Update --</option>
                                                     <?php if(isset($data['departments']) && count($data['departments']) > 0){?>
                                                     <?php foreach($data['departments'] as $department){?>
@@ -1054,10 +1094,10 @@
                                         </p>
                                         <p>
 
-                                            <span style="width:35%;font-size:1rem;">Category</span>&nbsp;&nbsp;
+                                            <span style="width:35%;" class="font-style-13px">Category</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
                                                 <select name="update_vcategorycode" id="update_vcategorycode"
-                                                    class="form-control">
+                                                    class="form-control font-style-13px">
                                                     <option value="no-update">-- No Update --</option>
                                                     <?php if(isset($data['categories']) && count($data['categories']) > 0){?>
                                                     <?php foreach($data['categories'] as $category){?>
@@ -1069,9 +1109,9 @@
                                         </p>
 
                                         <p>
-                                            <span style="width:35%;font-size:1rem;">Sub Category</span>&nbsp;&nbsp;
+                                            <span style="width:35%;" class="font-style-13px">Sub Category</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
-                                                <select name="update_subcat_id" id="update_subcat_id" class="form-control">
+                                                <select name="update_subcat_id" id="update_subcat_id" class="form-control font-style-13px">
                                                     <option value="no-update">-- No Update --</option>
                                                     <?php if(isset($data['subcategories']) && count($data['subcategories']) > 0 && $data['new_database'] === true){?>
                                                     <?php foreach($data['subcategories'] as $subcategory){ ?>
@@ -1082,9 +1122,9 @@
                                             </span>
                                         </p>
                                         <p style="display:none" ;>
-                                            <span style="width:35%;font-size:1rem;">Item Type</span>&nbsp;&nbsp;
+                                            <span style="width:35%;" class="font-style-13px">Item Type</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
-                                                <select name="update_vitemtype" class="form-control">
+                                                <select name="update_vitemtype" class="form-control font-style-13px">
                                                     <option value="no-update">-- No Update --</option>
                                                     <?php if(isset($data['item_types']) && count($data['item_types']) > 0){?>
                                                     <?php foreach($data['item_types'] as $item_type){ ?>
@@ -1096,9 +1136,9 @@
                                         </p>
 
                                         <p style="display:none;">
-                                            <span style="width:35%;font-size:1rem;">Unit</span>&nbsp;&nbsp;
+                                            <span style="width:35%;" class="font-style-13px">Unit</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
-                                                <select name="update_vunitcode" class="form-control">
+                                                <select name="update_vunitcode" class="form-control font-style-13px">
                                                     <option value="no-update">-- No Update --</option>
                                                     <?php if(isset($data['units']) && count($data['units']) > 0){?>
                                                     <?php foreach($data['units'] as $unit){ ?>
@@ -1109,9 +1149,9 @@
                                             </span>
                                         </p>
                                         <p style="display:none;">
-                                            <span style="width:35%;font-size:1rem;">Size</span>&nbsp;&nbsp;
+                                            <span style="width:35%;" class="font-style-13px">Size</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
-                                                <select name="update_vsize" class="form-control">
+                                                <select name="update_vsize" class="form-control font-style-13px">
                                                     <option value="no-update">-- No Update --</option>
                                                     <?php if(isset($data['sizes']) && count($data['sizes']) > 0){?>
                                                     <?php foreach($data['sizes'] as $size){ ?>
@@ -1122,9 +1162,9 @@
                                             </span>
                                         </p>
                                         <p>
-                                            <span style="width:35%;font-size:1rem;"> ITEM Group</span>&nbsp;&nbsp;
+                                            <span style="width:35%;" class="font-style-13px"> ITEM Group</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
-                                                <select name="update_iitemgroupid" class="form-control">
+                                                <select name="update_iitemgroupid" class="form-control font-style-13px">
                                                     <option value="no-update">-- No Update --</option>
                                                     <?php if(isset($data['itemGroups']) && count($data['itemGroups']) > 0){?>
                                                     <?php foreach($data['itemGroups'] as $itemGroup){ ?>
@@ -1138,15 +1178,61 @@
                                     <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
 
                                         <p>
+                                            <span style="width:35%;font-size:1rem;">Tax</span>&nbsp;&nbsp;
+                                            <span style="width:60%;">
+                                                <select name="tax" id="tax" class="form-control">
+                                                    <option value='all'>All Taxes</option>
+                                                    <option value='tax1'>Tax 1</option>
+                                                    <option value='tax2'>Tax 2</option>
+                                                    <option value='tax3'>Tax 3</option>
+                                                    <option value='no'>No Tax</option>
+                                                </select>
+                                            </span>
+                                        </p>
+                                        <p>
+                                            <span style="width:35%;font-size:1rem;">Age Verification</span>&nbsp;&nbsp;
+                                            <span style="width:60%;">
+                                                <select name="update_vageverify" class="form-control">
+                                                    <option value="no-update">-- No Update --</option>
+                                                    <?php if(isset($data['ageVerifications']) && count($data['ageVerifications']) > 0){?>
+                                                    <?php foreach($data['ageVerifications'] as $ageVerification){ ?>
+                                                    <option value="<?php echo $ageVerification['vvalue']; ?>"><?php echo $ageVerification['vname']; ?></option>
+                                                    <?php } ?>
+                                                    <?php } ?>
+                                                </select>
+                                            </span>
+                                        </p>
+                                        {{-- <p class="text-uppercase no-sort" style="width: 9%; padding-left: 0px;">Tax
+                                        <div class="adjustment-has-search">
+
+                                            <select class='table-heading-fields' name='tax' id='tax'
+                                                style="padding-left: 0px;">
+                                                <option value='all'>All Taxes</option>
+                                                <option value='tax1'>Tax 1</option>
+                                                <option value='tax2'>Tax 2</option>
+                                                <option value='tax3'>Tax 3</option>
+                                                <option value='no'>No Tax</option>
+                                            </select>
+
+                                        </div>
+                                        </p> --}}
+
+                                        {{-- <p>
                                             <span style="width:35%;font-size:1rem;">Tax1</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
                                                 <select name="update_vtax1" id="update_vtax1" class="form-control">
                                                     <option value="no-update">-- No Update --</option>
-                                                    <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
-                                                    <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
-                                                    <option value="<?php echo $k; ?>"><?php echo $k; ?></option>
-                                                    <?php } ?>
-                                                    <?php } ?>
+                                                    <?php //if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){
+                                                    ?>
+                                                    <?php //foreach($data['array_yes_no'] as $k => $array_y_n){
+                                                    ?>
+                                                    <option value="<?php //echo $k;
+?>"><?php //echo $k;
+?></option>
+                                                    <?php //}
+                                                    ?>
+                                                    <?php //}
+                                                    ?>
                                                 </select>
                                             </span>
                                         </p>
@@ -1155,14 +1241,20 @@
                                             <span style="width:60%;">
                                                 <select name="update_vtax2" id="update_vtax2" class="form-control">
                                                     <option value="no-update">-- No Update --</option>
-                                                    <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
-                                                    <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
-                                                    <option value="<?php echo $k; ?>"><?php echo $k; ?></option>
-                                                    <?php } ?>
-                                                    <?php } ?>
+                                                    <?php //if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){
+                                                    ?>
+                                                    <?php //foreach($data['array_yes_no'] as $k => $array_y_n){
+                                                    ?>
+                                                    <option value="<?php //echo $k;
+?>"><?php //echo $k;
+?></option>
+                                                    <?php //}
+                                                    ?>
+                                                    <?php //}
+                                                    ?>
                                                 </select>
                                             </span>
-                                        </p>
+                                        </p> --}}
                                         <p>
                                             <span style="width:35%;font-size:1rem;">Food Item</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
@@ -1195,7 +1287,19 @@
 
 
                                     <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
-
+                                        <p>
+                                            <span style="width:35%;font-size:1rem;">Unit</span>
+                                            <span style="width:60%;">
+                                                <select name="update_unit_id" id="update_unit_id" class="form-control">
+                                                    <option value="no-update">-- No Update --</option>
+                                                    <?php if(isset($data['itemsUnits']) && count($data['itemsUnits']) > 0){ ?>
+                                                    <?php foreach($data['itemsUnits'] as $unit){ ?>
+                                                    <option value="<?php echo $unit['id']; ?>"><?php echo $unit['unit_name']; ?></option>
+                                                    <?php } ?>
+                                                    <?php } ?>
+                                                </select>
+                                            </span>
+                                        </p>
                                         <p>
                                             <span style="width:35%;font-size:1rem;"> UNIT PER CASE</span>
                                             &nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_npack"
@@ -1215,19 +1319,7 @@
                                                     disabled>&nbsp;Update Zero QOH
                                             </span>
                                         </p>
-                                        <p>
-                                            <span style="width:35%;font-size:1rem;">Age Verification</span>&nbsp;&nbsp;
-                                            <span style="width:60%;">
-                                                <select name="update_vageverify" class="form-control">
-                                                    <option value="no-update">-- No Update --</option>
-                                                    <?php if(isset($data['ageVerifications']) && count($data['ageVerifications']) > 0){?>
-                                                    <?php foreach($data['ageVerifications'] as $ageVerification){ ?>
-                                                    <option value="<?php echo $ageVerification['vvalue']; ?>"><?php echo $ageVerification['vname']; ?></option>
-                                                    <?php } ?>
-                                                    <?php } ?>
-                                                </select>
-                                            </span>
-                                        </p>
+
 
                                         <p> <span style="width:35%;font-size:1rem;">Bottle Deposit</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
@@ -1466,20 +1558,7 @@
                             <div class="panel-body padding-left-right" id="options_checkbox_div" style="display: none;">
                                 <div class="row text-uppercase">
 
-                                    <div class="col-md-4 span_field" style="padding-left:25px;padding-right:10px;">
-                                        <p>
-                                            <span style="width:35%;font-size:1rem;">Unit</span>
-                                            <span style="width:60%;">
-                                                <select name="update_unit_id" id="update_unit_id" class="form-control">
-                                                    <option value="no-update">-- No Update --</option>
-                                                    <?php if(isset($data['itemsUnits']) && count($data['itemsUnits']) > 0){ ?>
-                                                    <?php foreach($data['itemsUnits'] as $unit){ ?>
-                                                    <option value="<?php echo $unit['id']; ?>"><?php echo $unit['unit_name']; ?></option>
-                                                    <?php } ?>
-                                                    <?php } ?>
-                                                </select>
-                                            </span>
-                                        </p>
+                                    <div class="col-md-4 span_field" style="padding-left:35px;padding-right:10px;">
                                         <p>
                                             <span style="width:35%;font-size:1rem;">Malt</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
@@ -1488,7 +1567,7 @@
                                         </p>
 
                                     </div>
-                                    <div class="col-md-4 span_field" style="padding-left:25px;padding-right:10px;">
+                                    <div class="col-md-4 span_field" style="padding-left:0px;padding-right:10px;">
 
                                         <p>
                                             <span style="width:35%;font-size:1rem;">Unit Value</span>&nbsp;&nbsp;
@@ -1499,7 +1578,7 @@
                                         </p>
 
                                     </div>
-                                    <div class="col-md-4 span_field" style="padding-left:25px;padding-right:10px;">
+                                    <div class="col-md-4 span_field" style="padding-left:0px;padding-right:10px;">
                                         <p>
                                             <span style="width:35%;font-size:1rem;">Bucket</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
@@ -1570,8 +1649,56 @@
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            // $('input[name="selected_items_id[]"]').prop( 'checked', true );
+        // cost checkbox
+        $('#cost_checkbox').click(function() {
+            $('#cost').attr('readonly', false);
+            $('#inc_cost').attr('readonly', true);
+            $('#inc_cost_dol').attr('readonly', true);
+        });
+        $('#increment_cost').click(function() {
+            $('#inc_cost').attr('readonly', false);
+            $('#cost').attr('readonly', true);
+            $('#inc_cost_dol').attr('readonly', true);
+        });
+        $('#increment_cost_dollar').click(function() {
+            $('#inc_cost_dol').attr('readonly', false);
+             $('#inc_cost').attr('readonly', true);
+            $('#cost').attr('readonly', true);
+        });
+
+
+        // price check box
+        $('#price_checkbox').click(function() {
+            $('#price').attr('readonly', false);
+            $('#inc_price').attr('readonly', true);
+            $('#inc_price_dol').attr('readonly', true);
+        });
+        $('#increment_price').click(function() {
+            $('#inc_price').attr('readonly', false);
+            $('#price').attr('readonly', true);
+            $('#inc_price_dol').attr('readonly', true);
+        });
+        $('#increment_price_dollar').click(function() {
+            $('#inc_price_dol').attr('readonly', false);
+             $('#inc_price').attr('readonly', true);
+            $('#price').attr('readonly', true);
+        });
+
+
+
+
+
+         $(document).on('change', '#cost_checkbox', function(event) {
+            event.preventDefault();
+
+            // alert($("#cost_checkbox").prop("checked", true));
+            // console.log($("#cost_checkbox").prop("checked", true));
+
+            // if($(this).is(":checked")){
+            //     $('#cost').prop('readonly',true);
+            // }else{
+            //     $('#cost').prop('readonly',false);
+            // }
         });
 
         $(document).on('change', '.iitemid', function(event) {
@@ -2112,6 +2239,9 @@
         })
     </script>
     <style>
+        .font-style-13px{
+            font-style:13px;
+        }
         .disabled {
             pointer-events: none; //This makes it not clickable
 
