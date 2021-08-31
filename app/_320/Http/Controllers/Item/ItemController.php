@@ -996,13 +996,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -1124,13 +1124,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -1916,13 +1916,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -2061,13 +2061,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -4454,13 +4454,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -4600,13 +4600,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
