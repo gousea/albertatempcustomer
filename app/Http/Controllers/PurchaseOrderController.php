@@ -552,6 +552,8 @@ class PurchaseOrderController extends Controller
 		$data['export_as_csv'] = url('/PurchaseOrder/export_as_csv');
 		$data['export_as_email'] = url('/PurchaseOrder/export_as_email');
 		$data['export_as_excel'] = url('/PurchaseOrder/export_as_excel');
+		
+		$data['get_categories_url']    = url('buydown/get_item_categories');
 
 		if (isset($input['ipoid'])) {
             
@@ -768,6 +770,10 @@ class PurchaseOrderController extends Controller
         
 		$data['vendors'] = $suppliers = Supplier::orderBy('vcompanyname', 'ASC')->get()->toArray();
         // $data['store'] = $this->model_api_purchase_order->getStore();
+        
+        $data['sizes'] = Size::orderBy('vsize', 'ASC')->get()->toArray();
+        
+        $data['departments'] = Department::orderBy('vdepartmentname', 'ASC')->get()->toArray();
         
 		return $data;
 	}

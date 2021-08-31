@@ -88,21 +88,39 @@ class PurchaseOrder extends Model
         if (isset($search_items['dept_code']) && !empty(trim($search_items['dept_code']))) {
             $search = $search_items['dept_code'];
             if ($search != 'all') {
-                $condition .= " AND md.vdepartmentname LIKE  '%" . $search . "%'";
+                $condition .= " AND mi.vdepcode ='" . $search . "'";
             }
         }
 
         if (isset($search_items['category_code']) && !empty(trim($search_items['category_code']))) {
             $search = $search_items['category_code'];
             if ($search != 'All' && $search != 'all') {
-                $condition .= " AND mc.vcategoryname LIKE  '%" . $search . "%'";
+                $condition .= " AND mi.vcategorycode ='" . $search . "'";
             }
         }
 
         if (isset($search_items['supplier_code']) && !empty($search_items['supplier_code'])) {
             $search = $search_items['supplier_code'];
             if ($search != 'all') {
-                $condition .= " AND msupp.vcompanyname LIKE  '%" . $search . "%'";
+                $condition .= " AND mi.vsuppliercode ='" . $search . "'";
+            }
+        }
+        
+        if (isset($search_items['price_select_by']) && !empty(trim($search_items['price_select_by'])) && $search_items['select_by_value1'] != null && !empty($search_items['select_by_value1'])) {
+            $search_conditions = $search_items['price_select_by'];
+            
+            $select_by_value1 = $search_items['select_by_value1'];
+            $select_by_value2 = $search_items['select_by_value2'];
+            
+            if ($search_conditions == 'greater' && isset($select_by_value1)) {
+                $condition .= " AND mi.dunitprice > $select_by_value1 ";
+            } elseif ($search_conditions == 'less' && isset($select_by_value1)) {
+                $condition .= " AND mi.dunitprice < $select_by_value1 ";
+            } elseif ($search_conditions == 'equal' && isset($select_by_value1)) {
+                $condition .= " AND mi.dunitprice = $select_by_value1 ";
+            } elseif ($search_conditions == 'between' && isset($select_by_value1) && isset($select_by_value2)) {
+
+                $condition .= " AND mi.dunitprice BETWEEN $select_by_value1 AND $select_by_value2 ";
             }
         }
        
@@ -112,9 +130,9 @@ class PurchaseOrder extends Model
                 $condition .= " AND mi.dunitprice = $search ";
             } 
         }
-
+        
         //parent-child Search changed 05-10(oct)-2020
-        if(!empty(trim($search_items['item_name'])) || !empty(trim($search_items['sku'])) || $search_items['size'] != 'all' || $search_items['dept_code'] != 'all' || $search_items['category_code'] != 'All' || $search_items['supplier_code'] != 'all' || !empty($search_items['price'])){
+        if(!empty(trim($search_items['item_name'])) || !empty(trim($search_items['sku'])) || $search_items['size'] != 'all' || $search_items['dept_code'] != 'all' || $search_items['category_code'] != 'all' || $search_items['supplier_code'] != 'all' || !empty($search_items['select_by_value1'])){
             if(count($pre_items_id) > 0){
                 $sort='';
                 $pre_items_id = implode(',', $pre_items_id);

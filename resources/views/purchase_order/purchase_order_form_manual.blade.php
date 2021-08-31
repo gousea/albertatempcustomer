@@ -384,32 +384,71 @@
                                                   </th>
                                                   <th class="text-left text-uppercase">PRICE
                                                     <div class="adjustment-has-search">
-                                                      <span class="fa fa-search form-control-feedback"></span>
-                                                      <input type="number" class="form-control table-heading-fields text-center search_text_box search_item_history" id="price_filter" placeholder="SEARCH" style="padding-left: 1.375rem;" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>>
+                                                        <select class='table-heading-fields text-center search_text_box' id='price_select_by' name='price_select_by' style='width:55%; padding-left: 5px;'>
+                                                            
+                                                            <option value="greater" selected>Greater than</option>
+                                                            <option value="less">Less than</option>
+                                                            <option value="equal">Equal to</option>
+                                                            <option value="between">Between</option>
+                                                        </select>
+                                                        <span id='selectByValuesSpan'>
+                                                            <input type='text' autocomplete='off' name='select_by_value_1'
+                                                                id='select_by_value_1'
+                                                                class='search_text_box table-heading-fields search_item_history'
+                                                                placeholder='Enter Amount'
+                                                                style='width:40%; color:black; height:28px; padding-left: 0px;'
+                                                                value='' />
+                                                        </span>
+                                                      <!--<input type="number" class="form-control table-heading-fields text-center search_text_box search_item_history" id="price_filter" placeholder="SEARCH" style="padding-left: 1.375rem;" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>>-->
                                                     </div>
                                                   </th>
                                                   <th class="text-left text-uppercase">SIZE
                                                     <div class="adjustment-has-search">
-                                                      <span class="fa fa-search form-control-feedback"></span>
-                                                      <input type="text" class="form-control table-heading-fields text-center search_item_history" id="size_id" placeholder="SEARCH" style="padding-left: 1.375rem;" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>>
+                                                        <select class='table-heading-fields text-center search_item_history' id="size_id" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>>
+                                                            <option value='all'>All</option>";
+                                                                <?php 
+                                                                  foreach($data['sizes'] as $size){
+                                                                ?>  
+                                                                    <option value="<?= addslashes($size['vsize']) ?>"> <?=addslashes($size['vsize']) ?></option>;
+                                                                <?php } ?>
+                                                        </select>
+                                                        
                                                     </div>
                                                   </th>
                                                   <th class="text-left text-uppercase">DEPT.
                                                     <div class="adjustment-has-search">
-                                                      <span class="fa fa-search form-control-feedback"></span>
-                                                      <input type="text" class="form-control table-heading-fields text-center search_item_history" id="dept_code" placeholder="SEARCH" style="padding-left: 1.375rem;" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>>
+                                                        <select class='table-heading-fields text-center search_item_history' name='dept_code' id='dept_code' style="padding-left: 1.375rem;" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>>
+                                                        
+                                                            <option value='all'>All</option>";
+                                                            <?php
+                                                              foreach($data['departments'] as $department){
+                                                            ?>
+                                                                <option value='<?= $department['vdepcode'] ?>'> <?= $department['vdepartmentname'] ?></option>;
+                                                            <?php } ?>
+                                                        </select>
+                                                      
                                                     </div>
                                                   </th>
                                                   <th class="text-left text-uppercase">CATEGORY
                                                     <div class="adjustment-has-search">
-                                                      <span class="fa fa-search form-control-feedback"></span>
-                                                      <input type="text" class="form-control table-heading-fields text-center search_item_history" id="category_code" placeholder="SEARCH" style="padding-left: 1.375rem;" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>>
+                                                        <select class='table-heading-fields text-center search_item_history' id="category_code" style="padding-left:  1.375rem; width:150px;" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>>
+                                                        
+                                                            <option value='all'>All</option>
+                                                        </select>
+                                                        
                                                     </div>
                                                   </th>
                                                   <th class="text-left text-uppercase">VENDOR
                                                     <div class="adjustment-has-search">
-                                                      <span class="fa fa-search form-control-feedback"></span>
-                                                      <input type="text" class="form-control table-heading-fields text-center search_item_history" id="supplier_code" placeholder="SEARCH" style="padding-left: 1.375rem;" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>>
+                                                        
+                                                        <select class="table-heading-fields text-center search_item_history" id="supplier_code" placeholder="SEARCH" style="padding-left: 1.375rem;" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> disabled <?php } ?>>
+                                                            <option value='all'>All</option>";
+                                                            <?php
+                                                              foreach($data['vendors'] as $vendor){
+                                                            ?>
+                                                                <option value='<?= $vendor['vsuppliercode'] ?>'> <?= $vendor['vcompanyname'] ?></option>;
+                                                            <?php } ?>
+                                                        </select>
                                                     </div>
                                                   </th>
                                                   
@@ -2567,7 +2606,7 @@ $('.editable_text').focus(function() {
         
     });
 
-  $(document).on('keyup', '.search_item_history', function(event) {
+  $(document).on('change, input', '.search_item_history', function(event) {
     
     $('tbody#history_items').empty();
     $('#search_vendor_item_code').val('');
@@ -2577,18 +2616,22 @@ $('.editable_text').focus(function() {
     
     var item_name = $('#item_name').val();
     var sku = $('#sku').val();
-    var price = $('#price_filter').val();
+    // var price = $('#price_filter').val();
     var size = $('#size_id').val();
     var dept_code = $('#dept_code').val();
     var category_code = $('#category_code').val();
     var supplier_code = $('#supplier_code').val();
-
+    
+    var price_select_by = $('#price_select_by').val();
+    var select_by_value1 = $('#select_by_value_1').val() === undefined?'':$('#select_by_value_1').val();
+    var select_by_value2 = $('#select_by_value_2').val() === undefined?'':$('#select_by_value_2').val();
+    console.log(select_by_value1);
     var ivendorid = $('input[name="vvendorid"]').val();
     search_item_history_url = search_item_history_url.replace(/&amp;/g, '&');
 
     $('#item_history_section').hide();
     
-    if(item_name != '' || sku != '' || size != '' || dept_code != '' || category_code != '' || supplier_code != '' || price != '' ){
+    if(item_name != '' || sku != '' || size != '' || dept_code != '' || category_code != '' || supplier_code != '' || select_by_value1 != '' ){
       var pre_items_id = {};
         
       $('tbody#purchase_order_items > tr').each(function(index_val, val) {
@@ -2601,7 +2644,7 @@ $('.editable_text').focus(function() {
         }
         
       search_ajax = $.ajax({
-        url : search_item_history_url+'?item_name='+encodeURIComponent(item_name)+'&sku='+sku+'&size='+size+'&dept_code='+dept_code+'&category_code='+category_code+'&supplier_code='+supplier_code+'&price='+price+'&ivendorid='+ivendorid,
+        url : search_item_history_url+'?item_name='+encodeURIComponent(item_name)+'&sku='+sku+'&size='+size+'&dept_code='+dept_code+'&category_code='+category_code+'&supplier_code='+supplier_code+'&price_select_by='+price_select_by+'&select_by_value1='+select_by_value1+'&select_by_value2='+select_by_value2+'&ivendorid='+ivendorid,
         headers: {
             'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
         },
@@ -3844,10 +3887,10 @@ $('.editable_text').focus(function() {
             $('#item_name').val('');
             $('#select_by_value_1').val('');
             $('#sku').val('');
-            $('#size_id').val(' ');
-            $('#category_code').val(' '); 
-            $('#dept_code').val(' ');
-            $('#supplier_code').val(' ');
+            $('#size_id').val('all');
+            $('#category_code').val('all'); 
+            $('#dept_code').val('all');
+            $('#supplier_code').val('all');
         });
     });
     
@@ -3856,6 +3899,78 @@ $('.editable_text').focus(function() {
         if (event.which == '13') {
           event.preventDefault();
         }
+    });
+    
+    $(document).on("change","#dept_code",function(){
+        var get_category_ajax;
+        if($(this).val() != "")
+        {
+            $('#category_code').attr("placeholder", "Loading...");
+            var get_categories_url = "<?php echo $data['get_categories_url']; ?>";
+            get_categories_url = get_categories_url.replace(/&amp;/g, '&');
+            
+            var dep_code = [$(this).val()];
+            
+            if(get_category_ajax && get_category_ajax.readyState != 4 ){
+                get_category_ajax.abort();
+            }
+            
+            get_category_ajax = $.ajax({
+                url: get_categories_url,
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                },
+                type: 'post',
+                data : {dep_code : dep_code},
+                success:function(data){
+                    if(data)
+                    {
+                        $('#category_code').attr("placeholder", "Select Category");
+                        $( '#category_code' ).html( data );
+                        $('#category_code').prop("disabled", false);
+                    }
+                    else
+                    {
+                        $( '#category_code' ).html( '' );
+                        $('#category_code').prop("disabled", true);
+                    }
+                }
+            })
+        }
+
+    });
+    
+    $(document).on('change', '#price_select_by', function() {
+        var select_by = $(this).val();
+        var select_by_value1 = $('#select_by_value1').val() === undefined ? '' : $('#select_by_value1').val();
+        var select_by_value2 = $('#select_by_value2').val() === undefined ? '' : $('#select_by_value2').val();
+                
+        var html = '';
+        if (select_by === 'between') {
+                
+            html =
+                '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box table-heading-fields search_item_history" placeholder="Enter" style="color:#000000; height:28px; padding-left: 1px; padding-right: 1px; width:55px;" value="' +
+                select_by_value1 + '"/>';
+            html +=
+                '<input type="number" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box table-heading-fields search_item_history" placeholder="Amt" style="color:#000000; height:28px; padding-left: 1px; padding-right: 1px; width:55px;" value="' +
+                select_by_value2 + '"/>'
+                
+            $(this).css({
+                'width': 100
+            });
+                
+        } else {
+                
+            html =
+                '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box table-heading-fields search_item_history" placeholder="Amt" style="color:#000000; height:28px; width:40%; padding-left: 1px;" value="' +
+                select_by_value1 + '"/>'
+            // $('#selectByValuesSpan').html('not between');
+            $(this).css({
+                'width': 100
+            });
+        }
+        $('#selectByValuesSpan').html(html);
+
     });
 </script>
 
