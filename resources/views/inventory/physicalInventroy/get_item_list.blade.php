@@ -151,7 +151,7 @@
                                         ?>
                                             <th class="text-uppercase no-sort" style="width: 12%;">Dept.
                                             <div class="adjustment-has-search">
-                                                <select class='table-heading-fields' multiple='true'  name='dept_code' id='dept_code'>
+                                                <select class='table-heading-fields' multiple='true'  name='dept_code[]' id='dept_code'>
                                                 <option value='all'>All</option>";
                                                     <?php 
                                                         foreach($data['departments'] as $department){
