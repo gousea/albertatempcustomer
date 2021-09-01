@@ -5,6 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Illuminate\Pagination\LengthAwarePaginator;
+Use Exception;
 
 class ZeroMovement extends Model{
     
@@ -133,11 +134,19 @@ class ZeroMovement extends Model{
         $sql="CALL rp_webzeroitemmovement('".$data['p_start_date']."','" . $data['p_end_date'] . "','".$data['vdepcode']."','".$data['vcategorycode']."','".$data['subcat_id']."', '".(int)$start."', '".(int)$limit."')";
       // $sql="CALL rp_webzeroitemmovement('".$data['p_start_date']."','" . $data['p_end_date'] . "','".$data['vdepcode']."','".$data['vcategorycode']."','".$data['subcat_id']."')";
      
-        //dd($sql);
+       try{
+           
         $return_data = DB::connection('mysql_dynamic')->select($sql);
-        $result = json_decode(json_encode($return_data), true); 	
+       
+           
+       }
+       catch(Exception $e){
+          return array();
+       }
+       
+       $result = json_decode(json_encode($return_data), true); 	
         
-        return $result;
+       return $result;
     }
     
     public function getcat_SubCategories($cat_id) {
@@ -264,5 +273,6 @@ class ZeroMovement extends Model{
         }
        $return['success'] = 'Item Updated  Successfully';
        return $return;
-   }
+  
+    }
 }
