@@ -240,20 +240,21 @@
 
 
     <script>
-        $(document).on('change', '#price_select_by', function(){
-            var select_by = $(this).val();
-            var html='';
-            if(select_by === 'between'){
-                // $('#price_select_by').css('width', '55px');
-                html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:25%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value=""/>';
-                html += '<input type="text" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box1" placeholder="Enter Amt" style="width:25%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="" required/>'
-            } else {
-                // $('#price_select_by').css('width', '70px');
-                html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:50%;color:black;border-radius: 4px;height:28px;margin-left:5px;" value=""/>'
-                // $('#selectByValuesSpan').html('not between');
-            }
-            $('#selectByValuesSpan').html(html);
-        });
+        // $(document).on('change', '#price_select_by', function(){
+        //     var select_by = $(this).val();
+        //     console.log(select_by);
+        //     var html='';
+        //     if(select_by == 'between'){
+        //         // $('#price_select_by').css('width', '55px');
+        //         html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:25%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value=""/>';
+        //         html += '<input type="text" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box1" placeholder="Enter Amt" style="width:25%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="" required/>'
+        //     } else {
+        //         // $('#price_select_by').css('width', '70px');
+        //         html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:50%;color:black;border-radius: 4px;height:28px;margin-left:5px;" value=""/>'
+        //         // $('#selectByValuesSpan').html('not between');
+        //     }
+        //     $('#selectByValuesSpan').html(html);
+        // });
     </script>
 
 <script>
@@ -350,8 +351,21 @@
             } );
             
             
-            $( '#price_select_by', this ).off().on( 'change', function () { 
+            $( '#price_select_by', this ).on( 'change', function () { 
                 var self = this;
+                
+                var selectBy = $("#price_select_by").val();
+                var html='';
+                if(selectBy == 'between'){
+                    // $('#price_select_by').css('width', '55px');
+                    html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:25%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value=""/>';
+                    html += '<input type="text" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box1" placeholder="Enter Amt" style="width:25%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="" required/>'
+                } else {
+                    // $('#price_select_by').css('width', '70px');
+                    html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:50%;color:black;border-radius: 4px;height:28px;margin-left:5px;" value=""/>'
+                    // $('#selectByValuesSpan').html('not between');
+                }
+                $('#selectByValuesSpan').html(html);
                 
                 clearTimeout(timer);
                 timer = setTimeout(function () {
