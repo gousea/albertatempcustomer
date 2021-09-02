@@ -122,7 +122,7 @@
                                     <option value="between">Between</option>
                                   </select>
                                   <span id='selectByValuesSpan'>
-                                    <input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box table-heading-fields' placeholder='Enter Amount' style='width:50%;color:black;height:28px; padding-left: 1px;' value=''/>
+                                    <input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box1 table-heading-fields' placeholder='Enter Amount' style='width:50%;color:black;height:28px; padding-left: 1px;' value=''/>
                                   </span>
                                 </div>
                               </th>
@@ -152,11 +152,9 @@
                                             <th class="text-uppercase no-sort" style="width: 12%;">Dept.
                                             <div class="adjustment-has-search">
                                                 <select class='table-heading-fields' multiple='true'  name='dept_code[]' id='dept_code'>
-                                                <option value='all'>All</option>";
-                                                    <?php 
-                                                        foreach($data['departments'] as $department){
-                                                    ?>  
-                                                        <option value='<?=$department['vdepcode']?>'><?=$department['vdepartmentname'] ?></option>;
+                                                    <option value='all'>All</option>";
+                                                    <?php foreach($data['departments'] as $department){ ?>  
+                                                        <option value='<?=$department['vdepcode']?>' ><?=$department['vdepartmentname'] ?></option>;
                                                     <?php } ?>
                                                 </select>
                                             </div>
@@ -289,7 +287,7 @@
             
             var timer;
      
-            $( '.search_text_box', this ).on( 'keyup change', function () {
+            $( '.search_text_box', this ).off().on( 'keyup change', function () {
                 var self = this;
 
                 if(self.value != ''){
@@ -306,13 +304,15 @@
                         .column(i)
                         .search( self.value )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
                 }
                 },0);
                 
             } );
             
             //========filter for price==============
-            $(document).on( 'input', '.search_text_box1', function () {
+            $(document).off().on( 'input', '.search_text_box1', function () {
                 
                 var selectBy = $("#price_select_by").val();
                 var select_by_value_1 = $('#select_by_value_1').val();
@@ -341,6 +341,8 @@
                             .column(3)
                             .search( searchVal)
                             .draw();
+                            
+                        $("div#divLoading").addClass('show');
                     
                     },0);
                 
@@ -348,7 +350,7 @@
             } );
             
             
-            $( '#price_select_by', this ).on( 'change', function () { 
+            $( '#price_select_by', this ).off().on( 'change', function () { 
                 var self = this;
                 
                 clearTimeout(timer);
@@ -358,6 +360,8 @@
                         .column(i)
                         .search( self.value )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
                 }
                 },0);
             } );
@@ -373,6 +377,8 @@
                         .column(5)
                         .search( search )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
             } );
             $( '#category_code', this ).on( 'change', function () {
                 var search = [];
@@ -385,6 +391,8 @@
                         .column(6)
                         .search( search )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
             } );
             
             $( '#supplier_code', this ).on( 'change', function () { 
@@ -398,6 +406,8 @@
                         .column(8)
                         .search( search )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
             } );
             $( '#subcat_id', this ).on( 'change', function () { 
                 var search = [];
@@ -410,6 +420,8 @@
                         .column(7)
                         .search( search )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
             } ); 
             
         } );
@@ -568,6 +580,11 @@
                 } else{ 
                  $('.iitemid').prop('checked', false);   
                 } 
+                
+                setTimeout(function(){
+                    $("div#divLoading").removeClass('show');
+                }, 1000);
+                
             });
         
         var totalDisplayRecord = table.page.info().recordsDisplay;
@@ -688,6 +705,7 @@
                 var supplier = $('#supplier_code').val();
                 var no_of_rows = $('#item_listing tr').length;
                 var empty = $('.dataTables_empty').text();
+                
                 
                 if(empty == 'No data available in table'){
                     bootbox.confirm({
