@@ -45,6 +45,8 @@
         <div class="panel panel-default">
           
             <div class="panel-body padding-left-right">
+
+              <span class="text-danger">!WARRNING :- Don't use browser back button, use cancel button for back.</span>
               
                 <form method="POST" id="calculateform" >
                     @csrf
