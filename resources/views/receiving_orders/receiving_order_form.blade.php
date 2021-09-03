@@ -4070,10 +4070,10 @@ $('.editable_text').focus(function() {
     event.preventDefault();
 
     if($('#advance_update').val() == 0){
-      advance_update_function(false);
+      advance_update_function(true);
       $('#advance_update').val(1);
     }else{
-      advance_update_function(true);
+      advance_update_function(false);
       $('#advance_update').val(0);
     }
     
