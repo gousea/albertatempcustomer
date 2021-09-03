@@ -503,9 +503,17 @@ class EditMultipleItems extends Model
                                         if(isset($data['update_nsellunit_checkbox']) && $data['update_nsellunit_checkbox'] == 'Y'){
                                             $sql .= " nsellunit='1',";
                                             $updated_column[] = 'nsellunit';
+                                            $current_nsellunit = 1;
                                         }elseif(isset($data['update_nsellunit']) && $data['update_nsellunit'] != '' && $data['update_nsellunit'] != '1' && $data['update_nsellunit'] != '0'){
                                             $sql .= " nsellunit='" . ($data['update_nsellunit']) . "',";
                                             $updated_column[] = 'nsellunit';
+                                            $current_nsellunit = $data['update_nsellunit'];
+                                        }else{
+                                            $current_nsellunit = $current_item['nsellunit'];
+                                        }
+                                        
+                                        if($current_nsellunit == 0){
+                                            $current_nsellunit = 1;
                                         }
                                             
                                         // if(isset($data['update_dcostprice_checkbox']) && $data['update_dcostprice_checkbox'] == 'Y'){
@@ -1204,6 +1212,10 @@ class EditMultipleItems extends Model
                                 $current_nsellunit = $data['update_nsellunit'];
                             }else{
                                 $current_nsellunit = $current_item['nsellunit'];
+                            }
+                            
+                            if($current_nsellunit == 0){
+                                $current_nsellunit = 1;
                             }
                                 
                             // if(isset($data['update_dcostprice_checkbox']) && $data['update_dcostprice_checkbox'] == 'Y'){
