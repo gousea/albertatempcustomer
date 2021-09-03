@@ -158,7 +158,7 @@
                                     @foreach ($items as $i => $item)
                                         <tr>
                                             <td data-order={{ $item['iitemid'] }} class="text-center">
-                                                <input type="checkbox" name="selected[{{$i}}][iitemid]"
+                                                <input type="checkbox" class="checkbox" name="selected[{{$i}}][iitemid]"
                                                     id="items[{{$i}}][select]" value={{ $item['iitemid'] }} />
                                                 <input type="hidden" name="items[{{$i}}][iitemid]"
                                                     value={{ $item['iitemid'] }}>
@@ -407,6 +407,24 @@
     
     $(document).on('click', '#update_button', function (event) {
         
+        var count = 0;
+        $('.checkbox:checked').each(function(i) {
+            count = count + 1;
+            
+        });
+        
+        if (count <= 0) {
+            bootbox.confirm({
+                size: 'small',
+                title: " ",
+                message: "Not any Item is Selected",
+                callback: function(result) {}
+            });
+            
+            return false;
+        }
+        
+
         <?php if(session()->get('hq_sid') == 1) { ?>
             $("div#divLoading").removeClass('show');
             $("#myModal").modal('show');
