@@ -1864,7 +1864,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn headermenublue basic-button-small"
-                        id="item_update_sure_btn_1">SURE</button>
+                        id="item_update_sure_btn">SURE</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">CANCEL</button>
 
                 </div>
