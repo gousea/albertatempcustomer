@@ -283,7 +283,7 @@
                             </tbody>
                         </table>
                 </div>
-                {{$items->links()}} 
+                {{ $items->appends(request()->except('page'))->links() }}
             </div>
             <br>
         </div>
