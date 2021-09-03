@@ -2115,7 +2115,7 @@
 
         $(document).on('click', '#item_update_sure_btn_1', function(event) {
             $('#myModalUpdateItems_1').modal('hide');
-            $("#myModalUpdateItems").modal('show');
+            // $("#myModalUpdateItems").modal('show');
         });
 
 
