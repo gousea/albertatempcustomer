@@ -134,7 +134,7 @@
                                                 </div>
                                             </th>
 
-                                            <th class="text-uppercase no-sort" style="width: 17%; padding-left: 0px;">PRICE
+                                            <th class="text-uppercase no-sort" style="width: 23%; padding-left: 0px;">PRICE
                                                 <div class="adjustment-has-search">
 
                                                     <select class='table-heading-fields' id='price_select_by'
@@ -165,7 +165,7 @@
                                                         <option value='tax1'>Tax 1</option>
                                                         <option value='tax2'>Tax 2</option>
                                                         <option value='tax3'>Tax 3</option>
-                                                        <option value='no'>No Tax</option>
+                                                        <option value='notax'>No Tax</option>
                                                     </select>
 
                                                 </div>
@@ -259,6 +259,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 
     <script>
@@ -280,14 +283,14 @@
             if (select_by === 'between') {
 
                 html =
-                    '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box table-heading-fields" placeholder="Enter" style="color:#000000; height:28px; padding-left: 1px; padding-right: 1px; width:43px;" value="' +
+                    '<input type="number" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box table-heading-fields" placeholder="Enter" style="color:#000000; height:28px; padding-left: 1px; padding-right: 1px; width:50px;" value="' +
                     select_by_value1 + '"/>';
                 html +=
-                    '<input type="number" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box table-heading-fields" placeholder="Amt" style="color:#000000; height:28px; padding-left: 1px; padding-right: 1px; width:43px;" value="' +
+                    '<input type="number" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box table-heading-fields" placeholder="Amt" style="color:#000000; height:28px; padding-left: 1px; padding-right: 1px; width:50px;" value="' +
                     select_by_value2 + '"/>'
 
                 $(this).css({
-                    'width': 77
+                    'width': 100
                 });
 
             } else {
@@ -297,7 +300,7 @@
                     select_by_value1 + '"/>'
                 // $('#selectByValuesSpan').html('not between');
                 $(this).css({
-                    'width': 100
+                    'width': 64
                 });
             }
             $('#selectByValuesSpan').html(html);
@@ -334,7 +337,7 @@
                     null && select_by_val1 >= select_by_val2) {
                     bootbox.alert({
                         size: 'small',
-                        title: "Attention",
+                        title: " ",
                         message: "Second value must be greater than first value!"
                     });
                 }
@@ -568,7 +571,7 @@
                 }
                 $("div#divLoading").removeClass('show');
             });
-
+            
             /*$('button').click( function() {
                 var data = table.$('input, select').serialize();
                 alert(
@@ -577,7 +580,7 @@
                 );
                 return false;
             } );*/
-
+            
             $(document).on('change', '#main_checkbox', function(event) {
                 event.preventDefault();
                 var set_unset_session_value_url = "<?php echo $data['set_unset_session_value']; ?>";
@@ -666,7 +669,7 @@
                         success: function(data) {
                             $("div#divLoading").removeClass('show');
                             // setTimeout(function(){
-
+                            
                             // }, 3500);
                             if (data) {
                                 $('#category_code').attr("placeholder", "Select Category");
@@ -838,7 +841,7 @@
                 // alert('Please enter cost!');
                 bootbox.alert({
                     size: 'small',
-                    title: "Attention",
+                    title: " ",
                     message: "Please enter cost!",
                     callback: function() {}
                 });
@@ -849,7 +852,7 @@
                 // alert('Please enter price!');
                 bootbox.alert({
                     size: 'small',
-                    title: "Attention",
+                    title: " ",
                     message: "Please enter price!",
                     callback: function() {}
                 });
@@ -861,7 +864,7 @@
                     // alert('Please enter pack!');
                     bootbox.alert({
                         size: 'small',
-                        title: "Attention",
+                        title: " ",
                         message: "Please enter pack!",
                         callback: function() {}
                     });
@@ -917,7 +920,7 @@
                 // alert('Please select filter type!');
                 bootbox.alert({
                     size: 'small',
-                    title: "Attention",
+                    title: " ",
                     message: "Please select filter type!",
                     callback: function() {}
                 });
@@ -966,36 +969,36 @@
 
                                         <p>
                                             <span>
-                                                <input type="radio" name="update_dcostprice_increment" id="cost_checkbox" class="c_checkbox">
+                                                <input type="checkbox" name="update_dcostprice_checkbox" id="update_dcostprice_checkbox" class="c_checkbox">
                                             </span>
                                             <span style="width:60%; text-transform:uppercase;" class="font-style-13px">COST</span>
 
                                             <span style="width:30%;">
-                                                <input type="text" name="cost_checkbox" value="0" class="form-control font-style-13px" id="cost" readonly>
+                                                <input type="text" name="update_dcostprice" value="0" class="form-control font-style-13px" id="cost" readonly>
                                             </span>
                                         </p>
 
                                         <p>
                                             <span>
-                                                <input type="radio" name="update_dcostprice_increment" id="increment_cost" class="c_checkbox">
+                                                <input type="checkbox" name="update_dcostprice_increment_checkbox" id="update_dcostprice_increment_checkbox" class="c_checkbox">
                                             </span>
                                             <span style="width:60%; text-transform:uppercase;" class="font-style-13px">increment cost
                                                 ($)</span>
 
                                             <span style="width:30%;">
-                                                <input type="text" name="increment_cost" value="0" class="form-control font-style-13px" id="inc_cost" readonly>
+                                                <input type="text" name="update_dcostprice_increment" value="0" class="form-control font-style-13px" id="inc_cost" readonly>
                                             </span>
                                         </p>
 
                                         <p>
                                             <span>
-                                                <input type="radio" name="update_dcostprice_increment" id="increment_cost_dollar" class="c_checkbox">
+                                                <input type="checkbox" name="update_dcostprice_increment_percent_checkbox" id="update_dcostprice_increment_percent_checkbox" class="c_checkbox">
                                             </span>
                                             <span style="width:60%; text-transform:uppercase;">increment cost
                                                 by (%)</span>
 
                                             <span style="width:30%;">
-                                                <input type="text" name="increment_cost_dollar" value="0" class="form-control font-style-13px" id="inc_cost_dol" readonly>
+                                                <input type="text" name="update_dcostprice_increment_percent" value="0" class="form-control font-style-13px" id="inc_cost_dol" readonly>
                                             </span>
                                         </p>
 
@@ -1009,10 +1012,10 @@
 
                                         <p>
                                             <span>
-                                                <input type="radio" value="price" name="price" class="p_checkbox" id="price_checkbox">
+                                                <input type="checkbox" name="update_dunitprice_checkbox" class="p_checkbox" id="update_dunitprice_checkbox">
                                             </span>
                                             <span style="width:60%;font-size:1rem;">PRICE</span>
-                                            <span style="width:30%;"><input type="text" name="price_checkbox" value="0"
+                                            <span style="width:30%;"><input type="text" name="update_dunitprice" value="0"
                                                     class="form-control" id="price" readonly>
                                             </span>
                                         </p>
@@ -1020,27 +1023,27 @@
                                         <!--</p>-->
                                         <p>
                                             <span>
-                                                <input type="radio" value="increment_price" name="price" class="p_checkbox" id="increment_price">
+                                                <input type="checkbox" name="update_dunitprice_increment_checkbox" class="p_checkbox" id="update_dunitprice_increment_checkbox">
                                             </span>
                                             <span style="width:60%;font-size:1rem; text-transform:uppercase;">increment
                                                 price
                                                 ($)</span>
-
+                                                
                                             <span style="width:30%;">
-                                                <input type="text" name="increment_price" value="0" class="form-control" id="inc_price" readonly>
+                                                <input type="text" name="update_dunitprice_increment" value="0" class="form-control" id="inc_price" readonly>
                                             </span>
                                         </p>
-
+                                            
                                         <p>
                                             <span>
-                                                <input type="radio" value="increment_price_dollar" name="price" class="p_checkbox" id="increment_price_dollar">
+                                                <input type="checkbox" name="update_dunitprice_increment_percent_checkbox" class="p_checkbox" id="update_dunitprice_increment_percent_checkbox">
                                             </span>
                                             <span style="width:60%;font-size:1rem; text-transform:uppercase;">increment
                                                 price
                                                 by (%)</span>
 
                                             <span style="width:30%;">
-                                                <input type="text" name="increment_price_dollar" value="0" class="form-control" id="inc_price_dol" readonly>
+                                                <input type="text" name="update_dunitprice_increment_percent" value="0" class="form-control" id="inc_price_dol" readonly>
                                             </span>
                                         </p>
 
@@ -1078,7 +1081,7 @@
                             <br><br>
                             <div class="panel-body padding-left-right">
                                 <div class="row text-uppercase">
-                                    <div class="col-md-4 span_field " style="padding-left:10px;padding-right:10px;">
+                                    <div class="col-md-4 span_field">
 
                                         <p><span style="width:35%;" class="font-style-13px">Department</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
@@ -1138,7 +1141,7 @@
                                         <p style="display:none;">
                                             <span style="width:35%;" class="font-style-13px">Unit</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
-                                                <select name="update_vunitcode" class="form-control font-style-13px">
+                                                <select name="update_vunitcode" class="form-control font-style-13px; position: relative; left: 7px;">
                                                     <option value="no-update">-- No Update --</option>
                                                     <?php if(isset($data['units']) && count($data['units']) > 0){?>
                                                     <?php foreach($data['units'] as $unit){ ?>
@@ -1175,13 +1178,13 @@
                                             </span>
                                         </p>
                                     </div>
-                                    <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
+                                    <div class="col-md-4 span_field">
 
                                         <p>
                                             <span style="width:35%;font-size:1rem;">Tax</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
-                                                <select name="tax" id="tax" class="form-control">
-                                                    <option value='all'>All Taxes</option>
+                                                <select name="tax[]" id="tax_update" class="form-control tax_update" multiple='true' placeholder="--No Update--" style="width:200px;">
+                                                    
                                                     <option value='tax1'>Tax 1</option>
                                                     <option value='tax2'>Tax 2</option>
                                                     <option value='tax3'>Tax 3</option>
@@ -1284,13 +1287,11 @@
                                         </p>
 
                                     </div>
-
-
-                                    <div class="col-md-4 span_field" style="padding-left:0px;padding-right:0px;">
+                                    <div class="col-md-4 span_field">
                                         <p>
                                             <span style="width:35%;font-size:1rem;">Unit</span>
                                             <span style="width:60%;">
-                                                <select name="update_unit_id" id="update_unit_id" class="form-control">
+                                                <select name="update_unit_id" id="update_unit_id" class="form-control" style="position: relative; left: 8px;">
                                                     <option value="no-update">-- No Update --</option>
                                                     <?php if(isset($data['itemsUnits']) && count($data['itemsUnits']) > 0){ ?>
                                                     <?php foreach($data['itemsUnits'] as $unit){ ?>
@@ -1311,7 +1312,7 @@
                                             <span style="width:35%; font-size:1rem;">QOH:</span>
                                             &nbsp;&nbsp;
                                             <span style="width:60%;"><input type="text" name="update_iqtyonhand" value="0"
-                                                    class="form-control" disabled>
+                                                    class="form-control" disabled style="position: relative; right: 2px;">
                                             </span>
                                             &nbsp;&nbsp;
                                             <span style="width:45%;display:none">
@@ -1321,10 +1322,10 @@
                                         </p>
 
 
-                                        <p> <span style="width:35%;font-size:1rem;">Bottle Deposit</span>&nbsp;&nbsp;
+                                        <p style="position: relative; bottom: 8px;"> <span style="width:35%;font-size:1rem;">Bottle Deposit</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
                                                 <input name="update_nbottledepositamt" value="" type="text"
-                                                    class="form-control">
+                                                    class="form-control" style="position: relative; left: 2px;">
                                             </span>
                                         </p>
 
@@ -1558,7 +1559,7 @@
                             <div class="panel-body padding-left-right" id="options_checkbox_div" style="display: none;">
                                 <div class="row text-uppercase">
 
-                                    <div class="col-md-4 span_field" style="padding-left:35px;padding-right:10px;">
+                                    <div class="col-md-4 span_field" style="padding-left:35px;padding-right:10px; padding-top: 10px;">
                                         <p>
                                             <span style="width:35%;font-size:1rem;">Malt</span>&nbsp;&nbsp;
                                             <span style="width:60%;">
@@ -1649,39 +1650,62 @@
     </div>
 
     <script type="text/javascript">
+        
+        $('.tax_update').select2({
+            placeholder: "--No update--",
+            allowClear: true,
+        });
         // cost checkbox
-        $('#cost_checkbox').click(function() {
+        $('#update_dcostprice_checkbox').click(function() {
             $('#cost').attr('readonly', false);
             $('#inc_cost').attr('readonly', true);
             $('#inc_cost_dol').attr('readonly', true);
+            
+            $("#update_dcostprice_increment_checkbox").prop("checked", false);
+            $("#update_dcostprice_increment_percent_checkbox").prop("checked", false);
         });
-        $('#increment_cost').click(function() {
+        $('#update_dcostprice_increment_checkbox').click(function() {
             $('#inc_cost').attr('readonly', false);
             $('#cost').attr('readonly', true);
             $('#inc_cost_dol').attr('readonly', true);
+            
+            $("#update_dcostprice_checkbox").prop("checked", false);
+            $("#update_dcostprice_increment_percent_checkbox").prop("checked", false);
         });
-        $('#increment_cost_dollar').click(function() {
+        $('#update_dcostprice_increment_percent_checkbox').click(function() {
             $('#inc_cost_dol').attr('readonly', false);
              $('#inc_cost').attr('readonly', true);
             $('#cost').attr('readonly', true);
+            
+            $("#update_dcostprice_checkbox").prop("checked", false);
+            $("#update_dcostprice_increment_checkbox").prop("checked", false);
         });
 
 
         // price check box
-        $('#price_checkbox').click(function() {
+        $('#update_dunitprice_checkbox').click(function() {
             $('#price').attr('readonly', false);
             $('#inc_price').attr('readonly', true);
             $('#inc_price_dol').attr('readonly', true);
+            
+            $("#update_dunitprice_increment_checkbox").prop("checked", false);
+            $("#update_dunitprice_increment_percent_checkbox").prop("checked", false);
         });
-        $('#increment_price').click(function() {
+        $('#update_dunitprice_increment_checkbox').click(function() {
             $('#inc_price').attr('readonly', false);
             $('#price').attr('readonly', true);
             $('#inc_price_dol').attr('readonly', true);
+            
+            $("#update_dunitprice_checkbox").prop("checked", false);
+            $("#update_dunitprice_increment_percent_checkbox").prop("checked", false);
         });
-        $('#increment_price_dollar').click(function() {
+        $('#update_dunitprice_increment_percent_checkbox').click(function() {
             $('#inc_price_dol').attr('readonly', false);
              $('#inc_price').attr('readonly', true);
             $('#price').attr('readonly', true);
+            
+            $("#update_dunitprice_checkbox").prop("checked", false);
+            $("#update_dunitprice_increment_checkbox").prop("checked", false);
         });
 
 
@@ -1794,7 +1818,7 @@
                         'input[name="update_dcostprice_increment_percent"]').is(':checked')) {
                     bootbox.alert({
                         size: 'small',
-                        title: "Attention",
+                        title: " ",
                         message: "Please check only one!",
                         callback: function() {}
                     });
@@ -1812,7 +1836,7 @@
                         'input[name="update_dunitprice_increment_percent"]').is(':checked')) {
                     bootbox.alert({
                         size: 'small',
-                        title: "Attention",
+                        title: " ",
                         message: "Please check only one!",
                         callback: function() {}
                     });
@@ -1885,7 +1909,7 @@
                 if (!catcode) {
                     bootbox.alert({
                         size: 'small',
-                        title: "Attention",
+                        title: " ",
                         message: "Please Select Category!(If you select department then You have to select category too, because its mandetory)",
                         callback: function() {}
                     });
@@ -1902,7 +1926,7 @@
                 // alert('Please enter cost!');
                 bootbox.alert({
                     size: 'small',
-                    title: "Attention",
+                    title: " ",
                     message: "Please enter cost!",
                     callback: function() {}
                 });
@@ -1913,7 +1937,7 @@
                 // alert('Please enter price!');
                 bootbox.alert({
                     size: 'small',
-                    title: "Attention",
+                    title: " ",
                     message: "Please enter price!",
                     callback: function() {}
                 });
@@ -1925,7 +1949,7 @@
                     // alert('Please enter pack!');
                     bootbox.alert({
                         size: 'small',
-                        title: "Attention",
+                        title: " ",
                         message: "Please enter pack!",
                         callback: function() {}
                     });
@@ -1938,7 +1962,7 @@
                     // alert('Please enter pack!');
                     bootbox.alert({
                         size: 'small',
-                        title: "Attention",
+                        title: " ",
                         message: "Please select unit!",
                         callback: function() {}
                     });
@@ -1949,7 +1973,7 @@
                     // alert('Please enter pack!');
                     bootbox.alert({
                         size: 'small',
-                        title: "Attention",
+                        title: " ",
                         message: "Please enter unit value!",
                         callback: function() {}
                     });
@@ -1960,7 +1984,7 @@
                     // alert('Please enter pack!');
                     bootbox.alert({
                         size: 'small',
-                        title: "Attention",
+                        title: " ",
                         message: "Please select bucket!",
                         callback: function() {}
                     });
@@ -2014,7 +2038,7 @@
                 if (count <= 0) {
                     bootbox.confirm({
                         size: 'small',
-                        title: "Attention",
+                        title: " ",
                         message: "Not any Item is Selected",
                         callback: function(result) {}
                     });
@@ -2239,6 +2263,18 @@
         })
     </script>
     <style>
+        #item_tot{
+            font-size: 18px !important;
+        }
+        input { 
+            font-size: 13px !important; 
+        }
+        select { 
+            font-size: 13px !important; 
+        }
+        span{
+            font-size: 13px !important;
+        }
         .font-style-13px{
             font-style:13px;
         }
@@ -2253,6 +2289,38 @@
             border-left: 2px solid blue;
             height: 150px;
         }
+        
+          
+          .selection{
+              width:200px;
+          }
+          
+          .select2-container--default .select2-selection--multiple:before {
+                content: ' ';
+                display: block;
+                position: absolute;
+                border-color: #888 transparent transparent transparent;
+                border-style: solid;
+                border-width: 5px 4px 0 4px;
+                height: 0;
+                right: 6px;
+                margin-left: -4px;
+                margin-top: -2px;top: 50%;
+                width: 0;cursor: pointer
+            }
+            
+            .select2-container--open .select2-selection--multiple:before {
+                content: ' ';
+                display: block;
+                position: absolute;
+                border-color: transparent transparent #888 transparent;
+                border-width: 0 4px 5px 4px;
+                height: 0;
+                right: 6px;
+                margin-left: -4px;
+                margin-top: -2px;top: 50%;
+                width: 0;cursor: pointer
+            }
 
     </style>
 @endsection

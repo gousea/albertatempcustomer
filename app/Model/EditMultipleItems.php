@@ -284,6 +284,7 @@ class EditMultipleItems extends Model
     public function editlistItems($data = array()) {
         $success =array();
         $error =array();
+        // dd($data);
         if(isset($data) && count($data) > 0){
             if(isset($data['stores_hq'])){
                 if($data['stores_hq'] === session()->get('sid')){
@@ -380,15 +381,49 @@ class EditMultipleItems extends Model
                                             $updated_column[] = 'vfooditem';
                                         }
                                             
-                                        if($data['update_vtax1'] != 'no-update'){
-                                            $sql .= " vtax1='" . ($data['update_vtax1']) . "',";
-                                            $updated_column[] = 'vtax1';
-                                        }
                                             
-                                        if($data['update_vtax2'] != 'no-update'){
-                                            $sql .= " vtax2='" . ($data['update_vtax2']) . "',";
-                                            $updated_column[] = 'vtax2';
+                                        if(isset($data['tax'])){
+                                            foreach($data['tax'] as $tax){
+                                                if($tax == 'tax1'){
+                                                    $sql .= " vtax1='Y',";
+                                                }
+                                                
+                                                if($tax == 'tax2'){
+                                                    $sql .= " vtax2='Y',";
+                                                }
+                                                
+                                                if($tax == 'tax3'){
+                                                    $sql .= " vtax3='Y',";
+                                                }
+                                            }
+                                            
+                                            if(!in_array('tax1', $data['tax'])){
+                                                $sql .= " vtax1='N',";
+                                            }
+                                            
+                                            if(!in_array('tax2', $data['tax'])){
+                                                $sql .= " vtax2='N',";
+                                            }
+                                            
+                                            if(!in_array('tax3', $data['tax'])){
+                                                $sql .= " vtax3='N',";
+                                            }
+                                            
+                                            if(!in_array('notax', $data['tax'])){
+                                                $sql .= " vtax1='N', vtax2='N', vtax3='N',";
+                                            }
                                         }
+                            
+                                        
+                                        // if($data['update_vtax1'] != 'no-update'){
+                                        //     $sql .= " vtax1='" . ($data['update_vtax1']) . "',";
+                                        //     $updated_column[] = 'vtax1';
+                                        // }
+                                            
+                                        // if($data['update_vtax2'] != 'no-update'){
+                                        //     $sql .= " vtax2='" . ($data['update_vtax2']) . "',";
+                                        //     $updated_column[] = 'vtax2';
+                                        // }
                                             
                                         if($data['update_aisleid'] != 'no-update'){
                                             $sql .= " aisleid='" . ($data['update_aisleid']) . "',";
@@ -405,29 +440,44 @@ class EditMultipleItems extends Model
                                             $updated_column[] = 'shelvingid';
                                         }
                                             
+                                            
                                         // if(isset($data['update_dunitprice_checkbox']) && $data['update_dunitprice_checkbox'] == 'Y'){
                                         //     $sql .= " dunitprice='0',";
+                                        //     $new_dunitprice=0;
                                         //     $updated_column[] = 'dunitprice';
-                                        // }elseif(isset($data['update_dunitprice']) && $data['update_dunitprice'] != '' && $data['update_dunitprice'] != '0'){
+                                        // }else if(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && !isset($data['update_dunitprice_increment']) && !isset($data['update_dunitprice_increment_percent'])){
                                         //     $sql .= " dunitprice='" . ($data['update_dunitprice']) . "',";
                                         //     $updated_column[] = 'dunitprice';
-                                        // }
+                                        //     $new_dunitprice=$data['update_dunitprice'];
+                                        // }elseif(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && isset($data['update_dunitprice_increment']) && $data['update_dunitprice_increment'] == 'Y' && !isset($data['update_dunitprice_increment_percent'])){
+                                        //     $new_dunitprice = $current_item['dunitprice'] + ($data['update_dunitprice']);
+                                        //     $sql .= " dunitprice='" . $new_dunitprice . "',";
+                                        //     $updated_column[] = 'dunitprice';
+                                        // }elseif(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && !isset($data['update_dunitprice_increment']) && isset($data['update_dunitprice_increment_percent']) && $data['update_dunitprice_increment_percent'] == 'Y'){
+            
+                                        //     $new_dunitprice = (($current_item['dunitprice'] * ($data['update_dunitprice'])) / 100) + ($current_item['dunitprice']);
+                                        //     $sql .= " dunitprice='" . $new_dunitprice . "',";
+                                        //     $updated_column[] = 'dunitprice';
                                             
-                                        if(isset($data['update_dunitprice_checkbox']) && $data['update_dunitprice_checkbox'] == 'Y'){
-                                            $sql .= " dunitprice='0',";
-                                            $new_dunitprice=0;
-                                            $updated_column[] = 'dunitprice';
-                                        }else if(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && !isset($data['update_dunitprice_increment']) && !isset($data['update_dunitprice_increment_percent'])){
+                                        // }else{
+                                        //     $new_dunitprice= $current_item['dunitprice'];
+                                        // }
+                                        
+                                        if(isset($data['update_dunitprice_checkbox']) && $data['update_dunitprice_checkbox'] == 'on' && isset($data['update_dunitprice']) && $data['update_dunitprice'] != 0){
+                                            
                                             $sql .= " dunitprice='" . ($data['update_dunitprice']) . "',";
                                             $updated_column[] = 'dunitprice';
                                             $new_dunitprice=$data['update_dunitprice'];
-                                        }elseif(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && isset($data['update_dunitprice_increment']) && $data['update_dunitprice_increment'] == 'Y' && !isset($data['update_dunitprice_increment_percent'])){
-                                            $new_dunitprice = $current_item['dunitprice'] + ($data['update_dunitprice']);
+                                            
+                                        }elseif(isset($data['update_dunitprice_increment_checkbox']) && $data['update_dunitprice_increment_checkbox'] == 'on' && isset($data['update_dunitprice_increment']) && $data['update_dunitprice_increment'] != 0){
+                                            
+                                            $new_dunitprice = $current_item['dunitprice'] + ($data['update_dunitprice_increment']);
                                             $sql .= " dunitprice='" . $new_dunitprice . "',";
                                             $updated_column[] = 'dunitprice';
-                                        }elseif(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && !isset($data['update_dunitprice_increment']) && isset($data['update_dunitprice_increment_percent']) && $data['update_dunitprice_increment_percent'] == 'Y'){
-            
-                                            $new_dunitprice = (($current_item['dunitprice'] * ($data['update_dunitprice'])) / 100) + ($current_item['dunitprice']);
+                                            
+                                        }elseif(isset($data['update_dunitprice_increment_percent_checkbox']) && $data['update_dunitprice_increment_percent_checkbox'] == 'on' && isset($data['update_dunitprice_increment_percent']) && $data['update_dunitprice_increment_percent'] != 0){
+                                            
+                                            $new_dunitprice = (($current_item['dunitprice'] * ($data['update_dunitprice_increment_percent'])) / 100) + ($current_item['dunitprice']);
                                             $sql .= " dunitprice='" . $new_dunitprice . "',";
                                             $updated_column[] = 'dunitprice';
                                             
@@ -470,47 +520,43 @@ class EditMultipleItems extends Model
                                         //     $current_dcostprice = $current_item['dcostprice'];
                                         // }
                                         
-                                        if(isset($data['update_dcostprice_checkbox']) && $data['update_dcostprice_checkbox'] == 'Y' && $current_item['isparentchild'] != 1){
-                                            // $sql .= " dcostprice='0',";
-                                            $current_dcostprice = 0;
-                                            $new_dcostprice = 0;
-                                            $updated_column[] = 'dcostprice';
-                                            $sql .= " dcostprice='0', new_costprice='0',";
+                                        // if($data['cost_checkbox'] != 0 && $current_item['isparentchild'] != 1){
+                                        //     // $sql .= " dcostprice='0',";
+                                        //     $current_dcostprice = 0;
+                                        //     $new_dcostprice = 0;
+                                        //     $updated_column[] = 'dcostprice';
+                                        //     $sql .= " dcostprice='0', new_costprice='0',";
                     
-                                        }else if(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && !isset($data['update_dcostprice_increment']) && !isset($data['update_dcostprice_increment_percent']) && $current_item['isparentchild'] !=1){
-                                            // $sql .= " dcostprice='" . ($data['update_dcostprice']) . "',";
-                                            $sql .= " dcostprice='" . ($data['update_dcostprice']) . "', new_costprice='" . ($data['update_dcostprice']) . "',";
-                                            $current_dcostprice = $data['update_dcostprice'];
-                                            $new_dcostprice = $data['update_dcostprice'];
-                                            $updated_column[] = 'dcostprice';
-                                            
-                                            // $sql .= " nunitcost='" . $current_nunitcost . "',";
-                                        // }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && isset($data['update_dcostprice_increment']) && $data['update_dcostprice_increment'] == 'Y' && !isset($data['update_dcostprice_increment_percent']) && $current_item['isparentchild'] !=1){
-                                        }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && isset($data['update_dcostprice_increment']) && $data['update_dcostprice_increment'] == 'Y' && !isset($data['update_dcostprice_increment_percent']) ){
-                                            $new_dcostprice = $current_item['dcostprice'] + ($data['update_dcostprice']);
-                                            // $sql .= " dcostprice='" . $new_dcostprice . "',";
-                                            $sql .= " dcostprice='" . $new_dcostprice . "', new_costprice='" . $new_dcostprice . "',";
-                                            $current_dcostprice = $new_dcostprice;
-                                            $updated_column[] = 'dcostprice';
-                                            // $sql .= " nunitcost='" . $current_nunitcost . "',";
-                                        // }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && !isset($data['update_dcostprice_increment']) && isset($data['update_dcostprice_increment_percent']) && $data['update_dcostprice_increment_percent'] == 'Y' && $current_item['isparentchild'] !=1){
-                                        }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && !isset($data['update_dcostprice_increment']) && isset($data['update_dcostprice_increment_percent']) && $data['update_dcostprice_increment_percent'] == 'Y' ){
-                                            
-                                            $new_dcostprice = (($current_item['dcostprice'] * ($data['update_dcostprice'])) / 100) + ($current_item['dcostprice']);
-                                            // $sql .= " dcostprice='" . $new_dcostprice . "',";
-                                            $sql .= " dcostprice='" . $new_dcostprice . "', new_costprice='" . $new_dcostprice . "',";
-                                            $current_dcostprice = $new_dcostprice;
-                                            $updated_column[] = 'dcostprice';
-                                            // $sql .= " nunitcost='" . $current_nunitcost . "',";
+                                        // }else
                                         
-                                        //=====commented on 25/06/2020===========
-                                        }elseif(isset($data['update_dcostprice']) && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_increment']) && !isset($data['update_dcostprice_increment_percent'])){
+                                        if(isset($data['update_dcostprice_checkbox']) && $data['update_dcostprice_checkbox'] == 'on' && isset($data['update_dcostprice']) && $data['update_dcostprice'] != 0){
                                             
                                             $sql .= " dcostprice='" . ($data['update_dcostprice']) . "', new_costprice='" . ($data['update_dcostprice']) . "',";
                                             $current_dcostprice = $data['update_dcostprice'];
                                             $new_dcostprice = $data['update_dcostprice'];
+                                            
+                                            $current_nunitcost = $current_dcostprice /  $current_nsellunit;
+                                            $sql .= " nunitcost='" . $current_nunitcost . "',";
+                                            
+                                        }elseif(isset($data['update_dcostprice_increment_checkbox']) && $data['update_dcostprice_increment_checkbox'] == 'on' && isset($data['update_dcostprice_increment']) && $data['update_dcostprice_increment'] != 0){
+                                            
+                                            $new_dcostprice = $current_item['dcostprice'] + ($data['update_dcostprice_increment']);
+                                            $sql .= " dcostprice='" . $new_dcostprice . "', new_costprice='" . $new_dcostprice . "',";
+                                            $current_dcostprice = $new_dcostprice;
                                             $updated_column[] = 'dcostprice';
-                                            // $sql .= " nunitcost='" . $current_nunitcost . "',";
+                                            
+                                            $current_nunitcost = $current_dcostprice /  $current_nsellunit;
+                                            $sql .= " nunitcost='" . $current_nunitcost . "',";
+                                            
+                                        }elseif(isset($data['update_dcostprice_increment_percent_checkbox']) && $data['update_dcostprice_increment_percent_checkbox'] == 'on' && isset($data['update_dcostprice_increment_percent']) && $data['update_dcostprice_increment_percent'] != 0){
+                                            
+                                            $new_dcostprice = (($current_item['dcostprice'] * ($data['update_dcostprice_increment_percent'])) / 100) + ($current_item['dcostprice']);
+                                            $sql .= " dcostprice='" . $new_dcostprice . "', new_costprice='" . $new_dcostprice . "',";
+                                            $current_dcostprice = $new_dcostprice;
+                                            $updated_column[] = 'dcostprice';
+                                            
+                                            $current_nunitcost = $current_dcostprice /  $current_nsellunit;
+                                            $sql .= " nunitcost='" . $current_nunitcost . "',";
                                             
                                         }else{
                                             $new_dcostprice = $current_item['dcostprice'];
@@ -620,29 +666,29 @@ class EditMultipleItems extends Model
                                         }
                                         
                                         // Update subcategory
-                                        if(isset($data['update_subcat_id']) && $data['update_subcat_id'] != 'no-update'){
+                                        if(isset($data['update_subcat_id']) && $data['update_subcat_id'] != 'no-update' && $data['update_subcat_id'] !='--Select Subcategory--'){
                                             if(isset($sub_cat_id)){
                                                 $sql .= " subcat_id='" .$sub_cat_id . "',";
                                             }
                                             $updated_column[] = 'subcategory';
                                         }else{
                                             if((isset($data['update_vcategorycode']) && $data['update_vcategorycode'] != 'no-update') && (isset($data['update_vdepcode']) && $data['update_vdepcode'] != 'no-update')){
-                                                $sql .= " subcat_id='" . null . "',";
+                                                $sql .= " subcat_id=null,";
                                                 $updated_column[] = 'subcategory';
                                             }
                                         }
                                         
                                         // Update manufacturer
-                                        if($data['update_manufacturerid'] != 'no-update'){
-                                            $sql .= " manufacturer_id='" . ($data['update_manufacturerid']) . "',";
-                                            $updated_column[] = 'manufcaturer';
-                                        }
+                                        // if($data['update_manufacturerid'] != 'no-update'){
+                                        //     $sql .= " manufacturer_id='" . ($data['update_manufacturerid']) . "',";
+                                        //     $updated_column[] = 'manufcaturer';
+                                        // }
                                             
                                             
-                                        if($data['update_estatus'] != 'no-update'){
-                                            $sql .= " estatus='" . ($data['update_estatus']) . "',";
-                                            $updated_column[] = 'estatus';
-                                        }
+                                        // if($data['update_estatus'] != 'no-update'){
+                                        //     $sql .= " estatus='" . ($data['update_estatus']) . "',";
+                                        //     $updated_column[] = 'estatus';
+                                        // }
                                             
                                         $sql = rtrim($sql,',');
                                         $sql .= " WHERE iitemid = '" . (int)$current_item['iitemid'] . "'";
@@ -1026,16 +1072,45 @@ class EditMultipleItems extends Model
                                 $sql .= " vfooditem='" . ($data['update_vfooditem']) . "',";
                                 $updated_column[] = 'vfooditem';
                             }
+                            
+                            if(isset($data['tax'])){
+                                foreach($data['tax'] as $tax){
+                                    if($tax == 'tax1'){
+                                        $sql .= " vtax1='Y',";
+                                    }
+                                    
+                                    if($tax == 'tax2'){
+                                        $sql .= " vtax2='Y',";
+                                    }
+                                    
+                                    if($tax == 'tax3'){
+                                        $sql .= " vtax3='Y',";
+                                    }
+                                }
                                 
-                            if($data['update_vtax1'] != 'no-update'){
-                                $sql .= " vtax1='" . ($data['update_vtax1']) . "',";
-                                $updated_column[] = 'vtax1';
-                            }
+                                if(!in_array('tax1', $data['tax'])){
+                                    $sql .= " vtax1='N',";
+                                }
                                 
-                            if($data['update_vtax2'] != 'no-update'){
-                                $sql .= " vtax2='" . ($data['update_vtax2']) . "',";
-                                $updated_column[] = 'vtax2';
+                                if(!in_array('tax2', $data['tax'])){
+                                    $sql .= " vtax2='N',";
+                                }
+                                
+                                if(!in_array('tax3', $data['tax'])){
+                                    $sql .= " vtax3='N',";
+                                }
                             }
+                            
+                             
+                            // if($data['update_vtax1'] != 'no-update'){
+                            //     $sql .= " vtax1='" . ($data['update_vtax1']) . "',";
+                            //     $updated_column[] = 'vtax1';
+                            // }
+                                
+                            // if($data['update_vtax2'] != 'no-update'){
+                            //     $sql .= " vtax2='" . ($data['update_vtax2']) . "',";
+                            //     $updated_column[] = 'vtax2';
+                            // }
                                 
                             if($data['update_aisleid'] != 'no-update'){
                                 $sql .= " aisleid='" . ($data['update_aisleid']) . "',";
@@ -1060,21 +1135,43 @@ class EditMultipleItems extends Model
                             //     $updated_column[] = 'dunitprice';
                             // }
                                 
-                            if(isset($data['update_dunitprice_checkbox']) && $data['update_dunitprice_checkbox'] == 'Y'){
-                                $sql .= " dunitprice='0',";
-                                $new_dunitprice=0;
-                                $updated_column[] = 'dunitprice';
-                            }else if(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && !isset($data['update_dunitprice_increment']) && !isset($data['update_dunitprice_increment_percent'])){
+                            // if(isset($data['update_dunitprice_checkbox']) && $data['update_dunitprice_checkbox'] == 'Y'){
+                            //     $sql .= " dunitprice='0',";
+                            //     $new_dunitprice=0;
+                            //     $updated_column[] = 'dunitprice';
+                            // }else if(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && !isset($data['update_dunitprice_increment']) && !isset($data['update_dunitprice_increment_percent'])){
+                            //     $sql .= " dunitprice='" . ($data['update_dunitprice']) . "',";
+                            //     $updated_column[] = 'dunitprice';
+                            //     $new_dunitprice=$data['update_dunitprice'];
+                            // }elseif(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && isset($data['update_dunitprice_increment']) && $data['update_dunitprice_increment'] == 'Y' && !isset($data['update_dunitprice_increment_percent'])){
+                            //     $new_dunitprice = $current_item['dunitprice'] + ($data['update_dunitprice']);
+                            //     $sql .= " dunitprice='" . $new_dunitprice . "',";
+                            //     $updated_column[] = 'dunitprice';
+                            // }elseif(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && !isset($data['update_dunitprice_increment']) && isset($data['update_dunitprice_increment_percent']) && $data['update_dunitprice_increment_percent'] == 'Y'){
+
+                            //     $new_dunitprice = (($current_item['dunitprice'] * ($data['update_dunitprice'])) / 100) + ($current_item['dunitprice']);
+                            //     $sql .= " dunitprice='" . $new_dunitprice . "',";
+                            //     $updated_column[] = 'dunitprice';
+                                
+                            // }else{
+                            //     $new_dunitprice= $current_item['dunitprice'];
+                            // }
+                            
+                            if(isset($data['update_dunitprice_checkbox']) && $data['update_dunitprice_checkbox'] == 'on' && isset($data['update_dunitprice']) && $data['update_dunitprice'] != 0){
+                                
                                 $sql .= " dunitprice='" . ($data['update_dunitprice']) . "',";
                                 $updated_column[] = 'dunitprice';
                                 $new_dunitprice=$data['update_dunitprice'];
-                            }elseif(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && isset($data['update_dunitprice_increment']) && $data['update_dunitprice_increment'] == 'Y' && !isset($data['update_dunitprice_increment_percent'])){
-                                $new_dunitprice = $current_item['dunitprice'] + ($data['update_dunitprice']);
+                                
+                            }elseif(isset($data['update_dunitprice_increment_checkbox']) && $data['update_dunitprice_increment_checkbox'] == 'on' && isset($data['update_dunitprice_increment']) && $data['update_dunitprice_increment'] != 0){
+                                
+                                $new_dunitprice = $current_item['dunitprice'] + ($data['update_dunitprice_increment']);
                                 $sql .= " dunitprice='" . $new_dunitprice . "',";
                                 $updated_column[] = 'dunitprice';
-                            }elseif(isset($data['update_dunitprice_select']) && $data['update_dunitprice_select'] == 'set as price' && $data['update_dunitprice'] != '0' && !isset($data['update_dunitprice_checkbox']) && !isset($data['update_dunitprice_increment']) && isset($data['update_dunitprice_increment_percent']) && $data['update_dunitprice_increment_percent'] == 'Y'){
-
-                                $new_dunitprice = (($current_item['dunitprice'] * ($data['update_dunitprice'])) / 100) + ($current_item['dunitprice']);
+                                
+                            }elseif(isset($data['update_dunitprice_increment_percent_checkbox']) && $data['update_dunitprice_increment_percent_checkbox'] == 'on' && isset($data['update_dunitprice_increment_percent']) && $data['update_dunitprice_increment_percent'] != 0){
+                                
+                                $new_dunitprice = (($current_item['dunitprice'] * ($data['update_dunitprice_increment_percent'])) / 100) + ($current_item['dunitprice']);
                                 $sql .= " dunitprice='" . $new_dunitprice . "',";
                                 $updated_column[] = 'dunitprice';
                                 
@@ -1121,65 +1218,101 @@ class EditMultipleItems extends Model
                             //     $current_dcostprice = $current_item['dcostprice'];
                             // }
                             
-                            if(isset($data['update_dcostprice_checkbox']) && $data['update_dcostprice_checkbox'] == 'Y' && $current_item['isparentchild'] !=1){
-                                // $sql .= " dcostprice='0',";
-                                $current_dcostprice = 0;
-                                $new_dcostprice = 0;
-                                $updated_column[] = 'dcostprice';
-                                $sql .= " dcostprice='0', new_costprice='0',";
+                            // if(isset($data['update_dcostprice_checkbox']) && $data['update_dcostprice_checkbox'] == 'Y' && $current_item['isparentchild'] !=1){
+                            //     // $sql .= " dcostprice='0',";
+                            //     $current_dcostprice = 0;
+                            //     $new_dcostprice = 0;
+                            //     $updated_column[] = 'dcostprice';
+                            //     $sql .= " dcostprice='0', new_costprice='0',";
         
-                            }else if(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && !isset($data['update_dcostprice_increment']) && !isset($data['update_dcostprice_increment_percent']) && $current_item['isparentchild'] !=1){
-                                // $sql .= " dcostprice='" . ($data['update_dcostprice']) . "',";
-                                $sql .= " dcostprice='" . ($data['update_dcostprice']) . "', new_costprice='" . ($data['update_dcostprice']) . "',";
-                                $current_dcostprice = $data['update_dcostprice'];
-                                $new_dcostprice = $data['update_dcostprice'];
-                                $updated_column[] = 'dcostprice';
+                            // }else if(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && !isset($data['update_dcostprice_increment']) && !isset($data['update_dcostprice_increment_percent']) && $current_item['isparentchild'] !=1){
+                            //     // $sql .= " dcostprice='" . ($data['update_dcostprice']) . "',";
+                            //     $sql .= " dcostprice='" . ($data['update_dcostprice']) . "', new_costprice='" . ($data['update_dcostprice']) . "',";
+                            //     $current_dcostprice = $data['update_dcostprice'];
+                            //     $new_dcostprice = $data['update_dcostprice'];
+                            //     $updated_column[] = 'dcostprice';
                                 
-                                // $sql .= " nunitcost='" . $current_nunitcost . "',";
-                            // }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && isset($data['update_dcostprice_increment']) && $data['update_dcostprice_increment'] == 'Y' && !isset($data['update_dcostprice_increment_percent']) && $current_item['isparentchild'] !=1){
-                            }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && isset($data['update_dcostprice_increment']) && $data['update_dcostprice_increment'] == 'Y' && !isset($data['update_dcostprice_increment_percent']) ){
-                                $new_dcostprice = $current_item['dcostprice'] + ($data['update_dcostprice']);
-                                // $sql .= " dcostprice='" . $new_dcostprice . "',";
-                                $sql .= " dcostprice='" . $new_dcostprice . "', new_costprice='" . $new_dcostprice . "',";
-                                $current_dcostprice = $new_dcostprice;
-                                $updated_column[] = 'dcostprice';
-                                // $sql .= " nunitcost='" . $current_nunitcost . "',";
-                            // }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && !isset($data['update_dcostprice_increment']) && isset($data['update_dcostprice_increment_percent']) && $data['update_dcostprice_increment_percent'] == 'Y' && $current_item['isparentchild'] !=1){
-                            }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && !isset($data['update_dcostprice_increment']) && isset($data['update_dcostprice_increment_percent']) && $data['update_dcostprice_increment_percent'] == 'Y' ){
+                            //     // $sql .= " nunitcost='" . $current_nunitcost . "',";
+                            // // }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && isset($data['update_dcostprice_increment']) && $data['update_dcostprice_increment'] == 'Y' && !isset($data['update_dcostprice_increment_percent']) && $current_item['isparentchild'] !=1){
+                            // }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && isset($data['update_dcostprice_increment']) && $data['update_dcostprice_increment'] == 'Y' && !isset($data['update_dcostprice_increment_percent']) ){
+                            //     $new_dcostprice = $current_item['dcostprice'] + ($data['update_dcostprice']);
+                            //     // $sql .= " dcostprice='" . $new_dcostprice . "',";
+                            //     $sql .= " dcostprice='" . $new_dcostprice . "', new_costprice='" . $new_dcostprice . "',";
+                            //     $current_dcostprice = $new_dcostprice;
+                            //     $updated_column[] = 'dcostprice';
+                            //     // $sql .= " nunitcost='" . $current_nunitcost . "',";
+                            // // }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && !isset($data['update_dcostprice_increment']) && isset($data['update_dcostprice_increment_percent']) && $data['update_dcostprice_increment_percent'] == 'Y' && $current_item['isparentchild'] !=1){
+                            // }elseif(isset($data['update_dcostprice_select']) && $data['update_dcostprice_select'] == 'set as cost' && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_checkbox']) && !isset($data['update_dcostprice_increment']) && isset($data['update_dcostprice_increment_percent']) && $data['update_dcostprice_increment_percent'] == 'Y' ){
                                 
-                                $new_dcostprice = (($current_item['dcostprice'] * ($data['update_dcostprice'])) / 100) + ($current_item['dcostprice']);
-                                // $sql .= " dcostprice='" . $new_dcostprice . "',";
-                                $sql .= " dcostprice='" . $new_dcostprice . "', new_costprice='" . $new_dcostprice . "',";
-                                $current_dcostprice = $new_dcostprice;
-                                $updated_column[] = 'dcostprice';
-                                // $sql .= " nunitcost='" . $current_nunitcost . "',";
+                            //     $new_dcostprice = (($current_item['dcostprice'] * ($data['update_dcostprice'])) / 100) + ($current_item['dcostprice']);
+                            //     // $sql .= " dcostprice='" . $new_dcostprice . "',";
+                            //     $sql .= " dcostprice='" . $new_dcostprice . "', new_costprice='" . $new_dcostprice . "',";
+                            //     $current_dcostprice = $new_dcostprice;
+                            //     $updated_column[] = 'dcostprice';
+                            //     // $sql .= " nunitcost='" . $current_nunitcost . "',";
                             
-                            //=====commented on 25/06/2020===========
-                            }elseif(isset($data['update_dcostprice']) && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_increment']) && !isset($data['update_dcostprice_increment_percent'])){
+                            // //=====commented on 25/06/2020===========
+                            // }elseif(isset($data['update_dcostprice']) && $data['update_dcostprice'] != '0' && !isset($data['update_dcostprice_increment']) && !isset($data['update_dcostprice_increment_percent'])){
+                                
+                            //     $sql .= " dcostprice='" . ($data['update_dcostprice']) . "', new_costprice='" . ($data['update_dcostprice']) . "',";
+                            //     $current_dcostprice = $data['update_dcostprice'];
+                            //     $new_dcostprice = $data['update_dcostprice'];
+                            //     $updated_column[] = 'dcostprice';
+                                
+                            //     $current_nunitcost = $current_dcostprice /  $current_nsellunit;
+                            //     // $sql .= " nunitcost='" . $current_nunitcost . "',";
+                                
+                                
+                            // }else{
+                            //     $new_dcostprice = $current_item['dcostprice'];
+                            //     $current_dcostprice = $current_item['dcostprice'];
+                            // }
+                            
+                            // $current_nunitcost = $current_dcostprice /  $current_npack;
+                            // $sql .= " nunitcost='" . $current_nunitcost . "',";
+                            
+                            
+                            if(isset($data['update_dcostprice_checkbox']) && $data['update_dcostprice_checkbox'] == 'on' && isset($data['update_dcostprice']) && $data['update_dcostprice'] != 0){
                                 
                                 $sql .= " dcostprice='" . ($data['update_dcostprice']) . "', new_costprice='" . ($data['update_dcostprice']) . "',";
                                 $current_dcostprice = $data['update_dcostprice'];
                                 $new_dcostprice = $data['update_dcostprice'];
+                                
+                                $current_nunitcost = $current_dcostprice /  $current_nsellunit;
+                                $sql .= " nunitcost='" . $current_nunitcost . "',";
+                                
+                            }elseif(isset($data['update_dcostprice_increment_checkbox']) && $data['update_dcostprice_increment_checkbox'] == 'on' && isset($data['update_dcostprice_increment']) && $data['update_dcostprice_increment'] != 0){
+                                
+                                $new_dcostprice = $current_item['dcostprice'] + ($data['update_dcostprice_increment']);
+                                $sql .= " dcostprice='" . $new_dcostprice . "', new_costprice='" . $new_dcostprice . "',";
+                                $current_dcostprice = $new_dcostprice;
                                 $updated_column[] = 'dcostprice';
                                 
                                 $current_nunitcost = $current_dcostprice /  $current_nsellunit;
-                                // $sql .= " nunitcost='" . $current_nunitcost . "',";
+                                $sql .= " nunitcost='" . $current_nunitcost . "',";
                                 
+                            }elseif(isset($data['update_dcostprice_increment_percent_checkbox']) && $data['update_dcostprice_increment_percent_checkbox'] == 'on' && isset($data['update_dcostprice_increment_percent']) && $data['update_dcostprice_increment_percent'] != 0){
+                                
+                                $new_dcostprice = (($current_item['dcostprice'] * ($data['update_dcostprice_increment_percent'])) / 100) + ($current_item['dcostprice']);
+                                $sql .= " dcostprice='" . $new_dcostprice . "', new_costprice='" . $new_dcostprice . "',";
+                                $current_dcostprice = $new_dcostprice;
+                                $updated_column[] = 'dcostprice';
+                                
+                                $current_nunitcost = $current_dcostprice /  $current_nsellunit;
+                                $sql .= " nunitcost='" . $current_nunitcost . "',";
                                 
                             }else{
                                 $new_dcostprice = $current_item['dcostprice'];
                                 $current_dcostprice = $current_item['dcostprice'];
                             }
                             
-                            // $current_nunitcost = $current_dcostprice /  $current_npack;
-                            // $sql .= " nunitcost='" . $current_nunitcost . "',";
                                 
                             if($data['update_visinventory'] != 'no-update'){
                                 $sql .= " visinventory='" . ($data['update_visinventory']) . "',";
                                 $updated_column[] = 'visinventory';
                             }
                                 
-                            if($data['update_ndiscountper'] != ''){
+                            if(isset($data['update_ndiscountper']) != ''){
                                 $sql .= " ndiscountper='" . (float)$data['update_ndiscountper'] . "',";
                                 $updated_column[] = 'ndiscountper';
                             }
@@ -1274,31 +1407,32 @@ class EditMultipleItems extends Model
                             }
                             
                             // Update subcategory
-                            if(isset($data['update_subcat_id']) && $data['update_subcat_id'] != 'no-update'){
+                            if(isset($data['update_subcat_id']) && $data['update_subcat_id'] != 'no-update' && $data['update_subcat_id'] !='--Select Subcategory--'){
                                 $sql .= " subcat_id='" . ($data['update_subcat_id']) . "',";
                                 $updated_column[] = 'subcategory';
                             }else{
                                 if((isset($data['update_vcategorycode']) && $data['update_vcategorycode'] != 'no-update') && (isset($data['update_vdepcode']) && $data['update_vdepcode'] != 'no-update')){
-                                    $sql .= " subcat_id='" . null . "',";
+                                    $sql .= " subcat_id=null,";
                                     $updated_column[] = 'subcategory';
                                 }
                             }
                             
                             // Update manufacturer
-                            if($data['update_manufacturerid'] != 'no-update'){
-                                $sql .= " manufacturer_id='" . ($data['update_manufacturerid']) . "',";
-                                $updated_column[] = 'manufcaturer';
-                            }
+                            // if($data['update_manufacturerid'] != 'no-update'){
+                            //     $sql .= " manufacturer_id='" . ($data['update_manufacturerid']) . "',";
+                            //     $updated_column[] = 'manufcaturer';
+                            // }
                                 
                                 
-                            if($data['update_estatus'] != 'no-update'){
-                                $sql .= " estatus='" . ($data['update_estatus']) . "',";
-                                $updated_column[] = 'estatus';
-                            }
-                                
+                            // if($data['update_estatus'] != 'no-update'){
+                            //     $sql .= " estatus='" . ($data['update_estatus']) . "',";
+                            //     $updated_column[] = 'estatus';
+                            // }
+                              
                             $sql = rtrim($sql,',');
                             $sql .= " WHERE iitemid = '" . (int)$value . "'";
-                                
+                            // echo $sql;
+                            // die;
                             DB::connection('mysql_dynamic')->update($sql);
                             
                             // print_r($sql);
