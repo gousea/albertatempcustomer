@@ -93,6 +93,13 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::patch('customers/update/{icustomerid}', 'CustomerController@update')->name('customers.update');
     });
 
+
+    /*================= GIft card Module Routes =========================*/
+    Route::group(['middleware' => ['Permission:PER1003']], function () {
+        //customer Module route
+        Route::get('giftcard', 'GiftCardController@index')->name('giftcard');
+    });
+
     /*================= User Module Routes =========================*/
     Route::group(['middleware' => ['Permission:PER1004']], function () {
 
@@ -1027,18 +1034,15 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::get('/salesanalyticsreport_getcategory', 'SalesAnalyticsReportController@getcategories')->name('salesanalyticsreport_getcategory');
         Route::get('/salesanalyticsreport_getsubcategory', 'SalesAnalyticsReportController@get_subcategories')->name('salesanalyticsreport_getsubcategory');
         Route::get('/salesanalyticsreport_getprintpage', 'SalesAnalyticsReportController@print_page')->name('salesanalyticsreport_getprintpage');
-   
 
-         
+
+
         // PROMOTION REPORT ROUTE
         Route::GET('/promotionreport', 'PromotionReportController@index')->name('PromotionReport');
         Route::POST('/promotionreport_form', 'PromotionReportController@get_data')->name('PromotionReportForm');
         Route::GET('/promotionreportcsv', 'PromotionReportController@csv')->name('PromotionReportCsv');
         Route::GET('/promotionreportprint', 'PromotionReportController@print_data')->name('PromotionReportprint');
         Route::GET('/promotionreportpdf', 'PromotionReportController@pdf')->name('PromotionReportpdf');
-        
-   
-   
     });
 
     /*================= General Module Routes =========================*/
