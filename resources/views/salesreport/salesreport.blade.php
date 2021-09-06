@@ -799,9 +799,9 @@ $(document).on('submit', '#filter_form', function(event) {
 $(document).ready(function() {
   $("#btnPrint").printPage();
 });
-$(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
+// $(window).load(function() {
+//     $("div#divLoading").removeClass('show');
+//   });
 
   const saveData = (function () {
     const a = document.createElement("a");
