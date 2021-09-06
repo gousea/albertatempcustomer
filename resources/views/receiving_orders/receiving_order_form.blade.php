@@ -1172,14 +1172,14 @@
     }
     
     
-    suggested_cost = (new_costprice/nsellunit) * closest_itotalunit;
+    // suggested_cost = (new_costprice/nsellunit) * closest_itotalunit;
     
     
-    if(isNaN(suggested_cost)) {
-      suggested_cost = 0.00;
-    }else{
-      suggested_cost = parseFloat(suggested_cost).toFixed(2);
-    }
+    // if(isNaN(suggested_cost)) {
+    //   suggested_cost = 0.00;
+    // }else{
+    //   suggested_cost = parseFloat(suggested_cost).toFixed(2);
+    // }
     
     let profit = nunitprice - closest_nunitcost;
     let gross_profit = (profit/nunitprice) * 100;
@@ -1365,7 +1365,7 @@
       closest_nunitcost = 0.0000;
     }
     
-    suggested_cost = parseFloat(suggested_cost).toFixed(2);
+    // suggested_cost = parseFloat(suggested_cost).toFixed(2);
     
     let profit = nunitprice - closest_nunitcost;
     let gross_profit = (profit/nunitprice) * 100;
@@ -1424,7 +1424,7 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
     var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
     
     var nunitprice = $(this).closest('tr').find('.nnewunitprice_class').val();
-    var suggested_cost = $(this).closest('tr').find('.sggtdqty_class').val();
+    // var suggested_cost = $(this).closest('tr').find('.sggtdqty_class').val();
     
     var order_by = $(this).closest('tr').find('.po_order_by_class').val();
     let old_unitcost = $(this).closest('tr').find('.oldunitcost_class').val();
@@ -1509,14 +1509,14 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
     
     $(this).closest('tr').find('.nordextprice_class').val(closest_nordextprice);
     
-    if(parseFloat(suggested_cost) < parseFloat(closest_nordextprice)){
-        // $(this).closest('tr').children('td').css('background-color', '#ff9999');
-        $(this).closest('tr').children('td').css('color', '#FF0000');
-        $(this).closest('tr').children('td.noInput').css('color', '#FF0000');
-    } else {
-        $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
-        $(this).closest('tr').children('td.noInput').css('color', '#666666');
-    }
+    // if(parseFloat(suggested_cost) < parseFloat(closest_nordextprice)){
+    //     // $(this).closest('tr').children('td').css('background-color', '#ff9999');
+    //     $(this).closest('tr').children('td').css('color', '#FF0000');
+    //     $(this).closest('tr').children('td.noInput').css('color', '#FF0000');
+    // } else {
+    //     $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
+    //     $(this).closest('tr').children('td.noInput').css('color', '#666666');
+    // }
     
     // if(parseFloat(old_unitcost) > parseFloat(closest_nunitcost)){
     //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#66ff66');
@@ -1613,7 +1613,7 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
     
     // to get suggested cost
     // suggested_cost = last_costprice * closest_itotalunit;
-    suggested_cost = (new_costprice/nsellunit) * closest_itotalunit;
+    // suggested_cost = (new_costprice/nsellunit) * closest_itotalunit;
     
 
     $(this).closest('tr').find('.itotalunit_span_class').html(closest_itotalunit);
@@ -1624,15 +1624,15 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
 
     $(this).closest('tr').find('.sggtdqty_class').val(suggested_cost);
     
-    if(parseFloat(suggested_cost) < parseFloat(nordextprice)){
-        // $(this).closest('tr').children('td').css('background-color', '#FF0000');
-        $(this).closest('tr').children('td').css('color', '#FF0000');
-        $(this).closest('tr').children('td.noInput').css('color', '#FF0000');
-    } else {
-        $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
-        $(this).closest('tr').children('td').css('color', '#000000');
-        $(this).closest('tr').children('td.noInput').css('color', '#666666');
-    }
+    // if(parseFloat(suggested_cost) < parseFloat(nordextprice)){
+    //     // $(this).closest('tr').children('td').css('background-color', '#FF0000');
+    //     $(this).closest('tr').children('td').css('color', '#FF0000');
+    //     $(this).closest('tr').children('td.noInput').css('color', '#FF0000');
+    // } else {
+    //     $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
+    //     $(this).closest('tr').children('td').css('color', '#000000');
+    //     $(this).closest('tr').children('td.noInput').css('color', '#666666');
+    // }
 
     var subtotal = 0.00;
     $('.nordextprice_class').each(function() {
@@ -3560,7 +3560,7 @@ $('.editable_text').focus(function() {
             html_receiving_item += '>Unit</option></select></td>';
             
             
-            suggested_cost = qty_unit_case * unit_cost;
+            // suggested_cost = qty_unit_case * unit_cost;
             
             // <input type="text" class="orderBy" name="items['+window.index_item+'][dunitprice]" id="" style="width:60px;text-align:right;" value="'+  transfer_to_po[index]['order_by'] +'">
             
@@ -4070,10 +4070,10 @@ $('.editable_text').focus(function() {
     event.preventDefault();
 
     if($('#advance_update').val() == 0){
-      advance_update_function(false);
+      advance_update_function(true);
       $('#advance_update').val(1);
     }else{
-      advance_update_function(true);
+      advance_update_function(false);
       $('#advance_update').val(0);
     }
     
