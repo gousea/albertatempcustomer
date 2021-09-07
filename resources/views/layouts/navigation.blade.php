@@ -27,7 +27,7 @@
                                                 <ul class="dropdown-menu main-dropdown">
                                                 <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('customers') }}">
                                                                         Customer</a></li>
-                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="">
+                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('giftcard') }}">
                                                                         Gift Card </a></li>
                                                 </ul>
                                         </li>
