@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
     Physical Inventory
@@ -12,50 +12,61 @@
 @section('main-content')
 
 <div id="content">
+
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Items</span>
+                </div>
+                <div class="nav-submenu">
+                    <button class="btn btn-gray headerblack  buttons_menu" id="scanned_items_model">View All Scanned Data</button>
+                    <button class="btn btn-gray headerblack  buttons_menu" id="next_btn"><i class="fa fa-plus"></i>&nbsp;Next</button>
+                    <a href="<?php echo $data['cancel']; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+                </div>
+            </div> <!-- navbar-collapse.// -->
+        </div>
+      </nav>
+
     <style>
 
-    table#item_listing tr th{
-        table-layout: fixed !important;
-    }
+        table#item_listing tr th{
+            table-layout: fixed !important;
+        }
 
-     span.select2-container{
-        width: 90% !important;
-        min-width:100px; !important;
-    }
-    #items_status + span.select2-container{
-        max-width: 20%;
-    }
-    thead input {
-        width: 100%;
-    }
+        .padding-left-right{
+            padding: 0 2% 0 2%;
+        }
 
-     .table.table-bordered.table-striped.table-hover thead > tr{
-     	background: #03a9f4 none repeat scroll 0 0 !important;
-     }
+        span.select2-container{
+            width: 90% !important;
+            min-width:100px; !important;
+        }
+        #items_status + span.select2-container{
+            max-width: 20%;
+        }
+        thead input {
+            width: 100%;
+        }
 
-     table tbody tr:nth-child(even) td{
-    	background-color: #f05a2814;
-    }
+        .table.table-bordered.table-striped.table-hover thead > tr{
+            background: #03a9f4 none repeat scroll 0 0 !important;
+        }
 
-    .select2-search input {
-        color:black;
-    }
-    .select2-selection__choice {
-        color:black;
-    }
+        /* table tbody tr:nth-child(even) td{
+            background-color: #f05a2814;
+        } */
 
+        .select2-search input {
+            color:black;
+        }
+        .select2-selection__choice {
+            color:black;
+        }
+        
     </style>
-  <div class="page-header">
-    <div class="container-fluid">
-
-      <ul class="breadcrumb">
-
-        <li><a href=""></a></li>
-
-      </ul>
-    </div>
-  </div>
-  <div class="container-fluid">
+    
+  <div class="container-fluid section-content">
     @if (isset($data['error_warning']))
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -67,22 +78,9 @@
         </div>
     @endif
     <div class="panel panel-default itemsData">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title"><i class="fa fa-list"></i> Items</h3>
+      
+      <div class="panel-body padding-left-right">
         
-      </div>
-      <div class="panel-body">
-        
-        <div class="row" style="padding-bottom: 15px; ">
-            <div class="col-md-12">
-                
-                <button type="button" class="btn btn-primary" id="scanned_items_model">View All Scanned Data</button> &nbsp;&nbsp;
-                <div class="btn-group pull-right">
-                    <a href="<?php echo $data['cancel']; ?>" class="btn btn-primary" style="margin:1px;"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Cancel</a>&nbsp;&nbsp;
-                    <button class="btn btn-primary" id="next_btn" style="margin:1px;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Next</button>&nbsp;&nbsp;
-                </div>
-            </div>
-        </div>
         <div class="form-group">
                 <input type="checkbox" id="for_scanning" >
                 <label class="control-label" for="input-template">Add Data One By One Using Scanner </label>
@@ -92,33 +90,110 @@
                 <form method="post" action="{{ $data['url_next'] }}" id="itemlistform">
                     @csrf
                     <input type="hidden" name="conditions" id="conditions" >
-                    <table id="item_listing" class="table table-bordered table-striped table-hover" style="table-layout:fixed; font-size:10px;">
+                    <table id="item_listing" class="table table-striped table-hover promotionview" style="width:100%; font-size:11px;">
                         <thead>
                             <?php $dynamic_data = [];?>
-                            <tr>
+                            <tr class="header-color">
                               <th style="width: 20px;color:black;" class="text-center"><input type="checkbox" name="selected" id="parent_selected" onchange="$('input[name*=\'selected\']').prop('checked', this.checked);" checked /></th>
-                              <th class="text-left text-uppercase no-sort" style="width:60px;">ITEM NAME</th>
+                              
+                              <th class="text-left text-uppercase no-sort" style="width: 15%;">&nbsp;&nbsp;Item Name
+                                <div class="po-has-search">
+                                  <span class="fa fa-search form-control-feedback"></span>
+                                  <input type="text" class="form-control table-heading-fields text-center search_text_box" name="item_search" id="item_search" placeholder="SEARCH"  style="width: 100%; padding-left: 5px;">
+                                </div>
+                              </th>
                               <?php $dynamic_data[] = "vitemname";?>
-                              <th class="text-left text-uppercase no-sort" style="width:60px;">SKU</th>
+                              
+                              <th class="text-left text-uppercase no-sort" style="width: 12%;">&nbsp;&nbsp;SKU
+                                <div class="po-has-search">
+                                  <span class="fa fa-search form-control-feedback"></span>
+                                  <input type="text" name="sku_search" id="sku_search" class="form-control table-heading-fields text-center search_text_box" placeholder="SEARCH"  style="width: 110%; padding-left: 5px;">
+                                </div>
+                              </th>
                               <?php $dynamic_data[] = "vbarcode";?>
-                              <th class="text-left text-uppercase" style=" width:100px;">PRICE</th>
+                              
+                              <th style="width: 20%;">PRICE
+                                <div class="adjustment-has-search">
+                                  
+                                  <select class='table-heading-fields' id='price_select_by' name='price_select_by' style='width:40%; padding-left: 5px;'>
+                                    <option value="greater" selected>Greater than</option>
+                                    <option value="less">Less than</option>
+                                    <option value="equal">Equal to</option>
+                                    <option value="between">Between</option>
+                                  </select>
+                                  <span id='selectByValuesSpan'>
+                                    <input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box1 table-heading-fields' placeholder='Enter Amount' style='width:50%;color:black;height:28px; padding-left: 1px;' value=''/>
+                                  </span>
+                                </div>
+                              </th>
                               <?php $dynamic_data[] = "dunitprice";?>
-                              <th class="text-left text-uppercase" style="width:38px;" >COST</th>
+
+                              <th class="text-left text-uppercase no-filter" style="width:38px;" >COST</th>
                               <?php $dynamic_data[] = "unitcost";?>
+                              
                               <?php if(isset($data['itemListings']) && count($data['itemListings'])){ ?>
                                 <?php foreach($data['itemListings'] as $m => $itemListing){ ?>
-                                   <th class="text-left text-uppercase no-sort" style="width:72px !important">{{  $data['title_arr'][$m] }}</th>
+                                   
                                    <?php if($m == 'vcategorycode'){
                                         $dynamic_data[] = "vcategoryname";
+                                        ?>
+                                            <th class="text-uppercase no-sort" style="width: 12%;">Category
+                                            <div class="adjustment-has-search">
+                                                <select class='table-heading-fields' multiple='true' name='category_code[]' id='category_code'>
+                                                <option value='all'>All</option>
+                                                
+                                                </select>
+                                            </div>
+                                            </th>
+                                        <?php continue;
                                         }else if($m ==  'vdepcode'){
                                             $dynamic_data[] = "vdepartmentname";
+                                        ?>
+                                            <th class="text-uppercase no-sort" style="width: 12%;">Dept.
+                                            <div class="adjustment-has-search">
+                                                <select class='table-heading-fields' multiple='true'  name='dept_code[]' id='dept_code'>
+                                                    <option value='all'>All</option>";
+                                                    <?php foreach($data['departments'] as $department){ ?>  
+                                                        <option value='<?=$department['vdepcode']?>' ><?=$department['vdepartmentname'] ?></option>;
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                            </th>
+                                        <?php continue;
                                         }else if($m ==  'subcat_id'){
                                             $dynamic_data[] = "subcat_name";
+                                        ?>
+                                            <th class="text-uppercase no-sort" style="width: 12%;">Sub Category
+                                            <div class="adjustment-has-search">
+                                                <select class='table-heading-fields' multiple='true' name='subcat_id[]' id='subcat_id'>
+                                                <option value='all'>All</option>
+                                                
+                                                </select>
+                                            </div>
+                                            </th>
+                                        <?php continue;
                                         }else if($m ==  'vsuppliercode'){
                                             $dynamic_data[] = "vcompanyname";
+                                        ?>
+                                            <th class="text-left text-uppercase no-sort" style="width: 12%;">&nbsp;&nbsp;Supplier
+                                                <div class="adjustment-has-search">
+                                                    <select class='table-heading-fields'  multiple='true' name='supplier_code[]' id='supplier_code'>
+                                                    <option value='all'>All</option>";
+                                                        <?php 
+                                                            foreach($data['supplier'] as $supplier){
+                                                        ?>  
+                                                            <option value='<?=$supplier['vsuppliercode']?>'><?=$supplier['vcompanyname'] ?></option>;
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </th>
+                                        <?php continue;
                                         }else{
                                             $dynamic_data[] = $m;
                                         } ?>
+
+                                        <th class="text-left text-uppercase no-sort" style="width:72px !important">{{  $data['title_arr'][$m] }}</th>
+
                                   <?php } ?>
                               <?php } else { ?>
                                 <th class="text-left text-uppercase no-sort" style="width:65px";><?php echo $column_deptcode; ?></th>
@@ -142,35 +217,44 @@
 </div>
 @endsection
 
-@section('script_files')
-    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+@section('page-script')
+
+    <style>
+        .no-filter{
+            padding-bottom: 44px !important;
+        }
+    
+    </style>
+
+    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">
+
+    <link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+    <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link type="text/css" href="{{ asset('stylesheet/select2/css/select2.min.css') }}" rel="stylesheet" />
-    <!-- DataTables -->
-    <script src="{{ asset('javascript/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('javascript/dataTables.bootstrap.min.js') }}"></script>
+    
     <script src="{{ asset('javascript/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
     <!----  Session ----->
     <!--<script src="{{ asset('javascript/jquery/jquery.session.js') }}"></script>-->
-@endsection
 
-@section('scripts')
+
     <script>
-        $(document).on('change', '#price_select_by', function(){
-            var select_by = $(this).val();
-            var html='';
-            if(select_by === 'between'){
-                $('#price_select_by').css('width', '55px');
-                html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:35px;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value=""/>';
-                html += '<input type="text" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box1" placeholder="Enter Amt" style="width:35px;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="" required/>'
-            } else {
-                $('#price_select_by').css('width', '70px');
-                html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:60px;color:black;border-radius: 4px;height:28px;margin-left:5px;" value=""/>'
-                // $('#selectByValuesSpan').html('not between');
-            }
-            $('#selectByValuesSpan').html(html);
-        });
+        // $(document).on('change', '#price_select_by', function(){
+        //     var select_by = $(this).val();
+        //     console.log(select_by);
+        //     var html='';
+        //     if(select_by == 'between'){
+        //         // $('#price_select_by').css('width', '55px');
+        //         html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:25%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value=""/>';
+        //         html += '<input type="text" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box1" placeholder="Enter Amt" style="width:25%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="" required/>'
+        //     } else {
+        //         // $('#price_select_by').css('width', '70px');
+        //         html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:50%;color:black;border-radius: 4px;height:28px;margin-left:5px;" value=""/>'
+        //         // $('#selectByValuesSpan').html('not between');
+        //     }
+        //     $('#selectByValuesSpan').html(html);
+        // });
     </script>
 
 <script>
@@ -181,12 +265,6 @@
         var url = "<?php echo $data['searchitem'];?>";
         url = url.replace(/&amp;/g, '&');
         
-        var departments = "<?php echo $data['departments'];?>";
-        var category = "<?php echo $data['category'];?>"; 
-        var subcategory = "<?php echo $data['subcategory'];?>"; 
-        var supplier = "<?php echo $data['supplier'];?>";
-        var price_select_by = "<?php echo $data['price_select_by'] ?>";
-        
         $(document).on('input', '#select_by_value_2, #select_by_value_1', function(){
                 
                 select_by_val1 = parseFloat($('#select_by_value_1').val());
@@ -195,7 +273,7 @@
                     if($('#price_select_by').val() == 'between' && typeof(select_by_val1) != "undefined" && select_by_val1 !== null && typeof(select_by_val2) != "undefined" && select_by_val2 !== null && select_by_val1 >= select_by_val2){ 
                             bootbox.alert({ 
                                         size: 'small',
-                                        title: "Attention", 
+                                        title: "  ", 
                                         message: "Second value must be greater than first value!", 
                                       });
                     }
@@ -203,43 +281,23 @@
         });
         
         
-        $('#item_listing thead tr').clone(true).appendTo( '#item_listing thead' );
-        $('#item_listing thead tr:eq(1) th').each( function (i) {
+        // $('#item_listing thead tr').clone(true).appendTo( '#item_listing thead' );
+        $('#item_listing thead tr th').each( function (i) {
             var title = $(this).text();
-            if(title == "SKU")
-            {
-                $(this).html( '<input type="text" name="sku_search" id="sku_search" class="search_text_box" placeholder="Search" style="color:black;border-radius: 4px;height:28px;"/>' );
-            }
-            else if(title == "ITEM NAME"){
-                $(this).html( '<input type="text" name="item_search" id="item_search" class="search_text_box" placeholder="Search" style="color:black;border-radius: 4px;height:28px;"/>' );
-            }
-            else if(title == "PRICE"){
-                $(this).html(price_select_by);
-            }
-            else if(title == "Dept.")
-            {
-                $(this).html(departments)
-            }
-            else if(title == "Category")
-            {
-                $(this).html(category)
-            }
-            else if(title == "Sub Category")
-            {
-                $(this).html(subcategory)
-            }
-            else if(title == "Supplier")
-            {
-                $(this).html(supplier)
-            }
-            else{
-                $(this).html( '' );
-            }
+            
             
             var timer;
      
-            $( '.search_text_box', this ).on( 'keyup change', function () {
+            $( '.search_text_box', this ).off().on( 'keyup change', function () {
                 var self = this;
+
+                if(self.value != ''){
+                    $(this).closest('div').find('.fa-search').hide();
+                    
+                }else{
+                    $(this).closest('div').find('.fa-search').show();
+                }
+
                 clearTimeout(timer);
                 timer = setTimeout(function () {
                     if ( table.column(i).search() !== self.value ) {
@@ -247,13 +305,15 @@
                         .column(i)
                         .search( self.value )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
                 }
                 },0);
                 
             } );
             
             //========filter for price==============
-            $(document).on( 'input', '.search_text_box1', function () {
+            $(document).off().on( 'input', '.search_text_box1', function () {
                 
                 var selectBy = $("#price_select_by").val();
                 var select_by_value_1 = $('#select_by_value_1').val();
@@ -282,6 +342,8 @@
                             .column(3)
                             .search( searchVal)
                             .draw();
+                            
+                        $("div#divLoading").addClass('show');
                     
                     },0);
                 
@@ -292,6 +354,19 @@
             $( '#price_select_by', this ).on( 'change', function () { 
                 var self = this;
                 
+                var selectBy = $("#price_select_by").val();
+                var html='';
+                if(selectBy == 'between'){
+                    // $('#price_select_by').css('width', '55px');
+                    html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:25%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value=""/>';
+                    html += '<input type="text" autocomplete="off" name="select_by_value_2" id="select_by_value_2" class="search_text_box1" placeholder="Enter Amt" style="width:25%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;" value="" required/>'
+                } else {
+                    // $('#price_select_by').css('width', '70px');
+                    html = '<input type="text" autocomplete="off" name="select_by_value_1" id="select_by_value_1" class="search_text_box1" placeholder="Enter Amt" style="width:50%;color:black;border-radius: 4px;height:28px;margin-left:5px;" value=""/>'
+                    // $('#selectByValuesSpan').html('not between');
+                }
+                $('#selectByValuesSpan').html(html);
+                
                 clearTimeout(timer);
                 timer = setTimeout(function () {
                     if ( table.column(i).search() !== self.value ) {
@@ -299,6 +374,8 @@
                         .column(i)
                         .search( self.value )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
                 }
                 },0);
             } );
@@ -314,6 +391,8 @@
                         .column(5)
                         .search( search )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
             } );
             $( '#category_code', this ).on( 'change', function () {
                 var search = [];
@@ -326,6 +405,8 @@
                         .column(6)
                         .search( search )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
             } );
             
             $( '#supplier_code', this ).on( 'change', function () { 
@@ -339,6 +420,8 @@
                         .column(8)
                         .search( search )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
             } );
             $( '#subcat_id', this ).on( 'change', function () { 
                 var search = [];
@@ -351,6 +434,8 @@
                         .column(7)
                         .search( search )
                         .draw();
+                        
+                    $("div#divLoading").addClass('show');
             } ); 
             
         } );
@@ -446,15 +531,15 @@
             data_array.push({ "data": value });
         });
         data_array.unshift({data: "iitemid", render: function(data, type, row){
-                            return $("<input>").attr({
-                                type: 'checkbox',
-                                class: "iitemid",
-                                value: data,
-                                name: "selected[]",
-                                "data-order": data,
-                                checked:"checked"
-                            })[0].outerHTML;
-                        }});
+            return $("<input>").attr({
+                type: 'checkbox',
+                class: "iitemid",
+                value: data,
+                name: "selected[]",
+                "data-order": data,
+                checked:"checked"
+            })[0].outerHTML;
+        }});
                         
             table =   $("#item_listing").DataTable({
             
@@ -509,14 +594,21 @@
                 } else{ 
                  $('.iitemid').prop('checked', false);   
                 } 
+                
+                setTimeout(function(){
+                    $("div#divLoading").removeClass('show');
+                }, 1000);
+                
             });
         
-    var totalDisplayRecord = table.page.info().recordsDisplay;
-    console.log(totalDisplayRecord);
-       
-    $("#item_listing_processing").remove();
-    $("#item_listing_filter").hide();
-});
+        var totalDisplayRecord = table.page.info().recordsDisplay;
+        console.log(totalDisplayRecord);
+        
+        $("#item_listing_processing").remove();
+        $("#item_listing_filter").hide();
+
+        $("#item_listing_paginate").addClass("pull-right");
+    });
         var itemId = [];
         var scanned_iitemid = [];
         var selected = [];
@@ -605,6 +697,7 @@
                     },3000);
                 }
             });
+
             //========validation on next button =============
             $('#next_btn', this).on('click', function(){
                 var count =0;
@@ -626,20 +719,22 @@
                 var supplier = $('#supplier_code').val();
                 var no_of_rows = $('#item_listing tr').length;
                 var empty = $('.dataTables_empty').text();
+                
+                
                 if(empty == 'No data available in table'){
                     bootbox.confirm({
                                     size: 'small',
-                                    title: "Attention",
+                                    title: "  ",
                                     message: "Not any Item are there, Table is blank",
                                     callback: function(result){
                                     }
                                 });
                 }
-                else if((count <= 0 || parentcount > 0) && $('#for_scanning').prop("checked") == false && item_search === "" && sku_search === "" && price_select_by == "" && department == null && supplier == null && category == null && subcategory == null ){
+                else if((count <= 0 || parentcount > 0) && $('#for_scanning').prop("checked") == false && item_search === "" && sku_search === "" && price_select_by == "" && department.length == 0 && supplier.length == 0 && category.length == 0 && subcategory.length == 0 ){
                     bootbox.confirm({
                                     size: 'small',
-                                    title: "Attention",
                                     message: "No filters have been selected which implies that you intend to include all the items.<br><br> Do you want to proceed ?",
+                                    title: "  ",
                                     callback: function(result){
                                         if(result){
                                             $('#conditions').val('all');
@@ -651,7 +746,7 @@
                 }else if($('#for_scanning').prop("checked") == true && scanned_iitemid.length <= 0 ){
                     bootbox.confirm({
                                     size: 'small',
-                                    title: "Attention",
+                                    title: "  ",
                                     message: "Not any Item is Scanned, Table is blank",
                                     callback: function(result){
                                     }
@@ -769,31 +864,31 @@
     <div class="modal fade" id="viewModal" role="dialog">
         <div class="modal-dialog">
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content modal-lg">
             <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Scanned Item</h4>
+                <h4 class="modal-title">Scanned Item</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
-                            <button type="button" class="btn btn-primary pull-right" id="remove_button">Remove</button>
+                            <button type="button" class="btn button-blue basic-button-small pull-right" id="remove_button">Remove</button>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                             <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="scanned_data_table">
+                            <table class="table table-hover promotionview" id="scanned_data_table">
 
                                 <thead id="txt" style="font-size:12px;">
-                                    <tr>
+                                    <tr class="header-color">
                                         <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" name="itemid_selected" onchange="$('input[name*=\'itemid_selected\']').prop('checked', this.checked);" /></th>
-                                        <th class="text-center" style="vertical-align : middle;">SKU</th>
-                                        <th class="text-center" style="vertical-align : middle;">Item Name</th>
-                                        <th class="text-center" >QOH</th>
-                                        <td class="text-center" >Price</td>
+                                        <th class="text-left" style="vertical-align : middle;">SKU</th>
+                                        <th class="text-left" style="vertical-align : middle;">Item Name</th>
+                                        <th class="text-left" >QOH</th>
+                                        <th class="text-left" >Price</td>
                                     </tr>
                                 </thead>
                                 <tbody id="cal_post_table">
@@ -807,7 +902,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$(this).closest('tr').remove();">Close</button>
+            <button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;" onclick="$(this).closest('tr').remove();">Close</button>
             </div>
         </div>
 
@@ -841,10 +936,7 @@
     <!-- unset sesion url ajax -->
     <script type="text/javascript">
         $(document).ready(function(){
-            $(window).load(function() {
-                $("div#divLoading").removeClass('show');
-            });
-
+            
             var unset_session_scanned_data = "<?php echo $data['unset_session_scanned_data']; ?>";
             unset_session_scanned_data = unset_session_scanned_data.replace(/&amp;/g, '&');
             $.ajax({
@@ -865,5 +957,13 @@
                 }
             });
         });
+
+        function preventBack() {
+            window.history.forward(); 
+        }
+          
+        setTimeout("preventBack()", 0);
+          
+        window.onunload = function () { null };
     </script>
 @endsection

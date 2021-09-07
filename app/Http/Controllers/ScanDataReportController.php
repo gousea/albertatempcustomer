@@ -186,17 +186,11 @@ class ScanDataReportController extends Controller
                         {
                             if( strtolower($report_data['vsaleby']) == 'price' || $report_data['vsaleby'] == 2)
                             {
-                                
                                 $Multi_Pack_Discount_Amount = (isset($report_data['sale_ndiscountper']) && $report_data['sale_ndiscountper'] != "") ? $report_data['sale_ndiscountper'] : "";
-                                
-                                
                             }
                             else if(strtolower($report_data['vsaleby']) == 'discount' || $report_data['vsaleby'] == 1)
-                            {
-                                
+                            {   
                                 $Multi_Pack_Discount_Amount = (isset($report_data['sale_ndiscountper']) && $report_data['sale_ndiscountper'] != "") ? ( $report_data['sale_ndiscountper'] / 100 ) * $report_data['nunitprice'] : "";
-                            
-                                
                             }
                         } 
                         
@@ -275,6 +269,12 @@ class ScanDataReportController extends Controller
                         
                         if($Multi_Pack_Indicator == 'Y'){
                             $total_multipack_sold += abs($Quantity_Sold);
+                        }
+                        
+                        // by vijay requirement by 29-04-2021
+                        if( $Multi_Pack_Discount_Amount == null &&  isset($MFG_Deal_Name_THREE) && isset($MFG_Deal_Discount_Amount_THREE) && isset($Loyalty_ID_Number)){
+                            $Multi_Pack_Indicator = 'N';
+                            $Multi_Pack_Required_Quantity = '';
                         }
                         
     					$data_row .= trim($management_account_number).'|'.trim($week_ending_date).'|'.trim($transaction_date).'|'.trim($transaction_time).'|'.trim($transaction_id_code).'|'.trim($store_number).'|'.trim($store_name).'|'; //7

@@ -239,7 +239,7 @@ class ScanDataReport extends Model
                             
                             mst_supplier as msupplier, 
                             mst_unit as u  
-                    WHERE CHAR_LENGTH(tsd.vitemcode) > 6 
+                    WHERE CHAR_LENGTH(tsd.vitemcode) > 5 
                     AND u.vunitcode = mi.vunitcode 
                     AND tsd.isalesid=ts.isalesid AND ms.istoreid=ts.istoreid AND mi.vbarcode=tsd.vitemcode 
                     AND msupplier.vsuppliercode=mi.vsuppliercode AND date_format(ts.dtrandate,'%Y-%m-%d') >= '".$week_starting_date."' 
@@ -335,7 +335,7 @@ class ScanDataReport extends Model
 		           )  as prom 
              
                 on mi.vbarcode = prom.vitemcode, mst_supplier as msupplier, 
-                mst_unit as u WHERE CHAR_LENGTH(tsd.vitemcode) > 6 
+                mst_unit as u WHERE CHAR_LENGTH(tsd.vitemcode) > 5 
                 AND u.vunitcode = mi.vunitcode AND tsd.isalesid=ts.isalesid  
                 AND ms.istoreid=ts.istoreid AND mi.vbarcode=tsd.vitemcode 
                 AND (ts.vtrntype = 'Transaction') 
@@ -431,6 +431,7 @@ $data_row = json_encode($run_query);
                     AND date_format(ts.dtrandate,'%Y-%m-%d') <= '".$week_ending_date."' 
                     AND mi.vdepcode in(".$department_id.") 
                     AND mi.vcategorycode in(".$category_id.")
+                    AND  tsd.vitemcode REGEXP '^[0-9]+$'
                     and (dstartdatetime < ts.dtrandate or dstartdatetime='0000-00-00 00:00:00' or dstartdatetime is null)
                     and (denddatetime > ts.dtrandate or denddatetime='0000-00-00 00:00:00' or denddatetime is null)
                     and (ts.vtrntype = 'Transaction')";
@@ -486,6 +487,7 @@ $data_row = json_encode($run_query);
                         AND ms.istoreid=ts.istoreid 
                         AND mi.vbarcode=tsd.vitemcode
                         AND (ts.vtrntype = 'Transaction')
+                        AND  tsd.vitemcode REGEXP '^[0-9]+$'
                         AND msupplier.vsuppliercode=mi.vsuppliercode 
                         AND date_format(ts.dtrandate,'%Y-%m-%d') >= '".$week_starting_date."' 
                         AND date_format(ts.dtrandate,'%Y-%m-%d') <= '".$week_ending_date."' 
@@ -494,7 +496,7 @@ $data_row = json_encode($run_query);
         }
         
 
-      
+       
         $run_query = DB::connection('mysql_dynamic')->select($query);
         
         return $run_query;

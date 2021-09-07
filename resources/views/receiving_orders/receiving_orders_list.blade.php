@@ -1,10 +1,33 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'Receiving Order')
 @section('main-content')
 
 <div id="content">
+
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase"> Receiving Order</span>
+            </div>
+            <div class="nav-submenu">
+              
+              <a type="button" href="<?php echo $data['add']; ?>" title="Add" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>  
+                          
+              <button class="btn btn-dark headerwhite buttons_menu basic-button-small" data-toggle="modal" data-target="#myModalImportNew"><i class="fa fa-file"></i>&nbsp;&nbsp;Import EDI Invoice</button>
+            
+              <button class="btn btn-dark headerwhite buttons_menu basic-button-medium" data-toggle="modal" data-target="#myModalImportMissingItem"><i class="fa fa-gift"></i>&nbsp;Import Missing Items</button>
+              <?php if(isset($error_import_barcode) && !empty($error_import_barcode)){ ?>
+                  <button class="btn btn-warning buttonred buttons_menu basic-button-small" data-toggle="modal" data-target="#error_import_modal"><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;Import Error Occurs</button>
+              <?php } ?>
+              <button class="btn btn-danger buttonred buttons_menu basic-button-small" id="delete_po_btn"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete RO</button>
+            </div>
+        </div> <!-- navbar-collapse.// -->
+    </div>
+  </nav>
   
-    <div class="container-fluid">
+  <section class="section-content py-6">
+    <div class="container">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -15,144 +38,74 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         @endif
-        <br>
-        <br>
+        
         <div class="panel panel-default">
-            <div class="panel-heading head_title">
-                <h3 class="panel-title"><i class="fa fa-list"></i>Receiving Order</h3>
-            </div>
+            
             <div class="panel-body">
-                <div class="row" style="padding-bottom:15px;float: right;">
-                    <div class="col-md-12">
-                        <div class="">
-                            <a href="<?php echo $data['add']; ?>" title="Add" class="btn btn-primary add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>  
-                          
-                            <button class="btn btn-info" data-toggle="modal" data-target="#myModalImportNew"><i class="fa fa-file"></i>&nbsp;&nbsp;Import EDI Invoice</button>
-                          
-                            <button class="btn btn-info" data-toggle="modal" data-target="#myModalImportMissingItem"><i class="fa fa-gift"></i>&nbsp;&nbsp;Import Missing Items</button>
-                            <?php if(isset($error_import_barcode) && !empty($error_import_barcode)){ ?>
-                                <button class="btn btn-warning" data-toggle="modal" data-target="#error_import_modal"><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;Import Error Occurs</button>
-                            <?php } ?>
-                            <button class="btn btn-danger" id="delete_po_btn" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete RO</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="clear:both;">
-                    <form action="<?php echo $data['current_url'];?>" method="post" id="form_order_search">
-                        @csrf
-                        <div class="col-md-12">
-                            <div style="display: inline-block;width:92%;">
-                                <input type="text" name="searchbox" value="<?php echo isset($data['searchbox']) ? $data['searchbox']: ''; ?>" class="form-control" placeholder="Search..." autocomplete="off">
-                            </div>
-                            <div style="display: inline-block;">
-                                &nbsp;&nbsp;<input type="submit" name="Filter" value="Search" class="btn btn-info">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <br>
+            
                 
                 <form action="" method="post" enctype="multipart/form-data" id="form-purchase-order">
                 
-                    <div class="table-responsive">
-                        <table id="purchase_order" class="table table-bordered table-hover">
+                    <div class="table-responsive col-xl-12 col-md-12">
+                      
+                        <table id="receiving_order" class="table table-hover" data-classes="table table-hover promotionview">
+                        
                             <thead>
-                                <tr>
-                                    <th style="width: 1px;" class="text-center"><input type="checkbox" id="main_checkbox" /></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_estatus'];?>">Status</a></th>
-                                    <th class="text-right"><a style="color: #fff;" href="<?php echo $data['sort_vponumber'];?>">PurchaseORD#</a></th>
-                                    <th class="text-left">Invoice#</th>
-                                    <th class="text-right sample">Total</th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vvendorname'];?>">Vendor Name</a></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vordertype'];?>">Order Type</a></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_dcreatedate'];?>">Date Created</a></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_dreceiveddate'];?>">Date Received</a></th>
-                                    <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th>
-                                    <th class="text-left">Action</th>
+                                <tr class="header-color">
+                                    <th style="width: 1px;" class="text-center no-filter-checkbox"><input type="checkbox" id="main_checkbox" /></th>
+                                    <th class="text-left text-uppercase" style="width: 155px;">&nbsp;&nbsp;Status
+                                      <div class="po-has-search">
+                                        <span class="fa fa-search form-control-feedback" style="width: 1.375rem;"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 0.275rem;">
+                                      </div>
+                                    </th>
+                                    <th class="text-left text-uppercase" style="width: 155px;">&nbsp;&nbsp;PurchaseORD#
+                                      <div class="po-has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH">
+                                      </div>
+                                    </th>
+                                    <th class="text-left text-uppercase" style="width: 155px;">&nbsp;&nbsp;Invoice#
+                                      <div class="po-has-search">
+                                        <span class="fa fa-search form-control-feedback" style="width: 1.375rem;"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 0.275rem;">
+                                      </div>
+                                    </th>
+                                    <th class="text-left text-uppercase sample" style="width: 155px;">&nbsp;&nbsp;Total
+                                      <div class="po-has-search">
+                                        <span class="fa fa-search form-control-feedback" style="width: 1.375rem;"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 0.275rem;">
+                                      </div>
+                                    </th>
+                                    <th class="text-left text-uppercase" style="width: 155px;">&nbsp;&nbsp;Vendor
+                                      <div class="po-has-search">
+                                        <span class="fa fa-search form-control-feedback" style="width: 1.375rem;"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 0.275rem;">
+                                      </div>
+                                    </th>
+                                    <th class="text-left text-uppercase" style="width: 155px ;">&nbsp;&nbsp;Order Type
+                                      <div class="po-has-search">
+                                        <span class="fa fa-search form-control-feedback" style="width: 1.375rem;"></span>
+                                        <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 0.275rem;">
+                                      </div>
+                                    </th>
+                                    <th class="text-left text-uppercase no-filter">Date Created</th>
+                                    {{-- <th class="text-left">Date Received</th> --}}
+                                    {{-- <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th> --}}
+                                    <th class="text-left text-uppercase no-filter">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php if ($receiving_orders) { ?>
-                                    <?php $purchase_order_row = 1;$i=0; $bg = '#fff';?>
-                                    <?php foreach ($receiving_orders as $purchase_order) { ?>
-                                        
-                                        <?php 
-                                            if($purchase_order['estatus'] == 'Close'){
-                                                $bg = '#FCEBCF';
-                                            } else {
-                                                $bg = '#fff';
-                                            } 
-                                        ?>
-                                        
-                                        <tr id="purchase_order-row<?php echo $purchase_order_row; ?>">
-                                            <td data-order="<?php echo $purchase_order['iroid']; ?>" class="text-center" style="background:<?php echo $bg; ?>">
-                                                <span style="display:none;"><?php echo $purchase_order['iroid']; ?></span>
-                                                <input type="checkbox" name="selected[]" id="purchase_order[<?php echo $purchase_order_row; ?>][select]"  value="<?php echo $purchase_order['iroid']; ?>" <?php if($purchase_order['estatus'] == 'Close'){?> disabled <?php } ?> />
-                                             </td>
-                                                
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['estatus']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-right" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['vponumber']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['vinvoiceno']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-right" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['nnettotal']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['vvendorname']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['vordertype']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['dcreatedate']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['dreceiveddate']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <span><?php echo $purchase_order['dlastupdate']; ?></span>
-                                            </td>
-                                            
-                                            <td class="text-left" style="background:<?php echo $bg; ?>">
-                                                <?php if($purchase_order['estatus'] == 'Close'){?>
-                                                    <a href="<?php echo $purchase_order['edit']; ?>" data-toggle="tooltip" title="View" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-eye"></i>&nbsp;&nbsp;View
-                                                    </a>
-                                                <?php } else {?>
-                                                    <a href="<?php echo $purchase_order['edit']; ?>" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit
-                                                    </a>
-                                                <?php } ?>
-                                            </td>
-                                        </tr>
-                                        <?php $purchase_order_row++; $i++;?>
-                                    <?php } ?>
-                                <?php } else { ?>
-                                    <tr>
-                                      <td colspan="7" class="text-center">Sorry no data found!</td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
+                        
+                        
                         </table>
+                    
                     </div>
                 </form>
-                <div class="row">
-                  {{$data['results']->links()}}
-                </div>
+                
             </div>
         </div>
     </div>
+  </section>
 </div>
 
 <!-- Modal -->
@@ -163,8 +116,8 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
+              <h4 class="modal-title text-center">Import Invoice</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title text-center">Import Invoice</h4>
             </div>
             <div class="modal-body">
                 <form action="<?php echo $data['import_invoice_new'];?>" method="post" enctype="multipart/form-data" id="form_import_invoice_new">
@@ -176,29 +129,14 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <span style="display:inline-block;width:8%;">File: </span> <span style="display:inline-block;width:85%;"><input type="file" name="import_invoice_file" id="import_edi_file" class="form-control" required></span>
+                                <span style="display:inline-block;width:15%;">File: </span> <span style="display:inline-block;width:75%;"><input type="file" name="import_invoice_file" id="import_edi_file" required></span>
                             </div>
                         </div>
-                        <!--<div class="col-md-12">
-                          <div class="form-group">
-                            <span style="display:inline-block;width:15%;">EDI Vendor: </span> <span style="display:inline-block;width:75%;">
-                            <select name="edi_predefined_vvendorid" class="form-control" id="edi_predefined_vvendors" required>
-                                <option></option>
-                              <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
-                                <?php foreach($data['vendors'] as $vendor){?>
-                                    <?php if($vendor['vcompanyname'] == 'ALLEN BROTHERS' || $vendor['vcompanyname'] == 'CORE MARK' || $vendor['vcompanyname'] == 'RESNICK' || $vendor['vcompanyname'] == 'FEDWAY' || $vendor['vcompanyname'] == 'fedway'){ ?>
-                                        <option value="<?php echo $vendor['isupplierid']; ?>"><?php echo $vendor['vcompanyname']; ?></option>
-                                    <?php }?>
-                                <?php } ?>
-                              <?php } ?>
-                            </select>
-                            </span>
-                          </div>
-                        </div>-->
+                        
                         <div class="col-md-12">
                           <div class="form-group">
                             <span style="display:inline-block;width:15%;">Vendor: </span> <span style="display:inline-block;width:75%;">
-                            <select name="vvendorid" class="form-control" id="vvendors" required>
+                            <select name="vvendorid" class="form-control adjustment-fields" id="vvendors" required>
                                 <option></option>
                               <?php if(isset($data['vendors']) && count($data['vendors']) > 0){?>
                                 <?php foreach($data['vendors'] as $vendor){?>
@@ -210,37 +148,11 @@
                           </div>
                         </div>
                         <div class="col-md-12" id="display_vendor_options">
-                            <!--<div class="col-md-offset-1 form-group checkdigitOptions">
-                                <div class="floatBlock">
-                                    <label for="remove_check_digit"> <input id="remove_check_digit" name="check_digit" type="radio" value="without_check_digit" checked /> Without Check Digit </label>
-                                </div>
-                                
-                                <div class="floatBlock">
-                                    <label for="add_check_digit"> <input id="add_check_digit" name="check_digit" type="radio" value="with_check_digit" />  With Check Digit  </label>
-                                </div>
-                                
-                                <div class="floatBlock">
-                                    <label for="remove_first_digit"> <input id="remove_first_digit" name="check_digit" type="radio" value="without_first_digit" /> Without First Digit </label>
-                                </div>
-                                
-                                 <div class="floatBlock">
-                                    <label for="upcAtoEconversion"> <input id="upc_conversion_a_e" name="check_digit" type="radio" value="upc_conversion" /> Upc A to Upc E conversion </label>
-                                </div> 
-                            </div> -->
-                          <!--<div class="form-group">
-                                <span>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="digit" value="add_check_dgigit">Add Check Digit 
-                                    </label>
-                                    
-                                    <input type="radio" name="digit" value="remove_check_dgigit"> Remove Check Digit
-                                    <input type="radio" name="digit" value="remove_first_dgigit"> Remove First Digit 
-                                </span>
-                          </div>-->
+                            
                         </div>
                         <div class="col-md-12 text-center">
                           <div class="form-group">
-                            <input type="submit" class="btn btn-success" name="import_invoice" value="Import Invoice">&nbsp;<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success buttons_menu" name="import_invoice" value="Import Invoice">&nbsp;<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                           </div>
                         </div>
                     </div>
@@ -253,13 +165,25 @@
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 <style>
     .disabled, #item_ellipsis{
         pointer-events:none;
     }
 </style>
+
+<style>
+  .no-filter{
+      padding-bottom: 45px !important;
+  }
+
+  .no-filter-checkbox{
+      padding-bottom: 20px !important;
+  }
+</style>
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">
 
 <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
 <script type="text/javascript">
@@ -299,7 +223,7 @@
             // alert(response.error);
             bootbox.alert({ 
               size: 'small',
-              title: "Attention", 
+              title: "  ", 
               message: response.error, 
               callback: function(){}
             });
@@ -325,7 +249,7 @@
             // alert(response.error);
             bootbox.alert({ 
               size: 'small',
-              title: "Attention", 
+              title: "  ", 
               message: response.error, 
               callback: function(){}
             });
@@ -362,29 +286,29 @@
   <div class="modal-dialog modal-lg">
 
     <!-- Modal content-->
-    <div class="modal-content">
+    <div class="modal-content bg-light">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Import Missing Items</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         <form action="<?php echo $data['import_missing_items'];?>" method="post" enctype="multipart/form-data" id="form_import_missing_items">
             @csrf
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-8">
               <input name="itemsort_search" id="itemsort_search" placeholder="Search Item..." type="text" class="form-control">
             </div>
-            <div class="col-md-1 text-right">
-              <button class="btn btn-success" id="import_missing_item_btn">Import Items</button>
+            <div class="col-md-3 text-right">
+              <button class="btn btn-success basic-button-small  header-color" id="import_missing_item_btn">Import Items</button>
             </div>
           </div><br>
           <div class="row">
             <div class="col-md-12">
               <div class="table-responsive" style="height:450px;">
                 <?php if(isset($missing_items) && count($missing_items) > 0){?>
-                  <table class="table table-bordered tabler-hover" id="missing_item_table">
+                  <table class="table tabler-hover promotionview" data-classes="table table-hover promotionview" id="missing_item_table">
                     <thead>
-                      <tr>
+                      <tr class="header-color">
                         <th style="width: 1px; color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_missing_items\']').prop('checked', this.checked);" /></th>
                         <th class="text-left">SKU#</th>
                         <th class="text-left">Item Name</th>
@@ -419,7 +343,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default headerwhite basic-button-small" data-dismiss="modal" >Cancel</button>
       </div>
     </div>
   </div>
@@ -505,7 +429,7 @@
       // alert('Please select items for import!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please select items for import!", 
         callback: function(){}
       });
@@ -572,9 +496,9 @@
     $("div#divLoading").addClass('show');
   });
 
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
+  // $(window).load(function() {
+  //   $("div#divLoading").removeClass('show');
+  // });
 </script>
 
 <script type="text/javascript">
@@ -596,7 +520,7 @@
     if($("input[name='selected[]']:checked").length == 0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: 'Please Select PO to Delete!', 
         callback: function(){}
       });
@@ -799,6 +723,147 @@
     	justify-content: flex-start;
     	break-before: always;
     }
+
+    .edit_btn_rotate{
+      line-height: 0.5;
+      border-radius: 6px;
+    }
+    
   </style>
+
+<script>
+  var url = "<?php echo $data['current_url'];?>";
+
+  $('#receiving_order thead tr th').each( function (i) {
+      
+      $( this ).on( 'keyup', '.table-heading-fields', function () {
+
+            var self = this;
+            if ( table.column(i).search() !== self.value ) {
+                
+                
+                table
+                    .column(i)
+                    .search( self.value )
+                    .draw();
+                    
+                $("div#divLoading").addClass('show');
+                
+            }
+      });
+      
+  });
+
+  
+
+  var showPaginationPrevNextButtons = false;
+  var table =   $("#receiving_order").DataTable({
+      "bSort": false,
+      // "scrollY":"300px",
+      // "autoWidth": true,
+      "fixedHeader": true,
+      "processing": true,
+      "iDisplayLength": 20,
+      "serverSide": true,
+      "bLengthChange": false,
+      "aoColumnDefs": [
+          { "sWidth": "190px", "aTargets": [ 7 ] },
+          
+      ],
+      //"autoWidth": true,
+
+      "language": {
+          search: "_INPUT_",
+          searchPlaceholder: "Search..."
+      },
+      // "fnPreDrawCallback": function( oSettings ) {
+      
+      //     main_checkbox = $('#main_checkbox').is(":checked");
+  
+      // },
+      "dom": 't<"bottom col-md-12 row"<"col-md-3"i><"col-md-9"p>>',
+      "ajax": {
+      url: url,
+      headers: {
+              'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+      },
+      "data": function(d){
+          d["m_check"] = $('#main_checkbox').is(":checked");
+          
+      },
+      type: 'POST',
+      "dataSrc": function ( json ) {
+              
+              if(json.data.length != 0){
+              $(".bottom").show();  
+              
+              } else {
+              $(".bottom").hide(); 
+              
+              }
+              
+              return json.data;
+          } 
+      },
+      
+      columns :  [
+                  {
+                      data: "iroid", render: function(data, type, row){
+                          
+                          return $("<input>").attr({
+                                  // checked: !uncheckedBoxes[data],
+                                  type: 'checkbox',
+                                  class: "iroid",
+                                  value: data,
+                                  name: "selected[]",
+                                  "data-order": data,
+                          })[0].outerHTML;
+                          
+                      }
+                  },
+                  { "data": "estatus"},
+                  
+                  { "data": "vponumber"},
+                  { "data": "vinvoiceno"},
+                  { "data": "nnettotal"},
+                  { "data": "vvendorname"},
+                  {"data": "vordertype"},
+                  {"data": "dcreatedate"},
+                  
+                  { "data": "view_edit", render: function(data, type, row){
+                          return "<a href="+data+" data-toggle='tooltip' title='View' class='btn btn-sm btn-info edit_btn_rotate header-color ' ><i class='fa fa-eye'></i>&nbsp;&nbsp;View</a>";
+                    }
+                },
+                  
+          ],
+          rowCallback: function(row, data, index){
+              
+      },
+      fnDrawCallback : function() {
+              if ($(this).find('tbody tr').length<=1) {
+                  $(this).find('.dataTables_empty').hide();
+              }
+              
+              // $(this).removeClass('promotionview');
+              $(this).addClass('promotionview');
+              console.log("check")
+      }
+  }).on('draw', function(){
+              if($('#main_checkbox').prop("checked") == true){
+                  
+                  $('.iitemid').prop('checked', true);
+              } else{ 
+                  $('.iitemid').prop('checked', false);   
+              }
+              // console.log($(this).find('tbody tr .iitemid').length);
+          if ($(this).find('tbody tr .iitemid').length>0) {
+              $('#buttonEditMultipleItems').prop('disabled', false);
+          }
+          $("div#divLoading").removeClass('show');
+          
+  });
+
+  $("#receiving_order_paginate").addClass("pull-right");
+</script>
   
 @endsection

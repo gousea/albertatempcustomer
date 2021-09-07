@@ -1,20 +1,27 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title', 'Items')
 
 @section('main-content')
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      
-      <ul class="breadcrumb">
-        @foreach ($data['breadcrumbs'] as $breadcrumb)
-        <li><a href="{{ $breadcrumb['href'] }}">{{ $breadcrumb['text'] }} </a></li>
-        @endforeach
-      </ul>
+  
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase"> Clone Item</span>
+            </div>
+            <div class="nav-submenu">
+              <button class="btn btn-gray headerblack  buttons_menu save_btn_rotate formsubmit">Save</button>
+              
+              <a type="submit" id="cancel_button" href="{{ $data['cancel'] }}" data-toggle="tooltip" title="Cancel" class="btn btn-danger buttonred buttons_menu basic-button-small cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+              
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
-  </div>
-  <div class="container-fluid">
+  </nav>
+
+  <div class="container-fluid section-content">
     @if ($data['error_warning'])
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -26,30 +33,67 @@
     </div>
     @endif
     <div class="panel panel-default">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i>Clone Item</h3>
-        
-      </div>
-      <div class="panel-body">
+      
+      <div class="panel-body padding-left-right">
 
-        <div class="row" style="padding-bottom: 9px;float: right;">
-          <div class="col-md-12">
-            <div class="">
-                <a id="cancel_button" href="{{ $data['cancel'] }}" data-toggle="tooltip" title="Cancel" class="btn btn-default cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
-            </div>
+        <div class="mytextdiv">
+          <div class="mytexttitle font-weight-bold text-uppercase">
+              TAB
           </div>
+          <div class="divider font-weight-bold"></div>
         </div>
-        <div class="clearfix"></div>
 
-        <ul class="nav nav-tabs responsive" id="myTab">
-          <li class="active"><a href="#item_tab" data-toggle="tab">Item</a></li>
-          <li><a href="#alias_code_tab" data-toggle="tab" >Add Alias Code</a></li>
-          <li <?php if(isset($data['vitemtype']) && $data['vitemtype'] != 'Lot Matrix'){ ?> style="pointer-events:none;" <?php } ?> ><a <?php if(isset($data['vitemtype']) && $data['vitemtype'] != 'Lot Matrix'){ ?> style="background:#ccc;" <?php } ?> href="#lot_matrix_tab" data-toggle="tab">Lot Matrix</a></li>
-          <li><a href="#vendor_tab" data-toggle="tab" >Vendor</a></li>
-          <!--<li id="slab_price_tab"><a href="#slab_price_tab" data-toggle="tab" >Slab Price</a></li> -->
-        </ul>
+        <div class="py-3">
+          <div class="row">
+              <div class="col-md-12 mx-auto">
+                  
+                  <div class="form-group row">
+                      <div class="col-12 col-md-2 col-sm-2 col-lg-2 p-form">
+                        
+                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                        </div>
 
-        <div class="tab-content responsive">
+                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                            
+                            <input type="checkbox" name="for_general" maxlength="30" id="item_tab_li" checked />
+                            <label for="inputFirstname" class="p-2 text-uppercase">Item</label>
+                        </div>
+                          
+                      </div>
+                      
+                      <div class="col-12 col-md-2 col-sm-2 col-lg-2 p-form">
+
+                        <div class="col-12 col-md-12 col-sm-12 col-lg-12">
+                            
+                            <input type="checkbox" name="for_item" maxlength="30" id="alias_code_tab_li" <?php if(!isset($data['iitemid']) || empty($data['iitemid'])){?> style="pointer-events:none;" <?php } ?> />
+                            <label for="inputFirstname" class="p-2 text-uppercase">Add Alias Code</label>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-md-2 col-sm-2 col-lg-2 p-form">
+
+                        <div class="col-12 col-md-12 col-sm-12 col-lg-12">
+                            <input type="checkbox" name="for_item" maxlength="30" id="lot_matrix_tab_li" <?php if(isset($data['vitemtype']) && $data['vitemtype'] != 'Lot Matrix'){ ?> style="pointer-events:none;" <?php } ?> />
+                            <label for="inputFirstname" class="p-2 text-uppercase">Lot Matrix</label>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-md-2 col-sm-2 col-lg-2 p-form">
+
+                        <div class="col-12 col-md-12 col-sm-12 col-lg-12">
+                            <input type="checkbox" name="for_item" maxlength="30" id="vendor_tab_li" <?php if(!isset($data['iitemid']) || empty($data['iitemid'])){?> style="pointer-events:none;" <?php } ?> />
+                            <label for="inputFirstname" class="p-2 text-uppercase">Vendor</label>
+                        </div>
+                      </div>
+
+                  </div>
+                  
+              </div>
+          </div>
+
+        </div>
+
+        <div class="responsive">
           <div class="tab-pane active" id="item_tab">
             <form action="{{ $data['action'] }}" method="post" enctype="multipart/form-data" id="form-item1" class="form-horizontal">
                 @csrf
@@ -69,730 +113,875 @@
                 <?php if(isset($data['parentmasterid']) && isset($data['edit_page'])){?>
                     <input type="hidden" name="parentmasterid" value="<?php echo !empty($data['parentmasterid']) ? $data['parentmasterid'] : 0; ?>">
                 <?php } ?>
-          <div class="panel panel-default" style="border-top:none;margin-bottom:0px;">
-            <div class="panel-body" style="padding: 10px 10px 0px 10px;">
-                <h4><b>Add Item</b></h4>&nbsp;&nbsp;
-            </div>
-          </div>
-          <div style="background:#fff;padding-top:1%;padding-right:1%;">
-            <br>
-            <div class="row" style="margin-left:-50px;">
-                      
-                <div class="col-md-6 required">
-                    <div class="form-group">
-                      <label class="col-md-4 control-label" for="input-customer">Item Type</label>
-                      <div class="col-md-8">
-                        <select name="vitemtype" class="form-control">
-                          <?php if(isset($data['item_types']) && count($data['item_types']) > 0){?>
-                            <?php foreach($data['item_types'] as $item_type){ ?>
-                              <?php if(isset($data['vitemtype']) && $data['vitemtype'] == $item_type){?>
-                                <option value="<?php echo $item_type;?>" selected="selected"><?php echo $item_type;?></option>
-                              <?php }else{ ?>
-                                <option value="<?php echo $item_type;?>"><?php echo $item_type;?></option>
-                              <?php } ?>
-                            <?php } ?>
-                          <?php } ?>
-                        </select>
-                      </div>
-                    </div>
-                </div>
               
-                <div class="col-md-6 notLottery">
-                    <div class="form-group required">
-                        <label class="col-md-4 control-label" for="input-state">Cost</label>
-                        <div class="col-md-8">
-                            
-                            <input type="text" name="new_costprice" style="display: inline-block;width: 87%;" value="<?php echo isset($data['new_costprice']) ? number_format((float)$data['new_costprice'], 2) : ''; ?>" placeholder="New Cost" id="input-new_cost" class="form-control"/>
-                            
-                            <input type='hidden' id='input-unitcost' value=''>
-                            <button class="btn btn-sm btn-info" id="add_cost" style="display: inline-block;width: 10%" title="Add Costs">..</button>
-                            <input type="hidden" id="avgcost_value" name="dcostprice" value="<?php echo isset($data['dcostprice']) ? $data['dcostprice'] : ''; ?>" placeholder="Avg. Case Cost" class="form-control" autocomplete="off"/> 
-                            <input type="hidden" id="lastcost_value" name="last_costprice" value="<?php echo isset($data['last_costprice']) ? $data['last_costprice'] : ''; ?>" placeholder="Last Cost" class="form-control" readonly/>
-                                
-                            <?php if (isset($data['error_new_costprice'])) { ?>
-                                <div class="text-danger"><?php echo $data['error_new_costprice']; ?></div>
-                            <?php } ?>
-                      </div>
-                    </div>
+                <div class="mytextdiv">
+                  <div class="mytexttitle font-weight-bold text-uppercase">
+                      Item Info
+                  </div>
+                  <div class="divider font-weight-bold"></div>
                 </div>
-              
-            </div>
-            
-            <div class="row" style="margin-left:-50px;">
-                <div class="col-md-6 required">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="input-account-number">SKU</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="vbarcode" maxlength="13" value="<?php echo isset($data['vbarcode']) ? $data['vbarcode'] : ''; ?>" placeholder="SKU" id="input-sku" class="form-control" <?php if(isset($data['vbarcode']) && isset($data['edit_page'])){?>readonly <?php } ?> autocomplete="off"/>
-                            <?php if (isset($data['error_vbarcode'])) { ?>
-                                <div class="text-danger"><?php echo $data['error_vbarcode']; ?></div>
-                            <?php } ?>
-                            <!--<div class="text-danger" id="input_sku_error"></div>-->
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 notLottery">
-                    <div class="form-group required">
-                        <label class="col-sm-4 control-label" for="input-first-name">Price</label>
-                        <div class="col-sm-8">
-                            
-                            <input type="text" style="display: inline-block;width: 87%;" id="input-Selling_Price" name="dunitprice" value="<?php echo isset($data['dunitprice']) ? $data['dunitprice'] : ''; ?>" placeholder="Selling Price" class="form-control" autocomplete="off"/>
-                            <button class="btn btn-sm btn-info" id="add_pricelevel" title="Add Description" style="display: inline-block;width: 10%">..</button>
-                            <input type="hidden" id="nlevel2_value" name="nlevel2" value="<?php echo isset($data['nlevel2']) ? $data['nlevel2'] : ''; ?>" class="form-control" />
-                            <input type="hidden" id="nlevel3_value" name="nlevel3" value="<?php echo isset($data['nlevel3']) ? $data['nlevel3'] : ''; ?>" class="form-control" />
-                            <input type="hidden" id="nlevel4_value" name="nlevel4" value="<?php echo isset($data['nlevel4']) ? $data['nlevel4'] : ''; ?>" class="form-control"/>
-                            <?php if (isset($data['error_dunitprice'])) { ?>
-                                <div class="text-danger"><?php echo $data['error_dunitprice']; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="row notLottery" style="margin-left:-50px;">
-                
-                <div class="col-md-6">
-                    <div class="form-group required">
-                        <label class="col-sm-4 control-label" for="input-first-name">Item Name</label>
-                        <div class="col-sm-8">
-                            
-                            <input type="text" style="display: inline-block;width: 88%;" name="vitemname" maxlength="100" value="<?php echo isset($data['vitemname']) ? $data['vitemname'] : ''; ?>" placeholder="Item Name" id="input_itemname" class="form-control" />
-                            <button class="btn btn-sm btn-info" title="Add Description" id="add_description" style="display: inline-block;width: 10%">..</button>
-                            <input type="hidden" id="description_value" name="vdescription" maxlength="100" value="<?php echo isset($data['vdescription']) ? $data['vdescription'] : ''; ?>" placeholder="Description" >
-                            <!--<?php if(isset($data['itemparentitems']) && (count($data['itemparentitems']) > 0)){ ?>
-                                <div style="margin-top:10px;"><b>Parent:</b> <?php echo $data['itemparentitems'][0]->vitemname;?></div>
-                            <?php } ?>-->
-                            <?php if (isset($data['error_vitemname'])) { ?>
-                                <div class="text-danger"><?php echo $data['error_vitemname']; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="form-group" style="border-top:none;">
-                      <label class="col-sm-4 control-label" for="input-phone">Gross Profit(%) </label>
-                        <?php 
-                            if(isset($data['new_costprice']) && $data['new_costprice'] > 0 && isset($data['dunitprice'])){    
-                                $nunit_cost = (int)$data['npack'] !== 0?(int)($data['new_costprice']/$data['npack']):0;
-                                $nunit_cost = round($nunit_cost, 2);
-                                if(isset($ndiscountper)){
-                                    $percent = $data['dunitprice'] - ($nunit_cost-$ndiscountper);
-                                }else{
-                                    $percent = $data['dunitprice'] - $nunit_cost;
-                                }
-                                $percent = $percent > 0 ? $percent : 0;
-                                
-                                if($percent > 0){
-                                    $percent = $percent;
-                                }else{
-                                    $percent = 0;
-                                }
-                              
-                                if($data['dunitprice'] == 0 || $data['dunitprice'] == '0.0000'){
-                                    $dunitprice = 1;
-                                }else{
-                                    $dunitprice = $data['dunitprice'];
-                                }
-                                $percent = (($percent/$dunitprice) * 100);
-                                $percent = number_format((float)$percent, 2, '.', '');
-                            }else{
-                                $percent = 0.00;
-                            }
-                        ?>
-                        <div class="col-md-8">
-                            <input type="text" style="display: inline-block;width: 87%;" name="gross_profit" value="<?php echo $percent;?>" placeholder="" id="input-profit-margin" class="form-control" readonly />
-                            <button class="btn btn-sm btn-info" id="selling_price_calculation_btn" title="Calculate Selling Price" style="display: inline-block;width: 10%">..</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row notLottery" style="margin-left:-50px;">
-                <div class="col-md-6">
-                    <div class="form-group required">
-                        <label class="col-sm-4 control-label" for="input-address">Unit</label>
-                        <div class="col-sm-8">
-                            <select name="vunitcode" class="form-control">
-                                <?php if(isset($data['units']) && count($data['units']) > 0){?>
-                                    <?php foreach($data['units'] as $unit){ ?>
-                                        <?php if(isset($vunitcode) && $vunitcode == $unit['vunitcode']){?>
-                                          <option value="<?php echo $unit['vunitcode'];?>" selected="selected"><?php echo $unit['vunitname'];?></option>
-                                        <?php } else { ?>
-                                          <option value="<?php echo $unit['vunitcode'];?>"><?php echo $unit['vunitname'];?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                <?php } ?>
-                            </select>
-                            <?php if (isset($data['error_vunitcode'])) { ?>
-                            <div class="text-danger"><?php echo $data['error_vunitcode']; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 ">
-                    <div class="form-group"><!--- Discount Price changes to Gross Markup on 03-03-20 ---->
-                        <label class="col-sm-4 control-label" for="input-account-number">Gross Markup</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="discount_price" maxlength="50" value="<?php echo isset($data['bydown']) ? $data['bydown'] : ''; ?>" placeholder="Gross Markup" id="input-discount_price" class="form-control" <?php if(isset($data['bydown']) && isset($data['edit_page'])){?>readonly <?php } ?> readonly/>
-        
-                        </div>
-                    </div>
-                </div>
-              
-            </div>
-            
-            <div class="row notLottery" style="margin-left:-50px;">
-                
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="input-phone">Taxable</label>
-                        <div class="col-md-8">                                   
-                            <select name="vtax" class="form-control">
-                                <?php if(isset($data['all_taxes']) && count($data['all_taxes']) > 0 ) { ?>
-                                    <?php foreach($data['all_taxes'] as $tax){ ?>
-                                        <?php if(isset($data['vtax']) && $data['vtax'] == $tax['value']) { ?>
-                                            <option value="<?php echo $tax['value'] ?>" selected="selected" ><?php echo $tax['name'] ?></option>
-                                        <?php } else { ?>
-                                            <option value="<?php echo $tax['value'] ?>" ><?php echo $tax['name'] ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="input-account-number">Buydown</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="ndiscountper" value="<?php echo isset($buydown) ? $buydown : 0; ?>" placeholder="Buydown" id="input_buydown; ?>" class="form-control" readonly/>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="row notLottery" style="margin-left:-50px;">
-                
-                <div class="col-md-6">
-                    <div class="form-group required">
-                        <label class="col-md-4 control-label" for="input-state">Department</label>
-                        <div class="col-md-8">
-                        <span style="display: inline-block;width: 87%;">
-                            <select name="vdepcode" class="form-control" id="dept_code" style="display: inline-block;width: 87% !important;">
-                                
-                            <option value="">--Select Department--</option>
-                              <?php if(isset($data['departments']) && count($data['departments']) > 0){?>
-                                <?php foreach($data['departments'] as $department){ ?>
-                                <?php if(isset($data['vdepcode']) && $data['vdepcode'] == $department['vdepcode']){?>
-                                  <option value="<?php echo $department['vdepcode'];?>" selected="selected"><?php echo $department['vdepartmentname'];?></option>
-                                <?php } else { ?>
-                                  <option value="<?php echo $department['vdepcode'];?>"><?php echo $department['vdepartmentname'];?></option>
-                                <?php } ?>
-                                <?php } ?>
-                              <?php } ?>
-                            </select>
-                        </span>&nbsp;
-                        <!--<span style="display: inline-block;width: 10%" title="Add Department" id="add_new_department"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
-                        <button class="btn btn-success btn-sm" id="add_new_department" style="display: inline-block;width: 10%;"><i class="fa fa-plus-square" aria-hidden="true" ></i></button>
-                        <?php if (isset($data['error_vdepcode'])) { ?>
-                          <div class="text-danger"><?php echo $data['error_vdepcode']; ?></div>
-                        <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="input-country">Qty on Hand</label>
-                        <div class="col-sm-8">
-                            
-                            <?php if(isset($data['edit_page'])){?>
-                                <?php
-                                
-                                if($data['iqtyonhand'] != 0 && $data['iqtyonhand']!='' && $data['npack']!=0){
-                                  $quotient = (int)($data['iqtyonhand'] / $data['npack']);
-                                  $remainder = $iqtyonhand % $data['npack'];
-                                    
-                                  $qty_on_hand = 'Case: '.$quotient .' ['.$remainder.']';
-                                }else{
-                                  $qty_on_hand = 'Case: 0 [0]';
-                                }
-                                ?>
-                                <input type="text" value="<?php echo isset($data['QOH']) ? $data['QOH'] : ''; ?>" class="form-control" readonly>
-                                <input type="hidden" name="iqtyonhand" value="<?php echo isset($data['iqtyonhand']) ? $data['iqtyonhand'] : ''; ?>" class="form-control" placeholder="Qty on Hand" <?php if((isset($data['isparentchild']) && $data['isparentchild'] == 1) || (isset($data['edit_page']))){?> readonly <?php } ?>  autocomplete="off"/>
-                            <?php }else{?>
-                                <input type="text" name="iqtyonhand" value="<?php echo isset($data['iqtyonhand']) ? $data['iqtyonhand'] : ''; ?>" class="form-control" placeholder="Qty on Hand"  autocomplete="off"/>
-                            <?php }?>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="row notLottery" style="margin-left:-50px;">
-                
-                <div class="col-md-6" >
-                    <div class="form-group required">
-                        <label class="col-sm-4 control-label" for="input-zip">Category</label>
-                        <div class="col-sm-8">
-                            <span style="display: inline-block;width: 87%;">
-                                <select name="vcategorycode" class="form-control" id="category_code"
-                                    <?php
-                                        if(!isset($data['vcategorycode'])){
-                                            echo "disabled='true'";
-                                        }
-                                    
-                                    ?>
-                                >
-                                <option value="">--Select Category--</option>
-                                
-                                    <?php if(isset($data['categories']) && count($data['categories']) > 0 && isset($data['vcategorycode'])){?>
-                                        <?php foreach($data['categories'] as $category){ ?>
-                                            <?php echo "DB: ".$data['vcategorycode']." Current: ".$category['vcategorycode']; ?>
-                                            <?php if($data['vcategorycode'] == $category['vcategorycode']){ echo "DB: ".$data['vcategorycode']." Current: ".$category['vcategorycode']; ?>
-                                                <option value="<?php echo $category['vcategorycode'];?>" selected="selected"><?php echo $category['vcategoryname'];?></option>
-                                            <?php } else { ?>
-                                                <option value="<?php echo $category['vcategorycode'];?>"><?php echo $category['vcategoryname'];?></option>
-                                            <?php } ?>
-                                        <?php } ?>
-                                    <?php } ?>
-                                  
-                                </select>
-                            </span>&nbsp;
-                            <!--<span style="display: inline-block;width: 10%" title="Add Category" id="add_new_category"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
-                            <button class="btn btn-success btn-sm" style="display: inline-block;width: 10%" title="Add Category" id="add_new_category"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
-                            <?php if (isset($data['error_vcategorycode'])) { ?>
-                              <div class="text-danger"><?php echo $data['error_vcategorycode']; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-                <?php 
-                    if(isset($data['nsellunit']) && $data['nsellunit'] != ''){
-                      $nsellunit = $data['nsellunit'];
-                    }else{
-                      $nsellunit = 1;
-                    }
-                ?>
-                <div class="col-md-6">
-                    <div class="form-group" style="border-top:none;">
-                      <label class="col-sm-4 control-label" for="input-phone">Selling Unit</label>
-                      <div class="col-md-8">
-                        <input type="text" name="nsellunit" value="<?php echo $nsellunit; ?>" placeholder="Selling Unit" id="input-sellingunit" class="form-control" <?php if(isset($data['vitemtype']) && $data['vitemtype'] == 'Lot Matrix'){?> readonly <?php } ?> />
-                      </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="row notLottery" style="margin-left:-50px;">
-                
-                <! --Sub-category-- ->
-                <div class="col-md-6">
-                    <div class="form-group ">
-                      <label class="col-sm-4 control-label" for="input-zip">Sub Category</label>
-                      <div class="col-sm-8">
-                        <span style="display: inline-block;width: 87%;">
-                            <select name="subcat_id" class="form-control" id="subcat_id"
-                                <?php
-                                    if(!isset($data['vcategorycode'])){
-                                        echo "disabled='true'";
-                                    }
-                                
-                                ?>
-                            >
-                            <option value="">--Select Sub Category--</option>
-                            
-                                <?php if(isset($data['subcategories']) && count($data['subcategories']) > 0 && isset($data['subcat_id'])){?>
-                                    <?php foreach($data['subcategories'] as $subcategory){ ?>
-                                    
-                                        <?php if($data['subcat_id'] == $subcategory['subcat_id']){ ?>
-                                            <option value="<?php echo $subcategory['subcat_id'];?>" selected="selected"><?php echo $subcategory['subcat_name'];?></option>
-                                        <?php } else { ?>
-                                            <option value="<?php echo $subcategory['subcat_id'];?>"><?php echo $subcategory['subcat_name'];?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                <?php } ?>
-                              
-                            </select>
-                        </span>&nbsp;
-                        <!--<span style="display: inline-block;width: 10%" title="Add Sub Category" id="add_new_subcategory"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
-                        <button class="btn btn-success btn-sm" style="display: inline-block;width: 10%" title="Add Sub Category" id="add_new_subcategory"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
-                        <?php if (isset($data['error_subcat_id'])) { ?>
-                          <div class="text-danger"><?php echo $data['error_subcat_id']; ?></div>
-                        <?php } ?>
-                      </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label" for="input-phone">Unit Per Case</label>
-                      <?php 
-                        if(isset($data['npack']) && $data['npack'] != ''){
-                          $npack = $data['npack'];
-                        }else{
-                          $npack = 1;
-                        }
-                      ?>
-                      <div class="col-md-8">
-                        <input type="text" name="npack" value="<?php echo $npack; ?>" placeholder="Unit Per Case" id="input-unitpercase" class="form-control" />
-                      </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="row notLottery" style="margin-left:-50px;">
-                
-                <! --Supplier-- >
-                <div class="col-md-6">
-                    <div class="form-group required">
-                      <label class="col-sm-4 control-label" for="input-city">Supplier</label>
-                      <div class="col-sm-8">
-                        <span style="display: inline-block;width: 87%;">
-                            <select name="vsuppliercode" class="form-control">
-                            <option value="">--Select Supplier--</option>
-                              <?php if(isset($data['suppliers']) && count($data['suppliers']) > 0){?>
-                                <?php foreach($data['suppliers'] as $supplier){ ?>
-                                <?php if(isset($data['vsuppliercode']) && $data['vsuppliercode'] == $supplier['vsuppliercode']){?>
-                                  <option value="<?php echo $supplier['vsuppliercode'];?>" selected="selected"><?php echo $supplier['vcompanyname'];?></option>
-                                <?php } else { ?>
-                                  <option value="<?php echo $supplier['vsuppliercode'];?>"><?php echo $supplier['vcompanyname'];?></option>
-                                <?php } ?>
-                                <?php } ?>
-                              <?php } ?>
-                            </select>
-                        </span>&nbsp;
-                        <!--<span style="display: inline-block;width: 10%" title="Add Supplier" id="add_new_supplier"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
-                        <button class="btn btn-success btn-sm" style="display: inline-block;width: 10%" title="Add Supplier" id="add_new_supplier"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
-                        <?php if (isset($data['error_vsuppliercode'])) { ?>
-                            <div class="text-danger"><?php echo $data['error_vsuppliercode']; ?></div>
-                          <?php } ?>
-                      </div>
-                    </div>
-                </div>
-                
-                <?php if(isset($data['itemparentitems'][0])) { 
-                
-                    $Parent_barcode = $data['itemparentitems'][0]->vitemname.' ['.$data['itemparentitems'][0]->vbarcode.']';
-                }
-                ?>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="input-account-number">Parent Barcode</label>
-                        <div class="col-sm-8 small">
-                            <input type="text" name="Parent_barcode" maxlength="50" value="<?php echo isset($data['Parent_barcode']) ? $data['Parent_barcode'] : ''; ?>" placeholder="Parent Barcode" class="form-control small" style="font-size:12px;" readonly >
-                            <?php if (isset($data['error_bydown'])) { ?>
-                                <div class="text-danger"><?php echo $data['error_bydown']; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-           
-            <div class="row notLottery" style="margin-left:-50px;">
-               
-               <! --SIZE- ->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="input-country">Size</label>
-                        <div class="col-sm-8">
-                            <span style="display: inline-block;width: 87%;">
-                                <select name="vsize" class="form-control">
-                                <option value="">--Select Size--</option>
-                                  <?php if(isset($data['sizes']) && count($data['sizes']) > 0){?>
-                                    <?php foreach($data['sizes'] as $size){ ?>
-                                    <?php if(isset($data['vsize']) && $data['vsize'] == $size['vsize']){ ?>
-                                      <option value="<?php echo $size['vsize'];?>" selected="selected"><?php echo $size['vsize'];?></option>
-                                    <?php } else { ?>
-                                      <option value="<?php echo $size['vsize'];?>"><?php echo $size['vsize'];?></option>
-                                    <?php } ?>
-                                    <?php } ?>
-                                  <?php } ?>
-                                </select>
-                            </span>&nbsp;
-                        
-                        <button class="btn btn-success btn-sm" style="display: inline-block;width: 10%" title="Add Size" id="add_new_size"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label" for="input-country">Bottle Deposit</label>
-                      <div class="col-md-8">
-                        <input name="nbottledepositamt" id="nbottledepositamt" value="<?php echo isset($data['nbottledepositamt']) ? $data['nbottledepositamt'] : '0.00'; ?>" type="text" class="form-control">
-                      </div>
-                    </div>
-               </div>
-               
-            </div>
-           
-            <div class="row notLottery" style="margin-left:-50px;">
-               
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="input-city">Manufacturer</label>
-                        <div class="col-sm-8">
-                            <select name="manufacturer_id" class="form-control">
-                            <option value="">--Select Manufacturer--</option>
-                              <?php if(isset($data['manufacturers']) && count($data['manufacturers']) > 0){?>
-                                <?php foreach($data['manufacturers'] as $manufacturer){ ?>
-                                <?php if(isset($data['manufacturer_id']) && $data['manufacturer_id'] == $manufacturer['mfr_id']){?>
-                                  <option value="<?php echo $manufacturer['mfr_id'];?>" selected="selected"><?php echo $manufacturer['mfr_name'];?></option>
-                                <?php } else { ?>
-                                  <option value="<?php echo $manufacturer['mfr_id'];?>"><?php echo $manufacturer['mfr_name'];?></option>
-                                <?php } ?>
-                                <?php } ?>
-                              <?php } ?>
-                            </select>
-                        
-                        <?php if (isset($data['error_vsuppliercode'])) { ?>
-                            <div class="text-danger"><?php echo $data['error_vsuppliercode']; ?></div>
-                          <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="form-group" style="border-top:none;">
-                        <label class="col-sm-4 control-label" for="input-phone">Food Item</label>
-                        <div class="col-md-8">
-                            <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
-                              <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
-                                <label class="radio-inline">
-                                  <input type="radio" name="vfooditem" value="<?php echo $k;?>" <?php if($data['vfooditem'] == $k) echo "checked"; ?>><?php echo $array_y_n;?>
-                                </label>
-                              <?php } ?>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-               
-            </div>
-           
-            <div class="row notLottery" style="margin-left:-50px;">
-               
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label" for="input-phone"><?php echo "Promotion"; ?></label>
-                      <div class="col-sm-8">
-                        <select name="itemPromotionid" class="form-control">
-                        <option value="">--Select promotion--</option>
-                          <?php if(isset($data['itemPromotion']) && count($data['itemPromotion']) > 0){?>
-                            <?php foreach($data['itemPromotion'] as $itemPromo){ ?>
-                            
-                            <?php if(isset($prom_id) && $prom_id == $itemPromo[$prom_id]){ ?>
-                              <option value="<?php echo $itemPromo->prom_id;?>" selected="selected"><?php echo $itemPromo->prom_name;?></option>
-                            <?php } else { ?>
-                              <option value="<?php echo $itemPromo->prom_id;?>"><?php echo $itemPromo->prom_name;?></option>
-                            <?php } ?>
-                            <?php } ?>
-                          <?php } ?>
-                        </select>
-                        
-                      </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="form-group" style="border-top:none;">
-                        <label class="col-sm-4 control-label" for="input-phone">Age Verification</label>
-                          
-                        <div class="col-md-8">
-                            <select name="vageverify" class="form-control">
-                                <!--<option value="">--Select Age Verification--</option>-->
-                                <option value="0">None</option>
-                                <?php if(isset($data['ageVerifications']) && count($data['ageVerifications']) > 0){?>
-                                    <?php foreach($data['ageVerifications'] as $ageVerification){ ?>
-                                        <?php if(isset($data['vageverify']) && $data['vageverify'] == $ageVerification->vvalue){ ?>
-                                            <option value="<?php echo $ageVerification->vvalue;?>" selected="selected"><?php echo $ageVerification->vname;?></option>
-                                        <?php } else { ?>
-                                            <option value="<?php echo $ageVerification->vvalue;?>" ><?php echo $ageVerification->vname;?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="row Lottery" style="margin-left:-50px; display:none">
-                
-                <div class="col-md-6">
-                    <div class="form-group required">
-                        <label class="col-sm-4 control-label" for="input-account-number">Ticket Name</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="ticket_name" maxlength="50" value="<?php echo isset($data['vitemname']) ? $data['vitemname'] : ''; ?>" placeholder="Ticket Name" id="input-ticket_name" class="form-control" autocomplete="off"/>
-                            <?php if (isset($data['error_ticket_name'])) { ?>
-                                <div class="text-danger"><?php echo $data['error_ticket_name']; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="row Lottery" style="margin-left:-50px; display:none">
-                
-                <div class="col-md-6">
-                    <div class="form-group required">
-                        <label class="col-sm-4 control-label" for="input-account-number">Ticket Price</label>
-                        <div class="col-sm-8">
-                            <input type="number" name="ticket_price" maxlength="50" value="<?php echo isset($data['dunitprice']) ? $data['dunitprice'] : ''; ?>" placeholder="Ticket Price" id="input-ticket_price" class="form-control" autocomplete="off"/>
-                            <?php if (isset($data['error_ticket_price'])) { ?>
-                                <div class="text-danger"><?php echo $data['error_ticket_price']; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="row Lottery" style="margin-left:-50px; display:none">
-                
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="input-account-number">Games Per Book</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="games_per_book" maxlength="50" value="<?php echo isset($data['npack']) ? $data['npack'] : '1'; ?>" placeholder="Games Per Book" id="input-games_per_book" class="form-control" autocomplete="off"/>
-                            <?php if (isset($data['error_games_per_book'])) { ?>
-                                <div class="text-danger"><?php echo $data['error_games_per_book']; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="row Lottery" style="margin-left:-50px; display:none">
-                
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="input-account-number">Book Qoh</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="book_qoh" maxlength="50" value="<?php echo isset($data['QOH']) ? $data['QOH'] : ''; ?>" placeholder="Book Qoh" id="input-book_qoh" class="form-control" autocomplete="off" readonly/>
-                            <?php if (isset($data['error_book_qoh'])) { ?>
-                                <div class="text-danger"><?php echo $data['error_book_qoh']; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="row Lottery" style="margin-left:-50px; display:none">
-                
-                <div class="col-md-6">
-                    <div class="form-group required">
-                        <label class="col-sm-4 control-label" for="input-account-number">Book Cost</label>
-                        <div class="col-sm-8">
-                            <input type="number" name="book_cost" maxlength="50" value="<?php echo isset($data['dcostprice']) ? number_format((float)$data['dcostprice'], 2) : ''; ?>" placeholder="Book Cost" id="input-book_cost" class="form-control" autocomplete="off"/>
-                            <?php if (isset($data['error_book_cost'])) { ?>
-                                <div class="text-danger"><?php echo $data['error_book_cost']; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
 
-          </div>
-          
+                <div>
 
-          
-           <div class="panel panel-default notLottery" style="border-top:none;margin-bottom:0px;margin-top:1%;">
-                <div class="panel-body" style="padding: 10px 10px 0px 10px;"><h5>Advance Options&nbsp;&nbsp;<input type="checkbox" name="advance_options_checkbox" ></h5></div>
-            </div>
-            <div class="notLottery" style="background:#fff;padding-top:1%;padding-right:1%; padding-left:3%;"> 
-                <div id="advance_options_checkbox_div">
-                        
-                        <div class="row" style="margin-left:-50px;">
-                            <div class="col-md-6">
-                                
-                                <div class="form-group" style="border-top:none;">
-                                    <label class="col-sm-4 control-label" for="input-country">Status</label>
-                                    <div class="col-md-8">
-                                      <select name="estatus" class="form-control">
-                                        <?php if(isset($data['array_status']) && count($data['array_status']) > 0){?>
-                                          <?php foreach($data['array_status'] as $k => $array_sts){ ?>
-                                            <?php if($data['estatus'] == $array_sts) {?>
-                                              <option value="<?php echo $array_sts;?>" selected="selected"><?php echo $array_sts;?></option>
-                                            <?php }else{?>
-                                              <option value="<?php echo $array_sts;?>"><?php echo $array_sts;?></option>
-                                            <?php } ?>
-                                          <?php } ?>
-                                        <?php } ?>
-                                      </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group" style="border-top:none;">
-                                    <label class="col-sm-4 control-label" for="input-country">Reorder Duration</label>
-                                    
-                                    <div class="col-md-8">
-                                        <input type="text" name="reorder_duration" maxlength="45" value="<?php echo isset($data['reorder_duration']) ? $data['reorder_duration'] : ''; ?>" placeholder="Reorder Duration" id="input_reorder_duration" class="form-control"  />
-                                        <span class="text-small" style="position: absolute"><b>Enter Order Duration in Days.</b></span>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group" style="border-top:none;">
-                                    <label class="col-sm-4 control-label" for="input-phone">Re-Order Point</label>
-                                    
-                                    <div class="col-md-8">
-                                        <input type="text" style="display: inline-block;"  name="ireorderpoint" value="<?php echo isset($data['ireorderpoint']) ? $data['ireorderpoint'] : ''; ?>" placeholder="Re-Order Point" id="input_reorderpoint" class="form-control"  />
-                                        <span class="text-small" ><b>Enter Reorder Point in Unit.</b></span>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group" style="border-top:none;">
-                                    <label class="col-sm-4 control-label" for="input-phone">Order Qty Upto</label>
-                                    <div class="col-md-8">
-                                        <input type="text" name="norderqtyupto" value="<?php echo isset($data['norderqtyupto']) ? $data['norderqtyupto'] : ''; ?>" placeholder="Order Qty Upto" id="input_orderqtyupto" class="form-control" />
-                                        <span class="text-small" style="position: absolute"><b>Enter Order Qty Upto in Case.</b></span>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-country">Aisle</label>
-                                    <div class="col-sm-8">
-                                        <select name="aisleid" class="form-control">
-                                          <option value="">--Select Mfg. Promo Desc--</option>
-                                          <?php if(isset($data['aisles']) && count((array)$data['aisles']) > 0){?>
-                                            <?php foreach($data['aisles'] as $aisle){ ?>
-                                              <?php if(isset($aisleid) && $aisleid == $aisle->Id) {?>
-                                                <option value="<?php echo $aisle->Id;?>" selected="selected"><?php echo $aisle->aislename;?></option>
-                                              <?php } else { ?>
-                                                <option value="<?php echo $aisle->Id;?>"><?php echo $aisle->aislename;?></option>
+                    <div class="py-3">
+                      <div class="row">
+                          <div class="col-md-12 mx-auto">
+                              
+                              <div class="form-group row ">
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                          <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Item Type</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <select name="vitemtype" class="form-control adjustment-fields">
+                                          <?php if(isset($data['item_types']) && count($data['item_types']) > 0){?>
+                                            <?php foreach($data['item_types'] as $item_type){ ?>
+                                              <?php if(isset($data['vitemtype']) && $data['vitemtype'] == $item_type){?>
+                                                <option value="<?php echo $item_type;?>" selected="selected"><?php echo $item_type;?></option>
+                                              <?php }else{ ?>
+                                                <option value="<?php echo $item_type;?>"><?php echo $item_type;?></option>
                                               <?php } ?>
                                             <?php } ?>
                                           <?php } ?>
                                         </select>
+                                          
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+    
+                                      <label for="inputNumber" class="p-2 float-right text-uppercase">SKU</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                      <input type="text" name="vbarcode" maxlength="13" value="<?php echo isset($data['vbarcode']) ? $data['vbarcode'] : ''; ?>" placeholder="SKU" id="input-sku" class="form-control adjustment-fields" <?php if(isset($data['vbarcode']) && isset($data['edit_page'])){?>readonly <?php } ?> autocomplete="off"/>
+                                      <?php if (isset($data['error_vbarcode'])) { ?>
+                                          <div class="text-danger"><?php echo $data['error_vbarcode']; ?></div>
+                                      <?php } ?>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form notLottery">
+                                      
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputVendor" class="p-2 float-right text-uppercase">Item Name</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      
+                                      <input type="text" style="display: inline-block;width: 82%;" name="vitemname" maxlength="100" value="<?php echo isset($data['vitemname']) ? $data['vitemname'] : ''; ?>" placeholder="Item Name" id="input_itemname" class="form-control adjustment-fields" />
+                                      <button class="btn btn-sm btn-info" title="Add Description" id="add_description" style="display: inline-block;width: 15%">..</button>
+                                      <input type="hidden" id="description_value" name="vdescription" maxlength="100" value="<?php echo isset($data['vdescription']) ? $data['vdescription'] : ''; ?>" placeholder="Description" >
+                                      
+                                      <?php if (isset($data['error_vitemname'])) { ?>
+                                          <div class="text-danger"><?php echo $data['error_vitemname']; ?></div>
+                                      <?php } ?>
+                                       
+                                    </div>
+                                  </div>
+
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form Lottery" style="display:none">
+                                      
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputVendor" class="p-2 float-right text-uppercase">Ticket Name</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      
+                                      <input type="text" name="ticket_name" maxlength="50" value="<?php echo isset($data['vitemname']) ? $data['vitemname'] : ''; ?>" placeholder="Ticket Name" id="input-ticket_name" class="form-control adjustment-fields" autocomplete="off" />
+                                      
+                                      <?php if (isset($data['error_ticket_name'])) { ?>
+                                        <div class="text-danger"><?php echo $data['error_ticket_name']; ?></div>
+                                      <?php } ?>
+                                       
+                                    </div>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
+    
+                      <div class="row notLottery">
+                        <div class="col-md-12 mx-auto">
+                            
+                            <div class="form-group row">
+                                
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+  
+                                    <label for="inputCreated" class="p-2 float-right text-uppercase">Cost</label>
+                                  </div>
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                    <input type="text" name="new_costprice" style="display: inline-block;width: 82%;" value="<?php echo isset($data['new_costprice']) && !empty($data['new_costprice']) ? number_format((float)$data['new_costprice'], 2) : ''; ?>" placeholder="New Cost" id="input-new_cost" class="form-control adjustment-fields"/>
+                                    
+                                    <input type='hidden' id='input-unitcost' value=''>
+                                    <button class="btn btn-sm btn-info" id="add_cost" style="display: inline-block;width: 15%" title="Add Costs">..</button>
+                                    <input type="hidden" id="avgcost_value" name="dcostprice" value="<?php echo isset($data['dcostprice']) ? $data['dcostprice'] : ''; ?>" placeholder="Avg. Case Cost" class="form-control" autocomplete="off"/> 
+                                    <input type="hidden" id="lastcost_value" name="last_costprice" value="<?php echo isset($data['last_costprice']) ? $data['last_costprice'] : ''; ?>" placeholder="Last Cost" class="form-control" readonly/>
+                                        
+                                    <?php if (isset($data['error_new_costprice'])) { ?>
+                                        <div class="text-danger"><?php echo $data['error_new_costprice']; ?></div>
+                                    <?php } ?>
+                                    
+                                  </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputReceived" class="p-2 float-right text-uppercase">Price</label>
+                                  </div>
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                    <input type="text" style="display: inline-block;width: 82%;" id="input-Selling_Price" name="dunitprice" value="<?php echo isset($data['dunitprice']) ? $data['dunitprice'] : ''; ?>" placeholder="Selling Price" class="form-control adjustment-fields" autocomplete="off"/>
+                                    <button class="btn btn-sm btn-info" id="add_pricelevel" title="Add Description" style="display: inline-block;width: 15%">..</button>
+                                    <input type="hidden" id="nlevel2_value" name="nlevel2" value="<?php echo isset($data['nlevel2']) ? $data['nlevel2'] : ''; ?>" class="form-control" />
+                                    <input type="hidden" id="nlevel3_value" name="nlevel3" value="<?php echo isset($data['nlevel3']) ? $data['nlevel3'] : ''; ?>" class="form-control" />
+                                    <input type="hidden" id="nlevel4_value" name="nlevel4" value="<?php echo isset($data['nlevel4']) ? $data['nlevel4'] : ''; ?>" class="form-control"/>
+                                    <?php if (isset($data['error_dunitprice'])) { ?>
+                                        <div class="text-danger"><?php echo $data['error_dunitprice']; ?></div>
+                                    <?php } ?>
+                                  </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                    <label for="inputStatus" class="p-2 float-right text-uppercase">GP%</label>
+                                  </div>
+
+                                  <?php
+
+                                    if(isset($data['new_costprice']) && $data['new_costprice'] >0 && isset($data['dunitprice'])){    
+                                      
+                                      // echo "new_costprice: $new_costprice";
+                                      // echo "npack: $npack";
+                                      
+                                      
+                                        // $nunit_cost = $data['new_costprice']/$data['npack'];
+                                        $nunit_cost = (int)$data['npack'] !== 0?(int)($data['new_costprice']/$data['npack']):0;
+                                        $nunit_cost = round($nunit_cost, 2);
+                                      
+                                      if(isset($ndiscountper)){
+                                        $percent = $data['dunitprice'] - ($nunit_cost-$ndiscountper);
+                                      }else{
+                                        $percent = (float)$data['dunitprice'] - (float)$nunit_cost;
+                                      }
+                                      
+                                      $percent = ($percent > 0) ? $percent : 0;
+                                      
+                                      if($percent > 0){
+                                        $percent = $percent;
+                                      }else{
+                                        $percent = 0;
+                                      }
+                                      
+                                      if($data['dunitprice'] == 0 || $data['dunitprice'] == '0.0000'){
+                                        $dunitprice = 1;
+                                      }else{
+                                          $dunitprice = $data['dunitprice'];
+                                      }
                                      
+                                      $percent = (((float)$percent/(float)$dunitprice) * 100);
+                                      
+                                      
+                                      $percent = number_format((float)$percent, 2, ".", '');
+            
+                                    }else{
+                                      $percent = 0.00;
+                                    }
+
+                                  ?>
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                    
+                                      <!--<span style="display: inline-block;width: 87%;"><input type="text" name="gross_profit" value="<?php echo $percent;?>" placeholder="" id="input-profit-margin" class="form-control" readonly /></span>
+                                    <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn"><button class="btn btn-sm btn-info" title="">..</button></span>-->
+                                    <input type="text" style="display: inline-block;width: 82%;" name="gross_profit" value="<?php echo $percent;?>" placeholder="" id="input-profit-margin" class="form-control adjustment-fields" readonly />
+                                    <button class="btn btn-sm btn-info" id="selling_price_calculation_btn" title="Calculate Selling Price" style="display: inline-block;width: 15%">..</button>
+                                      
+                                  </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                      </div>
+
+                      <div class="row notLottery">
+                          <div class="col-md-12 mx-auto">
+                              
+                              <div class="form-group row ">
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                          <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Department</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <span style="display: inline-block;width: 79%;">
+                                          <select name="vdepcode" class="form-control adjustment-fields" id="dept_code" style="display: inline-block;width: 79% !important;">
+                                              
+                                            <option value="">Select Department</option>
+                                            <?php if(isset($data['departments']) && count($data['departments']) > 0){?>
+                                              <?php foreach($data['departments'] as $department){ ?>
+                                              <?php if(isset($data['vdepcode']) && $data['vdepcode'] == $department['vdepcode']){?>
+                                                <option value="<?php echo $department['vdepcode'];?>" selected="selected"><?php echo $department['vdepartmentname'];?></option>
+                                              <?php } else { ?>
+                                                <option value="<?php echo $department['vdepcode'];?>"><?php echo $department['vdepartmentname'];?></option>
+                                              <?php } ?>
+                                              <?php } ?>
+                                            <?php } ?>
+                                          </select>
+                                        </span>
+                                      <!--<span style="display: inline-block;width: 10%" title="Add Department" id="add_new_department"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
+                                      <button class="btn btn-success btn-sm" id="add_new_department" style="display: inline-block;width: 18%;"><i class="fa fa-plus-square" aria-hidden="true" ></i></button>
+                                      <?php if (isset($data['error_vdepcode'])) { ?>
+                                        <div class="text-danger"><?php echo $data['error_vdepcode']; ?></div>
+                                      <?php } ?>
+                                          
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+    
+                                      <label for="inputNumber" class="p-2 float-right text-uppercase">Category</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                      <span style="display: inline-block;width: 79%;">
+                                        <select name="vcategorycode" class="form-control adjustment-fields" id="category_code"
+                                            <?php
+                                                if(!isset($data['vcategorycode'])){
+                                                    echo "disabled='true'";
+                                                }
+                                            
+                                            ?>
+                                        >
+                                            <option value="">Select Category</option>
+                                            
+                                            <?php if(isset($data['categories']) && count($data['categories']) > 0 && isset($data['vcategorycode'])){?>
+                                                <?php foreach($data['categories'] as $category){ ?>
+                                                    <?php echo "DB: ".$data['vcategorycode']." Current: ".$category['vcategorycode']; ?>
+                                                    <?php if($data['vcategorycode'] == $category['vcategorycode']){ echo "DB: ".$data['vcategorycode']." Current: ".$category['vcategorycode']; ?>
+                                                        <option value="<?php echo $category['vcategorycode'];?>" selected="selected"><?php echo $category['vcategoryname'];?></option>
+                                                    <?php } else { ?>
+                                                        <option value="<?php echo $category['vcategorycode'];?>"><?php echo $category['vcategoryname'];?></option>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                            <?php } ?>
+                                          
+                                        </select>
+                                      </span>
+                                      <!--<span style="display: inline-block;width: 10%" title="Add Category" id="add_new_category"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
+                                      <button class="btn btn-success btn-sm" style="display: inline-block;width: 18%" title="Add Category" id="add_new_category"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                      <?php if (isset($data['error_vcategorycode'])) { ?>
+                                        <div class="text-danger"><?php echo $data['error_vcategorycode']; ?></div>
+                                      <?php } ?>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputVendor" class="p-2 float-right text-uppercase">Sub Category</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      
+                                      <span style="display: inline-block;width: 79%;">
+                                        <select name="subcat_id" class="form-control adjustment-fields" id="subcat_id"
+                                            <?php
+                                                if(!isset($data['vcategorycode'])){
+                                                    echo "disabled='true'";
+                                                }
+                                            
+                                            ?>
+                                        >
+                                            <option value="">Select Sub Category</option>
+                                            
+                                            <?php if(isset($data['subcategories']) && count($data['subcategories']) > 0 && isset($data['subcat_id'])){?>
+                                                <?php foreach($data['subcategories'] as $subcategory){ ?>
+                                                
+                                                    <?php if($data['subcat_id'] == $subcategory['subcat_id']){ ?>
+                                                        <option value="<?php echo $subcategory['subcat_id'];?>" selected="selected"><?php echo $subcategory['subcat_name'];?></option>
+                                                    <?php } else { ?>
+                                                        <option value="<?php echo $subcategory['subcat_id'];?>"><?php echo $subcategory['subcat_name'];?></option>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                            <?php } ?>
+                                          
+                                        </select>
+                                      </span>
+                                      <!--<span style="display: inline-block;width: 10%" title="Add Sub Category" id="add_new_subcategory"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
+                                      <button class="btn btn-success btn-sm" style="display: inline-block;width: 18%" title="Add Sub Category" id="add_new_subcategory"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                      <?php if (isset($data['error_subcat_id'])) { ?>
+                                        <div class="text-danger"><?php echo $data['error_subcat_id']; ?></div>
+                                      <?php } ?>
+                                       
+                                    </div>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
+
+                      <div class="row notLottery">
+                          <div class="col-md-12 mx-auto">
+                              
+                              <div class="form-group row ">
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                          <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Supplier</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <span style="display: inline-block;width: 79%;">
+                                          <select name="vsuppliercode" class="form-control adjustment-fields">
+                                              <option value="">Select Supplier</option>
+                                            <?php if(isset($data['suppliers']) && count($data['suppliers']) > 0){?>
+                                              <?php foreach($data['suppliers'] as $supplier){ ?>
+                                              <?php if(isset($data['vsuppliercode']) && $data['vsuppliercode'] == $supplier['vsuppliercode']){?>
+                                                <option value="<?php echo $supplier['vsuppliercode'];?>" selected="selected"><?php echo $supplier['vcompanyname'];?></option>
+                                              <?php } else { ?>
+                                                <option value="<?php echo $supplier['vsuppliercode'];?>"><?php echo $supplier['vcompanyname'];?></option>
+                                              <?php } ?>
+                                              <?php } ?>
+                                            <?php } ?>
+                                          </select>
+                                        </span>
+                                        <!--<span style="display: inline-block;width: 10%" title="Add Supplier" id="add_new_supplier"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
+                                        <button class="btn btn-success btn-sm" style="display: inline-block;width: 18%" title="Add Supplier" id="add_new_supplier"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                        <?php if (isset($data['error_vsuppliercode'])) { ?>
+                                          <div class="text-danger"><?php echo $data['error_vsuppliercode']; ?></div>
+                                        <?php } ?>
+                                          
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+    
+                                      <label for="inputNumber" class="p-2 float-right text-uppercase">Taxable</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                      <select name="vtax" class="form-control adjustment-fields">
+                                        <?php if(isset($data['all_taxes']) && count($data['all_taxes']) > 0 ) { ?>
+                                            <?php foreach($data['all_taxes'] as $tax){ ?>
+                                                <?php if(isset($data['vtax']) && $data['vtax'] == $tax['value']) { ?>
+                                                    <option value="<?php echo $tax['value'] ?>" selected="selected" ><?php echo $tax['name'] ?></option>
+                                                <?php } else { ?>
+                                                    <option value="<?php echo $tax['value'] ?>" ><?php echo $tax['name'] ?></option>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        <?php } ?>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputVendor" class="p-2 float-right text-uppercase">Unit</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      
+                                      <select name="vunitcode" class="form-control adjustment-fields">
+                                        <option value="">Select Unit</option>
+                                        <?php if(isset($data['units']) && count($data['units']) > 0){?>
+                                            <?php foreach($data['units'] as $unit){ ?>
+                                                <?php if(isset($data['vunitcode']) && $data['vunitcode'] == $unit['vunitcode']){?>
+                                                  <option value="<?php echo $unit['vunitcode'];?>" selected="selected"><?php echo $unit['vunitname'];?></option>
+                                                <?php } else { ?>
+                                                  <option value="<?php echo $unit['vunitcode'];?>"><?php echo $unit['vunitname'];?></option>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        <?php } ?>
+                                      </select>
+                                       <?php if (isset($data['error_vunitcode'])) { ?>
+                                          <div class="text-danger"><?php echo $data['error_vunitcode']; ?></div>
+                                        <?php } ?>
+                                    </div>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
+
+                      <div class="row notLottery">
+                          <div class="col-md-12 mx-auto">
+                              
+                              <div class="form-group row ">
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                          <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Size</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <span style="display: inline-block;width: 79%;">
+                                          <select name="vsize" class="form-control adjustment-fields">
+                                              <option value="">--Select Size--</option>
+                                            <?php if(isset($data['sizes']) && count($data['sizes']) > 0){?>
+                                              <?php foreach($data['sizes'] as $size){ ?>
+                                              <?php if(isset($data['vsize']) && $data['vsize'] == $size['vsize']){ ?>
+                                                <option value="<?php echo $size['vsize'];?>" selected="selected"><?php echo $size['vsize'];?></option>
+                                              <?php } else { ?>
+                                                <option value="<?php echo $size['vsize'];?>"><?php echo $size['vsize'];?></option>
+                                              <?php } ?>
+                                              <?php } ?>
+                                            <?php } ?>
+                                          </select>
+                                        </span>
+                                  
+                                        <button class="btn btn-success btn-sm" style="display: inline-block;width: 18%" title="Add Size" id="add_new_size"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                                          
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+    
+                                      <label for="inputNumber" class="p-2 float-right text-uppercase">Manufaturer</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                      <select name="manufacturer_id" class="form-control adjustment-fields">
+                                        <option value="">--Select Manufacturer--</option>
+                                        <?php if(isset($data['manufacturers']) && count($data['manufacturers']) > 0){?>
+                                          <?php foreach($data['manufacturers'] as $manufacturer){ ?>
+                                          <?php if(isset($data['manufacturer_id']) && $data['manufacturer_id'] == $manufacturer['mfr_id']){?>
+                                            <option value="<?php echo $manufacturer['mfr_id'];?>" selected="selected"><?php echo $manufacturer['mfr_name'];?></option>
+                                          <?php } else { ?>
+                                            <option value="<?php echo $manufacturer['mfr_id'];?>"><?php echo $manufacturer['mfr_name'];?></option>
+                                          <?php } ?>
+                                          <?php } ?>
+                                        <?php } ?>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputVendor" class="p-2 float-right text-uppercase">Age Verification</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      
+                                      <select name="vageverify" class="form-control adjustment-fields">
+                                        <!--<option value="">--Select Age Verification--</option>-->
+                                        <option value="0">None</option>
+                                        <?php if(isset($data['ageVerifications']) && count($data['ageVerifications']) > 0){?>
+                                            <?php foreach($data['ageVerifications'] as $ageVerification){ ?>
+                                                <?php if(isset($data['vageverify']) && $data['vageverify'] == $ageVerification->vvalue){ ?>
+                                                    <option value="<?php echo $ageVerification->vvalue;?>" selected="selected"><?php echo $ageVerification->vname;?></option>
+                                                <?php } else { ?>
+                                                    <option value="<?php echo $ageVerification->vvalue;?>" ><?php echo $ageVerification->vname;?></option>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        <?php } ?>
+                                      </select>
+                                       
+                                    </div>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
+
+                      <div class="row notLottery">
+                          <div class="col-md-12 mx-auto">
+                              
+                              <div class="form-group row ">
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                          <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Selling Unit</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <?php 
+                                            if(isset($data['nsellunit']) && $data['nsellunit'] != ''){
+                                              $nsellunit = $data['nsellunit'];
+                                            }else{
+                                              $nsellunit = 1;
+                                            }
+                                        ?>
+                                        <input type="text" name="nsellunit" value="<?php echo $nsellunit; ?>" placeholder="Selling Unit" id="input-sellingunit" class="form-control adjustment-fields" <?php if(isset($data['vitemtype']) && $data['vitemtype'] == 'Lot Matrix'){?> readonly <?php } ?> />
+                                          
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+    
+                                      <label for="inputNumber" class="p-2 float-right text-uppercase">Unit Per Case</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                      <?php 
+                                        if(isset($data['npack']) && $data['npack'] != ''){
+                                          $npack = $data['npack'];
+                                        }elseif($data['npack'] != 0){
+                                            $npack = 1;
+                                        }else{
+                                            $npack = 0;
+                                        }
+                                      ?>
+                                      <input type="text" name="npack" value="<?php echo $npack; ?>" placeholder="Unit Per Case" id="input-unitpercase" class="form-control adjustment-fields" />
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputVendor" class="p-2 float-right text-uppercase">Qty on Hand</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      
+                                      <?php if(isset($data['edit_page'])){?>
+                                        <?php
+                                        
+                                          if($data['iqtyonhand'] != 0 && $data['iqtyonhand']!='' && $data['npack']!=0){
+                                            $quotient = (int)($data['iqtyonhand'] / $data['npack']);
+                                            $remainder = $data['iqtyonhand'] % $data['npack'];
+                                              
+                                            $qty_on_hand = ''.$quotient .' ('.$remainder.')';
+                                          }
+                                          else{
+                                            $qty_on_hand = 'Case: 0 [0]';
+                                          }
+                                          if(isset($data['itemparentitems']->IQTYONHAND)){
+                                              $qty_on_hand=$data['itemparentitems']->IQTYONHAND % $data['npack'];
+                                          }
+                                          ?>
+                                          <input type="text" value="<?php echo isset($data['QOH']) ? $qty_on_hand : ''; ?>" class="form-control" readonly>
+                                          <input type="hidden" name="iqtyonhand" value="<?php echo isset($data['iqtyonhand']) ? $data['iqtyonhand'] : ''; ?>" class="form-control adjustment-fields" placeholder="Qty on Hand" <?php if((isset($data['isparentchild']) && $data['isparentchild'] == 1) || (isset($data['edit_page']))){?> readonly <?php } ?>  autocomplete="off"/>
+                                      <?php }else{?>
+                                          <input type="text" name="iqtyonhand" value="<?php echo isset($data['iqtyonhand']) ? $data['iqtyonhand'] : ''; ?>" class="form-control adjustment-fields" placeholder="Qty on Hand"  autocomplete="off"/>
+                                      <?php }?>
+                                       
+                                    </div>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
+
+                      <div class="row notLottery">
+                          <div class="col-md-12 mx-auto">
+                              
+                              <div class="form-group row ">
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                          <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Promotion</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                        <select name="itemPromotionid" id="promotionid" class="form-control adjustment-fields">
+                                
+                                          <?php if(isset($data['itemPromotion']) && count($data['itemPromotion']) > 0){?>
+                                              <?php foreach($data['itemPromotion'] as $itemPromo){ ?>
+                                              
+                                              <?php if(isset($data['prom_id']) && $data['prom_id'] == $itemPromo->prom_id){ ?>
+                                                <option value="<?php echo $itemPromo->prom_id;?>" selected="selected"><?php echo $itemPromo->prom_name;?></option>
+                                              <?php } else { ?>
+                                                <option class="disPro" value="<?php echo $itemPromo->prom_id;?>" ><?php echo $itemPromo->prom_name;?></option>
+                                              <?php } ?>
+                                              <?php } ?>
+                                          <?php }else{ ?>
+                                              <option>None</option>
+                                          <?php } ?> 
+                                        </select> 
+                                          
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+    
+                                      <label for="inputNumber" class="p-2 float-right text-uppercase">Buydown</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                      <input type="text" name="ndiscountper" value="<?php echo isset($data['buydown']) ? $data['buydown'] : 0; ?>" placeholder="Buydown" id="input_buydown; ?>" class="form-control adjustment-fields" readonly/>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputVendor" class="p-2 float-right text-uppercase">Parent Barcode</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      
+                                      <?php if(isset($data['itemparentitems']) && !empty($data['itemparentitems'])) { 
+                        
+                                          $Parent_barcode = $data['itemparentitems']->vitemname.' ['.$data['itemparentitems']->vbarcode.']';
+                                        }
+                                      ?>
+
+                                      <input type="text" name="Parent_barcode" maxlength="50" value="<?php echo isset($Parent_barcode) ? $Parent_barcode : ''; ?>" placeholder="Parent Barcode" class="form-control small adjustment-fields" style="font-size:12px;" readonly >
+                                       
+                                    </div>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
+
+                      <div class="row notLottery">
+                          <div class="col-md-12 mx-auto">
+                              
+                              <div class="form-group row ">
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                          <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Food Item</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required form-inline">
+
+                                        <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
+                                          <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
+                                            <label class="radio-inline">
+                                              <input type="radio" name="vfooditem" value="<?php echo $k;?>" <?php if($data['vfooditem'] == $k) echo "checked"; ?>><?php echo $array_y_n;?>&nbsp;&nbsp;
+                                            </label>
+                                          <?php } ?>
+                                        <?php } ?>
+                                          
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+    
+                                      <label for="inputNumber" class="p-2 float-right text-uppercase">Bottle Deposit</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                      
+                                      <input name="nbottledepositamt" id="nbottledepositamt" value="<?php echo isset($data['nbottledepositamt']) ? $data['nbottledepositamt'] : '0.00'; ?>" type="text" class="form-control adjustment-fields">
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputVendor" class="p-2 float-right text-uppercase">Gross Markup</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      
+                                      <input type="text" name="discount_price" maxlength="50" value="<?php echo isset($data['bydown']) ? $data['bydown'] : ''; ?>" placeholder="Gross Markup" id="input-discount_price" class="form-control adjustment-fields" <?php if(isset($data['bydown']) && isset($data['edit_page'])){?>readonly <?php } ?> readonly/>
+                                                                             
+                                    </div>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
+
+                      <div class="row Lottery" style="display:none">
+                          <div class="col-md-12 mx-auto">
+                              
+                              <div class="form-group row ">
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                          <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Ticket Price</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required form-inline">
+
+                                        <input type="number" name="ticket_price" maxlength="50" value="<?php echo isset($data['dunitprice']) ? $data['dunitprice'] : ''; ?>" placeholder="Ticket Price" id="input-ticket_price" class="form-control adjustment-fields" autocomplete="off"/>
+                                        <?php if (isset($data['error_ticket_price'])) { ?>
+                                            <div class="text-danger"><?php echo $data['error_ticket_price']; ?></div>
+                                        <?php } ?>
+                                          
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+    
+                                      <label for="inputNumber" class="p-2 float-right text-uppercase">Games Per Book</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+                                      <input type="text" name="games_per_book" maxlength="50" value="<?php echo isset($data['npack']) ? $data['npack'] : '1'; ?>" placeholder="Games Per Book" id="input-games_per_book" class="form-control adjustment-fields" autocomplete="off"/>
+                                      <?php if (isset($data['error_games_per_book'])) { ?>
+                                          <div class="text-danger"><?php echo $data['error_games_per_book']; ?></div>
+                                      <?php } ?>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputVendor" class="p-2 float-right text-uppercase">Book Qoh</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <input type="text" name="book_qoh" maxlength="50" value="<?php echo isset($data['QOH']) ? $data['QOH'] : ''; ?>" placeholder="Book Qoh" id="input-book_qoh" class="form-control adjustment-fields" autocomplete="off" readonly/>
+                                      <?php if (isset($data['error_book_qoh'])) { ?>
+                                          <div class="text-danger"><?php echo $data['error_book_qoh']; ?></div>
+                                      <?php } ?>                                      
+                                    </div>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
+
+                      <div class="row Lottery" style="display:none">
+                          <div class="col-md-12 mx-auto">
+                              
+                              <div class="form-group row ">
+                                  <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
+                                          <label for="inputFirstname" class="p-2 float-right text-uppercase control-label">Book Cost</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required form-inline">
+
+                                        <input type="number" name="book_cost" maxlength="50" value="<?php echo isset($data['dcostprice']) ? number_format((float)$data['dcostprice'], 2) : ''; ?>" placeholder="Book Cost" id="input-book_cost" class="form-control adjustment-fields" autocomplete="off"/>
+                                        <?php if (isset($data['error_book_cost'])) { ?>
+                                            <div class="text-danger"><?php echo $data['error_book_cost']; ?></div>
+                                        <?php } ?>
+                                          
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                              
+                          </div>
+                      </div>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="notLottery">
+
+                  <div class="mytextdiv">
+                    <div class="mytexttitle font-weight-bold text-uppercase">
+                      Advance Options
+                    </div>
+                    <a class="btn btn-small text-center text-white" id="advance_options_hideshow" style="line-height:5px; width:100px; border-radius:6px; background-color:grey; font-size:9px;">SHOW ADVANCE</a>
+                    &nbsp;
+                    <div class="divider font-weight-bold"></div>
+                    <input type="hidden" value="1" name="advance_options" id="advance_options">
+                  </div>
+                  
+                    <div id="advance_options_checkbox_div" style="display: none;">
+                        
+                      <div class="py-3">
+                        <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                
+                                <div class="form-group row">
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputFirstname" class="p-2 float-right text-uppercase">Status</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                          <select name="estatus" class="form-control adjustment-fields">
+                                            <?php if(isset($data['array_status']) && count($data['array_status']) > 0){?>
+                                              <?php foreach($data['array_status'] as $k => $array_sts){ ?>
+                                                <?php if($data['estatus'] == $array_sts) {?>
+                                                  <option value="<?php echo $array_sts;?>" selected="selected"><?php echo $array_sts;?></option>
+                                                <?php }else{?>
+                                                  <option value="<?php echo $array_sts;?>"><?php echo $array_sts;?></option>
+                                                <?php } ?>
+                                              <?php } ?>
+                                            <?php } ?>
+                                          </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <label for="inputLastname" class="p-2 float-right text-uppercase">WIC</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-inline">
+      
+                                        <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
+                                          <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
+                                          <?php if($data['wicitem'] == '1') $wicitem = 'Y'; else $wicitem ='N'; ?>
+                                            <label class="radio-inline">
+                                              <input type="radio" name="wicitem" class="form-control" value="<?php echo $k;?>" <?php if($wicitem == $k) echo "checked"; ?> ><?php echo $array_y_n;?>&nbsp;&nbsp;
+                                            </label>
+                                          <?php } ?>
+                                        <?php } ?>
+                                      </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputLastname" class="p-2 float-right text-uppercase">Discount</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <select name="vdiscount" class="form-control adjustment-fields">
+                                          <?php if(isset($data['arr_y_n']) && count($data['arr_y_n']) > 0){?>
+                                            <?php foreach($data['arr_y_n'] as $k => $array_y_n){ ?>
+                                              <?php if($data['vdiscount'] == $array_y_n) {?>
+                                                <option value="<?php echo $array_y_n;?>" selected="selected"><?php echo $array_y_n;?></option>
+                                              <?php }else{?>
+                                                <option value="<?php echo $array_y_n;?>"><?php echo $array_y_n;?></option>
+                                              <?php } ?>
+                                            <?php } ?>
+                                          <?php } ?>
+                                        </select>
+                                      </div>
                                     </div>
                                 </div>
                                 
-                                <! --Mfg Buy Down Desc-->
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="input-phone">
-                                        <?php 
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12 mx-auto">
+
+                                <div class="form-group row">
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputFirstname" class="p-2 float-right text-uppercase">Reorder Duration</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                          <input type="text" name="reorder_duration" maxlength="45" value="<?php echo isset($data['reorder_duration']) ? $data['reorder_duration'] : ''; ?>" placeholder="Reorder Duration" id="input_reorder_duration" class="form-control adjustment-fields"  />
+                                          <span class="text-small" style="position: absolute"><b>Enter Order Duration in Days.</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <label for="inputLastname" class="p-2 float-right text-uppercase">Re-Order Point</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <input type="text" style="display: inline-block;"  name="ireorderpoint" value="<?php echo isset($data['ireorderpoint']) ? $data['ireorderpoint'] : ''; ?>" placeholder="Re-Order Point" id="input_reorderpoint" class="form-control adjustment-fields"  />
+                                        <span class="text-small" ><b>Enter Reorder Point in Unit.</b></span>
+                                      </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                         
-                                        echo "Mfg Buy Down Desc."; 
-                                        ?></label>
-                                    <div class="col-sm-8">
-                                        <select name="shelfid" class="form-control">
-                                            <option value="">--Select Mfg Buy Down Desc.--</option>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputLastname" class="p-2 float-right text-uppercase">Order Qty Upto</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <input type="text" name="norderqtyupto" value="<?php echo isset($data['norderqtyupto']) ? $data['norderqtyupto'] : ''; ?>" placeholder="Order Qty Upto" id="input_orderqtyupto" class="form-control adjustment-fields" />
+                                        <span class="text-small" style="position: absolute"><b>Enter Order Qty Upto in Case.</b></span>
+                                      </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                
+                                <div class="form-group row">
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputFirstname" class="p-2 float-right text-uppercase">Aisle</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                          <select name="aisleid" class="form-control adjustment-fields">
+                                            <option value="">Select Mfg. Promo Desc</option>
+                                            <?php if(isset($data['aisles']) && count((array)$data['aisles']) > 0){?>
+                                              <?php foreach($data['aisles'] as $aisle){ ?>
+                                                <?php if(isset($data['aisleid']) && $data['aisleid'] == $aisle->Id) {?>
+                                                
+                                                  <option value="<?php echo $aisle->Id;?>" selected="selected"><?php echo $aisle->aislename;?></option>
+                                                <?php } else { ?>
+                                                  <option value="<?php echo $aisle->Id;?>"><?php echo $aisle->aislename;?></option>
+                                                <?php } ?>
+                                              <?php } ?>
+                                            <?php } ?>
+                                          </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <label for="inputLastname" class="p-2 float-right text-uppercase">Mfg Buy Down Desc.</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <select name="shelfid" class="form-control adjustment-fields">
+                                            <option value="">Select Mfg Buy Down Desc.</option>
                                             <?php if(isset($data['shelfs']) && count((array)$data['shelfs']) > 0){?>
                                             <?php foreach($data['shelfs'] as $shelf){ ?>
                                               <?php if(isset($data['shelfid']) && $data['shelfid'] == $shelf->Id){ ?>
@@ -803,89 +992,64 @@
                                             <?php } ?>
                                             <?php } ?>
                                         </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputLastname" class="p-2 float-right text-uppercase">Mfg MultiPack Desc.</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <select name="shelvingid" class="form-control adjustment-fields">
+                                          <option value="">Select Mfg MultiPack Desc.</option>
+                                          <?php if(isset($data['shelvings']) && count($data['shelvings']) > 0){?>
+                                            <?php foreach($data['shelvings'] as $shelving){ ?>
+                                            <?php if(isset($data['shelvingid']) && $data['shelvingid'] == $shelving->id){ ?>
+                                              <option value="<?php echo $shelving->id;?>" selected="selected"><?php echo $shelving->shelvingname;?></option>
+                                            <?php } else { ?>
+                                              <option value="<?php echo $shelving->id;?>"><?php echo $shelving->shelvingname;?></option>
+                                            <?php } ?>
+                                            <?php } ?>
+                                          <?php } ?>
+                                        </select> 
+                                      </div>
                                     </div>
                                 </div>
                                 
-                                <! --Mfg. Multipack Desc-- >
-                                <div class="form-group">
-                                  <label class="col-sm-4 control-label" for="input-phone">
-                                      <?php 
-                                             
-                                            echo "Mfg MultiPack Desc."; 
-                                      ?>
-                                  </label>
-                                  <div class="col-sm-8">
-                                    <select name="shelvingid" class="form-control">
-                                      <option value="">--Select Mfg MultiPack Desc.--</option>
-                                      <?php if(isset($data['shelvings']) && count($data['shelvings']) > 0){?>
-                                        <?php foreach($data['shelvings'] as $shelving){ ?>
-                                        <?php if(isset($data['shelvingid']) && $data['shelvingid'] == $shelving->id){ ?>
-                                          <option value="<?php echo $shelving->id;?>" selected="selected"><?php echo $shelving->shelvingname;?></option>
-                                        <?php } else { ?>
-                                          <option value="<?php echo $shelving->id;?>"><?php echo $shelving->shelvingname;?></option>
-                                        <?php } ?>
-                                        <?php } ?>
-                                      <?php } ?>
-                                    </select> 
-                                  </div>
-                                </div>
-                                    
                             </div>
-                            
-                            <div class="col-md-6">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 mx-auto">
                                 
-                                <div class="form-group" style="border-top:none;">
-                                    <label class="col-sm-4 control-label" for="input-phone">WIC</label>
-                                    <div class="col-md-8">
-                                        <?php if(isset($data['array_yes_no']) && count($data['array_yes_no']) > 0){?>
-                                          <?php foreach($data['array_yes_no'] as $k => $array_y_n){ ?>
-                                          <?php if($data['wicitem'] == 1) $data['wicitem'] = 'Y'; else $data['wicitem'] ='N'; ?>
-                                            <label class="radio-inline">
-                                              <input type="radio" name="wicitem" value="<?php echo $k;?>" <?php if($data['wicitem'] == $k) echo "checked"; ?> ><?php echo $array_y_n;?>
-                                            </label>
-                                          <?php } ?>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group" style="border-top:none;">
-                                    <label class="col-sm-4 control-label" for="input-phone">Barcode Type</label>
-                                    <div class="col-md-8">
-                                      <select name="vbarcodetype" class="form-control">
-                                        <?php if(isset($data['barcode_types']) && count($data['barcode_types']) > 0){?>
-                                          <?php foreach($data['barcode_types'] as $barcode_type){ ?>
-                                          <?php if(isset($data['vbarcodetype']) && $data['vbarcodetype'] == $barcode_type) { ?>
-                                            <option value="<?php echo $barcode_type;?>" selected="selected"><?php echo $barcode_type;?></option>
-                                          <?php } else { ?>
-                                            <option value="<?php echo $barcode_type;?>"><?php echo $barcode_type;?></option>
-                                          <?php } ?>
-                                          <?php } ?>
-                                        <?php } ?>
-                                      </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group" style="border-top:none;">
-                                    <label class="col-sm-4 control-label" for="input-country">Discount</label>
-                                    <div class="col-md-8">
-                                        <select name="vdiscount" class="form-control">
-                                            <?php if(isset($data['arr_y_n']) && count($data['arr_y_n']) > 0){?>
-                                              <?php foreach($data['arr_y_n'] as $k => $array_y_n){ ?>
-                                                <?php if($data['vdiscount'] == $array_y_n) {?>
-                                                  <option value="<?php echo $array_y_n;?>" selected="selected"><?php echo $array_y_n;?></option>
-                                                <?php }else{?>
-                                                  <option value="<?php echo $array_y_n;?>"><?php echo $array_y_n;?></option>
-                                                <?php } ?>
+                                <div class="form-group row">
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputFirstname" class="p-2 float-right text-uppercase">Barcode Type</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                          <select name="vbarcodetype" class="form-control adjustment-fields">
+                                            <?php if(isset($data['barcode_types']) && count($data['barcode_types']) > 0){?>
+                                              <?php foreach($data['barcode_types'] as $barcode_type){ ?>
+                                              <?php if(isset($data['vbarcodetype']) && $data['vbarcodetype'] == $barcode_type) { ?>
+                                                <option value="<?php echo $barcode_type;?>" selected="selected"><?php echo $barcode_type;?></option>
+                                              <?php } else { ?>
+                                                <option value="<?php echo $barcode_type;?>"><?php echo $barcode_type;?></option>
+                                              <?php } ?>
                                               <?php } ?>
                                             <?php } ?>
-                                        </select>
+                                          </select>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="form-group" style="border-top:none;">
-                                    <label class="col-sm-4 control-label" for="input-phone">Station</label>
-                                    <div class="col-md-8">
-                                        <select name="stationid" class="form-control">
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <label for="inputLastname" class="p-2 float-right text-uppercase">Station</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <select name="stationid" class="form-control adjustment-fields">
                                           <option value="">--Select Station--</option>
                                           <?php if(isset($data['stations']) && count($data['stations']) > 0){?>
                                             <?php foreach($data['stations'] as $station){ ?>
@@ -897,13 +1061,15 @@
                                             <?php } ?>
                                           <?php } ?>
                                         </select>
+                                      </div>
                                     </div>
-                                </div>
-                                
-                                <div class="form-group" style="border-top:none;">
-                                    <label class="col-md-4 control-label" for="input-phone">Show Image</label>
-                                    <div class="col-md-8">
-                                        <select name="vshowimage" class="form-control">
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputLastname" class="p-2 float-right text-uppercase">Show Image</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <select name="vshowimage" class="form-control adjustment-fields">
                                             <?php if(isset($data['arr_y_n']) && count($data['arr_y_n']) > 0){?>
                                               <?php foreach($data['arr_y_n'] as $k => $array_y_n){ ?>
                                                 <?php if($data['vshowimage'] == $array_y_n) {?>
@@ -914,20 +1080,30 @@
                                               <?php } ?>
                                             <?php } ?>
                                         </select>
+                                      </div>
                                     </div>
                                 </div>
                                 
-                                <div>
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-8">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12 mx-auto">
+                              
+                            <div class="form-group row">
+                                <div class="col-12 col-md-12 col-sm-2 col-lg-12 p-form">
+                                    <div class="col-2 col-md-2 col-sm-6 col-lg-2">
+                                        <label for="inputFirstname" class="p-2 float-right text-uppercase">Image</label>
+                                    </div>
+                                    <div class="col-8 col-md-8 col-sm-6 col-lg-8">
                                       <?php if(isset($data['itemimage']) && $data['itemimage'] != ''){?>
-                                        <img src="data:image/gif;base64,<?php echo $data['itemimage'];?>" class="img-responsive" width="100" height="100" alt="" id="showImage">
+                                        <img src="data:image/gif;base64,<?php echo $data['itemimage'];?>" class="img-responsive" width="100" height="100" alt="" id="showImage" style="margin-left: -30px;">
                                         <br>
                                         <button class="btn btn-info btn-sm" id="remove_item_img">Remove</button>
                                         <br><br>
                                         <input type="hidden" name="pre_itemimage" value="<?php echo $data['itemimage'];?>">
                                       <?php } else { ?>
-                                        <img src="{{ asset('image/user-icon-profile.png') }}" class="img-responsive" width="100" height="100" alt="" id="showImage"><br>
+                                        <img src="{{ asset('image/user-icon-profile.png') }}" class="img-responsive" width="600" height="200" alt="" id="showImage" style="margin-left: -30px;"><br>
                                         <input type="hidden" name="pre_itemimage" value="">
                                       <?php } ?>
                                       <input type="file" name="itemimage" accept="image/x-png,image/gif,image/jpeg" onchange="showImages(this)">
@@ -935,131 +1111,198 @@
                                 </div>
                                 
                             </div>
-                            
+      
+                          </div>
                         </div>
                         
+                      </div>
+                        
                     </div>
-            </div>
+                </div>
+                <br>
+                
+                <div class="notLottery">
 
-          <br>
-          <div class="panel panel-default notLottery" style="border-top:none;margin-bottom:0px;">
-            <div class="panel-body" style="padding: 10px 10px 0px 10px;"><h5>PLCB &nbsp;&nbsp; <input type="checkbox" name="plcb_options_checkbox" value="1" <?php if($data['plcb_options_checkbox']){ echo 'checked'; }?>></h5></div>
-          </div>
-          <div class="notLottery" style="background:#fff;padding-top:1%;padding-right:1%;">
-            <div id="plcb_options_checkbox_div" style="<?php if($data['plcb_options_checkbox']){ echo 'display: block'; }else{ echo 'display: none'; }?>">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group required">
-                      <label class="col-sm-4 control-label" for="input-phone">
-                      Unit</label>
-                      <div class="col-sm-8">
-                        <select name="unit_id" class="form-control">
-                          <option value="">-- Select Unit --</option>
-                          <?php if(isset($data['itemsUnits']) && count($data['itemsUnits']) > 0){ ?>
-                            <?php foreach($data['itemsUnits'] as $unit){ ?>
-                              <?php if($unit->id == $data['unit_id']) {?>
-                                <option value="<?php echo $unit->id; ?>" selected="selected"><?php echo $unit->unit_name; ?></option>
-                              <?php } else {?>
-                                <option value="<?php echo $unit->id; ?>"><?php echo $unit->unit_name; ?></option>
-                              <?php } ?>
-                            <?php } ?>
-                          <?php } ?>
-                        </select>
-                        <?php if (isset($data['error_unit_id'])) { ?>
-                          <div class="text-danger"><?php echo $data['error_unit_id']; ?></div>
-                        <?php } ?>
-                      </div>
+                  <div class="mytextdiv">
+                    <div class="mytexttitle font-weight-bold text-uppercase">
+                      PLCB
                     </div>
+                    <a class="btn btn-small text-center text-white" id="plcb_options_hideshow" style="line-height:5px; width:100px; border-radius:6px; background-color:grey; font-size:9px;">PLCB ADVANCE</a>
+                    &nbsp;
+                    <div class="divider font-weight-bold"></div>
+                    <input type="hidden" value="1" name="plcb_options" id="plcb_options">
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group required">
-                      <label class="col-sm-4 control-label" for="input-phone">Unit Value</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" value="<?php echo isset($data['unit_value']) ? $data['unit_value'] : ''; ?>" name="unit_value">
-    
-                        <?php if (isset($data['error_unit_value'])) { ?>
-                          <div class="text-danger"><?php echo $data['error_unit_value']; ?></div>
-                        <?php } ?>
-                      </div>
+
+                  <div id="plcb_options_checkbox_div" style="<?php if($data['plcb_options_checkbox']){ echo 'display: block'; }else{ echo 'display: none'; }?>">
+                    <div class="py-3">
+                        <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                
+                                <div class="form-group row">
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            <label for="inputFirstname" class="p-2 float-right text-uppercase">Unit</label>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                            
+                                          <select name="unit_id" class="form-control adjustment-fields">
+                                            <option value="">-- Select Unit --</option>
+                                            <?php if(isset($data['itemsUnits']) && count($data['itemsUnits']) > 0){ ?>
+                                              <?php foreach($data['itemsUnits'] as $unit){ ?>
+                                                <?php if($unit->id == $data['unit_id']) {?>
+                                                  <option value="<?php echo $unit->id; ?>" selected="selected"><?php echo $unit->unit_name; ?></option>
+                                                <?php } else {?>
+                                                  <option value="<?php echo $unit->id; ?>"><?php echo $unit->unit_name; ?></option>
+                                                <?php } ?>
+                                              <?php } ?>
+                                            <?php } ?>
+                                          </select>
+                                          <?php if (isset($data['error_unit_id'])) { ?>
+                                            <div class="text-danger"><?php echo $data['error_unit_id']; ?></div>
+                                          <?php } ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <label for="inputLastname" class="p-2 float-right text-uppercase">Unit Value</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+      
+                                        <input type="text" class="form-control adjustment-fields" value="<?php echo isset($data['unit_value']) ? $data['unit_value'] : ''; ?>" name="unit_value">
+                                        
+                                        <?php if (isset($data['error_unit_value'])) { ?>
+                                          <div class="text-danger"><?php echo $data['error_unit_value']; ?></div>
+                                        <?php } ?>
+                                      </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                        
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputLastname" class="p-2 float-right text-uppercase">Bucket</label>
+                                      </div>
+                                      <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <select name="bucket_id" class="form-control adjustment-fields">
+                                          <option value="">-- Select Bucket --</option>
+                                          <?php if(isset($data['buckets']) && count($data['buckets']) > 0){?>
+                                            <?php foreach($data['buckets'] as $bucket){ ?>
+                                              <?php if($bucket->id == $data['bucket_id']) {?>
+                                                <option value="<?php echo $bucket->id;?>" selected="selected"><?php echo $bucket->bucket_name;?></option>
+                                              <?php } else {?>
+                                                <option value="<?php echo $bucket->id;?>"><?php echo $bucket->bucket_name;?></option>
+                                              <?php } ?>
+                                            <?php } ?>
+                                          <?php } ?>
+                                        </select>
+                                        <?php if (isset($data['error_bucket_id'])) { ?>
+                                          <div class="text-danger"><?php echo $data['error_bucket_id']; ?></div>
+                                        <?php } ?>
+                                      </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12 mx-auto">
+                              
+                            <div class="form-group row">
+                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                        <label for="inputFirstname" class="p-2 float-right text-uppercase">Malt</label>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <input style="margin-top: 10px;" type="checkbox" class="" name="malt" value="1" <?php if($data['malt']){ echo 'checked'; }?>>
+                                    </div>
+                                </div>
+                                
+                            </div>
+      
+                          </div>
+                        </div>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label" for="input-phone">Malt</label>
-                      <div class="col-sm-8">
-                        <input style="margin-top: 10px;" type="checkbox" class="form-control" name="malt" value="1" <?php if($data['malt']){ echo 'checked'; }?>>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group required">
-                      <label class="col-sm-4 control-label" for="input-phone">
-                      Bucket</label>
-                      <div class="col-sm-8">
-                        <select name="bucket_id" class="form-control">
-                          <option value="">-- Select Bucket --</option>
-                          <?php if(isset($data['buckets']) && count($data['buckets']) > 0){?>
-                            <?php foreach($data['buckets'] as $bucket){ ?>
-                              <?php if($bucket->id == $data['bucket_id']) {?>
-                                <option value="<?php echo $bucket->id;?>" selected="selected"><?php echo $bucket->bucket_name;?></option>
-                              <?php } else {?>
-                                <option value="<?php echo $bucket->id;?>"><?php echo $bucket->bucket_name;?></option>
-                              <?php } ?>
-                            <?php } ?>
-                          <?php } ?>
-                        </select>
-                        <?php if (isset($data['error_bucket_id'])) { ?>
-                          <div class="text-danger"><?php echo $data['error_bucket_id']; ?></div>
-                        <?php } ?>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </div>
-          </div>
           
-          </form>
-          <br>
-          <div class="row">
-            <div class="col-md-12 text-center">
-              <!--<input type="submit" form="form-item" title="Save" class="btn btn-primary save_btn_rotate" value="Save">-->
-              <input type="button" title="Save" class="btn btn-primary save_btn_rotate formsubmit" value="Save">
-              <a id="cancel_button" href="<?php echo $data['cancel']; ?>" data-toggle="tooltip" title="Cancel" class="btn btn-default cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+            </form>
+            <br>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <!--<input type="submit" form="form-item" title="Save" class="btn btn-primary save_btn_rotate" value="Save">-->
+                <input type="button" title="Save" class="btn button-blue basic-button-small save_btn_rotate formsubmit" value="Save">
+                <a id="cancel_button" href="<?php echo $data['cancel']; ?>" data-toggle="tooltip" title="Cancel" class="btn btn-default basic-button-small text-dark cancel_btn_rotate" style="border-color: black;"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+              </div>
             </div>
           </div>
-          </div>
-          <div class="tab-pane" id="alias_code_tab">
+
+          <div class="tab-pane" id="alias_code_tab" style="display: none;">
             <form action="<?php echo $data['add_alias_code']; ?>" method="post" enctype="multipart/form-data" id="form-item-alias-code" class="form-horizontal">
-                @csrf
-            <?php if(isset($data['iitemid'])){?>
-              <input type="hidden" name="iitemid" value="<?php echo $data['iitemid'];?>">
-            <?php } ?>
-              <div class="row">
-                <div class="col-md-4">
-                  <span>Alias Code:&nbsp;&nbsp;</span><span style="display:inline-block;"><input type="text" name="valiassku" maxlength="50" class="form-control" required></span>
-                  <input type="hidden" name="vitemcode" value="<?php echo isset($data['vitemcode']) ? $data['vitemcode'] : ''; ?>">
-                  <input type="hidden" name="vsku" value="<?php echo isset($data['vbarcode']) ? $data['vbarcode'] : ''; ?>">
+              @csrf
+              <?php if(isset($data['iitemid'])){?>
+                <input type="hidden" name="iitemid" value="<?php echo $data['iitemid'];?>">
+              <?php } ?>
+              
+              <div class="mytextdiv">
+                <div class="mytexttitle font-weight-bold text-uppercase">
+                    Alias Code
                 </div>
-                <div class="col-md-4">
-                  <span style="display:inline-block;"><input type="submit" name="Alias_code" value="Add Alias Code" class="btn btn-info"></span>
+                <div class="divider font-weight-bold"></div>
+              </div>
+
+              <div class="py-3">
+                  
+                <div class="row">
+                  <div class="col-md-12 mx-auto">
+                      
+                    <div class="form-group row">
+                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                <label for="inputFirstname" class="p-2 float-right text-uppercase">Alias Code:</label>
+                            </div>
+                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                              <input type="text" id="valiassku"  name="valiassku" maxlength="50" class="form-control adjustment-fields" required>
+                              <input type="hidden" name="vitemcode" id="vitemcode" value="<?php echo isset($data['vitemcode']) ? $data['vitemcode'] : ''; ?>">
+                              <input type="hidden" name="vsku" name="vsku" value="<?php echo isset($data['vbarcode']) ? $data['vbarcode'] : ''; ?>">
+                              <?php if(session()->get('hq_sid') == 1){ ?>
+                                  <input type="hidden" name="alias_stores_hq" value="" id="alias_stores_hq"  >
+                              <?php } ?>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                            <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                              <input type="submit" name="Alias_code" value="Add Alias Code" class="btn button-blue basic-button-small">
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
+
             </form>
             <br><br>
             <form action="<?php echo $data['alias_code_deletelist']; ?>" method="post" enctype="multipart/form-data" id="form-item-alias-list" class="form-horizontal">
+                @csrf
+                <div class="mytextdiv">
+                  <div class="mytexttitle font-weight-bold text-uppercase">
+                      Existing Codes
+                  </div>
+                  <div class="divider font-weight-bold"></div>
+                </div>
+
               <div class="row">
                 <div class="col-md-12">
-                  <table class="table table-bordered table-hover" style="width:30%;">
+                  <table class="table table-hover promotionview" style="width:30%;">
                     <thead>
-                      <tr>
-                        <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_alias\']').prop('checked', this.checked);" /></th>
+                      <tr class="header-color">
+                        <th style="width: 1px;" class="text-left text-uppercase"><input type="checkbox" onclick="$('input[name*=\'selected_alias\']').prop('checked', this.checked);" /></th>
                         <th>Alias sku</th>
                       </tr>
                     </thead>
                     <tbody>
-                    <?php if(isset($data['itemalias']) && count($data['itemalias']) > 0){ ?>
+                    <?php if(isset($data['itemalias']) && count((array)$data['itemalias']) > 0){ ?>
                       <?php foreach($data['itemalias'] as $k => $alias) { ?>
                         <tr>
                           <td><input type="checkbox" name="selected_alias[]" value="<?php echo $alias->iitemaliasid; ?>" /></td>
@@ -1074,65 +1317,75 @@
               <br>
               <div class="row">
                 <div class="col-md-12 text-left">
-                  <input type="submit" title="Delete" class="btn btn-danger" value="Delete" style="border-radius:0px;" <?php if(isset($data['itemalias']) && count($data['itemalias']) == 0){ ?> disabled="true" <?php } ?> >
+                  <input type="submit" title="Delete" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase" value="Delete" style="border-radius:0px;" <?php if(isset($data['itemalias']) && count($data['itemalias']) == 0){ ?> disabled="true" <?php } ?> >
                 </div>
               </div>
             </form>
           </div>
           
-          <div class="tab-pane" id="lot_matrix_tab">
+          <div class="tab-pane" id="lot_matrix_tab" style="display: none;">
             <div class="row">
               <div class="col-md-4">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#addLotItemModal">Add Lot Item</button>&nbsp;&nbsp;
+                <button class="btn button-blue basic-button-small" data-toggle="modal"  id="button_addLotItemModal">Add Lot Item</button>&nbsp;&nbsp;
                 <form action="<?php echo $data['lot_matrix_deletelist']; ?>" method="post" id="delete_lot_items" style="display: inline-block;">
-                    @csrf
-                  <input type="submit" class="btn btn-danger" value="Delete Lot Item" style="border-radius:0px;">
+                @csrf
+                  <input type="submit" class="btn btn-danger buttonred basic-button-small" value="Delete Lot Item" style="border-radius:0px;">
                 </form>
               </div>
             </div>
             <br><br>
-            <form action="<?php echo $data['lot_matrix_editlist']; ?>" method="post" enctype="multipart/form-data" id="form-item-lot-matrix-list" class="form-horizontal">
+            <form action="<?php echo $data['lot_matrix_editlist']; ?>" method="post" enctype="multipart/form-data" id="form-item-lot-matrix-list1" class="form-horizontal">
                 @csrf
+                
+                <?php if(session()->get('hq_sid') == 1) { ?>
+                    <input type="hidden" id="store_hq_for_edit" name="store_hq_for_edit" value="" >
+                <?php } ?>
               <div class="row">
                 <div class="col-md-12">
-                  <table class="table table-bordered table-hover">
+                  <table class="table table-hover promotionview" style="width: 100%;">
                     <thead>
-                      <tr>
+                      <tr class="header-color">
                         <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_lot_matrix\']').prop('checked', this.checked);" /></th>
-                        <th>Pack Name</th>
-                        <th>Description</th>
-                        <th>Unit Cost</th>
-                        <th>Pack Qty</th>
-                        <th>Pack Cost</th>
-                        <th>Price</th>
-                        <th>Sequence</th>
-                        <th>Profit Margin(%)</th>
+                        <th class="text-left">Pack Name</th>
+                        <th class="text-left">Description</th>
+                        <th class="text-left">Unit Cost</th>
+                        <th class="text-left">Pack Qty</th>
+                        <th class="text-left">Pack Cost</th>
+                        <th class="text-left">Price</th>
+                        <th class="text-left">Sequence</th>
+                        <th class="text-left">Profit Margin(%)</th>
                       </tr>
                     </thead>
                     <tbody>
-                    <?php if(isset($data['itempacks']) && count($data['itempacks']) > 0){ ?>
+                    <?php if(isset($data['itempacks']) && count((array)$data['itempacks']) > 0){ ?>
                       <?php foreach($data['itempacks'] as $k => $itempack) { ?>
                         <tr>
-                        <input type="hidden" name="itempacks[<?php echo $k; ?>][iitemid]" value="<?php echo $itempack->iitemid; ?>">
-                        <input type="hidden" name="itempacks[<?php echo $k; ?>][idetid]" value="<?php echo $itempack->idetid; ?>">
+                          <input type="hidden" name="itempacks[<?php echo $k; ?>][iitemid]" value="<?php echo $itempack->iitemid; ?>">
+                          <input type="hidden" name="itempacks[<?php echo $k; ?>][idetid]" value="<?php echo $itempack->idetid; ?>">
                           <?php if($itempack->iparentid == 1){ ?>
-                            <td><input type="checkbox" name="" value="<?php echo $itempack->idetid; ?>" class="selected_lot_matrix_checkbox" /></td>
+                            <td><input type="checkbox" name="selected_lot_matrix[]" value="<?php echo $itempack->idetid; ?>" class="selected_lot_matrix_checkbox" /></td>
                           <?php } else { ?>
                             <td><input type="checkbox" class="selected_lot_matrix_checkbox" name="selected_lot_matrix[]" value="<?php echo $itempack->idetid; ?>" /></td>
                           <?php } ?>
-                          <td><?php echo $itempack->vpackname;?></td>
-                          <td><?php echo $itempack->vdesc;?></td>
-                          <td><?php echo $data->nunitcost;?></td>
-                          <td><?php echo $itempack->ipack;?></td>
                           <td>
-                            <?php echo $itempack->npackcost;?>
+                            <input type="text" class="editable adjustment-fields" name="itempacks[<?php echo $k; ?>][vpackname]" value="<?php echo $itempack->vpackname;?>" />
+                          </td>
+                          <td>
+                            <?php //echo $itempack->vdesc;?>
+                            <input type="text" class="editable adjustment-fields" name="itempacks[<?php echo $k; ?>][vdesc]" value="<?php echo $itempack->vdesc;?>" />
+                          </td>
+                          <td class="text-left"><?php echo number_format($data['nunitcost'], 2);?></td>
+                          <td class="text-left"><?php echo $itempack->ipack;?></td>
+                          <td class="text-left">
+                            <!--<?php echo $itempack->npackcost;?>-->
+                            <input type="text" class="editable adjustment-fields" id="input_npackcost" name="itempacks[<?php echo $k; ?>][npackcost]" value="<?php echo number_format($itempack->npackcost, 2);?>" />
                             <input type="hidden" class="input_npackcost" value="<?php echo $itempack->npackcost;?>">
                           </td>
-                          <td>
-                            <input type="text" class="editable input_npackprice" name="itempacks[<?php echo $k; ?>][npackprice]" value="<?php echo $itempack->npackprice; ?>" />
+                          <td class="text-left">
+                            <input type="text" class="editable input_npackprice adjustment-fields" id='input_npackprice' name="itempacks[<?php echo $k; ?>][npackprice]" value="<?php echo $itempack->npackprice; ?>" style="text-align: right;" />
                           </td>
-                          <td><?php echo $itempack->isequence;?></td>
-                          <td>
+                          <td class="text-left"><?php echo $itempack->isequence;?></td>
+                          <td class="text-left">
                             <span class="npackmargins"><?php echo $itempack->npackmargin;?></span>
                             <input class="input_npackmargins" type="hidden" name="itempacks[<?php echo $k; ?>][npackmargin]" value="<?php echo $itempack->npackmargin; ?>" />
                           </td>
@@ -1146,75 +1399,108 @@
               <br>
               <div class="row">
                 <div class="col-md-12">
-                  <input type="submit" title="Update" class="btn btn-primary" value="Update" <?php if(isset($itempacks) && count($itempacks) == 0){ ?> disabled="true" <?php } ?> >
+                  <input type="button" title="Update" id="save_pack_edit_index" class="btn button-blue basic-button-small save_btn_rotate" value="Update" <?php if(isset($data['itempacks']) && count((array)$data['itempacks']) == 0){ ?> disabled="true" <?php } ?> >
                 </div>
               </div>
             </form>
           </div>
-          <div class="tab-pane" id="vendor_tab">
+
+          <div class="tab-pane" id="vendor_tab" style="display: none;">
             <form action="<?php echo $data['action_vendor']; ?>" method="post" enctype="multipart/form-data" id="form-item-vendor" class="form-horizontal">
-                @csrf
-            <?php if(isset($data['iitemid'])){?>
-              <input type="hidden" name="iitemid" value="<?php echo $data['iitemid'];?>">
-            <?php } ?>
-              <div class="row">
-                <div class="col-md-4 text-center">
-                  <span>Vendor Item Code:&nbsp;&nbsp;</span><span style="display:inline-block;"><input type="text" name="vvendoritemcode" maxlength="100" class="form-control" required></span>
+              @csrf
+              <?php if(isset($data['iitemid'])){?>
+                <input type="hidden" name="iitemid" value="<?php echo $data['iitemid'];?>">
+              <?php } ?>
+              <?php if(session()->get('stores_hq')){?>
+                <input type="hidden" id="hiddenvendorAssignsave" name="hiddenvendorAssignsave" value="">
+              <?php } ?>
+
+              <div class="mytextdiv">
+                <div class="mytexttitle font-weight-bold text-uppercase">
+                    Vendor
                 </div>
-                <div class="col-md-4 text-center">
-                  <span>Vendor:&nbsp;&nbsp;</span>
-                  <span style="display:inline-block;">
-                    <select name="ivendorid" class="form-control" required>
-                      <option value="">--Select Vendor--</option>
-                        <?php if(isset($data['suppliers']) && count($data['suppliers']) > 0){?>
-                          <?php foreach($data['suppliers'] as $supplier){ ?>
-                            <?php $already_vendor = false; ?>
-                            <?php if(isset($data['itemvendors']) && count($data['itemvendors']) > 0){ ?>
-                              <?php foreach($data['itemvendors'] as $itemvendor) { ?>
-                                <?php if($itemvendor->ivendorid == $supplier['isupplierid']){ ?>
-                                    <?php $already_vendor = true; ?>
-                                <?php } ?>
-                              <?php } ?>
-                            <?php } ?>
-                            <?php if($already_vendor == false){ ?>
-                              <option value="<?php echo $supplier['vsuppliercode'];?>"><?php echo $supplier['vcompanyname'];?></option>
-                            <?php } ?>
-                          <?php } ?>
-                        <?php } ?>
-                    </select>
-                  </span>
-                </div>
-                <div class="col-md-4">
-                  <span style="display:inline-block;"><input type="submit" name="Assign" value="Assign" class="btn btn-info"></span>
-                </div>
+                <div class="divider font-weight-bold"></div>
+              </div>
+
+              <div class="py-3">
+                  <div class="row">
+                      <div class="col-md-12 mx-auto">
+                          
+                          <div class="form-group row">
+                              <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputFirstname" class="p-2 float-right text-uppercase">Vendor Item Code:&nbsp;&nbsp;</label>
+                                  </div>
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      
+                                    <input type="text" name="vvendoritemcode" maxlength="100" class="form-control adjustment-fields" required>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+
+                                  <label for="inputLastname" class="p-2 float-right text-uppercase">Vendor:&nbsp;&nbsp;</label>
+                                </div>
+                                <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+
+                                  <select name="ivendorid" id="ivendorid" class="form-control adjustment-fields" required>
+                                    <option value="">--Select Vendor--</option>
+                                      <?php if(isset($data['suppliers']) && count($data['suppliers']) > 0){?>
+                                        <?php foreach($data['suppliers'] as $supplier){ ?>
+                                            <option value="<?php echo $supplier['vsuppliercode'];?>"><?php echo $supplier['vcompanyname'];?></option>
+                                        <?php } ?>
+                                      <?php } ?>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                  
+                                <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                  <input type="button" id="form-item-vendor-submit-btn" name="Assign" value="Assign" class="btn button-blue basic-button-small text-uppercase">
+                                </div>
+                                <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                  <button class="btn buttonred basic-button-small text-uppercase" id="delete_item_vendor_btn"">Delete</button>                                    
+                                </div>
+                              </div>
+                          </div>
+                          
+                      </div>
+                  </div>
+
               </div>
             </form>
             <br><br>
             <form action="<?php echo $data['action_vendor_editlist']; ?>" method="post" enctype="multipart/form-data" id="form-item-vendor-list" class="form-horizontal">
-                @csrf
+             @csrf
               <div class="row">
                 <div class="col-md-12">
-                  <table class="table table-bordered table-hover" style="width:70%;">
+                  <table class="table table-hover promotionview" style="width:70%;">
                     <thead>
-                      <tr>
-                        <th>Vendor Name</th>
-                        <th>Vendor Item Code</th>
-                        <th>Address</th>
-                        <th>Phone</th>
+                      <tr class="header-color">
+                        <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected_vendor_code\']').prop('checked', this.checked);" /></td>
+                        <th class="text-left text-uppercase">Vendor Name</th>
+                        <th class="text-left text-uppercase">Vendor Item Code</th>
+                        <th class="text-left text-uppercase">Address</th>
+                        <th class="text-left text-uppercase">Phone</th>
                       </tr>
                     </thead>
                     <tbody>
-                    <?php if(isset($data['itemvendors']) && count($data['itemvendors']) > 0){ ?>
+                    <?php if(session()->get('hq_sid') == 1){ ?>
+                        <input type="hidden" name="vendor_update_stores" id="vendor_update_stores" value="">
+                    <?php } ?>
+                    <?php if(isset($data['itemvendors']) && count((array)$data['itemvendors']) > 0){ ?>
                       <?php foreach($data['itemvendors'] as $k => $itemvendor) { ?>
                         <tr>
                         <input type="hidden" name="itemvendors[<?php echo $k; ?>][iitemid]" value="<?php echo $itemvendor->iitemid; ?>">
                         <input type="hidden" name="itemvendors[<?php echo $k; ?>][ivendorid]" value="<?php echo $itemvendor->ivendorid; ?>">
-                          <td><?php echo $itemvendor['vcompanyname'];?></td>
-                          <td>
+                        <input type="hidden" name="itemvendors[<?php echo $k; ?>][Id]" value="<?php echo $itemvendor->Id; ?>">
+                          <td class="text-left text-uppercase"><input type="checkbox" class="item_vendor_ids" name="selected_vendor_code[]" value="<?php echo $itemvendor->Id; ?>" /></td>
+                          <td class="text-left text-uppercase"><?php echo $itemvendor->vcompanyname;?></td>
+                          <td class="text-left text-uppercase">
                             <input type="text" class="editable" maxlength="100" name="itemvendors[<?php echo $k; ?>][vvendoritemcode]" value="<?php echo $itemvendor->vvendoritemcode; ?>" />
                           </td>
-                          <td><?php echo $itemvendor->vaddress1;?></td>
-                          <td><?php echo $itemvendor->vphone;?></td>
+                          <td class="text-left text-uppercase"><?php echo $itemvendor->vaddress1;?></td>
+                          <td class="text-left text-uppercase"><?php echo $itemvendor->vphone;?></td>
                         </tr>
                       <?php } ?>
                     <?php } ?>
@@ -1223,12 +1509,12 @@
                 </div>
               </div>
               <br>
+            </form>
               <div class="row">
                 <div class="col-md-12">
-                  <input type="submit" title="Update" value="Update" class="btn btn-primary" <?php if(isset($data['itemvendors']) && count($data['itemvendors']) == 0){ ?> disabled="true" <?php } ?> >
+                  <button id="updateAllvendorsAssigned" class="btn btn-primary" <?php if(isset($data['itemvendors']) && count($data['itemvendors']) == 0){ ?> disabled="true" <?php } ?> > Update </button>
                 </div>
               </div>
-            </form>
           </div>
          
         </div>
@@ -1245,14 +1531,14 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to add the Items:</h6>
             <button type="button" class="close" id="closeBtn" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to add the Items:</h4>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
+             <table class="table promotionview">
                 <thead id="table_green_header_tag">
-                    <tr>
+                    <tr class="header-color">
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
                                 <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
@@ -1266,7 +1552,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input stores" id="stores" name="stores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check stores" id="stores" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -1276,7 +1562,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button id="save_btn" class="btn btn-danger" data-dismiss="modal">Save</button>
+            <button id="save_btn" class="bbtn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Save</button>
             <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
           </div>
         </div>
@@ -1288,27 +1574,13 @@
 @endsection
 
 
-@section('scripts')
+@section('page-script')
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 
 <style type="text/css">
- .nav.nav-tabs .active a{
-    background-color: #f05a28 !important; 
-    color: #fff !important; 
-  }
-
-  .nav.nav-tabs li a{
-    color: #fff !important; 
-    background-color: #03A9F4; 
-  }
-
-  .nav.nav-tabs li a:hover{
-    color: #fff !important; 
-    background-color: #f05a28 !important; 
-  }
-
-  .nav.nav-tabs li a:hover{
-    color: #fff !important; 
+  .padding-left-right{
+    padding: 0 2% 0 2%;
   }
 
   .add_new_administrations{
@@ -1354,7 +1626,7 @@
         $('#input-sellingunit').attr('readonly', 'readonly');
         $('.notLottery').show();
         $('.Lottery').hide();
-    }else if($(this).val() == 'Lottery'){
+    }else if($(this).val() == 'Instant'){
         // console.log($(this).val());
         $('.notLottery').hide();
         $('.Lottery').show();
@@ -2431,7 +2703,7 @@ $(document).ready(function(){
   }
 
   .select2-container--default .select2-selection--single{
-    border-radius: 0px !important;
+    border-radius: 7px !important;
     height: 35px !important;
   }
   .select2.select2-container.select2-container--default{
@@ -2441,9 +2713,9 @@ $(document).ready(function(){
     line-height: 35px !important;
   }
 </style>
-
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
 <script type="text/javascript">
   $('select[name="vitemtype"]').select2();
   $('select[name="vdepcode"]').select2();
@@ -2558,74 +2830,68 @@ $(document).ready(function(){
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Add New Category under <span id="span_dept_name"></span></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
           <form action="<?php echo $data['add_new_category']; ?>" method="post" id="category_add_new_form">
-              @csrf
+             @csrf
             <input type="hidden" name="isequence" value="0">
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Name</label>
+              <div class="col-12 col-md-12 col-sm-12 col-lg-12 p-form">
+                  <div class="col-3 col-md-3 col-sm-3 col-lg-3">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Name</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="50" class="form-control" id="add_vcategoryname" name="vcategoryname">
+                  <div class="col-9 col-md-9 col-sm-9 col-lg-9">
+                    
+                    <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_vcategoryname" name="vcategoryname">
                   </div>
-                </div>
               </div>
             </div>
             <br>
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Description</label>
+              <div class="col-12 col-md-12 col-sm-12 col-lg-12 p-form">
+                  <div class="col-3 col-md-3 col-sm-3 col-lg-3">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Description</label>
                   </div>
-                  <div class="col-md-10">  
-                    <textarea maxlength="100" name="vdescription" id="category_add_vdescription" class="form-control"></textarea>
+                  <div class="col-9 col-md-9 col-sm-9 col-lg-9">
+                    <textarea maxlength="100" name="vdescription" id="category_add_vdescription" class="form-control adjustment-fields"></textarea>
+                    
                   </div>
-                </div>
               </div>
             </div>
             <br>
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Type</label>
+              <div class="col-12 col-md-12 col-sm-12 col-lg-12 p-form">
+                  <div class="col-3 col-md-3 col-sm-3 col-lg-3">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Type</label>
                   </div>
-                  <div class="col-md-10">  
-                    <select name="vcategorttype" id="" class="form-control ">
+                  <div class="col-9 col-md-9 col-sm-9 col-lg-9">
+                    <select name="vcategorttype" id="" class="form-control adjustment-fields">
                       <option value="<?php echo $data['Sales']; ?>" selected="selected"><?php echo $data['Sales']; ?></option>
                       <option value="<?php echo $data['MISC']; ?>" ><?php echo $data['MISC']; ?></option>
                     </select>
                   </div>
-                </div>
               </div>
             </div>
             <br>
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Department</label>
+              <div class="col-12 col-md-12 col-sm-12 col-lg-12 p-form">
+                  <div class="col-3 col-md-3 col-sm-3 col-lg-3">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Department</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" name="category_dept_name" id="category_dept_name" class="form-control" value="" disabled="true">
+                  <div class="col-9 col-md-9 col-sm-9 col-lg-9">
+                    <input type="text" name="category_dept_name" id="category_dept_name" class="form-control adjustment-fields" value="" disabled="true">
                     <input type="hidden" name="category_dept_code" id="category_dept_code" class="form-control" value="<?php echo isset($data['vdepcode'])?$data['vdepcode']:''; ?>">
                     
                   </div>
-                </div>
               </div>
             </div>
             <br>
             <div class="row">
               <div class="col-md-12 text-center">
-                <input class="btn btn-success" type="submit" value="Save">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input class="btn button-blue basic-button-small" type="submit" value="Save">
+                <button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;">Cancel</button>
               </div>
             </div>
           </form>
@@ -2722,43 +2988,42 @@ $(document).ready(function(){
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Add New Department</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
           <form action="<?php echo $data['add_new_department']; ?>" method="post" id="department_add_new_form">
-              @csrf
+             @csrf
             <input type="hidden" name="isequence" value="0">
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Name</label>
+              
+              <div class="col-12 col-md-12 col-sm-12 col-lg-12 p-form">
+                  <div class="col-3 col-md-3 col-sm-3 col-lg-3">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Name</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="50" class="form-control" id="add_vdepartmentname" name="vdepartmentname">
+                  <div class="col-9 col-md-9 col-sm-9 col-lg-9">
+                    <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_vdepartmentname" name="vdepartmentname">
                   </div>
-                </div>
               </div>
             </div>
             <br>
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Description</label>
+              
+              <div class="col-12 col-md-12 col-sm-12 col-lg-12 p-form">
+                  <div class="col-3 col-md-3 col-sm-3 col-lg-3">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Description</label>
                   </div>
-                  <div class="col-md-10">  
-                    <textarea maxlength="100" name="vdescription" id="department_add_vdescription" class="form-control"></textarea>
+                  <div class="col-9 col-md-9 col-sm-9 col-lg-9">
+                    <textarea maxlength="100" name="vdescription" id="department_add_vdescription" class="form-control adjustment-fields"></textarea>
                   </div>
-                </div>
               </div>
+
             </div>
             <br>
             <div class="row">
               <div class="col-md-12 text-center">
-                <input class="btn btn-success" type="submit" value="Save">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input class="btn button-blue basic-button-small" type="submit" value="Save">
+                <button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;">Cancel</button>
               </div>
             </div>
           </form>
@@ -2913,29 +3178,27 @@ $(document).ready(function(){
   });
 </script>
 
-<div class="modal fade" id="addModalSubCatogory" role="dialog">
+  <div class="modal fade" id="addModalSubCatogory" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Add New Sub Category - <span id="span_cat_name">  </span></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
           <form action="<?php echo $data['add_new_subcategory']; ?>" method="post" id="subcategory_add_new_form">
-              @csrf
+             @csrf
             <input type="hidden" name="isequence" value="0">
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Name</label>
+              <div class="col-12 col-md-12 col-sm-12 col-lg-12 p-form">
+                  <div class="col-3 col-md-3 col-sm-3 col-lg-3">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Name</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="50" class="form-control" id="add_subcat_name" name="subcat_name">
+                  <div class="col-9 col-md-9 col-sm-9 col-lg-9">
+                    <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_subcat_name" name="subcat_name">
                   </div>
-                </div>
               </div>
             </div>
             <br>
@@ -2943,8 +3206,8 @@ $(document).ready(function(){
             <br>
             <div class="row">
               <div class="col-md-12 text-center">
-                <input class="btn btn-success" type="submit" value="Save">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input class="btn button-blue basic-button-small" type="submit" value="Save">
+                <button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;">Cancel</button>
               </div>
             </div>
           </form>
@@ -3039,29 +3302,27 @@ $(document).ready(function(){
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Add New Size</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
           <form action="<?php echo $data['add_new_size']; ?>" method="post" id="size_add_new_form">
               @csrf
             <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Name</label>
+              <div class="col-12 col-md-12 col-sm-12 col-lg-12 p-form">
+                  <div class="col-3 col-md-3 col-sm-3 col-lg-3">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Name</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="50" class="form-control" id="add_vsize" name="vsize">
+                  <div class="col-9 col-md-9 col-sm-9 col-lg-9">
+                    <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_vsize" name="vsize">
                   </div>
-                </div>
               </div>
             </div>
             <br>
             <div class="row">
               <div class="col-md-12 text-center">
-                <input class="btn btn-success" type="submit" value="Save">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input class="btn button-blue basic-button-small" type="submit" value="Save">
+                <button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;">Cancel</button>
               </div>
             </div>
           </form>
@@ -3299,181 +3560,158 @@ $(document).ready(function(){
 
 <!-- Modal Add -->
   <div class="modal fade" id="addModalSupplier" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Add New Supplier</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body small">
           <form action="<?php echo $data['add_new_supplier']; ?>" method="post" id="supplier_add_new_form">
               @csrf
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Vendor Name</label>
+            
+            <div class="form-group row">
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputFirstname" class="p-2 float-right text-uppercase">Vendor Name</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="50" class="form-control" id="add_vcompanyname" name="vcompanyname">
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_vcompanyname" name="vcompanyname">
                   </div>
-                </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Vendor Type</label>
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Vendor Type</label>
                   </div>
-                  <div class="col-md-10">  
-                    <select name="vvendortype" class="form-control"> 
-                      <option value="Vendor">Vendor</option>
-                      <option value="Other">Other</option>
-                    </select>
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <select name="vvendortype" class="form-control adjustment-fields"> 
+                    <option value="Vendor">Vendor</option>
+                    <option value="Other">Other</option>
+                  </select>
                   </div>
-                </div>
+              </div>
+            </div>
+            
+            <br>
+            <div class="form-group row">
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputFirstname" class="p-2 float-right text-uppercase">First Name</label>
+                  </div>
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_vfnmae" name="vfnmae">
+                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Last Name</label>
+                  </div>
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="text" maxlength="25" class="form-control adjustment-fields" id="add_vlname" name="vlname">
+                  </div>
               </div>
             </div>
             <br>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>First Name</label>
+            <div class="form-group row">
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputFirstname" class="p-2 float-right text-uppercase">Vendor Code</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="25" class="form-control" id="add_vfnmae" name="vfnmae">
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_vcode" name="vcode">
                   </div>
-                </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Last Name</label>
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Address</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="25" class="form-control" id="add_vlname" name="vlname">
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="text" maxlength="25" class="form-control adjustment-fields" id="add_vaddress1" name="vaddress1">
                   </div>
-                </div>
               </div>
             </div>
             <br>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Vendor Code</label>
+            <div class="form-group row">
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputFirstname" class="p-2 float-right text-uppercase">City</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="20" class="form-control" id="add_vcode" name="vcode">
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_vcity" name="vcity">
                   </div>
-                </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Address&nbsp;&nbsp;</label>
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">State</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="100" class="form-control" id="add_vaddress1" name="vaddress1">
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="text" maxlength="25" class="form-control adjustment-fields" id="add_vstate" name="vstate">
                   </div>
-                </div>
               </div>
             </div>
             <br>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>City</label>
+            <div class="form-group row">
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputFirstname" class="p-2 float-right text-uppercase">Phone</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="20" class="form-control" id="add_vcity" name="vcity">
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="text" maxlength="50" class="form-control adjustment-fields" id="add_vphone" name="vphone">
                   </div>
-                </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>State</label>
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Zip</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="20" class="form-control" id="add_vstate" name="vstate">
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="text" maxlength="25" class="form-control adjustment-fields" id="add_vzip" name="vzip">
                   </div>
-                </div>
               </div>
             </div>
             <br>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Phone</label>
+            <div class="form-group row">
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputFirstname" class="p-2 float-right text-uppercase">Country</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="20" class="form-control" id="add_vphone" name="vphone">
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="text" maxlength="20" class="form-control adjustment-fields" id="add_vcountry" name="vcountry" value="USA" readonly>
                   </div>
-                </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Zip</label>
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputLastname" class="p-2 float-right text-uppercase">Email</label>
                   </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="10" class="form-control" id="add_vzip" name="vzip">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Country</label>
-                  </div>
-                  <div class="col-md-10">  
-                    <input type="text" maxlength="20" class="form-control" id="add_vcountry" name="vcountry" value="USA" readonly>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>Email</label>
-                  </div>
-                  <div class="col-md-10">  
-                    <input type="email" maxlength="100" class="form-control" id="add_vemail" name="vemail" onkeyup="isEmail()" autocomplete="off" />
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <input type="email" maxlength="100" class="form-control adjustment-fields" id="add_vemail" name="vemail" onkeyup="isEmail()" autocomplete="off" />
                     <span class="text-warning" id="email_error"></span>
                   </div>
-                </div>
               </div>
             </div>
             <br>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label>PLCB Type</label>
+            <div class="form-group row">
+              <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+                  <div class="col-4 col-md-4 col-sm-4 col-lg-4">
+                      <label for="inputFirstname" class="p-2 float-right text-uppercase">PLCB Type</label>
                   </div>
-                  <div class="col-md-10">  
-                    <select name="plcbtype" class="form-control">
+                  <div class="col-8 col-md-8 col-sm-8 col-lg-8">
+                    <select name="plcbtype" class="form-control adjustment-fields">
                       <option value="None">None</option>
                       <option value="Schedule A">Schedule A</option>
                       <option value="Schedule B">Schedule B</option>
                       <option value="Schedule C">Schedule C</option>
                     </select>
                   </div>
-                </div>
               </div>
+              
             </div>
             <br>
             <div class="row">
               <div class="col-md-12 text-center">
-                <input class="btn btn-success" type="submit" id="save_supplier" value="Save">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input class="btn button-blue basic-button-small" type="submit" id="save_supplier" value="Save">
+                <button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;">Cancel</button>
               </div>
             </div>
           </form>
@@ -3493,7 +3731,7 @@ $(document).ready(function(){
 
 
 <script type="text/javascript">
-  $(window).load(function() {
+  $(window).on('load', function() {
     $("div#divLoading").removeClass('show');
   });
 </script>
@@ -3520,7 +3758,7 @@ $(document).ready(function(){
     if($("input[name='percent_selling_price']").val() == ''){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: 'Please Enter Profit Margin!', 
         callback: function(){}
       });
@@ -3533,7 +3771,7 @@ $(document).ready(function(){
     if(per == '0' || per == 0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: 'Profit Margin Should not be Zero!', 
         callback: function(){}
       });
@@ -3557,7 +3795,7 @@ $(document).ready(function(){
     // console.log(selling_price);
     selling_price = selling_price.toFixed(2);
     //  revenue = revenue.toFixed(2);
-// console.log(per);
+  // console.log(per);
      $('input[name="dunitprice"]').val(selling_price);
      $('input[name="gross_profit"]').val(prof_mar.toFixed(2));
 
@@ -3573,14 +3811,14 @@ $(document).ready(function(){
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Calculate Selling Price</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         <p class="text-center"><strong>Enter Your Profit Margin and it will Calculate Your Selling Price.</strong></p>
-        <p class="text-center"><span style="display: inline-block;"><input type="text" name="percent_selling_price" class="form-control"></span>&nbsp;<span><b>%</b></span></p>
+        <p class="text-center"><span style="display: inline-block;"><input type="text" name="percent_selling_price" class="form-control adjustment-fields"></span>&nbsp;<span><b>%</b></span></p>
         <p class="text-center">
-          <button type="button" class="btn btn-info" id="selling_percent_calculate_btn">Calculate</button>
+          <button type="button" class="btn button-blue basic-button-small" id="selling_percent_calculate_btn">Calculate</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </p>
         
@@ -3596,8 +3834,8 @@ $(document).ready(function(){
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Add Item Description</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -3605,7 +3843,7 @@ $(document).ready(function(){
                 <label>Description</label>
             </div>
             <div class="col-md-8">
-                <input type="text" id="input-description" name="description" maxlength="100" value="<?php echo isset($data['vdescription']) ? $data['vdescription'] : ''; ?>" placeholder="Description" class="form-control" />
+                <input type="text" id="input-description" name="description" maxlength="100" value="<?php echo isset($data['vdescription']) ? $data['vdescription'] : ''; ?>" placeholder="Description" class="form-control adjustment-fields" />
             </div>
         </div>
         <br>
@@ -3613,7 +3851,7 @@ $(document).ready(function(){
           <div class="text-danger"><?php echo $data['error_vdescription']; ?></div>
         <?php } ?>
         <p class="text-center">
-          <button type="button" class="btn btn-info" id="save_description_btn">Save</button>
+          <button type="button" class="btn button-blue basic-button-small" id="save_description_btn">Save</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </p>
         
@@ -3624,88 +3862,76 @@ $(document).ready(function(){
 </div>
 
 <div id="levelPricingModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Level Pricing</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="row">
-            <div class="col-md-6 padding">
-                <div class="form-group">
-                    <div class="col-md-5">
-                        <label>Level 2 Price</label>
-                    </div>
-                    <div class="col-md-7">
-                        <input type="text" class="form-control" name="nlevel2" value="<?php echo isset($data['nlevel2']) ? $data['nlevel2'] : ''; ?>" placeholder="Level 2 Price" id="input-level2price" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 padding">
-                <div class="form-group">
-                    <div class="col-md-5">
-                        <label>Gross Profit(%)</label>
-                    </div>
-                    <div class="col-md-7">
-                        <span style="display: inline-block;width: 85%;"><input type="text" name="gross_profit2" value="" placeholder="" id="input-gross-profit2" class="form-control" readonly /></span>
-                        <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn_l2"><button class="btn btn-sm btn-info" title="">..</button></span>
-                    </div>
-                </div>
-            </div>
+        <div class="form-group row">
+          <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+              <div class="col-5 col-md-5 col-sm-5 col-lg-5">
+                  <label for="inputFirstname" class="p-2 float-right text-uppercase">Level 2 Price</label>
+              </div>
+              <div class="col-7 col-md-7 col-sm-7 col-lg-7">
+                <input type="text" class="form-control adjustment-fields" name="nlevel2" value="<?php echo isset($data['nlevel2']) ? $data['nlevel2'] : ''; ?>" placeholder="Level 2 Price" id="input-level2price">
+              </div>
+          </div>
+          <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+              <div class="col-5 col-md-5 col-sm-5 col-lg-5">
+                  <label for="inputLastname" class="p-2 float-right text-uppercase">Gross Profit(%)</label>
+              </div>
+              <div class="col-7 col-md-7 col-sm-7 col-lg-7">
+                <span style="display: inline-block;width: 85%;"><input type="text" name="gross_profit2" value="" placeholder="" id="input-gross-profit2" class="form-control adjustment-fields" readonly /></span>
+                <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn_l2"><button class="btn btn-sm btn-info" title="">..</button></span>
+              </div>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 padding">
-                <div class="form-group">
-                    <div class="col-md-5">
-                        <label>Level 3 Price</label>
-                    </div>
-                    <div class="col-md-7">
-                        <input type="text" name="nlevel3" value="<?php echo isset($data['nlevel3']) ? $data['nlevel3'] : ''; ?>" placeholder="Level 3 Price" id="input-level3price" class="form-control" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 padding">
-                <div class="form-group">
-                    <div class="col-md-5">
-                        <label>Gross Profit(%)</label>
-                    </div>
-                    <div class="col-md-7">
-                        <span style="display: inline-block;width: 85%;"><input type="text" name="gross_profit3" value="" placeholder="" id="input-gross-profit3" class="form-control" readonly /></span>
-                        <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn_l3"><button class="btn btn-sm btn-info" title="">..</button></span>
-                    </div>
-                </div>
-            </div>
+        <div class="form-group row">
+          <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+              <div class="col-5 col-md-5 col-sm-5 col-lg-5">
+                  <label for="inputFirstname" class="p-2 float-right text-uppercase">Level 3 Price</label>
+              </div>
+              <div class="col-7 col-md-7 col-sm-7 col-lg-7">
+                <input type="text" class="form-control adjustment-fields" name="nlevel3" value="<?php echo isset($data['nlevel3']) ? $data['nlevel3'] : ''; ?>" placeholder="Level 3 Price" id="input-level3price">
+              </div>
+          </div>
+          <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+              <div class="col-5 col-md-5 col-sm-5 col-lg-5">
+                  <label for="inputLastname" class="p-2 float-right text-uppercase">Gross Profit(%)</label>
+              </div>
+              <div class="col-7 col-md-7 col-sm-7 col-lg-7">
+                <span style="display: inline-block;width: 85%;"><input type="text" name="gross_profit3" value="" placeholder="" id="input-gross-profit3" class="form-control adjustment-fields" readonly /></span>
+                <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn_l3"><button class="btn btn-sm btn-info" title="">..</button></span>
+              </div>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 padding">
-                <div class="form-group">
-                    <div class="col-md-5">
-                        <label>Level 4 Price</label>
-                    </div>
-                    <div class="col-md-7">
-                        <input type="text" name="nlevel4" value="<?php echo isset($data['nlevel4']) ? $data['nlevel4'] : ''; ?>" placeholder="Level 4 Price" id="input-level4price" class="form-control"/>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 padding">
-                <div class="form-group">
-                    <div class="col-md-5">
-                        <label>Gross Profit(%)</label>
-                    </div>
-                    <div class="col-md-7">
-                        <span style="display: inline-block;width: 85%;"><input type="text" name="gross_profit4" value="" placeholder="" id="input-gross-profit4" class="form-control" readonly /></span>
-                        <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn_l4"><button class="btn btn-sm btn-info" title="">..</button></span>
-                    </div>
-                </div>
-            </div>
+        <div class="form-group row">
+          <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+              <div class="col-5 col-md-5 col-sm-5 col-lg-5">
+                  <label for="inputFirstname" class="p-2 float-right text-uppercase">Level 4 Price</label>
+              </div>
+              <div class="col-7 col-md-7 col-sm-7 col-lg-7">
+                <input type="text" class="form-control adjustment-fields" name="nlevel2" value="<?php echo isset($data['nlevel4']) ? $data['nlevel2'] : ''; ?>" placeholder="Level 4 Price" id="input-level4price">
+              </div>
+          </div>
+          <div class="col-12 col-md-6 col-sm-2 col-lg-6 p-form">
+              <div class="col-5 col-md-5 col-sm-5 col-lg-5">
+                  <label for="inputLastname" class="p-2 float-right text-uppercase">Gross Profit(%)</label>
+              </div>
+              <div class="col-7 col-md-7 col-sm-7 col-lg-7">
+                <span style="display: inline-block;width: 85%;"><input type="text" name="gross_profit4" value="" placeholder="" id="input-gross-profit4" class="form-control adjustment-fields" readonly /></span>
+                <span style="display: inline-block;width: 10%" id="selling_price_calculation_btn_l4"><button class="btn btn-sm btn-info" title="">..</button></span>
+              </div>
+          </div>
         </div>
         <br>
         <p class="text-center">
-          <button type="button" class="btn btn-info" id="save_price_btn">Save</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn button-blue basic-button-small" id="save_price_btn">Save</button>
+          <button type="button" class="btn btn-default basic-button-small text-dark" data-dismiss="modal" style="border-color: black;">Cancel</button>
         </p>
         
       </div>
@@ -3720,8 +3946,8 @@ $(document).ready(function(){
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Cost</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
           <div class="row">
@@ -3729,7 +3955,7 @@ $(document).ready(function(){
                 <label>Last Cost</label>
             </div>
             <div class="col-md-8">
-                <input type="text" name="lastcost" value="<?php echo isset($data['last_costprice']) ? $data['last_costprice'] : ''; ?>" placeholder="Last Cost" id="input-lastcost" class="form-control" readonly/>
+                <input type="text" name="lastcost" value="<?php echo isset($data['last_costprice']) ? $data['last_costprice'] : ''; ?>" placeholder="Last Cost" id="input-lastcost" class="form-control adjustment-fields" readonly/>
             </div>
         </div>
         <div class="row">
@@ -3737,12 +3963,12 @@ $(document).ready(function(){
                 <label>Case Cost</label>
             </div>
             <div class="col-md-8">
-                <input type="text" name="avgcost" name="dcostprice" value="<?php echo isset($data['dcostprice']) ? $data['dcostprice'] : ''; ?>" placeholder="Avg. Case Cost" id="input-avg_case_cost" class="form-control" autocomplete="off" <?php if(isset($data['isparentchild']) && $data['isparentchild'] == 1){?> readonly <?php } ?>  />
+                <input type="text" name="avgcost" name="dcostprice" value="<?php echo isset($data['dcostprice']) ? $data['dcostprice'] : ''; ?>" placeholder="Avg. Case Cost" id="input-avg_case_cost" class="form-control adjustment-fields" autocomplete="off" <?php if(isset($data['isparentchild']) && $data['isparentchild'] == 1){?> readonly <?php } ?>  />
             </div>
         </div>
         
         <p class="text-center">
-          <button type="button" class="btn btn-info" id="save_cost_btn">Save</button>
+          <button type="button" class="btn button-blue basic-button-small" id="save_cost_btn">Save</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </p>
         
@@ -3970,7 +4196,7 @@ $(document).ready(function(){
             if($("input[name='percent_selling_price_l2']").val() == ''){
               bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: 'Please Enter Profit Margin!', 
                 callback: function(){}
               });
@@ -3982,7 +4208,7 @@ $(document).ready(function(){
             if(prof_mar == '0' || prof_mar == 0){
               bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: 'Profit Margin Should not be Zero!', 
                 callback: function(){}
               });
@@ -4006,7 +4232,7 @@ $(document).ready(function(){
             if($("input[name='percent_selling_price_l3']").val() == ''){
               bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: 'Please Enter Profit Margin!', 
                 callback: function(){}
               });
@@ -4018,7 +4244,7 @@ $(document).ready(function(){
             if(prof_mar == '0' || prof_mar == 0){
               bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: 'Profit Margin Should not be Zero!', 
                 callback: function(){}
               });
@@ -4042,7 +4268,7 @@ $(document).ready(function(){
             if($("input[name='percent_selling_price_l4']").val() == ''){
               bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: 'Please Enter Profit Margin!', 
                 callback: function(){}
               });
@@ -4054,7 +4280,7 @@ $(document).ready(function(){
             if(prof_mar == '0' || prof_mar == 0){
               bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: 'Profit Margin Should not be Zero!', 
                 callback: function(){}
               });
@@ -4074,7 +4300,7 @@ $(document).ready(function(){
         
         var itemtype = '<?php echo $data['vitemtype'] ?>';
         
-        if(itemtype == 'Lottery'){
+        if(itemtype == 'Instant'){
          
             $('.notLottery').hide();
             $('.Lottery').show();   
@@ -4508,5 +4734,107 @@ $(document).ready(function(){
         
 
 </script>
+
+<script>
+    $(document).on('click', '#alias_code_tab_li', function(){
+
+      if($('#alias_code_tab_li').is(":checked") == true){
+
+        $('#item_tab_li').prop('checked', false);
+        $('#lot_matrix_tab_li').prop('checked', false);
+        $('#vendor_tab_li').prop('checked', false);
+        
+        $('#alias_code_tab').show();
+        $('#item_tab').hide();
+        $('#lot_matrix_tab').hide();
+        $('#vendor_tab').hide();
+        
+        $('#save_btn_row').hide();
+
+        // $.cookie("tab_selected", 'alias_code_tab'); //set cookie tab
+      }
+    });
+
+    $(document).on('click', '#item_tab_li', function(){
+
+      if($('#item_tab_li').is(":checked") == true){
+
+        $('#alias_code_tab_li').prop('checked', false);
+        $('#lot_matrix_tab_li').prop('checked', false);
+        $('#vendor_tab_li').prop('checked', false);
+        
+        $('#item_tab').show();
+        $('#alias_code_tab').hide();
+        $('#lot_matrix_tab').hide();
+        $('#vendor_tab').hide();
+        
+        $('#save_btn_row').show();
+
+        // $.cookie("tab_selected", 'item_tab'); //set cookie tab
+      }
+    });
+
+    $(document).on('click', '#lot_matrix_tab_li', function(){
+
+      if($('#lot_matrix_tab_li').is(":checked") == true){
+
+        $('#item_tab_li').prop('checked', false);
+        $('#alias_code_tab_li').prop('checked', false);
+        $('#vendor_tab_li').prop('checked', false);
+        
+        $('#lot_matrix_tab').show();
+        $('#alias_code_tab').hide();
+        $('#item_tab').hide();
+        $('#vendor_tab').hide();
+        
+        $('#save_btn_row').hide();
+
+        // $.cookie("tab_selected", 'lot_matrix_tab'); //set cookie tab
+      }
+    });
+
+    $(document).on('click', '#vendor_tab_li', function(){
+
+      if($('#vendor_tab_li').is(":checked") == true){
+
+        $('#item_tab_li').prop('checked', false);
+        $('#alias_code_tab_li').prop('checked', false);
+        $('#lot_matrix_tab_li').prop('checked', false);
+        
+        $('#vendor_tab').show();
+        $('#lot_matrix_tab').hide();
+        $('#alias_code_tab').hide();
+        $('#item_tab').hide();
+        
+        $('#save_btn_row').hide();
+
+        // $.cookie("tab_selected", 'vendor_tab'); //set cookie tab
+      }
+    });
+
+    $(document).on('click', '#plcb_options_hideshow', function(event) {
+      event.preventDefault();
+      if ($('#plcb_options').val()==1){ 
+          $('#plcb_options_checkbox_div').show('slow');
+          $('#plcb_options').val(0);
+      }else{
+          $('#plcb_options_checkbox_div').hide('slow');
+          $('#plcb_options').val(1);
+      }
+    });
+    
+    $(document).on('click', '#advance_options_hideshow', function(event) {
+      event.preventDefault();
+      if ($('#advance_options').val()==1){ 
+          $('#advance_options_checkbox_div').show('slow');
+          $('#advance_options').val(0);
+      }else{
+          $('#advance_options_checkbox_div').hide('slow');
+          $('#advance_options').val(1);
+      }
+    });
+  
+
+  </script>
 
 @endsection

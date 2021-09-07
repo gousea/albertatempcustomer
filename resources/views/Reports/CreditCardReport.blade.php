@@ -5,26 +5,30 @@ Credit Card Report
 @section('main-content')
 
 <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-        <div class="container-fluid">
+        <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
                     <span class="font-weight-bold text-uppercase">Credit Card Report</span>
                 </div>
                 <div class="nav-submenu">
-                   
+                       <?php if(isset($reports) && count($reports) > 0){ ?>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('ccprint')}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            </a>
+                        <?php } ?>
                 </div>
             </div> 
         </div>
     </nav>
 
 <section class="section-content py-6"> 
-<div id="content">
-    
-    <div class="container-fluid">
-        <div class="panel panel-default">
-           
+ <div class="container">
+
                <?php if(isset($reports) && count($reports) > 0){ ?>
-                    <div class="row" style="padding-bottom: 10px;float: right;">
+                    <div class="row" style="display:none";>
                         <div class="col-md-12">
                             <a id="pdf_export_btn" href="" class="" style="margin-right:10px;">
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
@@ -37,34 +41,61 @@ Credit Card Report
                             </a>
                         </div>
                     </div>
-                    <br>
+                    
                 <?php } ?>
-            <div class="panel-body">
-        <div style="margin: 10px;">
-                <form method="GET" id="filter_form"  action="{{ route('CardReportForm') }}" class="form-inline">
+           <div class="row">
+                <div class="col-md-12" >
+                    <h6><span>SEARCH PARAMETERS </span></h6>
+                </div>    
+            </div>  
+            <br>
+            
+                <form method="GET" id="filter_form"  action="{{ route('CardReportForm') }}" class="form-inline" >
                   <div class="form-group mx-sm-4 mb-2">
-                      <input type='text' class="form-control" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Select Date Range" autocomplete="off" readonly/>
+                      <input type='text' class="form-control rcorner" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Select Date Range" autocomplete="off" readonly/>
                       <input type='hidden' class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" readonly/>                
                   </div>
-                <!--  <div class="col-md-2"> -->
+               
                     <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" autocomplete="off">
-                <!--  </div> -->
-                  <div class="form-group mx-sm-4 mb-2">
-                    <input type="text" class="form-control" name="credit_card_number" value="<?php echo isset($credit_card_number) ? $credit_card_number : ''; ?>" id="credit_card_number" maxlength="4" placeholder="Credit Card Number" autocomplete="off" >
+               
+                  <div class="form-group mx-sm-2 mb-2">
+                    <input type="text" class="form-control rcorner" name="credit_card_number" value="<?php echo isset($credit_card_number) ? $credit_card_number : ''; ?>" id="credit_card_number" maxlength="4" placeholder="Credit Card Number" autocomplete="off" >
+                  </div>
+                  <div class="form-group mx-sm-2 mb-2">
+                    <input type="text" class="form-control rcorner" name="credit_card_amount" value="<?php echo isset($credit_card_amount) ? $credit_card_amount : ''; ?>" id="credit_card_amount" placeholder="Credit Card Amount" autocomplete="off">
                   </div>
                   <div class="form-group mx-sm-4 mb-2">
-                    <input type="text" class="form-control" name="credit_card_amount" value="<?php echo isset($credit_card_amount) ? $credit_card_amount : ''; ?>" id="credit_card_amount" placeholder="Credit Card Amount" autocomplete="off">
+                    <input type="submit" class="btn btn-success rcorner header-color" value="Generate">
                   </div>
-                  <div class="form-group mx-sm-4 mb-2"">
-                    <input type="submit" class="btn btn-success" value="Generate">
-                  </div>
+                  
+                   <?php if(isset($p_start_date)){?>
+                            <div class="form-group mx-sm-3 mb-2">
+                                 <?php $date = \DateTime::createFromFormat('m-d-Y' , $p_start_date);
+                                   $startdate=$date->format('d-m-Y'); ?>
+                                   
+                                   <?php $date = \DateTime::createFromFormat('m-d-Y' , $p_end_date);
+                                   $endtdate=$date->format('d-m-Y'); ?>
+                                   
+                                   
+                                   <h6 style="text-transform: uppercase;"><span> <?php  echo date(' l F d,Y', strtotime($startdate));?> - <?php  echo date(' l F d,Y', strtotime($endtdate));?></span></h6>
+                            </div>   
+                           <?php } ?>
                 </form>
-        </div>
+         
+            
+            <br>
+             <div class="row">
+                <div class="col-md-12" >
+                    <h6><span>CREDIT CARD REPORT </span></h6>
+                </div>    
+            </div>       
+            
+            
         <?php if(isset($reports) && count($reports) > 0){ ?>
            
-         <div style="margin-left: 46px;">
+         <div style="display:none">
                   <div class="col-md-12">
-                    <p><b>From: <?php echo $p_start_date; ?> To <?php echo $p_end_date; ?></p>
+                    <p><b>From: <?php echo $p_start_date; ?> To <?php echo $p_end_date; ?></b></p>
                   </div>
               
                   <div class="col-md-12">
@@ -81,7 +112,7 @@ Credit Card Report
           </div>
 
 
-    <div class="col-md-12 table-responsive "style="margin: 10px;">
+    <div>
           <br>
                       <?php 
                               $grand_total_transaction_number= 0;
@@ -93,18 +124,23 @@ Credit Card Report
                               $grand_total_nauthamount = $grand_total_nauthamount + $report->nauthamount; ?>
                               
                       <?php } ?>          
-          
-            <table class="table table-striped table-hover" style="width:100%;">
+        <div>
+            <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" style="width: 100%;margin-bottom: 0px;">
               
                         <thead>
-                        <tr>
+                        <tr class="th_color">
+                       
                         <th style="width: 50%;">Card Type</th>
-                        <th class="text-right" style="width: 30%;">Transactions</th>
-                        <th class="text-right" style="width: 20%;">Amount</th>
+                        <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th class="text-right text-uppercase" style="width: 30%;">Transactions</th>
+                        <th class="text-right text-uppercase" style="width: 20%;">Amount</th>
                         </tr>
                         
-                        <tr>
+                        <tr class="headermenublue">
+                           
                         <th style="width: 50%;">Grand Total</th>
+                          <th></th>
                         <th class="text-right" style="width: 30%;"><?php echo $grand_total_transaction_number;?></th>
                         <th class="text-right" style="width: 20%;"><?php echo number_format((float)$grand_total_nauthamount, 2) ;?></th>
                         </tr>
@@ -117,9 +153,11 @@ Credit Card Report
                 
                    
                   <tr >
+                     
+                    
                    
-                      <table class="table table-striped table-hover " style="width: 100%;margin-bottom: 0px;">
-                            <thead>
+                      <table class="table table-striped table-hover promotionview" data-row-style="rowColors" data-striped="true" style="width: 100%;margin-bottom: 0px;">
+                            <thead class="headermenublue">
                                 
                               <tr class="search_header" style="cursor: pointer;" data-cardtype="<?php echo $report->vcardtype;?>">
                                 <th class="text-uppercase" style="width: 50%;"><?php echo $report->vcardtype;?> TOTAL</th>
@@ -142,6 +180,7 @@ Credit Card Report
               
               </tbody>
             </table>
+        </div>     
           </div>
         </div>
         <?php }else{ ?>
@@ -170,7 +209,7 @@ Credit Card Report
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" ></script>
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
-
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
 
@@ -338,19 +377,19 @@ $(document).on('submit', '#filter_form', function(event) {
         var html = '';
         if(response){
 
-          html += '';
+          html += ''
           html += '<tr>';
           html += '<td colspan="3" style="padding: 0px;">';
-          html += '<table class="table" style="margin-bottom: 0px;">';
+          html += '<table data-toggle="table" class="table table-striped table-hover promotionview" data-row-style="rowColors" data-striped="true"style="margin-bottom: 0px;"  >';
           html += '<thead>';
-          html += '<tr>';
+          html += '<tr class="th_color">';
           html += '<th>DATE</th>';
           html += '<th>TIME</th>';
-          html += '<th class="text-right">LAST FOUR OF CC</th>';
-          html += '<th class="text-right">APPROVAL CODE</th>';
-          html += '<th class="text-right">AMOUNT</th>';
-          html += '<th>CARD TYPE</th>';
-          html += '<th>ACTION</th>';
+          html += '<th class="text-center">LAST FOUR OF CC</th>';
+          html += '<th class="text-center">APPROVAL CODE</th>';
+          html += '<th class="text-center">AMOUNT</th>';
+          html += '<th class="text-center">CARD TYPE</th>';
+          html += '<th class="text-right">ACTION</th>';
           html += '</tr>';
           html += '</thead>';
           html += '<tbody>';
@@ -359,26 +398,26 @@ $(document).on('submit', '#filter_form', function(event) {
             console.log(v);
            var receipt_url = print_receipt_url+'?id='+v.id+'&by=mpstender';
 
-            html += '<tr>';
-            html += '<td>';
+            html += '<tr class="th_white_color" style="padding:1px">';
+            html += '<td class="th_white_color">';
             html += v.date;
             html += '</td>';
-            html += '<td>';
+            html += '<td class="th_white_color">';
             html += v.time;
             html += '</td>';
-            html += '<td class="text-right">';
+            html += '<td class="text-right th_white_color text-center ">';
             html += v.last_four_of_cc;
             html += '</td>';
-            html += '<td class="text-right">';
+            html += '<td class="text-right th_white_color text-center">';
             html += v.approvalcode;
             html += '</td>';
-            html += '<td class="text-right">';
+            html += '<td class="text-right th_white_color text-center">';
             html += v.amount;
             html += '</td>';
-            html += '<td>';
+            html += '<td class="th_white_color text-center">';
             html += v.vcardtype;
             html += '</td>';
-            html += '<td>';
+            html += '<td class="th_white_color text-right">';
             html += '<a href="'+ receipt_url +'" class="btn btn-info printMe"><i class="fa fa-print"></i> Print</a>';
             html += '</td>';
             html += '</tr>';
@@ -386,8 +425,7 @@ $(document).on('submit', '#filter_form', function(event) {
 
           html += '</tbody>';
           html += '</table>';
-          html += '</td>';
-          html += '</tr>';
+     
 
           current_header.parent().parent().find('tbody').append(html);
           current_header.parent().parent().find('tbody').show();
@@ -623,4 +661,44 @@ $(document).ready(function() {
         
     });
 </script> 
+<style>
+
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+   
+}
+.table .table {
+    background-color: #f8f9fa;
+}
+
+.th_white_color{
+    background-color: #fff;
+    border-top: 3px solid ##cccccc;
+}
+h6 {
+   width: 100%; 
+   text-align: left; 
+   border-bottom: 2px solid; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+   color:#286fb7;
+} 
+
+h6 span { 
+    background:#f8f9fa!important; 
+    padding:0 10px; 
+    color:#286fb7;
+}
+.rcorner {
+  border-radius:9px;
+}
+</style>
 @endsection

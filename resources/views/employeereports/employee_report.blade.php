@@ -1,27 +1,34 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title')
-  Employee Loss Prevention Report
+Employee Loss Prevention Report
 @endsection
 @section('main-content')
 
-<div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <ul class="breadcrumb">
-        <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-        <?php //} ?>
-      </ul>
-    </div>
-  </div>
-  <div class="container-fluid">    
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo "Employee Loss Prevention Report"; ?></h3>
-      </div>
-      <div class="panel-body">
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Employee Loss Prevention Report</span>
+                </div>
+                <div class="nav-submenu">
+                       <?php if(isset($reports) && count($reports) > 0){ ?>
+                              <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{ route('send_mail') }}" id="send_mail_btn" > Mail
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="{{ route('csv_export') }}" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{ route('print_page') }}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{ route('pdf_save_page') }}" > PDF
+                            </a>
+                        <?php } ?>
+                </div>
+            </div> 
+        </div>
+    </nav>
 
-        <?php if(isset($reports) && count($reports) > 0){ ?>
+  <div class="container">    
+  
+        <?php if(isset($reports_css) && count($reports_css) > 0){ ?>
         <div class="row" style="padding-bottom: 15px;float: right;">
           <div class="col-md-12">
             <a id="send_mail_btn" href="{{ route('send_mail') }}" class="pull-right" style="margin-right:10px;" title="Send the report via email"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Mail</a>
@@ -31,14 +38,15 @@
           </div>
         </div>
         <?php } ?>
-        <div class="clearfix"></div>
-
-        <div class="row">
+         <br>
+         <h6><span> DATE SELECTION</span></h6>
+         <br>
           <form method="get" id="filter_form">
+              <div class="row">
               @csrf
               @method('get')
                <div class="col-md-3">
-              <input type="text" class="form-control" name="dates"  id="dates" placeholder="Start Date" readonly>
+              <input type="text" class="form-control rcorner" name="dates"  id="dates" placeholder="Start Date" readonly>
             </div>
               
             <div class="col-md-0">
@@ -48,11 +56,15 @@
               <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly>
             </div>
             <div class="col-md-2">
-              <input type="submit" class="btn btn-success" value="Generate" id="generate">
+              <input type="submit" class="btn btn-success rcorner header-color " value="Generate" id="generate">
+            </div>
             </div>
           </form>
-        </div>
-        <?php if(isset($reports) && count($reports) > 0){ ?>
+        
+          <br>
+                 <h6><span> LOSS PREVENTION REPORT</span></h6>
+        
+        <?php if(isset($reports_css) && count($reports_css) > 0){ ?>
         <br><br><br>
         <div class="row">
           <div class="col-md-12">
@@ -67,10 +79,14 @@
           <div class="col-md-12">
             <p><b>From:</b><?php echo $p_start_date; ?> <b>To:</b><?php echo $p_end_date; ?></p>
           </div>
-          <div class="col-md-12 table-responsive">
+          <?php }?>
+           <?php if(isset($reports) && count($reports) > 0){ ?>
+          
           <br>
-            <table class="table table-bordered table-striped table-hover" style="border:none;width:80%;">
-              <thead>
+            <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
+                   data-click-to-select="true">
+              <thead class="header-color text-uppercase">
                 <tr style="border-top: 1px solid #ddd;">
                   <th>Username</th>
                    <th>User ID</th>
@@ -98,7 +114,7 @@
               </tbody>              
             </table>
             
-          </div>
+          
         </div>
         <?php }else{ ?>
           <?php if(isset($p_start_date)){ ?>
@@ -111,16 +127,15 @@
             </div>
           <?php } ?>
         <?php } ?>
-      </div>
-    </div>
+      
+    
   </div>
 </div>
 
 
 @endsection
 
-@section('scripts')
-
+@section('page-script')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -133,6 +148,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <link type="text/css" href="{{ asset('javascript/bootstrap-datepicker.css')}}" rel="stylesheet" />
 <script src="{{ asset('javascript/bootstrap-datepicker.js')}}"></script>
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
+
 
 <style type="text/css">
   .table.table-bordered.table-striped.table-hover thead > tr {
@@ -269,9 +287,9 @@ $(document).on('submit', '#filter_form', function (event) {
 $(document).ready(function () {
 	$("#btnPrint").printPage();
 });
-$(window).load(function () {
-	$("div#divLoading").removeClass('show');
-});
+// $(window).load(function () {
+// 	$("div#divLoading").removeClass('show');
+// });
 const saveData = (function () {
 	const a = document.createElement("a");
 	document.body.appendChild(a);
@@ -389,5 +407,25 @@ $(document).ready(function() {
     $('#dates').val(start_date+"-"+end_date);
 }); 
 </script>
+<style>
+.rcorner {
+  border-radius:9px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
 
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
+</style>
 @endsection

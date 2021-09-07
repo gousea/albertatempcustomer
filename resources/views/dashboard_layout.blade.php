@@ -61,7 +61,7 @@
                             <div class="tab-content">
                                 <div id="home" class="container tab-pane active"><br>
                                     <form name="myForm" action="{{ route('dashboardlayout') }}" method="POST"
-                                        enctype="multipart/form-data" id="form-user" class="form-horizontal">
+                                        enctype="multipart/form-data" id="form-user" class="form-horizontal" onsubmit="return checkout(this)">
                                         @csrf
                                         {{-- <div class="row">
                                                 <div class="col-md-12 bg-light text-right">
@@ -74,8 +74,7 @@
 
 
                                         <div class="form-group control_system pull-right col-md-1">
-                                            <input type="submit" id="Submit" value="Save" class="btn btn-primary"
-                                                onclick="checkout()">
+                                            <input type="submit" id="Submit" value="Save" class="btn btn-primary">
                                         </div>
                                         <?php echo "<h1 class='title align-center'
                                             style='text-align: center;'>MENU LIST</h1>"; ?>
@@ -134,8 +133,7 @@
                                 </div>
                                 <div id="menu1" class="container tab-pane fade"><br>
                                     <h3>Dashboard Sorting</h3>
-                                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                        aliquip ex ea commodo consequat.</p>
+                                    <p>This is dashboard sorting</p>
                                 </div>
                             </div>
 

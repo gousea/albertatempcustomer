@@ -5,16 +5,18 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
-<p style="text-align:left;margin-top:2%;margin-left:2%;"><img src="{{ public_path('image/logoreport.jpg') }}" alt="Pos logo" widtd="120" height="50"></p>
+<p style="text-align:left;margin-top:2%;margin-left:2%;"><img src=" " widtd="120" height="50"></p>
+
 <div style="text-align: center; margin:0 auto;">
     <h3 class="panel-title" style="font-weight:bold;font-size:24px;margin-top:-6%;"><?php echo "End Of Day Report" ?></h3>
     <!--<hr style="height:0.2px; background-color:black;">-->
 
 </div> 
-<body style="margin-left:2%";>
-  <div class="row">
+<br>
+<body style="margin-left:2%;";>
+  <div class="row" >
           <div class="col-md-12">
-            <div class='col-md-6'>
+            <div class='col-md-6' style="font-size:20px";>
                 <p><b>Store Name:</b> {{ session()->get('storeName') }}</p>
             </div>
           </div>
@@ -22,7 +24,7 @@
         
         <div class="row">
           <div class="col-md-12">
-            <div class='col-md-6'>
+            <div class='col-md-6' style="font-size:20px";>
                 <p><b>Store Address: </b><?php echo $store[0]->vaddress1; ?></p>
             </div>    
           </div>
@@ -30,14 +32,14 @@
         
         <div class="row">
           <div class="col-md-12">
-            <div class='col-md-6'>
+            <div class='col-md-6' style="font-size:20px";>
                 <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
             </div>
           </div>
         </div>
             <div class="row">
           <div class="col-md-12">
-            <div class='col-md-6'>
+            <div class='col-md-6' style="font-size:20px";>
                 <p><b>Date: </b><?php echo $date ; ?></p>
             </div>
           </div>
@@ -46,7 +48,7 @@
 <div class="row">
    <div class='col-md-12'>
     
-        <table class="table table-bordered table-striped table-hover" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+        <table class="table table-bordered table-striped table-hover" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="font-size:24px";>
            <tr > 
                         <th style=" text-align:center;border-style: none;background-color:white;padding: 0px 10px;">SALES DETAIL</th>
                         <td style=" text-align:center;border-left: none;background-color:white;padding: 0px 10px;"></td>
@@ -93,7 +95,7 @@
                        
                             </tr>
                          <tr>
-                            <td style="padding: 0px 10px;"><b>Total Store Sales</b></td>
+                            <td style="padding: 0px 10px;">Total Store Sales</td>
                             <td style="padding: 0px 10px;" class="text-right"><?php echo "$",$report_sale_new[0]->StoreSalesInclTax; ?></td>
                         </tr>
                        <?php if($report_sale_new[0]->LottoSales!=0){?> 
@@ -137,8 +139,8 @@
                         <?php } ?> 
                         
                         <tr>
-                            <td style="padding: 0px 10px;">Grand Total</td>
-                            <td style="padding: 0px 10px;" class="text-right"><?php echo "$",$report_sale_new[0]->GrandTotal; ?></td>
+                            <td style="padding: 0px 10px;"><b>Grand Total </b></td>
+                            <td style="padding: 0px 10px;" class="text-right"><b><?php echo "$",$report_sale_new[0]->GrandTotal; ?><b></td>
                         </tr>
                      
                         <!--<td style="padding: 0px 10px;">&nbsp;</td>-->
@@ -385,6 +387,15 @@
                            <td style="padding: 0px 10px;" class="text-right"><?php echo $report_sale_new[0]->EbtTaxExempted; ?></td>
                         </tr>
                         <?php }?>
+                        
+                        
+                        <?php if(isset($report_sale_new[0]->ConvCharge) && $report_sale_new[0]->ConvCharge!=0){ ?> 
+                        <tr>
+                            <td style="padding: 0px 10px;">Convenience Charge</td>
+                           <td style="padding: 0px 10px;" class="text-right"><?php echo $report_sale_new[0]->ConvCharge; ?></td>
+                        </tr>
+                        <?php }?>
+                        
                          
                          
                         <tr > 

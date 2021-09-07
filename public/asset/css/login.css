@@ -1,58 +1,109 @@
-#login-container{
+#login-container {
     height: 100%;
     padding: 0;
-    
 }
 
-body{
-    overflow: hidden;
-}
-
-.card-img-top{
+.card-img-top {
     width: 200px;
     margin: auto;
     margin-top: 110px;
 }
 
-.form-control{
-    width: 300px;
+.bg-light {
+    background: url("../img/background_image.jpg");
 }
 
-.bg-light{
-    background: url('../img/background_image.jpg');
-}
-
-.login-conts{
+.login-conts {
     font-size: 13px;
 }
 
 .login-content {
-   padding-top: 6rem;
+    padding-top: 6rem;
 }
 
-.login-btn{
+.login-btn {
     padding: 3px 30px;
     border: none;
     border-radius: 9px;
     width: 70%;
 }
 
-.login-btns{
-    padding: 3px 30px;
-    border: none;
+/* .login-btns {
     border-radius: 9px;
-    width: 70%;
-}
+    width: 78%;
+} */
 
-form{
-    margin-left: 60px;
-}
-
-#card{
+#card {
     height: 100%;
 }
 
-.card-title{
+.card-title {
     margin: auto;
     font-size: 13px;
+}
+
+@media all and (min-width: 768) {
+    .login-btns {
+        width: 100%;
+    }
+}
+
+@media all and (max-width: 992px) {
+    .login-content {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+/* ============ desktop view ============ */
+@media all and (min-width: 992px) {
+    .form-control {
+        width: 60%;
+        margin: auto;
+    }
+    .login-content {
+        padding-top: 6rem;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* .form-control {
+        width: 335px;
+    } */
+}
+/* ============ desktop view .end// ============ */
+
+@media only screen and (min-device-width: 992px) and (max-device-width: 1024px) {
+    .login-form {
+        margin-left: 10px;
+    }
+}
+
+@media all and (min-width: 1366px) {
+    .login-btns {
+        width: 60%;
+    }
+
+    .login-form {
+        margin-left: 10px;
+    }
+}
+
+/* ============ large desktop view// ============ */
+
+@media all and (min-width: 1024px) {
+    .login-btns {
+        width: 60%;
+        margin: auto;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .form-control {
+        width: 100%;
+    }
+
+    .login-btns {
+        width: 100%;
+    }
 }

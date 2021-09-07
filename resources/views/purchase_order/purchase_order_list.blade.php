@@ -1,162 +1,113 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'Purchase Order')
 @section('main-content')
 
 <div id="content">
     
-    <div class="container-fluid">
-        @if ($data['error_warning'])
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
-        @endif
-        @if ($data['success'])
-        <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ $data['success'] }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
-        @endif
-        <br>
-        <br>
-        <div class="panel panel-default">
-            <div class="panel-heading head_title">
-                <h3 class="panel-title"><i class="fa fa-list"></i>Purchase Order</h3>
-            </div>
-            
-            <div class="panel-body">
-                <div class="row" style="padding-bottom:15px;float: right;">
-                    <div class="col-md-12">
-                        <div class="">
-                            <a href="<?php echo $data['add']; ?>" title="Add (Manual)" class="btn btn-primary add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New (Manual)</a>  
-                            <a href="<?php echo $data['po_sales_history']; ?>" title="Add (Sales History)" class="btn btn-primary add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New (Sales History)</a>  
-                            <a href="<?php echo $data['po_par_level']; ?>" title="Add (PAR Level)" class="btn btn-primary add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New (PAR Level)</a>  
-                            <button class="btn btn-danger" id="delete_po_btn" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete PO</button>
-                        </div>
-                    </div>
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Purchase Order</span>
                 </div>
-                <div class="row" style="clear:both;">
-                    <form action="<?php echo $data['current_url'];?>" method="post" id="form_order_search">
-                        @csrf
-                        <div class="col-md-12">
-                            <div style="display: inline-block;width:92%;">
-                                <input type="text" name="searchbox" value="<?php echo isset($data['searchbox']) ? $data['searchbox']: ''; ?>" class="form-control" placeholder="Search..." autocomplete="off" required>
-                            </div>
-                          
-                            <div style="display: inline-block;">
-                                <input type="submit" name="Filter" value="Search" class="btn btn-info">
-                            </div>
-                        </div>
-                    </form>
+                <div class="nav-submenu">
+                    
+                    <a type="button" href="<?php echo $data['add']; ?>" title="Add (Manual)" class="btn btn-gray headerblack buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New (Manual)</a>  
+                    <a type="button" href="<?php echo $data['po_sales_history']; ?>" title="Add (Sales History)" class="btn btn-gray headerblack basic-button-medium add_new_btn_rotate" style="color:black;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New (Sales History)</a>  
+                    <a type="button" href="<?php echo $data['po_par_level']; ?>" title="Add (PAR Level)" class="btn btn-gray headerblack basic-button-medium add_new_btn_rotate" style="color:black;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New (PAR Level)</a>  
+                    <button class="btn btn-danger buttonred buttons_menu basic-button-small" id="delete_po_btn"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete PO</button>
                 </div>
-                <br>
-                <form action="" method="post" enctype="multipart/form-data" id="form-purchase-order">
-                  
-                    <div class="table-responsive">
-                        <table id="purchase_order" class="table table-bordered table-hover">
-                        <?php if ($purchase_orders) { ?>
-                        <thead>
-                            <tr>
-                              <th style="width: 1px;" class="text-center"><input type="checkbox" id="main_checkbox" /></th>
-                              <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_estatus'];?>">Status</a></th>
-                              <th class="text-right"><a style="color: #fff;" href="<?php echo $data['sort_vponumber'];?>">PurchaseORD#</a></th>
-                              <th class="text-left">Invoice#</th>
-                              <th class="text-right sample">Total</th>
-                              <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vvendorname'];?>">Vendor Name</a></th>
-                              <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_vordertype'];?>">Order Type</a></th>
-                              <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_dcreatedate'];?>">Date Created</a></th>
-                              <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_dreceiveddate'];?>">Date Received</a></th>
-                              <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th>
-                              <th class="text-left">Action</th>
-                            </tr>
-                        </thead>
+            </div> <!-- navbar-collapse.// -->
+        </div>
+    </nav>
+
+        <section class="section-content py-6">
+            <div class="container">
+                @if ($data['error_warning'])
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+                @endif
+                @if ($data['success'])
+                <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ $data['success'] }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+                @endif
+                
+                <div class="panel panel-default">
+                    
+                    <div class="panel-body">
                         
-                        <tbody>
-                            
-                            <?php $purchase_order_row = 1;$i=0; $bg = '#fff';?>
-                            <?php foreach ($purchase_orders as $purchase_order) { ?>
+                        <form action="" method="post" enctype="multipart/form-data" id="form-purchase-order">
+                        
+                            <div class="table-responsive col-xl-12 col-md-12">
+                                <table id="purchase_order" class="table table-hover" data-classes="table table-hover table-condensed promotionview"
+                                    data-row-style="rowColors" data-striped="true" data-click-to-select="true">
                                 
-                            <?php 
-                                if($purchase_order['estatus'] == 'Close'){
-                                    $bg = '#FCEBCF';
-                                } else {
-                                    $bg = '#fff';
-                                } 
-                            ?>
-                            
-                            <tr id="purchase_order-row<?php echo $purchase_order_row; ?>">
-                                <td data-order="<?php echo $purchase_order['ipoid']; ?>" class="text-center" style="background:<?php echo $bg; ?>">
-                                    <span style="display:none;"><?php echo $purchase_order['ipoid']; ?></span>
-                                    <input type="checkbox" name="selected[]" id="purchase_order[<?php echo $purchase_order_row; ?>][select]"  value="<?php echo $purchase_order['ipoid']; ?>" <?php if($purchase_order['estatus'] == 'Close'){?> disabled <?php } ?> />
-                                </td>
-                              
-                                <td class="text-left" style="background:<?php echo $bg; ?>">
-                                    <span><?php echo $purchase_order['estatus']; ?></span>
-                                </td>
+                                    <thead>
+                                        <tr class="header-color">
+                                            <th style="width: 1px;" class="text-center no-filter-checkbox"><input type="checkbox" id="main_checkbox" /></th>
+                                            <th class="text-left text-uppercase">&nbsp;&nbsp;Status
+                                              <div class="po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH"  style="width: 100%; padding-left: 5px;">
+                                              </div>
+                                            </th>
+                                            <th class="text-left text-uppercase">&nbsp;&nbsp;PurchaseORD#
+                                              <div class="po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="padding-left: 5px;">
+                                              </div>
+                                            </th>
+                                            <th class="text-left text-uppercase">&nbsp;&nbsp;Invoice#
+                                              <div class="po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH"  style="width: 95%; padding-left: 5px;">
+                                              </div>
+                                            </th>
+                                            <th class="text-left text-uppercase sample">&nbsp;&nbsp;Total
+                                              <div class="po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="width: 100%; padding-left: 5px;">
+                                              </div>
+                                            </th>
+                                            <th class="text-left text-uppercase">&nbsp;&nbsp;Vendor
+                                              <div class="po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="width: 100%; padding-left: 5px;">
+                                              </div>
+                                            </th>
+                                            <th class="text-left text-uppercase">&nbsp;Order Type
+                                              <div class="po-has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" style="width: 100%; padding-left: 5px;">
+                                              </div>
+                                            </th>
+                                            <th class="text-left text-uppercase no-filter" style="padding-bottom: 27px !important;">Date Created</th>
+                                            {{-- <th class="text-left">Date Received</th> --}}
+                                            {{-- <th class="text-left"><a style="color: #fff;" href="<?php echo $data['sort_LastUpdate'];?>">Last Update</a></th> --}}
+                                            <th class="text-left text-uppercase no-filter">Action</th>
+                                        </tr>
+                                    </thead>
                                 
-                                <td class="text-right" style="background:<?php echo $bg; ?>">
-                                    <span><?php echo $purchase_order['vponumber']; ?></span>
-                                </td>
                                 
-                                <td class="text-left" style="background:<?php echo $bg; ?>">
-                                    <span><?php echo $purchase_order['vinvoiceno']; ?></span>
-                                </td>
-                                
-                                <td class="text-right" style="background:<?php echo $bg; ?>">
-                                    <span><?php echo $purchase_order['nnettotal']; ?></span>
-                                </td>
-                                
-                                <td class="text-left" style="background:<?php echo $bg; ?>">
-                                    <span><?php echo $purchase_order['vvendorname']; ?></span>
-                                </td>
-                                
-                                <td class="text-left" style="background:<?php echo $bg; ?>">
-                                    <span><?php echo $purchase_order['vordertype']; ?></span>
-                                </td>
-                                
-                                <td class="text-left" style="background:<?php echo $bg; ?>">
-                                    <span><?php echo $purchase_order['dcreatedate']; ?></span>
-                                </td>
-                                
-                                <td class="text-left" style="background:<?php echo $bg; ?>">
-                                    <span><?php echo $purchase_order['dreceiveddate']; ?></span>
-                                </td>
-                                
-                                <td class="text-left" style="background:<?php echo $bg; ?>">
-                                    <span><?php echo $purchase_order['dlastupdate']; ?></span>
-                                </td>
-                                
-                                <td class="text-left" style="background:<?php echo $bg; ?>">
-                                    <?php if($purchase_order['estatus'] == 'Close'){?>
-                                        <a href="<?php echo $purchase_order['edit']; ?>" data-toggle="tooltip" title="View" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-eye"></i>&nbsp;&nbsp;View
-                                        </a>
-                                    <?php } else {?>
-                                        <a href="<?php echo $purchase_order['edit']; ?>" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit
-                                        </a>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <?php $purchase_order_row++; $i++;?>
-                            <?php } ?>
-                            <?php } else { ?>
-                            <tr>
-                                <td colspan="7" class="text-center">Sorry no data found!</td>
-                            </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
+                                </table>
+                            </div>
+                        </form>
+                        
                     </div>
-                </form>
-                <div class="row">
-                  {{$data['results']->links()}}
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 </div>
 
 
 @endsection
 
-@section('scripts')
+@section('page-script')
+
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/purchaseorder.css') }}">
 
 <script src="{{ asset('javascript/bootbox.min.js') }}" defer></script>
 <script type="text/javascript">
@@ -229,13 +180,14 @@
         $("div#divLoading").addClass('show');
     });
 
-    $(window).load(function() {
+    $(window).on('load', function() {
         $("div#divLoading").removeClass('show');
     });
 </script>
 
 <script type="text/javascript">
     $(document).on('click', '#main_checkbox', function(event) {
+        console.log($(this).prop('checked')+"jhjh")
         if ($(this).prop('checked')==true){ 
             $('input[name="selected[]"]').not(":disabled").prop('checked', true);
         }else{
@@ -253,7 +205,7 @@
         if($("input[name='selected[]']:checked").length == 0){
             bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: 'Please Select PO to Delete!', 
                 callback: function(){}
             });
@@ -340,6 +292,163 @@
     	justify-content: flex-start;
     	break-before: always;
     }
+    
   </style>
+
+    <style>
+        .no-filter{
+            padding-bottom: 45px !important;
+        }
+
+        .no-filter-checkbox{
+            padding-bottom: 20px !important;
+        }
+
+        .edit_btn_rotate{
+            line-height: 0.5;
+            border-radius: 6px;
+        }
+    </style>
+
+    <script>
+        var url = "<?php echo $data['current_url'];?>";
+
+        
+        $('#purchase_order thead tr th').each( function (i) {
+            
+            $( this ).on( 'keyup', '.table-heading-fields', function () {
+
+                var self = this;
+                
+                if(self.value != ''){
+                    $(this).closest('div').find('.fa-search').hide();
+                    
+                }else{
+                    $(this).closest('div').find('.fa-search').show();
+                }
+                
+                if ( table.column(i).search() !== self.value ) {
+                    
+                    
+                    table
+                        .column(i)
+                        .search( self.value )
+                        .draw();
+                        
+                    $("div#divLoading").addClass('show');
+                    
+                }
+            });                  
+            
+        });
+    
+
+        var showPaginationPrevNextButtons = false;
+        var table =   $("#purchase_order").DataTable({
+            "bSort": false,
+            // "scrollY":"300px",
+            // "autoWidth": true,
+            "fixedHeader": true,
+            "processing": true,
+            "iDisplayLength": 20,
+            "serverSide": true,
+            "bLengthChange": false,
+            // "aoColumnDefs": [
+            //     { "sWidth": "190px", "aTargets": [ 7 ] },
+                
+            // ],
+            //"autoWidth": true,
+
+            "language": {
+                search: "_INPUT_",
+                searchPlaceholder: "Search..."
+            },
+            // "fnPreDrawCallback": function( oSettings ) {
+            
+            //     main_checkbox = $('#main_checkbox').is(":checked");
+        
+            // },
+            "dom": 't<"bottom col-md-12 row"<"col-md-3"i><"col-md-9"p>>',
+            "ajax": {
+            url: url,
+            headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+            },
+            "data": function(d){
+                d["m_check"] = $('#main_checkbox').is(":checked");
+                
+            },
+            type: 'POST',
+            "dataSrc": function ( json ) {
+                    
+                    if(json.data.length != 0){
+                    $(".bottom").show();  
+                    
+                    } else {
+                    $(".bottom").hide(); 
+                    
+                    }
+                    
+                    return json.data;
+                } 
+            },
+            
+            columns :  [
+                        {
+                            data: "ipoid", render: function(data, type, row){
+                                
+                                return $("<input>").attr({
+                                        // checked: !uncheckedBoxes[data],
+                                        type: 'checkbox',
+                                        class: "ipoid",
+                                        value: data,
+                                        name: "selected[]",
+                                        "data-order": data,
+                                })[0].outerHTML;
+                                
+                            }
+                        },
+                        { "data": "estatus"},
+                        
+                        { "data": "vponumber"},
+                        { "data": "vinvoiceno"},
+                        { "data": "nnettotal"},
+                        { "data": "vvendorname"},
+                        {"data": "vordertype"},
+                        {"data": "dcreatedate"},
+                        
+                        { "data": "view_edit", render: function(data, type, row){
+                                return "<a href="+data+" data-toggle='tooltip' title='View' class='btn btn-sm btn-info edit_btn_rotate header-color' ><i class='fa fa-eye'></i>&nbsp;&nbsp;View</a>";
+                          }
+                      },
+                        
+                ],
+                rowCallback: function(row, data, index){
+                    
+            },
+            fnDrawCallback : function() {
+                    if ($(this).find('tbody tr').length<=1) {
+                        $(this).find('.dataTables_empty').hide();
+                    }
+                    
+                    $(this).addClass('promotionview');
+                    
+            }
+        }).on('draw', function(){
+                    if($('#main_checkbox').prop("checked") == true){
+                        
+                        $('.iitemid').prop('checked', true);
+                    } else{ 
+                        $('.iitemid').prop('checked', false);   
+                    }
+                    // console.log($(this).find('tbody tr .iitemid').length);
+                if ($(this).find('tbody tr .iitemid').length>0) {
+                    $('#buttonEditMultipleItems').prop('disabled', false);
+                }
+                $("div#divLoading").removeClass('show');
+        });
+
+        $("#purchase_order_paginate").addClass("pull-right");
+    </script>
   
   @endsection

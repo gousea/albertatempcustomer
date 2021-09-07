@@ -46,115 +46,108 @@ class quickUpdateItem extends Model
         return $result;
     }
 
-    public function getItems_new($itemdata)
-    {
-        
-        $query = Item::from('mst_item as a')
-            ->select(
-               'a.iitemid','a.vitemtype','a.vitemname','a.vbarcode',
-                'a.vcategorycode','a.vdepcode','a.vsuppliercode','a.vunitcode',
-                'a.iqtyonhand','a.vtax1','a.vtax2','a.dcostprice',
-                'a.nunitcost','a.dunitprice','a.visinventory','a.isparentchild',
-                'mc.vcategoryname','md.vdepartmentname','ms.vcompanyname', 'mu.vunitname',
-                DB::raw("CASE 
-                        WHEN a.NPACK = 1 or (a.npack is null)   then a.IQTYONHAND 
-                        else (Concat(cast(((a.IQTYONHAND div a.NPACK )) as signed), '  (', Mod(a.IQTYONHAND,a.NPACK) ,')') ) end as IQTYONHAND, 
-                        case isparentchild 
-                        when 0 then a.VITEMNAME  
-                        when 1 then Concat(a.VITEMNAME,' [Child]') 
-                        when 2 then  Concat(a.VITEMNAME,' [Parent]') end   as VITEMNAME")
-            )
-            ->leftjoin('mst_category as mc', 'mc.vcategorycode', '=', 'a.vcategorycode')
-            ->leftjoin('mst_department as md', 'md.vdepcode', '=', 'a.vdepcode')
-            ->leftjoin('mst_supplier as ms', 'ms.vsuppliercode', '=', 'a.vsuppliercode')
-            ->leftjoin('mst_unit as mu', 'mu.vunitcode', '=', 'a.vunitcode')
-            ->where('a.estatus', 'Active');
+    // public function getItems_new($itemdata)
+    // {
 
-        if (!empty($itemdata['search_radio'])) {
-            if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'category') {
-                $query->where('a.vcategorycode', $itemdata['search_find']);
-            } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'department') {
-                $query->where('a.vdepcode', $itemdata['search_find']);
-            } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'item_group') {
-                $searchValue = $itemdata['search_find'];
-                $query->leftJoin('itemgroupdetail as b', function ($join) use ($searchValue) {
-                    // $join->on('b.vsku', '=', 'a.vbarcode');
-                    $join->on('b.iitemgroupid', '=', '$searchValue');
-                });
-                $query->where('b.vsku', '=', 'a.vbarcoe');
-            } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'search') {
-                $query->where('a.vitemname', 'like', '%' . $itemdata["search_find"] . '%');
-            }
-        }
-        if (!empty($itemdata['search_item_type'])) {
-            $query->where('a.vitemtype', $itemdata['search_item_type']);
-        }
-        $qeuryResult = $query->paginate(20);
-        return $qeuryResult;
-    }
+    //     $query = Item::from('mst_item as a')
+    //         ->select(
+    //           'a.iitemid','a.vitemtype','a.vitemname','a.vbarcode',
+    //             'a.vcategorycode','a.vdepcode','a.vsuppliercode','a.vunitcode',
+    //             'a.iqtyonhand','a.vtax1','a.vtax2','a.dcostprice',
+    //             'a.nunitcost','a.dunitprice','a.visinventory','a.isparentchild',
+    //             'mc.vcategoryname','md.vdepartmentname','ms.vcompanyname', 'mu.vunitname',
+    //             DB::raw("CASE
+    //                     WHEN a.NPACK = 1 or (a.npack is null)   then a.IQTYONHAND
+    //                     else (Concat(cast(((a.IQTYONHAND div a.NPACK )) as signed), '  (', Mod(a.IQTYONHAND,a.NPACK) ,')') ) end as IQTYONHAND,
+    //                     case isparentchild
+    //                     when 0 then a.VITEMNAME
+    //                     when 1 then Concat(a.VITEMNAME,' [Child]')
+    //                     when 2 then  Concat(a.VITEMNAME,' [Parent]') end   as VITEMNAME")
+    //         )
+    //         ->leftjoin('mst_category as mc', 'mc.vcategorycode', '=', 'a.vcategorycode')
+    //         ->leftjoin('mst_department as md', 'md.vdepcode', '=', 'a.vdepcode')
+    //         ->leftjoin('mst_supplier as ms', 'ms.vsuppliercode', '=', 'a.vsuppliercode')
+    //         ->leftjoin('mst_unit as mu', 'mu.vunitcode', '=', 'a.vunitcode')
+    //         ->where('a.estatus', 'Active');
+
+    //     if (!empty($itemdata['search_radio'])) {
+    //         if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'category') {
+    //             $query->where('a.vcategorycode', $itemdata['search_find']);
+    //         } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'department') {
+    //             $query->where('a.vdepcode', $itemdata['search_find']);
+    //         } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'item_group') {
+    //             $searchValue = $itemdata['search_find'];
+    //             $query->leftJoin('itemgroupdetail as b', function ($join) use ($searchValue) {
+    //                 // $join->on('b.vsku', '=', 'a.vbarcode');
+    //                 $join->on('b.iitemgroupid', '=', '$searchValue');
+    //             });
+    //             $query->where('b.vsku', '=', 'a.vbarcoe');
+    //         } else if (!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'search') {
+    //             $query->where('a.vitemname', 'like', '%' . $itemdata["search_find"] . '%');
+    //         }
+    //     }
+    //     if (!empty($itemdata['search_item_type'])) {
+    //         $query->where('a.vitemtype', $itemdata['search_item_type']);
+    //     }
+    //     $qeuryResult = $query->paginate(20);
+    //     return $qeuryResult;
+    // }
 
     public function getItems($itemdata = array()) {
+        // dd($itemdata);
+        $datas = array();
+        $sql_total_string = $sql_string = "WHERE a.estatus='Active'";
         
-        
-        if(isset($itemdata['search_radio']) && $itemdata['search_radio'] == "category" ){
+        if (isset($itemdata['sku']) && isset($itemdata['item']) && isset($itemdata['unit']) && isset($itemdata['department']) && isset($itemdata['category']) && isset($itemdata['unitcost']) && isset($itemdata['unitprice']) && isset($itemdata['tax1']) && isset($itemdata['tax2']) && isset($itemdata['qoh'])) {
             
-            $itemdata['search_find'] =  isset($itemdata['search_vcategorycode']) ? $itemdata['search_vcategorycode'] : '' ;
-          
-        }elseif(isset($itemdata['search_radio']) && $itemdata['search_radio'] == "department"){
-            $itemdata['search_find'] =  isset($itemdata['search_vdepcode']) ? $itemdata['search_vdepcode'] : '' ;
-        }elseif(isset($itemdata['search_radio']) && $itemdata['search_radio'] == "item_group"){
-            $itemdata['search_find'] =  isset($itemdata['search_vitem_group_id']) ? $itemdata['search_vitem_group_id'] : '';
-        }elseif(isset($itemdata['search_radio']) && $itemdata['search_radio'] == "search"){
-            $itemdata['search_find'] =  isset($itemdata['search_item']) ? $itemdata['search_item'] : '';
-        }else{
-            $itemdata['search_find'] = "";
+            if(isset($itemdata['category']) && !empty($itemdata['category']) && $itemdata['category'] != 'all'){
+                $sql_string .= " AND a.vcategorycode= '". ($itemdata['category']) ."' ";
+            }
+            
+            if(isset($itemdata['department']) && !empty($itemdata['department']) && $itemdata['department'] != 'all'){
+                $sql_string .= " AND a.vdepcode= '". ($itemdata['department']) ."' ";
+            }
+            
+            if(isset($itemdata['unit']) && !empty($itemdata['unit']) && $itemdata['unit'] != 'all'){
+                $sql_string .= " AND a.vunitcode= '". ($itemdata['unit']) ."' ";
+            }
+            
+            if(isset($itemdata['unitcost']) && !empty($itemdata['unitcost'])){
+                $sql_string .= " AND a.nunitcost= '". ($itemdata['unitcost']) ."' ";
+            }
+            
+            if(isset($itemdata['unitprice']) && !empty($itemdata['unitprice'])){
+                $sql_string .= " AND a.dunitprice= '". ($itemdata['unitprice']) ."' ";
+            }
+            
+            if(isset($itemdata['tax1']) && !empty($itemdata['tax1']) && $itemdata['tax1'] != 'all'){
+                $sql_string .= " AND a.vtax1= '". ($itemdata['tax1']) ."' ";
+            }
+            
+            if(isset($itemdata['tax2']) && !empty($itemdata['tax2']) && $itemdata['tax2'] != 'all'){
+                $sql_string .= " AND a.vtax2= '". ($itemdata['tax2']) ."' ";
+            }
+            
+            if(isset($itemdata['qoh']) && !empty($itemdata['qoh'])){
+                $sql_string .= " AND a.iqtyonhand= '". ($itemdata['qoh']) ."' ";
+            }
+            
+            if(isset($itemdata['item']) && !empty($itemdata['item'])){
+                $sql_string .= " AND a.vitemname LIKE  '%" .($itemdata['item']). "%' ";
+            }
+            
+            if(isset($itemdata['sku']) && !empty($itemdata['sku'])){
+                $sql_string .= " AND (a.vbarcode LIKE  '%" .($itemdata['sku']). "%' OR  ma.valiassku LIKE  '%" .($itemdata['sku']). "%') ";
+            }
+            
+            $sql_string .= ' ORDER BY a.LastUpdate DESC';
+            
         }
         
-        $datas = array();
-        $sql_total_string = $sql_string = '';
-       
-        
-        if (!empty($itemdata['search_radio'])) {
+        else{
             
-            if(!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'category'){
-                $sql_string .= " WHERE a.estatus='Active' AND a.vcategorycode= ". ($itemdata['search_find']);
-                
-                if($itemdata['search_item_type']!='All'){
-                $sql_string .= " AND a.vitemtype= '". ($itemdata['search_item_type'])."'";
-                }
-            }else if(!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'department'){
-                $sql_string .= " WHERE a.estatus='Active' AND a.vdepcode= ". ($itemdata['search_find']);
-                if($itemdata['search_item_type']!='All'){
-                    $sql_string .= " AND a.vitemtype= '". ($itemdata['search_item_type'])."'";
-                }
-            }else if(!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'item_group'){
-                $sql_string.=", itemgroupdetail as b";
-                $sql_total_string.=", itemgroupdetail as b";
-                $sql_string .= " WHERE a.estatus='Active' AND b.iitemgroupid= '". ($itemdata['search_find'])."' AND b.vsku=a.vbarcode";
-                $sql_total_string .= " WHERE a.estatus='Active' AND b.iitemgroupid= '". ($itemdata['search_find'])."' AND b.vsku=a.vbarcode";
-                
-                if($itemdata['search_item_type']!='All'){
-                    $sql_string .= " AND a.vitemtype= '". ($itemdata['search_item_type'])."'";
-                }
-               
-            }else if(!empty($itemdata['search_find']) && $itemdata['search_radio'] == 'search'){
-                $sql_string .= " WHERE a.estatus='Active' AND (a.vitemname LIKE  '%" .($itemdata['search_find']). "%' OR  a.vbarcode LIKE  '%" .($itemdata['search_find']). "%' OR  ma.valiassku LIKE  '%" .($itemdata['search_find']). "%')";
-                
-                if($itemdata['search_item_type']!='All'){
-                    $sql_string .= " AND a.vitemtype= '". ($itemdata['search_item_type'])."'";
-                } 
-            } else{
-                if($itemdata['search_item_type'] == "All"){
-                    $sql_string .= " WHERE a.estatus='Active'  ";
-                }else {
-                    
-                    $sql_string .= " WHERE a.estatus='Active' AND a.vitemtype= '". ($itemdata['search_item_type'])."' ";
-                }
-            }
-        }else{
-            $sql_string .= " WHERE a.estatus='Active' AND a.vitemtype= '". ($itemdata['search_item_type'])."'";
             $sql_string .= ' ORDER BY a.LastUpdate DESC';
-
+            
             if (isset($itemdata['start']) || isset($itemdata['limit'])) {
                 if ($itemdata['start'] < 0) {
                     $itemdata['start'] = 0;
@@ -164,42 +157,41 @@ class quickUpdateItem extends Model
                 }
                 $sql_string .= " LIMIT " . (int)$itemdata['start'] . "," . (int)$itemdata['limit'];
             }
-            
+
         }
         
         $sql_query = "SELECT DISTINCT a.iitemid, a.vitemtype, a.vitemname, a.vbarcode, a.vcategorycode, a.vdepcode, a.vsuppliercode, a.vunitcode,
-        a.vtax1, a.vtax2, a.dcostprice, a.nunitcost, a.dunitprice, a.visinventory, a.isparentchild, mc.vcategoryname, 
-        md.vdepartmentname, ms.vcompanyname, mu.vunitname , 
+        a.vtax1, a.vtax2, a.dcostprice, a.nunitcost, a.dunitprice, a.visinventory, a.isparentchild, mc.vcategoryname,
+        md.vdepartmentname, ms.vcompanyname, mu.vunitname ,
         
-        case a.isparentchild  when 1 then   Mod(p.iqtyonhand,p.NPACK)  else  
+        case a.isparentchild  when 1 then   Mod(p.iqtyonhand,p.NPACK)  else
         (Concat(cast(((a.iqtyonhand div a.NPACK )) as signed), '  (', Mod(a.iqtyonhand,a.NPACK) ,')') )end as iqtyonhand ,
         
         case a.isparentchild when 0
-        then a.VITEMNAME  when 1 then Concat(a.VITEMNAME,' [Child]') when 2 then  Concat(a.VITEMNAME,' [Parent]') end   as VITEMNAME 
-        FROM mst_item as a LEFT JOIN mst_category mc ON(mc.vcategorycode=a.vcategorycode) 
+        then a.VITEMNAME  when 1 then Concat(a.VITEMNAME,' [Child]') when 2 then  Concat(a.VITEMNAME,' [Parent]') end   as VITEMNAME
+        FROM mst_item as a LEFT JOIN mst_category mc ON(mc.vcategorycode=a.vcategorycode)
         LEFT JOIN mst_department md ON(md.vdepcode=a.vdepcode)
-        LEFT JOIN mst_supplier ms ON(ms.vsuppliercode=a.vsuppliercode) 
-        LEFT JOIN mst_itemalias ma ON(ma.vsku=a.vbarcode) 
+        LEFT JOIN mst_supplier ms ON(ms.vsuppliercode=a.vsuppliercode)
+        LEFT JOIN mst_itemalias ma ON(ma.vsku=a.vbarcode)
         LEFT JOIN mst_unit mu ON(mu.vunitcode=a.vunitcode)
         LEFT JOIN mst_item p ON a.parentid = p.iitemid $sql_string ";
-       
         
         $query = DB::connection('mysql_dynamic')->select($sql_query);
         
         return $query;
     }
-    
+
     public function addDepartment($sid, $depid=''){
         if(isset($depid)){
             $get_dep_name = DB::connection('mysql_dynamic')->select("select * from mst_department where vdepcode = '".(int)$depid."' ");
-            
+
             if(isset($get_dep_name[0])){
                 $dep_name = $get_dep_name[0]->vdepartmentname;
                 $dep_desc = $get_dep_name[0]->vdescription;
                 $dep_s_time = $get_dep_name[0]->starttime;
                 $dep_e_time = $get_dep_name[0]->endtime;
                 $dep_isequence = $get_dep_name[0]->isequence;
-                $dep_estatus = $get_dep_name[0]->estatus; 
+                $dep_estatus = $get_dep_name[0]->estatus;
             }
             $checkExists = DB::connection('mysql')->select("select * from u".$sid.".mst_department where  vdepartmentname = '".$dep_name."' ");
             if(count($checkExists) > 0){
@@ -207,7 +199,7 @@ class quickUpdateItem extends Model
                     return $checkExists[0]->vdepcode;
                 }
             }else{
-                $sql = "INSERT INTO u".$sid.".mst_department(vdepartmentname, vdescription, starttime, endtime, isequence, estatus, SID) 
+                $sql = "INSERT INTO u".$sid.".mst_department(vdepartmentname, vdescription, starttime, endtime, isequence, estatus, SID)
                         values('".$dep_name."', '".$dep_desc."', '".$dep_s_time."', '".$dep_e_time."', '".$dep_isequence."', '".$dep_estatus."', '".$sid."') ";
                 DB::connection('mysql')->statement($sql);
                 $query_data = "select idepartmentid from u".$sid.".mst_department where vdepartmentname = '" .$dep_name."' ";
@@ -216,15 +208,15 @@ class quickUpdateItem extends Model
                     $last_id = $return_query_data[0]->idepartmentid;
                 }
                 // $return_data = $return_query_data[0];
-                
+
                 $sql2 = "UPDATE u".$sid.".mst_department SET vdepcode = '".(int)$last_id."' WHERE idepartmentid = '" . (int)$last_id . "'";
                 DB::connection('mysql')->update($sql2);
-                
+
                 return $last_id;
             }
         }
     }
-    
+
     public function addCategory($sid, $catid=''){
         if(isset($catid) ){
             $get_cat_name = DB::connection("mysql_dynamic")->select("SELECT * FROM mst_category where icategoryid = '".$catid."' ");
@@ -236,7 +228,7 @@ class quickUpdateItem extends Model
                 $cat_status = $get_cat_name[0]->estatus;
                 $cat_dep_code = $get_cat_name[0]->dept_code;
             }
-            
+
             $checkExists = DB::connection('mysql')->select("select * from u".$sid.".mst_category where  vcategoryname = '".$cat_name."' ");
             if(count($checkExists) > 0){
                 if(isset($checkExists[0])){
@@ -244,25 +236,25 @@ class quickUpdateItem extends Model
                 }
             }else {
                 $depname = DB::connection("mysql_dynamic")->select("select * from mst_department where vdepcode = '".$cat_dep_code."' ");
-                
+
                 if(isset($depname[0])){
                     $department_name = $depname[0]->vdepartmentname;
                     $dep_desc = $depname[0]->vdescription;
                     $dep_s_time = $depname[0]->starttime;
                     $dep_e_time = $depname[0]->endtime;
                     $dep_isequence = $depname[0]->isequence;
-                    $dep_estatus = $depname[0]->estatus; 
+                    $dep_estatus = $depname[0]->estatus;
                 }
-                
+
                 $department_code = DB::connection("mysql")->select("select * from u".$sid.".mst_department where vdepartmentname = '".$department_name."' ");
-                
+
                 if(isset($department_code[0])){
-                    
+
                     $depcode = $department_code[0]->vdepcode;
-                  
+
                 } else {
-                    
-                    $sql = "INSERT INTO u".$sid.".mst_department(vdepartmentname, vdescription, starttime, endtime, isequence, estatus, SID) 
+
+                    $sql = "INSERT INTO u".$sid.".mst_department(vdepartmentname, vdescription, starttime, endtime, isequence, estatus, SID)
                         values('".$department_name."', '".$dep_desc."', '".$dep_s_time."', '".$dep_e_time."', '".$dep_isequence."', '".$dep_estatus."', '".$sid."') ";
                     DB::connection('mysql')->statement($sql);
                     $query_data = "select idepartmentid from u".$sid.".mst_department where vdepartmentname = '" .$department_name."' ";
@@ -270,20 +262,20 @@ class quickUpdateItem extends Model
                     if(isset($return_query_data[0])){
                         $last_id = $return_query_data[0]->idepartmentid;
                     }
-                    
+
                     $sql2 = "UPDATE u".$sid.".mst_department SET vdepcode = '".(int)$last_id."' WHERE idepartmentid = '" . (int)$last_id . "'";
                     DB::connection('mysql')->update($sql2);
                     $depcode = $last_id;
-                   
+
                 }
-                
+
                 $inserting = DB::connection("mysql")->statement("Insert INTO u".$sid.".mst_category (vcategoryname, vdescription, vcategorttype, isequence, estatus, dept_code, SID) VAlues('".$cat_name."', '".$cat_desc."', '".$cat_type."',  '".$cat_isequence."', '".$cat_status."', '".$depcode."', '".$sid."') ");
-                $lastinsertcat_id = DB::connection("mysql")->select("SELECT * FROM u".$sid.".mst_category order by icategoryid DESC limit 1"); 
+                $lastinsertcat_id = DB::connection("mysql")->select("SELECT * FROM u".$sid.".mst_category order by icategoryid DESC limit 1");
                 if(isset($lastinsertcat_id[0])){
-                   $vcategorycode = $lastinsertcat_id[0]->icategoryid; 
+                   $vcategorycode = $lastinsertcat_id[0]->icategoryid;
                 }
                 $updating = DB::connection("mysql")->statement("UPDATE u".$sid.".mst_category SET vcategorycode = '".$vcategorycode."'  WHERE icategoryid = '".$vcategorycode."' ");
-                
+
                 return $vcategorycode;
             }
         }
@@ -299,14 +291,14 @@ class quickUpdateItem extends Model
         }else{
             $data = [];
         }
-        
+
         $array_items = array();
         if(isset($listItems['selected'])){
             foreach($listItems['selected'] as $items){
                 array_push($array_items, $items['iitemid']);
             }
         }
-        
+
         error_reporting(0);
         if (isset($data) && count($data) > 0) {
             try {
@@ -317,23 +309,23 @@ class quickUpdateItem extends Model
                                 $stores = [session()->get('sid')];
                             }else{
                                 $stores = explode(",", $listItems['stores_hq']);
-                            } 
-                            
+                            }
+
                             $getbarcode =  DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid='" . (int)$value['iitemid'] . "' ");
                             if(isset($getbarcode[0])){
                                 $vbarcode = $getbarcode[0]->vbarcode;
                             }
-                            
+
                             foreach($stores as $store){
                                 $getitem_id =  DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_item WHERE vbarcode='" .$vbarcode. "' ");
                                 if(isset($getitem_id[0])){
                                     $item_id = $getitem_id[0]->iitemid;
                                 }
-                                
+
                                 $current_item = DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_item WHERE iitemid='" . (int)$item_id . "'");
-                                
+
                                 // if ($current_item[0]->iqtyonhand != $value['iqtyonhand'] && $value['iqtyonhand'] != '') {
-                                    
+
                                 //   if($current_item[0]->isparentchild==1)
                                 //   {
                                 //         $id=$current_item[0]->parentid;
@@ -341,65 +333,65 @@ class quickUpdateItem extends Model
                                 //         $newqoh=$parent_item[0]->iqtyonhand+$value['iqtyonhand'];
                                 //         DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET iqtyonhand = '" .$newqoh. "' WHERE iitemid = '" . (int)$id . "'");
                                 //         DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET iqtyonhand = 0 WHERE iitemid = '" . (int)$item_id  . "'");
-                                        
+
                                 //         $sql="SELECT ipiid FROM u".$store.".trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
                                 //         $query = DB::connection('mysql')->select($sql);
                                 //         $ipid = $query[0]->ipiid;
-                                        
-                                        
+
+
                                 //         $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
                                 //         DB::connection('mysql_dynamic')->insert("INSERT INTO  u".$store.".trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)($store) . "'");
                                 //         $ipiid = $vrefnumber;
-                                       
+
                                 //         //$quickvalue = $value['iqtyonhand'] - $parent_item[0]->iqtyonhand;
                                 //         $quickvalue=$value['iqtyonhand'];
                                 //         DB::connection('mysql_dynamic')->insert("INSERT INTO  u".$store.".trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
                                 //              vitemid = '" . $parent_item[0]->iitemid . "',
                                 //              vitemname = '" . $parent_item[0]->vitemname. "',
                                 //              vunitcode = '" . $parent_item[0]->vunitcode. "',
-                                //              ndebitqty= '" . $quickvalue . "', 
+                                //              ndebitqty= '" . $quickvalue . "',
                                 //              beforeQOH = '". $parent_item[0]->iqtyonhand ."',
                                 //              afterQOH = '". $newqoh ."',
-                                //              vbarcode = '" . $parent_item[0]->vbarcode . "', 
+                                //              vbarcode = '" . $parent_item[0]->vbarcode . "',
                                 //              SID = '" . (int)($store) . "'
                                 //              ");
-                                            
-                                //   } 
+
+                                //   }
                                 //   else{
                                 //     // $query = DB::connection('mysql_dynamic')->select("SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1");
-                                    
+
                                 //     // $ipid = $query['ipiid'];
                                 //     $sql="SELECT ipiid FROM u".$store.".trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
                                 //     $query = DB::connection('mysql')->select($sql);
                                 //     $ipid = $query[0]->ipiid;
-                                    
-                                    
+
+
                                 //     $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
                                 //     DB::connection('mysql_dynamic')->insert("INSERT INTO u".$store.".trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)($store) . "'");
-                                    
+
                                 //     $ipiid = $vrefnumber;
-                                   
+
                                 //     $quickvalue = $value['iqtyonhand'] - $current_item[0]->iqtyonhand;
                                 //     DB::connection('mysql_dynamic')->insert("INSERT INTO u".$store.".trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
                                 //          vitemid = '" . $current_item[0]->iitemid . "',
                                 //          vitemname = '" . $current_item[0]->vitemname. "',
                                 //          vunitcode = '" . $current_item[0]->vunitcode. "',
-                                //          ndebitqty= '" . $quickvalue . "', 
+                                //          ndebitqty= '" . $quickvalue . "',
                                 //          beforeQOH = '". $current_item[0]->iqtyonhand ."',
                                 //          afterQOH = '". $value['iqtyonhand'] ."',
-                                //          vbarcode = '" . $current_item[0]->vbarcode . "', 
+                                //          vbarcode = '" . $current_item[0]->vbarcode . "',
                                 //          SID = '" . (int)($store) . "'
                                 //          ");
                                 //     DB::connection('mysql_dynamic')->update("UPDATE u".$store.".mst_item SET iqtyonhand = '" . ($value['iqtyonhand']) . "' WHERE iitemid = '" . (int)$item_id . "'");
-                                
-                                //   }      
+
+                                //   }
                                 // }
-                                
+
                                 if ($current_item['nunitcost'] != $value['nunitcost'] && $value['nunitcost'] != '') {
-                                    
-                                    DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET 
+
+                                    DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET
                                     nunitcost = '" . ($value['nunitcost']) . "' ,
-                                    new_costprice='" .($current_item[0]->nsellunit*$value['nunitcost']) . "' 
+                                    new_costprice='" .($current_item[0]->nsellunit*$value['nunitcost']) . "'
                                     WHERE iitemid = '" . (int)$item_id . "'");
                                 }
                                 if ($current_item['vdepcode'] != $value['vdepartmentname'] && $value['vdepartmentname'] != '') {  //echo" 134:UPDATE mst_item SET vdepcode = '" . ($value['vdepartmentname']) . "' WHERE iitemid = '" . (int)$value['iitemid'] . "'";die;
@@ -407,10 +399,10 @@ class quickUpdateItem extends Model
                                     DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET vdepcode = '" .$department_code. "' WHERE iitemid = '" . (int)$item_id . "'");
                                 }
                                 if ($current_item['vcategorycode'] != $value['vcategoryname'] && $value['vcategoryname'] != '') {
-                                    $cat_code           = $this->addCategory($store, $value['vcategoryname']); 
+                                    $cat_code           = $this->addCategory($store, $value['vcategoryname']);
                                     DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET vcategorycode = '".$cat_code."' WHERE iitemid = '".(int)$item_id."'");
                                 }
-                                
+
                                 if ((($current_item['dcostprice'] != $value['dcostprice']) && ($current_item['dcostprice'] != '0.0000') && $current_item['isparentchild'] != 1) && (($current_item['dunitprice'] != $value['dunitprice']) && ($current_item['dunitprice'] != '0.00'))) {
                                     if (DB::connection('mysql')->select("SELECT * FROM information_schema.tables WHERE table_schema = 'u".$store."'  AND table_name = 'trn_webadmin_history'")) {
                                         $old_item_values = $current_item;
@@ -462,7 +454,7 @@ class quickUpdateItem extends Model
                                             } catch (\Exception $e) {
                                                 report($e);
                                             }
-                                            
+
                                             $webadmin_history_id = DB::connection('mysql')->select("select * from u".$store.".trn_webadmin_history order by historyid DESC LIMIT 1  ");
                                             if(isset($webadmin_history_id[0])){
                                                 $trn_webadmin_history_last_id_cost = $webadmin_history_id[0]->historyid;
@@ -505,12 +497,12 @@ class quickUpdateItem extends Model
                                             } catch (\Exception $e) {
                                                 report($e);
                                             }
-                                            
+
                                             $webadmin_history_id = DB::connection('mysql')->select("select * from u".$store.".trn_webadmin_history order by historyid DESC LIMIT 1  ");
                                             if(isset($webadmin_history_id[0])){
                                                 $trn_webadmin_history_last_id_price = $webadmin_history_id[0]->historyid;
                                             }
-                                            
+
                                         }
                                         DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET dunitprice = '" . ($value['dunitprice']) . "' WHERE iitemid = '" . (int)$item_id. "'");
                                         //trn_itempricecosthistory
@@ -557,12 +549,12 @@ class quickUpdateItem extends Model
                                                     } catch (\Exception $e) {
                                                         report($e);
                                                     }
-                                                    
+
                                                     $webadmin_history_id = DB::connection('mysql')->select("select * from u".$store.".trn_webadmin_history order by historyid DESC LIMIT 1  ");
                                                     if(isset($webadmin_history_id[0])){
                                                         $trn_webadmin_history_last_id_child = $webadmin_history_id[0]->historyid;
                                                     }
-                                                    
+
                                                 }
                                                 DB::connection('mysql')->update("UPDATE u".$store.".mst_item SET dcostprice=npack*
                                                             '" . ($isParentCheck['nunitcost']) . "',nunitcost='" . ($isParentCheck['nunitcost']) . "' WHERE iitemid= '" . (int)($chi_item['iitemid']) . "'");
@@ -655,13 +647,13 @@ class quickUpdateItem extends Model
                                     }
                                 }
                             }
-                            
-                            
-                        }else{ 
+
+
+                        }else{
                             $current_item = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid='" . (int)$value['iitemid'] . "'");
-                            
+
                             // if ($current_item[0]->iqtyonhand != $value['iqtyonhand'] && $value['iqtyonhand'] != '') {
-                                
+
                             //   if($current_item[0]->isparentchild==1)
                             //   {
                             //       $id=$current_item[0]->parentid;
@@ -669,66 +661,66 @@ class quickUpdateItem extends Model
                             //       $newqoh=$parent_item[0]->iqtyonhand+$value['iqtyonhand']; dd($newqoh);
                             //       DB::connection('mysql_dynamic')->update("UPDATE mst_item SET iqtyonhand = '" .$newqoh. "' WHERE iitemid = '" . (int)$id . "'");
                             //       DB::connection('mysql_dynamic')->update("UPDATE mst_item SET iqtyonhand = 0 WHERE iitemid = '" . (int)(int)$value['iitemid']  . "'");
-                                 
+
                             //         $sql="SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
                             //         $query = DB::connection('mysql_dynamic')->select($sql);
                             //         $ipid = $query[0]->ipiid;
-                                   
-                                    
+
+
                             //         $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
                             //         DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)(session()->get('sid')) . "'");
                             //         // $ipiid = DB::getPdo()->lastInsertId();
                             //         $ipiid = $vrefnumber;
-                                   
+
                             //         //$quickvalue = $value['iqtyonhand'] - $parent_item[0]->iqtyonhand;
                             //         $quickvalue=$value['iqtyonhand'];
                             //         DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
                             //              vitemid = '" . $parent_item[0]->iitemid . "',
                             //              vitemname = '" . $parent_item[0]->vitemname. "',
                             //              vunitcode = '" . $parent_item[0]->vunitcode. "',
-                            //              ndebitqty= '" . $quickvalue . "', 
+                            //              ndebitqty= '" . $quickvalue . "',
                             //              beforeQOH = '". $parent_item[0]->iqtyonhand ."',
                             //              afterQOH = '". $newqoh ."',
-                            //              vbarcode = '" . $parent_item[0]->vbarcode . "', 
+                            //              vbarcode = '" . $parent_item[0]->vbarcode . "',
                             //              SID = '" . (int)(session()->get('sid')) . "'
                             //              ");
-                                      
+
                             //   }
                             //   else{
                             //     // $query = DB::connection('mysql_dynamic')->select("SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1");
-                                
+
                             //     // $ipid = $query['ipiid'];
                             //     $sql="SELECT ipiid FROM trn_physicalinventory ORDER BY ipiid DESC LIMIT 1";
                             //     $query = DB::connection('mysql_dynamic')->select($sql);
                             //     $ipid = $query[0]->ipiid;
-                                
-                                
+
+
                             //     $vrefnumber = str_pad($ipid + 1, 9, "0", STR_PAD_LEFT);
                             //     DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventory SET  vrefnumber= $vrefnumber,estatus='Close',dcreatedate=CURRENT_TIMESTAMP, vtype = 'Quick Update',SID = '" . (int)(session()->get('sid')) . "'");
                             //     // $ipiid = DB::getPdo()->lastInsertId();
                             //     $ipiid = $vrefnumber;
-                                
+
                             //     $quickvalue = $value['iqtyonhand'] - $current_item[0]->iqtyonhand;
                             //     DB::connection('mysql_dynamic')->insert("INSERT INTO trn_physicalinventorydetail SET  ipiid = '" . (int)$ipiid . "',
                             //          vitemid = '" . $current_item[0]->iitemid . "',
                             //          vitemname = '" . $current_item[0]->vitemname. "',
                             //          vunitcode = '" . $current_item[0]->vunitcode. "',
-                            //          ndebitqty= '" . $quickvalue . "', 
+                            //          ndebitqty= '" . $quickvalue . "',
                             //          beforeQOH = '". $current_item[0]->iqtyonhand ."',
                             //          afterQOH = '". $value['iqtyonhand'] ."',
-                            //          vbarcode = '" . $current_item[0]->vbarcode . "', 
+                            //          vbarcode = '" . $current_item[0]->vbarcode . "',
                             //          SID = '" . (int)(session()->get('sid')) . "'
                             //          ");
-                                    
+
                             //         DB::connection('mysql_dynamic')->update("UPDATE mst_item SET iqtyonhand = '" . ($value['iqtyonhand']) . "' WHERE iitemid = '" . (int)$value['iitemid'] . "'");
-                                
-                            //     }      
+
+                            //     }
                             // }
-                            
+
                             if ($current_item['nunitcost'] != $value['nunitcost'] && $value['nunitcost'] != '') {
-                                
+
                                 DB::connection('mysql_dynamic')->update("UPDATE mst_item SET nunitcost = '" . ($value['nunitcost']) . "' ,
-                                new_costprice='" .($current_item[0]->nsellunit*$value['nunitcost']) . "' 
+                                new_costprice='" .($current_item[0]->nsellunit*$value['nunitcost']) . "'
                                 WHERE iitemid = '" . (int)$value['iitemid'] . "'");
                             }
                             if ($current_item['vdepcode'] != $value['vdepartmentname'] && $value['vdepartmentname'] != '') {  //echo" 134:UPDATE mst_item SET vdepcode = '" . ($value['vdepartmentname']) . "' WHERE iitemid = '" . (int)$value['iitemid'] . "'";die;
@@ -966,10 +958,10 @@ class quickUpdateItem extends Model
                                     }
                                 }
                             }
-                            
+
                         }
                     }
-                    
+
                 }
             } catch (\Exception $e) {
                 // duplicate entry exception

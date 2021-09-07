@@ -76,30 +76,7 @@ class PurchaseOrderController extends Controller
         }
 		
 		$data['SID'] = session()->get('sid');
-		$purchase_orders = array();
-        
-		$results = PurchaseOrder::orderBy($sort, $order)->paginate(20);
 		
-		foreach ($results as $result) {
-			
-			$purchase_orders[] = array(
-				'ipoid'  		=> $result->ipoid,
-				'estatus'     	=> $result->estatus,
-				'vponumber' 	=> $result->vponumber,
-				'nnettotal' 	=> $result->nnettotal,
-				'vinvoiceno' 	=> $result->vinvoiceno,
-				'vvendorname'   => $result->vvendorname,
-				'vordertype'  	=> $result->vordertype,
-				'dcreatedate'  	=> $result->dcreatedate,
-				'dreceiveddate' => $result->dreceiveddate,
-				'dlastupdate'  	=> $result->LastUpdate,
-				'view'          => url('/PurchaseOrder/info' . '?ipoid=' . $result->ipoid ),
-				'edit'          => url('/PurchaseOrder/edit' . '?ipoid=' . $result->ipoid ),
-				'delete'        => url('/PurchaseOrder/delete' . '?ipoid=' . $result->ipoid )
-			);
-		}
-        
-		$data['results'] = $results;
 		
 		$error_warning = session()->get('warning');
         if (isset($error_warning)) {
@@ -120,7 +97,7 @@ class PurchaseOrderController extends Controller
         }
         
         
-		return view('purchase_order.purchase_order_list',compact('data', 'purchase_orders'));
+		return view('purchase_order.purchase_order_list',compact('data'));
 	}
 	
 	protected function getSearchList(Request $request) 
@@ -134,99 +111,156 @@ class PurchaseOrderController extends Controller
 		}
 		
 		if(isset($input['order'])){
-		    $order = $input['order'];
+		    $order = 'ORDER BY LastUpdate '.$input['order'];
 		}else{
-		    $order = 'DESC';
+		    $order = 'ORDER BY LastUpdate DESC';
 		}
+
+        $search_value = $input['columns'];
         
-		$data['current_url'] = url('/PurchaseOrder');
-		$data['add'] = url('/PurchaseOrder/add');
-		$data['edit'] = url('/PurchaseOrder/edit');
-		$data['delete'] = url('/PurchaseOrder/delete');
-		$data['po_sales_history'] = url('/PurchaseOrder/add_po_sales_history');
-		$data['po_par_level'] = url('/PurchaseOrder/add_po_par_level');
-		$data['edit_list'] = url('/PurchaseOrder/edit_list');
-		
-        if($order == 'DESC'){
-            $data['sort_estatus'] = url('/PurchaseOrder?sort=estatus&order=ASC');
-            $data['sort_vponumber'] = url('/PurchaseOrder?sort=vponumber&order=ASC');
-            $data['sort_vvendorname'] = url('/PurchaseOrder?sort=vvendorname&order=ASC');
-            $data['sort_vordertype'] = url('/PurchaseOrder?sort=vordertype&order=ASC');
-            $data['sort_dcreatedate'] = url('/PurchaseOrder?sort=dcreatedate&order=ASC');
-            $data['sort_dreceiveddate'] = url('/PurchaseOrder?sort=dreceiveddate&order=ASC');
-            $data['sort_LastUpdate'] = url('/PurchaseOrder?sort=LastUpdate&order=ASC');
-        }else{
-            $data['sort_estatus'] = url('/PurchaseOrder');
-            $data['sort_vponumber'] = url('/PurchaseOrder');
-            $data['sort_vvendorname'] = url('/PurchaseOrder');
-            $data['sort_vordertype'] = url('/PurchaseOrder');
-            $data['sort_dcreatedate'] = url('/PurchaseOrder');
-            $data['sort_dreceiveddate'] = url('/PurchaseOrder');
-            $data['sort_LastUpdate'] = url('/PurchaseOrder');
+        $search_items = [];
+        foreach($search_value as $value)
+        {
+            if($value["data"] == "estatus")
+            {
+                $search_items['estatus'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vponumber")
+            {
+                $search_items['vponumber'] = $value['search']['value'];
+            }
+            else if($value["data"] == "nnettotal")
+            {
+                $search_items['nnettotal'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vinvoiceno")
+            {
+                $search_items['vinvoiceno'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vvendorname")
+            {
+                $search_items['vvendorname'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vordertype")
+            {
+                $search_items['vordertype'] = $value['search']['value'];
+            }
+            
         }
-		
+
+        if(empty(trim($search_items['estatus'])) && empty(trim($search_items['vponumber'])) && empty(trim($search_items['nnettotal'])) && empty(trim($search_items['vinvoiceno'])) &&  empty(trim($search_items['vvendorname'])) && empty(trim($search_items['vordertype']))  )
+        {
+            $limit = 20;
+            
+            $start_from = ($input['start']);
+
+            $select_query = "SELECT * FROM trn_purchaseorder ".$order." LIMIT ". $input['start'].", ".$limit;
+
+            $count_select_query = "SELECT COUNT(distinct ipoid) as count FROM trn_purchaseorder";
+            $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
+            $count_query = isset($count_query[0])?(array)$count_query[0]:[];
+            
+            $count_records = $count_total = (int)$count_query['count'];
+
+        }else{
+            $limit = 20;
+            
+            $start_from = ($input['start']);
+            
+            $offset = $input['start']+$input['length']; 
+            $condition = "WHERE 1=1";
+            $check_condition = 0;
+            
+            if(isset($search_items['estatus']) && !empty(trim($search_items['estatus']))){
+                $search = ($search_items['estatus']);
+                $condition .= " AND estatus LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vponumber']) && !empty(trim($search_items['vponumber']))){
+                $search = ($search_items['vponumber']);
+                $condition .= " AND vponumber LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+
+            if(isset($search_items['nnettotal']) && !empty(trim($search_items['nnettotal']))){
+                $search = ($search_items['nnettotal']);
+                $condition .= " AND nnettotal LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vinvoiceno']) && !empty(trim($search_items['vinvoiceno']))){
+                $search = ($search_items['vinvoiceno']);
+                $condition .= " AND vinvoiceno LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+
+            if(isset($search_items['vvendorname']) && !empty(trim($search_items['vvendorname']))){
+                $search = ($search_items['vvendorname']);
+                $condition .= " AND vvendorname LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vordertype']) && !empty(trim($search_items['vordertype']))){
+                $search = ($search_items['vordertype']);
+                $condition .= " AND vordertype LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            $select_query = "SELECT * FROM trn_purchaseorder ".$condition." ".$order." LIMIT ". $input['start'].", ".$limit;
+
+            $count_select_query = "SELECT COUNT(distinct ipoid) as count FROM trn_purchaseorder ".$condition;
+            $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
+            $count_query = isset($count_query[0])?(array)$count_query[0]:[];
+            
+            $count_records = $count_total = (int)$count_query['count'];
+        }
+        
+        $query = DB::connection('mysql_dynamic')->select($select_query);
+        
 		$data['SID'] = session()->get('sid');
 		$purchase_orders = array();
         
-        if(isset($input['searchbox'])){
-            
-            $search = $input['searchbox'];
-            
-            $results = PurchaseOrder::where(function($query) use ($search) {
-                                     
-                                            $query->where('vponumber', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('vordertitle', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('vvendorname', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('vinvoiceno', 'LIKE', '%'.$search.'%')
-                                                ->orWhere('estatus', 'LIKE', '%'.$search.'%');
-                                        })
-                                        ->orderBy($sort, $order)
-                                        ->paginate(20);
-        }else{
-            $results = PurchaseOrder::orderBy($sort, $order)->paginate(20);
+        $datas = array();
+        if(count($query) > 0){
+            foreach ($query as $key => $value) {
+
+                // if($value->estatus == 'Close'){
+                //     $view_edit = url('/PurchaseOrder/info' . '?ipoid=' . $value->ipoid );
+                // }else{
+                //     $view_edit = url('/PurchaseOrder/edit' . '?ipoid=' . $value->ipoid );
+                // }
+                
+                $view_edit = url('/PurchaseOrder/edit' . '?ipoid=' . $value->ipoid );
+                
+                $temp = array();
+                $temp['ipoid']          = $value->ipoid;
+                $temp['estatus']        = $value->estatus;
+                $temp['vponumber']      = $value->vponumber;
+                $temp['nnettotal']      = $value->nnettotal;
+                $temp['vinvoiceno']     = $value->vinvoiceno;
+                $temp['vvendorname']    = $value->vvendorname;
+                $temp['vordertype']     = $value->vordertype;
+                $temp['dcreatedate']    = $value->dcreatedate;
+                $temp['dreceiveddate']  = $value->dreceiveddate;
+                $temp['LastUpdate']     = $value->LastUpdate;
+                $temp['view_edit']      = $view_edit;
+				$temp['delete']         = url('/PurchaseOrder/delete' . '?ipoid=' . $value->ipoid );
+
+                $datas[]                = $temp;
+            }
         }
 		
-		foreach ($results as $result) {
-			
-			$purchase_orders[] = array(
-				'ipoid'  		=> $result->ipoid,
-				'estatus'     	=> $result->estatus,
-				'vponumber' 	=> $result->vponumber,
-				'nnettotal' 	=> $result->nnettotal,
-				'vinvoiceno' 	=> $result->vinvoiceno,
-				'vvendorname'   => $result->vvendorname,
-				'vordertype'  	=> $result->vordertype,
-				'dcreatedate'  	=> $result->dcreatedate,
-				'dreceiveddate' => $result->dreceiveddate,
-				'dlastupdate'  	=> $result->LastUpdate,
-				'view'          => url('/PurchaseOrder/info' . '?ipoid=' . $result->ipoid ),
-				'edit'          => url('/PurchaseOrder/edit' . '?ipoid=' . $result->ipoid ),
-				'delete'        => url('/PurchaseOrder/delete' . '?ipoid=' . $result->ipoid )
-			);
-		}
+		$return = [];
+        $return['draw'] = (int)$input['draw'];
+        $return['recordsTotal'] = $count_total;
+        $return['recordsFiltered'] = $count_records;
+        $return['data'] = $datas;
         
-		$data['results'] = $results;
-		
-		$error_warning = session()->get('warning');
-        if (isset($error_warning)) {
-            $data['error_warning'] = session()->get('warning');
-
-            session()->forget('warning');
-        } else {
-            $data['error_warning'] = '';
-        }
-        
-        $success = session()->get('success');
-        if (isset($success)) {
-            $data['success'] = session()->get('success');
-
-            session()->forget('success');
-        } else {
-            $data['success'] = '';
-        }
+        return response(json_encode($return), 200)
+                  ->header('Content-Type', 'application/json');
         
         
-		return view('purchase_order.purchase_order_list',compact('data', 'purchase_orders'));
 	}
 	
 	public function edit_form(Request $request) 
@@ -407,7 +441,7 @@ class PurchaseOrderController extends Controller
         
         if(count($result['result']) !== 0) {
             
-            $html = '<thead><tr><th></th>';
+            $html = '<thead class="button-blue text-white text-uppercase font-weight-bold" style="font-size:12px";><tr><th></th>';
             $html .= '<th>Item Name</th>';
             $html .= '<th>Odr By</th>';
             $html .= '<th>Odr Qty</th>';
@@ -518,6 +552,8 @@ class PurchaseOrderController extends Controller
 		$data['export_as_csv'] = url('/PurchaseOrder/export_as_csv');
 		$data['export_as_email'] = url('/PurchaseOrder/export_as_email');
 		$data['export_as_excel'] = url('/PurchaseOrder/export_as_excel');
+		
+		$data['get_categories_url']    = url('buydown/get_item_categories');
 
 		if (isset($input['ipoid'])) {
             
@@ -734,6 +770,10 @@ class PurchaseOrderController extends Controller
         
 		$data['vendors'] = $suppliers = Supplier::orderBy('vcompanyname', 'ASC')->get()->toArray();
         // $data['store'] = $this->model_api_purchase_order->getStore();
+        
+        $data['sizes'] = Size::orderBy('vsize', 'ASC')->get()->toArray();
+        
+        $data['departments'] = Department::orderBy('vdepartmentname', 'ASC')->get()->toArray();
         
 		return $data;
 	}
@@ -998,85 +1038,13 @@ class PurchaseOrderController extends Controller
         // ==================================== Drop down for departments ============================================
         
         $departments = Department::orderBy('vdepartmentname', 'ASC')->get()->toArray();
-        
-        $departments_html ="";
-        $departments_html = "<select class='' name='dept_code' id='dept_code' style='width: 100px;'><option value='all'>All</option>";
-        foreach($departments as $department){
-            if(isset($data['departments']) && $data['departments'] == $department['vdepcode']){
-                $departments_html .= "<option value='".$department['vdepcode']."' selected='selected'>".$department['vdepartmentname']."</option>";
-            } else {
-                $departments_html .= "<option value='".$department['vdepcode']."'>".$department['vdepartmentname']."</option>";
-            }
-        }
-        $departments_html .="</select>";
-        
-        $data['departments'] = $departments_html;
-        
-        
-        
-        // ==================================== Drop down for categories ============================================
-        $categories_html = "<select class='' name='category_code' id='category_code' style='width: 100px;'><option value='all'>All</option>";
-        
-        if(isset($input['dept_code'])){
-
-            $get_categories = Category::where('dept_code', $input['dept_code'])->get()->toArray();
-        
-            foreach($get_categories as $category){
-                if(isset($input['category_code']) && $input['category_code'] == $category['vcategorycode']){
-                    $categories_html .= "<option value='".$category['vcategorycode']."' selected='selected'>".$category['vcategoryname']."</option>";
-                } else {
-                    $categories_html .= "<option value='".$category['vcategorycode']."'>".$category['vcategoryname']."</option>";
-                }
-            }
-            
-        }
-        
-        $categories_html .="</select>";
-        $data['categories'] = $categories_html;
-        
-        
-        // ==================================== Drop down for sub categories ============================================
-
-        $subcategories_html = "<select class='' name='sub_category_id' id='sub_category_id' style='width: 100px;'><option value='all'>All</option>";
-        
-        if(isset($input['category_code'])) {
-            
-            $get_subcategories = SubCategory::where('cat_id', $input['category_code'])->get()->toArray();
-        
-            foreach($get_subcategories as $subcategory){
-                if(isset($input['sub_category_id']) && $input['sub_category_id'] == $subcategory['subcat_id']){
-                    $subcategories_html .= "<option value='".$subcategory['subcat_id']."' selected='selected'>".$subcategory['subcat_name']."</option>";
-                } else {
-                    $subcategories_html .= "<option value='".$subcategory['subcat_id']."'>".$subcategory['subcat_name']."</option>";
-                }
-            }
-            
-        }
-        $subcategories_html .="</select>";
-        $data['subcategories'] = $subcategories_html;
-        
+                
+        $data['departments'] = $departments;
         
         
         // ==================================== Drop down for vendors ============================================
         
         $suppliers = Supplier::orderBy('vcompanyname', 'ASC')->get()->toArray();
-        
-        
-        // $suppliers = $this->model_administration_items->getSuppliers();
-        $supplier_html ="";
-        $supplier_html = "<select class='' name='supplier_code' id='supplier_code' style='width: 100px;'><option value='all'>All</option>";
-        foreach($suppliers as $supplier){
-            $supplier_html .= "<option value='".$supplier['isupplierid']."'";
-            
-            if(isset($input['vvendorid']) && $input['vvendorid'] == $supplier['isupplierid']){
-                $supplier_html .= "selected='selected'>".$supplier['vcompanyname']."</option>";
-            }
-            
-            $supplier_html .= ">".$supplier['vcompanyname']."</option>";
-        }
-        $supplier_html .="</select>";
-        
-        $data['suppliers'] = $supplier_html;        
         
         $data['vendors'] = $suppliers;
 		$data['store'] = Store::All()->toArray();
@@ -1101,43 +1069,7 @@ class PurchaseOrderController extends Controller
                         'c' => 'Custom'
                      );
             
-        $price_select_by_list = array(
-                                    'greater'   => 'Greater than',
-                                    'less'      => 'Less than',
-                                    'equal'     => 'Equal to',
-                                    'between'   => 'Between'
-                                );        
-                
-        $price_select_by_html = "<select class='' id='price_select_by' name='price_select_by' style='width:40%;'>";
-        foreach($price_select_by_list as $k => $v){
-            $price_select_by_html .= "<option value='".$k."'";
-            
-            if(isset($data['price_select_by']) && $k === $data['price_select_by']){
-                $price_select_by_html .= " selected";
-            }
-            
-            $price_select_by_html .= ">".$v."</option>";
-        }
-        $price_select_by_html .= "</select>";
-        $price_select_by_html .= "<span id='selectByValuesSpan'>";
-        
-        if(isset($input['price_select_by']) && $input['price_select_by'] === 'between'){
-            // $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Enter Amt' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$data['select_by_value_2']."'/></span>";
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amt' style='width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value='".$data['select_by_value_1']."'/>";
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Enter Amt' style='width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value='".$data['select_by_value_2']."'/>";
-        } else {
-            if(isset($data['select_by_value_1'])){
-                $select_by_value_1 =  $data['select_by_value_1'];
-            }else{
-                $select_by_value_1 = '';
-            }
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amount' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$select_by_value_1."'/>";
-        }
-        
-        $price_select_by_html .= "</span>"; 
-        
-        $data['price_select_by'] = $price_select_by_html;		
-		
+       
         $data['get_categories_url'] = url('/PurchaseOrder/sales_history/get_categories');
         $data['get_subcategories_url'] = url('/PurchaseOrder/sales_history/get_subcategories');
         
@@ -1407,90 +1339,17 @@ class PurchaseOrderController extends Controller
 				array_push($data['items_id'], $v['vitemid']);
 			}
 		}
-		
-		
+				
         // ==================================== Drop down for departments ============================================
         
         $departments = Department::orderBy('vdepartmentname', 'ASC')->get()->toArray();
         
-        $departments_html ="";
-        $departments_html = "<select class='' name='dept_code' id='dept_code' style='width: 100px;'><option value='all'>All</option>";
-        foreach($departments as $department){
-            if(isset($data['departments']) && $data['departments'] == $department['vdepcode']){
-                $departments_html .= "<option value='".$department['vdepcode']."' selected='selected'>".$department['vdepartmentname']."</option>";
-            } else {
-                $departments_html .= "<option value='".$department['vdepcode']."'>".$department['vdepartmentname']."</option>";
-            }
-        }
-        $departments_html .="</select>";
-        
-        $data['departments'] = $departments_html;
-        
-        
-        
-        // ==================================== Drop down for categories ============================================
-        $categories_html = "<select class='' name='category_code' id='category_code' style='width: 100px;'><option value='all'>All</option>";
-        
-        if(isset($input['dept_code'])){
-            
-            $get_categories = Category::where('dept_code', $input['dept_code'])->get()->toArray();
-                
-            foreach($get_categories as $category){
-                if(isset($input['category_code']) && $input['category_code'] == $category['vcategorycode']){
-                    $categories_html .= "<option value='".$category['vcategorycode']."' selected='selected'>".$category['vcategoryname']."</option>";
-                } else {
-                    $categories_html .= "<option value='".$category['vcategorycode']."'>".$category['vcategoryname']."</option>";
-                }
-            }
-            
-        }
-        
-        $categories_html .="</select>";
-        $data['categories'] = $categories_html;
-        
-        
-        // ==================================== Drop down for sub categories ============================================
-
-        $subcategories_html = "<select class='' name='sub_category_id' id='sub_category_id' style='width: 100px;'><option value='all'>All</option>";
-        
-        if(isset($input['category_code'])) {
-            
-            $get_subcategories = SubCategory::where('cat_id', $input['category_code'])->get()->toArray();
-        
-            foreach($get_subcategories as $subcategory){
-                if(isset($input['sub_category_id']) && $input['sub_category_id'] == $subcategory['subcat_id']){
-                    $subcategories_html .= "<option value='".$subcategory['subcat_id']."' selected='selected'>".$subcategory['subcat_name']."</option>";
-                } else {
-                    $subcategories_html .= "<option value='".$subcategory['subcat_id']."'>".$subcategory['subcat_name']."</option>";
-                }
-            }
-            
-        }
-        $subcategories_html .="</select>";
-        $data['subcategories'] = $subcategories_html;
-        
-        
+        $data['departments'] = $departments;
+              
         
         // ==================================== Drop down for vendors ============================================
         
         $suppliers = Supplier::orderBy('vcompanyname', 'ASC')->get()->toArray();
-        
-        
-        // $suppliers = $this->model_administration_items->getSuppliers();
-        $supplier_html ="";
-        $supplier_html = "<select class='' name='supplier_code' id='supplier_code' style='width: 100px;'><option value='all'>All</option>";
-        foreach($suppliers as $supplier){
-            $supplier_html .= "<option value='".$supplier['isupplierid']."'";
-            
-            if(isset($input['vvendorid']) && $input['vvendorid'] == $supplier['isupplierid']){
-                $supplier_html .= "selected='selected'>".$supplier['vcompanyname']."</option>";
-            }
-            
-            $supplier_html .= ">".$supplier['vcompanyname']."</option>";
-        }
-        $supplier_html .="</select>";
-        
-        $data['suppliers'] = $supplier_html;        
         
         $data['vendors'] = $suppliers;
 		$data['store'] = Store::All()->toArray();
@@ -1509,49 +1368,6 @@ class PurchaseOrderController extends Controller
                         'c' => 'Custom'
                      );
 
-
-        $price_select_by_list = array(
-                                    'greater'   => 'Greater than',
-                                    'less'      => 'Less than',
-                                    'equal'     => 'Equal to',
-                                    'between'   => 'Between'
-                                );        
-                
-        $price_select_by_html = "<select class='' id='price_select_by' name='price_select_by' style='width:40%;'>";
-        foreach($price_select_by_list as $k => $v){
-            $price_select_by_html .= "<option value='".$k."'";
-            
-            if(isset($data['price_select_by']) && $k === $data['price_select_by']){
-                $price_select_by_html .= " selected";
-            }
-            
-            $price_select_by_html .= ">".$v."</option>";
-        }
-        $price_select_by_html .= "</select>";
-        $price_select_by_html .= "<span id='selectByValuesSpan'>";
-        
-        // $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amt' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$data['select_by_value_1']."'/>";
-
-
-
-        if(isset($input['price_select_by']) && $input['price_select_by'] === 'between'){
-            // $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Enter Amt' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$data['select_by_value_2']."'/></span>";
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amt' style='width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value='".$data['select_by_value_1']."'/>";
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Enter Amt' style='width:27%;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value='".$data['select_by_value_2']."'/>";
-        } else {
-            if(isset($data['select_by_value_1'])){
-                $select_by_value_1 =  $data['select_by_value_1'];
-            }else{
-                $select_by_value_1 = '';
-            }
-            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amount' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$select_by_value_1."'/>";
-        }
-        
-        $price_select_by_html .= "</span>"; 
-        
-        
-        $data['price_select_by'] = $price_select_by_html;		
-		
 		$data['get_categories_url'] = url('/PurchaseOrder/sales_history/get_categories');
         $data['get_subcategories_url'] = url('/PurchaseOrder/sales_history/get_subcategories');
         
@@ -1668,7 +1484,7 @@ class PurchaseOrderController extends Controller
         
         if(empty(trim($search_items['vitemname'])) && empty(trim($search_items['vbarcode'])) && empty(trim($search_items['vendor'])) && empty(trim($search_items['vcategoryname'])) &&  empty(trim($search_items['vdepartmentname'])))
         {
-            $limit = 20;
+            $limit = 10;
             
             $start_from = ($input['start']);
             
@@ -1709,7 +1525,7 @@ class PurchaseOrderController extends Controller
         else
         {
             
-            $limit = 20;
+            $limit = 10;
             
             $start_from = ($input['start']);
             
@@ -1976,7 +1792,7 @@ class PurchaseOrderController extends Controller
 		$json = array();
 		
         //removed ivendorid on 6th April 2020: To search items regardless of selected vendor
-        if (isset($input['search_item']) && $request->isMethod('post')) {		    
+        if (isset($input) && $request->isMethod('post')) {		    
 			
 	        $pre_items_id = json_decode(file_get_contents('php://input'), true);
             
@@ -1985,7 +1801,7 @@ class PurchaseOrderController extends Controller
             // new search result function without vendor filter 			
 			
 			$PurchaseOrder = new PurchaseOrder;
-			$items = $PurchaseOrder->getSearchItemHistoryAll($input['search_item'],$input['ivendorid'],$pre_items_id);
+			$items = $PurchaseOrder->getSearchItemHistoryAll($input,$input['ivendorid'],$pre_items_id);
 			$json['items'] = $items;
 		}
             

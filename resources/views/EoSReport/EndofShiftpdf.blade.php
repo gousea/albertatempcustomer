@@ -217,12 +217,15 @@
                                 <td class="text-right"><?php echo "$",$data['Coupon'];?></td>
                             </tr>
                              <?php } ?>
-                             <?php if($data['CreditCardTender'] !=0){?>
+                             
+                             
+                              <?php if($data['CreditCardTender'] !=0){?>
                             <tr>
                                 <td>CREDIT CARD </td>
                                 <td class="text-right"><?php echo "$",$data['CreditCardTender'];?></td>
                             </tr>
                              <?php } ?>
+                             
                               
                                <?php if($data['CheckTender'] !=0){?>
                             <tr>
@@ -298,7 +301,7 @@
                                 <td>#AVG TRANSACTIONS</td>
                                 <td class="text-right"><?php echo "$",number_format($data['AvgSaleTrn'],2);?></td>
                             </tr>
-                           <?php if(isset($data['Surcharges'] ) && $data['Surcharges'] !=0){ ?>
+                              <?php if(isset($data['Surcharges'] ) && $data['Surcharges'] !=0){ ?>
                             <tr>
                                 <td>#Surcharges Collected </td>
                                 <td class="text-right"><?php echo $data['Surcharges'];?></td>
@@ -311,6 +314,16 @@
                                 <td class="text-right"><?php echo $data['EbtTaxExempted'];?></td>
                             </tr>
                             <?php } ?>
+                            
+                            
+                            <?php if(isset($data['ConvCharge']) && $data['ConvCharge'] !=0){ ?>
+                            <tr>
+                                <td># CONVENIENCE CHARGE </td>
+                                <td class="text-right"><?php echo $data['ConvCharge'];?></td>
+                            </tr>
+                            <?php } ?>
+                            
+                            
                               </tbody>
                         </table>
                    
@@ -367,7 +380,7 @@
                           
                             <tbody>
                             <tr>
-                                <td> EXPECTED CASH </td>
+                                <td> EXPECTED CASH</td>
                                 <td class="text-right"><?php echo "$",$excash=$data['ClosingBalance'];?></td>
                             </tr>
                             <tr>
@@ -391,6 +404,28 @@
              
                 </div>
                 </div>
+                <br>
+                <?php if(isset($cashier_data)){ ?>
+                <div class="row">
+                    <div class="col-md-4">
+                        <table id="customers" style="border:none;">
+                            
+                            <tr>
+                                <td>CASHIER DETAILS </td>
+                                <td class="text-right">TIMINGS</td>
+                               </tr>
+                            <tbody>
+                              <?php foreach($cashier_data as $v){?>
+                                <tr>
+                                <td><?php echo $v->iuserid;?> </td>
+                                <td class="text-right"><?php echo $v->Timing;?></td>
+                               </tr>
+                            <?php } ?>    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <?} ?>
                 <br> 
                 <div class="row" >
                      <div class="col-md-12">

@@ -1,40 +1,51 @@
-@extends('layouts.master')
-
-@section('title', 'Sales Transaction')
+@extends('layouts.layout')
+@section('title')
+Sales Transaction
+@endsection
 @section('main-content')
 
-<div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
-        </div>
-    </div>
-    <div class="container-fluid">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-list"></i>Sales Transaction</h3>
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Sales Transaction</span>
                 </div>
-             
-                <div class="panel-body">
-                <div class="row" style="margin: 10px;">
-                    <form method="GET" id="filter_form" action="{{ route('SalesTransactionForm') }}">
+                <div class="nav-submenu">
+                       <?php if(isset($report_paid_out_no) && count($report_paid_out_no) > 0){ ?>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('Paidoutprint')}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            </a>
+                        <?php } ?>
+                </div>
+            </div> 
+        </div>
+    </nav>
+
+
+
+<section class="section-content py-6"> 
+    <div class="container">
+                <div class="col-md-12" >
+                    <h6><span>SEARCH PARAMETERS </span></h6>
+                    <br>
+                </div>        
+                <form method="GET" id="filter_form" action="{{ route('SalesTransactionForm') }}" style="padding-left: 12px;">
                   @csrf
-                    <div class="col-md-2" style="width:290px;">
+                  <div class="row">
+                      
+                    <div class="col-md-3 ">
                          
-                      <input type="" class="form-control" name="dates" value="<?php echo isset($start_date) ? $start_date : ''; ?>" id="dates" placeholder="Start Date" readonly>
+                      <input type="" class="form-control rcorner" name="dates" value="<?php echo isset($start_date) ? $start_date : ''; ?>" id="dates" placeholder="Start Date" readonly >
                       <input type="hidden" class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : date('m-d-Y h:i', strtotime('now')); ?>" id="start_date" placeholder="Start Date" readonly>
                       <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : date('m-d-Y h:i', strtotime('now')); ?>" id="end_date" placeholder="End Date" readonly>
                     
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-auto" style="padding: 0px;">
                     
-                        <select name="report_by" class="form-control" id="report_by" >
+                        <select name="report_by" class="form-control rcorner" id="report_by" >
                         <option value="All"<?php if(isset($_GET['report_by']) && $_GET['report_by']=='All') echo 'selected="selected"';?>>All</option>
                         <option value="Credit Card"<?php if(isset($_GET['report_by']) && $_GET['report_by']=='Credit Card') echo 'selected="selected"';?>>Credit Card</option>
                         <option value="Cash" <?php if(isset($_GET['report_by']) && $_GET['report_by']=='Cash') echo 'selected="selected"';?>>Cash</option>
@@ -51,8 +62,8 @@
                       </select>
                       
                     </div>
-                    <div class="col-md-2">
-                      <select name="amount_by" class="form-control" id="amount_by" >
+                    <div class="col-auto">
+                      <select name="amount_by" class="form-control rcorner" id="amount_by" >
                         <option value=''>--No Amt. Filter--</option>
                         <option value="less"<?php if(isset($_GET['amount_by']) && $_GET['amount_by']=='less') echo 'selected="selected"';?>>Less Than</option>
                         <option value="greater" <?php if(isset($_GET['amount_by']) && $_GET['amount_by']=='greater') echo 'selected="selected"';?>>Greater Than</option>
@@ -60,11 +71,11 @@
                        
                       </select>
                       </div>
-                      <div class="col-md-2">
-                      <input type="number" class="form-control"  name="amount"  id="amount" Placeholder="Enter amount"  step="any" value="<?php echo isset($_GET['amount'])? $_GET['amount']:'' ?>" autocomplete="off">
+                      <div class="col-auto " style="width:196px;">
+                      <input type="number" class="form-control rcorner"  name="amount"  id="amount" Placeholder="Enter amount"  step="any" value="<?php echo isset($_GET['amount'])? $_GET['amount']:'' ?>" autocomplete="off">
                       </div>
-                       <div class="col-md-2">
-                       <select name="iuserid" class="form-control" id="regid">
+                       <div class="col-auto">
+                       <select name="iuserid" class="form-control rcorner" id="regid">
                             <<option value="All"<?php if(isset($_GET['report_by'])&& $_GET['report_by']=='All') echo 'selected="selected"';?>>All Registers</option>
                             
                               <?php if(isset($userid_list) && count($userid_list) > 0){?>
@@ -81,22 +92,30 @@
                               <?php } ?>
                             </select>
                        </div>
-                       <br>
-                       <br>
-                       </br>
-                      <div class="col-md-2">
-                      <input type="submit" class="btn btn-success" name="Submit" value="Generate">
+                       
+                      <div class="col-auto">
+                      <input type="submit" class="btn btn-success rcorner header-color" name="Submit" value="Generate">
                     </div>
+                    
               </form>
                 </div>
+                
+            </form>   
+            
+                <br>    <br>
+                <div class="col-md-12" >
+                    <h6><span> SALES TRANSCATION </span></h6>
+                </div> 
+                
+                
                 <?php if(isset($reports) && count($reports) > 0){ ?>   
-                <br><br><br>
-                    <div class="row" style="margin-left: 2%;">
+                
+                    <div class="row" style="margin-left: 2%; display:none;">
                         <div class="col-md-12">
                             <p>From: <?php echo $start_date; ?> To <?php echo $end_date; ?></p>
                         </div>
-                </div>
-                    <div class="row" style="margin-left: 2%;">
+                  </div>
+                    <div class="row" style="margin-left: 2%;display:none;">
                         <div class="col-md-12">
                             <p><b>Store Name: </b>{{ session()->get('storeName') }}</p>
                         </div>
@@ -107,19 +126,23 @@
                             <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
                         </div>
             </div>
-                    <div class="row" style="margin: 10px;">
+            
+            <div class="row" style="margin: 0px;">
+                        
                   <div class="col-md-12 table-responsive">
-                  <br>
-                    <table class="table table-bordered table-striped table-hover" style="border:none;">
-                      <thead class='header'>
+                 
+                     <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
+                   data-click-to-select="true">
+                      <thead class='header th_color text-uppercase'>
                         <tr style="border-top: 1px solid #ddd;">
                           <th>Date</th>
                           <th>Reg</th>
                           <th>Tran#</th>
-                          <th class="text-right">Total</th>
+                          <th >Total</th>
                          <!-- <th class="text-right">Change</th>-->
-                          <th class="text-right">Total Tax</th>
-                          <th> <a style="color:#fff;" >Tender Type</a></th>
+                          <th>Total Tax</th>
+                          <th> Tender Type</th>
                           <!--<th>Trn Type</th>-->
                           <th>Action</th>
                         </tr>
@@ -131,13 +154,13 @@
                           $ntaxtotal=$ntaxtotal+$value->ntaxtotal;
                           }
                           ?>
-                          <tr>
+                          <tr class="header-color text-uppercase">
                               <td><b>Grand Total</b></td>
                               <td></td>
                               <td></td>
-                              <td class="text-right"> <b><?php echo "$",$nettotal;?></b></td>
+                              <td> <b><?php echo "$",$nettotal;?></b></td>
                             
-                              <td class="text-right"><b><?php echo "$",$ntaxtotal;?></b></td>
+                              <td><b><?php echo "$",$ntaxtotal;?></b></td>
                              
                               <td></td>
                               <td></td>
@@ -148,9 +171,9 @@
                               <td><?php echo date('m-d-Y g:i:sA', strtotime($value->dtrandate));?></td>
                               <td><?php echo $value->vterminalid;?></td>
                               <td><?php echo $value->trnsalesid;?></td>
-                              <td class="text-right"><?php echo "$",$value->nnettotal;?></td>
+                              <td><?php echo "$",$value->nnettotal;?></td>
                             
-                              <td class="text-right"><?php echo "$",$value->ntaxtotal;?></td>
+                              <td><?php echo "$",$value->ntaxtotal;?></td>
                              
                               <td><?php echo $value->tendername;?></td>
                              
@@ -173,13 +196,13 @@
                         </div>
                     <?php } ?>
                 <?php } ?>
-            </div>
-            </div>
+            
+            
         </div>
 </div>
-
+</section>
 @endsection
-@section('scripts')   
+@section('page-script')
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -188,24 +211,25 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" ></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script> 
+ <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <script>
-   $(function(){
-    $("#start_date").datepicker({
+  //  $(function(){
+  //   $("#start_date").datepicker({
       
-      format: 'mm-dd-yyyy hh:mm',
-      todayHighlight: true,
-      autoclose: true,
-    });
+  //     format: 'mm-dd-yyyy hh:mm',
+  //     todayHighlight: true,
+  //     autoclose: true,
+  //   });
 
-    $("#end_date").datepicker({
-      format: 'mm-dd-yyyy hh:mm',
-      todayHighlight: true,
-      autoclose: true,
-    });
-  }); 
+  //   $("#end_date").datepicker({
+  //     format: 'mm-dd-yyyy hh:mm',
+  //     todayHighlight: true,
+  //     autoclose: true,
+  //   });
+  // }); 
   
    $(document).ready(function() {
-      /*$('input[name="dates"]').daterangepicker({
+      $('input[name="dates"]').daterangepicker({
         timePicker: true,
         startDate: moment().startOf('hour'),
         endDate: moment().startOf('hour').add(32, 'hour'),
@@ -213,7 +237,7 @@
           //format: 'M-D-Y hh:mm A'
           format: 'M/DD hh:mm A'
         }
-      });*/
+      });
       
       $(function() {
 
@@ -237,7 +261,7 @@
         startDate: "<?php echo isset($start_date) ? $start_date : date('m/d/Y');?>",
         endDate: "<?php echo isset($end_date) ? $end_date : date('m/d/Y');?>",
         locale: {
-          format: 'M/DD/YYYY hh:mm A'
+        format: 'M/DD/YYYY hh:mm A'
         },
         ranges: {
            'Today': [moment().startOf('day'), moment()],
@@ -469,18 +493,24 @@ $(document).ready(function() {
   }
 
   .select2-container--default .select2-selection--single{
-    border-radius: 0px !important;
+    /*border-radius: 0px !important;*/
     height: 35px !important;
+    width:150px;
   }
   .select2.select2-container.select2-container--default{
   width: 100% !important;
   }
   .select2-container--default .select2-selection--single .select2-selection__rendered{
-    line-height: 35px !important;
+    line-height: 38px !important;
+    border-radius: 9px !important;
   }
 </style>
 <script>
     $('select[name="report_by"]').select2();
+    $('select[name="amount_by"]').select2();
+    $('select[name="iuserid"]').select2();
+    
+    
 </script>
 
 <!--<script src="view/javascript/table-fixed-header.js" ></script>-->
@@ -498,6 +528,42 @@ $(document).ready(function() {
     pointer-events:none; //This makes it not clickable
  
     }
+    
 
+
+</style>
+<style>
+.rcorner {
+  border-radius:9px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+h6 {
+   width: 100%; 
+   text-align: left; 
+   border-bottom: 2px solid; 
+   line-height: 0.1em;
+   margin: 0px 0 20px; 
+   color:#286fb7;
+} 
+
+h6 span { 
+    background:#f8f9fa!important; 
+    padding:10px 0px; 
+    color:#286fb7;
+}
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
 </style>
 @endsection 

@@ -15,10 +15,10 @@ class CustomerController extends Controller
     }
     public function index()
     {
-        $customers = Customer::orderBy('icustomerid', 'DESC')->paginate(20);
+        $customers = Customer::orderBy('icustomerid', 'DESC')->get();
         return view('customers.index', compact('customers'));
     }
-    
+
     public function search(Request $request)
     {
         $input = $request->all();
@@ -29,7 +29,7 @@ class CustomerController extends Controller
     public function create()
     {
         //return view('customers.create');
-        $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_id FROM mst_version ORDER BY ver_id DESC LIMIT 1");
+        $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_no FROM mst_version ORDER BY ver_id DESC LIMIT 1");
         $version=$version_latest[0];
         //dd($version->ver_no);
         return view('customers.create', compact('version'));
@@ -38,9 +38,9 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        
+
         $duplicateCust = Customer::where('vphone', '=', $input['vphone'])->get();
-        
+
         if(count($duplicateCust) > 0){
             return redirect('customers/create')
                         ->withErrors("Customer is already exists.")
@@ -48,20 +48,21 @@ class CustomerController extends Controller
         }else {
             if(isset($input['expire_dt'])){
                 $expire_dt = explode("-", $input['expire_dt']);
-                $expire_date = $expire_dt[2].'-'.$expire_dt[0].'-'.$expire_dt[1];
+                $expire_date = $expire_dt[0].'-'.$expire_dt[1].'-'.$expire_dt[2];
             }else{
                 $expire_date = '';
             }
             if(isset($input['birth_dt'])){
                 $birth_dt = explode("-",$input['birth_dt']);
-                $birth_date = $birth_dt[2].'-'.$birth_dt[0].'-'.$birth_dt[1];
+                $birth_date = $birth_dt[0].'-'.$birth_dt[1].'-'.$birth_dt[2];
             }else{
                 $birth_date = '';
             }
-            $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_id FROM mst_version ORDER BY ver_id DESC LIMIT 1");
-            $version=$version_latest[0];   
-            if($version->ver_id >=310){
-        
+
+            $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_no FROM mst_version ORDER BY ver_id DESC LIMIT 1");
+            $version=$version_latest[0];
+            if($version->ver_no=='3.1.0'){
+
             Customer::create([
                 'vcustomername' => $input['vcustomername'],
                 'vaccountnumber' => $input['vaccountnumber'],
@@ -108,7 +109,7 @@ class CustomerController extends Controller
                 'note' => $input['note'],
                 'SID' => session()->get('sid')
         ]);
-    }    
+    }
 
             return redirect('customers')->with('message', 'customers created Successfully');
         }
@@ -118,31 +119,33 @@ class CustomerController extends Controller
     {
         $customers = Customer::where('icustomerid', '=', $icustomerid)->get();
         $customer = $customers[0];
-        
-        $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_id FROM mst_version ORDER BY ver_id DESC LIMIT 1");
+        $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_no FROM mst_version ORDER BY ver_id DESC LIMIT 1");
         $version=$version_latest[0];
-        
+
         return view('customers.edit', compact('customer','version'));
     }
 
     public function update(Request $request, Customer $customer, $icustomerid)
     {
         $input = $request->all();
+
+
         if(isset($input['expire_dt'])){
         $expire_dt = explode("-", $input['expire_dt']);
-        $expire_date = $expire_dt[2].'-'.$expire_dt[0].'-'.$expire_dt[1];
+        $expire_date = $expire_dt[0].'-'.$expire_dt[1].'-'.$expire_dt[2];
         }else{
             $expire_date = '';
         }
         if(isset($input['birth_dt'])){
         $birth_dt = explode("-",$input['birth_dt']);
-        $birth_date = $birth_dt[2].'-'.$birth_dt[0].'-'.$birth_dt[1];
+        $birth_date = $birth_dt[0].'-'.$birth_dt[1].'-'.$birth_dt[2];
         }else{
             $birth_date = '';
         }
-        $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_id FROM mst_version ORDER BY ver_id DESC LIMIT 1");
-        $version=$version_latest[0];   
-        if($version->ver_id >=310){
+
+        $version_latest= DB::connection('mysql_dynamic')->select("SELECT ver_no FROM mst_version ORDER BY ver_id DESC LIMIT 1");
+        $version=$version_latest[0];
+        if($version->ver_no=='3.1.0'){
         Customer::where('icustomerid', '=', $icustomerid)->update([
             'vcustomername' => $input['vcustomername'],
             'vaccountnumber' => $input['vaccountnumber'],
@@ -191,7 +194,7 @@ class CustomerController extends Controller
             'SID' => session()->get('sid')
         ]);
         }
-        return redirect('customers')->with('message', 'customers updated Successfully');
+        return redirect('customers')->with('message', 'Customer Updated Successfully');
 
     }
 
@@ -201,6 +204,6 @@ class CustomerController extends Controller
         for($i = 0; $i < count($delId['selected']); $i++ ){
             Customer::where('icustomerid', '=', $delId['selected'][$i] )->delete();
         }
-        return redirect('customers')->with('message', 'customers Deleted Successfully');
+        return redirect('customers')->with('message', 'Customer Deleted Successfully');
     }
 }

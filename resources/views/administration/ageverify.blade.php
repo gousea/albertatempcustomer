@@ -1,119 +1,145 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
   Age Verification
 @endsection
 
 @section('main-content')
-<?php
-// echo "<pre>";
-// print_r($storeData);
-// echo "<pre>";
-?>
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      
-      @if (session()->has('message'))
-        <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>      
-      @endif
-
-    <div id='errorDiv'>
-    </div>
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        @foreach ($errors->all() as $error)
-          <i class="fa fa-exclamation-circle"></i>{{$error}}<br/>
-        @endforeach
-        
-      </div> 
-    @endif
-    
-    
-      <?php //if ($success) { ?>
-      {{-- <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php //echo $success; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div> --}}
-      <?php //} ?> 
-      
-      <div class="panel panel-default" style="">
-        <div class="panel-heading head_title"> 
-            <h3 class="panel-title"><i class="fa fa-list"></i> Age Verification</h3>
-        </div>
-        <div class="panel-body">
-          <div class="row" style="padding-bottom: 15px;float: right;">
-            <div class="col-md-12">
-              <div class="">
-                <a id="save_button" class="btn btn-primary" title="Save">
-                <i class="fa fa-save"></i>&nbsp;&nbsp;Save</a>
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+      <div class="container">
+          <div class="collapse navbar-collapse" id="main_nav">
+              <div class="menu">
+                  <span class="font-weight-bold text-uppercase" > Age Verification</span>
               </div>
+              <div class="nav-submenu">
+                  <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+              </div>
+          </div> <!-- navbar-collapse.// -->
+      </div>
+  </nav>
+  <section class="section-content py-6">
+    
+      <div class="container">
+        <div class="page-header">
+          
+          @if (session()->has('message'))
+            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+          @endif
+
+        <div id='errorDiv'>
+        </div>
+        @if ($errors->any())
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            @foreach ($errors->all() as $error)
+              <i class="fa fa-exclamation-circle"></i>{{$error}}<br/>
+            @endforeach
+            
+          </div> 
+        @endif
+        
+        
+        
+          <div class="panel panel-default" style="">
+          
+            <div class="panel-body">
+              <form action="/ageverifysearch" method="post" id="form_age_verification_search">
+                @csrf
+                <input type="hidden" name="searchbox" id="Id">
+                <div class="row">
+                  <div class="col-md-12">
+                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                    <input type="text" style="height:33px; font-size: 12 !important; font-weight: 600;" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Age Verification..." id="autocomplete-product" autocomplete="off">
+                  </div>
+                </div>
+              </form>
+              <br>
+
+              <form action="" method="post" enctype="multipart/form-data" id="form-age-verification">
+                <input type="hidden" name="MenuId" value="">
+                  <div class="table-responsive">
+                    <table id="age-verification" class="text-center table table-hover" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                      <thead style="background-color: #286fb7!important;">
+                        <tr>
+                          <th style="width: 1px;" class="text-center">
+                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                          </th>
+                          <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Description</th>
+                          <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Age</th>
+                          
+                        </tr> 
+                      </thead>
+                      <tbody id='searchData'>
+
+                        @foreach ($agedata as $k => $age)
+                        <tr>
+                          <td class="text-center">                        
+                        <input type="checkbox" name="selected[]" id="age_verification[{{$age->Id}}]['select']" class="checkboxId" value="{{$age->Id}}">
+                          </td>
+                                            
+                          <!-- <td>{{ $age->vname }}</td>
+                          <td>{{ $age->vvalue }}</td> -->
+
+                          <td >
+                            <span style="display:none;">{{ $age->vname }}</span>
+                            <input type="text" style="border:none;" maxlength="50" class="editable age_verification_c" name="age_verification[{{$age->Id}}]['vname']" id="age_verification[{{$age->Id}}]['vname']" value="{{ $age->vname }}" onclick="">
+                            <!--<input type="hidden" maxlength="50" class="editable age_verification_c" name="age_verification[1][vname]" id="age_verification[1][vname]" value="LOTTERY" onclick='document.getElementById("age_verification[2][select]").setAttribute("checked","checked");' />-->
+                            <input type="hidden"  name="age_verification[{{$age->Id}}]['Id']" value="{{$age->Id}}">
+                          </td>
+                                            
+                          <td>
+                            <input type="text" style="border:none;" class="editable age_verification_s" maxlength="50" name="age_verification[{{$age->Id}}]['vvalue']" id="age_verification[{{$age->Id}}]['vvalue']" value="{{ $age->vvalue }}" onclick="">
+                          </td>
+                                            
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+              </form>
             </div>
           </div>
+        </div>
+      </div>
+    
+  </section>
+</div>
 
-          <form action="/ageverifysearch" method="post" id="form_age_verification_search">
-            @csrf
-            <input type="hidden" name="searchbox" id="Id">
-            <div class="row">
-              <div class="col-md-12">
-                <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-                <input type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Age Verification..." id="autocomplete-product" autocomplete="off">
-              </div>
-            </div>
-          </form>
-          <br>
-
-          <form action="" method="post" enctype="multipart/form-data" id="form-age-verification">
-            <input type="hidden" name="MenuId" value="">
-              <div class="table-responsive">
-                <table id="age-verification" class="text-center table table-bordered table-hover" style="width:50%;">
-                  <thead>
-                    <tr>
-                      <td style="width: 1px;" class="text-center">
-                        <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                        </td>
-                      <td style="" class="text-left">Description</td>
-                      
-                      <!--<td class="text-right">Value</td>-->
-                      <td class="text-right">Age</td>
-                      <!-- <td class="text-center">Action</td> -->
-                    </tr> 
-                  </thead>
-                  <tbody id='searchData'>
-
-                    @foreach ($agedata as $k => $age)
-                    <tr>
-                      <td class="text-center">                        
-                    <input type="checkbox" name="selected[]" id="age_verification[{{$age->Id}}]['select']" class="checkboxId" value="{{$age->Id}}">
-                      </td>
-                                        
-                      <!-- <td>{{ $age->vname }}</td>
-                      <td>{{ $age->vvalue }}</td> -->
-
-                      <td class="text-left">
-                        <span style="display:none;">{{ $age->vname }}</span>
-                        <input type="text" maxlength="50" class="editable age_verification_c" name="age_verification[{{$age->Id}}]['vname']" id="age_verification[{{$age->Id}}]['vname']" value="{{ $age->vname }}" onclick="">
-                        <!--<input type="hidden" maxlength="50" class="editable age_verification_c" name="age_verification[1][vname]" id="age_verification[1][vname]" value="LOTTERY" onclick='document.getElementById("age_verification[2][select]").setAttribute("checked","checked");' />-->
-                        <input type="hidden" name="age_verification[{{$age->Id}}]['Id']" value="{{$age->Id}}">
-                      </td>
-                                        
-                      <td class="text-right">
-                        <input type="text" class="text-right editable age_verification_s" maxlength="50" name="age_verification[{{$age->Id}}]['vvalue']" id="age_verification[{{$age->Id}}]['vvalue']" value="{{ $age->vvalue }}" onclick="">
-                      </td>
-                                        
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-              </div>
-          </form>
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <?php if(session()->get('hq_sid') == 1){ ?>
@@ -122,13 +148,15 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Update the Age :</h4>
+              <h6>Select the stores in which you want to Update the Age :</h6> 
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -153,7 +181,7 @@
     
 @endsection
 
-@section('scripts')
+@section('page-script')
 <script type="text/javascript">
     $(document).ready(function($) {
   
@@ -177,8 +205,8 @@
 </script>
 
     <script src="/javascript/bootbox.min.js" defer=""></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
   
   <script type="text/javascript">
 
@@ -200,7 +228,6 @@ $(document).on('click','#save_button', function(){
     var avArr = [];
 
     $("input[name='selected[]']:checked").each(function () {
-          
           var id = $(this).val();
           var name = $(this).closest('tr').find('.age_verification_c').val();
           var age = $(this).closest('tr').find('.age_verification_s').val();
@@ -210,24 +237,15 @@ $(document).on('click','#save_button', function(){
               vname: name,
               vvalue: age
           });
-  
-      });
+    });
       
     if(avArr.length < 1){
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "You did not select anything", 
-            callback: function(){location.reload(true);}
-        });
-        
-        
+        $('#warning_msg').html('You did not select anything');
         $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
     <?php if(session()->get('hq_sid') == 1){ ?>
-    
-        console.log(avArr);
         $.ajax({
             url : "<?php echo url('/duplicateage'); ?>",
             headers: {
@@ -242,7 +260,7 @@ $(document).on('click','#save_button', function(){
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -253,7 +271,7 @@ $(document).on('click','#save_button', function(){
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -262,7 +280,7 @@ $(document).on('click','#save_button', function(){
                     popup = popup + data;
                 @endforeach
                 $('#age_stores').html(popup);    
-            }
+            }, 
         });
         $("#myModal").modal('show');
     <?php } else { ?>
@@ -273,37 +291,27 @@ $(document).on('click','#save_button', function(){
               url: '/ageverification',
               contentType: 'application/json',
               data: JSON.stringify(avArr), // access in body
-          }).success(function (e) {
-              location.reload();
-          }).fail(function (msg) {
-                   
-                  //console.log('FAIL');
-                    let mssg = '<div class="alert alert-danger">';
-                    
-                    //console.log(msg);
-                    let errors = msg.responseJSON;
-                    //console.log(errors);
-            
-                    $.each(errors, function(k, err){
-                    //   console.log(err);
-                      $.each(err, function(key, error){
-                        // console.log(error);
-                        mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-                      });
-                    });
-            
-                    mssg += '</div>';
-                
-                    
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Attention", 
-                        message: mssg, 
-                        callback: function(){location.reload(true);}
-                    });
-                    
+              success: function(result) {
+                  avArr = [];
+                location.reload();
+              },
+              error: function (msg) {
+                     let mssg = '<div class="alert alert-danger">';
+                     let errors = msg.responseJSON;
+                     $.each(errors, function(k, err){
+                        $.each(err, function(key, error){
+                          mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+                       });
+                     });
+                     mssg += '</div>';
+                     
+                    $('#error_msg').html(mssg);
                     $("div#divLoading").removeClass('show');
-                  });
+                    $('#errorModal').modal('show');
+              },
+              
+          });
+          
     <?php } ?>
 });
 
@@ -341,37 +349,30 @@ $('#Edit_btn_age').click(function(){
           url: '/ageverification',
           contentType: 'application/json',
           data: JSON.stringify({data:avArr, stores_hq: edit_stores}), // access in body
-    }).success(function (e) {
+          success: function (msg) {
+            avArr = [];
             location.reload();
-    }).fail(function (msg) {
-           
-        //console.log('FAIL');
-        let mssg = '<div class="alert alert-danger">';
-        
-        //console.log(msg);
-        let errors = msg.responseJSON;
-        //console.log(errors);
-
-        $.each(errors, function(k, err){
-        //   console.log(err);
-          $.each(err, function(key, error){
-            // console.log(error);
-            mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
-          });
-        });
-
-        mssg += '</div>';
-    
-        
-        bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: mssg, 
-            callback: function(){location.reload(true);}
-        });
-        
-        $("div#divLoading").removeClass('show');
+          },
+          error:function (msg) {
+                    let mssg = '<div class="alert alert-danger">';
+                    let errors = msg.responseJSON;
+            
+                    $.each(errors, function(k, err){
+                      $.each(err, function(key, error){
+                        mssg += '<p><i class="fa fa-exclamation-circle"></i>'+error+"</p>";
+                      });
+                    });
+            
+                    mssg += '</div>';
+                    
+                    $('#error_msg').html(mssg);
+                    $("div#divLoading").removeClass('show');
+                    $('#errorModal').modal('show');
+                    location.reload(true);
+                    $("div#divLoading").removeClass('show');
+          }
     });
+    
 });
 
     // Serch Code
@@ -416,12 +417,12 @@ $('#Edit_btn_age').click(function(){
                                     
                   html += '<td class="text-left">';
                   html += '<span style="display:none;">'+v.vname+'</span>';
-                  html += '<input type="text" maxlength="50" class="editable age_verification_c" name="age_verification['+v.Id+'][\'vname\']" id="age_verification['+v.Id+'][\'vname\']" value="'+v.vname+'">';
+                  html += '<input type="text" style="border:none;" maxlength="50" class="editable age_verification_c" name="age_verification['+v.Id+'][\'vname\']" id="age_verification['+v.Id+'][\'vname\']" value="'+v.vname+'">';
                   html += '<input type="hidden" name="age_verification['+v.Id+'][\'Id\']" value="'+v.Id+'">';
                   html += '</td>';
                    
                   html +=  '<td class="text-right">';
-                  html +=  '<input type="text" class="editable age_verification_s" maxlength="50" name="age_verification['+v.Id+'][\'vvalue\']" id="age_verification['+v.Id+'][\'vvalue\']" value="'+v.vvalue+'">';
+                  html +=  '<input type="text" style="border:none;" class="editable age_verification_s" maxlength="50" name="age_verification['+v.Id+'][\'vvalue\']" id="age_verification['+v.Id+'][\'vvalue\']" value="'+v.vvalue+'">';
                   html +=  '</td>';
                   html += '</tr>';
                 });

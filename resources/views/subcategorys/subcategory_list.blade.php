@@ -1,153 +1,151 @@
-@extends('layouts.master')
+@extends('layouts.layout')
+
 @section('title')
   Sub Category
 @endsection
+
 @section('main-content')
-
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <ul class="breadcrumb">
-      </ul>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title"><i class="fa fa-list"></i>Sub Category</h3>
-      </div>
-      @if (session()->has('message'))
-            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>      
-            @endif
-            @if (session()->has('error'))
-            <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>      
-            @endif
-  
-          @if ($errors->any())
-            <div class="alert alert-danger">
-              <ul>
-                @foreach ($errors->all() as $error)
-                  <li>{{$error}}</li>
-                @endforeach
-              </ul>
-            </div>                
-          @endif
-      <div class="panel-body">
-
-      <form action="{{route('subcategory')}}" method="get" id="form_subcategory_search">
-        @csrf
-        @method('post')
-        <input type="hidden" name="searchbox" id="subcat_id">
-        <div class="row">
-            <div class="col-md-12">
-                <input type="text" name="automplete-product" class="form-control" placeholder="Search SubCategory..." id="automplete-product">
-            </div>
-        </div>
-      </form>
-        <br>
-
-      <form action="{{route('subcategory.edit_list')}}" method="post" enctype="multipart/form-data" id="form-category">
-          @csrf
-          @method('post')
-          
-          @if(session()->get('hq_sid') == 1)
-                <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
-            @endif
-          <div class="row" style="position: absolute; right: 46px;">
-            <div class="col-md-12">
-              <div class="">
-                  
-              <a id="save_button" class="btn btn-primary" title="Save"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</a>
-              <button type="button" onclick="addCategory();" data-toggle="tooltip" title="<?php //echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</button>        
-              <button type="button" class="btn btn-danger" id="delete_category_btn" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>        
-        
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+      <div class="container">
+          <div class="collapse navbar-collapse" id="main_nav">
+              <div class="menu">
+                  <span class="font-weight-bold text-uppercase" style="font-size: 22px">Sub Category</span>
               </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
+              <div class="nav-submenu">
+                  <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu" title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                  <button type="button" onclick="addCategory();" class="btn btn-gray headerblack  buttons_menu" href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                  <button type="button" id="delete_category_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+              </div>
+          </div> <!-- navbar-collapse.// -->
+      </div>
+  </nav>
+  <section class="section-content py-6">
+      <div class="container">
+        <div class="panel panel-default">
+        
+            @if (session()->has('message'))
+                <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>      
+                @endif
+                @if (session()->has('error'))
+                <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>      
+                @endif
+      
+              @if ($errors->any())
+                <div class="alert alert-danger">
+                  <ul>
+                    @foreach ($errors->all() as $error)
+                      <li>{{$error}}</li>
+                    @endforeach
+                  </ul>
+                </div>                
+              @endif
+          <div class="panel-body">
 
-        <input type="hidden" name="MenuId" value="<?php //echo $filter_menuid; ?>"/>
-          <div class="table-responsive">
-            
-            <table id="subcategory" class="table table-bordered table-hover" style="width:60%; margin-top: 55px;">
-            <?php if ($data['categories']) { ?>
-              <thead>
-                <tr>
-                  <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                  {{-- <th style="width:1px;" class="text-left">{{$data['column_category_code'] }}</th> --}}
-                  
-                  <th style="width:1px;" class="text-left">Sub Category Name</th>
-                  {{-- <th class="text-left">{{$data['column_description']}}</th> --}}
-                  {{-- <th class="text-left">{{$data['column_category_type']}}</th> --}}
-                  <th class="text-left">Category</th>
-                  
-                  <th class="text-left" style="display:none;"><?php //echo $column_sequence; ?></th>
-                </tr>
-              </thead>
-              <tbody>
+          <form action="{{route('subcategory')}}" method="get" id="form_subcategory_search">
+            @csrf
+            @method('post')
+            <input type="hidden" name="searchbox" id="subcat_id">
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" style="height: 33px !important; font-size: 12px !important; font-weight: 600;" name="automplete-product" class="form-control" placeholder="Search SubCategory..." id="automplete-product">
+                </div>
+            </div>
+          </form>
+            <br>
+
+          <form action="{{route('subcategory.edit_list')}}" method="post" enctype="multipart/form-data" id="form-category">
+              @csrf
+              @method('post')
+              
+              @if(session()->get('hq_sid') == 1)
+                    <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
+                @endif
+              
+            <input type="hidden" name="MenuId" value="<?php //echo $filter_menuid; ?>"/>
+              <div class="table-responsive">
                 
-                <?php $category_row = 1;$i=0; ?>
-                <?php foreach ($data['sub_categories'] as $subcategory) { ?>
-                <tr id="category-row<?php echo $category_row; ?>">
-                  <td data-order="<?php echo $subcategory->subcat_id; ?>" class="text-center">
-                  <span style="display:none;"><?php echo $subcategory->subcat_id; ?></span>
-                  <?php if (in_array($subcategory->subcat_id, $data['selected'])) { ?>
-                    <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]" value="<?php echo $subcategory->subcat_id; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]"  value="<?php echo $subcategory->subcat_id; ?>" />
-                    <?php } ?>
-                  </td>
-                  
-                  <td class="text-left">
-                    <span style="display:none;"><?php echo $subcategory->subcat_name; ?></span>
-                    <input type="text" maxlength="50" class="editable subcategories_c" name="subcategory[<?php echo $i; ?>][subcat_name]" id="category[<?php echo $i; ?>][vcategoryname]" value="<?php echo $subcategory->subcat_name; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
-        				    <input type="hidden" name="subcategory[<?php echo $i; ?>][subcat_id]" value="<?php echo $subcategory->subcat_id; ?>"/>
-                  </td>
-                  <?php 
-                  // echo "<pre>";
-                  // print_r($data['categories']);
-                  // die;
-                  ?>
-                    <td>
-                        <select name="subcategory[<?php echo $i; ?>][cat_id]" id="category[<?php echo $i; ?>][dept_code]" class="form-control categories_c" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
-                            <option value="">--Select Category--</option>
-                            <?php if(isset($data['categories']) && count($data['categories']) > 0){?>
-                                <?php foreach($data['categories'] as $category){ ?>
-                                    <?php if(isset($subcategory->cat_id) && $subcategory->cat_id == $category->icategoryid){?>
-                                        <option value="<?php echo $category->icategoryid;?>" selected="selected"><?php echo $category->vcategoryname;?></option>
-                                    <?php } else { ?>
-                                        <option value="<?php echo $category->icategoryid;?>"><?php echo $category->vcategoryname;?></option>
+              <table id="subcategory" class="table  table-hover" style="width:100%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;">
+                <?php if ($data['categories']) { ?>
+                  <thead style="background-color: #286fb7!important;">
+                    <tr>
+                      <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                      {{-- <th style="width:1px;" class="text-left">{{$data['column_category_code'] }}</th> --}}
+                      <th class="col-xs-1 headername text-uppercase text-light" data-field="supplier_code">Sub Category Name</th>
+                                            
+                      {{-- <th class="text-left">{{$data['column_description']}}</th> --}}
+                      {{-- <th class="text-left">{{$data['column_category_type']}}</th> --}}
+                      <th style="border-bottom-right-radius: 9px; border-top-right-radius: 9px " class="col-xs-1 headername text-uppercase text-light">Category</th>
+                      
+                      <th class="text-left" style="display:none;"><?php //echo $column_sequence; ?></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <?php $category_row = 1;$i=0; ?>
+                    <?php foreach ($data['sub_categories'] as $subcategory) { ?>
+                    <tr id="category-row<?php echo $category_row; ?>">
+                      <td data-order="<?php echo $subcategory->subcat_id; ?>" class="text-center">
+                      <span style="display:none;"><?php echo $subcategory->subcat_id; ?></span>
+                      <?php if (in_array($subcategory->subcat_id, $data['selected'])) { ?>
+                        <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]" value="<?php echo $subcategory->subcat_id; ?>" checked="checked" />
+                        <?php } else { ?>
+                        <input type="checkbox" name="selected[]" id="category[<?php echo $category_row; ?>][select]"  value="<?php echo $subcategory->subcat_id; ?>" />
+                        <?php } ?>
+                      </td>
+                      
+                      <td class="text-left">
+                        <span style="display:none;"><?php echo $subcategory->subcat_name; ?></span>
+                        <input type="text" style="height: 33px; border:none; font-size: 12px !important; font-weight: 600;" maxlength="50" class="editable subcategories_c" name="subcategory[<?php echo $i; ?>][subcat_name]" id="category[<?php echo $i; ?>][vcategoryname]" value="<?php echo $subcategory->subcat_name; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
+                        <input type="hidden" name="subcategory[<?php echo $i; ?>][subcat_id]" value="<?php echo $subcategory->subcat_id; ?>"/>
+                      </td>
+                      <?php 
+                      // echo "<pre>";
+                      // print_r($data['categories']);
+                      // die;
+                      ?>
+                        <td style="border-bottom-right-radius: 9px; border-top-right-radius: 9px "> 
+                            <select style="height: 33px; font-size: 12px !important; font-weight: 600;" name="subcategory[<?php echo $i; ?>][cat_id]" id="category[<?php echo $i; ?>][dept_code]" class="form-control categories_c" onchange='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");'>
+                                <option value="">--Select Category--</option>
+                                <?php if(isset($data['categories']) && count($data['categories']) > 0){?>
+                                    <?php foreach($data['categories'] as $category){ ?>
+                                        <?php if(isset($subcategory->cat_id) && $subcategory->cat_id == $category->icategoryid){?>
+                                            <option value="<?php echo $category->icategoryid;?>" selected="selected"><?php echo $category->vcategoryname;?></option>
+                                        <?php } else { ?>
+                                            <option value="<?php echo $category->icategoryid;?>"><?php echo $category->vcategoryname;?></option>
+                                        <?php } ?>
                                     <?php } ?>
                                 <?php } ?>
-                            <?php } ?>
-                        </select>
-                    </td>
-                
-                  <td class="text-left" style="display:none;">
-                    <input type="text" class="editable categories_s" name="category[<?php echo $i; ?>][isequence]" id="category[<?php echo $i; ?>][isequence]" value="<?php echo $category->isequence; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
-                  </td>
-                </tr>
-                <?php $category_row++; $i++;?>
-                <?php } ?>
-                <?php } else { ?>
-                  <tr>
-                  <td colspan="7" class="text-center"><?php //echo $text_no_results;?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
-            {{ $data['sub_categories']->links()}}
+                            </select>
+                        </td>
+                    
+                      <td class="text-left" style="display:none;">
+                        <input type="text" class="editable categories_s" name="category[<?php echo $i; ?>][isequence]" id="category[<?php echo $i; ?>][isequence]" value="<?php echo $category->isequence; ?>" onclick='document.getElementById("category[<?php echo $category_row; ?>][select]").setAttribute("checked","checked");' />
+                      </td>
+                    </tr>
+                    <?php $category_row++; $i++;?>
+                    <?php } ?>
+                    <?php } else { ?>
+                      <tr>
+                      <td colspan="7" class="text-center"><?php //echo $text_no_results;?></td>
+                    </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+                <div class="pull-right">
+                  {{ $data['sub_categories']->links()}}
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
-  </div>
+  </section>
 </div>
-
 
 <!-- Modal Add -->
 <div class="modal fade" id="addModal" role="dialog">
@@ -156,8 +154,10 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add New Sub Category</h4>
+          <h5 class="modal-title">Add New Sub Category</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
       </div>
       <div class="modal-body">
         <form action="{{route('subcategory.add_list')}}" method="post" id="add_new_form">
@@ -207,7 +207,7 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <input type="button" class="btn btn-success" id="save_subcategory" value="Save">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>
@@ -219,11 +219,19 @@
 <!-- Modal Add-->
 
 
-<div class="modal fade" id="successModal" role="dialog">
-  <div class="modal-dialog modal-sm">
-  
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
     <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
           <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
@@ -254,13 +262,13 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to add the SubCategory :</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to add the SubCategory :</h4>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -289,14 +297,14 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to Edit the SubCategory :
+            <span style="color: #03A9F4">(Please Note: If a SubCategory not exists in any of the stores those subcategory will be created)</span></h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Edit the SubCategory :</h4>
-            <span style="color: #03A9F4">(Please Note: If a SubCategory not exists in any of the stores those subcategory will be created)</span>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -311,7 +319,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input editstores" id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check  editstores" id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -334,13 +342,13 @@
          Modal content
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to delete the Sub Category :</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to delete the Sub Category :</h4>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -363,18 +371,52 @@
     
 <?php } ?>
 
+
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 @endsection
 
-@section('scripts')
+@section('page-script')
 
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
   
 <script type="text/javascript">
 
 $(document).ready(function(){
-    
     $('#add_vsubcategoryname, .subcategories_c').on('keypress', function (event) {
         var regex = new RegExp("^[a-zA-Z0-9. _]+$");
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -383,35 +425,9 @@ $(document).ready(function(){
            return false;
         }
     });
-    
 })
 
-//   $(document).on('submit', 'form#add_new_form', function(event) {
-    
-//     if($('form#add_new_form #add_vcategoryname').val() == ''){
-//       // alert('Please enter name!');
-//       bootbox.alert({ 
-//         size: 'small',
-//         title: "Attention", 
-//         message: "Please enter name!", 
-//         callback: function(){}
-//       });
-//       return false;
-//     }
-    
-//     if($('form#add_new_form #add_dept_code').val() == ''){
-//       // alert('Please enter name!');
-//       bootbox.alert({ 
-//         size: 'small',
-//         title: "Attention", 
-//         message: "Please select a Category!", 
-//         callback: function(){}
-//       });
-//       return false;
-//     }
-//     $("div#divLoading").addClass('show');
-    
-//   });
+
 
  $('#button-filter').on('click', function() {
     url = '';
@@ -467,7 +483,7 @@ $(document).ready(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
@@ -478,7 +494,7 @@ $(document).ready(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -530,25 +546,18 @@ $("#closeBtn").click(function(){
     var subcatids = [];
     
     if($("input[name='selected[]']:checked").length == 0){
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: 'Please Select SubCategory to Edit!', 
-        callback: function(){}
-      });
+      $('#warning_msg').html('Please Select SubCategory to Edit!');
+      $("div#divLoading").removeClass('show');
+      $('#warningModal').modal('show');
       return false;
     }
     
     $('.subcategories_c').each(function(){
         subcatids.push($(this).val());
       if($(this).val() == ''){
-        // alert('Please Enter Category Name');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please Enter Sub Category Name", 
-          callback: function(){}
-        });
+        $('#warning_msg').html('Please Enter Sub Category Name');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         all_category = false;
         return false;
       }else{
@@ -563,13 +572,9 @@ $("#closeBtn").click(function(){
       $('.categories_s').each(function(){
         if($(this).val() != ''){
           if(!numericReg.test($(this).val())){
-            // alert('Please Enter Only Number');
-            bootbox.alert({ 
-              size: 'small',
-              title: "Attention", 
-              message: "Please Enter Only Number", 
-              callback: function(){}
-            });
+            $('#warning_msg').html('Please Enter Only Number');
+            $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
             all_done = false;
             return false;
           }else{
@@ -618,7 +623,7 @@ $("#closeBtn").click(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Category does not exist)</span></td>'+
@@ -629,7 +634,7 @@ $("#closeBtn").click(function(){
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -714,13 +719,14 @@ $("#closeBtn").click(function(){
 </script>
 
 <script type="text/javascript">
-$(document).ready(function($) {
-  $("div#divLoading").addClass('show');
-});
+// $(document).ready(function($) {
+//   $("div#divLoading").addClass('show');
+// });
+// $(window).on('load', function() {
+//   $("div#divLoading").removeClass('show');
+// });
 
-$(window).load(function() {
-  $("div#divLoading").removeClass('show');
-});
+
 </script>
 
 <script type="text/javascript">
@@ -731,12 +737,11 @@ $(window).load(function() {
     event.preventDefault();
     
     if($("input[name='selected[]']:checked").length == 0){
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: 'Please Select SubCategory to Delete!', 
-        callback: function(){}
-      });
+      
+      $('#warning_msg').html('Please Select SubCategory to Delete!');
+      $("div#divLoading").removeClass('show');
+      $('#warningModal').modal('show');
+      
       return false;
     }
     
@@ -765,7 +770,7 @@ $(window).load(function() {
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Sub Category does not exist)</span></td>'+
@@ -776,7 +781,7 @@ $(window).load(function() {
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -805,18 +810,13 @@ $(window).load(function() {
             dataType: 'json',
             success: function(data) {
                 if(data['success_msg']){
-                  setTimeout(function(){
+                    $('#success_msg').html('<strong>Sub category Deleted successfully</strong>');
                     $("div#divLoading").removeClass('show');
                     $('#successModal').modal('show');
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Attention", 
-                        message:  data['success_msg'],
-                        callback: function(){}
-                    });
-                   $('#successModal').modal('hide');
-                  window.location.reload();
-                  }, 3000);
+                    setTimeout(function(){
+                    $('#successModal').modal('hide');
+                    window.location.reload();
+                    }, 3000);
                 }else{
                   var errorMsg = '';
                   
@@ -855,59 +855,6 @@ $(window).load(function() {
     <?php } ?>
 
 
-    // $("input[name='selected[]']:checked").each(function (i)
-    // {
-    //   data[i] = parseInt($(this).val());
-    // });
-    // $("div#divLoading").addClass('show');
-    // $.ajax({
-    //     url : delete_category_url,
-    //     data : data,
-    //     type : 'get',
-    //     contentType: "application/json",
-    //     dataType: 'json',
-    //   success: function(data) {
-    //     var success_mess = data.success;
-        
-    //     if(success_mess){
-    //       // $('#success_msg').html('<strong>'+ data.success +'</strong>');
-    //       bootbox.alert({ 
-    //         size: 'small',
-    //         title: "Attention", 
-    //         message: 'Category Deleted!', 
-    //         callback: function(){}
-    //       });
-          
-    //       setTimeout(function(){
-    //       //  $('#successModal').modal('hide');
-    //       window.location.reload();
-    //       }, 3000);
-    //     }else{
-
-    //       $('#error_msg').html('<strong>'+ data.error +'</strong>');
-    //       $("div#divLoading").removeClass('show');
-    //       $('#errorModal').modal('show');
-
-    //     }
-
-
-    //   },
-    //   error: function(xhr) { // if error occured
-    //     var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-        
-    //     var error_show = '';
-
-    //     if(response_error.error){
-    //       error_show = response_error.error;
-    //     }else if(response_error.validation_error){
-    //       error_show = response_error.validation_error[0];
-    //     }
-
-    //     $('#error_alias').html('<strong>'+ error_show +'</strong>');
-    //     $('#errorModal').modal('show');
-    //     return false;
-    //   }
-    // });
     
   });
   
@@ -934,7 +881,7 @@ $('#delete_btn_category').click(function(){
     $.each($("input[name='deletestores']:checked"), function(){            
         deletestores.push($(this).val());
     });
-    $("#category input[name='selected[]']:checked").each(function () {
+    $("#subcategory input[name='selected[]']:checked").each(function () {
       var id =$(this).val();
       var name = $(this).closest('tr').find('.subcategories_c').val();
       avArr.push({
@@ -955,33 +902,13 @@ $('#delete_btn_category').click(function(){
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
-                if(data['success_msg']){
-                    var successMsg ='';
-                    // $('#success_msg').html('<strong>'+ data['success_msg'] +'</strong>');
-                    $("div#divLoading").removeClass('show');
-                    $('#successModal').modal('show');
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Attention", 
-                        message:  data['success_msg'],
-                        callback: function(){window.location.reload()}
-                    });
-                }else{
-                  var errorMsg = '';
-                  
-                  $.each(data.error_msg, function (k, v){
-                      errorMsg += v+'<br/>';
-                  });
-        
-                  $('#error_msg').html('<strong>'+ errorMsg +'</strong>');
-                  $("div#divLoading").removeClass('show');
-                  $('#errorModal').modal('show');
-                  
-                  setTimeout(function(){
-                      $('#errorModal').modal('hide');
-                      window.location.reload();
-                      }, 4000);
-                }
+                $('#success_msg').html('<strong>Sub category Deleted successfully</strong>');
+                $("div#divLoading").removeClass('show');
+                $('#successModal').modal('show');
+                setTimeout(function(){
+                  $('#successModal').modal('hide');
+                  window.location.reload();
+                }, 3000);
             },
             error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
@@ -994,6 +921,8 @@ $('#delete_btn_category').click(function(){
                 $('#error_alias').html('<strong>'+ error_show +'</strong>');
                 $('#errorModal').modal('show');
                 return false;
+                
+                    
             }
         });
 });

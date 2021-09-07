@@ -44,15 +44,6 @@
     border-radius: 3rem;
 }
 
-.holder {
-    /* Clip edges, as some of the lines don't terminate nicely. */
-    overflow: hidden;
-    position: relative;
-    width: 200px;
-    height: 50px;
-    left: 55px;
-}
-
 .ellipse {
     position: absolute;
     /* background: radial-gradient(ellipse, transparent, transparent 7px, black 7px, black 10px, transparent 11px); */
@@ -114,10 +105,102 @@
     grid-row: 1 / span 2;
 }
 
-.grid-container {
-    width: 100%;
-    display: grid;
-    grid-gap: 17px;
+.header_date_text {
+    list-style-type: none;
     text-align: center;
-    grid-template-columns: 200px 250px 320px;
+}
+
+@media all and (min-width: 768) {
+    .logo {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    ul .navbar-nav {
+        text-align: center;
+        overflow-y: scroll;
+        height: 100%;
+    }
+
+    #main_nav {
+        text-align: center;
+    }
+
+    .header_date_text {
+        list-style-type: none;
+    }
+}
+
+/* ============ desktop view ============ */
+@media all and (min-width: 992px) {
+    .logo {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+/* ============ desktop view .end// ============ */
+
+@media all and (min-width: 1366px) {
+    .logo {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .grid-container {
+        width: 100%;
+        display: grid;
+        grid-gap: 17px;
+        text-align: center;
+        /* grid-template-columns: 200px 250px 320px; */
+        grid-template-columns: 183px 223px 270px;
+    }
+
+    .holder {
+        /* Clip edges, as some of the lines don't terminate nicely. */
+        overflow: hidden;
+        position: relative;
+        width: 200px;
+        height: 50px;
+        left: 55px;
+    }
+}
+
+@media only screen and (min-device-width: 992px) and (max-device-width: 1024px) {
+    .grid-container {
+        width: 100%;
+        display: grid;
+        grid-gap: 17px;
+        text-align: center;
+        /* grid-template-columns: 200px 250px 320px; */
+        grid-template-columns: 221px 223px 250px;
+    }
+}
+
+/* ============ large desktop view// ============ */
+
+@media all and (min-width: 1024px) {
+    .grid-container {
+        width: 100%;
+        display: grid;
+        grid-gap: 17px;
+        text-align: center;
+        /* grid-template-columns: 200px 250px 320px; */
+        grid-template-columns: 221px 223px 250px;
+    }
+
+    .holder {
+        /* Clip edges, as some of the lines don't terminate nicely. */
+        overflow: hidden;
+        position: relative;
+        width: 200px;
+        height: 50px;
+        left: 0px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .ml-auto,
+    .mx-auto {
+        text-align: center;
+    }
 }

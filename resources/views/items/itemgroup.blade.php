@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
   Item Group
@@ -7,100 +7,98 @@
 @section('main-content')
 <div id="content">
 
-  <div class="page-header">
-    <div class="container-fluid">
-      <!-- <h1>Item Group</h1> -->
-      
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase"> Item Group</span>
+            </div>
+            <div class="nav-submenu">                
+                <a type="button" href="additemgroup" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>
+                <button type="button" class="btn btn-danger buttonred buttons_menu basic-button-small" id="itemgroup_delete" onclick="myFunction()" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
-  </div>
+  </nav>
 
-  <div class="container-fluid"> 
-  @if (session()->has('message'))
-      <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>      
-    @endif
+  <div class="section-content py-6">
+    <div class="container"> 
+      @if (session()->has('message'))
+        <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>      
+      @endif
 
-    @if (session()->has('error'))
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>      
-    @endif
+      @if (session()->has('error'))
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>      
+      @endif
 
-    <div id='errorDiv'>
-    </div>
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-          <i class="fa fa-exclamation-circle"></i>{{$error}}
-        @endforeach
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div> 
-    @endif
-    <div class="panel panel-default">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title"><i class="fa fa-list"></i> Item Group</h3>
+      <div id='errorDiv'>
       </div>
-    <div class="panel-body">
-      <div class="row" style="padding-bottom: 9px;float: right;">
-        <div class="col-md-12">
-          <div class="">
-            <a href="additemgroup" class="btn btn-primary add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>
-            <button type="button" class="btn btn-danger" id="itemgroup_delete" onclick="myFunction()" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>  
-          </div>
-        </div>
-      </div>
-      <div class="clearfix"></div>
-
-      <form action="" method="post" id="form_group_search">
-        @csrf
-        <input type="hidden" name="searchbox" id="iitemgroupid">
-        <div class="row">
-          <div class="col-md-12">
-            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-            <input type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Item Group..." id="autocomplete-product" autocomplete="off">
-          </div>
-        </div>
-      </form>
-      <br>
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          @foreach ($errors->all() as $error)
+            <i class="fa fa-exclamation-circle"></i>{{$error}}
+          @endforeach
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div> 
+      @endif
+      <div class="panel panel-default">
       
-      <div class="table-responsive">
-        <table id="group" class="table table-bordered table-hover" style="width:60%;">
-          <thead>
-            <tr>
-              <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>
-              <th class="text-left">Group Name</th>
-              <th class="text-left">Slab Pricing</th>
-              <th class="text-left">Action</th>
-            </tr>
-          </thead>
-          <tbody id="searchData">
-            @foreach($itemgroup as $itemgroups)
-              <tr>
-                <td data-order="110" class="text-center">
-                  <span style="display:none;">{{$itemgroups->iitemgroupid}}</span>
-                  <input type="checkbox" name="selected[]" id="select[{{$itemgroups->iitemgroupid}}][select]" value="{{$itemgroups->iitemgroupid}}">
-                </td>
-                <td class="text-left">
-                  <span>{{$itemgroups->vitemgroupname}}</span>
-                </td>
-                <td class="text-left">
-                  <span>No</span>
-                </td>
-                <td class="text-left">
-                  <span><a href="edititem/{{$itemgroups->iitemgroupid}}"  title="Edit" class="btn btn-sm btn-info edit_btn_rotate"><i class="fa fa-pencil">&nbsp;&nbsp;Edit</i>
-                  </a></span>
-                </td>
+      <div class="panel-body">
+        
+        <form action="" method="post" id="form_group_search">
+          @csrf
+          <input type="hidden" name="searchbox" id="iitemgroupid">
+          <div class="row">
+            <div class="col-md-12">
+              <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+              <input type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Item Group..." id="autocomplete-product" autocomplete="off">
+            </div>
+          </div>
+        </form>
+        <br>
+        
+        <div class="table-responsive">
+          <table id="group" class="table table-hover promotionview" style="width:100%;">
+            <thead>
+              <tr class="header-color">
+                <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>
+                <th class="text-left">Group Name</th>
+                <th class="text-left">Slab Pricing</th>
+                <th class="text-left">Action</th>
               </tr>
-            @endforeach
-          </tbody>
-        </table>
-          
-          <!-- {{$itemgroup->links()}} -->
-      </div>
-        <div class="row" style="margin-left: 0px;margin-right: 0px;">
-          <div class="col-sm-6 text-left">{{$itemgroup->links()}}</div>
-          <!-- <div class="col-sm-6 text-right">Showing 1 to 11 of 11 (1 Pages)</div> -->
+            </thead>
+            <tbody id="searchData">
+              @foreach($itemgroup as $itemgroups)
+                <tr>
+                  <td data-order="110" class="text-center">
+                    <span style="display:none;">{{$itemgroups->iitemgroupid}}</span>
+                    <input type="checkbox" name="selected[]" id="select[{{$itemgroups->iitemgroupid}}][select]" value="{{$itemgroups->iitemgroupid}}">
+                  </td>
+                  <td class="text-left">
+                    <span>{{$itemgroups->vitemgroupname}}</span>
+                  </td>
+                  <td class="text-left">
+                    <span>No</span>
+                  </td>
+                  <td class="text-left">
+                    <span><a href="edititem/{{$itemgroups->iitemgroupid}}"  title="Edit" class="btn btn-sm btn-info edit_btn_rotate header-color" style="line-height: 0.5; border-radius:6px;"><i class="fa fa-pencil">&nbsp;&nbsp;Edit</i>
+                    </a></span>
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+            
+            <!-- {{$itemgroup->links()}} -->
+        </div>
+          <div class="row pull-right" style="margin-left: 0px;margin-right: 0px;">
+            <div class="col-sm-6 text-left">{{$itemgroup->links()}}</div>
+            <!-- <div class="col-sm-6 text-right">Showing 1 to 11 of 11 (1 Pages)</div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -113,12 +111,12 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to delete the Item Group:</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to delete the vendor:</h4>
           </div>
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+            <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -142,7 +140,7 @@
 @endsection
 
 
-@section('scripts')
+@section('page-script')
 <style>
     #item_paginate{
         float: right;
@@ -191,24 +189,24 @@
               $.each(itemGroup.itemgroup, function(k, v){
                 //console.log(v);
 
-              html +='<tr>';
-              html +='<td data-order="110" class="text-center">';
-              html +='<span style="display:none;">'+v.iitemgroupid+'</span>';
-              html +='<input type="checkbox" name="selected[]" id="select['+v.iitemgroupid+'][\'select\']" value="'+v.iitemgroupid+'">';
-              html +='</td>';
-              
-              html +='<td class="text-left">';
-              html +='<span>'+v.vitemgroupname+'</span>';
-              html +='</td>';
+                html +='<tr>';
+                html +='<td data-order="110" class="text-center">';
+                html +='<span style="display:none;">'+v.iitemgroupid+'</span>';
+                html +='<input type="checkbox" name="selected[]" id="select['+v.iitemgroupid+'][\'select\']" value="'+v.iitemgroupid+'">';
+                html +='</td>';
+                
+                html +='<td class="text-left">';
+                html +='<span>'+v.vitemgroupname+'</span>';
+                html +='</td>';
 
-              html +='<td class="text-left">';
-              html +='<span>No</span>';
-              html +='</td>';
+                html +='<td class="text-left">';
+                html +='<span>No</span>';
+                html +='</td>';
 
-              html +='<td class="text-left">';
-              html += '<span><a href="edititem/'+v.iitemgroupid+'"  title="Edit" class="btn btn-sm btn-info edit_btn_rotate"><i class="fa fa-pencil">&nbsp;&nbsp;Edit</i></a></span>';
-              html +='</td>';
-              html +='</tr>';
+                html +='<td class="text-left">';
+                html += '<span><a href="edititem/'+v.iitemgroupid+'"  title="Edit" class="btn btn-sm btn-info edit_btn_rotate"><i class="fa fa-pencil">&nbsp;&nbsp;Edit</i></a></span>';
+                html +='</td>';
+                html +='</tr>';
 
               });
               //console.log("1");
@@ -242,7 +240,7 @@
             if($("input[name='selected[]']:checked").length == 0){
               bootbox.alert({ 
                 size: 'small',
-                title: "Attention", 
+                title: "  ", 
                 message: 'Please Select itemgroup to Delete!', 
                 callback: function(){}
               });
@@ -276,7 +274,7 @@
                                             var data = '<tr>'+
                                                             '<td>'+
                                                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                                    '<input type="checkbox" class="checks check custom-control-input stores" disabled id="stores" name="stores" value="{{ $stores->id }}">'+
+                                                                    '<input type="checkbox" class="checks check  stores" disabled id="stores" name="stores" value="{{ $stores->id }}">'+
                                                                 '</div>'+
                                                             '</td>'+
                                                             '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Vendor does not exist)</span></td>'+
@@ -287,7 +285,7 @@
                                             var data = '<tr>'+
                                                             '<td>'+
                                                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                                    '<input type="checkbox" class="checks check custom-control-input stores"  id="stores" name="stores" value="{{ $stores->id }}">'+
+                                                                    '<input type="checkbox" class="checks check  stores"  id="stores" name="stores" value="{{ $stores->id }}">'+
                                                                 '</div>'+
                                                             '</td>'+
                                                             '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -320,7 +318,7 @@
                                 setTimeout(function(){
                                     $('#successModal').modal('hide');
                                     window.location.reload();
-                                }, 2000);
+                                }, 1000);
                             }else{
                                 $('#error_msg').html('<strong>'+ data.error +'</strong>');
                                 $("div#divLoading").removeClass('show');
@@ -373,7 +371,7 @@
         if($("input[name='selected[]']:checked").length == 0){
           bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: 'Please Select itemgroup to Delete!', 
             callback: function(){}
           });
@@ -404,7 +402,7 @@
                     setTimeout(function(){
                         $('#successModal').modal('hide');
                         window.location.reload();
-                    }, 2000);
+                    }, 1000);
                 }else{
                     $('#error_msg').html('<strong>'+ data.error +'</strong>');
                     $("div#divLoading").removeClass('show');

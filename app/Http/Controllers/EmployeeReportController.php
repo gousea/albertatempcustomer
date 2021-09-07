@@ -48,7 +48,6 @@ class EmployeeReportController extends Controller {
         $data_row.= "Store Name: " . $request->session()->get('storename') . PHP_EOL;
         $data_row.= "Store Address: " . $request->session()->get('storeaddress') . PHP_EOL;
         $data_row.= "Store Phone: " . $request->session()->get('storephone') . PHP_EOL;
-        $data_row.= "Store Phone: " . $request->session()->get('storephone') . PHP_EOL;
         $data_row.= "From: " . $request->session()->get('p_start_date')." To ". $request->session()->get('p_end_date'). PHP_EOL;
         if ($data['reports'] > 0) {
             $data_row.= 'Username,User ID,Transaction Type,Transaction Id,Transaction Time,Product Name,Amount' . PHP_EOL;

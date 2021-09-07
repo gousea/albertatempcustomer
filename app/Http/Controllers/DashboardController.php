@@ -85,14 +85,14 @@ class DashboardController extends Controller
         $user_data = AppUser::where([['vemail', '=', $session_logged_in_emailid]])->get();
         $iuserid = $user_data[0]->iuserid;
 
-        // $selected_user_menu = "SELECT t1.usermenu_id, t1.status, t2.menu_name as menuname, t2.menu_des as menudes, t2.menu_link as menulink
-        // FROM $sid.user_menu t1
+        // $selected_quick_links = "SELECT t1.usermenu_id, t1.status, t2.menu_name as menuname, t2.menu_des as menudes, t2.menu_link as menulink
+        // FROM $sid.quick_links t1
         // INNER JOIN $sid.menu_table t2 ON t1.menu_id = t2.menu_id
         // WHERE t1.status = 'Active' AND t1.iuserid = '$iuserid'";
 
-        $selected_user_menu = "select * from $sid.menu_table m left join $sid.user_menu u on m.menu_id = u.menu_id and iuserid = '$iuserid' and status = 'Active'";
+        $selected_quick_links = "select * from $sid.menu_table m left join $sid.quick_links u on m.menu_id = u.menu_id and iuserid = '$iuserid' and status = 'Active'";
         // die;
-        $data = DB::connection('mysql')->select($selected_user_menu);
+        $data = DB::connection('mysql')->select($selected_quick_links);
 
         // $datas = "select * from $sid.menu_table";
         // $data = DB::connection('mysql')->select($datas);
@@ -137,20 +137,20 @@ class DashboardController extends Controller
 
         $convert_uppercase_data = array();
 
-        DB::connection('mysql')->statement("UPDATE " . $sid . ".user_menu SET
+        DB::connection('mysql')->statement("UPDATE " . $sid . ".quick_links SET
         status =  'InActive'
         where  iuserid = '" . $iuserid . "' ");
 
         foreach ($input['menu'] as $menu_name) {
             // $menu_des = $menu_name;
-            $user_menu_selected_data = Menu::where([['menu_des', '=', $menu_name]])->get();
-            $user_menu_id = $user_menu_selected_data[0]->menu_id;
-            $user_menu_selected_data = Menu::where([['menu_des', '=', $menu_name]])->get();
+            $quick_links_selected_data = Menu::where([['menu_des', '=', $menu_name]])->get();
+            $quick_links_id = $quick_links_selected_data[0]->menu_id;
+            $quick_links_selected_data = Menu::where([['menu_des', '=', $menu_name]])->get();
 
-            $insert_data = "INSERT INTO " . $sid . ".user_menu
+            $insert_data = "INSERT INTO " . $sid . ".quick_links
                             (menu_id, iuserid, status, LastUpdate, SID)
                         VALUES
-                            ('$user_menu_id','$iuserid','Active', CURRENT_TIMESTAMP, " . $data['sid'] . ")";
+                            ('$quick_links_id','$iuserid','Active', CURRENT_TIMESTAMP, " . $data['sid'] . ")";
             $sql_excute = DB::connection('mysql')->statement($insert_data);
         }
         return redirect('dashboardlayout')->with('message', 'Saved Successfully');
@@ -166,19 +166,20 @@ class DashboardController extends Controller
         $user_data = AppUser::where([['vemail', '=', $session_logged_in_emailid]])->get();
         $iuserid = $user_data[0]->iuserid;
 
-        // $user_menu = "select * from " . $sid . ".user_menu where iuserid = '$iuserid' AND status = 'Active'";
+        // $quick_links = "select * from " . $sid . ".quick_links where iuserid = '$iuserid' AND status = 'Active'";
 
-        // $user_menu = DB::table('user_menu')
+        // $quick_links = DB::table('quick_links')
         //     ->select(DB::raw('*'))
-        //     ->from('user_menu')
-        //     ->join('menu_table', 'menu_table.menu_id', '=', 'user_menu.menu_id')
-        //     ->where(DB::raw('user_menu.iuserid'), '=', $iuserid)
-        //     ->where(DB::raw('user_menu.status'), '=', 'Active');
+        //     ->from('quick_links')
+        //     ->join('menu_table', 'menu_table.menu_id', '=', 'quick_links.menu_id')
+        //     ->where(DB::raw('quick_links.iuserid'), '=', $iuserid)
+        //     ->where(DB::raw('quick_links.status'), '=', 'Active');
         $select_query = "SELECT t1.status as usermenu_status, t1.usermenu_id, t2.menu_name as menu_name, t2.menu_des as menu_des, t2.menu_link as menu_link
-        FROM $sid.user_menu t1
+        FROM $sid.quick_links t1
         INNER JOIN $sid.menu_table t2 ON t1.menu_id = t2.menu_id
-        WHERE t1.status = 'Active'";
+        WHERE t1.status = 'Active' and t2.menu_link != 'null'";
         $sql_excute = DB::connection('mysql_dynamic')->select($select_query);
+        // dd($sql_excute);
         $return = json_decode(json_encode($sql_excute), true);
         return $return;
     }

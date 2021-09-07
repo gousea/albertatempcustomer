@@ -195,14 +195,20 @@
 {{-- @yield('page-script') --}}
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> --}}
+{{-- <script src="{{ asset('javascript/jquery-3.3.1.min.js') }}"></script> --}}
+
+{{-- <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script> --}}
+
+{{-- Orginal Script  --}}
+<script src="{{ asset('javascript/bootstrap-datetimepicker.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"
     type="text/javascript"></script>
 <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="http://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 <!-- jQuery -->
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"
@@ -238,11 +244,14 @@
 
             // var max_per_row = 4;
             // var item_count = 0;
+            
             var popup = '';
             var i = 0;
             var div = "<div class='col-md-8 mx-auto'>";
             $.each(data, function(index) {
-                // alert(data[index].usermenu_id);
+                console.log(data[index]); 
+                // var datlink = data[index].menu_link;
+                var datlink = "https://gitcustomer.albertapayments.com/"+ data[index].menu_link;
                 // alert(data[index].menu_name);
                 i++;
                 // if (i = )
@@ -251,7 +260,7 @@
                     // "<h5 class='font-weight-bold text-uppercase mt-3 mb-4 footerheader'>Links</h5>" +
                     "<ul class='list-unstyled footerlinksdata'>" +
                     "<li>" +
-                    "<a href=" + data[index].menu_link + " class='footerlink'>" +
+                    "<a href=" + datlink +" class='footerlink'>" +
                     data[index].menu_name +
                     "</a>" +
                     "</li>" +

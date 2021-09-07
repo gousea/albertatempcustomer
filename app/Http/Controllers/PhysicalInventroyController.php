@@ -19,7 +19,7 @@ use Session;
 class PhysicalInventroyController extends Controller
 {
     public function index()
-    {
+    { 
         $physicalInventrorylists = PhysicalInventory::where('vtype', 'Physical')->orderBy('ipiid', 'Desc')->paginate(25);
         return view('inventory.physicalInventroy.index', compact('physicalInventrorylists'));
     }
@@ -27,11 +27,144 @@ class PhysicalInventroyController extends Controller
     public function search_inventory_list(Request $request)
     {
         $input = $request->all();
-        $physicalInventrorylists = PhysicalInventory::where('vtype', '=' ,'Physical')
-                                                        ->where('vrefnumber', 'like', '%'.$input['automplete-product'].'%')
-                                                        ->orderBy('ipiid', 'Desc')
-                                                        ->paginate(25);
-        return view('inventory.physicalInventroy.index', compact('physicalInventrorylists'));
+        $search_value = $input['columns'];
+        
+        $search_items = [];
+        foreach($search_value as $value)
+        {
+            if($value["data"] == "vrefnumber")
+            {
+                $search_items['vrefnumber'] = $value['search']['value'];
+            }
+            else if($value["data"] == "dcreatedate")
+            {
+                $search_items['dcreatedate'] = $value['search']['value'];
+            }
+            else if($value["data"] == "dcalculatedate")
+            {
+                $search_items['dcalculatedate'] = $value['search']['value'];
+            }
+            else if($value["data"] == "dclosedate")
+            {
+                $search_items['dclosedate'] = $value['search']['value'];
+            }
+            else if($value["data"] == "vordertitle")
+            {
+                $search_items['vordertitle'] = $value['search']['value'];
+            }
+            else if($value["data"] == "estatus")
+            {
+                $search_items['estatus'] = $value['search']['value'];
+            }
+            
+        }
+
+        if(empty(trim($search_items['estatus'])) && empty(trim($search_items['vrefnumber'])) && empty(trim($search_items['dcreatedate'])) && empty(trim($search_items['dcalculatedate'])) &&  empty(trim($search_items['dclosedate'])) && empty(trim($search_items['vordertitle']))  )
+        {
+            $limit = 20;
+            
+            $start_from = ($input['start']);
+
+            $select_query = "SELECT * FROM trn_physicalinventory ORDER BY dcreatedate DESC  LIMIT ". $input['start'].", ".$limit;
+
+            $count_select_query = "SELECT COUNT(distinct ipiid) as count FROM trn_physicalinventory";
+            $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
+            $count_query = isset($count_query[0])?(array)$count_query[0]:[];
+            
+            $count_records = $count_total = (int)$count_query['count'];
+
+        }else{
+            $limit = 20;
+            
+            $start_from = ($input['start']);
+            
+            $offset = $input['start']+$input['length']; 
+            $condition = "WHERE 1=1";
+            $check_condition = 0;
+            
+            if(isset($search_items['estatus']) && !empty(trim($search_items['estatus']))){
+                $search = ($search_items['estatus']);
+                $condition .= " AND estatus LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vrefnumber']) && !empty(trim($search_items['vrefnumber']))){
+                $search = ($search_items['vrefnumber']);
+                $condition .= " AND vrefnumber LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+
+            if(isset($search_items['dcreatedate']) && !empty(trim($search_items['dcreatedate']))){
+                $search = ($search_items['dcreatedate']);
+                $condition .= " AND dcreatedate LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['dcalculatedate']) && !empty(trim($search_items['dcalculatedate']))){
+                $search = ($search_items['dcalculatedate']);
+                $condition .= " AND dcalculatedate LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+
+            if(isset($search_items['dclosedate']) && !empty(trim($search_items['dclosedate']))){
+                $search = ($search_items['dclosedate']);
+                $condition .= " AND dclosedate LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            if(isset($search_items['vordertitle']) && !empty(trim($search_items['vordertitle']))){
+                $search = ($search_items['vordertitle']);
+                $condition .= " AND vordertitle LIKE  '%" . $search . "%'";
+                $check_condition = 1;
+            }
+            
+            $select_query = "SELECT * FROM trn_physicalinventory ".$condition." LIMIT ". $input['start'].", ".$limit;
+
+            $count_select_query = "SELECT COUNT(distinct ipiid) as count FROM trn_physicalinventory ".$condition;
+            $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
+            $count_query = isset($count_query[0])?(array)$count_query[0]:[];
+            
+            $count_records = $count_total = (int)$count_query['count'];
+        }
+        
+        $query = DB::connection('mysql_dynamic')->select($select_query);
+        
+		$data['SID'] = session()->get('sid');
+		$purchase_orders = array();
+        
+        $datas = array();
+        if(count($query) > 0){
+            foreach ($query as $key => $value) {
+
+                if($value->estatus == 'Open'){
+                    $view_edit = url('/inventory/physicalInventroy/edit_open/' . '?ipiid=' . $value->ipiid );
+                }else{
+                    $view_edit = url('/inventory/physicalInventroy/show/' . '?ipiid=' . $value->ipiid );
+                }
+
+                $temp = array();
+                $temp['ipiid']          = $value->ipiid;
+                $temp['estatus']        = $value->estatus;
+                $temp['vrefnumber']      = $value->vrefnumber;
+                $temp['dcreatedate']    = $value->dcreatedate;
+                $temp['dcalculatedate'] = $value->dcalculatedate;
+                $temp['dclosedate']     = $value->dclosedate;
+                $temp['vordertitle']    = $value->vordertitle;                
+                $temp['view_edit']      = $view_edit;
+				$temp['delete_inventory']         = url('/inventory/physicalInventroy/delete_physical/' . '?ipiid=' . $value->ipiid );
+
+                $datas[]                = $temp;
+            }
+        }
+		
+		$return = [];
+        $return['draw'] = (int)$input['draw'];
+        $return['recordsTotal'] = $count_total;
+        $return['recordsFiltered'] = $count_records;
+        $return['data'] = $datas;
+        
+        return response(json_encode($return), 200)
+                  ->header('Content-Type', 'application/json');
     }
 
     public function create()
@@ -116,73 +249,30 @@ class PhysicalInventroyController extends Controller
         //============= Start Department Data=====================================================
         
         $departments = Department::orderBy('vdepartmentname', 'ASC')->get()->toArray();
-        $departments_html = "";
-        $departments_html = "<select class='form-control' multiple='true' name='dept_code[]' id='dept_code' style='width: 100px;'>'<option value='all'>All</option>";
-        foreach ($departments as $department) {
-            if (isset($vdepcode) && $vdepcode == $department['vdepcode']) {
-                $departments_html .= "<option value='" . $department['vdepcode'] . "' selected='selected'>" . $department['vdepartmentname'] . "</option>";
-            } else {
-                $departments_html .= "<option value='" . $department['vdepcode'] . "'>" . $department['vdepartmentname'] . "</option>";
-            }
-        }
-        $departments_html .= "</select>";
         
-        $data['departments'] = $departments_html;
+        $data['departments'] = $departments;
         
         //=============End Department Data=====================================================
         
         //=============Start Category Data=====================================================
         
         $category = Category::orderBy('vcategoryname', 'ASC')->get()->toArray();
-        $category_html = "";
-        $category_html = "<select class='form-control' multiple='true' name='category_code[]' id='category_code' style='width: 100px;'>'<option value='all'>All</option>";
-        // foreach($category as $category){
-        //     if(isset($vcategorycode) && $vcategorycode == $category['vcategorycode']){
-        //         $category_html .= "<option value='".$category['vcategorycode']."' selected='selected'>".$category['vcategoryname']."</option>";
-        //     } else {
-        //         $category_html .= "<option value='".$category['vcategorycode']."'>".$category['vcategoryname']."</option>";
-        //     }
-        // }
-        $category_html .= "</select>";
-
-        $data['category'] = $category_html;
+        
+        $data['category'] = $category;
         //=============End Category Data=====================================================
 
         //=============Start Sub Category Data=====================================================
 
         $subcategory = SubCategory::orderBy('subcat_name', 'ASC')->get()->toArray();
-        $subcategory_html = "";
-        $subcategory_html = "<select class='form-control' multiple='true' name='subcat_id[]' id='subcat_id' style='width: 100px;'>'<option value='all'>All</option>";
-        // foreach($subcategory as $subcategory){
-        //     if(isset($subcat_id) && $subcat_id == $subcategory['subcat_id']){
-        //         $subcategory_html .= "<option value='".$subcategory['subcat_id']."' selected='selected'>".$subcategory['subcat_name']."</option>";
-        //     } else {
-        //         $subcategory_html .= "<option value='".$subcategory['subcat_id']."'>".$subcategory['subcat_name']."</option>";
-        //     }
-        // }
-        $subcategory_html .= "</select>";
-
-        $data['subcategory'] = $subcategory_html;
+        
+        $data['subcategory'] = $subcategory;
         //=============End Sub Category Data=====================================================
 
         //=============Start Supplier Data=====================================================
 
         $supplier = Vendor::orderBy('vcompanyname', 'ASC')->get()->toArray();
 
-        // echo "<pre>"; print_r($supplier); echo "</pre>"; die;
-
-        $supplier_html = "";
-        $supplier_html = "<select class='form-control' multiple='true' name='supplier_code[]' id='supplier_code' style='width: 100px;'>'<option value='all'>All</option>";
-        foreach ($supplier as $supplier) {
-            if (isset($vsuppliercode) && $vsuppliercode == $supplier['vsuppliercode']) {
-                $supplier_html .= "<option value='" . $supplier['vsuppliercode'] . "' selected='selected'>" . $supplier['vcompanyname'] . "</option>";
-            } else {
-                $supplier_html .= "<option value='" . $supplier['vsuppliercode'] . "'>" . $supplier['vcompanyname'] . "</option>";
-            }
-        }
-        $supplier_html .= "</select>";
-
-        $data['supplier'] = $supplier_html;
+        $data['supplier'] = $supplier;
         //=============End Supplier Data=====================================================
 
         //==============Start Price select By========================================================
@@ -630,7 +720,9 @@ class PhysicalInventroyController extends Controller
                 $selected_itemid[$k] = $itemid['iitemid'];
             }
             
-            $result = PhysicalInventory::first()->snapshot($selected_itemid);
+            $PhysicalInventory = new PhysicalInventory;
+            $result = $PhysicalInventory->snapshot($selected_itemid);
+            // $result = PhysicalInventory::first()->snapshot($selected_itemid);
             if (isset($result)) {
                 $data = $this->get_details_of_selected_data($result);
                 
@@ -643,7 +735,10 @@ class PhysicalInventroyController extends Controller
             
             $scanned_selected_itemid = $scanned_selected_itemid;
             $ids = join("','", $scanned_selected_itemid);
-            $result = PhysicalInventory::first()->snapshot($scanned_selected_itemid);
+
+            $PhysicalInventory = new PhysicalInventory;
+            $result = $PhysicalInventory->snapshot($scanned_selected_itemid);
+            // $result = PhysicalInventory::first()->snapshot($scanned_selected_itemid);
                 
             if (isset($result)) {
                 
@@ -656,7 +751,10 @@ class PhysicalInventroyController extends Controller
             
             $selected_itemid = $selected_itemid;
             $ids = join("','", $selected_itemid);
-            $result = PhysicalInventory::first()->snapshot($selected_itemid);
+
+            $PhysicalInventory = new PhysicalInventory;
+            $result = $PhysicalInventory->snapshot($selected_itemid);
+            // $result = PhysicalInventory::first()->snapshot($selected_itemid);
             // dd($result);
             if (isset($result)) {
                 
@@ -754,7 +852,9 @@ class PhysicalInventroyController extends Controller
                 $selected_itemid[$k] = $itemid['iitemid'];
             }
             
-            $result = PhysicalInventory::first()->snapshot($selected_itemid);
+            $PhysicalInventory = new PhysicalInventory;
+            $result = $PhysicalInventory->snapshot($selected_itemid);
+            // $result = PhysicalInventory::first()->snapshot($selected_itemid);
             
             if (isset($result)) {
                 
@@ -1548,6 +1648,7 @@ class PhysicalInventroyController extends Controller
                     }
                 }
                 
+                
                 foreach ($items as $k => $item) 
                 {
                     $itemdetail = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid = '".$item['iitemid']."' ");
@@ -1559,7 +1660,7 @@ class PhysicalInventroyController extends Controller
                     
                     $itotalunit = $item['ndebitqty'];
                     
-                    $ndebitextprice = number_format(floatval($itotalunit), 2)  * number_format(floatval($itemdetail['nunitcost']), 2); 
+                    $ndebitextprice = number_format(floatval($itotalunit), 2, '.', '')  * number_format(floatval($itemdetail['nunitcost']), 2, '.', ''); 
                     
                     //========for sold item========
                     //======vitemcode = vbarcode both same=======
@@ -1787,7 +1888,8 @@ class PhysicalInventroyController extends Controller
                         $ndebitextprice = $itotalunit * $itemdetail['nunitcost'];
                         
                         //========for sold item========
-                        $from = $input['dcreatedate'];
+                        $from = \DateTime::createFromFormat('m-d-Y H:i:s', $input['dcreatedate'])->format('Y-m-d H:i:s');
+                        // $from = $input['dcreatedate'];
                         $to = date('Y-m-d H:i:s');
                         $soldqty_sql = "SELECT ifnull(SUM(tsd.ndebitqty), 0) as soldqty FROM trn_salesdetail as tsd LEFT JOIN trn_sales as ts ON(ts.isalesid = tsd.isalesid) WHERE ts.vtrntype='Transaction' AND tsd.vitemcode = '".$item['vbarcode']."' AND ts.dtrandate >= '".$from."' AND ts.dtrandate <= '".$to."' GROUP BY vitemcode ";
                         
@@ -1940,7 +2042,8 @@ class PhysicalInventroyController extends Controller
                         $ndebitextprice = $itotalunit * $itemdetail['nunitcost'];
                         
                         //========for sold item========
-                        $from = $input['dcreatedate'];
+                        $from = \DateTime::createFromFormat('m-d-Y H:i:s', $input['dcreatedate'])->format('Y-m-d H:i:s');
+                        // $from = $input['dcreatedate'];
                         $to = date('Y-m-d H:i:s');
                         $soldqty_sql = "SELECT ifnull(SUM(tsd.ndebitqty), 0) as soldqty FROM trn_salesdetail as tsd LEFT JOIN trn_sales as ts ON(ts.isalesid = tsd.isalesid) WHERE ts.vtrntype='Transaction' AND tsd.vitemcode = '".$item['vbarcode']."' AND ts.dtrandate >= '".$from."' AND ts.dtrandate <= '".$to."' GROUP BY vitemcode ";
                         
@@ -2294,7 +2397,7 @@ class PhysicalInventroyController extends Controller
                     $temp['dunitprice'] = $value['dunitprice'];
                     $temp['unitcost'] = number_format($value['unitcost'], 2);
                     $temp['iqtyonhand'] = $value['iqtyonhand'];
-                    $temp['ndebitqty'] = "<input type='number' class='text-center' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
+                    $temp['ndebitqty'] = "<input type='number' class='text-center adjustment-fields' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
                     $temp['costtotal'] = number_format(($value['iqtyonhand'] * $value['unitcost']), 2);
                     $temp['pricetotal'] = number_format(($value['iqtyonhand'] * $value['dunitprice']), 2);
                     $temp['inv_count'] = $ndebitqty;
@@ -2793,7 +2896,7 @@ class PhysicalInventroyController extends Controller
                     $temp['dunitprice'] = $value['dunitprice'];
                     $temp['unitcost'] = number_format($value['unitcost'], 2);
                     $temp['iqtyonhand'] = $value['iqtyonhand'];
-                    $temp['ndebitqty'] = "<input type='number' class='text-center' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
+                    $temp['ndebitqty'] = "<input type='number' class='text-center adjustment-fields' name='ndebitqty' id='ndebitqty_".$value['iitemid']."' data-vbarcode =".$value['vbarcode']." oninput='getinventorycount($(this).val(), ".$value['iitemid'].")' value=".(int)$ndebitqty.">";
                     $temp['costtotal'] = number_format(($value['iqtyonhand'] * $value['unitcost']), 2);
                     $temp['pricetotal'] = number_format(($value['iqtyonhand'] * $value['dunitprice']), 2);
                     

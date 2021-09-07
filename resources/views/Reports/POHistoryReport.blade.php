@@ -1,48 +1,42 @@
-@extends('layouts.master')
-
-@section('title', 'RO History Report')
+@extends('layouts.layout')
+@section('title')
+RO History Report
+@endsection
 @section('main-content')
-<div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
+
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> RO History Report</span>
+                </div>
+                <div class="nav-submenu">
+                       <?php if(isset($reports) && count($reports) > 0){ ?>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('POprint')}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            </a>
+                        <?php } ?>
+                </div>
+            </div> 
         </div>
-    </div>
+    </nav>
+
+<section class="section-content py-6"> 
     
-    <div class="container-fluid">
-       <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>RO History Report</h3>
-            </div>
-            <div class="panel-body">
-                <?php if(isset($reports) && count($reports) > 0){ ?>
-                    <div class="row" style="padding-bottom: 10px;float: right;">
-                        <div class="col-md-12">
-                        
-                            <a id="pdf_export_btn" href="" class="" style="margin-right:10px;">
-                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
-                            </a>
-                            <a  id="btnPrint" href="{{route('POprint')}}" class="" style="margin-right:10px;">
-                                <i class="fa fa-print" aria-hidden="true"></i> Print
-                            </a>
-                            <a id="csv_export_btn" href="" class="" style="margin-right:10px;">
-                                <i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV
-                            </a>
-                    
-                        </div>
-        </div>
-                <?php } ?>
-                <div class="row" style="margin: 10px;">
-                      <form method="post" id="filter_form" action="{{ route('POForm') }}">
+    <div class="container">
+       
+        
+                <h6><span>SEARCH PARAMETERS </span></h6>
+                <br> 
+                
+                <form method="post" id="filter_form" action="{{ route('POForm') }}">
+                    <div class="row"> 
                       @csrf
                         <div class="col-md-3">
-                          <select name="report_by[]" class="form-control" id="report_by" multiple="true">
+                          <select name="report_by[]" class="form-control select_new" id="report_by" multiple="true">
             
                           <?php if(isset($selected_byreports) && count($selected_byreports) > 0){ ?>
                                 <option value="">Please Select Vendor</option>
@@ -77,19 +71,24 @@
                           <?php } ?>
                           </select>
                         </div>
-                        <div class="col-md-2">
-                          <input type="" class="form-control" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" required readonly autocomplete="off" >
+                        <div class="col-md-3">
+                          <input type="" class="form-control rcorner" name="start_date" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="start_date" placeholder="Start Date" required  autocomplete="off" >
+                        </div>
+                         
+                        <div class="col-md-3">
+                          <input type="" class="form-control rcorner" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" required  autocomplete="off" >
                         </div>
                         <div class="col-md-2">
-                          <input type="" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" required readonly autocomplete="off" >
+                          <input type="submit" class="btn btn-success header-color rcorner" value="Generate">
                         </div>
-                        <div class="col-md-2">
-                          <input type="submit" class="btn btn-success" value="Generate">
-                        </div>
-                      </form>
-    </div>
+                    </div>    
+                </form>
+                <br><br>
+                
+                <h6><span> RO HISTORY </span></h6>
+    
                 <?php if(isset($reports) && count($reports) > 0){ ?>
-                <div class="row" style="margin: 10px;">
+                <div class="row" style="margin: 10px; display:none">
                     <div class="col-md-12">
                     <p><b>Date Range: </b><?php echo $p_start_date; ?> to <?php echo $p_end_date; ?></p>
                        <p><b>Store Name: </b>{{ session()->get('storeName') }}</p>
@@ -97,17 +96,18 @@
                        <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
                     </div>
                 </div>
-                <div class="row" style="margin: 10px;">    
-                  <div class="col-md-12 table-responsive">
+                 
                   <br>
-                    <table class="table table-bordered table-striped table-hover" style="border:none;width: 50%;">
+                    <table data-toggle="table" data-classes="table  table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
+                   data-click-to-select="true">
                       <thead class="header">
-                        <tr style="border-top: 1px solid #ddd;">
+                        <tr class="header-color  text-uppercase">
                           <th>Vendor</th>
                           <th>Date</th>
-                          <th class="text-right">Net Total</th>
-                          <th>View Item</th>
-                          <th class="text-right">RIP Total Amt</th>
+                          <th >Net Total</th>
+                          <th>Action</th>
+                          <th>RIP Total </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -116,29 +116,29 @@
                             $rip_tot=0;
                           ?>
                           <?php foreach ($reports as $key => $value){ ?>
-                          <tr>
-                            <td class="text-left"><?php echo $value['vvendorname']; ?></td>
-                            <td style="width:90px;" class="text-left"><?php echo $value['dcreatedate']; ?></td>
-                            <td class="text-right"><?php echo "$",number_format((float)$value['nnettotal'], 2, '.', '') ; ?></td>
-                            <td class="text-left"><button data-id="<?php echo $value['vvendorid']; ?>" data-name="<?php echo $value['vvendorname']; ?>" data-date="<?php echo $value['date2'] ;?>" data-ipoid="<?php echo $value['ipoid'] ;?>" class="btn btn-info btn-sm view_item_btn"><i class="fa fa-eye" aria-hidden="true"></i> view</button></td>
+                          <tr class="th_color">
+                            <td><?php echo $value['vvendorname']; ?></td>
+                            <td><?php echo $value['dcreatedate']; ?></td>
+                            <td ><?php echo "$",number_format((float)$value['nnettotal'], 2, '.', '') ; ?></td>
+                            <td ><button data-id="<?php echo $value['vvendorid']; ?>" data-name="<?php echo $value['vvendorname']; ?>" data-date="<?php echo $value['date2'] ;?>" data-ipoid="<?php echo $value['ipoid'] ;?>" class="btn btn-info btn-sm view_item_btn"><i class="fa fa-eye" aria-hidden="true"></i> view</button></td>
                             <?php 
                               $total_nnettotal = $total_nnettotal + $value['nnettotal'];
                               $rip_tot=$rip_tot+$value['rip_total'];
                             ?>
-                            <td class="text-right"><?php echo "$",number_format((float)$value['rip_total'], 2, '.', '') ; ?></td>
+                            <td ><?php echo "$",number_format((float)$value['rip_total'], 2, '.', '') ; ?></td>
                           </tr>
                           <?php } ?>
-                          <tr>
+                          <tr class="header-color  text-uppercase">
                             <td>&nbsp;</td>
-                            <td><b>Total</b></td>
-                            <td class="text-right"><b>$<?php echo number_format((float)$total_nnettotal, 2, '.', '') ?? ''; ?></b></td>
+                            <td><b> GRAND TOTAL</b></td>
+                            <td><b>$<?php echo number_format((float)$total_nnettotal, 2, '.', '') ?? ''; ?></b></td>
                             <td>&nbsp;</td>
-                            <td class="text-right"><b>$<?php echo number_format((float)$rip_tot, 2, '.', '') ??''; ?></b></td>
+                            <td><b>$<?php echo number_format((float)$rip_tot, 2, '.', '') ??''; ?></b></td>
                           </tr>
                       </tbody>
                     </table>
-                  </div>
-                </div>
+                  
+                
                 <?php }else{ ?>
                     <?php if(isset($p_start_date)){ ?>
                         <div class="row">
@@ -150,22 +150,27 @@
                     </div>
                     <?php } ?>
                 <?php } ?>
-            </div>
-        </div>
-    </div>
+            
+        
 </div>
+</section>
 
 @endsection
-@section('scripts')   
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+@section('page-script')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    
+
+    <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.js"></script>
     
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.min.js"></script>
     
     <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
 
 <script>
   $(function(){
@@ -173,12 +178,14 @@
       format: 'mm-dd-yyyy',
       todayHighlight: true,
       autoclose: true,
+      orientation: "bottom left" 
     });
 
     $("#end_date").datepicker({
       format: 'mm-dd-yyyy',
       todayHighlight: true,
       autoclose: true,
+      orientation: "bottom left" 
     });
   });
 </script>
@@ -272,6 +279,11 @@ $(document).on('submit', '#filter_form', function(event) {
 
 <script>  
 $(document).ready(function() {
+    $('.select_new').select2();
+    $selectElement2 = $('#report_by').select2({
+    placeholder: "VENDOR",
+    allowClear: true
+    });
   $("#btnPrint").printPage();
 });
 </script> 
@@ -347,17 +359,20 @@ $(document).ready(function() {
 
 <!-- Modal -->
   <div class="modal fade" id="view_item_modal" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" style="background:#f8f9fa;">
       <!-- Modal content-->
-      <div class="modal-content">
+      <div class="modal-content" style="background:#f8f9fa;">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-uppercase" id="modal_title">Modal Header</h4>
+        <h4 class="modal-title text-uppercase" id="modal_title" style="float: left;">Modal Header</h4>    
+          <button type="button" class="close" data-dismiss="modal" style="float: right;">&times;</button>
+          
         </div>
         <div class="modal-body" style="overflow-x:scroll !important;">
-          <table class="table table-bordered table-striped table-hover">
+          <table data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
+                   data-click-to-select="true">
             <thead>
-              <tr>
+              <tr class="header-color  text-uppercase">
                 <th>SKU#</th>
                 <th>Item Name</th>
                 <th>Vendor Code</th>
@@ -373,10 +388,7 @@ $(document).ready(function() {
               </tr>
             </thead>
             <tbody id="item_table_body">
-              <tr>
-                <td>test</td>
-                <td>10.00</td>
-              </tr>
+            
             </tbody>
           </table>
         </div>
@@ -534,5 +546,52 @@ const saveData = (function () {
         
     });
 
+</script>
+<style>
+.rcorner {
+  border-radius:9px;
+  height: 42px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
+</style>
+<style type="text/css">
+
+/*.table.table-bordered.table-striped.table-hover thead > tr {*/
+/*    background-color: #2486c6;*/
+/*    color: #fff;*/
+/*}*/
+.select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-selection .select2-selection--multiple {
+    height: 30px !important;
+}
+.selection{
+    height: 35px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
+
+</style>
+<script>
+    $('select[name="report_by[]"]').select2();
+    
+    
 </script>
 @endsection   

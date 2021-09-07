@@ -1,0 +1,5 @@
+Alberta POS Version 3.0.8
+
+Bugs Resolved :- 
+
+1.  Resolved all the bugs raised in ver 3.0.7.

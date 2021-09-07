@@ -16,6 +16,7 @@ class EndOfDayReportController extends Controller
 
     public function index(){
         
+        error_reporting(0);
         ini_set('max_execution_time', -1);
       
         $date=date("m-d-Y");
@@ -35,15 +36,32 @@ class EndOfDayReportController extends Controller
         session()->put('session_report_new_dept',  $report_new_dept);
         session()->put('session_store',  $store);
         session()->put('session_date',  $date);
+        $graph_data = $splitted_data = [];
         
+        $sql_data="select 
+            	sum(nnettotal) ytd, 
+            	sum(case when e.dstartdatetime >= date_add(curdate(), interval -day(current_date())+1 day) then nnettotal else 0 end) mtd,
+            	sum(case when e.dstartdatetime >= date_add(curdate(), interval -dayofweek(current_date())+1 day) then nnettotal else 0 end) wtd
+            	from trn_sales 
+            	join trn_endofdaydetail d on ibatchid=d.batchid
+            	join trn_endofday e on e.id=d.eodid
+            	where vtrntype='Transaction' and year(e.dstartdatetime) >= year(current_date())";
+          
         
-        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date'));
+                $result = DB::connection('mysql_dynamic')->select($sql_data);
+                
+                $week=$result[0]->wtd;
+                $month=$result[0]->mtd;
+                $year=$result[0]->ytd;
+        
+        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date','graph_data','week','month','year'));
         
     }
     public function getlist(Request $request){
         
-
-       ini_set('max_execution_time', -1);
+        error_reporting(0);
+        
+        ini_set('max_execution_time', -1);
         $input = $request->all();
         $date=$input['start_date'];
         $Reports = new Reports;
@@ -55,24 +73,89 @@ class EndOfDayReportController extends Controller
         
         
         $store=$Reports->getStore();
+        
+        //graph data new 
+        $graph_data = $splitted_data =$dataPoints=[];
+        $data['report_hourly']=$hourly;
+        if(!empty($data['report_hourly']))
+            {
+                
+                foreach($data['report_hourly'] as $report)
+                {
+                    
+                    $graph_data[]     = ["data"=> $report->Amount,"label" => $report->Hours];
+                    
+                }
+                
+                if(!empty($graph_data))
+                {
+                    $splitted_data['lable'] = array_column($graph_data,'label');
+                    $splitted_data['data'] = array_column($graph_data,'data');
+                }
+                
+            }
+           
+           
+       
+          
+        $graph_data = $splitted_data;
+        
+              
+          if(!empty($report_new_dept)){
+              foreach($report_new_dept as $v){
+                  $dataPoints[]= ["name"=> $v->vdepatname,"y" => number_format($v->gpp*100,2)];
+                  
+              }    
+          }
+          
+          //year data EOD
+           
+                // $sql_data="select 
+                // sum(nnettotal) ytd, 
+                // sum(case when e.dstartdatetime >= date_add(curdate(), interval -day(current_date())+1 day) then nnettotal else 0 end) mtd,
+                // sum(case when e.dstartdatetime >= date_add(curdate(), interval -dayofweek(current_date())+1 day) then nnettotal else 0 end) wtd
+                // from trn_sales 
+                // join trn_endofdaydetail d on ibatchid=d.batchid
+                // join trn_endofday e on e.id=d.eodid
+                // where vtrntype='Transaction' and date(e.dstartdatetime) >= str_to_date('". $date ."','%m-%d-%Y') ";
+	           // dd($sql_data);
+	           
+	            $sql_data="select 
+            	sum(nnettotal) ytd, 
+            	sum(case when e.dstartdatetime >= date_add(curdate(), interval -day(current_date())+1 day) then nnettotal else 0 end) mtd,
+            	sum(case when e.dstartdatetime >= date_add(curdate(), interval -dayofweek(current_date())+1 day) then nnettotal else 0 end) wtd
+            	from trn_sales 
+            	join trn_endofdaydetail d on ibatchid=d.batchid
+            	join trn_endofday e on e.id=d.eodid
+            	where vtrntype='Transaction' and year(e.dstartdatetime) >= year(current_date())";
+          
+        
+                $result = DB::connection('mysql_dynamic')->select($sql_data);
+                
+                $week=$result[0]->wtd;
+                $month=$result[0]->mtd;
+                $year=$result[0]->ytd;
+                
+                //
+        
 
-        $url_print = url('/eodreport/print');
-        session()->put('session_data',  $data);
-        session()->put('session_paidout',  $paidout);
-        session()->put('session_hourly',  $hourly);
-        session()->put('session_report_new_dept',  $report_new_dept);
-        session()->put('session_store',  $store);
-        session()->put('session_date',  $date);
+                $url_print = url('/eodreport/print');
+                session()->put('session_data',  $data);
+                session()->put('session_paidout',  $paidout);
+                session()->put('session_hourly',  $hourly);
+                session()->put('session_report_new_dept',  $report_new_dept);
+                session()->put('session_store',  $store);
+                session()->put('session_date',  $date);
 
         
         
         
-        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date','url_print'));
+        return view('EoDReport.Endofday', compact('data','paidout','hourly','report_new_dept','store','date','url_print','graph_data','dataPoints','week','month','year'));
        
     }
     public function eodPdf()
     {
-       
+         error_reporting(0);
         ini_set('max_execution_time', -1);
         ini_set('memory_limit', '-1');
         
@@ -110,6 +193,7 @@ class EndOfDayReportController extends Controller
     public function print()
     
     {
+         error_reporting(0);
         ini_set('max_execution_time', -1);
         $report_sale_new= session()->get('session_data') ;
         $report_paidout_new= session()->get('session_paidout') ;
@@ -122,6 +206,7 @@ class EndOfDayReportController extends Controller
 
     }
     public function csv(){
+         error_reporting(0);
         ini_set('max_execution_time', -1);
         $data_row = '';
         
@@ -417,6 +502,13 @@ class EndOfDayReportController extends Controller
         $data_row .= PHP_EOL;
         }
         
+        if(isset($report_sale_new[0]->ConvCharge) && $report_sale_new[0]->ConvCharge!=0){
+        $data_row .= "Convenience Charge: ,";
+        $data_row .= "$".$report_sale_new[0]->ConvCharge;
+        $data_row .= PHP_EOL;
+        }
+        
+        
         $data_row .= PHP_EOL;
         $data_row .= "Productivity,";
         $data_row .= PHP_EOL;
@@ -516,9 +608,10 @@ class EndOfDayReportController extends Controller
                            $SALES=+$SALES+$v->saleamount;
                            $COST=+$COST+$v->cost;
                            $GP=+$GP+$v->gpp;
+                           $totalgpp=(($COST-$SALES)/$SALES)*100;
           }              
                            
-        $data_row .= $QUANTITY.','."$".$num.','."$".$COST.','.number_format($GP,2).PHP_EOL;             
+        $data_row .= $QUANTITY.','."$".$num.','."$".$COST.','.number_format($totalgpp,2).PHP_EOL;             
        
         // $data_row .= PHP_EOL;
         
@@ -528,7 +621,7 @@ class EndOfDayReportController extends Controller
         foreach($report_new_dept as $val){     
            
           
-            $data_row .=$val->vdepatname.','.$val->qty.','.$val->saleamount.','.$val->cost.','.$val->gpp.PHP_EOL;
+            $data_row .=$val->vdepatname.','.$val->qty.','.$val->saleamount.','.$val->cost.','.number_format($val->gpp*100,2).PHP_EOL;
         }
         
         

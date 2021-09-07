@@ -6,21 +6,27 @@ Parent Child
 
 @section('main-content')
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+
 <div id="content">
     
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
-        <div class="container-fluid">
+        <div class="container">
             <div class="collapse navbar-collapse" id="main_nav">
                 <div class="menu">
-                    <span class="font-weight-bold text-uppercase"> Parent Child</span>
+                    <h6><span class="font-weight-bold text-uppercase"> Parent Child</span></h6>
+                </div>
+                <div class="nav-submenu">
+                    <button type="button" class="btn btn-gray headerblack buttons_menu" id="save_button" title="Save" style="border-radius: 6px; margin-right:5px;"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-danger buttonred basic-button-small buttons_menu" id="parent_delete" title="Delete" style="border-radius: 6px;"><i class="fa fa-trash"></i> Delete</button>
                 </div>
             </div> <!-- navbar-collapse.// -->
         </div>
     </nav>
       
     <section class="section-content py-6">
-        <div class="container-fluid">
-            <br>
+        <div class="container">
+            
             @if (session()->has('message'))
                 <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -53,8 +59,8 @@ Parent Child
             
             <div class="panel-body">
                 <div>
-                    <table class="table table-bordered table-hover" id="tab_logic">
-                        <thead>
+                    <table class="table table-hover" id="tab_logic" >
+                        <thead style="border-radius: 6px;">
                             <tr >
                                     
                                 <th class="text-center text-uppercase text-white"  style="width:390px; background-color:grey;">
@@ -97,23 +103,23 @@ Parent Child
                                 <input type="hidden" name="Csearch_vbarcode" id="csearch_vbarcode" value="<?php echo isset($Csearch_vbarcode) ? $Csearch_vbarcode : ''; ?>">
                             </td>
                             <td class="text-left" style="background-color: #fff;"  style="width:37px;height:70px;background-color: #fff;" >
-                                <input type="button" class="btn btn-success float-right" value="Add New" id="addmore" >
+                                <input type="button" class="btn btn-gray headerblack buttons_menu float-right" value="Add New" id="addmore" style="border-color: black;">
                             </td>
                         </form>
                         
                         <td style="background-color: #fff;">
-                            <button type="button" class="btn btn-danger float-right" id="parent_delete" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i> Delete</button>
+                            
                         </td>
                         
                         <td style="background-color: #fff;">
-                            <button type="button" class="btn btn-primary float-right" id="save_button" title="Save" style="border-radius: 0px; margin-right:5px;"><i class="fa fa-save"></i> Save</button>
+                            
                         </td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="table-responsive">
-                <table id="Parent_head" class="text-center table table-bordered table-hover" style="margin-bottom:0px;">
+                <table id="Parent_head" class="text-center table"  data-classes="table table-hover table-condensed promotionview" style="margin-bottom:0px;">
                     <thead>
                         <tr class="header-color">
                             
@@ -134,7 +140,7 @@ Parent Child
                             </td>
 
                             <td style="width:200px;"class="text-left">
-                            <input style="color:#000000;" type="text" name="parent_item"  placeholder="Search parent item." id="parent-products">
+                            <input style="color:#000000;" type="text" name="parent_item"  placeholder="Search parent item." id="parent-products" class="form-control table-heading-fields">
                             </td>
 
                             <td style="width:150px;"class="text-left">
@@ -146,7 +152,7 @@ Parent Child
                             </td>
 
                             <td style="width:200px;"class="text-left">
-                                <input style="color:#000000; " type="text" name="child_item"  placeholder="Search child item." id="child-product">
+                                <input style="color:#000000; " type="text" name="child_item"  placeholder="Search child item." id="child-product" class="form-control table-heading-fields">
                             </td>
                             
                             <td style="width:150px;"class="text-left">
@@ -161,8 +167,9 @@ Parent Child
             <form action="" method="post" enctype="multipart/form-data" id="form-cpack">
                 @csrf
                 <div class="table-responsive">
-                    <table id="Parent" class="text-center table table-bordered table-hover display" style="width:100%">
-                        <thead style='display:none;'> <th></th><th></th> <th></th> <th></th> <th></th><th></th>
+                    <table id="Parent" class="text-center table table-hover display" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-pagination="true" data-click-to-select="true" style="width:100%">
+                        <thead style='display:none; border:0;'> <th></th><th></th> <th></th> <th></th> <th></th><th></th>
                         </thead>
                             
                         @foreach ($pitemncitem as $k=>$pitem)
@@ -177,11 +184,11 @@ Parent Child
                                 </td>
 
                                 <td style="width:150px;"class="text-left">
-                                    <span ><?php echo $pitem['psku']; ?></span>
+                                    <span ><a href="<?php echo $pitem['item_link'];?>"><?php echo $pitem['psku']; ?></a></span>
                                 </td>
                             
                                 <td style="width:100px;" class="text-left">
-                                    <input style="width:70px;"type="text"  class="editable cpack" name="pitem[<?php echo $k; ?>][cpack]" id="cpack_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['cpack']; ?>" onclick='document.getElementById("pitem[<?php echo $k; ?>][select]").setAttribute("checked","checked");' />
+                                    <input style="width:70px;"type="text"  class="form-control editable cpack" name="pitem[<?php echo $k; ?>][cpack]" id="cpack_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['cpack']; ?>" onclick='document.getElementById("pitem[<?php echo $k; ?>][select]").setAttribute("checked","checked");' />
                                     <input type="hidden" name="pitem[<?php echo $k; ?>][cid]"  id="cid_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['cid']; ?>"/>
                                     <input type="hidden" name="pitem2[<?php echo $k; ?>][pid]"  id="pid_<?php echo $pitem['pid'] ."-". $pitem['cid']; ?>" value="<?php echo $pitem['pid']; ?>"/>
                                 </td>
@@ -191,7 +198,7 @@ Parent Child
                                 </td>
                             
                                 <td style="width:150px;"class="text-left">
-                                    <span ><?php echo $pitem['csku']; ?></span>
+                                    <span ><a href="<?php echo $pitem['citem_link'];?>"><?php echo $pitem['csku']; ?></a></span>
                                 </td>
         
                             </tr>
@@ -211,13 +218,13 @@ Parent Child
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
+                <h6 class="modal-title">Select the stores in which you want to Add Parent Child relation</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select the stores in which you want to Add Parent Child relation</h4>
               </div>
               <div class="modal-body">
-                 <table class="table table-bordered">
+                 <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="selectAllCheckbox" name="" value="" style="background: none !important;">
@@ -230,7 +237,7 @@ Parent Child
                 </table>
               </div>
               <div class="modal-footer">
-                <button id="adding_btn" class="btn btn-danger" data-dismiss="modal">Add New</button>
+                <button id="adding_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Add New</button>
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
               </div>
             </div>
@@ -244,13 +251,13 @@ Parent Child
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
+                <h6 class="modal-title">Select the stores in which you want to update the items:</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select the stores in which you want to update the items:</h4>
               </div>
               <div class="modal-body">
-                 <table class="table table-bordered">
+                 <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="editSelectAllCheckbox" name="" value="" style="background: none !important;">
@@ -263,7 +270,7 @@ Parent Child
                 </table>
               </div>
               <div class="modal-footer">
-                <button id="edit_btn" class="btn btn-danger" data-dismiss="modal">Update</button>
+                <button id="edit_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Update</button>
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
               </div>
             </div>
@@ -276,13 +283,13 @@ Parent Child
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
+                <h6 class="modal-title">Select the stores in which you want to Delete parent child relation:</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select the stores in which you want to Delete parent child relation:</h4>
               </div>
               <div class="modal-body">
-                 <table class="table table-bordered">
+                 <table class="table promotionview">
                     <thead id="table_green_header_tag">
-                        <tr>
+                        <tr class="header-color">
                             <th>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
                                     <input type="checkbox" class="" id="deleteSelectAllCheckbox" name="" value="" style="background: none !important;">
@@ -295,7 +302,7 @@ Parent Child
                 </table>
               </div>
               <div class="modal-footer">
-                <button id="delete_btn" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                <button id="delete_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Delete</button>
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
               </div>
             </div>
@@ -350,7 +357,7 @@ $("#addmore").click(function(){
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  stores" disabled id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -360,7 +367,7 @@ $("#addmore").click(function(){
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  stores"  id="else_hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -547,11 +554,12 @@ $('#adding_btn').click(function(){
     $(document).ready(function() {
         
       var table = $('#Parent').DataTable({
-        "dom": 't<"bottom"i<"float-right"p>><"clear">',
+        "dom": 't<<"float-right"p>><"clear">',
         "searching":true,
         "destroy": true,
-        "bLengthChange": false,
-        "pageLength":20,
+        // "bLengthChange": false,
+        // "pageLength":20,
+        "paging": false,
       });
       
     
@@ -638,7 +646,7 @@ input[type=number] {
                                         var data = '<tr>'+
                                                         '<td>'+
                                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                                '<input type="checkbox" class="checks check custom-control-input deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                                '<input type="checkbox" class="checks check  deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                             '</div>'+
                                                         '</td>'+
                                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -648,7 +656,7 @@ input[type=number] {
                                         var data = '<tr>'+
                                                         '<td>'+
                                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                                '<input type="checkbox" class="checks check custom-control-input deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                                '<input type="checkbox" class="checks check  deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                             '</div>'+
                                                         '</td>'+
                                                         '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -828,7 +836,7 @@ input[type=number] {
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="editstores" name="editstores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  editstores" disabled id="editstores" name="editstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -838,7 +846,7 @@ input[type=number] {
                         var data = '<tr>'+
                                         '<td>'+
                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                '<input type="checkbox" class="checks check custom-control-input editstores"  id="editstores" name="editstores" value="{{ $stores->id }}">'+
+                                                '<input type="checkbox" class="checks check  editstores"  id="editstores" name="editstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                         '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+

@@ -1,142 +1,96 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
     Physical Inventory
 @stop
 
-
 @section('main-content')
 
 <div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-          {{-- <h1>Users List</h1> --}}
-          <ul class="breadcrumb">
-            <li><a href="">Physical Inventory</a></li>
-          </ul>
-        </div>
-      </div>
-    <div class="container-fluid">
-        @if (session()->has('message'))
-            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i>
-                {{session()->get('message')}}
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-        @endif
-      <div class="panel panel-default">
-        <div class="panel-heading head_title">
-          <h3 class="panel-title"><i class="fa fa-list"></i> Physical Inventory</h3>
-        </div>
-        <div class="panel-body">
-            
-          <div class="row" style="padding-bottom: 15px;float: right;">
-            <div class="col-md-12">
-              <div class="">
-                <a href="" class="btn btn-primary add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>
+    
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+      <div class="container">
+          <div class="collapse navbar-collapse" id="main_nav">
+              <div class="menu">
+                  <span class="font-weight-bold text-uppercase"> Physical Inventory</span>
               </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-            
-          <form action="{{ url('inventory/physicalInventroy') }}" method="post" id="form_physical_search">
-              @csrf
-            <input type="hidden" name="searchbox" id="vordertitle">
-            <div class="row">
-                <div class="col-md-12">
-                    <input type="text" name="automplete-product" class="form-control" placeholder="Search Physical Inventory Through Ref. No..." id="automplete-product" autocomplete="off">
-                </div>
-            </div>
-          </form>
-          <br>
+              <div class="nav-submenu">
                 
-            <div class="table-responsive">
-              <table id="physical_inventory_detail" class="table table-bordered table-hover" style="">
-                <thead>
-                  <tr>
-                    <th class="text-left">Ref.Number</th>
-                    <th class="text-left">Created</th>
-                    <th class="text-left">Calculated</th>
-                    <th class="text-left">Commited</th>
-                    <th class="text-left">Title</th>
-                    <th class="text-left">Status</th>
-                    <th class="text-left">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    @foreach ($physicalInventrorylists as $item)
-                    <tr>
-                        <td class="text-left">
-                            <span>{{ $item->vrefnumber }}</span>
-                        </td>
-                        <td class="text-left">
-                            <?php
-                                if(isset($item->dcreatedate) && !empty($item->dcreatedate) && $item->dcreatedate != '0000-00-00 00:00:00'){
-                                    $dcreatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $item->dcreatedate)->format('m-d-Y H:i:s');
-                                }else{
-                                    $dcreatedate = '';
-                                }
-                            ?>
-                            <span>{{ $dcreatedate }}</span>
-                        </td>
-                        <td class="text-left">
-
-                            <?php
-                                if(isset($item->dcalculatedate) && !empty($item->dcalculatedate) && $item->dcalculatedate != '0000-00-00 00:00:00'){
-                                    $dcalculatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $item->dcalculatedate)->format('m-d-Y H:i:s');
-                                }else{
-                                    $dcalculatedate = '';
-                                }
-                            ?>
-                            <span>{{ $dcalculatedate }}</span>
-                        </td>
-                        <td class="text-left">
-                            <?php
-                                if(isset($item->dclosedate) && !empty($item->dclosedate) && $item->dclosedate != '0000-00-00 00:00:00'){
-                                    $dclosedate =  DateTime::createFromFormat('Y-m-d H:i:s', $item->dclosedate)->format('m-d-Y H:i:s');
-                                }else{
-                                    $dclosedate = '';
-                                }
-                            ?>
-                            <span>{{ $dclosedate }}</span>
-                        </td>
-                        <td class="text-left">
-                            <span>{{ $item->vordertitle }}</span>
-                        </td>
-                        <td class="text-left">
-                            <span>{{ $item->estatus }}</span>
-                        </td>
-                        <td class="text-left" style="width:136px;">
-                            <?php if($item->estatus == 'Calculated'){ ?>
-                                <a href="/inventory/physicalInventroy/show/?ipiid={{ $item->ipiid }}" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-pencil">&nbsp;&nbsp;Edit</i>
-                                </a>
-                            <?php }elseif($item->estatus == 'Open'){ ?>
-                                <a href="/inventory/physicalInventroy/edit_open/?ipiid={{ $item->ipiid }}" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-pencil">&nbsp;&nbsp;Edit</i>
-                                </a>
-                            <?php }else{ ?>
-                                <a href="/inventory/physicalInventroy/show/?ipiid={{ $item->ipiid }}" data-toggle="tooltip" title="Show" class="btn btn-sm btn-info edit_btn_rotate" ><i class="fa fa-eye">&nbsp;&nbsp;View</i>
-                                </a>
-                            <?php } ?>
+                <a type="button" href="" title="Add" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>  
                             
-                            <a href="/inventory/physicalInventroy/delete_physical/?ipiid={{ $item->ipiid }}" data-toggle="tooltip" title="Delete" class="btn btn-sm btn-danger" ><i class="fa fa-delete">&nbsp;&nbsp;Delete</i>
-                                </a>
-                        </td>
-                    </tr>
-                    @endforeach
+                
+              </div>
+          </div> <!-- navbar-collapse.// -->
+      </div>
+    </nav>
 
-                </tbody>
-              </table>
-            </div>
-            <div class="row">
-              <div class="col-sm-8 text-left">{{ $physicalInventrorylists->links() }}</div>
-              <div class="col-sm-4 text-right"></div>
-            </div>
+    <section class="section-content py-6">
+      <div class="container">
+          @if (session()->has('message'))
+              <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i>
+                  {{session()->get('message')}}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+              </div>
+          @endif
+        <div class="panel panel-default">
+          
+          <div class="panel-body">
+                 
+              <div class="table-responsive col-xl-12 col-md-12">
+                <table id="physical_inventory_detail" class="table table-hover" style="">
+                  <thead>
+                    <tr class="header-color">
+                      <th class="text-left text-uppercase">Ref.Number
+                        <div class="form-group has-search">
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
+                          <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                        </div>
+                      </th>
+                      <th class="text-left text-uppercase">Created
+                        <div class="form-group has-search">
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
+                          <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                        </div>
+                      </th>
+                      <th class="text-left text-uppercase">Calculated
+                        <div class="form-group has-search">
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
+                          <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                        </div>
+                      </th>
+                      <th class="text-left text-uppercase">Commited
+                        <div class="form-group has-search">
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
+                          <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                        </div>
+                      </th>
+                      <th class="text-left text-uppercase">Title
+                        <div class="form-group has-search">
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
+                          <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                        </div>
+                      </th>
+                      <th class="text-left text-uppercase">Status
+                        <div class="form-group has-search">
+                          <span class="fa fa-search form-control-feedback" style="padding-left: 6px;"></span>
+                          <input type="text" class="form-control table-heading-fields text-center" placeholder="SEARCH" id="adjustment_no">
+                        </div>
+                      </th>
+                      <th class="text-left text-uppercase no-filter">Action</th>
+                    </tr>
+                  </thead>
+                  
+                </table>
+              </div>
+              
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+</div>
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 <script>
     $(document).ready(function(){
@@ -146,29 +100,36 @@
             var url = 'physicalInventroy/check_status_url';
             url = url.replace(/&amp;/g, '&');
             
-            $.ajax({
+            if($('#physical_inventory_detail').find('tbody tr').length < 1){
                 
-                url: url,
-                type: 'GET',
-                success: function(response){
+                var add = "{{ route('inventory.physicalInventroy.get_item_list') }}";
+                    add = add.replace(/&amp;/g, '&');
+                    window.location.href = add;
+            }else{
+                $.ajax({
                     
-                    if(response.result == 'notclossed'){
+                    url: url,
+                    type: 'GET',
+                    success: function(response){
                         
-                        $("div#divLoading").removeClass('show');
-                        
-                        $('#success_alias').html('<strong>'+ response.msg +'</strong>');
-                        $('#successAliasModal').modal('show');
-                        
-                        return false;
-                    }else{
-                        var add = "{{ route('inventory.physicalInventroy.get_item_list') }}";
-                        add = add.replace(/&amp;/g, '&');
-                        window.location.href = add;
-                        
+                        if(response.result == 'notclossed'){
+                            
+                            $("div#divLoading").removeClass('show');
+                            
+                            $('#success_alias').html('<strong>'+ response.msg +'</strong>');
+                            $('#successAliasModal').modal('show');
+                            
+                            return false;
+                        }else{
+                            var add = "{{ route('inventory.physicalInventroy.get_item_list') }}";
+                            add = add.replace(/&amp;/g, '&');
+                            window.location.href = add;
+                            
+                        }
                     }
-                }
-                
-            });
+                    
+                });
+            }
         });
     });
 </script>
@@ -191,4 +152,137 @@
       
     </div>
   </div>
+
+  <script>
+    var url = "{{ url('/inventory/physicalInventroy/search_inventory_list') }}";
+  
+    $('#physical_inventory_detail thead tr th').each( function (i) {
+        
+        $( this ).on( 'keyup', '.table-heading-fields', function () {
+  
+              var self = this;
+              if ( table.column(i).search() !== self.value ) {
+                  
+                  
+                  table
+                      .column(i)
+                      .search( self.value )
+                      .draw();
+                      
+                  $("div#divLoading").addClass('show');
+                  
+              }
+        });
+        
+    });
+  
+   
+    var table =   $("#physical_inventory_detail").DataTable({
+        "bSort": false,
+        "fixedHeader": true,
+        "processing": true,
+        "iDisplayLength": 20,
+        "serverSide": true,
+        "bLengthChange": false,
+        "aoColumnDefs": [
+            { "sWidth": "190px", "aTargets": [ 6 ] },
+            
+        ],
+        
+        "language": {
+            search: "_INPUT_",
+            searchPlaceholder: "Search..."
+        },
+        // "fnPreDrawCallback": function( oSettings ) {
+        
+        //     main_checkbox = $('#main_checkbox').is(":checked");
+    
+        // },
+        "dom": 't<"bottom col-md-12 row"<"col-md-3"i><"col-md-9"p>>',
+        "ajax": {
+        url: url,
+        headers: {
+                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+        },
+        "data": function(d){
+            d["m_check"] = $('#main_checkbox').is(":checked");
+            
+        },
+        type: 'POST',
+        "dataSrc": function ( json ) {
+                
+                if(json.data.length != 0){
+                $(".bottom").show();  
+                
+                } else {
+                $(".bottom").hide(); 
+                
+                }
+                
+                return json.data;
+            } 
+        },
+        
+        columns :  [
+                    
+          
+                      { "data": "vrefnumber"},
+                      { "data": "dcreatedate"},
+                      { "data": "dcalculatedate"},
+                      { "data": "dclosedate"},
+                      {"data": "vordertitle"},
+                      { "data": "estatus"},
+                    
+                      { render: function(data, type, row){
+                        
+                          let view_edit = row['view_edit'];
+                          let delete_inventory = row['delete_inventory'];
+                            return "<a href="+view_edit+" data-toggle='tooltip' title='View' class='btn btn-sm btn-info edit_btn_rotate header-color' ><i class='fa fa-eye'></i>&nbsp;&nbsp;View</a>&nbsp;<a href="+delete_inventory+" data-toggle='tooltip' title='Delete' class='btn btn-sm btn-danger buttonred' ><i class='fa fa-delete'>&nbsp;&nbsp;Delete</i></a>";
+                        }
+                      },
+                    
+            ],
+            rowCallback: function(row, data, index){
+                
+        },
+        fnDrawCallback : function() {
+                if ($(this).find('tbody tr').length<=1) {
+                    $(this).find('.dataTables_empty').hide();
+                }
+                
+                // $(this).removeClass('promotionview');
+                $(this).addClass('promotionview');
+                console.log("check")
+        }
+    }).on('draw', function(){
+                if($('#main_checkbox').prop("checked") == true){
+                    
+                    $('.iitemid').prop('checked', true);
+                } else{ 
+                    $('.iitemid').prop('checked', false);   
+                }
+                // console.log($(this).find('tbody tr .iitemid').length);
+            if ($(this).find('tbody tr .iitemid').length>0) {
+                $('#buttonEditMultipleItems').prop('disabled', false);
+            }
+            $("div#divLoading").removeClass('show');
+    });
+  
+    $("#physical_inventory_detail_paginate").addClass("pull-right");
+  </script>
+
+<style>
+  .no-filter{
+      padding-bottom: 45px !important;
+  }
+
+  .no-filter-checkbox{
+      padding-bottom: 20px !important;
+  }
+
+  .edit_btn_rotate, .buttonred{
+      line-height: 0.5;
+      border-radius: 6px;
+    }
+</style>
 @endsection

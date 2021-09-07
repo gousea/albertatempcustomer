@@ -1,27 +1,33 @@
-@extends('layouts.master')
-
-@section('title', 'Below Cost Report')
+@extends('layouts.layout')
+@section('title')
+Below Cost Report
+@endsection
 @section('main-content')
-<div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-          
-          <!-- <h1><?php //echo $heading_title; ?></h1> -->
-          <ul class="breadcrumb">
-            <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-            <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-            <?php //} ?>
-          </ul>
+
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase">Below Cost Report</span>
+                </div>
+                <div class="nav-submenu">
+                       <?php if(isset($reports) && count($reports) > 0){ ?>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('BelowCostReportprint')}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('BelowCostReportpdf')}}" > PDF
+                            </a>
+                        <?php } ?>
+                </div>
+            </div> 
         </div>
-    </div>
+    </nav>
+
     
-    <div class="container-fluid">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>Below Cost Report</h3>
-        </div>
-        <div class="panel-body">
-            <?php if(isset($reports) && count($reports) > 0){ ?>
+    <div class="container">
+  
+            <?php if(isset($reports_ccs) && count($reports_css) > 0){ ?>
                         <div class="row" style="padding-bottom: 10px;float: right;">
                             <div class="col-md-12">
                             
@@ -37,15 +43,17 @@
                         
                             </div>
                         </div>
-                        <br>
+                      
             <?php } ?>
-    
-            <div class="row" style="margin: 10px;">
+      <br>
+          <h6><span>DEPARTMENT FILTER </span></h6>
+                <br>
     
               <form method="get" id="filter_form"  action="{{ route('BelowCostReportForm') }}" >
+               <div class="row" >
               
                 <div class="col-md-3">
-                  <select name="report_by[]" class="form-control" id="report_by" multiple="true">
+                  <select name="report_by[]" class="form-control" id="report_by" multiple="true" required>
     
                   <?php if(isset($selected_byreports) && count($selected_byreports) > 0){ ?>
                         <option value="">Please Select Department</option>
@@ -83,40 +91,48 @@
                 </div>
             
                 <div class="col-md-2">&nbsp;&nbsp;&nbsp;
-                  <input type="submit" class="btn btn-success" value="Generate">
+                  <input type="submit" class="btn btn-success rcorner header-color" value="Generate">
                 </div>
+                 </div>   
               </form>
-            </div>
-            <?php if(isset($reports) && count($reports) > 0){ ?>
-    
-          
-            <div class="row" style="margin: 10px;">  
-              <div class="col-md-6 pull-left">
-                <p><b>Store Name: </b>{{ session()->get('storeName') }}</p>
-              </div>
-            </div>
-            
-            <div class="row" style="margin: 10px;">
-              
-              <div class="col-md-6 pull-left">
-                <p><b>Store Address: </b><?php echo $store[0]->vaddress1 ?></p>
-              </div>
-            </div>
-            
-            <div class="row" style="margin: 10px;">
-              
-              <div class="col-md-6 pull-left">
-                <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
-              </div>
-            </div>
-    
-            <div class="row" style="margin: 10px;">
-             
-              <div class="col-md-12 table-responsive">
               <br>
-                <table class="table table-bordered table-striped table-hover" style="border:none;width:70%;">
+               <br>
+                 <h6><span> BELOW COST ITEMS</span></h6>
+               
+                
+        
+                    <?php if(isset($reports_css) && count($reports_css) > 0){ ?>
+            
+                      
+                        <div class="row" style="margin: 10px;">  
+                          <div class="col-md-6 pull-left">
+                            <p><b>Store Name: </b>{{ session()->get('storeName') }}</p>
+                          </div>
+                        </div>
+                        
+                        <div class="row" style="margin: 10px;">
+                          
+                          <div class="col-md-6 pull-left">
+                            <p><b>Store Address: </b><?php echo $store[0]->vaddress1 ?></p>
+                          </div>
+                        </div>
+                        
+                        <div class="row" style="margin: 10px;">
+                          
+                          <div class="col-md-6 pull-left">
+                            <p><b>Store Phone: </b><?php echo $store[0]->vphone1; ?></p>
+                          </div>
+                        </div>
+                      <?php }?>
+                
+          
+              <br>
+        <?php if(isset($reports) && count($reports) > 0){ ?>
+                <table data-toggle="table" data-classes="table  table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-sort-name="Quality" data-sort-order="desc"
+                   data-click-to-select="true">
                   <thead class="header">
-                    <tr style="border-top: 1px solid #ddd;">
+                    <tr class="headermenublue text-uppercas">
                       <th>Item Name</th>
                       <th>SKU</th>
                       
@@ -141,10 +157,10 @@
                       <?php } ?>
                   </tbody>
                 </table>
-              </div>
-            </div>
+              
+            
             <?php }else{ ?>
-              <?php // if(isset($reports)){ ?>
+              <?php if(isset($reports)){ ?>
                 <div class="row">
                   <div class="col-md-12"><br><br>
                     <div class="alert alert-info text-center">
@@ -152,16 +168,16 @@
                     </div>
                   </div>
                 </div>
-              <?php // } ?>
+              <?php } ?>
             <?php } ?>
-        </div>
-    </div>
+        
+    
   </div>
 </div>
 
 
 @endsection   
-@section('scripts')  
+@section('page-script')
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -173,6 +189,8 @@
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
 
 <script src="{{ asset('javascript/table-fixed-header.js') }}" ></script>
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
 
 <script>
 
@@ -228,9 +246,9 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
+//   $(window).load(function() {
+//     $("div#divLoading").removeClass('show');
+//   });
 </script>
 
 
@@ -369,4 +387,48 @@ const saveData = (function () {
     });
 
 </script>
+
+<style type="text/css">
+
+/*.table.table-bordered.table-striped.table-hover thead > tr {*/
+/*    background-color: #2486c6;*/
+/*    color: #fff;*/
+/*}*/
+.select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 35px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
+</style>
+<script>
+    $('select[name="report_by[]"]').select2();
+ 
+    
+    
+</script>
+<style>
+.rcorner {
+  border-radius:9px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
+</style>
 @endsection 

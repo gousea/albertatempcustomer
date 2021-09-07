@@ -18,223 +18,244 @@
         </div> <!-- navbar-collapse.// -->
     </div>
 </nav>
-
+  
 
 <div id="content">
     
-    <div class="container-fluid">
+    <div class="container-fluid section-content">
       <?php if ($error_warning) { ?>
         <div class="alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
       <?php } ?>
       
-        <div class="panel panel-default">
+      <div class="panel panel-default">
         
-            <div class="clearfix"></div>
-            <div class="panel-body" <?php if(isset($estatus) && $estatus == 'Close'){?> style="pointer-events:none;" <?php } ?> >
-                <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-adjustment-detail" class="form-horizontal">
-                @csrf
-                  <?php if(isset($ipiid)){?>
-                  <input type="hidden" name="ipiid" value="<?php echo $ipiid;?>">
-                  <?php } ?>
-                    
-                    <div class="container section-content">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="col-sm-4 control-label" for="input-template"><?php echo $text_number; ?></label>
-                              <div class="col-sm-8">
-                                <input type="text" name="vrefnumber" maxlength="30" value="<?php echo isset($vrefnumber) ? $vrefnumber : ''; ?>" placeholder="<?php echo $text_number; ?>" class="form-control" required id="vrefnumber" readonly/>
-              
-                                <?php if ($error_vrefnumber) { ?>
-                                  <div class="text-danger"><?php echo $error_vrefnumber; ?></div>
-                                <?php } ?>
+        <div class="clearfix"></div>
+        <div class="panel-body" <?php if(isset($estatus) && $estatus == 'Close'){?> style="pointer-events:none;" <?php } ?> >
+          <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-adjustment-detail" class="form-horizontal">
+            @csrf
+              <?php if(isset($ipiid)){?>
+              <input type="hidden" name="ipiid" value="<?php echo $ipiid;?>">
+              <?php } ?>
+
+              <div class="mytextdiv">
+                <div class="mytexttitle font-weight-bold text-uppercase">
+                    ADJUSTMENT INFO
+                </div>
+                <div class="divider font-weight-bold"></div>
+              </div>
+              <div class="py-3">
+                  <div class="row">
+                      <div class="col-md-12 mx-auto">
+                          
+                          <div class="form-group row">
+                              <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      <label for="inputFirstname" class="p-2 float-right text-uppercase"><?php echo $text_number; ?></label>
+                                  </div>
+                                  <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                      
+                                      <input type="text" name="vrefnumber" maxlength="30" value="<?php echo isset($vrefnumber) ? $vrefnumber : ''; ?>" placeholder="<?php echo $text_number; ?>" class="form-control adjustment-fields" required id="vrefnumber" readonly/>
+      
+                                      <?php if ($error_vrefnumber) { ?>
+                                        <div class="text-danger"><?php echo $error_vrefnumber; ?></div>
+                                      <?php } ?>
+                                  </div>
                               </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group required">
-                              <label class="col-sm-4 control-label" for="input-template"><?php echo $text_created; ?></label>
-                              <?php
-                              if(isset($dcreatedate) && !empty($dcreatedate) && $dcreatedate != '0000-00-00 00:00:00'){
-                                $dcreatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $dcreatedate)->format('m-d-Y');
-                              }else{
-                                $dcreatedate = '';
-                              }
-                              
-                              ?>
-                              <div class="col-sm-8">
-                                <?php if(isset($ipiid) && $ipiid != ''){?>
-                                  <input type="text" name="dcreatedate" value="<?php echo $dcreatedate;?>" placeholder="<?php echo $text_created; ?>" class="form-control" id="dcreatedate" readonly style="pointer-events: none;"/>
-                                <?php } else { ?>
-                                  <input type="text" name="dcreatedate" value="<?php echo date('m-d-Y');?>" placeholder="<?php echo $text_created; ?>" class="form-control" id="dcreatedate" required/>
-                                <?php } ?>
-                                
-              
-                                <?php if ($error_dcreatedate) { ?>
-                                  <div class="text-danger"><?php echo $error_dcreatedate; ?></div>
-                                <?php } ?>
-              
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-              
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group required">
-                              <label class="col-sm-4 control-label" for="input-template"><?php echo $text_title; ?></label>
-                              <div class="col-sm-8">
-                                <input type="text" name="vordertitle" maxlength="50" value="<?php echo isset($vordertitle) ? $vordertitle : ''; ?>" placeholder="<?php echo $text_title; ?>" class="form-control" id="vordertitle" required/>
-              
-                                <?php if ($error_vordertitle) { ?>
-                                  <div class="text-danger"><?php echo $error_vordertitle; ?></div>
-                                <?php } ?>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="col-sm-4 control-label" for="input-template"><?php echo $text_status; ?></label>
-                              <div class="col-sm-8">
-                                <input type="text" name="estatus" maxlength="10" value="<?php echo isset($estatus) ? $estatus : 'Open'; ?>" placeholder="<?php echo $text_status; ?>" class="form-control" readonly />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-              
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label class="col-sm-4 control-label" for="input-template"><?php echo $text_notes; ?></label>
-                              <div class="col-sm-8">
-                                <textarea name="vnotes" maxlength="1000" placeholder="<?php echo $text_notes; ?>" class="form-control" ><?php echo isset($vnotes) ? $vnotes : ''; ?></textarea>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                    
-                    <br><br><br>
-                    <div class="row">
-                      <div class="col-md-4" style="pointer-events: all;">
-                        <div class="table-responsive" >
-                          <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
-                            <thead>
-                              <tr class="header-color">
-                                <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort1\']').prop('checked', this.checked);"/></td>
-                                <td style="width:185px;"><input type="text" class="form-control" id="itemsort1_search_sku" placeholder="SKU#" style="border:none;"></td>
-                                <td style="width:242px;"><input type="text" class="form-control" id="itemsort1_search_item_name" placeholder="Item Name" style="border:none;"></td>
-                              </tr>
-                            </thead>
-                          </table>
-                          <div class="div-table-content">
-                            <table class="table table-bordered table-hover" id="itemsort1" style="table-layout: fixed;">
-                              <tbody>
-                                
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-1 text-center" style="margin-top:12%;">
-                        <a class="btn btn-primary" style="cursor:pointer" id="add_item_btn"><i class="fa fa-arrow-right fa-3x"></i></a><br><br>
-                        <a class="btn btn-primary" style="cursor:pointer" id="remove_item_btn"><i class="fa fa-arrow-left fa-3x"></i></a>
-                        
-                      </div>
-                      <div class="col-md-7" style="pointer-events: all;">
-                        <div class="table-responsive" >
-                          <table class="table table-bordered table-hover" style="padding:0px; margin:0px;" >
-                            <thead>
-                              <tr class="header-color">
-                                <td style="width:1%" class="text-center"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort2\']').prop('checked', this.checked);"/></td>
-                                <td style="width:18%;"><input type="text" class="form-control itemsort2_search" placeholder="SKU#" style="border:none;"></td>
-                                <td style="width:21%;"><input type="text" class="form-control itemsort2_search" placeholder="Item Name" style="border:none;"></td>
-                                <td class="text-right" style="width:10%;">Unit Cost</td>
-                                <td class="text-right" style="width:10%;">Pack Qty</td>
-                                <td class="text-right" style="width:10%;">QOH</td>
-                                <td class="text-right" style="width:10%;">Adj.Qty</td>
-                                <td style="width:10%;">Reason</td>
-                                <td class="text-right" style="width:10%;">Total Unit</td>
-                                <td class="text-right" style="width:10%;">Total Amt</td>
-                              </tr>
-                            </thead>
-                          </table>
-                          <div class="div-table-content" style="">
-                            <table class="table table-bordered table-hover" id="itemsort2" style="table-layout: fixed;">
-                              <tbody>
-                                <?php if(isset($edit_right_items) && count($edit_right_items) > 0){?>
-                                  <?php foreach($edit_right_items as $k => $edit_right_item){?>
-                                    <tr>
-                                        
-                                      <td class="text-center" style="width:1%;">
-                                        <input type="checkbox" name="checkbox_itemsort2[]" value="<?php echo $edit_right_item['iitemid']; ?>"/>
-                                        <input type="hidden" name="items[<?php echo $k; ?>][vitemid]" value="<?php echo $edit_right_item['iitemid']; ?>">
-                                      </td>
-                                      
-                                      <td style="width:15%;">
-                                      <?php echo $edit_right_item['vbarcode']; ?>
-                                      <input type="hidden" name="items[<?php echo $k; ?>][vbarcode]" value="<?php echo $edit_right_item['vbarcode']; ?>">
-                                      </td>
-                                      
-                                      <td style="width:18%;">
-                                      <?php echo $edit_right_item['vitemname']; ?>
-                                      <input type="hidden" name="items[<?php echo $k; ?>][vitemname]" value="<?php echo $edit_right_item['vitemname']; ?>">
-                                      </td>
-                                      
-                                      <td class="text-right" style="width:9%;">
-                                        <input type="text" class="editable nunitcost_class" name="items[<?php echo $k; ?>][nunitcost]" value="<?php echo $edit_right_item['nunitcost']; ?>" style="width:30px;text-align: right;">
-                                      </td>
-                                      
-                                      <td class="text-right" style="width:9%;">
-                                        <input type="text" class="editable npackqty_class" name="items[<?php echo $k; ?>][npackqty]" value="<?php echo $edit_right_item['npackqty']; ?>" style="width:30px;text-align: right;">
-                                      </td>
-                                      
-                                       <td class="text-right" style="width:9%;">
-                                        <input type="text" class="editable iqtyonhand_class" name="items[<?php echo $k; ?>][iqtyonhand]" value="<?php echo $edit_right_item['iqtyonhand']; ?>" style="width:30px;text-align: right;">
-                                      </td>
-                                      
-                                      <td class="text-right" style="width:9%;">
-                                        <input type="text" class="editable ndebitqty_class" name="items[<?php echo $k; ?>][ndebitqty]" value="<?php echo $edit_right_item['ndebitqty']; ?>" maxlength = "5" style="width:30px;text-align: right;">
-                                      </td>
-                                      
-                                      <td style="width:9%;">
-                                          <select name="items[<?php echo $k; ?>][vreasoncode]" style="width:35px;">
-                                          <option value="">Reason</option>
-                                            <?php foreach($reasons as $reason){ ?>
-                                              <?php if(isset($edit_right_item['vreasoncode']) && $reason['vreasoncode'] == $edit_right_item['vreasoncode']){ ?>
-                                                <option value="<?php echo $reason['vreasoncode']; ?>" selected="selected"><?php echo $reason['vreasonename']; ?></option>
-                                              <?php }else{ ?>
-                                                <option value="<?php echo $reason['vreasoncode']; ?>" ><?php echo $reason['vreasonename']; ?></option>
-                                              <?php } ?>
-                                            <?php } ?>
-                                          </select>
+                              <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+
+                                  <label for="inputLastname" class="p-2 float-right text-uppercase"><?php echo $text_title; ?></label>
+                                </div>
+                                <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+
+                                  <input type="text" name="vordertitle" maxlength="50" value="<?php echo isset($vordertitle) ? $vordertitle : ''; ?>" placeholder="<?php echo $text_title; ?>" class="form-control adjustment-fields" id="vordertitle" required/>
           
-                                      </td>
-                                      
-                                      <td class="text-right" style="width:9%;">
-                                        <input type="text" class="editable itotalunit_class" name="items[<?php echo $k; ?>][itotalunit]" value="<?php echo $edit_right_item['itotalunit']; ?>" style="width:30px;text-align: right;">
-                                      </td>
-                                      
-                                      <td class="text-right" style="width:10%;">
-                                        <span class="text_nnettotal_class"><?php echo $edit_right_item['nunitcost'] * $edit_right_item['itotalunit']; ?></span>
-                                        <input type="hidden" class="nnettotal_class" name="items[<?php echo $k; ?>][nnettotal]" value="<?php echo $edit_right_item['nunitcost'] * $edit_right_item['itotalunit']; ?>">
-                                      </td>
-                                      
-                                    </tr>
+                                  <?php if ($error_vordertitle) { ?>
+                                    <div class="text-danger"><?php echo $error_vordertitle; ?></div>
                                   <?php } ?>
-                                <?php } ?>
-                              </tbody>
-                            </table>
+                                </div>
+                              </div>
+                              <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                  
+                                <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                  <label for="inputLastname" class="p-2 float-right text-uppercase"><?php echo $text_created; ?></label>
+                                </div>
+                                <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                  <?php
+                                    if(isset($dcreatedate) && !empty($dcreatedate) && $dcreatedate != '0000-00-00 00:00:00'){
+                                      $dcreatedate =  DateTime::createFromFormat('Y-m-d H:i:s', $dcreatedate)->format('m-d-Y');
+                                    }else{
+                                      $dcreatedate = '';
+                                    }
+                                    
+                                  ?>
+                                    <?php if(isset($ipiid) && $ipiid != ''){?>
+                                      <input type="text" name="dcreatedate" value="<?php echo $dcreatedate;?>" placeholder="<?php echo $text_created; ?>" class="form-control adjustment-fields" id="dcreatedate" readonly style="pointer-events: none;"/>
+                                    <?php } else { ?>
+                                      <input type="text" name="dcreatedate" value="<?php echo date('m-d-Y');?>" placeholder="<?php echo $text_created; ?>" class="form-control adjustment-fields" id="dcreatedate" required/>
+                                    <?php } ?>
+                                    
+                  
+                                    <?php if ($error_dcreatedate) { ?>
+                                      <div class="text-danger"><?php echo $error_dcreatedate; ?></div>
+                                    <?php } ?>
+                                </div>
+                              </div>
                           </div>
-                        </div>
+                          
                       </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 mx-auto">
+                        
+                      <div class="form-group row">
+                          <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                              <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                  <label for="inputFirstname" class="p-2 float-right text-uppercase"><?php echo $text_status; ?></label>
+                              </div>
+                              <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                <input type="text" name="estatus" maxlength="10" value="<?php echo isset($estatus) ? $estatus : 'Open'; ?>" placeholder="<?php echo $text_status; ?>" class="form-control adjustment-fields" readonly />
+                              </div>
+                          </div>
+                          <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                              <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                  <label for="inputLastname" class="p-2 float-right text-uppercase"><?php echo $text_notes; ?></label>
+                              </div>
+                              <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+                                <textarea name="vnotes" maxlength="1000" placeholder="<?php echo $text_notes; ?>" class="form-control adjustment-fields" ><?php echo isset($vnotes) ? $vnotes : ''; ?></textarea>
+                              </div>
+                          </div>
+                      </div>
+
                     </div>
-           
-                </form>
+                  </div>
+              </div>
+              
+            <div class="col-xl-12 col-md-12">
+              <div class="mytextdiv">
+                <div class="mytexttitle font-weight-bold text-uppercase">
+                    ADD ITEMS
+                </div>
+                <a class="btn btn-small text-center text-white" id="table_hideshow" style="line-height:5px; width:100px; border-radius:6px; background-color:grey; font-size:9px;">SEARCH ADD ITEMS</a>
+                &nbsp;
+                <div class="divider font-weight-bold"></div>
+              </div>
+              <input type="hidden" value="0" id="for_table_hideshow">
+              <br>
+              <div class="table-responsive" id="add_items" style="display: none;">
+                <table class="table table-hover" style="padding:0px; margin:0px; width:100%;">
+
+                  <thead>
+                    <tr class="header-color">
+                      <th class="text-center no-filter-checkbox" style="width:30px;"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort1\']').prop('checked', this.checked);" /></th>
+                      <th class="text-left text-uppercase " style="width:242px;">Item Name
+                        
+                            <div class="form-group adjustment-has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control table-heading-fields" id="itemsort1_search_item_name" placeholder="Item Name"">
+                            </div>
+                      </th>
+                      <th class="text-left text-uppercase" style="width:219px;">SKU
+                        
+                            <div class="form-group adjustment-has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control table-heading-fields" id="itemsort1_search_sku" placeholder="SKU#" >
+                            </div>
+                      </th>
+                      <th class="text-left text-uppercase no-filter" >QTY ON HAND</th>
+                      <th class="text-left text-uppercase no-filter" >Department</th>
+                      <th class="text-left text-uppercase no-filter">Category</th>
+                      <th class="text-left text-uppercase no-filter">Subcategory</th>
+                      <th class="text-left text-uppercase no-filter">Supplier</th>
+                    </tr>
+                  </thead>
+                  
+                </table>
+
+                {{-- <div class="div-table-content">
+                  <table class="table table-hover" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-click-to-select="true" id="itemsort1" style="table-layout: fixed;">
+                    <tbody style="display: block; height:400px; overflow-y : scroll;">
+                      
+                    </tbody>
+                  </table>
+                </div> --}}
+                <div class="div-table-content">
+                  <table class="table table-hover list_item" data-toggle="table" data-classes="table table-hover table-condensed promotionview"
+                      data-row-style="rowColors" data-striped="true" data-click-to-select="true" id="itemsort1" style="table-layout: fixed;">
+                  
+                  </table>
+
+                  <tbody class="bg-light">
+                      
+                  </tbody>
+                </div>
+              </div>
+
+              <br>
+
+              <center>
+                <div>
+                  <a type="button" class="btn btn-primary basic-button-large" id="add_item_btn" href="#" style="display: none;">ADD TO ADJUSTMENT</a>
+                </div>
+              </center>
+
+              <br>
+              
+              <div class="table-responsive">
+                <table class="table table-hover" data-classes="table table-hover table-condensed promotionview"
+                    data-row-style="rowColors" data-striped="true" data-click-to-select="true" id="itemsort2" style="width: 100%;">
+                  
+
+                  <thead>
+                    <tr class="header-color">
+                      <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'checkbox_itemsort2\']').prop('checked', this.checked);"/></th>
+                      <th class="text-left text-uppercase">Item Name</th>
+                      <th class="text-left text-uppercase">SKU</th>
+                      <th class="text-left text-uppercase" >Unit Cost</th>
+                      <th class="text-left text-uppercase" >Pack Qty</th>
+                      <th class="text-left text-uppercase">QOH</th>
+                      <th class="text-left text-uppercase">Adj.Qty</th>
+                      <th class="text-left text-uppercase">Reason</th>
+                      <th class="text-left text-uppercase">Total Unit</th>
+                      <th class="text-left text-uppercase">Total Amount</th>
+                    </tr>
+                  </thead>
+
+                  <tbody >
+                    
+                  </tbody>
+
+                </table>
+
+              </div>
+
+              <br/>
+
+              <div class="container">
+                <div class="center">
+                    <a type="button" class="btn btn-danger basic-button-large" id="remove_item_btn" href="#">REMOVE FROM
+                        ADJUSTMENT</a>
+                </div>
+              </div>
+              
+              <br />
+              <br />
+              <br />
+              <div class="container">
+                  <div class="center">
+                    <button id="save_button_adjustment_detail" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary basic-button-small" <?php if(isset($estatus) && $estatus == 'Close'){?> disabled <?php } ?> ><i class="fa fa-save"></i>&nbsp;&nbsp;SAVE</button>
+                    <a style="pointer-events:all;" href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;CANCEL</a>
+                  </div>
+              </div>
+
             </div>
+          </form>
         </div>
+      </div>
     </div>
 </div>
     
@@ -250,6 +271,9 @@
           <div class="text-center">
             <p id="success_alias"></p>
           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
       </div>
       
@@ -276,14 +300,70 @@
 
 @section('page-script')
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+ {{-- <script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
+
+     <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+     {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script> --}}
+     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+
 <script type="text/javascript">
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+  // $(function(){
+
+  //   // $('#dcreatedate').each(function(){
+  //       $('#dcreatedate').datepicker({
+  //         dateFormat: 'mm-dd-yy',
+  //         todayHighlight: true,
+  //         autoclose: true,
+  //       });
+  //   // });
+  
+  // });
+
+  $(function(){
+    $("#dcreatedate").datepicker({
+      format: 'mm-dd-yyyy',
+      todayHighlight: true,
+      autoclose: true,
+         widgetPositioning:{
+                                horizontal: 'auto',
+                                vertical: 'bottom'
+                            }
+      
+      
+    });
+  });
+
+  $(document).on('click', '#table_hideshow', function(){
+
+    let table_hideshow_value = $('#for_table_hideshow').val();
+
+    if(table_hideshow_value == 0){
+      $('#add_items').show();
+      $('#add_item_btn').show();
+      $('#for_table_hideshow').val(1);
+    }else{
+      $('#add_items').hide();
+      $('#add_item_btn').hide();
+      $('#for_table_hideshow').val(0);
     }
-});
-//Item Filter
+  });
+  
+</script>
+
+
+<script type="text/javascript">
+  $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': "{{ csrf_token() }}"
+      }
+  });
+  //Item Filter
   $(document).on('keyup', '#itemsort1_search_sku', function(event) {
     event.preventDefault();
     $('#itemsort1_search_item_name').val('');
@@ -308,11 +388,15 @@ $.ajaxSetup({
 
             for(var i=0;i<response.items.length;i++){
 
-              left_items_html[i] ='<tr><td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort1[]" value="'+response.items[i]['iitemid']+'"/></td><td style="width:105px;">'+response.items[i]['vbarcode']+'</td><td style="width:242px;">'+response.items[i]['vitemname']+'</td></tr>';
+              left_items_html[i] ='<tr style="background-color:#fff;"><td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort1[]" value="'+response.items[i]['iitemid']+'"/></td><td style="word-wrap:break-word; width:242px; !important;">'+response.items[i]['vitemname']+'</td><td style="width:219px;">'+response.items[i]['vbarcode']+'</td><td style="width:177px;">'+response.items[i]['iqtyonhand']+'</td><td style="width:170px;">'+response.items[i]['vdepartmentname']+'</td><td style="width:140px;">'+response.items[i]['vcategoryname']+'</td><td style="width:177px;">'+response.items[i]['subcat_name']+'</td><td style="width:118px;">'+response.items[i]['vcompanyname']+'</td></tr>';
             }
 
+            $('#itemsort1 tbody').addClass('scroller');
             $('#itemsort1 tbody').html('');
             $('#itemsort1 tbody').html(left_items_html.join(''));
+            $('.table').addClass('promotionview');
+          }else{
+            $('#itemsort1 tbody').removeClass('scroller');
           }
           
         },
@@ -352,11 +436,15 @@ $.ajaxSetup({
 
             for(var i=0;i<response.items.length;i++){
 
-              left_items_html[i] ='<tr><td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort1[]" value="'+response.items[i]['iitemid']+'"/></td><td style="width:105px;">'+response.items[i]['vbarcode']+'</td><td style="width:242px;">'+response.items[i]['vitemname']+'</td></tr>';
+              left_items_html[i] ='<tr style="background-color:#fff;"><td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort1[]" value="'+response.items[i]['iitemid']+'"/></td><td style="word-wrap:break-word; width:242px; !important;">'+response.items[i]['vitemname']+'</td><td style="width:219px;">'+response.items[i]['vbarcode']+'</td><td style="width:177px;">'+response.items[i]['iqtyonhand']+'</td><td style="width:170px;">'+response.items[i]['vdepartmentname']+'</td><td style="width:140px;">'+response.items[i]['vcategoryname']+'</td><td style="width:177px;">'+response.items[i]['subcat_name']+'</td><td style="width:118px;">'+response.items[i]['vcompanyname']+'</td></tr>';
             }
 
+            $('#itemsort1 tbody').addClass('scroller');
             $('#itemsort1 tbody').html('');
             $('#itemsort1 tbody').html(left_items_html.join(''));
+            $('.table').addClass('promotionview');
+          }else{
+            $('#itemsort1 tbody').removeClass('scroller');
           }
           
         },
@@ -388,192 +476,97 @@ $.ajaxSetup({
   });
 //Item Filter
 
-//Items add and remove
-
-$(document).on('click', '#add_item_btn', function(event) {
-  event.preventDefault();
-
-  // window.checked_items2 = []; 
-
-  var data = {};
-
-  var add_items_url = '<?php echo $add_items; ?>';
-    
-  add_items_url = add_items_url.replace(/&amp;/g, '&');
-
-  if($("[name='checkbox_itemsort1[]']:checked").length == 0) {
-    bootbox.alert({ 
-      size: 'small',
-      title: "Attention", 
-      message: "Please select item to add", 
-      callback: function(){}
-    });
-    return false;
-  }
-
-  $("div#divLoading").addClass('show');
-
-  $("[name='checkbox_itemsort1[]']:checked").each(function (i) {
-      data[i] = parseInt($(this).val());
-  });
-
-  if(data){
-    $.ajax({
-        url : add_items_url,
-        data : {checkbox_itemsort1:data},
-        type : 'POST',
-    }).done(function(response){
-
-      // var  response = $.parseJSON(response); //decode the response array
-      
-      if(response.right_items_arr){
-        var right_items_html = '';
-        $.each(response.right_items_arr, function(i, v) {
-
-          window.checked_items2.push(v.iitemid);
-            
-          right_items_html += '<tr>';
-          right_items_html += '<td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort2[]" value="'+v.iitemid+'"/><input type="hidden" name="items['+window.index_item+'][vitemid]" value="'+v.iitemid+'"></td>';
-          right_items_html += '<td style="width:16%px;">'+v.vbarcode+'<input type="hidden" name="items['+window.index_item+'][vbarcode]" value="'+v.vbarcode+'"></td>';
-          right_items_html += '<td style="width:15%;">'+v.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+v.vitemname+'"></td>';
-          right_items_html += '<td class="text-right" style="width:9%;">'+v.nunitcost+'<input type="hidden" class="editable nunitcost_class" name="items['+window.index_item+'][nunitcost]" value="'+v.nunitcost+'" id="" style="width:40px;text-align:right;"></td>';
-          right_items_html += '<td class="text-right" style="width:9%;">'+v.npack+'<input type="hidden" class="editable npackqty_class" name="items['+window.index_item+'][npackqty]" id="" value="'+v.npack+'" style="width:40px;text-align:right;"></td>';
-          right_items_html += '<td class="text-right" style="width:9%;">'+v.iqtyonhand+'<input type="hidden" class="editable iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]" value="'+v.iqtyonhand+'" id="" style="width:30px;text-align: right;"></td>';
-          right_items_html += '<td class="text-right" style="width:11%;"><input type="text" class="editable_all_selected ndebitqty_class" name="items['+window.index_item+'][ndebitqty]" id="" style="width:40px;text-align:right;" maxlength = "5" value="0.00"></td>';
-          
-          right_items_html += '<td style="width:9%;">';
-          
-          right_items_html += '<select name="items['+window.index_item+'][vreasoncode]" style="width:40px;">';
-          right_items_html += '<option value="">Reason</option>';
-          
-          <?php if(isset($reasons) && count($reasons) > 0){?>
-            <?php foreach($reasons as $reason){?>
-              right_items_html += '<option value="<?php echo $reason['vreasoncode'];?>"><?php echo $reason['vreasonename'];?></option>';
-            <?php } ?>
-          <?php } ?>
-          right_items_html += '</select>';
-          right_items_html += '</td>';
-          right_items_html += '<td class="text-right" style="width:9%;"><span class="text_itotalunit_class">0.00</span><input type="hidden" class="editable itotalunit_class" name="items['+window.index_item+'][itotalunit]" id="" value="0.00" style="width:40px;text-align:right;"></td>';
-          
-          right_items_html += '<td class="text-right" style="width:9%;">';
-          right_items_html += '<span class="text_nnettotal_class">0.00</span><input type="hidden" class="nnettotal_class" name="items['+window.index_item+'][nnettotal]" id="" value="0.00" >';
-          right_items_html += '</td>';
-         // right_items_html += '<td><input type="hidden" class="iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]"  value="'+v.iqtyonhand+'"></td>';
-          right_items_html += '</tr>';
-          window.index_item++;
-        });
-
-        $('#itemsort2 tbody').append(right_items_html);
-      }
-
-
-      $('#itemsort1 tbody').html('');
-
-      $("div#divLoading").removeClass('show');
-      
-    });
-  }
-});
-
-$(document).on('click', '#remove_item_btn', function(event) {
-  event.preventDefault();
-  
-  var remove_items_url = '<?php echo $remove_items; ?>';
-    
-  remove_items_url = remove_items_url.replace(/&amp;/g, '&');
-
-  if($("[name='checkbox_itemsort2[]']:checked").length == 0) {
-    bootbox.alert({ 
-      size: 'small',
-      title: "Attention", 
-      message: "Please select item to remove", 
-      callback: function(){}
-    });
-    return false;
-  }
-
-  $("div#divLoading").addClass('show');
-
-  $("[name='checkbox_itemsort2[]']:checked").each(function (i) {
-   
-      if($.inArray( parseInt($(this).val()), window.checked_items2) !== -1){
-        window.checked_items2.splice( $.inArray($(this).val(), window.checked_items2), 1 );
-        $(this).closest('tr').remove();
-        
-      }
-
-  });
-
-    $.ajax({
-        url : remove_items_url,
-        data : {checkbox_itemsort1:window.checked_items1},
-        type : 'POST',
-    }).done(function(response){
-
-
-      $('#itemsort1 tbody').html('');
-
-      $("div#divLoading").removeClass('show');
-      
-    });
-
-});
-
-//form submit
-$(document).on('click', '#save_button_adjustment_detail', function(event) {
-  if($('form#form-adjustment-detail #vrefnumber').val() == ''){
-    // alert('please enter Number');
-    bootbox.alert({ 
-      size: 'small',
-      title: "Attention", 
-      message: "please enter number", 
-      callback: function(){}
-    });
-    $('form#form-adjustment-detail #vrefnumber').focus();
-    return false;
-  }else if($('form#form-adjustment-detail #dcreatedate').val() == ''){
-    // alert('please select Date');
-    bootbox.alert({ 
-      size: 'small',
-      title: "Attention", 
-      message: "please select date", 
-      callback: function(){}
-    });
-    $('form#form-adjustment-detail #dcreatedate').focus();
-    return false;
-  }else if($('form#form-adjustment-detail #vordertitle').val() == ''){
-    // alert('please enter title');
-    bootbox.alert({ 
-      size: 'small',
-      title: "Attention", 
-      message: "please enter title", 
-      callback: function(){}
-    });
-    $('form#form-adjustment-detail #vordertitle').focus();
-    return false;
-  }else{
-    $("div#divLoading").addClass('show');
-    $('form#form-adjustment-detail').submit();
-  }
-});
 </script>
-
-<link type="text/css" href="/javascript/bootstrap-datepicker.css" rel="stylesheet" />
-<script src="/javascript/bootstrap-datepicker.js" defer></script>
 
 <script type="text/javascript">
-  $(function(){
+  //Items add and remove
 
-    $('#dcreatedate').each(function(){
-        $(this).datepicker({
-          format: 'mm-dd-yyyy',
-          todayHighlight: true,
-          autoclose: true,
-        });
+  $(document).on('click', '#add_item_btn', function(event) {
+    event.preventDefault();
+
+    // window.checked_items2 = []; 
+
+    var data = {};
+
+    var add_items_url = '<?php echo $add_items; ?>';
+      
+    add_items_url = add_items_url.replace(/&amp;/g, '&');
+
+    if($("[name='checkbox_itemsort1[]']:checked").length == 0) {
+      bootbox.alert({ 
+        size: 'small',
+        title: "  ", 
+        message: "Please select item to add", 
+        callback: function(){}
+      });
+      return false;
+    }
+
+    $("div#divLoading").addClass('show');
+
+    $("[name='checkbox_itemsort1[]']:checked").each(function (i) {
+        data[i] = parseInt($(this).val());
     });
-  
+
+    if(data){
+      $.ajax({
+          url : add_items_url,
+          data : {checkbox_itemsort1:data},
+          type : 'POST',
+      }).done(function(response){
+
+          // var  response = $.parseJSON(response); //decode the response array
+        
+        if(response.right_items_arr){
+          var right_items_html = '';
+          $.each(response.right_items_arr, function(i, v) {
+
+            window.checked_items2.push(v.iitemid);
+              
+            right_items_html += '<tr>';
+            right_items_html += '<td class="text-center"><input type="checkbox" name="checkbox_itemsort2[]" value="'+v.iitemid+'"/><input type="hidden" name="items['+window.index_item+'][vitemid]" value="'+v.iitemid+'"></td>';
+            right_items_html += '<td class="text-left">'+v.vbarcode+'<input type="hidden" name="items['+window.index_item+'][vbarcode]" value="'+v.vbarcode+'"></td>';
+            right_items_html += '<td class="text-left">'+v.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+v.vitemname+'"></td>';
+            right_items_html += '<td class="text-left">'+v.nunitcost+'<input type="hidden" class="editable nunitcost_class" name="items['+window.index_item+'][nunitcost]" value="'+v.nunitcost+'" id="" style="width:40px;text-align:right;"></td>';
+            right_items_html += '<td class="text-left">'+v.npack+'<input type="hidden" class="editable npackqty_class" name="items['+window.index_item+'][npackqty]" id="" value="'+v.npack+'" style="width:40px;text-align:right;"></td>';
+            right_items_html += '<td class="text-left">'+v.iqtyonhand+'<input type="hidden" class="editable iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]" value="'+v.iqtyonhand+'" id="" style="width:30px;text-align: right;"></td>';
+            right_items_html += '<td class="text-left"><input type="text" class="adjustment-fields editable_all_selected ndebitqty_class" name="items['+window.index_item+'][ndebitqty]" id="" style="width:52px;text-align:right;" maxlength = "5" value="00"></td>';
+            
+            right_items_html += '<td class="text-left">';
+            
+            right_items_html += '<select class="adjustment-fields" name="items['+window.index_item+'][vreasoncode]" style="width:65px;">';
+            right_items_html += '<option value="">Reason</option>';
+            
+            <?php if(isset($reasons) && count($reasons) > 0){?>
+              <?php foreach($reasons as $reason){?>
+                right_items_html += '<option value="<?php echo $reason['vreasoncode'];?>"><?php echo $reason['vreasonename'];?></option>';
+              <?php } ?>
+            <?php } ?>
+            right_items_html += '</select>';
+            right_items_html += '</td>';
+            right_items_html += '<td class="text-left"><span class="text_itotalunit_class">0.00</span><input type="hidden" class="editable itotalunit_class" name="items['+window.index_item+'][itotalunit]" id="" value="0.00" style="width:40px;text-align:right;"></td>';
+            
+            right_items_html += '<td class="text-left">';
+            right_items_html += '<span class="text_nnettotal_class">0.00</span><input type="hidden" class="nnettotal_class" name="items['+window.index_item+'][nnettotal]" id="" value="0.00" >';
+            right_items_html += '</td>';
+            // right_items_html += '<td><input type="hidden" class="iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]"  value="'+v.iqtyonhand+'"></td>';
+            right_items_html += '</tr>';
+            window.index_item++;
+          });
+
+          $('#itemsort2 tbody').append(right_items_html);
+        }
+
+
+        $('#itemsort1 tbody').html('');
+
+        $("div#divLoading").removeClass('show');
+        
+      });
+    }
   });
 </script>
+
 
 <script type="text/javascript">
   $(document).on('keyup', '.itotalunit_class', function(event) {
@@ -688,6 +681,8 @@ $(document).on('click', '#save_button_adjustment_detail', function(event) {
 <script type="text/javascript">
   $(document).ready(function(){
 
+    $('.table').addClass('promotionview');
+
     window.reasons = $.parseJSON('<?php echo json_encode($reasons); ?>');
 
     window.checked_items2 = [];
@@ -723,15 +718,15 @@ $(document).on('click', '#save_button_adjustment_detail', function(event) {
             
             
           right_items_html += '<tr>';
-          right_items_html += '<td class="text-center" style="width:30px;"><input type="checkbox" name="checkbox_itemsort2[]" value="'+v.iitemid+'"/><input type="hidden" name="items['+window.index_item+'][vitemid]" value="'+v.iitemid+'"></td>';
-          right_items_html += '<td style="width:16%;">'+v.vbarcode+'<input type="hidden" name="items['+window.index_item+'][vbarcode]" value="'+v.vbarcode+'"></td>';
-          right_items_html += '<td style="width:15%;">'+v.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+v.vitemname+'"></td>';
-          right_items_html += '<td class="text-right" style="width:9%;">'+v.nunitcost+'<input type="hidden" class="editable nunitcost_class" name="items['+window.index_item+'][nunitcost]" value="'+v.nunitcost+'" id="" style="width:40px;text-align:right;"></td>';
-          right_items_html += '<td class="text-right" style="width:9%;">'+v.npackqty+'<input type="hidden" class="editable npackqty_class" name="items['+window.index_item+'][npackqty]" value="'+v.npackqty+'" id="" style="width:40px;text-align:right;"></td>';
-          right_items_html += '<td class="text-right" style="width:9%;">'+v.iqtyonhand+'<input type="hidden" class="editable iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]" value="'+v.iqtyonhand+'" id="" style="width:30px;text-align:right;"></td>';
-          right_items_html += '<td class="text-right" style="width:11%;"><input type="text" class="editable_all_selected ndebitqty_class" name="items['+window.index_item+'][ndebitqty]" maxlength = "5" value="'+v.ndebitqty+'" id="" style="width:48px;text-align:right;"></td>';
-          right_items_html += '<td style="width:9%;">';
-          right_items_html += '<select name="items['+window.index_item+'][vreasoncode]" style="width:40px;">';
+          right_items_html += '<td class="text-center" ><input type="checkbox" name="checkbox_itemsort2[]" value="'+v.iitemid+'"/><input type="hidden" name="items['+window.index_item+'][vitemid]" value="'+v.iitemid+'"></td>';
+          right_items_html += '<td class="text-left">'+v.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+v.vitemname+'"></td>';
+          right_items_html += '<td class="text-left">'+v.vbarcode+'<input type="hidden" name="items['+window.index_item+'][vbarcode]" value="'+v.vbarcode+'"></td>';
+          right_items_html += '<td class="text-left">'+v.nunitcost+'<input type="hidden" class="editable nunitcost_class" name="items['+window.index_item+'][nunitcost]" value="'+v.nunitcost+'" id="" style="width:40px;text-align:right;"></td>';
+          right_items_html += '<td class="text-left">'+v.npackqty+'<input type="hidden" class="editable npackqty_class" name="items['+window.index_item+'][npackqty]" value="'+v.npackqty+'" id="" style="width:40px;text-align:right;"></td>';
+          right_items_html += '<td class="text-left">'+v.iqtyonhand+'<input type="hidden" class="editable iqtyonhand_class" name="items['+window.index_item+'][iqtyonhand]" value="'+v.iqtyonhand+'" id="" style="width:30px;text-align:right;"></td>';
+          right_items_html += '<td class="text-left"><input type="text" class="adjustment-fields editable_all_selected ndebitqty_class" name="items['+window.index_item+'][ndebitqty]" maxlength = "5" value="'+v.ndebitqty+'" id="" style="width:52px;text-align:right;"></td>';
+          right_items_html += '<td class="text-left">';
+          right_items_html += '<select class="adjustment-fields" name="items['+window.index_item+'][vreasoncode]" style="width:60px;">';
           right_items_html += '<option value="">Reason</option>';
 
           $.each(window.reasons, function(index, value) {
@@ -745,9 +740,9 @@ $(document).on('click', '#save_button_adjustment_detail', function(event) {
           right_items_html += '</select>';
           right_items_html += '</td>';
         //   right_items_html += '<td class="text-right" style="width:10%;"><span class="text_itotalunit_class">'+ v.itotalunit +'</span><input type="hidden" class="editable itotalunit_class" name="items['+window.index_item+'][itotalunit]" value="'+v.itotalunit+'" id="" style="width:40px;text-align:right;"></td>';
-          right_items_html += '<td class="text-right" style="width:9%;"><span class="text_itotalunit_class">'+ v.ndebitqty +'</span><input type="hidden" class="editable itotalunit_class" name="items['+window.index_item+'][itotalunit]" value="'+v.itotalunit+'" id="" style="width:40px;text-align:right;"></td>';
+          right_items_html += '<td class="text-left"><span class="text_itotalunit_class">'+ v.ndebitqty +'</span><input type="hidden" class="editable itotalunit_class" name="items['+window.index_item+'][itotalunit]" value="'+v.itotalunit+'" id="" style="width:40px;text-align:right;"></td>';
           
-          right_items_html += '<td class="text-right" style="width:9%;">';
+          right_items_html += '<td class="text-left">';
         //   right_items_html += '<span class="text_nnettotal_class">'+ (v.nunitcost * v.itotalunit).toFixed(2) +'</span><input type="hidden" class="nnettotal_class" name="items['+window.index_item+'][nnettotal]" value="'+ (v.nunitcost * v.itotalunit).toFixed(2) +'" id="" >';
           right_items_html += '<span class="text_nnettotal_class">'+ (v.nunitcost * v.ndebitqty).toFixed(2) +'</span><input type="hidden" class="nnettotal_class" name="items['+window.index_item+'][nnettotal]" value="'+ (v.nunitcost * v.itotalunit).toFixed(2) +'" id="" >';
           right_items_html += '</td>';
@@ -774,7 +769,7 @@ $(document).on('click', '#save_button_adjustment_detail', function(event) {
       // alert('please enter Number');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please enter number", 
         callback: function(){}
       });
@@ -785,7 +780,7 @@ $(document).on('click', '#save_button_adjustment_detail', function(event) {
       // alert('please select Date');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please select date", 
         callback: function(){}
       });
@@ -796,7 +791,7 @@ $(document).on('click', '#save_button_adjustment_detail', function(event) {
       // alert('please enter title');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please enter title", 
         callback: function(){}
       });
@@ -807,7 +802,7 @@ $(document).on('click', '#save_button_adjustment_detail', function(event) {
     if($('#itemsort2 > tbody > tr').length == 0){
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "please add items!", 
         callback: function(){}
       });
@@ -871,4 +866,98 @@ $(document).on('click', '#save_button_adjustment_detail', function(event) {
     });
   });
 </script>
+
+<script type="text/javascript">
+  $(document).on('click', '#remove_item_btn', function(event) {
+    event.preventDefault();
+    
+    var remove_items_url = '<?php echo $remove_items; ?>';
+      
+    remove_items_url = remove_items_url.replace(/&amp;/g, '&');
+
+    if($("[name='checkbox_itemsort2[]']:checked").length == 0) {
+      bootbox.alert({ 
+        size: 'small',
+        title: "  ", 
+        message: "Please select item to remove", 
+        callback: function(){}
+      });
+      return false;
+    }
+
+    $("div#divLoading").addClass('show');
+
+    $("[name='checkbox_itemsort2[]']:checked").each(function (i) {
+      
+        if($.inArray( parseInt($(this).val()), window.checked_items2) !== -1){
+          window.checked_items2.splice( $.inArray($(this).val(), window.checked_items2), 1 );
+          $(this).closest('tr').remove();
+          
+        }
+
+    });
+
+      $.ajax({
+          url : remove_items_url,
+          data : {checkbox_itemsort1:window.checked_items1},
+          type : 'POST',
+      }).done(function(response){
+
+
+        $('#itemsort1 tbody').html('');
+
+        $("div#divLoading").removeClass('show');
+        
+      });
+
+  });
+
+    //form submit
+  $(document).on('click', '#save_button_adjustment_detail', function(event) {
+    if($('form#form-adjustment-detail #vrefnumber').val() == ''){
+      // alert('please enter Number');
+      bootbox.alert({ 
+        size: 'small',
+        title: "  ", 
+        message: "please enter number", 
+        callback: function(){}
+      });
+      $('form#form-adjustment-detail #vrefnumber').focus();
+      return false;
+    }else if($('form#form-adjustment-detail #dcreatedate').val() == ''){
+      // alert('please select Date');
+      bootbox.alert({ 
+        size: 'small',
+        title: "  ", 
+        message: "please select date", 
+        callback: function(){}
+      });
+      $('form#form-adjustment-detail #dcreatedate').focus();
+      return false;
+    }else if($('form#form-adjustment-detail #vordertitle').val() == ''){
+      // alert('please enter title');
+      bootbox.alert({ 
+        size: 'small',
+        title: "  ", 
+        message: "please enter title", 
+        callback: function(){}
+      });
+      $('form#form-adjustment-detail #vordertitle').focus();
+      return false;
+    }else{
+      $("div#divLoading").addClass('show');
+      $('form#form-adjustment-detail').submit();
+    }
+  });
+</script>
+
+<style>
+  .no-filter{
+      padding-bottom: 55px !important;
+  }
+
+  .no-filter-checkbox{
+      padding-bottom: 30px !important;
+  }
+</style>
 @endsection

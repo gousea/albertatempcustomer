@@ -95,7 +95,7 @@
                         <li><a href="{{ route('adjustment') }}">Adjustment</a></li>
                         <li><a href="{{ route('transfer') }}">Transfer</a></li>
                         
-                        <li><a href="{{ route('inventory.physicalInventroy') }}"> Physical </a></li>
+                        <li><a href="{{ url('inventory/physicalInventroy') }}"> Physical </a></li>
                         
                         <li><a href="{{ route('reason') }}"> Reason </a></li>
                         <li><a href="{{ route('PurchaseOrder') }}"> Purchase Order </a></li>
@@ -115,7 +115,7 @@
                     @endif
                     <li><a href="{{ route('unit') }}"> Unit </a></li>
                     <li><a href="{{ route('department') }}">Department</a></li>
-                    <li><a href="{{ route('category') }}">Category</a></li>   
+                    <li><a href="{{ route('category') }}">Categories</a></li>   
                     <li><a href="{{ route('subcategory') }}">Sub Category</a></li>
                     <li><a href="{{ route('manufacturer') }}"> Manufacturer </a></li>
                     @if(session()->get('hq_sid') != 1)

@@ -8,7 +8,7 @@
 
 <p style="text-align:left;margin-top:2%;margin-left:2%;"><img src="{{ public_path('image/logoreport.jpg') }}" alt="Pos logo" width="120" height="50"></p>
 <div style="text-align: center; margin:0 auto;">
-    <h3 class="panel-title" style="font-weight:bold;font-size:24px;margin-top:-6%;"><?php echo "PO History Report" ?></h3>
+    <h3 class="panel-title" style="font-weight:bold;font-size:24px;margin-top:-6%;"><?php echo "Profit Loss Report" ?></h3>
     <hr style="height:1px; background-color:black;">
    
 </div> 

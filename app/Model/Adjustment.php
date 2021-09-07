@@ -109,16 +109,44 @@ class Adjustment extends Model
 
     	if(isset($data['search_by']) && $data['search_by'] == 'vbarcode'){
     		if($item_ids != ''){
-    			$query = DB::connection('mysql_dynamic')->select("SELECT iitemid,vbarcode,vitemname FROM mst_item FORCE INDEX (idx_item_vbarcode) WHERE vbarcode LIKE  '%" .($data['search_val']). "%' AND estatus='Active' AND iitemid NOT IN($item_ids)");
+    			$sql_query = "SELECT mi.iitemid,mi.vbarcode,mi.vitemname, mi.iqtyonhand, md.vdepartmentname vdepartmentname, mc.vcategoryname vcategoryname, msupp.vcompanyname vcompanyname, msc.subcat_name subcat_name FROM mst_item mi FORCE INDEX (idx_item_vbarcode) 
+				LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode)
+				LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
+				LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) 
+				LEFT JOIN mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id) 
+				WHERE mi.vbarcode LIKE  '%" .($data['search_val']). "%' AND mi.estatus='Active' AND mi.iitemid NOT IN($item_ids)";
+
+				$query = DB::connection('mysql_dynamic')->select($sql_query);
     		}else{
-    			$query = DB::connection('mysql_dynamic')->select("SELECT iitemid,vbarcode,vitemname FROM mst_item FORCE INDEX (idx_item_vbarcode) WHERE vbarcode LIKE  '%" .($data['search_val']). "%' AND estatus='Active'");
+				$sql_query = "SELECT mi.iitemid,mi.vbarcode,mi.vitemname, mi.iqtyonhand, md.vdepartmentname vdepartmentname, mc.vcategoryname vcategoryname, msupp.vcompanyname vcompanyname, msc.subcat_name subcat_name  FROM mst_item mi FORCE INDEX (idx_item_vbarcode) 
+				LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode)
+				LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
+				LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) 
+				LEFT JOIN mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id) 
+				WHERE mi.vbarcode LIKE  '%" .($data['search_val']). "%' AND mi.estatus='Active'";
+
+				$query = DB::connection('mysql_dynamic')->select($sql_query);
     		}
     		
     	}else{
     		if($item_ids != ''){
-    			$query = DB::connection('mysql_dynamic')->select("SELECT iitemid,vbarcode,vitemname FROM mst_item FORCE INDEX (idx_item_vitemname) WHERE vitemname LIKE  '%" .($data['search_val']). "%' AND estatus='Active' AND iitemid NOT IN($item_ids)");
+    			$sql_query = "SELECT mi.iitemid,mi.vbarcode,mi.vitemname, mi.iqtyonhand, md.vdepartmentname vdepartmentname, mc.vcategoryname vcategoryname, msupp.vcompanyname vcompanyname, msc.subcat_name subcat_name FROM mst_item mi FORCE INDEX (idx_item_vitemname) 
+				LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode)
+				LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
+				LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) 
+				LEFT JOIN mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id)
+				WHERE mi.vitemname LIKE  '%" .($data['search_val']). "%' AND mi.estatus='Active' AND mi.iitemid NOT IN($item_ids)";
+
+				$query = DB::connection('mysql_dynamic')->select($sql_query);
     		}else{
-    			$query = DB::connection('mysql_dynamic')->select("SELECT iitemid,vbarcode,vitemname FROM mst_item FORCE INDEX (idx_item_vitemname) WHERE vitemname LIKE  '%" .($data['search_val']). "%' AND estatus='Active'");
+    			$sql_query = "SELECT mi.iitemid,mi.vbarcode,mi.vitemname, mi.iqtyonhand, md.vdepartmentname vdepartmentname, mc.vcategoryname vcategoryname, msupp.vcompanyname vcompanyname, msc.subcat_name subcat_name FROM mst_item mi FORCE INDEX (idx_item_vitemname) 
+				LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode)
+				LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode)
+				LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) 
+				LEFT JOIN mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id)
+				WHERE mi.vitemname LIKE  '%" .($data['search_val']). "%' AND mi.estatus='Active'";
+
+				$query = DB::connection('mysql_dynamic')->select($sql_query);
     		}
     	}
 

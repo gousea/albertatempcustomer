@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
   Item Group
@@ -7,153 +7,154 @@
 @section('main-content')
 
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <!-- <h1>Item Group</h1> -->
-    
+
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase">Item Group</span>
+            </div>
+            <div class="nav-submenu">
+                
+                <button id="save_button_group" data-toggle="tooltip" title="Save" class="btn btn-gray headerblack  buttons_menu" ><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <a style="pointer-events:all;" href="/itemgroup" data-toggle="tooltip" title="Cancel" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
-  </div>
+  </nav>
   
-  <div class="container-fluid">
+  <div class="container-fluid section-content">
+    <div class="container-fluid">
 
-    @if (session()->has('message'))
-      <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+      @if (session()->has('message'))
+        <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>      
+      @endif
+
+      @if (session()->has('error'))
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>      
-    @endif
+        </div>      
+      @endif
 
-    @if (session()->has('error'))
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>      
-    @endif
-
-    <div id='errorDiv'>
-    </div>
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-          <i class="fa fa-exclamation-circle"></i>{{$error}}
-        @endforeach
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div> 
-    @endif
-    <div class="panel panel-default">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title">Item Group</h3>
+      <div id='errorDiv'>
       </div>
-      <div class="panel-body">
-
-        <div class="row" style="padding-bottom: 9px;float: right;">
-          <div class="col-md-12">
-            <div class="">
-              <button id="save_button_group" title="Save" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
-              <a href="/itemgroup" title="Cancel" class="btn btn-default cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;Cancel</a>
-            </div>
-          </div>
-        </div>
-        <div class="clearfix"></div>
-          <!-- <ul class="nav nav-tabs responsive" id="myTab">
-                 <li class="active"><a href="#item_tab" data-toggle="tab" style="background-color: #f05a28;color: #fff !important;pointer-events:none;">General</a></li>
-                <li><a class="add_new_btn_rotate" href="" style="color: #fff !important;background-color: #03A9F4; pointer-events:none;">Group Slab Pricing</a></li>
-            </ul> -->
-
-        <form action="" method="post"  id="form-group_search_sku" class="form-horizontal">
-          @csrf
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group required">
-                <label class="col-sm-4 control-label" for="input-group">Group Name</label>
-                <div class="col-sm-8">
-                  <input type="text" maxlength="100" name="vitemgroupname" value="" placeholder="Group Name" class="form-control" required="">
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-sm-4 control-label" for="input-template">Item Type</label>
-                <div class="col-sm-8">
-                  <select name="vtype" id="vtype" class="form-control">
-                    <option value="">Please Select</option>
-                    <option value="Product" selected="selected">Product</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-            <br><br><br>
-          <div class="row">
-          <form action="" method="post"  id="groupsearch" >
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          @foreach ($errors->all() as $error)
+            <i class="fa fa-exclamation-circle"></i>{{$error}}
+          @endforeach
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div> 
+      @endif
+      <div class="panel panel-default">
+        
+        <div class="panel-body">
+          
+          <form action="" method="post"  id="form-group_search_sku" class="form-horizontal">
             @csrf
-            <div class="col-md-5">
-              <div class="table-responsive">
-                <table class="table table-bordered table-hover" style="padding:0px; margin:0px;">
-                  <thead>
-                    <tr>
-                      <td style="width: 1px;" class="text-center">
-                        <input type="checkbox" style="background: none;" onclick="$('input[name*=\'table1\']').prop('checked', this.checked)" name="table1">
-                      </td>
-                      <td style="width:130px;">
-                        <input type="text" class="form-control search_c" id="itemsort1_search_sku" placeholder="SKU" style="border:none;" autocomplete="off">
-                      </td>
-                      <td style="width:242px;">
-                        <input type="text" class="form-control search_c" id="itemsort1_search_item_name" placeholder="Name" style="border:none;">
-                      </td>
-                      <td class="text-right" style="width:100px;">Price</td>
-                    </tr>
-                  </thead>
-                </table>
-                <div class="div-table-content">
-                  <table class="table table-bordered table-hover" id="itemsort1" style="table-layout: fixed;">
-                    <tbody id="searchData">
-                        
-                    </tbody>
-                  </table>
+            <div class="container section-content">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group required">
+                    <label class="col-sm-4 control-label" for="input-group">Group Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" maxlength="100" name="vitemgroupname" value="" placeholder="Group Name" class="form-control adjustment-fields" required="">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input-template">Item Type</label>
+                    <div class="col-sm-8">
+                      <select name="vtype" id="vtype" class="form-control adjustment-fields">
+                        <option value="">Please Select</option>
+                        <option value="Product" selected="selected">Product</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </form>
+              <br><br>
+            <div class="row">
+              <div class="col-md-5">
+                <form action="" method="post"  id="groupsearch" >
+                @csrf
+                
+                  <div class="table-responsive">
+                    <table class="table table-hover promotionview" style="padding:0px; margin:0px; left:3%;">
+                      <thead>
+                        <tr class="header-color">
+                          <td style="width: 1px;" class="text-center">
+                            <input type="checkbox" style="background: none;" onclick="$('input[name*=\'table1\']').prop('checked', this.checked)" name="table1">
+                          </td>
+                          <td style="width:130px;">
+                            <input type="text" class="form-control search_c" id="itemsort1_search_sku" placeholder="SKU" style="border:none;" autocomplete="off">
+                          </td>
+                          <td style="width:242px;">
+                            <input type="text" class="form-control search_c" id="itemsort1_search_item_name" placeholder="Name" style="border:none;">
+                          </td>
+                          <td class="text-right" style="width:100px; padding-top: 20px;">Price</td>
+                        </tr>
+                      </thead>
+                    </table>
+                    <div class="div-table-content">
+                      <table class="table table-hover promotionview" id="itemsort1" style="table-layout: fixed; left:3%;">
+                        <tbody id="searchData" style="display: block; height:400px; overflow-y : scroll;">
+                            
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                
+                </form>
+              </div>
+              <div class="col-md-2 text-center" style="margin-top:12%;">
+                
+                <a class="btn btn-primary " style="cursor:pointer" id="add_item_btn"><i class="fa fa-arrow-right fa-3x"></i></a><br><br>
+                <a class="btn btn-primary" style="cursor:pointer" id="remove_item_btn"><i class="fa fa-arrow-left fa-3x"></i></a>
+              </div>
 
-            <div class="col-md-2 text-center" style="margin-top:12%;">
-            <form action="insertgroupname" method="post"  id="groupdetail" class="form-horizontal">
-            @csrf
-
-              <a class="btn btn-primary" style="cursor:pointer" id="add_item_btn"><i class="fa fa-arrow-right fa-3x"></i></a><br><br>
-              <a class="btn btn-primary" style="cursor:pointer" id="remove_item_btn"><i class="fa fa-arrow-left fa-3x"></i></a>
-            </div>
-            <div class="col-md-5">
-              <div class="table-responsive">
-                <table class="table table-bordered table-hover" style="padding:0px; margin:0px;">
-                  <thead>
-                    <tr>
-                      <td style="width:1%;" class="text-center">
-                        <input style="background: none;"  type="checkbox" onclick="$('input[name*=\'table2\']').prop('checked', this.checked)" name="table2">
-                      </td>
-                      <td style="width:242px;">
-                        <input type="text" class="form-control itemsort2_search" placeholder="Name" style="border:none;">
-                      </td>
-                      <td class="text-right" style="width:100px;">Sequence</td>
-                      <td class="text-right">Price</td>
-                    </tr>
-                  </thead>
-                </table>
-                <div class="div-table-content" style="">
-                  <table class="table table-bordered table-hover" id="itemsort2">
-                    <tbody id="resultData">
-                    
-                    </tbody>
-                  </table>
-                </div>
+              <div class="col-md-5">
+                  <form action="insertgroupname" method="post"  id="groupdetail" class="form-horizontal">
+                  @csrf
+                  
+                    <div class="table-responsive">
+                      <table class="table table-hover promotionview" style="padding:0px; margin:0px; left:3%;">
+                        <thead>
+                          <tr class="header-color">
+                            <td style="width:1%;" class="text-center">
+                              <input style="background: none;"  type="checkbox" onclick="$('input[name*=\'table2\']').prop('checked', this.checked)" name="table2">
+                            </td>
+                            <td style="width:242px;">
+                              <input type="text" class="form-control itemsort2_search" placeholder="Name" style="border:none;">
+                            </td>
+                            <td class="text-right" style="width:100px; padding-top: 20px;">Sequence</td>
+                            <td class="text-right" style="padding-top: 20px;">Price</td>
+                          </tr>
+                        </thead>
+                      </table>
+                      <div class="div-table-content" style="">
+                        <table class="table table-hover promotionview" id="itemsort2" style="left:3%;">
+                          <tbody id="resultData" style="display: block; height:400px; overflow-y : scroll;">
+                          
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  
+                  </form>
               </div>
             </div>
-            </form>
-          </div>
-        
+          
+        </div>
       </div>
     </div>
   </div>
-  
+
 </div>
 
 <?php if(session()->get('hq_sid') == 1){ ?>
@@ -162,13 +163,13 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
+            <h6 class="modal-title">Select the stores in which you want to Add New Item Group:
+            <span style="color: blue;">Note: Please make sure all the items are exists in child store also</span></h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Add New Item Group:</h4>
-            <span style="color: blue;">Note: Please make sure all the items are exists in child store also</span>
           </div>
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+            <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead id="table_green_header_tag" style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -183,7 +184,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input stores" id="stores" name="stores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check  stores" id="stores" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -203,8 +204,9 @@
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <script src="/javascript/bootbox.min.js" defer=""></script>
 <script>
 
@@ -246,11 +248,7 @@
       return false;
     }
 
-    // if (currentRequest !== undefined) {
-    //   currentRequest.abort();
-    // }
-
-
+    
     if (typeof currentRequest === 'undefined') {
       currentRequest = null;
     }
@@ -354,11 +352,11 @@ $(document).on('click', '#add_item_btn', function(event) {
       right_items_html += '<input type="hidden" class="vbarcode_right" name="vsku" value="'+barcode+'">';
       right_items_html += '</td>';
 
-      right_items_html += '<td class="text-right" style="width:100px;">';
-      right_items_html += '<input type="text" class="editable isequence_class " name="items['+barcode+'][isequence]"   style="width:50px;text-align:right;">';
+      right_items_html += '<td class="text-left" style="width:100px;">';
+      right_items_html += '<input type="text" class="editable isequence_class " name="items['+barcode+'][isequence]"   style="width:50px;">';
       right_items_html += '</td>';
       
-      right_items_html += '<td class="text-right">'+price+'</td>';
+      right_items_html += '<td class="text-left">'+price+'</td>';
       right_items_html += '</tr>';
       window.index_item++;
     
@@ -418,7 +416,7 @@ $(document).on('click','#save_button_group', function(e){
     if(avArr.length < 1){
         bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "You did not select anything", 
             callback: function(){location.reload(true);}
         });
@@ -434,9 +432,11 @@ $(document).on('click','#save_button_group', function(e){
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
                 url: '/savedata',
                 contentType: 'application/json',
-                data: JSON.stringify({groupname: grpName, barcodes: avArr}) // access in body
-            }).success(function (e) {
-                location.replace('/itemgroup');
+                data: JSON.stringify({groupname: grpName, barcodes: avArr}),
+                success: function (e) { 
+                  location.replace('/itemgroup');
+                },
+                
             }).fail(function (msg) {
                 //console.log('FAIL');
                 let mssg = '<div class="alert alert-danger">';
@@ -454,14 +454,13 @@ $(document).on('click','#save_button_group', function(e){
                 mssg += '</div>';
                 bootbox.alert({ 
                     size: 'small',
-                    title: "Attention", 
+                    title: "  ", 
                     message: mssg, 
                     callback: function(){}
                 });
                 $("div#divLoading").removeClass('show');
-        
+                
             }).done(function (msg) {
-                // console.log('DONE');
                 $("div#divLoading").removeClass('show');
             });
         <?php } ?>
@@ -505,10 +504,11 @@ $('#save_btn').click(function(){
         headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
         url: '/savedata',
         contentType: 'application/json',
-        data: JSON.stringify({groupname: grpName, barcodes: avArr, stores_hq:stores }) // access in body
-    }).success(function (e) {
-         location.replace('/itemgroup');
-    }).fail(function (msg) {
+        data: JSON.stringify({groupname: grpName, barcodes: avArr, stores_hq:stores }), // access in body
+        success : function (e) {
+          location.replace('/itemgroup');
+        }
+     }).fail(function (msg) {
         //console.log('FAIL');
         let mssg = '<div class="alert alert-danger">';
         //console.log(msg);
@@ -525,7 +525,7 @@ $('#save_btn').click(function(){
         mssg += '</div>';
         bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: mssg, 
             callback: function(){}
         });

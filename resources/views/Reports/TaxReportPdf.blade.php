@@ -135,7 +135,7 @@
         <div class="row">
           <div class="col-md-6 col-sm-6">
                <p style="float: left;"><b>Gross Sales:</p>
-           <span style="float: right;"><?php echo "$",number_format((float)($netsale+$reports['TAX']), 2); ?></span></b></p>
+           <span style="float: right;"><?php echo "$",number_format((float)($reports['NNETTOTAL']), 2); ?></span></b></p>
           </div>
         </div>
         <br><br>

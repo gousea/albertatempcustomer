@@ -18,7 +18,8 @@ class InventoryReportController extends Controller
     }
 
     public function index(){
-
+        
+        error_reporting(0);
         ini_set('max_execution_time', -1);
         ini_set("memory_limit", "2G");
         $Reports = new Reports;
@@ -35,6 +36,7 @@ class InventoryReportController extends Controller
    
 
     public function getlist(Request $request){
+      error_reporting(0);
         $input = $request->all();
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "2G");
@@ -551,7 +553,7 @@ class InventoryReportController extends Controller
     
     public function print_page() {
 
-    
+    error_reporting(0);
     ini_set("memory_limit", "2G");
     ini_set('max_execution_time', 0);
     $data1= session()->get('session_data') ;
@@ -573,7 +575,7 @@ class InventoryReportController extends Controller
     }
     public function print_page_N() {
 
-    
+    error_reporting(0);
     ini_set("memory_limit", "2G");
     ini_set('max_execution_time', 0);
     $data1= session()->get('session_data') ;
@@ -593,7 +595,7 @@ class InventoryReportController extends Controller
     }
      public function print_page_Z() {
 
-    
+    error_reporting(0);
     ini_set("memory_limit", "2G");
     ini_set('max_execution_time', 0);
     $data1= session()->get('session_data') ;
@@ -613,7 +615,7 @@ class InventoryReportController extends Controller
     }
     public function eodPdf()
     {
-       
+      error_reporting(0);
        ini_set("memory_limit", "2G");
        ini_set('max_execution_time', 0);
       
@@ -638,7 +640,7 @@ class InventoryReportController extends Controller
     }
      public function eodPdf_N()
     {
-       
+      error_reporting(0);
        ini_set("memory_limit", "2G");
        ini_set('max_execution_time', 0);
       
@@ -664,7 +666,7 @@ class InventoryReportController extends Controller
     }
      public function eodPdf_Z()
     {
-       
+      error_reporting(0);
        ini_set("memory_limit", "2G");
        ini_set('max_execution_time', 0);
       
@@ -690,6 +692,7 @@ class InventoryReportController extends Controller
 
    
     public function csv(){
+      error_reporting(0);
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "2G");
         
@@ -780,6 +783,7 @@ class InventoryReportController extends Controller
     
     }
     public function csv_Z(){
+      error_reporting(0);
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "2G");
         
@@ -870,6 +874,7 @@ class InventoryReportController extends Controller
     
     }
     public function csv_N(){
+      error_reporting(0);
        ini_set('max_execution_time', 0);
         ini_set("memory_limit", "2G");
         

@@ -1,0 +1,27 @@
+Alberta POS Version 3.1.0
+
+Bugs Resolved :- 
+
+POS
+1.  PAX Payment gateway integration.
+2.  Surcharge for Creditcard Transactions.
+3.  EBT Tax exempted added in Reports.
+4.  EBT Balance added on Receipt.
+5.  Price update checkbox added in Pricematch Screen.
+6.  Audit Report.
+7.  GP on Local Item Screen
+8.  Customer Display Design.
+9.  Pay Button Shifted to UP.
+10. Size Column added to Local Item Screen. 
+11. DVR Integration.
+12. Change of Font Size for Label Print.
+13. Display time for Credit card Approval Message.
+14. Scale Barcodes Convertion.
+15. Keyboard button added on Item Lookup Screen.
+16. EBT will work on all taxes(Earlier it was working on Tax1 only).
+17. Time Clock
+
+
+KIOSK
+1.  Previous Button works entire transaction.
+1.  Cancel Button works entire transaction.

@@ -58,20 +58,7 @@ class ItemController extends Controller
         $data['show_items'] = $disable_items;
         
         $departments = Department::orderBy('vdepartmentname', 'ASC')->get()->toArray();
-        
-        $departments_html ="";
-        $departments_html = "<select class='form-control' name='dept_code' id='dept_code' style='width: 100px;'>'<option value='all'>All</option>";
-        foreach($departments as $department){
-            if(isset($vdepcode) && $vdepcode == $department['vdepcode']){
-                $departments_html .= "<option value='".$department['vdepcode']."' selected='selected'>".$department['vdepartmentname']."</option>";
-            } else {
-                $departments_html .= "<option value='".$department['vdepcode']."'>".$department['vdepartmentname']."</option>";
-            }
-        }
-        $departments_html .="</select>";
-        
-        $data['departments'] = $departments_html;
-        
+        $data['departments'] = $departments;
         
         $itemListings = WebAdminSetting::where('variablename', 'ItemListing')->get('variablevalue')->toArray();
         
@@ -1000,13 +987,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -1128,13 +1115,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -1468,7 +1455,7 @@ class ItemController extends Controller
                                         "isparentchild" => "0",
                                         "parentid" => "0",
                                         "parentmasterid" => "0",
-                                        "wicitem" => $input['wicitem'],
+                                        "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
                                         "options_data" => $options_data,
                                         
                                     );
@@ -1909,13 +1896,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -2054,13 +2041,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -2438,7 +2425,7 @@ class ItemController extends Controller
                                     "isparentchild" => $input['isparentchild'],
                                     "parentid" => $input['parentid'],
                                     "parentmasterid" => $input['parentmasterid'],
-                                    "wicitem" => $input['wicitem'],
+                                    "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
                                     "options_data" => $options_data
                                 );
                     
@@ -3903,6 +3890,12 @@ class ItemController extends Controller
             $data['wicitem'] = '';
         }
 
+        if($data['wicitem'] == 1 || $data['wicitem'] === 'Y'){
+            $data['wicitem'] = 'Y';
+        }else{ 
+            $data['wicitem'] ='N';
+        }
+
         // if (isset($input['vsequence'])) {
         //     $data['vsequence'] = $input['vsequence'];
         // } elseif (!empty($item_info)) {
@@ -4431,13 +4424,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -4577,13 +4570,13 @@ class ItemController extends Controller
                         $data['error_vunitcode'] = '';
                     }
                     
-                    if (($input['vsuppliercode'] == '')) {
-                        $data['error_vsuppliercode'] = 'Please Select Supplier';
-                        $data['error_warning'] = 'Please check the form carefully for errors!';
-                        $check = false;
-                    } else {
-                        $data['error_vsuppliercode'] = '';
-                    }
+                    // if (($input['vsuppliercode'] == '')) {
+                    //     $data['error_vsuppliercode'] = 'Please Select Supplier';
+                    //     $data['error_warning'] = 'Please check the form carefully for errors!';
+                    //     $check = false;
+                    // } else {
+                    //     $data['error_vsuppliercode'] = '';
+                    // }
                     
                     if (($input['vdepcode'] == '')) {
                         $data['error_vdepcode']= 'Please Select Department';
@@ -4921,7 +4914,7 @@ class ItemController extends Controller
                                         "isparentchild" => "0",
                                         "parentid" => "0",
                                         "parentmasterid" => "0",
-                                        "wicitem" => $input['wicitem'],
+                                        "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
                                         "options_data" => $options_data,
                                         
                                     );
@@ -5022,7 +5015,7 @@ class ItemController extends Controller
                     }else{
                         $nsellunit = $input['nsellunit'];
                     }
-        
+                    
                     
                     if(isset($input['nbottledepositamt']) && ($input['nbottledepositamt'] == '0.00' || $input['nbottledepositamt'] == '')){
                         $nbottledepositamt = '0.00';
@@ -5031,7 +5024,7 @@ class ItemController extends Controller
                         $nbottledepositamt = (float)$input['nbottledepositamt'];
                         $ebottledeposit = 'Yes';
                     }
-        
+                    
                     if(isset($input['plcb_options_checkbox']) && $input['plcb_options_checkbox'] == 1){
         
                         $options_data['unit_id'] = $input['unit_id'];
@@ -5048,7 +5041,7 @@ class ItemController extends Controller
                     }
                     
                     $check_error='';
-
+                    
                     if($input['vitemtype'] == 'Instant'){
                         
                         /*====== games_per_book = npack and book_qoh = QOH only for Lotter items =========
@@ -5209,7 +5202,7 @@ class ItemController extends Controller
                                         "isparentchild" => "0",
                                         "parentid" => "0",
                                         "parentmasterid" => "0",
-                                        "wicitem" => $input['wicitem'],
+                                        "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
                                         "options_data" => $options_data,
                                         
                                     );     
@@ -5243,9 +5236,18 @@ class ItemController extends Controller
                         
                         $x_general = json_encode($x_general);
                         
-                        
-                        
                         DB::connection('mysql_dynamic')->insert("INSERT INTO trn_webadmin_history SET  itemid = '" . $last_iitemid['iitemid'] . "',userid = '" . Auth::user()->id . "',barcode = '" . ($new_item_values['vbarcode']) . "', type = 'Clone', oldamount = '0', newamount = '0',general = '" . $x_general . "', source = 'CloneItem', historydatetime = NOW(),SID = '" . (int)(session()->get('sid'))."'");
+                        
+                        if($new_item_values['vitemtype'] == 'Lot Matrix'){
+                            $itempacks = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_itempackdetail WHERE iitemid='". (int)$value->iitemid ."' ORDER BY isequence");
+                            $itempacks = isset($itempacks)?(array)$itempacks:[];
+                            
+                            foreach($itempacks as $itempack){
+                                
+                                $insert_query = "INSERT INTO mst_itempackdetail SET  iitemid = '" . (int)$last_iitemid['iitemid'] . "',`vbarcode` = '" . $input['vbarcode'] . "',`vpackname` = '" . $itempack->vpackname . "',`vdesc` = '" . $itempack->vdesc . "',`ipack` = '" . (int)$itempack->ipack . "',`iparentid` = '" . (int)$itempack->iparentid . "',`npackcost` = '" . $itempack->npackcost . "',`npackprice` = '" . $itempack->npackprice . "',`npackmargin` = '" . $itempack->npackmargin . "', SID = '" . (int)(session()->get('sid')) . "'";
+                                DB::connection('mysql_dynamic')->insert($insert_query);
+                            }
+                        }
                     }
                     $url = '/item/item_list/Active/DESC';
                         

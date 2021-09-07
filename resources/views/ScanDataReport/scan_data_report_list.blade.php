@@ -1,140 +1,143 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'Scan Data Report')
 @section('main-content')
+<link rel="stylesheet" href="{{ asset('asset/css/promotion.css') }}">
 
 <div id="content">
-    <div class="page-header">
-      <div class="container-fluid">
-        
-        <!-- <h1><?php echo $heading_title; ?></h1> -->
-        <ul class="breadcrumb">
-          <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-          <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-          <?php } ?>
-        </ul>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-      <?php } ?>
-      <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-      <?php } ?>
-      <div class="panel panel-default">
-        <div class="panel-heading head_title">
-          <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
-          <div class="top_button">
-          </div>
+
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Scan Data Report  </span>
+                </div>
+            </div> 
         </div>
-        <div class="panel-body">
-  
+    </nav>
+    <section class="section-content py-6">
+        <div class="container">
+            <?php if ($error_warning) { ?>
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            <?php } ?>
+            <?php if ($success) { ?>
+                <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            <?php } ?>
+            <div class="mytextdiv mb-3">
+                <div class="mytexttitle font-weight-bold text-uppercase">
+                Search Parameters
+                </div>
+                <div class="divider font-weight-bold"></div>
+            </div>
             <form action="<?php echo $current_url;?>" method="post" id="form_scan_data_search">
                 @csrf
-              <div class="row">
-                  <div class="col-md-12">
-                      <div class="col-md-4">
-                          <?php $manufacturers = array('1' => 'Phillip Morris(Marlboro)', '2' => 'RJ Reynolds');?>
-                          <select name="manufacturer" id="manufacturer" style="padding-left: 0px;" class="form-control">
-                            <option value="">-- Manufacturer --</option>
-                              <?php foreach($manufacturers as $key => $value){?>
-                                <option value="<?php echo $key;?>"><?php echo $value;?></option>
-                              <?php } ?>
-                          </select>
-                      </div>
-                      <div class="col-md-4">
-                          <input type="tel" class="form-control" name="management_account_number" maxlength="10" placeholder="Mgmt A/c No./Retail Ctrl No.">
-                      </div>
-                      <div class="col-md-4">
-                         <input type="" class="form-control" name="week_ending_date" value="<?php echo isset($week_ending_date) ? $week_ending_date : ''; ?>" id="week_ending_date" placeholder="Week Ending Date" readonly>
-                      </div>
-                  </div>
-              </div>
-              
-              <div class="row" style="margin-top: 25px;">
-                  <div class="col-md-12">
-                      <div class="col-md-2">Filter By:</div>
-                      <div class="col-md-3"><label><input type="radio" class="" name="filter_by" value="" id="radioDeptCat" checked> Departments & Categories</label></div>
-                      <div class="col-md-2" style="display: none"><label><input type="radio" class="" name="filter_by" value="" id="radioMfr" style="vertical-align: baseline;"> Manufacturers</label></div>
-                      <div class="col-md-2" style=""><label><input type="radio" class="" name="filter_by" value="" id="radioNone" style="vertical-align: baseline;"> None</label></div>
-                  </div>
-              </div>
-              
-              
-              <div class="row" style="margin-top: 25px;" id="divDeptCat">
-                  <div class="col-md-12">
-                      <div class="col-md-6">
-                          <select name="department_id[]" id="department_id" class="form-control" multiple="true" style="padding-left: 2px;">
+                <div class="form-group row">
+                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                        <?php $manufacturers = array('1' => 'Phillip Morris(Marlboro)', '2' => 'RJ Reynolds');?>
+                        <select name="manufacturer" id="manufacturer" style="padding-left: 0px;" class="form-control">
+                        <option value="">Manufacturer</option>
+                            <?php foreach($manufacturers as $key => $value){?>
+                            <option value="<?php echo $key;?>"><?php echo $value;?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                        <input type="tel" class="form-control" name="management_account_number" maxlength="10" placeholder="Mgmt A/c No./Retail Ctrl No.">
+                    </div>
+                    <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                        <input type="" class="form-control" name="week_ending_date" value="<?php echo isset($week_ending_date) ? $week_ending_date : ''; ?>" id="week_ending_date" placeholder="Week Ending Date" readonly>
+                    </div>
+                </div>
+                    
+
+
+                <div class="mytextdiv mb-3">
+                    <div class="mytexttitle font-weight-bold text-uppercase">
+                    Filter Report
+                    </div>
+                    <div class="divider font-weight-bold"></div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-12 col-md-6  col-lg-6 p-form">
+                        <input type="radio" class="" name="filter_by" value="" id="radioDeptCat" checked> &nbsp; &nbsp; &nbsp;Departments & Categories
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 p-form">
+                        <input type="radio" class="" name="filter_by" value="" id="radioNone" style="vertical-align: baseline;"> &nbsp; &nbsp; &nbsp;None
+                    </div>
+                </div>
+
+                <div class="form-group row" id="divDeptCat">
+                    <div class="col-12 col-md-6  col-lg-6 p-form">
+                        <select name="department_id[]" id="department_id" class="form-control" multiple="true" style="padding-left: 2px;">
                             <option value="" >-- Select Department(s) --</option>
                             <?php if(isset($departments) && count($departments) > 0){?>
-                              <?php foreach($departments as $department){?>
+                                <?php foreach($departments as $department){?>
                                 <option value="<?php echo $department['vdepcode'];?>"><?php echo $department['vdepartmentname'];?></option>
-                              <?php } ?>
+                                <?php } ?>
                             <?php } ?>
-                          </select>
-                      </div>
-                      <div class="col-md-6">
-                          <select name="category_id[]" id="category_id" class="form-control" multiple="true" style="padding-left: 2px;">
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 p-form">
+                        <select name="category_id[]" id="category_id" class="form-control" multiple="true" style="padding-left: 2px;">
                             <option value="" disabled="disabled">-- Select Category(s) --</option>
                             <?php if(isset($categories) && count($categories) > 0 && $new_database !== true){?>
-                              <?php foreach($categories as $category){?>
+                                <?php foreach($categories as $category){?>
                                 <option value="<?php echo $category['vcategorycode'];?>"><?php echo $category['vcategoryname'];?></option>
-                              <?php } ?>
+                                <?php } ?>
                             <?php } ?>
-                          </select>
-                      </div>
-                  </div>
-              </div>
-              
-              <div class="row" style="margin-top: 25px; display: none;" id="divMfr">
-                  <div class="col-md-12">
-                      
-                      <?php if(is_array($manufacturer_list)) { ?>
-                      
-                      <div class="col-md-6">
-                          <select name="mfr_id[]" id="mfr_id" class="form-control" multiple="true" style="padding-left: 2px;">
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row" style="margin-top: 25px; display: none;" id="divMfr">
+                    <div class="col-md-12">
+                        
+                        <?php if(is_array($manufacturer_list)) { ?>
+                        
+                        <div class="col-md-6">
+                            <select name="mfr_id[]" id="mfr_id" class="form-control" multiple="true" style="padding-left: 2px;">
                             <option value="">-- Select Manufacturer(s) --</option>
                             <?php if(isset($manufacturer_list) && count($manufacturer_list) > 0){?>
-                              <?php foreach($manufacturer_list as $manufacturer){?>
+                                <?php foreach($manufacturer_list as $manufacturer){?>
                                 <option value="<?php echo $manufacturer['mfr_id'];?>"><?php echo $manufacturer['mfr_name'];?></option>
-                              <?php } ?>
+                                <?php } ?>
                             <?php } ?>
-                          </select>
-                      </div>
-                      
-                      <?php } else { ?>
-                          <div class="col-md-6"><?php echo $manufacturer_list; ?></div>
-                      <?php }?>
-                  </div>
-              </div>
-              
-              <div class="row" style="margin-top: 25px;" id="">
-                  <div class="col-md-12">
-                      <div class="col-md-1 pull-right" style="padding-left: 5px;">
-                          <input type="submit" name="Export" value="Generate" class="btn btn-success">
-                      </div>
-                  </div>
-              </div>
-              
+                            </select>
+                        </div>
+                        
+                        <?php } else { ?>
+                            <div class="col-md-6"><?php echo $manufacturer_list; ?></div>
+                        <?php }?>
+                    </div>
+                </div>
+                
+                <div class="row" style="margin-top: 25px;" id="">
+                    <div class="col-md-12">
+                        <div class="col-md-1 pull-right" style="padding-left: 5px;">
+                            <input type="submit" name="Export" style="background-color: #286fb7 !important; color: #fff;" value="Generate" class="btn">
+                        </div>
+                    </div>
+                </div>
+                
             </form>
         </div>
-      </div>
-    </div>
+    </section>
   </div>
   
   
     <div class="modal fade" id="reconcileModal" role="dialog">
       <div class="modal-dialog">
-      
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Scan Data Reconciliation Report</h4>
+            <h5 class="modal-title">Scan Data Reconciliation Report</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
           <div class="modal-body">
               <div class='row'>
@@ -156,13 +159,70 @@
       </div>
     </div>
 
+
+
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errorModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger text-center">
+          <p id="error_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
-@section('scripts')
+@section('page-script')
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.js"></script>
+
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script> -->
+ 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script> 
 <script>
      $(document).ready(function(){
         $('#category_id').html('<option>Loading Categories...</option>');
@@ -204,7 +264,8 @@
     $('#manufacturer').change(function(){
         
         var manufacturer = $(this).val();
-        var dateElem = window.$.datepicker._getInst(document.getElementById("week_ending_date"));
+        var wdate = document.getElementById("week_ending_date");
+        var dateElem = window.$.datepicker._getInst(wdate);
         
         if(dateElem){
             $("#week_ending_date").datepicker( "destroy" );
@@ -263,12 +324,11 @@
         event.preventDefault();
         if($('#manufacturer :selected').length == 0 || $('#manufacturer :selected').val() == ''){
 
-            bootbox.alert({ 
-              size: 'small',
-              title: "Attention", 
-              message: "Please select the manufacturer before selecting the date!", 
-              callback: function(){}
-            });
+           
+            
+            $('#warning_msg').html('Please select the manufacturer before selecting the date!');
+            $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
             return false;
         }
     });
@@ -276,58 +336,44 @@
   $(document).on('submit', 'form#form_scan_data_search', function(event) {
     
     if($('#manufacturer :selected').length == 0 || $('#manufacturer :selected').val() == ''){
-        // alert('Please select department!');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please select manufacturer!", 
-          callback: function(){}
-        });
+        
+        
+        $('#warning_msg').html('Please select manufacturer!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
       
       
     if($('input[name="management_account_number"]').val() == ''){
-        // alert('Please enter management account number Or Retail Control Number!');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please enter management account number Or Retail Control Number!", 
-          callback: function(){}
-        });
+       
+        $('#warning_msg').html('Please enter management account number Or Retail Control Number!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
 
     if($('#week_ending_date').val() == ''){
-        // alert('Please select week ending date!');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please select week ending date!", 
-          callback: function(){}
-        });
+       
+        $('#warning_msg').html('Please select week ending date!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
 
     if(!$('#radioNone').is(':checked') && $('#department_id :selected').length == 0 || $('#department_id :selected').val() == ''){
-        // alert('Please select department!');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please select department!", 
-          callback: function(){}
-        });
+        
+        $('#warning_msg').html('Please select department!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
     
     if(!$('#radioNone').is(':checked') && $('#category_id :selected').length == 0 || $('#category_id :selected').val() == ''){
-        // alert('Please select department!');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please select category!", 
-          callback: function(){}
-        });
+        
+        $('#warning_msg').html('Please select category!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         return false;
     }
 
@@ -390,11 +436,6 @@
 </script>
 
 <script type="text/javascript">
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
-  
-  
       $(document).on('change', '#department_id', function(){
         $('#category_id').html('<option>Loading Categories...</option>');
     

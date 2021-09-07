@@ -36,6 +36,8 @@ class PhysicalInventory extends Model
 	    $insert  = DB::connection('mysql_dynamic')->insert($query_insert);
         $ipiid = DB::connection('mysql_dynamic')->select('SELECT LAST_INSERT_ID() as last_insert_id FROM trn_physicalinventory ')[0]->last_insert_id;
         
+        $sql = array();
+        
         if($insert == true){ 
             foreach ($selected_itemid as $itemid){
                 

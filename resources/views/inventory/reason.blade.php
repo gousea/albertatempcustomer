@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
   Adjustment Reason
@@ -7,111 +7,104 @@
 @section('main-content')
 
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      
-      <!-- <h1>Adjustment Reason</h1> -->
-      <ul class="breadcrumb">
-        <li><a href="https://customer.albertapayments.com/index.php?route=common/dashboard&amp;token=bhzqOCxBoEj7SfMf0xISckJCy5Fwn64F">Home</a></li>
-        <li><a href="https://customer.albertapayments.com/index.php?route=administration/adjustment_reason&amp;token=bhzqOCxBoEj7SfMf0xISckJCy5Fwn64F">Adjustment Reason</a></li>
-      </ul>
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="main_nav">
+            <div class="menu">
+                <span class="font-weight-bold text-uppercase"> Reason</span>
+            </div>
+            <div class="nav-submenu">
+                <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                <button type="button" onclick="addAdjustmentReason();" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                
+            </div>
+        </div> <!-- navbar-collapse.// -->
     </div>
-  </div>
-  <div class="container-fluid">
-
-    
-  <div class="container-fluid">
-    @if (session()->has('message'))
-    <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>      
-    @endif
-
-    @if (session()->has('error'))
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+  </nav>
+  
+  <div class="section-content py-6">
+    <div class="container">
+      @if (session()->has('message'))
+      <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>      
-    @endif
+      </div>      
+      @endif
+
+      @if (session()->has('error'))
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error')}}
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>      
+      @endif
 
 
-    <div id='errorDiv'>
-    </div>
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-          <i class="fa fa-exclamation-circle"></i>{{$error}}
-        @endforeach
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div> 
-    @endif
-
-
-    <div class="panel panel-default">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title"><i class="fa fa-list"></i> Adjustment Reason</h3>
+      <div id='errorDiv'>
       </div>
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          @foreach ($errors->all() as $error)
+            <i class="fa fa-exclamation-circle"></i>{{$error}}
+          @endforeach
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div> 
+      @endif
 
-      <div class="panel-body">
-        <div class="row" style="padding-bottom: 15px;float: right;">
-          <div class="col-md-12">
-            <div class="">
-              <a id="save_button" class="btn btn-primary" title="Save"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</a>
-              <button type="button" onclick="addAdjustmentReason();" data-toggle="tooltip" title="Add New" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</button>  
-            </div>
-          </div>
-        </div>
 
-        <div class="clearfix"></div>
-
-          <form action="/reasonsearch" method="post" id="form_reason_search">
-            @csrf
-            <input type="hidden" name="searchbox" id="ireasonid">
-            <div class="row">
-                <div class="col-md-12">
-                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Reason..." id="autocomplete-product" autocomplete="off">
-                </div>
-            </div>
-          </form>
-          <br>
+      <div class="panel panel-default">
         
-          <form action="" method="post"  id="form-adjustment-reason">
-            @csrf
-            <div class="table-responsive">
-              <table id="adjustment_reason" class="table table-bordered table-hover" style="width:50%">
-                <thead>
-                  <tr>
-                    <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>
-                    <th class="text-left">Name</th>
-                    <th class="text-left">Status</th>
-                  </tr>
-                </thead>
-                <tbody id="searchData">
-                  @foreach($reason as $reasons)
-                  <tr id="adjustment_reason">
-                    <td data-order="101" class="text-center">
-                      <span style="display:none;">{{$reasons->ireasonid}}</span>
-                      <input type="checkbox" name="selected[]" id="adjustment_reason[{{$reasons->ireasonid}}][select]" value="{{$reasons->ireasonid}}">
-                    </td>
+        <div class="panel-body">
+          
+          <div class="clearfix"></div>
 
-                    <td class="text-left">
-                      <span style="display:none;">{{$reasons->vreasonename}}</span>
-                      <input type="text" maxlength="50" class="editable adjustment_reason" name="adjustment_reason[{{$reasons->ireasonid}}][vreasonename]" id="adjustment_reason[{{$reasons->ireasonid}}][vreasonename]" value="{{$reasons->vreasonename}} " onclick="">
-                      <input type="hidden" name="adjustment_reason[{{$reasons->ireasonid}}][ireasonid]" value="{{$reasons->vreasonename}}">
-                    </td>
-                    <td class="text-left">
-                      <span>Active</span>
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-              {{$reason->links()}}
-            </div>
-          </form>
-          <!--<div class="row">-->
-          <!--  <div class="col-sm-6 text-left"></div>-->
-          <!--  <div class="col-sm-6 text-right">Showing 1 to 2 of 2 (1 Pages)</div>-->
-          <!--</div>-->
+            <form action="/reasonsearch" method="post" id="form_reason_search">
+              @csrf
+              <input type="hidden" name="searchbox" id="ireasonid">
+              <div class="row">
+                  <div class="col-md-12">
+                      <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input type="text" name="autocomplete-product" class="form-control ui-autocomplete-input" placeholder="Search Reason..." id="autocomplete-product" autocomplete="off">
+                  </div>
+              </div>
+            </form>
+            <br>
+          
+            <form action="" method="post"  id="form-adjustment-reason">
+              @csrf
+              <div class="table-responsive">
+                <table id="adjustment_reason" class="table table-hover promotionview" style="width:100%;">
+                  <thead>
+                    <tr class="header-color">
+                      <th style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>
+                      <th class="col-xs-1 headername text-uppercase text-light">Name</th>
+                      <th class="col-xs-1 headername text-uppercase text-light">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="searchData">
+                    @foreach($reason as $reasons)
+                    <tr id="adjustment_reason">
+                      <td data-order="101" class="text-center">
+                        <span style="display:none;">{{$reasons->ireasonid}}</span>
+                        <input type="checkbox" name="selected[]" id="adjustment_reason[{{$reasons->ireasonid}}][select]" value="{{$reasons->ireasonid}}">
+                      </td>
+
+                      <td class="text-left">
+                        <span style="display:none;">{{$reasons->vreasonename}}</span>
+                        <input type="text" style="border:none;" maxlength="50" class="editable adjustment_reason" name="adjustment_reason[{{$reasons->ireasonid}}][vreasonename]" id="adjustment_reason[{{$reasons->ireasonid}}][vreasonename]" value="{{$reasons->vreasonename}} " onclick="">
+                        <input type="hidden" name="adjustment_reason[{{$reasons->ireasonid}}][ireasonid]" value="{{$reasons->vreasonename}}">
+                      </td>
+                      <td class="text-left">
+                        <span>Active</span>
+                      </td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+                {{$reason->links()}}
+              </div>
+            </form>
+            <!--<div class="row">-->
+            <!--  <div class="col-sm-6 text-left"></div>-->
+            <!--  <div class="col-sm-6 text-right">Showing 1 to 2 of 2 (1 Pages)</div>-->
+            <!--</div>-->
+        </div>
       </div>
     </div>
   </div>
@@ -119,7 +112,7 @@
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 <script type="text/javascript">
 
@@ -134,8 +127,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
         <h4 class="modal-title">Add New Reason</h4>
+        <button type="button" class="close" data-dismiss="modal">×</button>
       </div>
       <div class="modal-body">
         <form action="/addreason" method="post" id="add_new_form">
@@ -143,22 +136,22 @@
           <input type="hidden" name="adjustment_reason[0][ireasonid]" value="0">
           <div class="row">
             <div class="col-md-12">
-              <div class="form-group">
+              <div class="form-group row">
                 <div class="col-md-2">
                   <label>Name</label>
                 </div>
                 <div class="col-md-10">  
-                  <input name="vreasonename" maxlength="50" name="adjustment_reason[0][vreasonename]" id="add_vreasonename" class="form-control" autocomplete="off">
+                  <input name="vreasonename" maxlength="50" name="adjustment_reason[0][vreasonename]" id="add_vreasonename" class="form-control adjustment-fields" autocomplete="off">
                 </div>
               </div>
             </div>
           </div>
           <br>
-          
+            
           <div class="row">
             <div class="col-md-12 text-center">
-              <input class="btn btn-success" type="submit" value="Save">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <input class="btn button-blue headerblack buttons_menu" type="submit" value="Save">
+              <button type="button" class="btn btn-gray headerblack buttons_menu" data-dismiss="modal" style="border-color: black">Cancel</button>
             </div>
           </div>
         </form>
@@ -168,7 +161,7 @@
 </div>
 
 <script src="/javascript/bootbox.min.js" defer=""></script>
-
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
 <!-- Add New form -->
@@ -184,7 +177,7 @@
       ///alert('Please enter Reason Name!');
       bootbox.alert({ 
         size: 'small',
-        title: "Attention", 
+        title: "  ", 
         message: "Please enter Reason Name!", 
         callback: function(){}
       });
@@ -200,6 +193,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> --}}
 
 <!-- Save data -->
 
@@ -236,7 +230,7 @@
       if(avArr.length < 1){
         bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: "You did not select anything", 
             callback: function(){location.reload(true);}
         });
@@ -250,11 +244,11 @@
           url: '/updatereason',
           contentType: 'application/json',
           datatype: 'json',
-          data: JSON.stringify(avArr) // access in body
-      }).success(function (e) {
-          //console.log('SUCCESS');
-          //console.log(e);
+          data: JSON.stringify(avArr),
+          success: function(result) {
             location.reload();
+          }// access in body
+      
       }).fail(function (msg) {
 
      //console.log('FAIL');
@@ -276,7 +270,7 @@
         
         bootbox.alert({ 
             size: 'small',
-            title: "Attention", 
+            title: "  ", 
             message: mssg, 
             callback: function(){location.reload(true);}
         });
@@ -335,7 +329,7 @@
                  html +='</td>';
                  html +='<td class="text-left">';
                  html +='<span style="display:none;">'+v.vreasonename+'</span>';
-                 html +='<input type="text" maxlength="50" class="editable adjustment_reason" name="adjustment_reason['+v.ireasonid+'][\'vreasonename\']" id="adjustment_reason['+v.ireasonid+'][\'vreasonename\']" value="'+v.vreasonename+' ">';
+                 html +='<input type="text" style="border:none;" maxlength="50" class="editable adjustment_reason" name="adjustment_reason['+v.ireasonid+'][\'vreasonename\']" id="adjustment_reason['+v.ireasonid+'][\'vreasonename\']" value="'+v.vreasonename+' ">';
                  html +='<input type="hidden" name="adjustment_reason['+v.ireasonid+'][\'ireasonid\']" value="'+v.vreasonename+'">';
                  html +='</td>';
                  html +='<td class="text-left">';

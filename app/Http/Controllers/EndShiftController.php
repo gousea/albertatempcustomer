@@ -58,12 +58,22 @@ class EndShiftController extends Controller
         session()->put('session_report_new_dept',  $report_new_dept);
         session()->put('session_date',  $p_start_date);
         session()->put('session_batch',  $p_batch_id);
-
+        if(session()->get('version') == 320){
+          //Cashier Details query Version 3.2
+        $cashier="select iuserid,concat (date_format(min(dtrandate),'%H:%i'),' to ',date_format(max(dtrandate), '%H:%i'))
+        Timing from trn_sales where ibatchid = $p_batch_id group by iuserid";
+        $cashier_data=DB::connection('mysql_dynamic')->select($cashier); 
         
+        $store['cashier_data']=$cashier_data;
+       // end Version 3.2
+        }
         
-        
-        return view('EoSReport.EndofShift', compact('data','report_new_dept','store','p_start_date','p_batch_id'));
-       
+        if(session()->get('version') == 320){
+        return view('EoSReport.EndofShift', compact('data','report_new_dept','store','p_start_date','p_batch_id','cashier_data'));
+        }
+        else{
+                return view('EoSReport.EndofShift', compact('data','report_new_dept','store','p_start_date','p_batch_id'));
+        }
     }
     public function eodPdf()
     {
@@ -80,6 +90,14 @@ class EndShiftController extends Controller
         $store['p_batch_id'] = $p_batch_id;
         $store['report_new_dept']=$report_new_dept;
         $store['data']=$data;
+        
+         if(session()->get('version') == 320){
+         $cashier="select iuserid,concat (date_format(min(dtrandate),'%H:%i'),' to ',date_format(max(dtrandate), '%H:%i'))
+        Timing from trn_sales where ibatchid = $p_batch_id group by iuserid";
+        $cashier_data=DB::connection('mysql_dynamic')->select($cashier); 
+        $store['cashier_data']=$cashier_data;
+       // end Version 3.2
+         }
         
        //return $store;
         $pdf = PDF::loadview('EoSReport.EndofShiftpdf',$store);
@@ -105,6 +123,14 @@ class EndShiftController extends Controller
         $store['p_batch_id'] = $p_batch_id;
         $store['report_new_dept']=$report_new_dept;
         $store['data']=$data;
+          
+         if(session()->get('version') == 320){
+         $cashier="select iuserid,concat (date_format(min(dtrandate),'%H:%i'),' to ',date_format(max(dtrandate), '%H:%i'))
+        Timing from trn_sales where ibatchid = $p_batch_id group by iuserid";
+        $cashier_data=DB::connection('mysql_dynamic')->select($cashier); 
+        $store['cashier_data']=$cashier_data;
+       // end Version 3.2
+         }
        
         return view('EoSReport.EndofShiftpdf',$store);  
 

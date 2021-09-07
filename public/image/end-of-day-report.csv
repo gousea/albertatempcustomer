@@ -1,39 +1,8 @@
 
-Store Name,Krauszers Food and Liquor
-SID,100229
-Batch  ,2010211011
-SHIFT START ,2020-10-21 18:34:41
-SHIFT END,2021-05-04 22:01:53
-Register No,101
 
-SALES TOTALS
-SALES(excluding Tax),$3.49
-TAXABLE SALES,$3.49
-NON-TAXABLE,$0.00
-TOTAL TAX,$0.23
-GRAND TOTAL,$3.72
-
-LOTTO SALES DETAILS
-
-TENDER DETAILS
-CASH,$3.72
-PERFORMANCE STATISTICS
-#OF TRANSACTION ,1
-#AVG TRANSACTIONS,$3.720000
-
-CASH COUNT
-OPENING CASH,$0.00
-CASH SALES,$3.72
-CASH ADD,$0.00
-CASH PAIDOUT,$407.25
-CASH  PICKUP,$0.00
-
-EXPECTED CASH,$-403.53
-ACTUAL CASH,$0.00
-CASH SHORT,$403.53
-
-
-DEPARTMENT SALES SUMMARY    :,
-Department Name,Quantity,Sales,Cost,GP%
-GROCERY,1.00,3.49,1.99,0.429799
-
+	SKU,Item Name,Modification,Before,Current,Location, Date,Time,User id
+011000000075,montego mentl sil king pk,Item Name, montego mentl king ctn,montego mentl sil king pk,Web,06-05-2021,10:14:33,703
+011000010043,montego org 100 ctn,Item Name, montego,montego org 100 ctn,Web,06-05-2021,10:22:02,703
+038000359217,kelloggs nutri grain strrawberry,Item Name, kelloggs nutri grain strraw038000359217,kelloggs nutri grain strrawberry,Web,06-11-2021,09:51:12,703
+684746400531,CLUB TAIL long island iced tea,Item Name, long island iced tea,CLUB TAIL long island iced tea,Web,06-25-2021,10:09:41,703
+089924335672,yuengling GOLD PIL,Item Name, yuengling,yuengling GOLD PIL,Web,06-25-2021,10:24:18,703

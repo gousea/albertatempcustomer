@@ -354,6 +354,15 @@ End of Shift Report
                                 <td class="text-right"><?php echo $data[0]->EbtTaxExempted;?></td>
                             </tr>
                             <?php } ?>
+                            
+                             <?php if(isset($data[0]->ConvCharge ) && $data[0]->ConvCharge !=0){ ?>
+                            <tr>
+                                <td>#CONVENIENCE CHARGE </td>
+                                <td class="text-right"><?php echo $data[0]->ConvCharge;?></td>
+                            </tr>
+                            <?php } ?>
+                            
+                            
                             </tbody>
                         </table>
                     </div>
@@ -434,6 +443,27 @@ End of Shift Report
                 <br>
                 </div>
         </div>
+       <?php if(isset($cashier_data))  {?>
+        <div class="row" style="margin: 10px;">
+                    <div class="col-md-4">
+                        <table width="100%" style="border:none;">
+                            
+                            <tr>
+                                <td>CASHIER DETAILS </td>
+                                <td class="text-right">TIMINGS</td>
+                               </tr>
+                            <tbody>
+                              <?php foreach($cashier_data as $v){?>
+                                <tr>
+                                <td><?php echo $v->iuserid;?> </td>
+                                <td class="text-right"><?php echo $v->Timing;?></td>
+                               </tr>
+                            <?php } ?>    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+         <?php }?> 
                 <div class="row">
             @php 
             $totaqty=$totaqty=  $totalsale=$totalcost=$totalgpp=0;

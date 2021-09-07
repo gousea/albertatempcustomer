@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\_320\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +19,7 @@ class Item extends Model
     
     public function deleteItems($data, $srotes_hq = null) {
         $return = array();
-       
+        
         if(isset($data) && count($data) > 0){
             if(isset($srotes_hq) &&  $srotes_hq != null){
                 $cntStores = count($srotes_hq);
@@ -826,6 +826,10 @@ class Item extends Model
                         $vvendoritemcode = 'AP00'.$last_id;
                         DB::connection('mysql')->insert("INSERT INTO u".$stores[$i].".mst_itemvendor SET  iitemid = '" . (int)$last_id . "',`ivendorid` = '" . (int)$data['vsuppliercode'] . "',`vvendoritemcode` = '" . $vvendoritemcode . "', SID = '" . (int)(session()->get('sid')) . "'");
                         
+                        if(empty($data['iqtyonhand'])){
+                            $data['iqtyonhand'] = 0;
+                        }
+
                         if(isset($data['options_data']) && count($data['options_data']) > 0){
     
                             DB::connection('mysql')->insert("INSERT INTO u".$stores[$i].".mst_item_size SET  item_id = '". (int)$last_id ."',unit_id = '". (int)$data['options_data']['unit_id'] ."',unit_value = '". (int)$data['options_data']['unit_value'] ."',SID = '" . (int)$stores[$i]."'");
@@ -969,9 +973,12 @@ class Item extends Model
                     // the auto generated codes to a sequence starting with 'AP00' sothat way we can distinguish which is auto generated
                     $vvendoritemcode = 'AP00'.$last_id;
                     DB::connection('mysql_dynamic')->insert("INSERT INTO mst_itemvendor SET  iitemid = '" . (int)$last_id . "',`ivendorid` = '" . (int)$data['vsuppliercode'] . "',`vvendoritemcode` = '" . $vvendoritemcode . "', SID = '" . (int)(session()->get('sid')) . "'");
-                   
-                    
+
                     //mst plcb item
+
+                    if(empty($data['iqtyonhand'])){
+                        $data['iqtyonhand'] = 0;
+                    }
                     
                     if(isset($data['options_data']) && count($data['options_data']) > 0){
                         
@@ -1662,7 +1669,8 @@ class Item extends Model
                     try {
                         $sql_query = "UPDATE u".$store.".mst_itempackdetail SET npackcost = '".$datas['npackcost']."', 
                                         vpackname = '" .$datas['vpackname']. "', vdesc = '" .$datas['vdesc']. "',
-                                        npackprice = '" .$datas['npackprice']. "',npackmargin = '" .$datas['npackmargin']. "' 
+                                        npackprice = '" .$datas['npackprice']. "', isequence ='".$datas['isequence']."',
+                                        npackmargin = '" .$datas['npackmargin']. "' 
                                         WHERE  iitemid = '".(int)($iitem_id)."' AND idetid = '".(int)($idet_pack_id)."' ";
                         DB::connection('mysql')->update($sql_query);
                     }
@@ -1673,7 +1681,7 @@ class Item extends Model
                 }
             }else{
                 try {
-                    $sql_query = "UPDATE mst_itempackdetail SET npackcost = '".$datas['npackcost']."', vpackname = '" .$datas['vpackname']. "', vdesc = '" .$datas['vdesc']. "',npackprice = '" .$datas['npackprice']. "',npackmargin = '" .$datas['npackmargin']. "' WHERE iitemid='". (int)($datas['iitemid']) ."' AND idetid='". (int)($datas['idetid']) ."'";
+                    $sql_query = "UPDATE mst_itempackdetail SET npackcost = '".$datas['npackcost']."', vpackname = '" .$datas['vpackname']. "', vdesc = '" .$datas['vdesc']. "',npackprice = '" .$datas['npackprice']. "',npackmargin = '" .$datas['npackmargin']. "', isequence ='".$datas['isequence']."' WHERE iitemid='". (int)($datas['iitemid']) ."' AND idetid='". (int)($datas['idetid']) ."'";
                     DB::connection('mysql_dynamic')->update($sql_query);
                 }
                 catch (QueryException $e) {
@@ -2446,7 +2454,7 @@ class Item extends Model
                 }
                 
             }else{
-            
+                
                 try {
                         //=============20-11-2020========
                         $itemvendor_exist = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_itemvendor WHERE iitemid= '". (int)$iitemid ."' AND ivendorid='". (int)$previous_item['vsuppliercode'] ."' ");

@@ -1,144 +1,135 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 @section('title', 'Unit')
 @section('main-content')
 <div id="content">
-    <div class="page-header">
-      <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase" > Unit</span>
+                </div>
+                <div class="nav-submenu">
+                    <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                    <button type="button" onclick="addUnit();" data-toggle="tooltip" class="btn btn-gray headerblack  buttons_menu " href="#"> <i class="fa fa-plus"></i>&nbsp;&nbsp; Add New</button>
+                    <button type="button" id="unit_delete" onclick="myFunction()" class="btn btn-danger buttonred buttons_menu basic-button-small" href="#"> <i class="fa fa-trash"></i>&nbsp;&nbsp; Delete</button>
+                </div>
+            </div> <!-- navbar-collapse.// -->
+        </div>
+    </nav>
+    <section class="section-content py-6">
+      <div class="container">
+        <?php if ($error_warning) { ?>
+          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>
+        <?php } ?>
+        <?php if ($success) { ?>
+          <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>
+        <?php } ?>
+ 
+        <div class="panel panel-default">
         
-        <!-- <h1><?php echo $heading_title; ?></h1> -->
-        <ul class="breadcrumb">
-          <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-          <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-          <?php } ?>
-        </ul>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div
-      <?php } ?>
-      <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-      <?php } ?>
-      <div class="panel panel-default">
-        <div class="panel-heading head_title">
-          <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
-        </div>
-        <div class="panel-body">
-  
-          <div class="row" style="padding-bottom: 15px;float: right;">
-            <div class="col-md-12">
-              <div class="">
-                <a id="save_button" class="btn btn-primary" title="Save"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</a>
-                <button type="button" onclick="addUnit();" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</button>  
-                <button type="button" class="btn btn-danger" id="unit_delete" title="Delete" style="border-radius: 0px;"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>   
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-  
-        <form action="<?php echo $current_url;?>" method="post" id="form_unit_search">
-          @csrf
-           
-          <input type="hidden" name="searchbox" id="iunitid">
-          <div class="row">
-              <div class="col-md-12">
-                  <input type="text" name="automplete-product" class="form-control" placeholder="Search Unit..." id="automplete-product">
-              </div>
-          </div>
-        </form>
-         <br>
+          <div class="panel-body">
+              <form action="<?php echo $current_url;?>" method="post" id="form_unit_search">
+                @csrf
+                
+                <input type="hidden" name="searchbox" id="iunitid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="text" name="automplete-product" class="form-control" placeholder="Search Unit..." id="automplete-product">
+                    </div>
+                </div>
+              </form>
+              <br>
+              <form action="" method="post" enctype="multipart/form-data" id="form-unit">
+                @csrf
+                @method('post')
+                @if(session()->get('hq_sid') == 1)
+                    <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
+                @endif
+                <div class="table-responsive">
+                  <table id="unit" class="table table-hover" style="width:100%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;">
+                  <?php if ($units) { ?>
+                    <thead style="background-color: #286fb7!important;">
+                      <tr>
+                        <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
+                        <th class="col-xs-1 headername text-uppercase text-light"><?php echo $column_unit_code; ?></th>
+                        <th class="col-xs-1 headername text-uppercase text-light"><?php echo $column_unit_name; ?></th>
+                        <th class="col-xs-1 headername text-uppercase text-light"><?php echo $column_unit_description; ?></th>
+                        <th class="col-xs-1 headername text-uppercase text-light"><?php echo $column_unit_status; ?></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                      <?php $unit_row = 1;$i=0; ?>
+                      <?php foreach ($units as $unit) { ?>
+                      <tr id="unit-row<?php echo $unit_row; ?>">
+                        <td data-order="<?php echo $unit['iunitid']; ?>" class="text-center">
+                            <span style="display:none;"><?php echo $unit['iunitid']; ?></span>
+                            <?php if (in_array($unit['iunitid'], $selected)) { ?>
+                              <input type="checkbox" class="selected" name="selected[]" id="unit[<?php echo $unit_row; ?>][select]" value="<?php echo $unit['iunitid']; ?>" checked="checked" />
+                            <?php } else { ?>
+                              <input type="checkbox" class="selected" name="selected[]" id="unit[<?php echo $unit_row; ?>][select]"  value="<?php echo $unit['iunitid']; ?>" />
+                            <?php } ?>
+                        </td>
+                        
+                        <td class="text-left">
+                            <span style="display:none;"><?php echo $unit['vunitcode']; ?></span>
+                            <input type="text" style="border:none;" maxlength="20" class="editable unitcode_c" name="unit[<?php echo $i; ?>][vunitcode]" id="unit[<?php echo $i; ?>][vunitcode]" value="<?php echo $unit['vunitcode']; ?>" onclick='document.getElementById("unit[<?php echo $unit_row; ?>][select]").checked = true;' />
           
-          <form action="" method="post" enctype="multipart/form-data" id="form-unit">
-            @csrf
-             @method('post')
-            @if(session()->get('hq_sid') == 1)
-                <input type="hidden" id="edit_hidden_store_hq_val" name="stores_hq" value="">
-            @endif
-            <div class="table-responsive">
-              <table id="unit" class="table table-bordered table-hover" style="width:70%">
-              <?php if ($units) { ?>
-                <thead>
-                  <tr>
-                    <th style="width: 1px;color:black;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                    <th class="text-left"><?php echo $column_unit_code; ?></th>
-                    <th class="text-left"><?php echo $column_unit_name; ?></th>
-                    <th class="text-left"><?php echo $column_unit_description; ?></th>
-                    <th class="text-left"><?php echo $column_unit_status; ?></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                  <?php $unit_row = 1;$i=0; ?>
-                  <?php foreach ($units as $unit) { ?>
-                  <tr id="unit-row<?php echo $unit_row; ?>">
-                    <td data-order="<?php echo $unit['iunitid']; ?>" class="text-center">
-                        <span style="display:none;"><?php echo $unit['iunitid']; ?></span>
-                        <?php if (in_array($unit['iunitid'], $selected)) { ?>
-                          <input type="checkbox" name="selected[]" id="unit[<?php echo $unit_row; ?>][select]" value="<?php echo $unit['iunitid']; ?>" checked="checked" />
-                        <?php } else { ?>
-                          <input type="checkbox" name="selected[]" id="unit[<?php echo $unit_row; ?>][select]"  value="<?php echo $unit['iunitid']; ?>" />
-                        <?php } ?>
-                    </td>
-                    
-                    <td class="text-left">
-                        <span style="display:none;"><?php echo $unit['vunitcode']; ?></span>
-                        <input type="text" maxlength="20" class="editable unitcode_c" name="unit[<?php echo $i; ?>][vunitcode]" id="unit[<?php echo $i; ?>][vunitcode]" value="<?php echo $unit['vunitcode']; ?>" onclick='document.getElementById("unit[<?php echo $unit_row; ?>][select]").setAttribute("checked","checked");' />
+                            <input type="hidden" name="unit[<?php echo $i; ?>][iunitid]" value="<?php echo $unit['iunitid']; ?>" />
       
-                        <input type="hidden" name="unit[<?php echo $i; ?>][iunitid]" value="<?php echo $unit['iunitid']; ?>" />
-  
-                    </td>
-  
-                    <td class="text-left">
-                    <span style="display:none;"><?php echo $unit['vunitname']; ?></span>
-                      <input type="text" maxlength="50" class="editable unit_c" name="unit[<?php echo $i; ?>][vunitname]" id="unit[<?php echo $i; ?>][vunitname]" value="<?php echo $unit['vunitname']; ?>" onclick='document.getElementById("unit[<?php echo $unit_row; ?>][select]").setAttribute("checked","checked");' />
-  
-                    </td>
-  
-                    <td class="text-left">
-                      <textarea class="editable" maxlength="100" name="unit[<?php echo $i; ?>][vunitdesc]" id="unit[<?php echo $i; ?>][vunitdesc]" onclick='document.getElementById("unit[<?php echo $unit_row; ?>][select]").setAttribute("checked","checked");'><?php echo $unit['vunitdesc']; ?></textarea>
-                    </td>
-                  
-                    <td class="text-left">
-                      <select name="unit[<?php echo $i; ?>][estatus]" id="unit[<?php echo $i; ?>][estatus]" class="form-control" onchange='document.getElementById("unit[<?php echo $unit_row; ?>][select]").setAttribute("checked","checked");'>
-                          <?php  if ($unit['estatus']==$Active) { ?>
-                          <option value="<?php echo $Active; ?>" selected="selected"><?php echo $Active; ?></option>
-                          <option value="<?php echo $Inactive; ?>" ><?php echo $Inactive; ?></option>
-                          <?php } else if($unit['estatus']==$Inactive){ ?>
-                            <option value="<?php echo $Active; ?>"><?php echo $Active; ?></option>
-                          <option value="<?php echo $Inactive; ?>" selected="selected"><?php echo $Inactive; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $Active; ?>"><?php echo $Active; ?></option>
-                          <option value="<?php echo $Inactive; ?>" selected="selected"><?php echo $Inactive; ?></option>
-                          <?php } ?>
-                        </select>
-                      </td>
-  
-                  </tr>
-                  <?php $unit_row++; $i++;?>
-                  <?php } ?>
-                  <?php } else { ?>
-                  <tr>
-                    <td colspan="7" class="text-center"><?php echo $text_no_results;?></td>
-                  </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
-            </div>
-          </form>
-          <?php if ($units) { ?>
-          <div class="row">
-            <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-            <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+                        </td>
+      
+                        <td class="text-left">
+                        <span style="display:none;"><?php echo $unit['vunitname']; ?></span>
+                          <input type="text" maxlength="50" style="border:none;" class="editable unit_c" name="unit[<?php echo $i; ?>][vunitname]" id="unit[<?php echo $i; ?>][vunitname]" value="<?php echo $unit['vunitname']; ?>" onclick='document.getElementById("unit[<?php echo $unit_row; ?>][select]").checked = true;' />
+      
+                        </td>
+      
+                        <td class="text-left">
+                          <textarea class="editable" style="border:none;" maxlength="100" name="unit[<?php echo $i; ?>][vunitdesc]" id="unit[<?php echo $i; ?>][vunitdesc]" onclick='document.getElementById("unit[<?php echo $unit_row; ?>][select]").setAttribute("checked","checked");'><?php echo $unit['vunitdesc']; ?></textarea>
+                        </td>
+                      
+                        <td class="text-left">
+                          <select name="unit[<?php echo $i; ?>][estatus]" id="unit[<?php echo $i; ?>][estatus]" class="form-control" onchange='document.getElementById("unit[<?php echo $unit_row; ?>][select]").setAttribute("checked","checked");'>
+                              <?php  if ($unit['estatus']==$Active) { ?>
+                              <option value="<?php echo $Active; ?>" selected="selected"><?php echo $Active; ?></option>
+                              <option value="<?php echo $Inactive; ?>" ><?php echo $Inactive; ?></option>
+                              <?php } else if($unit['estatus']==$Inactive){ ?>
+                                <option value="<?php echo $Active; ?>"><?php echo $Active; ?></option>
+                              <option value="<?php echo $Inactive; ?>" selected="selected"><?php echo $Inactive; ?></option>
+                              <?php } else { ?>
+                              <option value="<?php echo $Active; ?>"><?php echo $Active; ?></option>
+                              <option value="<?php echo $Inactive; ?>" selected="selected"><?php echo $Inactive; ?></option>
+                              <?php } ?>
+                            </select>
+                          </td>
+      
+                      </tr>
+                      <?php $unit_row++; $i++;?>
+                      <?php } ?>
+                      <?php } else { ?>
+                      <tr>
+                        <td colspan="7" class="text-center"><?php echo $text_no_results;?></td>
+                      </tr>
+                      <?php } ?>
+                    </tbody>
+                  </table>
+                </div>
+              </form>
+              <?php if ($units) { ?>
+                <div class="row">
+                  <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+                  <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+                </div>
+              <?php } ?>
           </div>
-          <?php } ?>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 
   
@@ -149,63 +140,65 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Add New Unit</h4>
+            <h5 class="modal-title">Add New Unit</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
-          <form action="<?php echo $edit_list; ?>" method="post" id="add_new_form">
+          <form class="form-inline"  action="<?php echo $edit_list; ?>" method="post" id="add_new_form">
             @csrf
             @if(session()->get('hq_sid') == 1)
                 <input type="hidden" id="hidden_store_hq_val" name="stores_hq" value="">
             @endif
             <input type="hidden" name="unit[0][iunitid]" value="0">
-            <div class="row">
+            <div class="row" style="width:100%">
               <div class="col-md-12">
                 <div class="form-group">
                   <div class="col-md-2">
                     <label>Code</label>
                   </div>
                   <div class="col-md-10">  
-                    <input type="text" maxlength="20" name="unit[0][vunitcode]" id="add_vunitcode" class="form-control">
+                    <input type="text" style="width: 100%" name="unit[0][vunitcode]" id="add_vunitcode" class="form-control">
                   </div>
                 </div>
               </div>
             </div>
             <br>
-            <div class="row">
+            <div class="row" style="width: 100%">
               <div class="col-md-12">
                 <div class="form-group">
                   <div class="col-md-2">
                     <label>Name</label>
                   </div>
                   <div class="col-md-10">  
-                    <input type="text" maxlength="50" name="unit[0][vunitname]" id="add_vunitname" class="form-control">
+                    <input type="text" style="width: 100%" name="unit[0][vunitname]" id="add_vunitname" class="form-control">
                   </div>
                 </div>
               </div>
             </div>
             <br>
-            <div class="row">
+            <div class="row" style="width: 100%">
               <div class="col-md-12">
                 <div class="form-group">
                   <div class="col-md-2">
                     <label>Description</label>
                   </div>
                   <div class="col-md-10">  
-                    <textarea name="unit[0][vunitdesc]" maxlength="100" id="add_vunitdesc" class="form-control"></textarea>
+                    <textarea name="unit[0][vunitdesc]" style="width: 100%" id="add_vunitdesc" class="form-control"></textarea>
                   </div>
                 </div>
               </div>
             </div>
             <br>
-            <div class="row">
+            <div class="row" style="width: 100%">
               <div class="col-md-12">
                 <div class="form-group">
                   <div class="col-md-2">
                     <label>Status</label>
                   </div>
                   <div class="col-md-10">  
-                    <select name="unit[0][estatus]" class="form-control ">
+                    <select name="unit[0][estatus]" class="form-control" style="width: 100%">
                       <option value="<?php echo $Active; ?>" selected="selected"><?php echo $Active; ?></option>
                       <option value="<?php echo $Inactive; ?>" ><?php echo $Inactive; ?></option>
                     </select>
@@ -214,10 +207,10 @@
               </div>
             </div>
             <br>
-            <div class="row">
+            <div class="row" style="width: 100%">
               <div class="col-md-12 text-center">
                 <button type="button" class="btn btn-success" id="save_unit" > Save</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
               </div>
             </div>
           </form>
@@ -228,23 +221,6 @@
   </div>
 <!-- Modal Add-->
 
-<div class="modal fade" id="successModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header" style="border-bottom:none;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="alert-success text-center">
-            <p id="success_msg"></p>
-          </div>
-        </div>
-      </div>
-      
-    </div>
-  </div>
 <div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog">
     
@@ -273,13 +249,15 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to add the Unit:</h4>
+              <h6>Select the stores in which you want to add the Unit:</h6> 
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+                <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -294,7 +272,7 @@
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox" id="table_green_check">
-                                    <input type="checkbox" class="checks check custom-control-input stores" id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">
+                                    <input type="checkbox" class="checks check  stores" id="hq_sid_{{ $stores->id }}" name="stores" value="{{ $stores->id }}">
                                 </div>
                             </td>
                             <td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}]</span></td>
@@ -317,14 +295,16 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to Edit the Unit:</h4>
-            <span style="color: #03A9F4">(Please Note: If a Unit not exists in any of the stores those unit will be created)</span>
+              <h6>Select the stores in which you want to Edit the Unit:
+                  <span style="color: #03A9F4">(Please Note: If a Unit not exists in any of the stores those unit will be created)</span>
+              </h6> 
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
-        
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+              <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -333,7 +313,7 @@
                         </th>
                         <th colspan="2" id="table_green_header">Select All</th>
                     </tr>
-                </thead>
+                  </thead>
                 <tbody id="edit_unit_stores"></tbody>
             </table>
           </div>
@@ -350,14 +330,17 @@
       <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
+
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to delete the Unit:</h4>
+              <h6>Select the stores in which you want to delete the Unit:</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+            <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -380,9 +363,43 @@
     
 <?php } ?>
 
+
+<div class="modal fade" id="successModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success text-center">
+          <p id="success_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 <script type="text/javascript">
 $.ajaxSetup({
@@ -419,7 +436,7 @@ $('#selectAllCheckbox').click(function(){
         $( ".stores" ).prop("checked", false );
     }
 });
-    console.log(stores_hq);
+ 
     
 $('#save_btn_unit').click(function(){
     $.each($("input[name='stores']:checked"), function(){            
@@ -444,24 +461,17 @@ $("#closeBtn").click(function(){
     var all_name_unit = true;
     
     if($("input[name='selected[]']:checked").length == 0){
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: 'Please Select Unit to Edit!', 
-        callback: function(){}
-      });
+      $('#warning_msg').html('Please Select Unit to Edit!');
+      $("div#divLoading").removeClass('show');
+      $('#warningModal').modal('show');
       return false;
     }
     
     $('.units_code_c').each(function(){
       if($(this).val() == ''){
-        // alert('Please Enter Unit Code');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please Enter Unit Code", 
-          callback: function(){}
-        });
+        $('#warning_msg').html('Please Enter Unit Code');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         all_code_unit = false;
         return false;
       }else{
@@ -472,13 +482,9 @@ $("#closeBtn").click(function(){
     if(all_code_unit == true){
       $('.units_name_c').each(function(){
         if($(this).val() == ''){
-          // alert('Please Enter Unit Name');
-          bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "Please Enter Unit Name", 
-            callback: function(){}
-          });
+          $('#warning_msg').html('Please Enter Unit Name');
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
           all_name_unit = false;
           return false;
         }else{
@@ -502,12 +508,9 @@ $("#closeBtn").click(function(){
       $('.units_name_c').each(function(){
         if($(this).val() != ''){
           if(!numericReg.test($(this).val())){
-            bootbox.alert({ 
-              size: 'small',
-              title: "Attention", 
-              message: "Please Enter Only Number", 
-              callback: function(){}
-            });
+            $('#warning_msg').html('Please Enter Only Number');
+            $("div#divLoading").removeClass('show');
+            $('#warningModal').modal('show');
             all_done = false;
             return false;
           }else{
@@ -547,7 +550,7 @@ $("#closeBtn").click(function(){
                                         var data = '<tr>'+
                                                         '<td>'+
                                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                                '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                                '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                             '</div>'+
                                                         '</td>'+
                                                         '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Unit does not exist)</span></td>'+
@@ -557,7 +560,7 @@ $("#closeBtn").click(function(){
                                         var data = '<tr>'+
                                                         '<td>'+
                                                             '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                                '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                                '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                             '</div>'+
                                                         '</td>'+
                                                         '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -618,40 +621,11 @@ function addUnit() {
 }
 </script>
 
-<script type="text/javascript">
-//   $(document).on('submit', 'form#add_new_form', function(event) {
-    
-//     if($('form#add_new_form #add_vunitcode').val() == ''){
-//       // alert('Please enter code!');
-//       bootbox.alert({ 
-//         size: 'small',
-//         title: "Attention", 
-//         message: "Please enter code!", 
-//         callback: function(){}
-//       });
-//       return false;
-//     }
-
-//     if($('form#add_new_form #add_vunitname').val() == ''){
-//       // alert('Please enter name!');
-//       bootbox.alert({ 
-//         size: 'small',
-//         title: "Attention", 
-//         message: "Please enter name!", 
-//         callback: function(){}
-//       });
-//       return false;
-//     }
-
-//     $("div#divLoading").addClass('show');
-    
-//   });
-</script>  
 
 <?php echo $footer; ?>
 
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link href = "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<script src = "https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js" defer></script>
 <script>
     $(function() {
@@ -689,15 +663,7 @@ function addUnit() {
     $(function() { $('input[name="automplete-product"]').focus(); });
 </script>
 
-<script type="text/javascript">
-  $(document).ready(function($) {
-    $("div#divLoading").addClass('show');
-  });
 
-  $(window).load(function() {
-    $("div#divLoading").removeClass('show');
-  });
-</script>
 
 <script>
 
@@ -707,12 +673,9 @@ function addUnit() {
     event.preventDefault();
     
     if($("input[name='selected[]']:checked").length == 0){
-      bootbox.alert({ 
-        size: 'small',
-        title: "Attention", 
-        message: 'Please Select Unit to Delete!', 
-        callback: function(){}
-      });
+      $('#warning_msg').html('Please Select Unit to Delete!');
+      $("div#divLoading").removeClass('show');
+      $('#warningModal').modal('show');
       return false;
     }
      var avArr = [];
@@ -742,7 +705,7 @@ function addUnit() {
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  deletestores" disabled id="hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Unit does not exist)</span></td>'+
@@ -752,7 +715,7 @@ function addUnit() {
                                 var data = '<tr>'+
                                                 '<td>'+
                                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                        '<input type="checkbox" class="checks check custom-control-input deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
+                                                        '<input type="checkbox" class="checks check  deletestores"  id="else_hq_sid_{{ $stores->id }}" name="deletestores" value="{{ $stores->id }}">'+
                                                     '</div>'+
                                                 '</td>'+
                                                 '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -778,14 +741,10 @@ function addUnit() {
             success: function(data) {
                 if(data['success']){
                   setTimeout(function(){
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Attention", 
-                        message: 'Deleted Successfully',
-                        callback: function(){}
-                    });
-                  $('#successModal').modal('hide');
-                  window.location.reload();
+                    $('#success_msg').html('<strong>Unit is deleted successfully</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#successModal').modal('show');
+                    window.location.reload();
                   }, 3000);
                 }else{
                   var errorMsg = '';
@@ -802,7 +761,7 @@ function addUnit() {
                       $('#errorModal').modal('hide');
                       window.location.reload();
                       }, 4000);
-                }
+                  }
             },
             error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
@@ -847,9 +806,6 @@ $('#delete_btn_unit').click(function(){
       });
       
     });
-    console.log(avArr)
-        
-    
         
         $.ajax({
             url: "<?php echo url('/unit/delete'); ?>",
@@ -861,14 +817,10 @@ $('#delete_btn_unit').click(function(){
             success: function(data) {
                 if(data['success']){
                   setTimeout(function(){
-                    bootbox.alert({ 
-                        size: 'small',
-                        title: "Attention", 
-                        message: 'Deleted Successfully',
-                        callback: function(){}
-                    });
-                   $('#successModal').modal('hide');
-                   window.location.reload();
+                    $('#success_msg').html('<strong>Unit is deleted successfully</strong>');
+                    $("div#divLoading").removeClass('show');
+                    $('#successModal').modal('show');
+                    window.location.reload();
                   }, 3000);
                 }else{
                   var errorMsg = '';
@@ -921,13 +873,9 @@ $('#delete_btn_unit').click(function(){
     
     $('.units_code_c').each(function(){
       if($(this).val() == ''){
-        // alert('Please Enter Unit Code');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please Enter Unit Code", 
-          callback: function(){}
-        });
+        $('#warning_msg').html('Please Enter Unit Code');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
         all_code_unit = false;
         return false;
       }else{
@@ -938,13 +886,9 @@ $('#delete_btn_unit').click(function(){
     if(all_code_unit == true){
       $('.units_name_c').each(function(){
         if($(this).val() == ''){
-          // alert('Please Enter Unit Name');
-          bootbox.alert({ 
-            size: 'small',
-            title: "Attention", 
-            message: "Please Enter Unit Name", 
-            callback: function(){}
-          });
+          $('#warning_msg').html('Please Enter Unit Name');
+          $("div#divLoading").removeClass('show');
+          $('#warningModal').modal('show');
           all_name_unit = false;
           return false;
         }else{
@@ -968,7 +912,17 @@ $('#delete_btn_unit').click(function(){
       $('#form-unit').submit();
     }
   });
+
+
+    $(document).on('click', '.selected', function(){
+      console.log(this.checked);
+      if(this.checked == false){
+        let id = $(this).attr('id');
+        document.getElementById(id).checked = false;
+      }
+    });
 </script>
+
 
 @endsection
 

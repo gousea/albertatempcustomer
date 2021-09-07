@@ -28,6 +28,10 @@ Route::get('/', function () {
     }
 });
 
+
+// checkVersion
+Route::post('/checkVersion', 'CheckVersionController@checkVersion')->name('checkVersion');
+
 /*Route::get('/', ['middleware' => 'guest', function()
 {
     return view('auth.login');
@@ -40,6 +44,8 @@ Route::get('/api/convertupce2upca', 'Admin\ProductController@convert_upce_2_upca
 
 // Route::get('/users', 'AllUserController@index' )->name('users');
 
+
+
 Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
 
 
@@ -47,6 +53,7 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
     Route::post('/dashboard', 'HomeController@dashContent')->name('dashboard');
     Route::get('/dashboardlayout', 'DashboardController@dashboard_layout')->name('dashboardlayout');
+    Route::get('/dashboardsalevalue', 'HomeController@getsaleid')->name('dashboardsalevalue');
     Route::get('/footerlinks', 'DashboardController@footer_links')->name('footerlinks');
     Route::post('/dashboardlayout', 'DashboardController@dashboard_menulist')->name('dashboardlayout');
 
@@ -86,6 +93,13 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::patch('customers/update/{icustomerid}', 'CustomerController@update')->name('customers.update');
     });
 
+
+    /*================= GIft card Module Routes =========================*/
+    Route::group(['middleware' => ['Permission:PER1003']], function () {
+        //customer Module route
+        Route::get('giftcard', 'GiftCardController@index')->name('giftcard');
+    });
+
     /*================= User Module Routes =========================*/
     Route::group(['middleware' => ['Permission:PER1004']], function () {
 
@@ -108,7 +122,7 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::post('/users/remove', 'AllUserController@remove')->name('users.remove');
     });
 
-    Route::get('/timeclock', 'TimeclockController@index')->name('timeclock');
+    // Route::get('/timeclock', 'TimeclockController@index')->name('timeclock');
     /*================= Store Module Routes =========================*/
     Route::group(['middleware' => ['Permission:PER1005']], function () {
         Route::get('/store/edit', 'StoreController@edit')->name('store.edit');
@@ -579,7 +593,8 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
 
         //==============Physical Inventroy Module Route==================
         Route::get('inventory/physicalInventroy', 'PhysicalInventroyController@index')->name('inventory.physicalInventroy');
-        Route::post('inventory/physicalInventroy', 'PhysicalInventroyController@search_inventory_list');
+        // Route::post('inventory/physicalInventroy/search_inventory_list', 'PhysicalInventroyController@search_inventory_list');
+        Route::post('inventory/physicalInventroy/search_inventory_list', 'PhysicalInventroyController@search_inventory_list');
         Route::get('inventory/physicalInventroy/create', 'PhysicalInventroyController@create')->name('inventory.physicalInventroy.create');
         Route::get('inventory/physicalInventroy/get_item_list', 'PhysicalInventroyController@get_item_list')->name('inventory.physicalInventroy.get_item_list');
         Route::post('inventory/physicalInventroy/search', 'PhysicalInventroyController@search');
@@ -776,6 +791,13 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::get('/time_clock_pdf', 'TimeClockController@time_clock_pdf')->name('time_clock_pdf');
         Route::get('/time_clock_data_week', 'TimeClockController@time_clock_data_week')->name('time_clock_data_week');
     });
+
+    // venky edit this=======
+    Route::get('/time_clock', 'TimeClockController@index')->name('time_clock');
+    Route::get('/time_update', 'TimeClockController@update')->name('time_clock_save');
+    Route::get('/time_clock_pdf', 'TimeClockController@time_clock_pdf')->name('time_clock_pdf');
+    Route::get('/time_clock_data_week', 'TimeClockController@time_clock_data_week')->name('time_clock_data_week');
+
 
     // Time Clock sheet Route
     Route::get('/time_sheet', 'TimeSheetController@index')->name('time_sheet');
@@ -1012,6 +1034,15 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::get('/salesanalyticsreport_getcategory', 'SalesAnalyticsReportController@getcategories')->name('salesanalyticsreport_getcategory');
         Route::get('/salesanalyticsreport_getsubcategory', 'SalesAnalyticsReportController@get_subcategories')->name('salesanalyticsreport_getsubcategory');
         Route::get('/salesanalyticsreport_getprintpage', 'SalesAnalyticsReportController@print_page')->name('salesanalyticsreport_getprintpage');
+
+
+
+        // PROMOTION REPORT ROUTE
+        Route::GET('/promotionreport', 'PromotionReportController@index')->name('PromotionReport');
+        Route::POST('/promotionreport_form', 'PromotionReportController@get_data')->name('PromotionReportForm');
+        Route::GET('/promotionreportcsv', 'PromotionReportController@csv')->name('PromotionReportCsv');
+        Route::GET('/promotionreportprint', 'PromotionReportController@print_data')->name('PromotionReportprint');
+        Route::GET('/promotionreportpdf', 'PromotionReportController@pdf')->name('PromotionReportpdf');
     });
 
     /*================= General Module Routes =========================*/

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.layout')
 
 @section('title')
   Taxes
@@ -7,153 +7,126 @@
 @section('main-content')
 
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      
-      <!-- <h1>Taxes</h1> -->
-      <ul class="breadcrumb">
-        <li><a href="https://customer.albertapayments.com/index.php?route=common/dashboard&amp;token=82bT8kvibI19RHfZNJp4h2leEGdWZGsZ">Home</a></li>
-        <li><a href="https://customer.albertapayments.com/index.php?route=administration/tax&amp;token=82bT8kvibI19RHfZNJp4h2leEGdWZGsZ">Taxes</a></li>
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="container-fluid">
-    @if (session()->has('message'))
-          <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-          </div>      
-    @endif
-    
-    @if (session()->has('error-message'))
-          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error-message')}}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-          </div>      
-    @endif
-    
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-          <i class="fa fa-exclamation-circle"></i>{{$error}}
-          <button type="button" class="close" data-dismiss="alert">&times;</button><br/>
-        @endforeach
-        
-      </div> 
-    @endif
-     
-    <div class="panel panel-default">
-      <div class="panel-heading head_title">
-        <h3 class="panel-title"><i class="fa fa-list"></i> Tax</h3>
-      </div>
-
-      <div class="panel-body">
-        <div class="row" style="padding-bottom: 15px;float: right;">
-          <div class="col-md-12">
-            <div class="">
-              <a id="save_button" class="btn btn-primary" title="Save"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</a>   
-            </div>
-          </div>
+  <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase" > Tax</span>
+                </div>
+                <div class="nav-submenu">
+                    <button type="button" id="save_button"  class="btn btn-gray headerblack  buttons_menu " title="Save" class="btn btn-gray headerblack  buttons_menu "><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>
+                </div>
+            </div> <!-- navbar-collapse.// -->
         </div>
-        <div class="clearfix"></div>
-        
-        <form action="" method="post" enctype="multipart/form-data" id="form-tax">
-        @csrf
-        <?php if(session()->get('hq_sid') == 1){ ?>
-            <input type="hidden" id="stores_hq" name="stores_hq" value="">
-        <?php } ?>
-          <div class="table-responsive">
-            <table id="table_tax" class="table table-bordered table-hover" style="width:50%;">
-              <thead>
-                <tr>
-                 <?php if(isset($taxes[0]['Id'])) {?>    
-                    <td style="" class="text-left">TAX1</td>
-                  <?php }?>
+  </nav>
+  <section class="section-content py-6">
+    <div class="container">
+      @if (session()->has('message'))
+            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{session()->get('message')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+      @endif
+      
+      @if (session()->has('error-message'))
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{session()->get('error-message')}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>      
+      @endif
+      
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          @foreach ($errors->all() as $error)
+            <i class="fa fa-exclamation-circle"></i>{{$error}}
+            <button type="button" class="close" data-dismiss="alert">&times;</button><br/>
+          @endforeach
+        </div> 
+      @endif
+      
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form action="" method="post" enctype="multipart/form-data" id="form-tax">
+            @csrf
+            <?php if(session()->get('hq_sid') == 1){ ?>
+                <input type="hidden" id="stores_hq" name="stores_hq" value="">
+            <?php } ?>
+            <div class="table-responsive">
+              <table id="table_tax" class="table table-hover"  style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                <thead style="background-color: #286fb7!important;" >
+                  <tr>
+                    <?php if(isset($taxes[0]['Id'])) {?>    
+                      <th style="" class="col-xs-1 headername text-uppercase text-light" >TAX1</th>
+                    <?php }?>
+                    
+                    <?php if(isset($taxes[1]['Id'])) {?>  
+                      <th class="col-xs-1 headername text-uppercase text-light" >TAX2</th>
+                    <?php }?>
+
+                    <?php if(isset($taxes[2]['Id'])) {?>
+                      <th class="col-xs-1 headername text-uppercase text-light" >TAX3</th>
+                    <?php }?>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <?php if(isset($taxes[0]['vtaxtype'])) {?>
+                        <td class="text-left">
+                          <input type="hidden" name="Id1" value="<?php echo (isset($taxes[0]['Id'])?$taxes[0]['Id']: '');?>">
+                          <b>Name : </b>&nbsp;&nbsp;
+                          <input type="text" style="border:none" class="editable tax_name" name="vtaxtype1" maxlength="50" id="vtaxtype1" value="<?php echo $taxes[0]['vtaxtype'];?>"/>
+                          <input type="hidden" class="hiddentaxcode" name="vtaxcode" value="<?php echo (isset($taxes[0]['Id'])?$taxes[0]['vtaxcode']: '');?>">
+                        </td>
+                    <?php }?>
+
+                    <?php if(isset($taxes[1]['vtaxtype'])) {?>
+                        <td class="text-left">
+                          <input type="hidden" name="Id2" value="<?php echo (isset($taxes[1]['Id'])?$taxes[1]['Id']:'');?>">
+                          <b>Name : </b>&nbsp;&nbsp;
+                          <input type="text" style="border:none"  class="editable tax_name" name="vtaxtype2" maxlength="50" id="vtaxtype2" value="<?php echo $taxes[1]['vtaxtype'];?>"/>
+                          <input type="hidden" class="hiddentaxcode" name="vtaxcode" value="<?php echo (isset($taxes[1]['Id'])?$taxes[1]['vtaxcode']: '');?>">
+                        </td>
+                    <?php }?>
+                    
+                    <?php if(isset($taxes[2]['vtaxtype'])) {?>
+                        <td class="text-left">
+                          <input type="hidden" name="Id3" value="<?php echo (isset($taxes[2]['Id'])?$taxes[2]['Id']:'');?>">
+                          <b>Name : </b>&nbsp;&nbsp;
+                          <input type="text" style="border:none" class="editable tax_name" name="vtaxtype3" maxlength="50" id="vtaxtype3" value="<?php echo $taxes[2]['vtaxtype'];?>"/>
+                          <input type="hidden" class="hiddentaxcode" name="vtaxcode" value="<?php echo (isset($taxes[3]['Id'])?$taxes[3]['vtaxcode']: '');?>">
+                        </td>
+                    <?php }?>
+                  </tr>
+                  <tr>
+                    <?php if(isset($taxes[0]['ntaxrate'])) {?>  
+                      <td class="text-left"><b>Rate&nbsp;&nbsp; : </b>&nbsp;&nbsp;
+                        <input type="hidden" class="hiddentaxname" name="hiddentaxname" value="<?php echo $taxes[0]['vtaxtype'];?>">
+                        <input type="text" style="border:none"  class="editable tax_rate" name="ntaxrate1" id="taxRate1" maxlength="7" max="100"  value="<?php echo $taxes[0]['ntaxrate'];?>"/>
+                      </td>
+                    <?php }?>
+                    
+                    <?php if(isset($taxes[1]['ntaxrate'])) {?>
+                      <td class="text-left"><b>Rate&nbsp;&nbsp; : </b>&nbsp;&nbsp;
+                        <input type="hidden" class="hiddentaxname" name="hiddentaxname" value="<?php echo $taxes[1]['vtaxtype'];?>">
+                        <input type="text" style="border:none"  class="editable tax_rate" name="ntaxrate2" id="taxRate2" maxlength="7" value="<?php echo $taxes[1]['ntaxrate'];?>"/>
+                      </td>
+                    <?php }?>
                   
-                  <?php if(isset($taxes[1]['Id'])) {?>  
-                  <td class="text-left">TAX2</td>
-                   <?php }?>
-
-                  <?php if(isset($taxes[2]['Id'])) {?>
-
-                  <td class="text-left">TAX3</td>
-                  <?php }?>
-                </tr>
-              </thead>
-
-              <tbody> 
-            
-                <tr>
-                 <?php if(isset($taxes[0]['vtaxtype'])) {?>
-                  
-                  <td class="text-left">
-                      <input type="hidden" name="Id1" value="<?php echo (isset($taxes[0]['Id'])?$taxes[0]['Id']: '');?>">
-                      
-                    <b>Name : </b>&nbsp;&nbsp;
-                    <input type="text" class="editable tax_name" name="vtaxtype1" maxlength="50" id="vtaxtype1" value="<?php echo $taxes[0]['vtaxtype'];?>"/>
-                    <input type="hidden" class="hiddentaxcode" name="vtaxcode" value="<?php echo (isset($taxes[0]['Id'])?$taxes[0]['vtaxcode']: '');?>">
-                  </td>
-                <?php }?>
+                    <?php if(isset($taxes[2]['ntaxrate'])) {?>
+                      <td class="text-left"><b>Rate&nbsp;&nbsp; : </b>&nbsp;&nbsp;
+                        <input type="hidden" class="hiddentaxname" name="hiddentaxname" value="<?php echo $taxes[2]['vtaxtype'];?>">
+                        <input type="text" style="border:none"  class="editable tax_rate" name="ntaxrate3" id="taxRate3" maxlength="7" value="<?php echo $taxes[2]['ntaxrate'];?>"/>
+                      </td>
+                    <?php }?>
+                  </tr>
+                </tbody>
                 
-               
-                  
-                  <?php if(isset($taxes[1]['vtaxtype'])) {?>
-                  <td class="text-left">
-                  <input type="hidden" name="Id2" value="<?php echo (isset($taxes[1]['Id'])?$taxes[1]['Id']:'');?>">
-                  
-                  <!--<input type="hidden" name="Id2" value="<?php echo ($taxes[1]['Id']);?>">-->
-                  
-                    <b>Name : </b>&nbsp;&nbsp;
-                    <input type="text" class="editable tax_name" name="vtaxtype2" maxlength="50" id="vtaxtype2" value="<?php echo $taxes[1]['vtaxtype'];?>"/>
-                    <input type="hidden" class="hiddentaxcode" name="vtaxcode" value="<?php echo (isset($taxes[1]['Id'])?$taxes[1]['vtaxcode']: '');?>">
-                  </td>
-                  <?php }?>
-                  
-                  <?php if(isset($taxes[2]['vtaxtype'])) {?>
-                  
-                  
-                  <td class="text-left">
-                  <input type="hidden" name="Id3" value="<?php echo (isset($taxes[2]['Id'])?$taxes[2]['Id']:'');?>">
-                  <b>Name : </b>&nbsp;&nbsp;
-                  <input type="text" class="editable tax_name" name="vtaxtype3" maxlength="50" id="vtaxtype3" value="<?php echo $taxes[2]['vtaxtype'];?>"/>
-                  <input type="hidden" class="hiddentaxcode" name="vtaxcode" value="<?php echo (isset($taxes[3]['Id'])?$taxes[3]['vtaxcode']: '');?>">
-                   </td>
-                   
-                  <?php }?>
-              
-                </tr>
-                
-                <tr>
-                  <?php if(isset($taxes[0]['ntaxrate'])) {?>  
-                  <td class="text-left"><b>Rate&nbsp;&nbsp; : </b>&nbsp;&nbsp;
-                    <input type="hidden" class="hiddentaxname" name="hiddentaxname" value="<?php echo $taxes[0]['vtaxtype'];?>">
-                    <input type="text" class="editable tax_rate" name="ntaxrate1" id="taxRate1" maxlength="7" max="100"  value="<?php echo $taxes[0]['ntaxrate'];?>"/>
-                 </td>
-                  <?php }?>
-                  
-                 <?php if(isset($taxes[1]['ntaxrate'])) {?>
-                  <td class="text-left"><b>Rate&nbsp;&nbsp; : </b>&nbsp;&nbsp;
-                    <input type="hidden" class="hiddentaxname" name="hiddentaxname" value="<?php echo $taxes[1]['vtaxtype'];?>">
-                    <input type="text" class="editable tax_rate" name="ntaxrate2" id="taxRate2" maxlength="7" value="<?php echo $taxes[1]['ntaxrate'];?>"/>
-                 </td>
-                  <?php }?>
-                 
-                  <?php if(isset($taxes[2]['ntaxrate'])) {?>
-                  <td class="text-left"><b>Rate&nbsp;&nbsp; : </b>&nbsp;&nbsp;
-                    <input type="hidden" class="hiddentaxname" name="hiddentaxname" value="<?php echo $taxes[2]['vtaxtype'];?>">
-                    <input type="text" class="editable tax_rate" name="ntaxrate3" id="taxRate3" maxlength="7" value="<?php echo $taxes[2]['ntaxrate'];?>"/></td>
-                  <?php }?>
-
-                </tr>
-          </tbody>
-              
-            </table>
-          </div>
-        </form>
-        
+              </table>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 
 
@@ -163,13 +136,15 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select the stores in which you want to update the Tax :</h4>
+              <h6>Select the stores in which you want to update the Tax :</h6> 
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
           </div>
         
           <div class="modal-body">
-             <table class="table table-bordered">
-                <thead id="table_green_header_tag">
+             <table class="table" style="width: 100%; border-collapse: separate; border-spacing:0 5px !important;">
+                  <thead id="table_green_header_tag"  style="background-color: #286fb7!important;">
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox" id="table_green_check">
@@ -192,10 +167,25 @@
     </div>
 <?php } ?>
 
+<div class="modal fade" id="warningModal"  tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom:none;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning text-center">
+          <p id="warning_msg"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 
 <script src="/javascript/bootbox.min.js" defer=""></script>
@@ -212,13 +202,13 @@
     
     $('.tax_name').each(function(){
       if($(this).val() == ''){
-        // alert('Please Enter Name');
-        bootbox.alert({ 
-          size: 'small',
-          title: "Attention", 
-          message: "Please Enter Name", 
-          callback: function(){}
-        });
+        $('#warning_msg').html('Please enter name!');
+        $("div#divLoading").removeClass('show');
+        $('#warningModal').modal('show');
+        setTimeout(function(){
+          $('#warningModal').modal('hide');
+          window.location.reload();
+        }, 2000);
         all_tax_name = false;
         return false;
       }else{
@@ -241,35 +231,19 @@
         });
         
         $('.tax_rate').each(function(){
-            
-            
             taxes.push($(this).val());
             if($(this).val() == ''){
-                // alert('Please Enter Rate');
-                bootbox.alert({ 
-                    size: 'small',
-                    title: "Attention", 
-                    message: "Please Enter Rate", 
-                    callback: function(){}
-                });
+                $('#warning_msg').html('Please Enter Rate');
+                $("div#divLoading").removeClass('show');
+                $('#warningModal').modal('show');
+
+                setTimeout(function(){
+                    $('#warningModal').modal('hide');
+                    window.location.reload();
+                }, 2000);
                 all_tax_rate = false;
                 return false;
             }
-            // else{
-            //     if(numericReg.test($(this).val())){
-            //         // alert('Please Enter Valid Rate');
-            //         // bootbox.alert({ 
-            //         //   size: 'small',
-            //         //   title: "Attention", 
-            //         //   message: "Please Enter Valid Rate", 
-            //         //   callback: function(){}
-            //         // });
-            //         all_tax_rate = false;
-            //         return false;
-            //     }else{
-            //         all_tax_rate = true;
-            //     }
-            // }
         });
     }else{
       all_tax_rate = false;
@@ -293,7 +267,7 @@
                             var data = '<tr>'+
                                             '<td>'+
                                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                    '<input type="checkbox" class="checks check custom-control-input editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                    '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                 '</div>'+
                                             '</td>'+
                                             '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
@@ -304,7 +278,7 @@
                             var data = '<tr>'+
                                             '<td>'+
                                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                                    '<input type="checkbox" class="checks check custom-control-input editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
+                                                    '<input type="checkbox" class="checks check  editstores"  id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                                 '</div>'+
                                             '</td>'+
                                             '<td class="checks_content" ><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -413,13 +387,9 @@
       
       if(val > 100 || val < 0)
       {
-       
-       
           alert('Invalid Tax Rate.  Please Check..!');
           this.value='';  
-          
           event.preventDefault();
-          
       }
       
       

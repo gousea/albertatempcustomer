@@ -1,31 +1,33 @@
-@extends('layouts.master')
-@section('title','Sales Analytics') @show
+@extends('layouts.layout')
+@section('title')
+Sales Analytics Report
+@endsection
 @section('main-content')
 
-<?php
-// dd($category); 
-// $cat['vcategorycode'], $category
-?>
+<nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="main_nav">
+                <div class="menu">
+                    <span class="font-weight-bold text-uppercase"> Sales Analytics Report</span>
+                </div>
+               <div class="nav-submenu">
+                       <?php if(isset($p_start_date)){ ?>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a>
+                             <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('salesanalyticsreport_getprintpage')}}" id="btnPrint">PRINT
+                            </a>
+                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesanalyticsreport_savePDF')}}" > PDF
+                            </a>
+                        <?php } ?>
+                </div>
+            </div> 
+        </div>
+    </nav>
+    
+  <div class="container">    
 
-<div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <!-- <h1><?php //echo $heading_title; ?></h1> -->
-      <ul class="breadcrumb">
-        <?php //foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php //echo $breadcrumb['href']; ?>"><?php //echo $breadcrumb['text']; ?></a></li>
-        <?php //} ?>
-      </ul>
-    </div>
-  </div>
-  <div class="container-fluid">    
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i>Sales Analytics</h3>
-      </div>
-      <div class="panel-body">
-
-        <?php if(isset($p_start_date)){ ?>
+ 
+        <?php if(isset($p_start_date_css)){ ?>
         <div class="row" style="padding-bottom: 15px;float: right;">
           <div class="col-md-12">
             <a id="csv_export_btn" href=""{{route('salesanalyticsreport_gettingCSV')}}"" class="pull-right" style="margin-right:10px;"><i class="fa fa-file-excel-o" aria-hidden="true"></i> CSV</a>
@@ -34,14 +36,18 @@
           </div>
         </div>
         <?php } ?>
-        <div class="clearfix"></div>
+      
+         <br>
+               <h6><span>SEARCH PARAMETERS </span></h6>
+               
+        <br>
         
         <form method="post" id="filter_form">
           @csrf
           @method('post')
             <div class="row">                    
-                <div class="col-md-2">
-                    <select name="department[]" class="form-control" id="department_code" multiple="true" placeholder="Select Department">                        
+                <div class="col">
+                    <select name="department[]" class="form-control" id="department_code" multiple="true" placeholder="Select Department" Required>                        
                        <option value="All">All</option>
                        <?php if(isset($departments) && !empty($departments) ) { ?>
                             <?php foreach($departments as $dep) { ?>
@@ -57,7 +63,7 @@
                 // }
                 
                 ?>                
-                <div class="col-md-2">
+                <div class="col">
                     <select name="category[]" class="form-control" id="category_code" multiple="true">                        
                             <?php if(isset($categories) && !empty($categories)) { ?>
                                 <?php foreach($categories as $cat) { ?>
@@ -71,7 +77,7 @@
                     // print_r($subcategories);
                     // die;
                 ?>
-                <div class="col-md-2">
+                <div class="col">
                     <select name="subcategory[]" class="form-control" id="subcategory_code" multiple="true">                        
                             <?php if(isset($subcategories) && !empty($subcategories) ) { ?>
                                 <?php foreach($subcategories as $subcat) { ?>
@@ -81,8 +87,8 @@
                     </select>
                 </div>
                     
-                <div class="col-md-2">
-                  <input type="text" class="form-control" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Start Date" readonly>
+                <div class="col-md-3">
+                  <input type="text" class="form-control rcorner" name="dates" value="<?php echo isset($p_start_date) ? $p_start_date : ''; ?>" id="dates" placeholder="Start Date" readonly>
                 </div>
               
                 <div class="col-md-0">
@@ -92,22 +98,21 @@
                   <input type="hidden" class="form-control" name="end_date" value="<?php echo isset($p_end_date) ? $p_end_date : ''; ?>" id="end_date" placeholder="End Date" readonly>
                 </div>
                 
-                <div class="col-md-2">
-                  <input type="submit" class="btn btn-success" value="Generate">
+                <div class="col">
+                  <input type="submit" class="btn btn-success rcorner header-color" value="Generate">
                 </div>
               
             </div>
             
         </form>
-        <?php if(isset($reports) && count($reports) > 0){ ?>
-
-        <?php 
-          
-
-        ?>
-
-
-        <br><br><br>
+        
+        <br>
+           <br>
+               <h6><span>SALES ANALYTICS </span></h6>
+        
+        <?php if(isset($reports_css) && count($reports_css) > 0){ ?>
+      
+        <br>
         <div class="row">
           <div class="col-md-12">
             <p><b>Date Range: </b><?php echo $p_start_date; ?> to <?php echo $p_end_date; ?></p>
@@ -126,18 +131,14 @@
           </div>
           
         </div>
-        
-        <div class="row">
-                
-              <div class="table-responsive">
-                  
-                <div class="col-md-12">
-                    
-                    <div class="col-md-10">
-                        
-                        <table class="table table-hover table_display sticky-header" >
-                            <thead class="header">
-                                <tr>
+      <?php } ?>
+      
+      
+       <?php if(isset($reports) && count($reports) > 0){ ?>
+      
+                        <table class="table promotionview" >
+                            <thead >
+                                <tr class="headermenublue text-uppercase">
                                     <th>Dep./Cat./Sub Cat./Item Name</th>
                                     <th class='text-right' >Total Amount</th>
                                     <th class='text-right' >Qty Sold</th>
@@ -146,8 +147,8 @@
                                     <th class='text-right' >Gross Profit(%)</th>
                                 </tr>
                             </thead>
-                            <tr>
-                                <th> Total:</th>
+                            <tr class="headermenublue text-uppercase">
+                                <th>GRAND TOTAL</th>
                                 <th class='text-right' id="total_amount"> </th>
                                 <th class='text-right' id="total_qty"> <?php echo $total_qty_sold1 ; ?> </th>
                                 <th class='text-right' id="total_cost"> <?php echo "$",number_format($total_total_cost1,2); ?> </th>
@@ -161,7 +162,7 @@
                                     
                                     <?php if(isset($r['vdepname'])) { ?>
                                         <?php $i++;?>
-                                        <tr class="first_row" id="child_<?php echo $i;?>">
+                                        <tr class="first_row th_color" id="child_<?php echo $i;?>">
                                             <th><?php echo isset($r['vdepname']) ? $r['vdepname']: ''; ?></th>
                                             <th></th>
                                             <th></th>
@@ -185,7 +186,7 @@
                                               $totalamt = $itmes['totalPrice'];                                              
                                               $totalamount += $totalamt; 
                                             ?>
-                                            <tr>
+                                            <tr  style="display:none;" class="child_<?php echo $i;?>">
                                                 <td style="display:none;" class="child_<?php echo $i;?>"><?php echo isset($itmes['vitemname']) ? $itmes['vitemname']: ''; ?></td>
                                                 <td style="display:none;" class='child_<?php echo $i;?> text-right'><?php echo "$", isset($totalamt) ? number_format($totalamt, 2): ''; ?></td>
                                                 <td style="display:none;" class='child_<?php echo $i;?> text-right'><?php echo isset($itmes['totalqty']) ? $itmes['totalqty']: ''; ?></td>                                                
@@ -205,8 +206,8 @@
                                                 
                                             </tr>                                                
                                         <?php } ?>
-                                        <tr> 
-                                            <th> Sub Total:</th>
+                                        <tr class="headermenublue text-uppercase"> 
+                                            <th> Sub Total</th>
                                             <th class='text-right'> <?php echo "$",number_format($totalamount, 2); ?> </th>
                                             <th class='text-right'> <?php echo $total_qty_sold ;?> </th>
                                             <th class='text-right'> <?php echo "$",number_format($total_total_cost,2); ?> </th>
@@ -238,21 +239,22 @@
                                 <?php if(isset($filters_selected) && $filters_selected == 'NoSubcategory') { ?>                                    
                                     <?php if(isset($r['vdepname'])) { ?>
                                         <?php $i++;?>
-                                        <tr class="department_first_row" id="depchild_<?php echo $i;?>">
+                                        <tr class="department_first_row th_color " id="depchild_<?php echo $i;?>">
                                             <th><?php echo isset($r['vdepname']) ? $r['vdepname']: ''; ?></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th></th>
+                                            
                                         </tr>
+                                        
                                         <?php $totalamount = $total_qty_sold = $total_total_cost = $total_total_price = $total_markup = $total_gross_profit = $counter =$subtotalgrossprofit= 0;?>                                        
                                         <?php $m=0;?>
                                         <?php foreach($r as $cat) { ?>                                        
                                             <?php if(isset($cat['vcatname'])) { ?>
-                                                <?php $m++;?>
-                                                <tr class="category_row" id="catchild_<?php echo $m;?>">
+                                                <?php $m++; ?>
+                                                <tr class="category_row th_color" id="catchild_<?php echo $m;?>"   >
                                                     <th style="display:none;" class="depchild_<?php echo $i;?>"><?php echo isset($cat['vcatname']) ? $cat['vcatname']: ''; ?></th>
                                                     <th style="display:none;" class="depchild_<?php echo $i;?>"></th>
                                                     <th style="display:none;" class="depchild_<?php echo $i;?>"></th>
@@ -274,7 +276,7 @@
                                                         $totalamt = $itmes['totalPrice'];
                                                         $totalamount += $totalamt; 
                                                     ?>
-                                                    <tr>
+                                                    <tr style="display:none;" class="catchild_<?php echo $m;?>">
                                                         <td style="display:none;" class="catchild_<?php echo $m;?>"><?php echo isset($itmes['vitemname']) ? $itmes['vitemname']: ''; ?></td>
                                                         <td style="display:none;" class='catchild_<?php echo $m;?> text-right'><?php echo isset($totalamt) ? number_format($totalamt, 2): ''; ?></td>
                                                         <td style="display:none;" class='catchild_<?php echo $m;?> text-right'><?php echo isset($itmes['totalqty']) ? $itmes['totalqty']: ''; ?></td>
@@ -294,8 +296,8 @@
                                                 <?php } ?>
                                             <?php } ?>
                                         <?php } ?>
-                                        <tr> 
-                                            <th> Sub Total:</th>
+                                        <tr class="headermenublue text-uppercase"> 
+                                            <th> Sub Total</th>
                                             <th class='text-right'> <?php echo "$",number_format($totalamount, 2);?> </th>
                                             <th class='text-right'> <?php echo $total_qty_sold ;?> </th>
                                             <th class='text-right'> <?php echo "$",number_format($total_total_cost,2); ?> </th>
@@ -326,8 +328,9 @@
                                 <?php if(isset($filters_selected) && $filters_selected == 'All') { ?>                                    
                                     <?php if(isset($r['vdepname'])) { ?>
                                         <?php $i++;?>
-                                        <tr class="department_first_row" id="depchild_<?php echo $i;?>">
+                                        <tr class="department_first_row th_color" id="depchild_<?php echo $i;?>">
                                             <th><?php echo isset($r['vdepname']) ? $r['vdepname']: ''; ?></th>
+                                            <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
@@ -338,7 +341,7 @@
                                         <?php foreach($r as $cat) { ?>                                            
                                             <?php if(isset($cat['vcatname'])) { ?>
                                                 <?php $m++;?>
-                                                <tr class="category_row" id="catchild_<?php echo $m;?>">
+                                                <tr class="category_row th_color depchild_<?php echo $i;?>" id="catchild_<?php echo $m;?>" style="display:none;">
                                                     <th style="display:none;" class="depchild_<?php echo $i;?>"><?php echo isset($cat['vcatname']) ? $cat['vcatname']: ''; ?></th>
                                                     <th style="display:none;" class="depchild_<?php echo $i;?>"></th>
                                                     <th style="display:none;" class="depchild_<?php echo $i;?>"></th>
@@ -349,7 +352,7 @@
                                                 <?php foreach($cat as $subcat) { ?>
                                                     <?php if(isset($subcat['subcat_name'])) { ?>
                                                         <?php $n++;?>
-                                                        <tr class="subcategory_row" id="subcatchild_<?php echo $n;?>">
+                                                        <tr class="subcategory_row th_color" id="subcatchild_<?php echo $n;?>">
                                                             <th style="display:none;" class="catchild_<?php echo $m;?>"><?php echo isset($subcat['subcat_name']) ? $subcat['subcat_name']: ''; ?></th>
                                                             <th style="display:none;" class="catchild_<?php echo $m;?>"></th>
                                                             <th style="display:none;" class="catchild_<?php echo $m;?>"></th>
@@ -369,7 +372,7 @@
                                                               $totalamt = $itmes['totalPrice'];
                                                               $totalamount += $totalamt; 
                                                             ?>
-                                                            <tr>
+                                                            <tr style="display:none;" class="subcatchild_<?php echo $n;?>">
                                                                 <td style="display:none;" class="subcatchild_<?php echo $n;?>"><?php echo isset($itmes['vitemname']) ? $itmes['vitemname']: ''; ?></td>
                                                                 <td style="display:none;" class='subcatchild_<?php echo $n;?> text-right'><?php echo "$", isset($totalamt) ? number_format($totalamt, 2): ''; ?></td>
                                                                 <td style="display:none;" class='subcatchild_<?php echo $n;?> text-right'><?php echo isset($itmes['totalqty']) ? $itmes['totalqty']: ''; ?></td>
@@ -393,8 +396,8 @@
                                                 <?php } ?>
                                             <?php } ?>
                                         <?php } ?>
-                                        <tr> 
-                                            <th> Sub Total:</th>
+                                        <tr class="headermenublue text-uppercase"> 
+                                            <th> Sub Total</th>
                                             <th class='text-right'> <?php echo "$",number_format($totalamount, 2); ?> </th>
                                             <th class='text-right'> <?php echo $total_qty_sold ;?> </th>
                                             <th class='text-right'> <?php echo "$",number_format($total_total_cost,2); ?> </th>
@@ -433,10 +436,10 @@
                                 <th class='text-right' id="bottom_gross_profit_percent"> <?php echo number_format($total_gross_profit_percentage,2),"%"; ?> </th>
                             </tr>
                         </table>
-                    </div>
-                </div>
-              </div>
-            </div>
+                    
+                
+              
+            
         <?php }else{ ?>
           <?php if(isset($p_start_date)){ ?>
             <div class="row">
@@ -448,31 +451,34 @@
             </div>
           <?php } ?>
         <?php } ?>
-      </div>
-    </div>
+      
+    
   </div>
-</div>
+
 
 @endsection
 
-@section('scripts')
+@section('page-script')
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" type="text/css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" type="text/css" rel="stylesheet" />-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript" src="{{ asset('javascript/table-fixed-header.js') }}"></script>
 <script type="text/javascript" src="{{ asset('javascript/jquery.printPage.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 
+<link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/reportline.css') }}">
+
 
 <style type="text/css">
   .select2-container--default .select2-selection--single{
     border-radius: 0px !important;
-    height: 35px !important;
+    height: 40px !important;
     width
   }
   .select2.select2-container.select2-container--default{
@@ -482,70 +488,70 @@
     line-height: 35px !important;
   }
 
-  .table.table-bordered.table-striped.table-hover thead > tr {
-    background-color: #2486c6;
-    color: #fff;
-  }
-  tr.first_row{
-        cursor:pointer;
-      }
+  /*.table.table-bordered.table-striped.table-hover thead > tr {*/
+  /*  background-color: #2486c6;*/
+  /*  color: #fff;*/
+  /*}*/
+  /*tr.first_row{*/
+  /*      cursor:pointer;*/
+  /*    }*/
     
-      tr.first_row > th{
-        background-color: #585858;
-        color: #fff;
+  /*    tr.first_row > th{*/
+  /*      background-color: #585858;*/
+  /*      color: #fff;*/
         /*border: 1px solid #808080 !important;*/
-      }
+  /*    }*/
 
-  tr.department_first_row{
-    cursor:pointer;
-  }
+  /*tr.department_first_row{*/
+  /*  cursor:pointer;*/
+  /*}*/
 
-  tr.department_first_row > th{
-    background-color: #585858;
-    color: #fff;
+  /*tr.department_first_row > th{*/
+  /*  background-color: #585858;*/
+  /*  color: #fff;*/
     /*border: 1px solid #808080 !important;*/
-  }
+  /*}*/
   
-  tr.category_row{
-    cursor:pointer;
-  }
+  /*tr.category_row{*/
+  /*  cursor:pointer;*/
+  /*}*/
 
-  tr.category_row > th{
-    background-color: #83888f;
-    color: #fff;
+  /*tr.category_row > th{*/
+  /*  background-color: #83888f;*/
+  /*  color: #fff;*/
     /*border: 1px solid #808080 !important;*/
-  }
+  /*}*/
   
-  tr.subcategory_row{
-    cursor:pointer;
-  }
+  /*tr.subcategory_row{*/
+  /*  cursor:pointer;*/
+  /*}*/
 
-  tr.subcategory_row > th{
-    background-color: #d1cdcd;
-    color: #fff;
+  /*tr.subcategory_row > th{*/
+  /*  background-color: #d1cdcd;*/
+  /*  color: #fff;*/
     /*border: 1px solid #808080 !important;*/
-  }
+  /*}*/
 
-  tr.header > th, tr.header > th > span{
-    font-size: 15px;
-  }
+  /*tr.header > th, tr.header > th > span{*/
+  /*  font-size: 15px;*/
+  /*}*/
 
-  tr.header > th > span{
-    float: right;
-  }
+  /*tr.header > th > span{*/
+  /*  float: right;*/
+  /*}*/
 
-  .header .sign:after{
-    content:"+";
-    display:inline-block;      
-  }
-  .header.expand .sign:after{
-    content:"-";
-  }
+  /*.header .sign:after{*/
+  /*  content:"+";*/
+  /*  display:inline-block;      */
+  /*}*/
+  /*.header.expand .sign:after{*/
+  /*  content:"-";*/
+  /*}*/
 
-  tr.add_space th {
-    border: none !important;
-    padding: 2px !important;
-  }
+  /*tr.add_space th {*/
+  /*  border: none !important;*/
+  /*  padding: 2px !important;*/
+  /*}*/
 
 </style>
 
@@ -553,19 +559,32 @@
 
 
 <script type="text/javascript">
-  $(function(){
-    $("#start_date").datepicker({
-      format: 'mm-dd-yyyy',
-      todayHighlight: true,
-      autoclose: true,
-    });
+//   $(function(){
+//     $("#start_date").datepicker({
+//       format: 'mm-dd-yyyy',
+//       todayHighlight: true,
+//       autoclose: true,
+//     });
 
-    $("#end_date").datepicker({
-      format: 'mm-dd-yyyy',
-      todayHighlight: true,
-      autoclose: true,
+//     $("#end_date").datepicker({
+//       format: 'mm-dd-yyyy',
+//       todayHighlight: true,
+//       autoclose: true,
+//     });
+//   });
+   $(document).ready(function(){     
+        $selectElement = $('select[name="department[]"]').select2({
+            placeholder: "Please select Department",
+        });
+        
+        $selectElement2 = $('select[name="category[]"]').select2({
+            placeholder: "Please select Category",
+        });
+        
+        $selectElement3 = $('select[name="subcategory[]"]').select2({
+            placeholder: "Please select Sub Category",
+        });
     });
-  });
   
    
     $(document).ready(function() {
@@ -773,9 +792,9 @@
       $(this).toggleClass('expand').nextUntil('tr.add_space').slideToggle(100);
     });
 
-    $(window).load(function() {
-      $("div#divLoading").removeClass('show');
-    });
+    // $(window).load(function() {
+    //   $("div#divLoading").removeClass('show');
+    // });
 
   const saveData = (function () {
     const a = document.createElement("a");
@@ -801,7 +820,7 @@
         type : 'GET',
       }).done(function(response){
         const data = response,
-        fileName = "profit-loss-report.csv";
+        fileName = "sale_anaylitis-Report-report.csv";
         saveData(data, fileName);
         $("div#divLoading").removeClass('show');        
       });
@@ -824,12 +843,12 @@
       if (req.readyState === 4 && req.status === 200) {
 
         if (typeof window.navigator.msSaveBlob === 'function') {
-          window.navigator.msSaveBlob(req.response, "Profit-and-loss-Report.pdf");
+          window.navigator.msSaveBlob(req.response, "sale_anaylitis-Report.pdf");
         } else {
           var blob = req.response;
           var link = document.createElement('a');
           link.href = window.URL.createObjectURL(blob);
-          link.download = "Profit-and-loss-Report.pdf";
+          link.download = "sale_anaylitis-Report-Report.pdf";
 
           // append the link to the document body
 
@@ -860,20 +879,16 @@
       }
     }
   });
-  $(document).ready(function(){     
-        $selectElement = $('select[name="department[]"]').select2({
-            placeholder: "Please select Department",
-        });
-        
-        $selectElement2 = $('select[name="category[]"]').select2({
-            placeholder: "Please select Category",
-        });
-        
-        $selectElement3 = $('select[name="subcategory[]"]').select2({
-            placeholder: "Please select Sub Category",
-        });
-    });
   
+ 
+    
+    $('.table').fixedHeader({
+      topOffset: 0
+    });
+ 
+</script>
+<script>
+    
     $("#department_code").change(function(){
         var deptCode = $(this).val();
         var input = {};
@@ -930,10 +945,32 @@
             });
         }
     });
-    $('.table').fixedHeader({
-      topOffset: 0
-    });
-  $(document).ready(function(){
+    
+</script>
+
+<style>
+.rcorner {
+  border-radius:9px;
+}
+.th_color{
+    background-color: #474c53 !important;
+    color: #fff;
+    
+  
+}
+
+
+[class^='select2'] {
+  border-radius: 9px !important;
+}
+table, .promotionview {
+    width: 100% !important;
+    position: relative;
+    left: 0%;
+}
+</style>
+<script>
+     $(document).ready(function(){
       var total_amount = $('#bottom_total_amount').text();
       var total_qty = $('#bottom_total_qty').text();
       var total_cost = $('#bottom_total_cost').text();
@@ -947,5 +984,5 @@
       $('#gross_profit_percent').text(gross_profit_percent);
   });
 </script>
-
+    
 @endsection

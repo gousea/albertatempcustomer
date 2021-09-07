@@ -1,0 +1,10 @@
+Alberta POS Version 3.0.9
+
+Bugs Resolved :- 
+
+1.  Issue in discount on items on unhold.
+
+New Fetures Added :- 
+
+1.  Weight Scale functionality added.  
+ 
