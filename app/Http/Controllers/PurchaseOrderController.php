@@ -111,9 +111,9 @@ class PurchaseOrderController extends Controller
 		}
 		
 		if(isset($input['order'])){
-		    $order = $input['order'];
+		    $order = 'ORDER BY LastUpdate '.$input['order'];
 		}else{
-		    $order = 'DESC';
+		    $order = 'ORDER BY LastUpdate DESC';
 		}
 
         $search_value = $input['columns'];
