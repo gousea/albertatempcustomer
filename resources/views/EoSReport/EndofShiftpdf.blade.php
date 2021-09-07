@@ -314,6 +314,16 @@
                                 <td class="text-right"><?php echo $data['EbtTaxExempted'];?></td>
                             </tr>
                             <?php } ?>
+                            
+                            
+                            <?php if(isset($data['ConvCharge']) && $data['ConvCharge'] !=0){ ?>
+                            <tr>
+                                <td># CONVENIENCE CHARGE </td>
+                                <td class="text-right"><?php echo $data['ConvCharge'];?></td>
+                            </tr>
+                            <?php } ?>
+                            
+                            
                               </tbody>
                         </table>
                    

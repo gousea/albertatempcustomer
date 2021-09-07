@@ -354,6 +354,15 @@ End of Shift Report
                                 <td class="text-right"><?php echo $data[0]->EbtTaxExempted;?></td>
                             </tr>
                             <?php } ?>
+                            
+                             <?php if(isset($data[0]->ConvCharge ) && $data[0]->ConvCharge !=0){ ?>
+                            <tr>
+                                <td>#CONVENIENCE CHARGE </td>
+                                <td class="text-right"><?php echo $data[0]->ConvCharge;?></td>
+                            </tr>
+                            <?php } ?>
+                            
+                            
                             </tbody>
                         </table>
                     </div>
