@@ -154,7 +154,7 @@ class PurchaseOrderController extends Controller
             
             $start_from = ($input['start']);
 
-            $select_query = "SELECT * FROM trn_purchaseorder LIMIT ". $input['start'].", ".$limit;
+            $select_query = "SELECT * FROM trn_purchaseorder ".$order." LIMIT ". $input['start'].", ".$limit;
 
             $count_select_query = "SELECT COUNT(distinct ipoid) as count FROM trn_purchaseorder";
             $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
@@ -207,7 +207,7 @@ class PurchaseOrderController extends Controller
                 $check_condition = 1;
             }
             
-            $select_query = "SELECT * FROM trn_purchaseorder ".$condition." LIMIT ". $input['start'].", ".$limit;
+            $select_query = "SELECT * FROM trn_purchaseorder ".$condition." ".$order." LIMIT ". $input['start'].", ".$limit;
 
             $count_select_query = "SELECT COUNT(distinct ipoid) as count FROM trn_purchaseorder ".$condition;
             $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
