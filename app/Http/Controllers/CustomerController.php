@@ -15,7 +15,7 @@ class CustomerController extends Controller
     }
     public function index()
     {
-        $customers = Customer::orderBy('icustomerid', 'DESC');
+        $customers = Customer::orderBy('icustomerid', 'DESC')->get();
         return view('customers.index', compact('customers'));
     }
 
