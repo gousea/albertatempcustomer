@@ -502,6 +502,13 @@ class EndOfDayReportController extends Controller
         $data_row .= PHP_EOL;
         }
         
+        if(isset($report_sale_new[0]->ConvCharge) && $report_sale_new[0]->ConvCharge!=0){
+        $data_row .= "Convenience Charge: ,";
+        $data_row .= "$".$report_sale_new[0]->ConvCharge;
+        $data_row .= PHP_EOL;
+        }
+        
+        
         $data_row .= PHP_EOL;
         $data_row .= "Productivity,";
         $data_row .= PHP_EOL;

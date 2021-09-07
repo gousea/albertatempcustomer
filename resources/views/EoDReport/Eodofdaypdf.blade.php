@@ -386,6 +386,14 @@
                            <td class="text-right">{{'$'}}{{$data['EbtTaxExempted']}}</td>
                         </tr>
                           @endif
+                          
+                             @if(isset($data['ConvCharge']) && $data['ConvCharge']!=0)
+                        <tr>
+                            <th>Convenience Charge</th>
+                           <td class="text-right">{{'$'}}{{$data['ConvCharge']}}</td>
+                        </tr>
+                          @endif
+                          
                         <tr>
                             <th>&nbsp;</th>
                             <td><?php echo ""; ?></td>

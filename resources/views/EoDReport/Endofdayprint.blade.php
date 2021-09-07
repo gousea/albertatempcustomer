@@ -387,6 +387,15 @@
                            <td style="padding: 0px 10px;" class="text-right"><?php echo $report_sale_new[0]->EbtTaxExempted; ?></td>
                         </tr>
                         <?php }?>
+                        
+                        
+                        <?php if(isset($report_sale_new[0]->ConvCharge) && $report_sale_new[0]->ConvCharge!=0){ ?> 
+                        <tr>
+                            <td style="padding: 0px 10px;">Convenience Charge</td>
+                           <td style="padding: 0px 10px;" class="text-right"><?php echo $report_sale_new[0]->ConvCharge; ?></td>
+                        </tr>
+                        <?php }?>
+                        
                          
                          
                         <tr > 

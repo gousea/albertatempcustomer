@@ -369,6 +369,14 @@
                                         <td class="text-right bg_table"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->EbtTaxExempted}}</button></td>
                                     </tr>
                                     @endif
+                                     @if(isset($data[0]->ConvCharge) && $data[0]->ConvCharge!=0)
+                                        <tr>
+                                      <td class="text-right bg_table">Convenience Charge</td>
+                                        <td class="text-right bg_table"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->ConvCharge}}</button></td>
+                                    </tr>
+                                    @endif
+                                    
+                                    
                                   </table>
                              </div>
                              
