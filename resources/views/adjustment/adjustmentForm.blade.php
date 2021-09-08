@@ -251,6 +251,7 @@
                     <a style="pointer-events:all;" href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-danger buttonred buttons_menu basic-button-small text-uppercase cancel_btn_rotate"><i class="fa fa-reply"></i>&nbsp;&nbsp;CANCEL</a>
                   </div>
               </div>
+              <br><br>
 
             </div>
           </form>
