@@ -304,14 +304,14 @@
                               <?php if(isset($data['Surcharges'] ) && $data['Surcharges'] !=0){ ?>
                             <tr>
                                 <td>#Surcharges Collected </td>
-                                <td class="text-right"><?php echo $data['Surcharges'];?></td>
+                                <td class="text-right"><?php echo "$", $data['Surcharges'];?></td>
                             </tr>
                             <?php } ?>
                             
                              <?php if(isset($data['EbtTaxExempted']) && $data['EbtTaxExempted'] !=0){ ?>
                             <tr>
                                 <td>#EBT Tax Exempted </td>
-                                <td class="text-right"><?php echo $data['EbtTaxExempted'];?></td>
+                                <td class="text-right"><?php echo "$", $data['EbtTaxExempted'];?></td>
                             </tr>
                             <?php } ?>
                             
@@ -319,7 +319,7 @@
                             <?php if(isset($data['ConvCharge']) && $data['ConvCharge'] !=0){ ?>
                             <tr>
                                 <td># CONVENIENCE CHARGE </td>
-                                <td class="text-right"><?php echo $data['ConvCharge'];?></td>
+                                <td class="text-right"><?php echo "$", $data['ConvCharge'];?></td>
                             </tr>
                             <?php } ?>
                             
