@@ -16,6 +16,7 @@ class Employee_Report extends Model
         // $data['end_date'] = $edate;
         
         
+        
                 $start_date = DateTime::createFromFormat('m-d-Y', $sdate);
                 $data['start_date'] = $start_date->format('Y-m-d');
     
