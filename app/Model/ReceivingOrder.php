@@ -1953,7 +1953,7 @@ class ReceivingOrder extends Model
 
     }
     
-     public function getSearchItemAll($search_items,$ivendorid,$pre_items_id)
+    public function getSearchItemAll($search_items,$ivendorid,$pre_items_id)
     {   
         $condition = "WHERE mi.estatus='Active'";
             
@@ -1964,7 +1964,7 @@ class ReceivingOrder extends Model
 
         if (isset($search_items['sku']) && !empty(trim($search_items['sku']))) {
             $search = $search_items['sku'];
-            $condition .= " AND mi.vbarcode LIKE  '%" . $search . "%'";
+            $condition .= " AND (mi.vbarcode LIKE  '%" . $search . "%' OR mia.valiassku LIKE '%" .$search. "%')";
         }
         
         if (isset($search_items['size']) && !empty($search_items['size'])) {
