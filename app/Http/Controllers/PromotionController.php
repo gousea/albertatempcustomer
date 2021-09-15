@@ -208,7 +208,7 @@ class PromotionController extends Controller
             $size_html ="";
             $size_html = "<select class='form-control' name='size_id' id='size_id' style='width: 50px; padding: 0px; font-size: 9px;'>'<option value='all'>All</option>";
             foreach($sizes as $size){
-                $size_html .= "<option value='".$size['vsize']."'>".$size['vsize']."</option>";
+                $size_html .= "<option value='".addslashes($size['vsize'])."'>".addslashes($size['vsize'])."</option>";
             }
             $size_html .="</select>";
             
@@ -368,7 +368,7 @@ class PromotionController extends Controller
             $size_html ="";
             $size_html = "<select class='form-control' name='size_id' id='size_id' style='width: 50px; padding: 0px; font-size: 9px;'>'<option value='all'>All</option>";
             foreach($sizes as $size){
-                $size_html .= "<option value='".$size['vsize']."'>".$size['vsize']."</option>";
+                $size_html .= "<option value='".addslashes($size['vsize'])."'>".addslashes($size['vsize'])."</option>";
             }
             $size_html .="</select>";
             
