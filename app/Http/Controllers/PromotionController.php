@@ -975,9 +975,9 @@ class PromotionController extends Controller
                                 // $new_price = $promotion_addl_discount/$input['promotion_buy_qty'];
                                 $new_price = $input['promotion_slab_price']/$input['promotion_buy_qty'];
                                 $new_price = number_format($new_price , 2);
-                                DB::connection('mysql')->insert("INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$store."' ");
+                                DB::connection('mysql')->insert("INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$store."' ");
                             } else {
-                                $insert_data = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$store."' ";
+                                $insert_data = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$store."' ";
                                 DB::connection('mysql')->insert($insert_data);
                             }
                         }  
@@ -1402,10 +1402,10 @@ class PromotionController extends Controller
                                     $new_price = $input['promotion_slab_price']/$input['promotion_buy_qty'];
                                     $new_price = number_format($new_price , 2);
                                     
-                                    $update_query = "UPDATE u".$store.".trn_prom_details SET prom_id='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price = '".$itemDetails['dunitprice'] ."', discounted_price='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID = '".$store."' WHERE `prom_id`={$prom_id} AND barcode='".$itemDetails['vbarcode']."'";
+                                    $update_query = "UPDATE u".$store.".trn_prom_details SET prom_id='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price = '".$itemDetails['dunitprice'] ."', discounted_price='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s')."', SID = '".$store."' WHERE `prom_id`={$prom_id} AND barcode='".$itemDetails['vbarcode']."'";
                                     
                                 } else {
-                                    $update_query = "UPDATE u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price='".$itemDetails['dunitprice']."', discounted_price='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$store."' WHERE prom_id= '".$prom_id."' AND barcode='".$itemDetails['vbarcode']."' ";
+                                    $update_query = "UPDATE u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price='".$itemDetails['dunitprice']."', discounted_price='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$store."' WHERE prom_id= '".$prom_id."' AND barcode='".$itemDetails['vbarcode']."' ";
                                 }	            
                                 $query =  DB::connection('mysql')->update($update_query);
                             }
@@ -1428,9 +1428,9 @@ class PromotionController extends Controller
                                     $new_price = $input['promotion_slab_price']/$input['promotion_buy_qty'];
                                     $new_price = number_format($new_price , 2);
                                     
-                                    $query_insert = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$store."' ";
+                                    $query_insert = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$store."' ";
                                 } else {
-                                    $query_insert = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$store."' ";
+                                    $query_insert = "INSERT INTO u".$store.".trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$store."' ";
                                 }
                                 
                               $query =  DB::connection('mysql')->insert($query_insert);
@@ -1448,7 +1448,7 @@ class PromotionController extends Controller
                             $query =  DB::connection('mysql')->delete($delete_query);
                             
                             $insert_delete_query = "INSERT INTO u".$store.".mst_delete_table (TableName, TableId, Action, LastUpdate, SID) 
-                                                    VALUES('trn_prom_details', '". (int)$et['prom_detail_id'] . "', 'delete', '".date('Y-m-d H:i:s', strtotime("+1 hours"))."', '".$store."')";
+                                                    VALUES('trn_prom_details', '". (int)$et['prom_detail_id'] . "', 'delete', '".date('Y-m-d H:i:s')."', '".$store."')";
                             $query =  DB::connection('mysql')->insert($insert_delete_query);
                         }
                     }
@@ -1704,10 +1704,10 @@ class PromotionController extends Controller
                                 $new_price = $input['promotion_slab_price']/$input['promotion_buy_qty'];
                                 $new_price = number_format($new_price , 2);
                                 
-                                $update_query = "UPDATE trn_prom_details SET prom_id='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price = '".$itemDetails['dunitprice'] ."', discounted_price='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID = '".session()->get('sid')."' WHERE `prom_id`={$prom_id} AND barcode='".$itemDetails['vbarcode']."'";
+                                $update_query = "UPDATE trn_prom_details SET prom_id='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price = '".$itemDetails['dunitprice'] ."', discounted_price='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s')."', SID = '".session()->get('sid')."' WHERE `prom_id`={$prom_id} AND barcode='".$itemDetails['vbarcode']."'";
                                 
                             } else {
-                                $update_query = "UPDATE trn_prom_details SET prom_id ='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price='".$itemDetails['dunitprice']."', discounted_price='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".session()->get('sid')."' WHERE prom_id= '".$prom_id."' AND barcode='".$itemDetails['vbarcode']."' ";
+                                $update_query = "UPDATE trn_prom_details SET prom_id ='".$prom_id."', barcode='".$itemDetails['vbarcode']."', unit_price='".$itemDetails['dunitprice']."', discounted_price='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".session()->get('sid')."' WHERE prom_id= '".$prom_id."' AND barcode='".$itemDetails['vbarcode']."' ";
                             }
                             
                             // if(session()->get('sid') == '100763' && $prom_id == '209'){
@@ -1737,9 +1737,9 @@ class PromotionController extends Controller
                               
                                 $new_price = number_format($new_price , 2);
                                 
-                                $query_insert = "INSERT INTO trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".session()->get('sid')."' ";
+                                $query_insert = "INSERT INTO trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$new_price."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".session()->get('sid')."' ";
                             } else {
-                                $query_insert = "INSERT INTO trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".session()->get('sid')."' ";
+                                $query_insert = "INSERT INTO trn_prom_details SET prom_id ='".$prom_id."', barcode ='".$itemDetails['vbarcode']."', unit_price ='".$itemDetails['dunitprice']."', discounted_price ='".$disc_value."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".session()->get('sid')."' ";
                             }
                             
                           $query =  DB::connection('mysql_dynamic')->insert($query_insert);
@@ -1756,7 +1756,7 @@ class PromotionController extends Controller
                         $query =  DB::connection('mysql_dynamic')->insert($delete_query);
                         
                         $insert_delete_query = "INSERT INTO mst_delete_table (TableName, TableId, Action, LastUpdate, SID) 
-                                                VALUES('trn_prom_details', '". (int)$et['prom_detail_id'] . "', 'delete', '".date('Y-m-d H:i:s', strtotime("+1 hours"))."', '".session()->get('sid')."')";
+                                                VALUES('trn_prom_details', '". (int)$et['prom_detail_id'] . "', 'delete', '".date('Y-m-d H:i:s')."', '".session()->get('sid')."')";
                         $query =  DB::connection('mysql_dynamic')->insert($insert_delete_query);
                     }
                 }
@@ -3184,7 +3184,7 @@ class PromotionController extends Controller
             {
                 if(!empty($value))
                 {
-                    \DB::connection('mysql_dynamic')->insert("INSERT INTO trn_prom_customers SET prom_id ='".$prom_id."', cust_id ='".$value."', LastUpdate ='".date('Y-m-d H:i:s', strtotime("+1 hours"))."', SID ='".$itemDetails['SID']."' ");
+                    \DB::connection('mysql_dynamic')->insert("INSERT INTO trn_prom_customers SET prom_id ='".$prom_id."', cust_id ='".$value."', LastUpdate ='".date('Y-m-d H:i:s')."', SID ='".$itemDetails['SID']."' ");
                 }
             }
             
