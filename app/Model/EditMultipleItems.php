@@ -485,11 +485,22 @@ class EditMultipleItems extends Model
                                             $new_dunitprice= $current_item['dunitprice'];
                                         }
                                             
-                                        if(isset($data['update_npack_checkbox']) && $data['update_npack_checkbox'] == 'Y'){
-                                            $sql .= " npack='1',";
-                                            $current_npack = 1;
-                                            $updated_column[] = 'npack';
-                                        }elseif(isset($data['update_npack']) && $data['update_npack'] != '' && $data['update_npack'] != '1' && $data['update_npack'] != '0'){
+                                        // if(isset($data['update_npack_checkbox']) && $data['update_npack_checkbox'] == 'Y'){
+                                        //     $sql .= " npack='1',";
+                                        //     $current_npack = 1;
+                                        //     $updated_column[] = 'npack';
+                                        // }elseif(isset($data['update_npack']) && $data['update_npack'] != '' && $data['update_npack'] != '1' && $data['update_npack'] != '0'){
+                                        //     $sql .= " npack='" . ($data['update_npack']) . "',";
+                                        //     $current_npack = $data['update_npack'];
+                                        //     $updated_column[] = 'npack'; 
+                                        // }else{
+                                        //     $current_npack = $current_item['npack'];
+                                        //     if($current_npack == 0){
+                                        //         $current_npack = 1;
+                                        //     }
+                                        // }
+                                        
+                                        if(isset($data['update_npack']) && $data['update_npack'] != '' && $data['update_npack'] != '0'){
                                             $sql .= " npack='" . ($data['update_npack']) . "',";
                                             $current_npack = $data['update_npack'];
                                             $updated_column[] = 'npack'; 
@@ -500,11 +511,19 @@ class EditMultipleItems extends Model
                                             }
                                         }
                                         
-                                        if(isset($data['update_nsellunit_checkbox']) && $data['update_nsellunit_checkbox'] == 'Y'){
-                                            $sql .= " nsellunit='1',";
-                                            $updated_column[] = 'nsellunit';
-                                            $current_nsellunit = 1;
-                                        }elseif(isset($data['update_nsellunit']) && $data['update_nsellunit'] != '' && $data['update_nsellunit'] != '1' && $data['update_nsellunit'] != '0'){
+                                        // if(isset($data['update_nsellunit_checkbox']) && $data['update_nsellunit_checkbox'] == 'Y'){
+                                        //     $sql .= " nsellunit='1',";
+                                        //     $updated_column[] = 'nsellunit';
+                                        //     $current_nsellunit = 1;
+                                        // }elseif(isset($data['update_nsellunit']) && $data['update_nsellunit'] != '' && $data['update_nsellunit'] != '1' && $data['update_nsellunit'] != '0'){
+                                        //     $sql .= " nsellunit='" . ($data['update_nsellunit']) . "',";
+                                        //     $updated_column[] = 'nsellunit';
+                                        //     $current_nsellunit = $data['update_nsellunit'];
+                                        // }else{
+                                        //     $current_nsellunit = $current_item['nsellunit'];
+                                        // }
+                                        
+                                        if(isset($data['update_nsellunit']) && $data['update_nsellunit'] != '' && $data['update_nsellunit'] != '0'){
                                             $sql .= " nsellunit='" . ($data['update_nsellunit']) . "',";
                                             $updated_column[] = 'nsellunit';
                                             $current_nsellunit = $data['update_nsellunit'];
@@ -1187,11 +1206,22 @@ class EditMultipleItems extends Model
                                 $new_dunitprice= $current_item['dunitprice'];
                             }
                                 
-                            if(isset($data['update_npack_checkbox']) && $data['update_npack_checkbox'] == 'Y'){
-                                $sql .= " npack='1',";
-                                $current_npack = 1;
-                                $updated_column[] = 'npack';
-                            }elseif(isset($data['update_npack']) && $data['update_npack'] != '' && $data['update_npack'] != '1' && $data['update_npack'] != '0'){
+                            // if(isset($data['update_npack_checkbox']) && $data['update_npack_checkbox'] == 'Y'){
+                            //     $sql .= " npack='1',";
+                            //     $current_npack = 1;
+                            //     $updated_column[] = 'npack';
+                            // }elseif(isset($data['update_npack']) && $data['update_npack'] != '' && $data['update_npack'] != '1' && $data['update_npack'] != '0'){
+                            //     $sql .= " npack='" . ($data['update_npack']) . "',";
+                            //     $current_npack = $data['update_npack'];
+                            //     $updated_column[] = 'npack'; 
+                            // }else{
+                            //     $current_npack = $current_item['npack'];
+                            //     if($current_npack == 0){
+                            //         $current_npack = 1;
+                            //     }
+                            // }
+                            
+                            if(isset($data['update_npack']) && $data['update_npack'] != '' && $data['update_npack'] != '0'){
                                 $sql .= " npack='" . ($data['update_npack']) . "',";
                                 $current_npack = $data['update_npack'];
                                 $updated_column[] = 'npack'; 
@@ -1202,11 +1232,19 @@ class EditMultipleItems extends Model
                                 }
                             }
                             
-                            if(isset($data['update_nsellunit_checkbox']) && $data['update_nsellunit_checkbox'] == 'Y'){
-                                $sql .= " nsellunit='1',";
-                                $updated_column[] = 'nsellunit';
-                                $current_nsellunit = 1;
-                            }elseif(isset($data['update_nsellunit']) && $data['update_nsellunit'] != '' && $data['update_nsellunit'] != '1' && $data['update_nsellunit'] != '0'){
+                            // if(isset($data['update_nsellunit_checkbox']) && $data['update_nsellunit_checkbox'] == 'Y'){
+                            //     $sql .= " nsellunit='1',";
+                            //     $updated_column[] = 'nsellunit';
+                            //     $current_nsellunit = 1;
+                            // }elseif(isset($data['update_nsellunit']) && $data['update_nsellunit'] != '' && $data['update_nsellunit'] != '1' && $data['update_nsellunit'] != '0'){
+                            //     $sql .= " nsellunit='" . ($data['update_nsellunit']) . "',";
+                            //     $updated_column[] = 'nsellunit';
+                            //     $current_nsellunit = $data['update_nsellunit'];
+                            // }else{
+                            //     $current_nsellunit = $current_item['nsellunit'];
+                            // }
+                            
+                            if(isset($data['update_nsellunit']) && $data['update_nsellunit'] != '' && $data['update_nsellunit'] != '0'){
                                 $sql .= " nsellunit='" . ($data['update_nsellunit']) . "',";
                                 $updated_column[] = 'nsellunit';
                                 $current_nsellunit = $data['update_nsellunit'];
