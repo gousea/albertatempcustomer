@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\UserDynamic;
 use App\User;
-use App\Model\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
-use App\Model\Userpermission;
 use Illuminate\Support\Facades\Auth;
-use App\Model\Permissiongroup;
-use App\Model\Userpermissiongroup;
 use Illuminate\Auth\Access\Gate;
 use DateTime;
-
+use App\Model\{UserDynamic, Permission, Userpermission, Permissiongroup, Userpermissiongroup, DeleteTable};
 
 class AllUserController extends Controller
 {
@@ -169,25 +164,25 @@ class AllUserController extends Controller
 
                 if (count($res) > 0) {
                     $mst_user = UserDynamic::create([
-                        'mob_user'  => $mob_user,
-                        'web_user'  => $web_user,
-                        'pos_user'  => $pos_user,
-                        'lb_user'  => $lb_user,
-                        'vfname'    => $input['vfname'],
-                        'vlname'    => $input['vlname'],
+                        'mob_user' => $mob_user,
+                        'web_user' => $web_user,
+                        'pos_user' => $pos_user,
+                        'lb_user' => $lb_user,
+                        'vfname' => $input['vfname'],
+                        'vlname' => $input['vlname'],
                         'vaddress1' => $input['vaddress1'],
                         'vaddress2' => $input['vaddress2'],
-                        'vcity'     => $input['vcity'],
-                        'vstate'    => $input['vstate'],
-                        'vzip'      => $input['vzip'],
-                        'vcountry'  => $input['vcountry'],
-                        'vphone'    => $input['vphone'],
-                        'vuserid'   => $input['vuserid'],
+                        'vcity' => $input['vcity'],
+                        'vstate' => $input['vstate'],
+                        'vzip' => $input['vzip'],
+                        'vcountry' => $input['vcountry'],
+                        'vphone' => $input['vphone'],
+                        'vuserid' => $input['vuserid'],
                         'vpassword' => $encdoe_password,
                         'vusertype' => $input['vusertype'],
                         'vpasswordchange' => "No",
-                        'estatus'   =>  $input['estatus'],
-                        'SID'       =>  session()->get('sid'),
+                        'estatus' => $input['estatus'],
+                        'SID' => session()->get('sid'),
 
                         'time_clock' => $time_clock,
                         'time_email' => $time_email,
@@ -227,24 +222,24 @@ class AllUserController extends Controller
                     fwrite($myfile, $some_text);
 
                     $mst_user = UserDynamic::create([
-                        'mob_user'  => $mob_user,
-                        'web_user'  => $web_user,
-                        'pos_user'  => $pos_user,
-                        'vfname'    => $input['vfname'],
-                        'vlname'    => $input['vlname'],
+                        'mob_user' => $mob_user,
+                        'web_user' => $web_user,
+                        'pos_user' => $pos_user,
+                        'vfname' => $input['vfname'],
+                        'vlname' => $input['vlname'],
                         'vaddress1' => $input['vaddress1'],
                         'vaddress2' => $input['vaddress2'],
-                        'vcity'     => $input['vcity'],
-                        'vstate'    => $input['vstate'],
-                        'vzip'      => $input['vzip'],
-                        'vcountry'  => $input['vcountry'],
-                        'vphone'    => $input['vphone'],
-                        'vuserid'   => $input['vuserid'],
+                        'vcity' => $input['vcity'],
+                        'vstate' => $input['vstate'],
+                        'vzip' => $input['vzip'],
+                        'vcountry' => $input['vcountry'],
+                        'vphone' => $input['vphone'],
+                        'vuserid' => $input['vuserid'],
                         'vpassword' => $encdoe_password,
                         'vusertype' => $input['vusertype'],
                         'vpasswordchange' => "No",
-                        'estatus'   =>  $input['estatus'],
-                        'SID'       =>  session()->get('sid'),
+                        'estatus' => $input['estatus'],
+                        'SID' => session()->get('sid'),
 
                         'time_clock' => $time_clock,
                         'time_email' => $time_email,
@@ -284,7 +279,7 @@ class AllUserController extends Controller
                 $some_text = '========================== check for this ' . PHP_EOL;
                 fwrite($myfile, $some_text);
 
-                $Email = User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->get();
+                $Email = User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->get();
                 if (count($Email) > 0) {
                     $encdoe_mwpassword = password_hash($input['mwpassword'], PASSWORD_BCRYPT);
                     $encdoe_password = $this->encodePassword($input['vpassword']);
@@ -294,25 +289,25 @@ class AllUserController extends Controller
 
                     if (count($res) > 0) {
                         $mst_user = UserDynamic::create([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'lb_user'  => $lb_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'lb_user' => $lb_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $input['vuserid'],
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $input['vuserid'],
                             'vpassword' => $encdoe_password,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $input['vemail'],
 
@@ -340,16 +335,16 @@ class AllUserController extends Controller
 
                         ]);
 
-                        User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->update([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'lb_user'  => $lb_user,
-                            'fname'     => $input['vfname'],
-                            'lname'     => $input['vlname'],
+                        User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->update([
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'lb_user' => $lb_user,
+                            'fname' => $input['vfname'],
+                            'lname' => $input['vlname'],
                             'user_role' => $input['vusertype'],
-                            'iuserid'   => $mst_user->iuserid,
-                            'estatus'   => $input['estatus'],
-                            'sid'       =>  session()->get('sid'),
+                            'iuserid' => $mst_user->iuserid,
+                            'estatus' => $input['estatus'],
+                            'sid' => session()->get('sid'),
                             'password' => $encdoe_mwpassword,
                             'vemail' => $input['vemail'],
                         ]);
@@ -358,24 +353,24 @@ class AllUserController extends Controller
                         fwrite($myfile, $some_text);
 
                         $mst_user = UserDynamic::create([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $input['vuserid'],
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $input['vuserid'],
                             'vpassword' => $encdoe_password,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $input['vemail'],
 
@@ -402,15 +397,15 @@ class AllUserController extends Controller
                             'sat_hours' => $sat_hours,
                         ]);
 
-                        User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->update([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'fname'     => $input['vfname'],
-                            'lname'     => $input['vlname'],
+                        User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->update([
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'fname' => $input['vfname'],
+                            'lname' => $input['vlname'],
                             'user_role' => $input['vusertype'],
-                            'iuserid'   => $mst_user->iuserid,
-                            'estatus'   => $input['estatus'],
-                            'sid'       =>  session()->get('sid'),
+                            'iuserid' => $mst_user->iuserid,
+                            'estatus' => $input['estatus'],
+                            'sid' => session()->get('sid'),
                             'password' => $encdoe_mwpassword,
                             'vemail' => $input['vemail'],
                         ]);
@@ -428,25 +423,25 @@ class AllUserController extends Controller
 
                     if (count($res) > 0) {
                         $mst_user = UserDynamic::create([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'lb_user'  => $lb_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'lb_user' => $lb_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $input['vuserid'],
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $input['vuserid'],
                             'vpassword' => $encdoe_password,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $input['vemail'],
 
@@ -474,41 +469,41 @@ class AllUserController extends Controller
                         ]);
 
                         $main = User::create([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'lb_user'  => $lb_user,
-                            'fname'     => $input['vfname'],
-                            'lname'     => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'lb_user' => $lb_user,
+                            'fname' => $input['vfname'],
+                            'lname' => $input['vlname'],
                             'user_role' => $input['vusertype'],
-                            'iuserid'   => $mst_user->iuserid,
-                            'estatus'   => $input['estatus'],
-                            'sid'       =>  session()->get('sid'),
-                            'password'  => $encdoe_mwpassword,
-                            'vemail'    => $input['vemail'],
+                            'iuserid' => $mst_user->iuserid,
+                            'estatus' => $input['estatus'],
+                            'sid' => session()->get('sid'),
+                            'password' => $encdoe_mwpassword,
+                            'vemail' => $input['vemail'],
                         ]);
                     } else {
                         $some_text = '========================== else part for this ' . PHP_EOL;
                         fwrite($myfile, $some_text);
 
                         $mst_user = UserDynamic::create([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $input['vuserid'],
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $input['vuserid'],
                             'vpassword' => $encdoe_password,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $input['vemail'],
 
@@ -537,16 +532,16 @@ class AllUserController extends Controller
 
 
                         $main = User::create([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'fname'     => $input['vfname'],
-                            'lname'     => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'fname' => $input['vfname'],
+                            'lname' => $input['vlname'],
                             'user_role' => $input['vusertype'],
-                            'iuserid'   => $mst_user->iuserid,
-                            'estatus'   => $input['estatus'],
-                            'sid'       =>  session()->get('sid'),
-                            'password'  => $encdoe_mwpassword,
-                            'vemail'    => $input['vemail'],
+                            'iuserid' => $mst_user->iuserid,
+                            'estatus' => $input['estatus'],
+                            'sid' => session()->get('sid'),
+                            'password' => $encdoe_mwpassword,
+                            'vemail' => $input['vemail'],
                         ]);
                     }
                 }
@@ -557,12 +552,12 @@ class AllUserController extends Controller
         if (isset($input['permission'])) {
             foreach ($input['permission'] as $permission) {
                 Userpermission::create([
-                    'status'        => 'Active',
-                    'created_id'    => Auth::user()->iuserid,
+                    'status' => 'Active',
+                    'created_id' => Auth::user()->iuserid,
                     'permission_id' => $permission,
-                    'updated_id'    => Auth::user()->iuserid,
-                    'userid'        => $mst_user->iuserid,
-                    'SID'           => session()->get('sid')
+                    'updated_id' => Auth::user()->iuserid,
+                    'userid' => $mst_user->iuserid,
+                    'SID' => session()->get('sid')
                 ]);
             }
         }
@@ -585,7 +580,6 @@ class AllUserController extends Controller
 
         return redirect('users')->with('message', 'User Created Successfully');
     }
-
 
 
     public function edit(UserDynamic $userDynamic, $iuserid)
@@ -629,15 +623,12 @@ class AllUserController extends Controller
 
     public function update(Request $request, UserDynamic $userDynamic, $iuserid)
     {
-
-        // dd($request->all());
         $file_location = 'user_permisson_update.log';
         $myfile = fopen($file_location, "a") or die("Unable to open file!");
         $txt = PHP_EOL . "Insertion Starting Date And time is: " . date("Y-m-d h:i:sa") . PHP_EOL;
         fwrite($myfile, $txt);
 
         $input = $request->all();
-
         //Time clock variable set
         $ssn = isset($input['ssn']) ? $input['ssn'] : '';
         $pay_type = isset($input['pay_type']) ? $input['pay_type'] : 0;
@@ -684,7 +675,6 @@ class AllUserController extends Controller
             $termination_dt = $termination_dt;
         }
 
-
         session()->put('userInput', $input);
         $sid = session()->get('sid');
         $que = Userpermission::where('userid', '=', $iuserid)->get()->toArray();
@@ -693,58 +683,70 @@ class AllUserController extends Controller
             $list_of_permissions[] = $que[$i]['permission_id'];
         }
 
+        $new_pcheck_false = [];
+        $new_pcheck_true = [];
+        $old_pcheck_true = [];
+        $old_pcheck_false = [];
+
         if (isset($input['permission'])) {
             foreach ($input['permission'] as $permission) {
                 if (in_array($permission, $list_of_permissions)) {
+                    $new_pcheck_true[] = $permission;
+                }
+                if (!in_array($permission, $list_of_permissions)) {
+                    $new_pcheck_false[] = $permission;
+                }
 
-                    $store_text = '========================== userpermission update foreach' . PHP_EOL;
-                    fwrite($myfile, $store_text);
+            }
+            foreach ($list_of_permissions as $permission) {
+                if (in_array($permission, $input['permission'])) {
+                    $old_pcheck_true[] = $permission;
+                }
+                if (!in_array($permission, $input['permission'])) {
+                    $old_pcheck_false[] = $permission;
+                }
 
+            }
+            if (!empty($new_pcheck_false)) {
+                /**
+                 * Mass insertion for new user's permission*/
+                foreach ($new_pcheck_false as $newPermission) {
+                    $newData[] = [
+                        'status' => 'Active',
+                        'created_id' => Auth::user()->iuserid,
+                        'permission_id' => $newPermission,
+                        'updated_id' => Auth::user()->iuserid,
+                        'userid' => $iuserid,
+                        'SID' => session()->get('sid')
+                    ];
+                }
+                Userpermission::insert($newData);
+            }
+
+            /**
+             * deletion of user's permission*/
+            if (!empty($old_pcheck_false)) {
+                /**
+                 * have to delete/inactivate the permissions
+                 * after delete, insert all deleted ids in mst_delete_table using model DeleteTable */
+                foreach ($old_pcheck_false as $permission) {
                     $get_id = Userpermission::where([['permission_id', '=', $permission], ['userid', '=', $iuserid]])->get();
-                    $mst_perm_id = $get_id[0]->Id;
-                    Userpermission::where('Id', '=', $mst_perm_id)->update(['permission_id' => $permission, 'status' => 'Active']);
-                } else {
+                    if (!empty($get_id)) {
+                        $userPIDS[] = $mst_perm_id = $get_id[0]['Id'];
+                        $deletedData[] = ['TableName' => 'mst_userpermissions', 'Action' => 'Delete', 'TableId' => (int)$mst_perm_id, 'SID' => (int)(session()->get('sid'))];
+                        $sql_resp = Userpermission::where('Id', $mst_perm_id)->delete();
+                    } else {
+                        /**log for not found the particular permission*/
+                    }
 
-                    $store_text = '========================== userpermission else create' . PHP_EOL;
-                    fwrite($myfile, $store_text);
-
-                    Userpermission::create([
-                        'status'        => 'Active',
-                        'created_id'    => Auth::user()->iuserid,
-                        'permission_id' => $permission,
-                        'updated_id'    => Auth::user()->iuserid,
-                        'userid'        => $iuserid,
-                        'SID'           => session()->get('sid')
-                    ]);
                 }
-                if (($k = array_search($permission, $list_of_permissions)) !== false) {
-                    unset($list_of_permissions[$k]);
+                /**
+                 * Mass insertion for deleted user's permission*/
+                if (!empty($mst_perm_id)) {
+                    DeleteTable::insert($deletedData);
                 }
             }
         }
-
-        // for removing permissoion
-        foreach ($list_of_permissions as $permission) {
-            $store_text = '========================== userpermission list of permission' . PHP_EOL;
-            fwrite($myfile, $store_text);
-
-            $get_id = Userpermission::where([['permission_id', '=', $permission], ['userid', '=', $iuserid]])->get();
-
-            foreach ($get_id as $value) {
-                $mst_perm_id = $value->Id;
-                $store_text = '========================== userpermission list of permission foreach' . PHP_EOL;
-                fwrite($myfile, $store_text);
-                //====commented (SUMIT) 05-04-2021====
-                // Userpermission::where('Id', '=', $mst_perm_id)->update(['status' => 'Inactive']);
-                $insert_delete_perm = "INSERT INTO mst_delete_table SET  TableName = 'mst_userpermissions',`Action` = 'delete',`TableId` = '" . (int)$mst_perm_id . "',SID = '" . (int)(session()->get('sid')) . "'";
-                $query =  DB::connection('mysql_dynamic')->insert($insert_delete_perm);
-                Userpermission::where('Id', '=', $mst_perm_id)->delete();
-
-                $update_query_time = "UPDATE mst_user SET LastUpdate =now() WHERE iuserid = '" . (int)$iuserid . "' ";
-                $query =  DB::connection('mysql_dynamic')->update($update_query_time);
-            }
-        }
-
         $group = Permissiongroup::where('vgroupname', '=', $input['vusertype'])->get();
         if (count($group) > 0) {
             $ipermissiongroupid = $group[0]->ipermissiongroupid;
@@ -865,8 +867,6 @@ class AllUserController extends Controller
             }
             $vemail = $input['vemail'];
 
-
-            // dd($web_user."_ ".$pos_user."_ ". $mob_user. "_ ".$lb_user);
             if ($check_pwd_entered == 1) {
 
                 if (isset($input['vpassword'])) {
@@ -880,26 +880,26 @@ class AllUserController extends Controller
                         fwrite($myfile, $store_text);
 
                         UserDynamic::where('iuserid', '=', $iuserid)->update([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'lb_user'  => $lb_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'lb_user' => $lb_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $vuserid,
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $vuserid,
                             'vpassword' => $this->encodePassword($input['vpassword']),
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
                             'vuserbarcode' => $vuserbarcode,
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $vemail,
 
@@ -938,26 +938,26 @@ class AllUserController extends Controller
                             fwrite($myfile, $store_text);
 
                             UserDynamic::where('iuserid', '=', $iuserid)->update([
-                                'mob_user'  => $mob_user,
-                                'web_user'  => $web_user,
-                                'pos_user'  => $pos_user,
-                                'lb_user'  => $lb_user,
-                                'vfname'    => $input['vfname'],
-                                'vlname'    => $input['vlname'],
+                                'mob_user' => $mob_user,
+                                'web_user' => $web_user,
+                                'pos_user' => $pos_user,
+                                'lb_user' => $lb_user,
+                                'vfname' => $input['vfname'],
+                                'vlname' => $input['vlname'],
                                 'vaddress1' => $input['vaddress1'],
                                 'vaddress2' => $input['vaddress2'],
-                                'vcity'     => $input['vcity'],
-                                'vstate'    => $input['vstate'],
-                                'vzip'      => $input['vzip'],
-                                'vcountry'  => $input['vcountry'],
-                                'vphone'    => $input['vphone'],
-                                'vuserid'   => $vuserid,
+                                'vcity' => $input['vcity'],
+                                'vstate' => $input['vstate'],
+                                'vzip' => $input['vzip'],
+                                'vcountry' => $input['vcountry'],
+                                'vphone' => $input['vphone'],
+                                'vuserid' => $vuserid,
                                 'vpassword' => $this->encodePassword($input['vpassword']),
                                 'vusertype' => $input['vusertype'],
                                 'vpasswordchange' => "No",
                                 'vuserbarcode' => $vuserbarcode,
-                                'estatus'   =>  $input['estatus'],
-                                'SID'       =>  session()->get('sid'),
+                                'estatus' => $input['estatus'],
+                                'SID' => session()->get('sid'),
                                 'mwpassword' => $encdoe_mwpassword,
                                 'vemail' => $vemail,
 
@@ -988,25 +988,25 @@ class AllUserController extends Controller
                             fwrite($myfile, $store_text);
 
                             UserDynamic::where('iuserid', '=', $iuserid)->update([
-                                'mob_user'  => $mob_user,
-                                'web_user'  => $web_user,
-                                'pos_user'  => $pos_user,
-                                'vfname'    => $input['vfname'],
-                                'vlname'    => $input['vlname'],
+                                'mob_user' => $mob_user,
+                                'web_user' => $web_user,
+                                'pos_user' => $pos_user,
+                                'vfname' => $input['vfname'],
+                                'vlname' => $input['vlname'],
                                 'vaddress1' => $input['vaddress1'],
                                 'vaddress2' => $input['vaddress2'],
-                                'vcity'     => $input['vcity'],
-                                'vstate'    => $input['vstate'],
-                                'vzip'      => $input['vzip'],
-                                'vcountry'  => $input['vcountry'],
-                                'vphone'    => $input['vphone'],
-                                'vuserid'   => $vuserid,
+                                'vcity' => $input['vcity'],
+                                'vstate' => $input['vstate'],
+                                'vzip' => $input['vzip'],
+                                'vcountry' => $input['vcountry'],
+                                'vphone' => $input['vphone'],
+                                'vuserid' => $vuserid,
                                 'vpassword' => $this->encodePassword($input['vpassword']),
                                 'vusertype' => $input['vusertype'],
                                 'vpasswordchange' => "No",
                                 'vuserbarcode' => $vuserbarcode,
-                                'estatus'   =>  $input['estatus'],
-                                'SID'       =>  session()->get('sid'),
+                                'estatus' => $input['estatus'],
+                                'SID' => session()->get('sid'),
                                 'mwpassword' => $encdoe_mwpassword,
                                 'vemail' => $vemail,
 
@@ -1045,25 +1045,25 @@ class AllUserController extends Controller
 
                     if (count($res) > 0) {
                         UserDynamic::where('iuserid', '=', $iuserid)->update([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'lb_user'  => $lb_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'lb_user' => $lb_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $vuserid,
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $vuserid,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
                             'vuserbarcode' => $vuserbarcode,
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $vemail,
 
@@ -1096,24 +1096,24 @@ class AllUserController extends Controller
                         fwrite($myfile, $store_text);
 
                         UserDynamic::where('iuserid', '=', $iuserid)->update([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $vuserid,
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $vuserid,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
                             'vuserbarcode' => $vuserbarcode,
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'mwpassword' => $encdoe_mwpassword,
                             'vemail' => $vemail,
 
@@ -1152,26 +1152,26 @@ class AllUserController extends Controller
 
                     if (count($res) > 0) {
                         UserDynamic::where('iuserid', '=', $iuserid)->update([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'lb_user'  => $lb_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'lb_user' => $lb_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $vuserid,
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $vuserid,
                             'vpassword' => $this->encodePassword($input['vpassword']),
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
                             'vuserbarcode' => $vuserbarcode,
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'vemail' => $vemail,
 
                             'tc_password' => $tc_pass,
@@ -1203,25 +1203,25 @@ class AllUserController extends Controller
                         fwrite($myfile, $store_text);
 
                         UserDynamic::where('iuserid', '=', $iuserid)->update([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $vuserid,
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $vuserid,
                             'vpassword' => $this->encodePassword($input['vpassword']),
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
                             'vuserbarcode' => $vuserbarcode,
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'vemail' => $vemail,
 
                             'tc_password' => $tc_pass,
@@ -1262,25 +1262,25 @@ class AllUserController extends Controller
                         fwrite($myfile, $store_text);
 
                         UserDynamic::where('iuserid', '=', $iuserid)->update([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'lb_user'  => $lb_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'lb_user' => $lb_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $vuserid,
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $vuserid,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
                             'vuserbarcode' => $vuserbarcode,
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'vemail' => $vemail,
 
                             'tc_password' => $tc_pass,
@@ -1312,24 +1312,24 @@ class AllUserController extends Controller
                         fwrite($myfile, $store_text);
 
                         UserDynamic::where('iuserid', '=', $iuserid)->update([
-                            'mob_user'  => $mob_user,
-                            'web_user'  => $web_user,
-                            'pos_user'  => $pos_user,
-                            'vfname'    => $input['vfname'],
-                            'vlname'    => $input['vlname'],
+                            'mob_user' => $mob_user,
+                            'web_user' => $web_user,
+                            'pos_user' => $pos_user,
+                            'vfname' => $input['vfname'],
+                            'vlname' => $input['vlname'],
                             'vaddress1' => $input['vaddress1'],
                             'vaddress2' => $input['vaddress2'],
-                            'vcity'     => $input['vcity'],
-                            'vstate'    => $input['vstate'],
-                            'vzip'      => $input['vzip'],
-                            'vcountry'  => $input['vcountry'],
-                            'vphone'    => $input['vphone'],
-                            'vuserid'   => $vuserid,
+                            'vcity' => $input['vcity'],
+                            'vstate' => $input['vstate'],
+                            'vzip' => $input['vzip'],
+                            'vcountry' => $input['vcountry'],
+                            'vphone' => $input['vphone'],
+                            'vuserid' => $vuserid,
                             'vusertype' => $input['vusertype'],
                             'vpasswordchange' => "No",
                             'vuserbarcode' => $vuserbarcode,
-                            'estatus'   =>  $input['estatus'],
-                            'SID'       =>  session()->get('sid'),
+                            'estatus' => $input['estatus'],
+                            'SID' => session()->get('sid'),
                             'vemail' => $vemail,
 
                             'tc_password' => $tc_pass,
@@ -1360,7 +1360,6 @@ class AllUserController extends Controller
             }
 
 
-
             if ($mst_user->vemail != $input['vemail']) {
                 $store_text = '========================== email' . PHP_EOL;
                 fwrite($myfile, $store_text);
@@ -1378,48 +1377,48 @@ class AllUserController extends Controller
                         if (!is_null($store_mw_User)) {
                             //if not empty that we are updating the user with store_mw_user id(ie., Primary key )
                             $user = User::where('id', '=', $store_mw_User->id)->update([
-                                'mob_user'  => $mob_user,
-                                'web_user'  => $web_user,
-                                'lb_user'  => $lb_user,
-                                'fname'     => $input['vfname'],
-                                'lname'     => $input['vlname'],
+                                'mob_user' => $mob_user,
+                                'web_user' => $web_user,
+                                'lb_user' => $lb_user,
+                                'fname' => $input['vfname'],
+                                'lname' => $input['vlname'],
                                 'user_role' => $input['vusertype'],
-                                'iuserid'   => $iuserid,
-                                'estatus'   => $input['estatus'],
-                                'password'  => $encdoe_mwpassword,
-                                'sid'       => session()->get('sid'),
-                                'vemail'    => $vemail,
+                                'iuserid' => $iuserid,
+                                'estatus' => $input['estatus'],
+                                'password' => $encdoe_mwpassword,
+                                'sid' => session()->get('sid'),
+                                'vemail' => $vemail,
                             ]);
                         } else {
                             //if empty then we are checking the email is alreay existed in store_mw_user
-                            $Email = User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->get();
+                            $Email = User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->get();
                             if (count($Email) > 0) {
                                 //if Email exists and it is in inactive means we will update that email
-                                User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->update([
-                                    'mob_user'  => $mob_user,
-                                    'web_user'  => $web_user,
-                                    'fname'     => $input['vfname'],
-                                    'lname'     => $input['vlname'],
+                                User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->update([
+                                    'mob_user' => $mob_user,
+                                    'web_user' => $web_user,
+                                    'fname' => $input['vfname'],
+                                    'lname' => $input['vlname'],
                                     'user_role' => $input['vusertype'],
-                                    'iuserid'   => $mst_user->iuserid,
-                                    'estatus'   => $input['estatus'],
-                                    'sid'       => session()->get('sid'),
-                                    'password'  => $encdoe_mwpassword,
+                                    'iuserid' => $mst_user->iuserid,
+                                    'estatus' => $input['estatus'],
+                                    'sid' => session()->get('sid'),
+                                    'password' => $encdoe_mwpassword,
                                 ]);
                             } else {
                                 //else not email present in store_mw user we are creating that email
                                 $main = User::create([
-                                    'mob_user'  => $mob_user,
-                                    'web_user'  => $web_user,
-                                    'lb_user'   => $lb_user,
-                                    'fname'     => $input['vfname'],
-                                    'lname'     => $input['vlname'],
+                                    'mob_user' => $mob_user,
+                                    'web_user' => $web_user,
+                                    'lb_user' => $lb_user,
+                                    'fname' => $input['vfname'],
+                                    'lname' => $input['vlname'],
                                     'user_role' => $input['vusertype'],
-                                    'iuserid'   => $mst_user->iuserid,
-                                    'estatus'   => $input['estatus'],
-                                    'sid'       => session()->get('sid'),
-                                    'password'  => $encdoe_mwpassword,
-                                    'vemail'    => $vemail,
+                                    'iuserid' => $mst_user->iuserid,
+                                    'estatus' => $input['estatus'],
+                                    'sid' => session()->get('sid'),
+                                    'password' => $encdoe_mwpassword,
+                                    'vemail' => $vemail,
                                 ]);
                             }
                         }
@@ -1436,47 +1435,47 @@ class AllUserController extends Controller
                         if (!is_null($store_mw_User)) {
                             //if not empty that we are updating the user with store_mw_user id(ie., Primary key )
                             $user = User::where('id', '=', $store_mw_User->id)->update([
-                                'mob_user'  => $mob_user,
-                                'web_user'  => $web_user,
-                                'lb_user'  => $lb_user,
-                                'fname'     => $input['vfname'],
-                                'lname'     => $input['vlname'],
+                                'mob_user' => $mob_user,
+                                'web_user' => $web_user,
+                                'lb_user' => $lb_user,
+                                'fname' => $input['vfname'],
+                                'lname' => $input['vlname'],
                                 'user_role' => $input['vusertype'],
-                                'iuserid'   => $iuserid,
-                                'estatus'   => $input['estatus'],
-                                'sid'       => session()->get('sid'),
-                                'vemail'    => $vemail,
+                                'iuserid' => $iuserid,
+                                'estatus' => $input['estatus'],
+                                'sid' => session()->get('sid'),
+                                'vemail' => $vemail,
                             ]);
                         } else {
                             //if empty then we are checking the email is alreay existed in store_mw_user
-                            $Email = User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->get();
+                            $Email = User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->get();
                             if (count($Email) > 0) {
                                 //if Email exists and it is in inactive means we will update that email
-                                User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->update([
-                                    'mob_user'  => $mob_user,
-                                    'web_user'  => $web_user,
-                                    'fname'     => $input['vfname'],
-                                    'lname'     => $input['vlname'],
+                                User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->update([
+                                    'mob_user' => $mob_user,
+                                    'web_user' => $web_user,
+                                    'fname' => $input['vfname'],
+                                    'lname' => $input['vlname'],
                                     'user_role' => $input['vusertype'],
-                                    'iuserid'   => $mst_user->iuserid,
-                                    'estatus'   => $input['estatus'],
-                                    'sid'       => session()->get('sid'),
-                                    'password'  => $encdoe_mwpassword,
+                                    'iuserid' => $mst_user->iuserid,
+                                    'estatus' => $input['estatus'],
+                                    'sid' => session()->get('sid'),
+                                    'password' => $encdoe_mwpassword,
                                 ]);
                             } else {
                                 //else not email present in store_mw user we are creating that email
                                 $main = User::create([
-                                    'mob_user'  => $mob_user,
-                                    'web_user'  => $web_user,
-                                    'lb_user'   => $lb_user,
-                                    'fname'     => $input['vfname'],
-                                    'lname'     => $input['vlname'],
+                                    'mob_user' => $mob_user,
+                                    'web_user' => $web_user,
+                                    'lb_user' => $lb_user,
+                                    'fname' => $input['vfname'],
+                                    'lname' => $input['vlname'],
                                     'user_role' => $input['vusertype'],
-                                    'iuserid'   => $mst_user->iuserid,
-                                    'estatus'   => $input['estatus'],
-                                    'sid'       => session()->get('sid'),
-                                    'password'  => $encdoe_mwpassword,
-                                    'vemail'    => $vemail,
+                                    'iuserid' => $mst_user->iuserid,
+                                    'estatus' => $input['estatus'],
+                                    'sid' => session()->get('sid'),
+                                    'password' => $encdoe_mwpassword,
+                                    'vemail' => $vemail,
                                 ]);
                             }
                         }
@@ -1498,48 +1497,48 @@ class AllUserController extends Controller
                         if (!is_null($store_mw_User)) {
                             //if not empty that we are updating the user with store_mw_user id(ie., Primary key )
                             $user = User::where('id', '=', $store_mw_User->id)->update([
-                                'mob_user'  => $mob_user,
-                                'web_user'  => $web_user,
-                                'lb_user'   => $lb_user,
-                                'fname'     => $input['vfname'],
-                                'lname'     => $input['vlname'],
+                                'mob_user' => $mob_user,
+                                'web_user' => $web_user,
+                                'lb_user' => $lb_user,
+                                'fname' => $input['vfname'],
+                                'lname' => $input['vlname'],
                                 'user_role' => $input['vusertype'],
-                                'iuserid'   => $iuserid,
-                                'estatus'   => $input['estatus'],
-                                'password'  => $encdoe_mwpassword,
-                                'sid'       => session()->get('sid'),
-                                'vemail'    => $vemail,
+                                'iuserid' => $iuserid,
+                                'estatus' => $input['estatus'],
+                                'password' => $encdoe_mwpassword,
+                                'sid' => session()->get('sid'),
+                                'vemail' => $vemail,
                             ]);
                         } else {
                             //if empty then we are checking the email is alreay existed in store_mw_user
-                            $Email = User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->get();
+                            $Email = User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->get();
                             if (count($Email) > 0) {
                                 //if Email exists and it is in inactive means we will update that email
-                                User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->update([
-                                    'mob_user'  => $mob_user,
-                                    'web_user'  => $web_user,
-                                    'fname'     => $input['vfname'],
-                                    'lname'     => $input['vlname'],
+                                User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->update([
+                                    'mob_user' => $mob_user,
+                                    'web_user' => $web_user,
+                                    'fname' => $input['vfname'],
+                                    'lname' => $input['vlname'],
                                     'user_role' => $input['vusertype'],
-                                    'iuserid'   => $mst_user->iuserid,
-                                    'estatus'   => $input['estatus'],
-                                    'sid'       => session()->get('sid'),
-                                    'password'  => $encdoe_mwpassword,
+                                    'iuserid' => $mst_user->iuserid,
+                                    'estatus' => $input['estatus'],
+                                    'sid' => session()->get('sid'),
+                                    'password' => $encdoe_mwpassword,
                                 ]);
                             } else {
                                 //else not email present in store_mw user we are creating that email
                                 $main = User::create([
-                                    'mob_user'  => $mob_user,
-                                    'web_user'  => $web_user,
-                                    'lb_user'   => $lb_user,
-                                    'fname'     => $input['vfname'],
-                                    'lname'     => $input['vlname'],
+                                    'mob_user' => $mob_user,
+                                    'web_user' => $web_user,
+                                    'lb_user' => $lb_user,
+                                    'fname' => $input['vfname'],
+                                    'lname' => $input['vlname'],
                                     'user_role' => $input['vusertype'],
-                                    'iuserid'   => $mst_user->iuserid,
-                                    'estatus'   => $input['estatus'],
-                                    'sid'       => session()->get('sid'),
-                                    'password'  => $encdoe_mwpassword,
-                                    'vemail'    => $vemail,
+                                    'iuserid' => $mst_user->iuserid,
+                                    'estatus' => $input['estatus'],
+                                    'sid' => session()->get('sid'),
+                                    'password' => $encdoe_mwpassword,
+                                    'vemail' => $vemail,
                                 ]);
                             }
                         }
@@ -1554,47 +1553,47 @@ class AllUserController extends Controller
                         if (!is_null($store_mw_User)) {
                             //if not empty that we are updating the user with store_mw_user id(ie., Primary key )
                             $user = User::where('id', '=', $store_mw_User->id)->update([
-                                'mob_user'  => $mob_user,
-                                'web_user'  => $web_user,
-                                'lb_user'   => $lb_user,
-                                'fname'     => $input['vfname'],
-                                'lname'     => $input['vlname'],
+                                'mob_user' => $mob_user,
+                                'web_user' => $web_user,
+                                'lb_user' => $lb_user,
+                                'fname' => $input['vfname'],
+                                'lname' => $input['vlname'],
                                 'user_role' => $input['vusertype'],
-                                'iuserid'   => $iuserid,
-                                'estatus'   => $input['estatus'],
-                                'sid'       => session()->get('sid'),
-                                'vemail'    => $vemail,
+                                'iuserid' => $iuserid,
+                                'estatus' => $input['estatus'],
+                                'sid' => session()->get('sid'),
+                                'vemail' => $vemail,
                             ]);
                         } else {
                             //if empty then we are checking the email is alreay existed in store_mw_user
-                            $Email = User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->get();
+                            $Email = User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->get();
                             if (count($Email) > 0) {
                                 //if Email exists and it is in inactive means we will update that email
-                                User::where([['vemail', '=', $input['vemail']], ['estatus', '=',  'Inactive']])->update([
-                                    'mob_user'  => $mob_user,
-                                    'web_user'  => $web_user,
-                                    'fname'     => $input['vfname'],
-                                    'lname'     => $input['vlname'],
+                                User::where([['vemail', '=', $input['vemail']], ['estatus', '=', 'Inactive']])->update([
+                                    'mob_user' => $mob_user,
+                                    'web_user' => $web_user,
+                                    'fname' => $input['vfname'],
+                                    'lname' => $input['vlname'],
                                     'user_role' => $input['vusertype'],
-                                    'iuserid'   => $mst_user->iuserid,
-                                    'estatus'   => $input['estatus'],
-                                    'sid'       => session()->get('sid'),
-                                    'password'  => $encdoe_mwpassword,
+                                    'iuserid' => $mst_user->iuserid,
+                                    'estatus' => $input['estatus'],
+                                    'sid' => session()->get('sid'),
+                                    'password' => $encdoe_mwpassword,
                                 ]);
                             } else {
                                 //else not email present in store_mw user we are creating that email
                                 $main = User::create([
-                                    'mob_user'  => $mob_user,
-                                    'web_user'  => $web_user,
-                                    'lb_user'   => $lb_user,
-                                    'fname'     => $input['vfname'],
-                                    'lname'     => $input['vlname'],
+                                    'mob_user' => $mob_user,
+                                    'web_user' => $web_user,
+                                    'lb_user' => $lb_user,
+                                    'fname' => $input['vfname'],
+                                    'lname' => $input['vlname'],
                                     'user_role' => $input['vusertype'],
-                                    'iuserid'   => $mst_user->iuserid,
-                                    'estatus'   => $input['estatus'],
-                                    'sid'       => session()->get('sid'),
-                                    'password'  => $encdoe_mwpassword,
-                                    'vemail'    => $vemail,
+                                    'iuserid' => $mst_user->iuserid,
+                                    'estatus' => $input['estatus'],
+                                    'sid' => session()->get('sid'),
+                                    'password' => $encdoe_mwpassword,
+                                    'vemail' => $vemail,
                                 ]);
                             }
                         }
