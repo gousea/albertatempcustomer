@@ -30,7 +30,11 @@
                 <div class="menu">
                     <span class="font-weight-bold text-uppercase"> Dashboard</span>
                 </div>
+
                 <div class="nav-submenu">
+                    <a type="button" class="btn btn-gray headerblack  buttons_menu text-uppercase"
+                                            href="#" id="addInfo">Add InfoTiles
+                    </a>
                     <a type="button" class="btn btn-gray headerblack  buttons_menu text-uppercase"
                         href="{{ route('dashboardlayout') }}"> Edit layout
                     </a>
@@ -44,7 +48,7 @@
                 <div class="heading text-muted">
                     <h6>Store Statistics</h6>
                 </div>
-                <div class="grid-container">
+                <div class="grid-container" style="grid-template-columns: repeat(2,1fr);">
                     <div class="box grid-item1">
                         <div class="icons">
                             {{-- <i class="fa fa-eye fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
@@ -54,6 +58,46 @@
                             {{-- <p class="buttons_menu a font-weight-bold">$2,193.00</p> --}}
                             <h6>$ {{ $output['sales']['today'] }}</h6>
                             <p class="buttons_menu c text-muted font-weight-bold">Today's Sales</p>
+                        </div>
+                    </div>
+                    <div class="box grid-item2">
+                        <div class="icons">
+                            {{-- <i class="fa fa-cutlery fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
+                            <img src="{{ asset('image/outline_date_range_black_24dp.png') }}" style="opacity: 0.3" />
+                        </div>
+                        <div class="text-numbers">
+                            <p class="buttons_menu a font-weight-bold">$ {{ $output['sales']['week'] }}</p>
+                            <p class="buttons_menu c text-muted font-weight-bold">Weekly sales</p>
+                        </div>
+                    </div>
+                    <div class="box grid-item2">
+                        <div class="icons">
+                            {{-- <i class="fa fa-cutlery fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
+                            <img src="{{ asset('image/outline_date_range_black_24dp.png') }}" style="opacity: 0.3" />
+                        </div>
+                        <div class="text-numbers">
+                            <p class="buttons_menu a font-weight-bold">$ {{ $output['sales']['week'] }}</p>
+                            <p class="buttons_menu c text-muted font-weight-bold">Weekly sales</p>
+                        </div>
+                    </div>
+                    <div class="box grid-item2">
+                        <div class="icons">
+                            {{-- <i class="fa fa-cutlery fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
+                            <img src="{{ asset('image/outline_date_range_black_24dp.png') }}" style="opacity: 0.3" />
+                        </div>
+                        <div class="text-numbers">
+                            <p class="buttons_menu a font-weight-bold">$ {{ $output['sales']['week'] }}</p>
+                            <p class="buttons_menu c text-muted font-weight-bold">Weekly sales</p>
+                        </div>
+                    </div>
+                    <div class="box grid-item2">
+                        <div class="icons">
+                            {{-- <i class="fa fa-cutlery fa-3x text-muted transperent-icons" aria-hidden="true"></i> --}}
+                            <img src="{{ asset('image/outline_date_range_black_24dp.png') }}" style="opacity: 0.3" />
+                        </div>
+                        <div class="text-numbers">
+                            <p class="buttons_menu a font-weight-bold">$ {{ $output['sales']['week'] }}</p>
+                            <p class="buttons_menu c text-muted font-weight-bold">Weekly sales</p>
                         </div>
                     </div>
                     <div class="box grid-item2">
@@ -111,9 +155,11 @@
                     <h6>News & Updates</h6>
                 </div>
                 <div class="content text-muted">
+                    @if(!empty($output['news_update']))
                     <?php foreach($output['news_update'] as $newsupdate) {?>
                     <p><?php echo $newsupdate->news_text; ?></p>
                     <?php } ?>
+                    @endif
                 </div>
             </div>
         </div>
@@ -308,8 +354,8 @@
     <div class="modal fade" id="view_salesdetail_model" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
-      <div class="modal-content">        
-        <div class="modal-body" id="printme">          
+      <div class="modal-content">
+        <div class="modal-body" id="printme">
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -318,23 +364,52 @@
       </div>
     </div>
   </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Tiles Details</h4>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Please fill out both the required inputs &hellip;</strong></p>
+                    <form method="post" action="#" name="" id="">
 
-    
+                        <div class="form-group">
+                            <label for="rtype">Select Report Type:</label>
+                            <select class="form-control" aria-label=".form-select-sm example" id="rtype">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="seq">Select Sequence:</label>
+                            <input type="number" class="form-control" id="seq">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Add Tiles</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 
 @endsection
-
 @section('page-script')
 
     <link rel="stylesheet" href="{{ asset('asset/css/adjustment.css') }}">
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
-
-    
 <script type="text/javascript">
-
-
-
+    $("#addInfo").click(function (){
+        $('#myModal').modal('toggle');
+    });
 $(document).on('click', '.print-sales', function(event) {
   event.preventDefault();
   var reportdata_url = '<?php echo route('dashboardsalevalue'); ?>';
@@ -345,24 +420,23 @@ $(document).on('click', '.print-sales', function(event) {
   $("div#divLoading").addClass('show');
 
   $.ajax({
-      
       url     : reportdata_url,
       data    : {salesid:salesid},
       type    : 'GET',
-      
+
   }).done(function(response){
       var  response = $.parseJSON(response); //decode the response array
-    
+
       if(response.code == 1 ){
           $("div#divLoading").removeClass('show');
           $('.modal-body').html(response.data);
           $('#view_salesdetail_model').modal('show');
-      
+
       }else if(response.code == 0){
           alert('Something Went Wrong!!!');
           $("div#divLoading").removeClass('show');
           return false;
-    }		
+    }
   });
 
 });
@@ -397,11 +471,7 @@ $(document).on('click', '.print-sales', function(event) {
     </script>
 
     <script src="{{ asset('javascript/dashboardApi.js') }}"></script>
-
     <script type="text/javascript">
-        // $(window).load(function() {
-        //     $("div#divLoading").removeClass('show');
-        // });
         $(document).ready(function() {
             setTimeout(function() {
                 if (window.sevenDaySalesArea !== undefined) {
@@ -420,10 +490,7 @@ $(document).on('click', '.print-sales', function(event) {
                     window.cutomerFlow.redraw();
                 }
             }, 50);
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
+
             $('#lessId').removeClass('lessContent');
             $('#moreId').addClass('moreContent');
             $('#lessBtn').hide();
