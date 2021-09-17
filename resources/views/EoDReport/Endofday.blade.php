@@ -276,7 +276,7 @@
                                     @if($data[0]->HouseAcctCheck !=0)
                                         <tr>
                                             <td class="text-right bg_table">  HOUSE ACCT PAYMENT CHECK </td>
-                                            <td class="text-right bg_table"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCheck}}</button></td>
+                                            <td class="text-right bg_table"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCheck}}</button></td>
                                         </tr>
                                     @endif
                                     @if($data[0]->CashTender+$data[0]->CouponTender+$data[0]->CreditCardTender !=0)
