@@ -90,7 +90,13 @@
                             <td class='text-right'><?php echo isset($itmes['TOTUNITPRICE']) ? $itmes['TOTUNITPRICE']: ''; ?></td>
                             <td class='text-right'><?php echo isset($itmes['AmountPer']) ? number_format($itmes['AmountPer'],2): ''; ?></td>
                             <td class='text-right'><?php echo isset($itmes['Amount']) ? $itmes['Amount']: ''; ?></td>
-                            <td class='text-right'><?php echo number_format(($itmes['Amount']/$itmes['TOTUNITPRICE'])*100,2); ?></td>
+                            
+                            <?php if ($itmes['TOTUNITPRICE'] !=0){?>
+                             <td class='text-right'><?php echo number_format(($itmes['Amount']/$itmes['TOTUNITPRICE'])*100,2); ?></td>
+                            <?php } else { ?>
+                            
+                            <td class='text-right'><?php echo number_format(($itmes['Amount']),2); ?></td>
+                            <?php }  ?>
                         </tr>
                     <?php } ?>
                     <tr> 
