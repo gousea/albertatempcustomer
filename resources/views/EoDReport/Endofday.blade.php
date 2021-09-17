@@ -282,7 +282,7 @@
                                     @if($data[0]->CashTender+$data[0]->CouponTender+$data[0]->CreditCardTender !=0)
                                       <tr>
                                            <td class="text-right bg_table"> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;TENDER TOTAL</td>
-                                           <td class="text-right bg_table"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->CashTender+$data[0]->CouponTender+$data[0]->CreditCardTender}} </button></td>
+                                           <td class="text-right bg_table"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->GrandTotal}}  </button></td>
                                         </tr> 
                                      @endif    
                                    </table>
