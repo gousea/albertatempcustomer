@@ -1304,7 +1304,7 @@
                                         <p>
                                             <span style="width:35%;font-size:1rem;"> UNIT PER CASE</span>
                                             &nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_npack"
-                                                    value="1" class="form-control">
+                                                    value="0" class="form-control">
                                             </span>
                                         </p>
 
@@ -1381,6 +1381,15 @@
                                                     <?php } ?>
                                                     <?php } ?>
                                                 </select>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="col-md-4 span_field">
+                                        <p>
+                                            <span style="width:35%;font-size:1rem;"> SELLING UNIT</span>
+                                            &nbsp;&nbsp;<span style="width:60%;"><input type="text" name="update_nsellunit"
+                                                    value="0" class="form-control">
                                             </span>
                                         </p>
                                     </div>
