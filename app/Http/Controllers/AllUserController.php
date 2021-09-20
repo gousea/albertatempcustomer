@@ -589,6 +589,21 @@ class AllUserController extends Controller
         $txt = PHP_EOL . "Insertion Starting Date And time is: " . date("Y-m-d h:i:sa") . PHP_EOL;
         fwrite($myfile, $txt);
 
+        $sid = session()->get('sid');
+        /**
+         * check user exits before doing multiple tasks
+         */
+        if(!empty($sid)){
+            $users = UserDynamic::where('iuserid', '=', $iuserid)->first();
+            if ($users === null)
+            {
+                /**
+                 * User does not exist
+                 * */
+                return redirect('users/')
+                    ->withErrors("User does not exist(ID- $iuserid).");
+            }
+        }
         $permissions = Permission::groupBy('vpermissioncode')->get();
         $mstPermissiongroup = Permissiongroup::all();
         $user = UserDynamic::where('iuserid', '=', $iuserid)->get();
@@ -676,6 +691,20 @@ class AllUserController extends Controller
         }
         session()->put('userInput', $input);
         $sid = session()->get('sid');
+        /**
+         * check user exits before doing multiple tasks
+         */
+        if(!empty($sid)){
+            $users = UserDynamic::where('iuserid', '=', $iuserid)->first();
+            if ($users === null) {
+                /**
+                 * User does not exist
+                 * */
+                return redirect('users/')
+                    ->withErrors("User does not exist(ID- $iuserid).");
+            }
+        }
+
         $que = Userpermission::where('userid', '=', $iuserid)->get()->toArray();
         $list_of_permissions = array();
 
