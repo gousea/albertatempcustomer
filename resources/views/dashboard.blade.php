@@ -274,35 +274,66 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-8" style="bottom: 180px;">
-            <div class="table-responsive">
-                <div class="heading text-muted">
-                    <h6 class="text-uppercase">Latest Transactions</h6>
-                </div>
-                <table id="vendor" class="table table-hover promotionview" style="width: 100%">
-                    <thead>
-                        <tr class="header-color">
-                            <th class="col-xs-1 headername text-uppercase" style="width: 300px;">timestamp</th>
-                            <th class="col-xs-1 headername text-uppercase" style="width: 300px;">transaction id</th>
-                            <th class="col-xs-6 headername text-uppercase" style="width: 300px;">amount</th>
-                            <th class="col-xs-6 headername text-uppercase" style="width: 300px;">tender type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($output['trn_sales_data'] as $sales_data)
-                            <tr id="customer-row">
-                                <td><span>{{ $sales_data->sales_timestamp }}</span></td>
-                                <td><a class="print-sales" id="print" data-id="<?php echo $sales_data->isalesid;?>">{{ $sales_data->transaction_id }} </a></td>
-                                <!-- <td><span>{{ $sales_data->transaction_id }}</span></td> -->
-                                <td><span>{{ $sales_data->sales_amount }}</span></td>
-                                <td><span>{{ $sales_data->tender_type }}</span></td>
+        
+        <?php if(isset($output['trn_sales_data'])) { ?>
+            <div class="col-8" style="top: 16px;">
+                <div class="table-responsive">
+                    <div class="heading text-muted">
+                        <h6 class="text-uppercase">Latest Transactions</h6>
+                    </div>
+                    <table id="vendor" class="table table-hover promotionview" style="width: 100%">
+                        <thead>
+                            <tr class="header-color">
+                                <th class="col-xs-1 headername text-uppercase" style="width: 300px;">timestamp</th>
+                                <th class="col-xs-1 headername text-uppercase" style="width: 300px;">transaction id</th>
+                                <th class="col-xs-6 headername text-uppercase" style="width: 300px;">amount</th>
+                                <th class="col-xs-6 headername text-uppercase" style="width: 300px;">tender type</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($output['trn_sales_data'] as $sales_data)
+                                <tr id="customer-row">
+                                    <td><span>{{ $sales_data->sales_timestamp }}</span></td>
+                                    <td><a class="print-sales" id="print" data-id="<?php echo $sales_data->isalesid;?>">{{ $sales_data->transaction_id }} </a></td>
+                                    <!-- <td><span>{{ $sales_data->transaction_id }}</span></td> -->
+                                    <td><span>{{ $sales_data->sales_amount }}</span></td>
+                                    <td><span>{{ $sales_data->tender_type }}</span></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        <?php } else {?>
+            <div class="col-8" style="bottom: 180px;">
+                <div class="table-responsive">
+                    <div class="heading text-muted">
+                        <h6 class="text-uppercase">Latest Transactions</h6>
+                    </div>
+                    <table id="vendor" class="table table-hover promotionview" style="width: 100%">
+                        <thead>
+                            <tr class="header-color">
+                                <th class="col-xs-1 headername text-uppercase" style="width: 300px;">timestamp</th>
+                                <th class="col-xs-1 headername text-uppercase" style="width: 300px;">transaction id</th>
+                                <th class="col-xs-6 headername text-uppercase" style="width: 300px;">amount</th>
+                                <th class="col-xs-6 headername text-uppercase" style="width: 300px;">tender type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($output['trn_sales_data'] as $sales_data)
+                                <tr id="customer-row">
+                                    <td><span>{{ $sales_data->sales_timestamp }}</span></td>
+                                    <td><a class="print-sales" id="print" data-id="<?php echo $sales_data->isalesid;?>">{{ $sales_data->transaction_id }} </a></td>
+                                    <!-- <td><span>{{ $sales_data->transaction_id }}</span></td> -->
+                                    <td><span>{{ $sales_data->sales_amount }}</span></td>
+                                    <td><span>{{ $sales_data->tender_type }}</span></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <?php } ?>
     </div>
 
     <div class="modal fade" id="view_salesdetail_model" role="dialog">
