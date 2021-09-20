@@ -10,7 +10,7 @@ Vendor Paid Out Report
                 <div class="menu">
                     <span class="font-weight-bold text-uppercase"> Paid Out Report</span>
                 </div>
-                <div class="nav-submenu">
+                <div class="nav-submenu" style="display: none;">
                        <?php if(isset($report_paid_out) && count($report_paid_out) > 0){ ?>
                             <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
                             </a>
@@ -172,31 +172,44 @@ Vendor Paid Out Report
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                
                                 </tr>
-                    </thead>              
-                            <?php 
+                    </thead>    
+                    
+                    
+                     <?php $i=0;?>
+                            <?php foreach($out as $r) { ?>
                             
-                                $count = 0; 
-                                foreach($report_paid_out as $v){?>
-                                 <?php if($v->Vendor === "Total"){
-                                 continue;
-                                 }?>
-                           
-                                    <tr>
-                                            
-                                           <td><?php echo isset($v->dt) ? $v->dt: ""; ?></td>
-                                            
+                                        <?php $i++;?>
+                                        <tr class="first_row th_color" id="child_<?php echo $i;?>">
+                                            <th><?php echo isset($r['Vendorname']) ? $r['Vendorname']: ''; ?></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
                                        
-                                           <td><?php echo isset($v->ttime) ? $v->ttime: 0.00; ?></td>
-                                            <td><?php echo isset($v->Vendor) ? $v->Vendor: ""; ?></td>
-                                            <td><?php echo "$",isset($v->Amount) ? $v->Amount: 0.00; ?></td>
+                                        <?php  foreach($r['details'] as $v) { ?>
                                             
-                                            <td><?php echo isset($v->TenderType) ? $v->TenderType: 0.00; ?></td>
-                                            <td><?php echo isset($v->RegNo) ? $v->RegNo : 0.00; ?></td>
-                                            
-                                            <td><?php echo isset($v->UserId) ? $v->UserId: 0.00; ?></td>
-                                    </tr>
-                                <?php } ?>
+                                            <tr  style="display:none;" class="child_<?php echo $i;?>">
+                                                <td style="display:none;" class="child_<?php echo $i;?>"><?php echo isset($v['dt']) ? $v['dt']: ''; ?></td>
+                                                <td><?php echo isset($v['ttime']) ? $v['ttime']: 0.00; ?></td>
+                                                <td><?php echo isset($v['Vendor']) ? $v['Vendor']: ""; ?></td>
+                                                <td><?php echo "$",isset($v['Amount']) ? $v['Amount']: 0.00; ?></td>
+                                                
+                                                <td><?php echo isset($v['TenderType']) ? $v['TenderType']: 0.00; ?></td>
+                                                <td><?php echo isset($v['RegNo']) ? $v['RegNo'] : 0.00; ?></td>
+                                                
+                                                <td><?php echo isset($v['UserId']) ? $v['UserId']: 0.00; ?></td>
+                                                
+                                            </tr>                                                
+                                    <?php } ?>
+                            <?php } ?>     
+                                        
+                                        
+                            
                     
                          
                         
@@ -278,7 +291,10 @@ Vendor Paid Out Report
 
     cb(start, end);
     
-    
+   $('.first_row').click(function(){
+    var trclass = $(this).attr('id');
+    $("."+trclass).toggle();
+  }); 
 
 });
       
@@ -541,6 +557,7 @@ $(document).ready(function() {
     });
 
 </script>
+
 <style>
 .rcorner {
   border-radius:9px;

@@ -1731,5 +1731,52 @@ class Reports extends Model
 	    return $result;
         }
     }
+    //new paid out report
+    public function newpaidOut($from_date = null, $to_date=null,$vendor,$amounttype,$amount,$tender) {
+        $condition = "";
+       if($vendor=='All'){
+           $vendor_name='All';
+       }
+       else{
+           $vendor_name=$vendor;
+         
+             $condition =  " AND vpaidoutname =  '".$vendor."' ";
+  
+       }
+       if($amounttype==''){
+           $amounttype='All';
+       } 
+       if($amount==''){
+           $amount='100000000000000000';
+       }
+       
+       $fDateTime = DateTime::createFromFormat('Y-m-d', $from_date);
+       $fDateString = $fDateTime->format('m-d-Y');
+       //echo $fDateString;die;
+       
+       $eDateTime = DateTime::createFromFormat('Y-m-d', $to_date);
+       $eDateString = $eDateTime->format('m-d-Y');
+     
+     
+       // $sql ="CALL rp_eofpaidout('".$fDateString."','".$eDateString."', '".$vendor_name."','".$amounttype."','".$amount."','".ucfirst($tender)."')";
+      $SQL="select ifnull(Vendor,'Total') Vendor, Amount , RegNo, UserId, TenderType, dt, ttime
+       from ( 	SELECT vpaidoutname Vendor, namount Amount , vterminalid RegNo, ilogid UserId, 'Cash' TenderType, date_format(ddate, '%m-%d-%Y') dt, time_format(ddate, '%r') ttime
+               FROM trn_paidoutdetail tpd join trn_paidout tp 
+               on tpd.ipaidouttrnid=tp.ipaidouttrnid 
+               where tp.ibatchid in 
+                       (select d.batchid 
+                       from trn_endofday e 
+                       join trn_endofdaydetail d on e.id=d.eodid 
+                       where date(e.dstartdatetime) 
+                     between '".$from_date."'  and  '".$to_date."'
+                      )
+           $condition
+           ) t " ;
+           
+           ///dd($SQL);
+
    
+       $query =  DB::connection('mysql_dynamic')->select($SQL);
+       return $query;
+   }
 }   
