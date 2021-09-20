@@ -128,7 +128,7 @@
                         <div class="panel-body padding15">
                             <strong>
                                 <h2 class="md-title" align="center"><sup style="font-size: 20px">Last 7 Day
-                                        Customer</sup></h2>
+                                        Sales</sup></h2>
                             </strong>
                             <div class="box-body chart-responsive">
                                 <div class="chart" id="chart" style="height: 300px;"></div>
