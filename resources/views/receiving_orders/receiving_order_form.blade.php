@@ -3143,6 +3143,7 @@ $('.editable_text').focus(function() {
 
             $('tbody#history_items').append(search_table_html).show('slow');
             $('#rotating_logo').hide();
+            $('#sku').val('').focus();
             return false;
             
           }else{
