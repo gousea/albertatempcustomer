@@ -16,6 +16,9 @@ use App\Model\WebAdminSetting;
 use Session;
 use Illuminate\Support\Facades\DB;
 
+use App\Model\ItemGroupDetail;
+use App\Model\ItemGroup;
+
 class PromotionController extends Controller
 {
     
