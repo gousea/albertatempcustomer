@@ -8,7 +8,7 @@
     <style>
         .checks.check.custom-control-input.checkboxes {
             position: absolute !important;
-            opacity: none !important;
+            opacity: 0 !important;
             z-index: 0 !important;
         }
 
@@ -704,7 +704,7 @@
                                 @foreach ($permissions as $permission)
                                     @if ($permission->vpermissiontype != 'MOB' && $permission->vpermissiontype != 'WEB')
                                         <tr>
-                                            <td style="height: 49.5; width: 61.8px;">
+                                            <td style="height: 49.5px; width: 61.8px;">
                                                 <div class="custom-control custom-checkbox" id="table_green_check"
                                                     style="padding: 5px; margin-left: 5px;">
                                                     <input
@@ -737,7 +737,7 @@
                                 @if ($permission->vpermissiontype == 'WEB')
                                     @if ($permission->vpermissionname != 'LOYALITY')
                                         <tr>
-                                            <td style="height: 49.5; width: 61.8px;">
+                                            <td style="height: 49.5px; width: 61.8px;">
                                                 <div class="custom-control custom-checkbox" id="table_orange_check"
                                                     style="padding: 5px; margin-left: 5px;">
                                                     <input
@@ -771,7 +771,7 @@
                         @foreach ($permissions as $permission)
                             @if ($permission->vpermissiontype == 'MOB')
                                 <tr>
-                                    <td style="height: 49.5; width: 61.8px;">
+                                    <td style="height: 49.5px; width: 61.8px;">
                                         <div class="custom-control custom-checkbox" id="table_blue_check"
                                             style="padding: 5px; margin-left: 5px;">
                                             <input
@@ -850,6 +850,28 @@
     </script>
 
     <script type="text/javascript">
+        /**
+         * remove space from password inputs
+         * */
+        $('#input-mwpassword').bind('keyup paste', function () {
+            this.value = this.value.replace(/ /g,'');
+        });
+        $('#input-re-mwpassword').bind('keyup paste', function () {
+            this.value = this.value.replace(/ /g,'');
+        });
+        $('#input_tc_pass').bind('keyup paste', function () {
+            this.value = this.value.replace(/ /g,'');
+        });
+        $('#input_tcc_pass').bind('keyup paste', function () {
+            this.value = this.value.replace(/ /g,'');
+        });
+        $('#input-vpassword').bind('keyup paste', function () {
+            this.value = this.value.replace(/ /g,'');
+        });
+        $('#input-re-vpassword').bind('keyup paste', function () {
+            this.value = this.value.replace(/ /g,'');
+        });
+
         $(document).on('keyup', 'input[name="tcc_pass"]', function(event) {
             event.preventDefault();
             var tc_pass = $('input[name="tc_pass"]').val();
