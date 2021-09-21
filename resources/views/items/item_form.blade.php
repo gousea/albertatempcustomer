@@ -4609,20 +4609,17 @@ $adjvaluereset = 0;
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  deletealiasstores" disabled id="deletealiasstores"
-                                        name="deletealiasstores" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  deletealiasstores" disabled id="deletealiasstores" name="deletealiasstores" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
-                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does
-                                    not exist)</span></td>'+
+                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                             '</tr>';
                         $('#deleteAliasSelectAllCheckbox').attr('disabled', true);
                         } else {
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  deletealiasstores" id="deletealiasstores"
-                                        name="deletealiasstores" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  deletealiasstores" id="deletealiasstores" name="deletealiasstores" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
                             '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -5051,20 +5048,17 @@ $adjvaluereset = 0;
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  lotstores" disabled id="lotstores" name="lotstores"
-                                        value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check lotstores" disabled id="lotstores" name="lotstores" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
-                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does
-                                    not exist)</span></td>'+
+                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                             '</tr>';
                         $('#lomatrixSelectAllCheckboxAlias').attr('disabled', true);
                         } else {
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  lotstores" id="lotstores" name="lotstores"
-                                        value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  lotstores" id="lotstores" name="lotstores" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
                             '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -5235,20 +5229,17 @@ $adjvaluereset = 0;
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  deletelotstores" disabled id="deletelotstores"
-                                        name="deletelotstores" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  deletelotstores" disabled id="deletelotstores" name="deletelotstores" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
-                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does
-                                    not exist)</span></td>'+
+                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                             '</tr>';
                         $('#deleteLotMatrixSelectAllCheckbox').attr('disabled', true);
                         } else {
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  deletelotstores" id="deletelotstores"
-                                        name="deletelotstores" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  deletelotstores" id="deletelotstores" name="deletelotstores" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
                             '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -5408,20 +5399,17 @@ $adjvaluereset = 0;
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  editlotstores" disabled id="editlotstores"
-                                        name="editlotstores" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  editlotstores" disabled id="editlotstores" name="editlotstores" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
-                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does
-                                    not exist)</span></td>'+
+                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                             '</tr>';
                         $('#editLotMatrixSelectAllCheckbox').attr('disabled', true);
                         } else {
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  editlotstores" id="editlotstores" name="editlotstores"
-                                        value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  editlotstores" id="editlotstores" name="editlotstores" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
                             '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -5500,162 +5488,6 @@ $adjvaluereset = 0;
         });
     </script>
 
-    <script type="text/javascript">
-        /*  $(document).on('submit', 'form#delete_slab_price_items', function(event) {
-            event.preventDefault();
-
-            var url = $(this).attr('action');
-            var data = {};
-
-            if($("input[name='selected_slab_price[]']:checked").length == 0){
-              $('#error_alias').html('<strong>Select Items to delete</strong>');
-              $('#errorAliasModal').modal('show');
-              return false;
-            }
-
-            $("input[name='selected_slab_price[]']:checked").each(function (i)
-            {
-              data[i] = parseInt($(this).val());
-            });
-
-            $.ajax({
-              url : url,
-              headers: {
-                        'X-CSRF-TOKEN': '<?php echo csrf_token(); ?>'
-              },
-              data : JSON.stringify(data),
-              type : 'POST',
-              contentType: "application/json",
-              dataType: 'json',
-            success: function(data) {
-
-              $('#success_alias').html('<strong>'+ data.success +'</strong>');
-              $('#successAliasModal').modal('show');
-              $.cookie("tab_selected", 'slab_price_tab');
-              setTimeout(function(){
-               window.location.reload();
-               $("div#divLoading").addClass('show');
-              }, 3000);
-
-            },
-            error: function(xhr) {
-              var  response_error = $.parseJSON(xhr.responseText);
-
-              var error_show = '';
-
-              if(response_error.error){
-                error_show = response_error.error;
-              }else if(response_error.validation_error){
-                error_show = response_error.validation_error[0];
-              }
-
-              $('#error_alias').html('<strong>'+ error_show +'</strong>');
-              $('#errorAliasModal').modal('show');
-              return false;
-            }
-          });
-            return false;
-          });
-          */
-    </script>
-
-    <script type="text/javascript">
-        /*  $(document).on('submit', 'form#form_add_parent_item', function(event) {
-            event.preventDefault();
-
-
-            var url = $(this).attr('action');
-            var data = {};
-
-            var parent_item_id = $(this).find('select[name="parent_item_id"]').val();
-            var child_item_id = $(this).find('input[name="child_item_id"]').val();
-
-            data['parent_item_id'] = parent_item_id;
-            data['child_item_id'] = child_item_id;
-
-            $.ajax({
-              url : url,
-              headers: {
-                        'X-CSRF-TOKEN': '<?php echo csrf_token(); ?>'
-              },
-              data : JSON.stringify(data),
-              type : 'POST',
-              contentType: "application/json",
-              dataType: 'json',
-            success: function(data) {
-
-              $('#success_alias').html('<strong>'+ data.success +'</strong>');
-              $('#successAliasModal').modal('show');
-              $.cookie("tab_selected", 'parent_tab');
-    </script>
-
-    <script type="text/javascript">
-        /*  $(document).on('submit', 'form#remove_parent_item', function(event) {
-            event.preventDefault();
-
-            var url = $(this).attr('action');
-
-            var data = {};
-            var selected_parent_item = []
-
-            var iitemid = $(this).find('input[name="iitemid"]').val();
-
-            if($("input[name='selected_parent_item[]']:checked").length == 0){
-              $('#error_alias').html('<strong>Select Items to Remove</strong>');
-              $('#errorAliasModal').modal('show');
-              return false;
-            }
-
-            $("input[name='selected_parent_item[]']:checked").each(function (i)
-            {
-              selected_parent_item[i] = parseInt($(this).val());
-            });
-
-            var selected_parent_item_id =selected_parent_item[0];
-
-            data['iitemid'] = iitemid;
-            data['selected_parent_item_id'] = selected_parent_item_id;
-
-            $.ajax({
-              url : url,
-              headers: {
-                        'X-CSRF-TOKEN': '<?php echo csrf_token(); ?>'
-              },
-              data : JSON.stringify(data),
-              type : 'POST',
-              contentType: "application/json",
-              dataType: 'json',
-            success: function(data) {
-
-              $('#success_alias').html('<strong>'+ data.success +'</strong>');
-              $('#successAliasModal').modal('show');
-              $.cookie("tab_selected", 'parent_tab');
-              setTimeout(function(){
-               window.location.reload();
-               $("div#divLoading").addClass('show');
-              }, 3000);
-
-            },
-            error: function(xhr) {
-              var  response_error = $.parseJSON(xhr.responseText);
-
-              var error_show = '';
-
-              if(response_error.error){
-                error_show = response_error.error;
-              }else if(response_error.validation_error){
-                error_show = response_error.validation_error[0];
-              }
-
-              $('#error_alias').html('<strong>'+ error_show +'</strong>');
-              $('#errorAliasModal').modal('show');
-              return false;
-            }
-          });
-
-        });
-        */
-    </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js">
     </script>
     <script type="text/javascript">
@@ -7440,12 +7272,10 @@ $adjvaluereset = 0;
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  deleteitemstores" disabled id="deleteitemstores"
-                                        name="deleteitemstores" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  deleteitemstores" disabled id="deleteitemstores" name="deleteitemstores" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
-                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does
-                                    not exist)</span></td>'+
+                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                             '</tr>';
                         $('#deleteItemSelectAllCheckbox').attr('disabled', true);
 
@@ -7453,8 +7283,7 @@ $adjvaluereset = 0;
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  deleteitemstores" id="deleteitemstores"
-                                        name="deleteitemstores" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  deleteitemstores" id="deleteitemstores" name="deleteitemstores" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
                             '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -7660,12 +7489,10 @@ $adjvaluereset = 0;
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  vendorstoreAssign" disabled
-                                        id="hq_sid_{{ $stores->id }}" name="vendorstoreAssign" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  vendorstoreAssign" disabledid="hq_sid_{{ $stores->id }}" name="vendorstoreAssign" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
-                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does
-                                    not exist)</span></td>'+
+                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                             '</tr>';
                         $('#selectAllCheckbox').attr('disabled', true);
 
@@ -7673,8 +7500,7 @@ $adjvaluereset = 0;
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  vendorstoreAssign" id="else_hq_sid_{{ $stores->id }}"
-                                        name="vendorstoreAssign" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  vendorstoreAssign" id="else_hq_sid_{{ $stores->id }}" name="vendorstoreAssign" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
                             '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -7888,12 +7714,10 @@ $adjvaluereset = 0;
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  storesUpdateitemcode" disabled
-                                        id="hq_sid_{{ $stores->id }}" name="storesUpdateitemcode" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  storesUpdateitemcode" disabled id="hq_sid_{{ $stores->id }}" name="storesUpdateitemcode" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
-                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does
-                                    not exist)</span></td>'+
+                            '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                             '</tr>';
                         $('#selectAllCheckbox').attr('disabled', true);
 
@@ -7901,8 +7725,7 @@ $adjvaluereset = 0;
                         var data = '<tr>'+
                             '<td>'+
                                 '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                    '<input type="checkbox" class="checks check  storesUpdateitemcode" id="else_hq_sid_{{ $stores->id }}"
-                                        name="storesUpdateitemcode" value="{{ $stores->id }}">'+
+                                    '<input type="checkbox" class="checks check  storesUpdateitemcode" id="else_hq_sid_{{ $stores->id }}" name="storesUpdateitemcode" value="{{ $stores->id }}">'+
                                     '</div>'+
                                 '</td>'+
                             '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -8297,13 +8120,6 @@ $adjvaluereset = 0;
 
 
         $(document).ready(function() {
-
-            // if ($('input[name="advance_options_checkbox"]').prop('checked')==true){
-            //     $('#advance_options_checkbox_div').show();
-            // }else{
-            //   $('#advance_options_checkbox_div').hide();
-            // }
-
             if ($('#plcb_options_checkbox').val() == 1) {
                 $('#plcb_options_checkbox_div').show();
             } else {
@@ -8313,21 +8129,8 @@ $adjvaluereset = 0;
     </script>
 
     <script type="text/javascript">
-        /*$('input[name="vitemname"]').keypress(function(event) {
-            var character = String.fromCharCode(event.keyCode);
-            var t = isValid(character);
-              if(!t){
-                event.preventDefault();
-              }
-          });*/
-
-
         $("#dept_code").change(function() {
-
-            // console.log($(this).text);
             var deptCode = $(this).val();
-
-
             var input = {};
             input['dept_code'] = deptCode;
 
@@ -8376,23 +8179,15 @@ $adjvaluereset = 0;
         });
 
         $("#category_code").change(function() {
-
-            // console.log($(this).text);
             var cat_id = $(this).val();
-
-
             var input = {};
             input['cat_id'] = cat_id;
 
             if (cat_id != "") {
-                //      console.log(deptCode);
-
                 var sid = "<?php echo $data['sid']; ?>";
                 var url = '<?php echo $data['get_subcategories_url']; ?>';
                 // url += "&sid="+sid;
                 url = url.replace(/&amp;/g, '&');
-
-
 
                 $.ajax({
                     url: url,
@@ -8404,8 +8199,6 @@ $adjvaluereset = 0;
                     contentType: "application/json",
                     dataType: 'text json',
                     success: function(response) {
-
-                        // console.log(response);
                         if (response.length > 0) {
                             // $("#span_dept_name").html($("#dept_code option:selected").text());
                             // $("#category_dept_name").val($("#dept_code option:selected").text());
@@ -8861,20 +8654,17 @@ $adjvaluereset = 0;
                                 var data = '<tr>'+
                                     '<td>'+
                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                            '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}"
-                                                name="editstores" value="{{ $stores->id }}">'+
+                                            '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
-                                    '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does
-                                            not exist)</span></td>'+
+                                    '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                                     '</tr>';
                                 $('#editSelectAllCheckbox').attr('disabled', true);
                                 } else {
                                 var data = '<tr>'+
                                     '<td>'+
                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                            '<input type="checkbox" class="checks check  editstores" id="else_hq_sid_{{ $stores->id }}"
-                                                name="editstores" value="{{ $stores->id }}">'+
+                                            '<input type="checkbox" class="checks check  editstores" id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                     '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -8904,12 +8694,10 @@ $adjvaluereset = 0;
                                 var data = '<tr>'+
                                     '<td>'+
                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                            '<input type="checkbox" class="checks check  itemstores" disabled id="hq_sid_{{ $stores->id }}"
-                                                name="itemstores" value="{{ $stores->id }}">'+
+                                            '<input type="checkbox" class="checks check  itemstores" disabled id="hq_sid_{{ $stores->id }}" name="itemstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
-                                    '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (SKU already
-                                            exist)</span></td>'+
+                                    '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (SKU already exist)</span></td>'+
                                     '</tr>';
                                 $('#selectAllCheckbox').attr('disabled', true);
 
@@ -8917,8 +8705,7 @@ $adjvaluereset = 0;
                                 var data = '<tr>'+
                                     '<td>'+
                                         '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                            '<input type="checkbox" class="checks check  itemstores" id="else_hq_sid_{{ $stores->id }}"
-                                                name="itemstores" value="{{ $stores->id }}">'+
+                                            '<input type="checkbox" class="checks check  itemstores" id="else_hq_sid_{{ $stores->id }}" name="itemstores" value="{{ $stores->id }}">'+
                                             '</div>'+
                                         '</td>'+
                                     '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -8964,12 +8751,10 @@ $adjvaluereset = 0;
                             var data = '<tr>'+
                                 '<td>'+
                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                        '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}"
-                                            name="editstores" value="{{ $stores->id }}">'+
+                                        '<input type="checkbox" class="checks check  editstores" disabled id="hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                         '</div>'+
                                     '</td>'+
-                                '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does
-                                        not exist)</span></td>'+
+                                '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                                 '</tr>';
                             $('#editSelectAllCheckbox').attr('disabled', true);
 
@@ -8977,8 +8762,7 @@ $adjvaluereset = 0;
                             var data = '<tr>'+
                                 '<td>'+
                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                        '<input type="checkbox" class="checks check  editstores" id="else_hq_sid_{{ $stores->id }}"
-                                            name="editstores" value="{{ $stores->id }}">'+
+                                        '<input type="checkbox" class="checks check  editstores" id="else_hq_sid_{{ $stores->id }}" name="editstores" value="{{ $stores->id }}">'+
                                         '</div>'+
                                     '</td>'+
                                 '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -9007,12 +8791,10 @@ $adjvaluereset = 0;
                             var data = '<tr>'+
                                 '<td>'+
                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                        '<input type="checkbox" class="checks check  itemstores" disabled id="hq_sid_{{ $stores->id }}"
-                                            name="itemstores" value="{{ $stores->id }}">'+
+                                        '<input type="checkbox" class="checks check  itemstores" disabled id="hq_sid_{{ $stores->id }}" name="itemstores" value="{{ $stores->id }}">'+
                                         '</div>'+
                                     '</td>'+
-                                '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (SKU
-                                        already exist)</span></td>'+
+                                '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (SKU already exist)</span></td>'+
                                 '</tr>';
                             $('#selectAllCheckbox').attr('disabled', true);
 
@@ -9020,8 +8802,7 @@ $adjvaluereset = 0;
                             var data = '<tr>'+
                                 '<td>'+
                                     '<div class="custom-control custom-checkbox" id="table_green_check">'+
-                                        '<input type="checkbox" class="checks check  itemstores" id="else_hq_sid_{{ $stores->id }}"
-                                            name="itemstores" value="{{ $stores->id }}">'+
+                                        '<input type="checkbox" class="checks check  itemstores" id="else_hq_sid_{{ $stores->id }}" name="itemstores" value="{{ $stores->id }}">'+
                                         '</div>'+
                                     '</td>'+
                                 '<td class="checks_content"><span>{{ $stores->name }} [{{ $stores->id }}] </span></td>'+
@@ -9039,32 +8820,8 @@ $adjvaluereset = 0;
                 $('form#form-item1').submit();
                 <?php } ?>
             }
-            // }
 
         });
-
-        // function formsubmit(){
-        // $(document).on('click', '.formsubmit', function(e){
-
-        //     var iqtyonhand = $('input[name="iqtyonhand"]').val();
-        //     var itemtype = $('select[name="vitemtype"]').val();
-        //     if((typeof(iqtyonhand) == "undefined" || iqtyonhand == null || iqtyonhand == '') && itemtype != 'Instant'){
-
-        //         var result = confirm('Qty On Hand is empty. Do you really want to submit ?');
-
-        //         if(result == true){
-        //             $('form#form-item').submit();
-        //         }else{
-        //             $(".show").hide();
-        //             $("div#divLoading").removeClass('show');
-        //             // return false;
-        //             e.stopPropagation();
-        //         }
-        //     }else{
-        //         $('form#form-item').submit();
-        //     }
-
-        // });
 
         $(window).on('beforeunload', function() {
 
@@ -9508,15 +9265,6 @@ $adjvaluereset = 0;
             }
         });
 
-        // edit_stores.push("{{ session()->get('sid') }}");
-        // $('#selectAllCheckbox').click(function(){
-        //     if($('#selectAllCheckbox').is(":checked")){
-        //         $(".stores").prop( "checked", true );
-        //     }else{
-        //         $( ".stores" ).prop("checked", false );
-        //     }
-        // });
-
         $('#update_btn').click(function() {
             $.each($("input[name='editstores']:checked"), function() {
                 edit_stores.push($(this).val());
@@ -9531,16 +9279,6 @@ $adjvaluereset = 0;
         });
 
         $(document).ready(function() {
-
-            // $('#input_itemname').on('keypress', function (event) {
-            //     var regex = new RegExp("^[A-Za-z0-9 _]*[A-Za-z]+[A-Za-z0-9 _]*$");
-            //     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-            //     if (!regex.test(key)) {
-            //       event.preventDefault();
-            //       return false;
-            //     }
-            // });
-
             $('#add_vdepartmentname, #add_vcategoryname, #add_subcat_name').on('keypress', function(event) {
                 var regex = new RegExp("^[a-zA-Z0-9. _]+$");
                 var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -9549,9 +9287,6 @@ $adjvaluereset = 0;
                     return false;
                 }
             });
-
-
-
         });
     </script>
 

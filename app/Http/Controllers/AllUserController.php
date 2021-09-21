@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\Gate;
 use DateTime;
 use App\Model\{UserDynamic, Permission, Userpermission, Permissiongroup, Userpermissiongroup, DeleteTable};
+use Illuminate\Support\Facades\Session;
 
 class AllUserController extends Controller
 {
@@ -19,8 +20,16 @@ class AllUserController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * user list method
+     */
     public function index()
     {
+        if (session()->has('sid')) {
+            $sid = Session::get('sid');
+        } else {
+            return redirect()->to('/');
+        }
         $file_location = 'user_permisson_welcome.log';
         $myfile = fopen($file_location, "a") or die("Unable to open file!");
         $txt = PHP_EOL . "Insertion Starting Date And time is: " . date("Y-m-d h:i:sa") . PHP_EOL;
@@ -41,6 +50,11 @@ class AllUserController extends Controller
 
     public function create()
     {
+        if (session()->has('sid')) {
+            $sid = Session::get('sid');
+        } else {
+            return redirect()->to('/');
+        }
         // $permissions = Permission::all();
         $permissions = Permission::groupBy('vpermissioncode')->get();
         $mstPermissiongroup = Permissiongroup::all();
@@ -56,9 +70,16 @@ class AllUserController extends Controller
         return $en_pass;
     }
 
-    //user creation function
+    /**
+     * user creation method
+     */
     public function store(Request $request)
     {
+        if (session()->has('sid')) {
+            $sid = Session::get('sid');
+        } else {
+            return redirect()->to('/');
+        }
         $file_location = 'user_permisson_store.log';
         $myfile = fopen($file_location, "a") or die("Unable to open file!");
         $txt = PHP_EOL . "Insertion Starting Date And time is: " . date("Y-m-d h:i:sa") . PHP_EOL;
@@ -67,29 +88,28 @@ class AllUserController extends Controller
         $input = $request->all();
         $sid = session()->get('sid');
 
-        $ssn = isset($input['ssn']) ? $input['ssn'] : '';
-        $pay_type = isset($input['pay_type']) ? $input['pay_type'] : 0;
-        $over_time = isset($input['over_time']) ? $input['over_time'] : '';
-        $pay_rate = isset($input['pay_rate']) ? $input['pay_rate'] : '';
-        $tc_id = isset($input['tc_id']) ? $input['tc_id'] : '';
-        $tc_pass = isset($input['tc_pass']) ? $input['tc_pass'] : '';
+        $ssn = $input['ssn'] ?? '';
+        $pay_type = $input['pay_type'] ?? 0;
+        $over_time =  $input['over_time'] ?? '';
+        $pay_rate =  $input['pay_rate'] ?? '';
+        $tc_id =  $input['tc_id'] ?? '';
+        $tc_pass =  $input['tc_pass'] ?? '';
         $tc_pass = $this->encodePassword($tc_pass);
 
-        $start_dt = isset($input['start_dt']) ? $input['start_dt'] : '';
-        $termination_dt = isset($input['termination_dt']) ? $input['termination_dt'] : '';
-        $vacation_hours = isset($input['vacation_hours']) ? $input['vacation_hours'] : '';
-        $sick_hours = isset($input['sick_hours']) ? $input['sick_hours'] : '';
-        $available_hours = isset($input['available_hours']) ? $input['available_hours'] : '';
+        $start_dt= $input['start_dt'] ?? '';
+        $termination_dt= $input['termination_dt'] ?? '';
+        $vacation_hours= $input['vacation_hours'] ?? '';
+        $sick_hours= $input['sick_hours'] ?? '';
+        $available_hours= $input['available_hours'] ?? '';
+        $sun_hours= $input['sun_hours'] ?? '';
+        $mon_hours= $input['mon_hours'] ?? '';
+        $tue_hours= $input['tue_hours'] ?? '';
+        $wed_hours= $input['wed_hours'] ?? '';
+        $thu_hours= $input['thu_hours'] ?? '';
+        $fri_hours= $input['fri_hours'] ?? '';
+        $sat_hours= $input['sat_hours'] ?? '';
+        $time_email= $input['time_email'] ?? '';
 
-        $sun_hours = isset($input['sun_hours']) ? $input['sun_hours'] : '';
-        $mon_hours = isset($input['mon_hours']) ? $input['mon_hours'] : '';
-        $tue_hours = isset($input['tue_hours']) ? $input['tue_hours'] : '';
-        $wed_hours = isset($input['wed_hours']) ? $input['wed_hours'] : '';
-        $thu_hours = isset($input['thu_hours']) ? $input['thu_hours'] : '';
-        $fri_hours = isset($input['fri_hours']) ? $input['fri_hours'] : '';
-        $sat_hours = isset($input['sat_hours']) ? $input['sat_hours'] : '';
-
-        $time_email = isset($input['time_email']) ? $input['time_email'] : '';
         if (isset($input['time']) && isset($input['time']) == 'time') {
             $time_clock = 'Y';
         } else {
@@ -106,6 +126,14 @@ class AllUserController extends Controller
         if (isset($input['vemail'])) {
             $some_text = '========================== checking email duplicate and status Active ' . PHP_EOL;
             fwrite($myfile, $some_text);
+            /**
+             * Invalid email address check
+             */
+            if(!($this->validEmail($input['vemail']))){
+                return redirect('users/create')
+                    ->withErrors("Invalid email address.")
+                    ->withInput($input);
+            }
 
             $duplicateEmail = User::where('vemail', '=', $input['vemail'])->get();
             $duplicateMstuser = UserDynamic::where('vemail', '=', $input['vemail'])->get();
@@ -584,11 +612,30 @@ class AllUserController extends Controller
 
     public function edit(UserDynamic $userDynamic, $iuserid)
     {
+        if (session()->has('sid')) {
+            $sid = Session::get('sid');
+        } else {
+            return redirect()->to('/');
+        }
         $file_location = 'user_permisson_edit.log';
         $myfile = fopen($file_location, "a") or die("Unable to open file!");
         $txt = PHP_EOL . "Insertion Starting Date And time is: " . date("Y-m-d h:i:sa") . PHP_EOL;
         fwrite($myfile, $txt);
 
+        $sid = session()->get('sid');
+        /**
+         * check user exits before doing multiple tasks
+         */
+        if (!empty($sid)) {
+            $users = UserDynamic::where('iuserid', '=', $iuserid)->first();
+            if ($users === null) {
+                /**
+                 * User does not exist
+                 * */
+                return redirect('users/')
+                    ->withErrors("User does not exist(ID- $iuserid).");
+            }
+        }
         $permissions = Permission::groupBy('vpermissioncode')->get();
         $mstPermissiongroup = Permissiongroup::all();
         $user = UserDynamic::where('iuserid', '=', $iuserid)->get();
@@ -623,6 +670,11 @@ class AllUserController extends Controller
 
     public function update(Request $request, UserDynamic $userDynamic, $iuserid)
     {
+        if (session()->has('sid')) {
+            $sid = Session::get('sid');
+        } else {
+            return redirect()->to('/');
+        }
         $file_location = 'user_permisson_update.log';
         $myfile = fopen($file_location, "a") or die("Unable to open file!");
         $txt = PHP_EOL . "Insertion Starting Date And time is: " . date("Y-m-d h:i:sa") . PHP_EOL;
@@ -630,40 +682,35 @@ class AllUserController extends Controller
 
         $input = $request->all();
         //Time clock variable set
-        $ssn = isset($input['ssn']) ? $input['ssn'] : '';
-        $pay_type = isset($input['pay_type']) ? $input['pay_type'] : 0;
-        $over_time = isset($input['over_time']) ? $input['over_time'] : '';
-        $pay_rate = isset($input['pay_rate']) ? $input['pay_rate'] : '';
-        $tc_id = isset($input['tc_id']) ? $input['tc_id'] : '';
-        $vuserbarcode = isset($input['vuserbarcode']) ? $input['vuserbarcode'] : '';
+        $ssn = $input['ssn'] ?? '';
+        $pay_type = $input['pay_type'] ?? 0;
+        $over_time = $input['over_time'] ?? '';
+        $pay_rate = $input['pay_rate'] ?? '';
+        $tc_id = $input['tc_id'] ?? '';
+        $vuserbarcode = $input['vuserbarcode'] ?? '';
 
-        if (isset($input['tc_pass1']) && $input['tc_pass1'] != '')
-        {
+        if (isset($input['tc_pass1']) && $input['tc_pass1'] != '') {
             $tc_pass = $this->encodePassword($input['tc_pass1']);
-        } else
-        {
+        } else {
             $tc_pass = !empty($input['tcc_pass']) ? $input['tcc_pass'] : '';
-            if(!empty($tc_pass))
-            {
+            if (!empty($tc_pass)) {
                 $tc_pass = $this->encodePassword($tc_pass);
             }
         }
 
-        $start_dt = isset($input['start_dt']) ? $input['start_dt'] : '';
-        $termination_dt = isset($input['termination_dt']) ? $input['termination_dt'] : '';
-        $vacation_hours = isset($input['vacation_hours']) ? $input['vacation_hours'] : '';
-        $sick_hours = isset($input['sick_hours']) ? $input['sick_hours'] : '';
-        $available_hours = isset($input['available_hours']) ? $input['available_hours'] : '';
-
-        $sun_hours = isset($input['sun_hours']) ? $input['sun_hours'] : '';
-        $mon_hours = isset($input['mon_hours']) ? $input['mon_hours'] : '';
-        $tue_hours = isset($input['tue_hours']) ? $input['tue_hours'] : '';
-        $wed_hours = isset($input['wed_hours']) ? $input['wed_hours'] : '';
-        $thu_hours = isset($input['thu_hours']) ? $input['thu_hours'] : '';
-        $fri_hours = isset($input['fri_hours']) ? $input['fri_hours'] : '';
-        $sat_hours = isset($input['sat_hours']) ? $input['sat_hours'] : '';
-
-        $time_email = isset($input['time_email']) ? $input['time_email'] : '';
+        $start_dt = $input['start_dt'] ?? '';
+        $termination_dt = $input['termination_dt'] ?? '';
+        $vacation_hours = $input['vacation_hours'] ?? '';
+        $sick_hours = $input['sick_hours'] ?? '';
+        $available_hours = $input['available_hours'] ?? '';
+        $sun_hours= $input['sun_hours'] ?? '';
+        $mon_hours= $input['mon_hours'] ?? '';
+        $tue_hours= $input['tue_hours'] ?? '';
+        $wed_hours= $input['wed_hours'] ?? '';
+        $thu_hours= $input['thu_hours'] ?? '';
+        $fri_hours= $input['fri_hours'] ?? '';
+        $sat_hours= $input['sat_hours'] ?? '';
+        $time_email= $input['time_email'] ?? '';
         if (isset($input['time']) && isset($input['time']) == 'time') {
             $time_clock = 'Y';
         } else {
@@ -676,6 +723,32 @@ class AllUserController extends Controller
         }
         session()->put('userInput', $input);
         $sid = session()->get('sid');
+        /**
+         * check user exits before doing multiple tasks
+         */
+        if (!empty($sid)) {
+            $users = UserDynamic::where('iuserid', '=', $iuserid)->first();
+            if ($users === null) {
+                /**
+                 * User does not exist
+                 * */
+                return redirect('users/')
+                    ->withErrors("User does not exist(ID- $iuserid).");
+            }
+        }
+
+        /**
+         * Invalid email address check
+         */
+        if(!empty($input['vemail'])){
+            if(!($this->validEmail($input['vemail']))){
+                return redirect('users/' . $iuserid . '/edit')
+                    ->withErrors(" Invalid email address..")
+                    ->withInput($input);
+            }
+        }
+
+
         $que = Userpermission::where('userid', '=', $iuserid)->get()->toArray();
         $list_of_permissions = array();
 
@@ -875,7 +948,7 @@ class AllUserController extends Controller
                         $store_text = '========================== update user' . PHP_EOL;
                         fwrite($myfile, $store_text);
 
-                        $update = ['mob_user' => $mob_user,'web_user' => $web_user,'pos_user' => $pos_user,'lb_user' => $lb_user,'vfname' => $input['vfname'],'vlname' => $input['vlname'],'vaddress1' => $input['vaddress1'],'vaddress2' => $input['vaddress2'],'vcity' => $input['vcity'],'vstate' => $input['vstate'],'vzip' => $input['vzip'],'vcountry' => $input['vcountry'],'vphone' => $input['vphone'],'vuserid' => $vuserid,'vpassword' => $this->encodePassword($input['vpassword']),'vusertype' => $input['vusertype'],'vpasswordchange' => "No",'vuserbarcode' => $vuserbarcode,'estatus' => $input['estatus'],'SID' => session()->get('sid'),'mwpassword' => $encdoe_mwpassword,'vemail' => $vemail,'tc_password' => $tc_pass,'time_clock' => $time_clock,'time_email' => $time_email,'ssn' => $ssn,'pay_type' => $pay_type,'over_time' => $over_time,'pay_rate' => $pay_rate,'start_dt' => $start_dt,'termination_dt' => $termination_dt,'vacation_hours' => $vacation_hours,'sick_hours' => $sick_hours,'available_hours' => $available_hours,'sun_hours' => $sun_hours,'mon_hours' => $mon_hours,'tue_hours' => $tue_hours,'wed_hours' => $wed_hours,'thu_hours' => $thu_hours,'fri_hours' => $fri_hours,'sat_hours' => $sat_hours ];
+                        $update = ['mob_user' => $mob_user, 'web_user' => $web_user, 'pos_user' => $pos_user, 'lb_user' => $lb_user, 'vfname' => $input['vfname'], 'vlname' => $input['vlname'], 'vaddress1' => $input['vaddress1'], 'vaddress2' => $input['vaddress2'], 'vcity' => $input['vcity'], 'vstate' => $input['vstate'], 'vzip' => $input['vzip'], 'vcountry' => $input['vcountry'], 'vphone' => $input['vphone'], 'vuserid' => $vuserid, 'vpassword' => $this->encodePassword($input['vpassword']), 'vusertype' => $input['vusertype'], 'vpasswordchange' => "No", 'vuserbarcode' => $vuserbarcode, 'estatus' => $input['estatus'], 'SID' => session()->get('sid'), 'mwpassword' => $encdoe_mwpassword, 'vemail' => $vemail, 'tc_password' => $tc_pass, 'time_clock' => $time_clock, 'time_email' => $time_email, 'ssn' => $ssn, 'pay_type' => $pay_type, 'over_time' => $over_time, 'pay_rate' => $pay_rate, 'start_dt' => $start_dt, 'termination_dt' => $termination_dt, 'vacation_hours' => $vacation_hours, 'sick_hours' => $sick_hours, 'available_hours' => $available_hours, 'sun_hours' => $sun_hours, 'mon_hours' => $mon_hours, 'tue_hours' => $tue_hours, 'wed_hours' => $wed_hours, 'thu_hours' => $thu_hours, 'fri_hours' => $fri_hours, 'sat_hours' => $sat_hours];
                         UserDynamic::where('iuserid', '=', $iuserid)->update(array_filter($update));
                         session()->forget('userInput');
                     } else {
@@ -889,13 +962,13 @@ class AllUserController extends Controller
                             $store_text = '========================== update users' . PHP_EOL;
                             fwrite($myfile, $store_text);
 
-                            $update = ['mob_user' => $mob_user,'web_user' => $web_user,'pos_user' => $pos_user,'lb_user' => $lb_user,'vfname' => $input['vfname'],'vlname' => $input['vlname'],'vaddress1' => $input['vaddress1'],'vaddress2' => $input['vaddress2'],'vcity' => $input['vcity'],'vstate' => $input['vstate'],'vzip' => $input['vzip'],'vcountry' => $input['vcountry'],'vphone' => $input['vphone'],'vuserid' => $vuserid,'vpassword' => $this->encodePassword($input['vpassword']),'vusertype' => $input['vusertype'],'vpasswordchange' => "No",'vuserbarcode' => $vuserbarcode,'estatus' => $input['estatus'],'SID' => session()->get('sid'),'mwpassword' => $encdoe_mwpassword,'vemail' => $vemail,'time_clock' => $time_clock,'time_email' => $time_email,'ssn' => $ssn,'pay_type' => $pay_type,'over_time' => $over_time,'pay_rate' => $pay_rate,'start_dt' => $start_dt,'termination_dt' => $termination_dt,'vacation_hours' => $vacation_hours,'sick_hours' => $sick_hours,'available_hours' => $available_hours,'sun_hours' => $sun_hours,'mon_hours' => $mon_hours,'tue_hours' => $tue_hours,'wed_hours' => $wed_hours,'thu_hours' => $thu_hours,'fri_hours' => $fri_hours,'sat_hours' => $sat_hours];
+                            $update = ['mob_user' => $mob_user, 'web_user' => $web_user, 'pos_user' => $pos_user, 'lb_user' => $lb_user, 'vfname' => $input['vfname'], 'vlname' => $input['vlname'], 'vaddress1' => $input['vaddress1'], 'vaddress2' => $input['vaddress2'], 'vcity' => $input['vcity'], 'vstate' => $input['vstate'], 'vzip' => $input['vzip'], 'vcountry' => $input['vcountry'], 'vphone' => $input['vphone'], 'vuserid' => $vuserid, 'vpassword' => $this->encodePassword($input['vpassword']), 'vusertype' => $input['vusertype'], 'vpasswordchange' => "No", 'vuserbarcode' => $vuserbarcode, 'estatus' => $input['estatus'], 'SID' => session()->get('sid'), 'mwpassword' => $encdoe_mwpassword, 'vemail' => $vemail, 'time_clock' => $time_clock, 'time_email' => $time_email, 'ssn' => $ssn, 'pay_type' => $pay_type, 'over_time' => $over_time, 'pay_rate' => $pay_rate, 'start_dt' => $start_dt, 'termination_dt' => $termination_dt, 'vacation_hours' => $vacation_hours, 'sick_hours' => $sick_hours, 'available_hours' => $available_hours, 'sun_hours' => $sun_hours, 'mon_hours' => $mon_hours, 'tue_hours' => $tue_hours, 'wed_hours' => $wed_hours, 'thu_hours' => $thu_hours, 'fri_hours' => $fri_hours, 'sat_hours' => $sat_hours];
                             UserDynamic::where('iuserid', '=', $iuserid)->update(array_filter($update));
                             session()->forget('userInput');
                         } else {
                             $store_text = '========================== update users else' . PHP_EOL;
                             fwrite($myfile, $store_text);
-                            $update = ['mob_user' => $mob_user,'web_user' => $web_user,'pos_user' => $pos_user,'vfname' => $input['vfname'],'vlname' => $input['vlname'],'vaddress1' => $input['vaddress1'],'vaddress2' => $input['vaddress2'],'vcity' => $input['vcity'],'vstate' => $input['vstate'],'vzip' => $input['vzip'],'vcountry' => $input['vcountry'],'vphone' => $input['vphone'],'vuserid' => $vuserid,'vpassword' => $this->encodePassword($input['vpassword']),'vusertype' => $input['vusertype'],'vpasswordchange' => "No",'vuserbarcode' => $vuserbarcode,'estatus' => $input['estatus'],'SID' => session()->get('sid'),'mwpassword' => $encdoe_mwpassword,'vemail' => $vemail,'tc_password' => $tc_pass,'time_clock' => $time_clock,'time_email' => $time_email,'ssn' => $ssn,'pay_type' => $pay_type,'over_time' => $over_time,'pay_rate' => $pay_rate,'start_dt' => $start_dt,'termination_dt' => $termination_dt,'vacation_hours' => $vacation_hours,'sick_hours' => $sick_hours,'available_hours' => $available_hours,'sun_hours' => $sun_hours,'mon_hours' => $mon_hours,'tue_hours' => $tue_hours,'wed_hours' => $wed_hours,'thu_hours' => $thu_hours,'fri_hours' => $fri_hours,'sat_hours' => $sat_hours];
+                            $update = ['mob_user' => $mob_user, 'web_user' => $web_user, 'pos_user' => $pos_user, 'vfname' => $input['vfname'], 'vlname' => $input['vlname'], 'vaddress1' => $input['vaddress1'], 'vaddress2' => $input['vaddress2'], 'vcity' => $input['vcity'], 'vstate' => $input['vstate'], 'vzip' => $input['vzip'], 'vcountry' => $input['vcountry'], 'vphone' => $input['vphone'], 'vuserid' => $vuserid, 'vpassword' => $this->encodePassword($input['vpassword']), 'vusertype' => $input['vusertype'], 'vpasswordchange' => "No", 'vuserbarcode' => $vuserbarcode, 'estatus' => $input['estatus'], 'SID' => session()->get('sid'), 'mwpassword' => $encdoe_mwpassword, 'vemail' => $vemail, 'tc_password' => $tc_pass, 'time_clock' => $time_clock, 'time_email' => $time_email, 'ssn' => $ssn, 'pay_type' => $pay_type, 'over_time' => $over_time, 'pay_rate' => $pay_rate, 'start_dt' => $start_dt, 'termination_dt' => $termination_dt, 'vacation_hours' => $vacation_hours, 'sick_hours' => $sick_hours, 'available_hours' => $available_hours, 'sun_hours' => $sun_hours, 'mon_hours' => $mon_hours, 'tue_hours' => $tue_hours, 'wed_hours' => $wed_hours, 'thu_hours' => $thu_hours, 'fri_hours' => $fri_hours, 'sat_hours' => $sat_hours];
                             UserDynamic::where('iuserid', '=', $iuserid)->update(array_filter($update));
                             session()->forget('userInput');
                         }
@@ -909,14 +982,14 @@ class AllUserController extends Controller
                     $res = DB::connection('mysql')->select($sql);
 
                     if (count($res) > 0) {
-                        $update = ['mob_user' => $mob_user,'web_user' => $web_user,'pos_user' => $pos_user,'lb_user' => $lb_user,'vfname' => $input['vfname'],'vlname' => $input['vlname'],'vaddress1' => $input['vaddress1'],'vaddress2' => $input['vaddress2'],'vcity' => $input['vcity'],'vstate' => $input['vstate'],'vzip' => $input['vzip'],'vcountry' => $input['vcountry'],'vphone' => $input['vphone'],'vuserid' => $vuserid,'vusertype' => $input['vusertype'],'vpasswordchange' => "No",'vuserbarcode' => $vuserbarcode,'estatus' => $input['estatus'],'SID' => session()->get('sid'),'mwpassword' => $encdoe_mwpassword,'vemail' => $vemail,'tc_password' => $tc_pass,'time_clock' => $time_clock,'time_email' => $time_email,'ssn' => $ssn,'pay_type' => $pay_type,'over_time' => $over_time,'pay_rate' => $pay_rate,'start_dt' => $start_dt,'termination_dt' => $termination_dt,'vacation_hours' => $vacation_hours,'sick_hours' => $sick_hours,'available_hours' => $available_hours,'sun_hours' => $sun_hours,'mon_hours' => $mon_hours,'tue_hours' => $tue_hours,'wed_hours' => $wed_hours,'thu_hours' => $thu_hours,'fri_hours' => $fri_hours,'sat_hours' => $sat_hours];
+                        $update = ['mob_user' => $mob_user, 'web_user' => $web_user, 'pos_user' => $pos_user, 'lb_user' => $lb_user, 'vfname' => $input['vfname'], 'vlname' => $input['vlname'], 'vaddress1' => $input['vaddress1'], 'vaddress2' => $input['vaddress2'], 'vcity' => $input['vcity'], 'vstate' => $input['vstate'], 'vzip' => $input['vzip'], 'vcountry' => $input['vcountry'], 'vphone' => $input['vphone'], 'vuserid' => $vuserid, 'vusertype' => $input['vusertype'], 'vpasswordchange' => "No", 'vuserbarcode' => $vuserbarcode, 'estatus' => $input['estatus'], 'SID' => session()->get('sid'), 'mwpassword' => $encdoe_mwpassword, 'vemail' => $vemail, 'tc_password' => $tc_pass, 'time_clock' => $time_clock, 'time_email' => $time_email, 'ssn' => $ssn, 'pay_type' => $pay_type, 'over_time' => $over_time, 'pay_rate' => $pay_rate, 'start_dt' => $start_dt, 'termination_dt' => $termination_dt, 'vacation_hours' => $vacation_hours, 'sick_hours' => $sick_hours, 'available_hours' => $available_hours, 'sun_hours' => $sun_hours, 'mon_hours' => $mon_hours, 'tue_hours' => $tue_hours, 'wed_hours' => $wed_hours, 'thu_hours' => $thu_hours, 'fri_hours' => $fri_hours, 'sat_hours' => $sat_hours];
                         UserDynamic::where('iuserid', '=', $iuserid)->update(array_filter($update));
                         session()->forget('userInput');
                     } else {
 
                         $store_text = '========================== updt usr else' . PHP_EOL;
                         fwrite($myfile, $store_text);
-                        $update = ['mob_user' => $mob_user,'web_user' => $web_user,'pos_user' => $pos_user,'vfname' => $input['vfname'],'vlname' => $input['vlname'],'vaddress1' => $input['vaddress1'],'vaddress2' => $input['vaddress2'],'vcity' => $input['vcity'],'vstate' => $input['vstate'],'vzip' => $input['vzip'],'vcountry' => $input['vcountry'],'vphone' => $input['vphone'],'vuserid' => $vuserid,'vusertype' => $input['vusertype'],'vpasswordchange' => "No",'vuserbarcode' => $vuserbarcode,'estatus' => $input['estatus'],'SID' => session()->get('sid'),'mwpassword' => $encdoe_mwpassword,'vemail' => $vemail,'tc_password' => $tc_pass,'time_clock' => $time_clock,'time_email' => $time_email,'ssn' => $ssn,'pay_type' => $pay_type,'over_time' => $over_time,'pay_rate' => $pay_rate,'start_dt' => $start_dt,'termination_dt' => $termination_dt,'vacation_hours' => $vacation_hours,'sick_hours' => $sick_hours,'available_hours' => $available_hours,'sun_hours' => $sun_hours,'mon_hours' => $mon_hours,'tue_hours' => $tue_hours,'wed_hours' => $wed_hours,'thu_hours' => $thu_hours,'fri_hours' => $fri_hours,'sat_hours' => $sat_hours];
+                        $update = ['mob_user' => $mob_user, 'web_user' => $web_user, 'pos_user' => $pos_user, 'vfname' => $input['vfname'], 'vlname' => $input['vlname'], 'vaddress1' => $input['vaddress1'], 'vaddress2' => $input['vaddress2'], 'vcity' => $input['vcity'], 'vstate' => $input['vstate'], 'vzip' => $input['vzip'], 'vcountry' => $input['vcountry'], 'vphone' => $input['vphone'], 'vuserid' => $vuserid, 'vusertype' => $input['vusertype'], 'vpasswordchange' => "No", 'vuserbarcode' => $vuserbarcode, 'estatus' => $input['estatus'], 'SID' => session()->get('sid'), 'mwpassword' => $encdoe_mwpassword, 'vemail' => $vemail, 'tc_password' => $tc_pass, 'time_clock' => $time_clock, 'time_email' => $time_email, 'ssn' => $ssn, 'pay_type' => $pay_type, 'over_time' => $over_time, 'pay_rate' => $pay_rate, 'start_dt' => $start_dt, 'termination_dt' => $termination_dt, 'vacation_hours' => $vacation_hours, 'sick_hours' => $sick_hours, 'available_hours' => $available_hours, 'sun_hours' => $sun_hours, 'mon_hours' => $mon_hours, 'tue_hours' => $tue_hours, 'wed_hours' => $wed_hours, 'thu_hours' => $thu_hours, 'fri_hours' => $fri_hours, 'sat_hours' => $sat_hours];
                         UserDynamic::where('iuserid', '=', $iuserid)->update(array_filter($update));
                         session()->forget('userInput');
                     }
@@ -930,14 +1003,14 @@ class AllUserController extends Controller
                     $res = DB::connection('mysql')->select($sql);
 
                     if (count($res) > 0) {
-                        $update = ['mob_user' => $mob_user,'web_user' => $web_user,'pos_user' => $pos_user,'lb_user' => $lb_user,'vfname' => $input['vfname'],'vlname' => $input['vlname'],'vaddress1' => $input['vaddress1'],'vaddress2' => $input['vaddress2'],'vcity' => $input['vcity'],'vstate' => $input['vstate'],'vzip' => $input['vzip'],'vcountry' => $input['vcountry'],'vphone' => $input['vphone'],'vuserid' => $vuserid,'vpassword' => $this->encodePassword($input['vpassword']),'vusertype' => $input['vusertype'],'vpasswordchange' => "No",'vuserbarcode' => $vuserbarcode,'estatus' => $input['estatus'],'SID' => session()->get('sid'),'vemail' => $vemail,'tc_password' => $tc_pass,'time_clock' => $time_clock,'time_email' => $time_email,'ssn' => $ssn,'pay_type' => $pay_type,'over_time' => $over_time,'pay_rate' => $pay_rate,'start_dt' => $start_dt,'termination_dt' => $termination_dt,'vacation_hours' => $vacation_hours,'sick_hours' => $sick_hours,'available_hours' => $available_hours,'sun_hours' => $sun_hours,'mon_hours' => $mon_hours,'tue_hours' => $tue_hours,'wed_hours' => $wed_hours,'thu_hours' => $thu_hours,'fri_hours' => $fri_hours,'sat_hours' => $sat_hours];
+                        $update = ['mob_user' => $mob_user, 'web_user' => $web_user, 'pos_user' => $pos_user, 'lb_user' => $lb_user, 'vfname' => $input['vfname'], 'vlname' => $input['vlname'], 'vaddress1' => $input['vaddress1'], 'vaddress2' => $input['vaddress2'], 'vcity' => $input['vcity'], 'vstate' => $input['vstate'], 'vzip' => $input['vzip'], 'vcountry' => $input['vcountry'], 'vphone' => $input['vphone'], 'vuserid' => $vuserid, 'vpassword' => $this->encodePassword($input['vpassword']), 'vusertype' => $input['vusertype'], 'vpasswordchange' => "No", 'vuserbarcode' => $vuserbarcode, 'estatus' => $input['estatus'], 'SID' => session()->get('sid'), 'vemail' => $vemail, 'tc_password' => $tc_pass, 'time_clock' => $time_clock, 'time_email' => $time_email, 'ssn' => $ssn, 'pay_type' => $pay_type, 'over_time' => $over_time, 'pay_rate' => $pay_rate, 'start_dt' => $start_dt, 'termination_dt' => $termination_dt, 'vacation_hours' => $vacation_hours, 'sick_hours' => $sick_hours, 'available_hours' => $available_hours, 'sun_hours' => $sun_hours, 'mon_hours' => $mon_hours, 'tue_hours' => $tue_hours, 'wed_hours' => $wed_hours, 'thu_hours' => $thu_hours, 'fri_hours' => $fri_hours, 'sat_hours' => $sat_hours];
                         UserDynamic::where('iuserid', '=', $iuserid)->update(array_filter($update));
                         session()->forget('userInput');
                     } else {
 
                         $store_text = '========================== updt usr s' . PHP_EOL;
                         fwrite($myfile, $store_text);
-                        $update = ['mob_user' => $mob_user,'web_user' => $web_user,'pos_user' => $pos_user,'vfname' => $input['vfname'],'vlname' => $input['vlname'],'vaddress1' => $input['vaddress1'],'vaddress2' => $input['vaddress2'],'vcity' => $input['vcity'],'vstate' => $input['vstate'],'vzip' => $input['vzip'],'vcountry' => $input['vcountry'],'vphone' => $input['vphone'],'vuserid' => $vuserid,'vpassword' => $this->encodePassword($input['vpassword']),'vusertype' => $input['vusertype'],'vpasswordchange' => "No",'vuserbarcode' => $vuserbarcode,'estatus' => $input['estatus'],'SID' => session()->get('sid'),'vemail' => $vemail,'tc_password' => $tc_pass,'time_clock' => $time_clock,'time_email' => $time_email,'ssn' => $ssn,'pay_type' => $pay_type,'over_time' => $over_time,'pay_rate' => $pay_rate,'start_dt' => $start_dt,'termination_dt' => $termination_dt,'vacation_hours' => $vacation_hours,'sick_hours' => $sick_hours,'available_hours' => $available_hours,'sun_hours' => $sun_hours,'mon_hours' => $mon_hours,'tue_hours' => $tue_hours,'wed_hours' => $wed_hours,'thu_hours' => $thu_hours,'fri_hours' => $fri_hours,'sat_hours' => $sat_hours];
+                        $update = ['mob_user' => $mob_user, 'web_user' => $web_user, 'pos_user' => $pos_user, 'vfname' => $input['vfname'], 'vlname' => $input['vlname'], 'vaddress1' => $input['vaddress1'], 'vaddress2' => $input['vaddress2'], 'vcity' => $input['vcity'], 'vstate' => $input['vstate'], 'vzip' => $input['vzip'], 'vcountry' => $input['vcountry'], 'vphone' => $input['vphone'], 'vuserid' => $vuserid, 'vpassword' => $this->encodePassword($input['vpassword']), 'vusertype' => $input['vusertype'], 'vpasswordchange' => "No", 'vuserbarcode' => $vuserbarcode, 'estatus' => $input['estatus'], 'SID' => session()->get('sid'), 'vemail' => $vemail, 'tc_password' => $tc_pass, 'time_clock' => $time_clock, 'time_email' => $time_email, 'ssn' => $ssn, 'pay_type' => $pay_type, 'over_time' => $over_time, 'pay_rate' => $pay_rate, 'start_dt' => $start_dt, 'termination_dt' => $termination_dt, 'vacation_hours' => $vacation_hours, 'sick_hours' => $sick_hours, 'available_hours' => $available_hours, 'sun_hours' => $sun_hours, 'mon_hours' => $mon_hours, 'tue_hours' => $tue_hours, 'wed_hours' => $wed_hours, 'thu_hours' => $thu_hours, 'fri_hours' => $fri_hours, 'sat_hours' => $sat_hours];
                         UserDynamic::where('iuserid', '=', $iuserid)->update(array_filter($update));
                         session()->forget('userInput');
                     }
@@ -953,14 +1026,14 @@ class AllUserController extends Controller
 
                         $store_text = '========================== updt -----' . PHP_EOL;
                         fwrite($myfile, $store_text);
-                        $update = ['mob_user' => $mob_user,'web_user' => $web_user,'pos_user' => $pos_user,'lb_user' => $lb_user,'vfname' => $input['vfname'],'vlname' => $input['vlname'],'vaddress1' => $input['vaddress1'],'vaddress2' => $input['vaddress2'],'vcity' => $input['vcity'],'vstate' => $input['vstate'],'vzip' => $input['vzip'],'vcountry' => $input['vcountry'],'vphone' => $input['vphone'],'vuserid' => $vuserid,'vusertype' => $input['vusertype'],'vpasswordchange' => "No",'vuserbarcode' => $vuserbarcode,'estatus' => $input['estatus'],'SID' => session()->get('sid'),'vemail' => $vemail,'tc_password' => $tc_pass,'time_clock' => $time_clock,'time_email' => $time_email,'ssn' => $ssn,'pay_type' => $pay_type,'over_time' => $over_time,'pay_rate' => $pay_rate,'start_dt' => $start_dt,'termination_dt' => $termination_dt,'vacation_hours' => $vacation_hours,'sick_hours' => $sick_hours,'available_hours' => $available_hours,'sun_hours' => $sun_hours,'mon_hours' => $mon_hours,'tue_hours' => $tue_hours,'wed_hours' => $wed_hours,'thu_hours' => $thu_hours,'fri_hours' => $fri_hours,'sat_hours' => $sat_hours];
+                        $update = ['mob_user' => $mob_user, 'web_user' => $web_user, 'pos_user' => $pos_user, 'lb_user' => $lb_user, 'vfname' => $input['vfname'], 'vlname' => $input['vlname'], 'vaddress1' => $input['vaddress1'], 'vaddress2' => $input['vaddress2'], 'vcity' => $input['vcity'], 'vstate' => $input['vstate'], 'vzip' => $input['vzip'], 'vcountry' => $input['vcountry'], 'vphone' => $input['vphone'], 'vuserid' => $vuserid, 'vusertype' => $input['vusertype'], 'vpasswordchange' => "No", 'vuserbarcode' => $vuserbarcode, 'estatus' => $input['estatus'], 'SID' => session()->get('sid'), 'vemail' => $vemail, 'tc_password' => $tc_pass, 'time_clock' => $time_clock, 'time_email' => $time_email, 'ssn' => $ssn, 'pay_type' => $pay_type, 'over_time' => $over_time, 'pay_rate' => $pay_rate, 'start_dt' => $start_dt, 'termination_dt' => $termination_dt, 'vacation_hours' => $vacation_hours, 'sick_hours' => $sick_hours, 'available_hours' => $available_hours, 'sun_hours' => $sun_hours, 'mon_hours' => $mon_hours, 'tue_hours' => $tue_hours, 'wed_hours' => $wed_hours, 'thu_hours' => $thu_hours, 'fri_hours' => $fri_hours, 'sat_hours' => $sat_hours];
                         UserDynamic::where('iuserid', '=', $iuserid)->update($update);
                         session()->forget('userInput');
                     } else {
 
                         $store_text = '========================== updt ----- else' . PHP_EOL;
                         fwrite($myfile, $store_text);
-                        $update = ['mob_user' => $mob_user,'web_user' => $web_user,'pos_user' => $pos_user,'vfname' => $input['vfname'],'vlname' => $input['vlname'],'vaddress1' => $input['vaddress1'],'vaddress2' => $input['vaddress2'],'vcity' => $input['vcity'],'vstate' => $input['vstate'],'vzip' => $input['vzip'],'vcountry' => $input['vcountry'],'vphone' => $input['vphone'],'vuserid' => $vuserid,'vusertype' => $input['vusertype'],'vpasswordchange' => "No",'vuserbarcode' => $vuserbarcode,'estatus' => $input['estatus'],'SID' => session()->get('sid'),'vemail' => $vemail,'tc_password' => $tc_pass,'time_clock' => $time_clock,'time_email' => $time_email,'ssn' => $ssn,'pay_type' => $pay_type,'over_time' => $over_time,'pay_rate' => $pay_rate,'start_dt' => $start_dt,'termination_dt' => $termination_dt,'vacation_hours' => $vacation_hours,'sick_hours' => $sick_hours,'available_hours' => $available_hours,'sun_hours' => $sun_hours,'mon_hours' => $mon_hours,'tue_hours' => $tue_hours,'wed_hours' => $wed_hours,'thu_hours' => $thu_hours,'fri_hours' => $fri_hours,'sat_hours' => $sat_hours];
+                        $update = ['mob_user' => $mob_user, 'web_user' => $web_user, 'pos_user' => $pos_user, 'vfname' => $input['vfname'], 'vlname' => $input['vlname'], 'vaddress1' => $input['vaddress1'], 'vaddress2' => $input['vaddress2'], 'vcity' => $input['vcity'], 'vstate' => $input['vstate'], 'vzip' => $input['vzip'], 'vcountry' => $input['vcountry'], 'vphone' => $input['vphone'], 'vuserid' => $vuserid, 'vusertype' => $input['vusertype'], 'vpasswordchange' => "No", 'vuserbarcode' => $vuserbarcode, 'estatus' => $input['estatus'], 'SID' => session()->get('sid'), 'vemail' => $vemail, 'tc_password' => $tc_pass, 'time_clock' => $time_clock, 'time_email' => $time_email, 'ssn' => $ssn, 'pay_type' => $pay_type, 'over_time' => $over_time, 'pay_rate' => $pay_rate, 'start_dt' => $start_dt, 'termination_dt' => $termination_dt, 'vacation_hours' => $vacation_hours, 'sick_hours' => $sick_hours, 'available_hours' => $available_hours, 'sun_hours' => $sun_hours, 'mon_hours' => $mon_hours, 'tue_hours' => $tue_hours, 'wed_hours' => $wed_hours, 'thu_hours' => $thu_hours, 'fri_hours' => $fri_hours, 'sat_hours' => $sat_hours];
                         UserDynamic::where('iuserid', '=', $iuserid)->update(array_filter($update));
                         session()->forget('userInput');
                     }
@@ -1221,13 +1294,12 @@ class AllUserController extends Controller
 
     public function remove(Request $request)
     {
-        // $delId = $request->all();
-        // for($i = 0; $i < count($delId['selected']); $i++ ){
-        //     UserDynamic::where('iuserid', '=', $delId['selected'][$i] )->delete();
-        //     User::where('iuserid', '=', $delId['selected'][$i])->update(['estatus' => 'Inactive']);
-        // }
-        // return redirect('users')->with('message', 'User Deleted Successfully');
-
+        if (session()->has('sid')) {
+            $sid = Session::get('sid');
+        } else {
+            return redirect()->to('/');
+        }
+        $delete ='';
         $file_location = 'user_permisson_remove.log';
         $myfile = fopen($file_location, "a") or die("Unable to open file!");
         $txt = PHP_EOL . "Insertion Starting Date And time is: " . date("Y-m-d h:i:sa") . PHP_EOL;
@@ -1245,15 +1317,18 @@ class AllUserController extends Controller
             $deletemstuser[0]->delete();
             $delete = User::where([['iuserid', '=', $del_id], ['sid', '=', $sid]])->delete();
         }
+        $txt = "Insertion End Date And time is: " . date("Y-m-d h:i:sa") . PHP_EOL;
+        $txt .= PHP_EOL;
+        fwrite($myfile, $txt);
+        fclose($myfile);
+
         if ($delete) {
             return redirect('users')->with('message', 'User Deleted Successfully');
         } else {
             return redirect('users')->with('message', 'Master Users can not be Deleted Permanently');
         }
-
-        $txt = "Insertion End Date And time is: " . date("Y-m-d h:i:sa") . PHP_EOL;
-        $txt .= PHP_EOL;
-        fwrite($myfile, $txt);
-        fclose($myfile);
+    }
+    public function validEmail($str) {
+        return (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $str)) ? FALSE : TRUE;
     }
 }
