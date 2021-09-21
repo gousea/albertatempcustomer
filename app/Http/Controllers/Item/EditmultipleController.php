@@ -539,7 +539,7 @@ class EditmultipleController extends Controller
                         }
                         break;
                     
-                    case 'no':
+                    case 'notax':
                         if($tax3_exists > 0){
                         $condition .= " AND (mi.vtax1 ='N' AND mi.vtax2 ='N' AND mi.vtax3 ='N')";
                         } else {
