@@ -200,6 +200,7 @@ Sales Transaction
             
         </div>
 </div>
+<br>
 </section>
 @endsection
 @section('page-script')
