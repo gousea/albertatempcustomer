@@ -46,7 +46,7 @@ Route::get('/api/convertupce2upca', 'Admin\ProductController@convert_upce_2_upca
 
 
 
-Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
+Route::group(['middleware' => ['auth', 'StoreDatabaseSelection','revalidate']], function () {
 
 
 
