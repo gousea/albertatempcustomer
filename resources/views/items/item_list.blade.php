@@ -9,7 +9,8 @@
     <style>
      span.select2-container{
         width: 90% !important;  
-        min-width:110px; !important;
+        min-width: 110px !important;
+        margin-right: 10px !important;
       }
       
         .select2-selection{
@@ -55,7 +56,7 @@
             
             <div class="nav-submenu d-flex">
                 <b style="top: 9px; position: relative; right: 7px; text-transform: uppercase; font-weight: 800">Show &nbsp</b> 
-                <select name="items_status" id="items_status">
+                <select name="items_status" id="items_status" style="margin-right:10px">
                     <option value="All" <?php echo ($data['show_items']=='ALL')? "selected" : "";?>>All</option>
                     <option value="Active" <?php echo ($data['show_items']=='Active')? "selected" : "";?>>Active</option>
                     <option value="Inactive" <?php echo ($data['show_items']=='Inactive')? "selected" : "";?>>Inactive</option>

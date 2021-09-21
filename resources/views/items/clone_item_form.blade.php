@@ -1562,7 +1562,7 @@
             </table>
           </div>
           <div class="modal-footer">
-            <button id="save_btn" class="bbtn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Save</button>
+            <button id="save_btn" class="btn btn-danger buttonred buttons_menu basic-button-small" data-dismiss="modal">Save</button>
             <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
           </div>
         </div>

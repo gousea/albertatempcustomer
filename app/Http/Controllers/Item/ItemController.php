@@ -5239,7 +5239,7 @@ class ItemController extends Controller
                         DB::connection('mysql_dynamic')->insert("INSERT INTO trn_webadmin_history SET  itemid = '" . $last_iitemid['iitemid'] . "',userid = '" . Auth::user()->id . "',barcode = '" . ($new_item_values['vbarcode']) . "', type = 'Clone', oldamount = '0', newamount = '0',general = '" . $x_general . "', source = 'CloneItem', historydatetime = NOW(),SID = '" . (int)(session()->get('sid'))."'");
                         
                         if($new_item_values['vitemtype'] == 'Lot Matrix'){
-                            $itempacks = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_itempackdetail WHERE iitemid='". (int)$value->iitemid ."' ORDER BY isequence");
+                            $itempacks = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_itempackdetail WHERE iitemid='". (int)$last_iitemid['iitemid'] ."' ORDER BY isequence");
                             $itempacks = isset($itempacks)?(array)$itempacks:[];
                             
                             foreach($itempacks as $itempack){
