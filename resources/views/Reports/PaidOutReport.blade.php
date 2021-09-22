@@ -10,14 +10,14 @@ Vendor Paid Out Report
                 <div class="menu">
                     <span class="font-weight-bold text-uppercase"> Paid Out Report</span>
                 </div>
-                <div class="nav-submenu" style="display: none;">
+                <div class="nav-submenu">
                        <?php if(isset($report_paid_out) && count($report_paid_out) > 0){ ?>
-                            <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
-                            </a>
+                           <!-- <a type="button" class="btn btn-gray headerblack  buttons_menu " href="#" id="csv_export_btn" > CSV
+                            </a> -->
                              <a type="button" class="btn btn-gray headerblack  buttons_menu "  href="{{route('Paidoutprint')}}" id="btnPrint">PRINT
                             </a>
-                            <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
-                            </a>
+                          <!--  <a type="button" class="btn btn-gray headerblack  buttons_menu " id="pdf_export_btn" href="{{route('salesreportpdf_save_page')}}" > PDF
+                            </a> -->
                         <?php } ?>
                 </div>
             </div> 

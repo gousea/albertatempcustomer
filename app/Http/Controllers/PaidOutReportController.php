@@ -53,7 +53,7 @@ class PaidOutReportController extends Controller
               
         //new report modification 
          $preport=$Reports->newpaidOut($input['start_date'], $input['end_date'],$vendorid,$amounttype,$amount,$tender);
-         
+         $data['printdata']=$preport;
          
          	  
          $reportsdata = json_decode(json_encode($preport), true); 
@@ -137,7 +137,7 @@ class PaidOutReportController extends Controller
         $data_row .= "Sl. No,Paid Date,Vendor Name,Amount,Tender Type,Register No,Time,User ID".PHP_EOL;
 
         $count = 0; 
-        foreach($data['report_paid_out'] as $v){
+        foreach($data['csv'] as $v){
             
             if($v->Vendor == "Total") {
                 continue;

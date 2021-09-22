@@ -58,17 +58,20 @@
                    
                    
                            <tr>
-                               <th>Serial No.</th>
-                               <th>Paid Date</th>
-                               <th>Vendor Name</th>
-                               <th>Amount</th>
-                               <th>Tender Type</th>
-                               <th>Register No</th>
-                               <th>Time</th>
-                               <th>User ID</th>
+                               <th></th>
+                                <th>Paid Out Date</th>
+                                
+                                 <th>Time</th>
+                                 
+                                <th>Vendor Name</th>
+                                <th>Amount</th>
+                                <th>Tender Type</th>
+                                <th>Register No</th>
+                               
+                                <th>User ID</th>
                            </tr>
                            <?php $total=0;?>
-                            <?php foreach($report_paid_out as $v){
+                            <?php foreach($printdata as $v){
                                  if($v->Vendor === "Total"){
                                   continue;
                                 }?>
@@ -86,24 +89,37 @@
                                <th></th>
                                <th></th>
                                </tr>
-                           <?php 
-                               $count = 0; 
-                               foreach($report_paid_out as $v){ ?>
-                                <?php if($v->Vendor === "Total"){
-                                continue;
-                                }?>
-                                       <tr>
-                                           <td><?php echo ++$count; ?></td>
-                                           <td style="width:80px;"><?php echo isset($v->dt) ? $v->dt: ""; ?></td>
-                                           <td><?php echo isset($v->Vendor) ? $v->Vendor: ""; ?></td>
-                                           <td><?php echo "$",isset($v->Amount) ? $v->Amount: 0.00; ?></td>
-                                           
-                                           <td><?php echo isset($v->TenderType) ? $v->TenderType: 0.00; ?></td>
-                                           <td><?php echo isset($v->RegNo) ? $v->RegNo: 0.00; ?></td>
-                                           <td><?php echo isset($v->ttime) ? $v->ttime: 0.00; ?></td>
-                                           <td><?php echo isset($v->UserId) ? $v->UserId: 0.00; ?></td>
-                                       </tr>
-                           <?php }?>
+                          <?php $i=0;?>
+                            <?php foreach($out as $r) { ?>
+                            
+                                        <?php $i++;?>
+                                        <tr class="first_row th_color" id="child_<?php echo $i;?>">
+                                            <th><?php echo isset($r['Vendorname']) ? $r['Vendorname']: ''; ?></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                       
+                                        <?php  foreach($r['details'] as $v) { ?>
+                                            
+                                            <tr   class="child_<?php echo $i;?>">
+                                                <td><?php echo "" ; ?></td>
+                                                <td  class="child_<?php echo $i;?>"><?php echo isset($v['dt']) ? $v['dt']: ''; ?></td>
+                                                <td><?php echo isset($v['ttime']) ? $v['ttime']: 0.00; ?></td>
+                                                <td><?php echo isset($v['Vendor']) ? $v['Vendor']: ""; ?></td>
+                                                <td><?php echo "$",isset($v['Amount']) ? $v['Amount']: 0.00; ?></td>
+                                                
+                                                <td><?php echo isset($v['TenderType']) ? $v['TenderType']: 0.00; ?></td>
+                                                <td><?php echo isset($v['RegNo']) ? $v['RegNo'] : 0.00; ?></td>
+                                                
+                                                <td><?php echo isset($v['UserId']) ? $v['UserId']: 0.00; ?></td>
+                                                
+                                            </tr>                                                
+                                    <?php } ?>
+                            <?php } ?>     
                    
                    
                    
