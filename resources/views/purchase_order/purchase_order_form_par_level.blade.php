@@ -76,8 +76,8 @@
       </div>
     </nav>
     
-  <div class="container-fluid section-content">
-    <div class="container-fluid">
+  <div class="container section-content">
+    <div class="container">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -490,7 +490,7 @@
                         
                         <div class='row'><!-- to leave a gap between the list of items and set of buttons --> &nbsp;</div>
                         
-                        <div class="tab-pane" id="item_tab">
+                        <div class="tab-pane" id="item_tab" style="margin-top: 190px;">
                           <div class="row" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
                             <div class="" style="display: none;">
                               <input type="text" placeholder="Add New Item" id="automplete-product" class="form-control">
