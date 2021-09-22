@@ -98,6 +98,7 @@
           <div class="row pull-right" style="margin-left: 0px;margin-right: 0px;">
             <div class="col-sm-6 text-left">{{$itemgroup->links()}}</div>
             <!-- <div class="col-sm-6 text-right">Showing 1 to 11 of 11 (1 Pages)</div> -->
+            <br>
           </div>
         </div>
       </div>
