@@ -417,7 +417,7 @@
                             <div class="row" id="div_item_listing" style="height: 700px;">
                                 <div class="col-md-12">
                                     <div class="box-body table-responsive">
-                    		            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%; font-size:9px;">
+                    		            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%; font-size:13px;">
                     		                <thead>
                     		                    <tr class="header-color" style="font-size:12px;">
                     		                        <th style="width: 1px;"><input type='checkbox' onclick="$('input[name*=\'selected_search_history_items\']').prop('checked', this.checked);"></th>
