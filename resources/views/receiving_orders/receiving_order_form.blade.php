@@ -3153,7 +3153,7 @@ $('.editable_text').focus(function() {
             $('#item_history_err').html('Sorry no data found! please search again');
             return false;
           }
-          $('#sku').val('');
+          
         },
         error: function(xhr) { // if error occured
           $('#rotating_logo').hide();
