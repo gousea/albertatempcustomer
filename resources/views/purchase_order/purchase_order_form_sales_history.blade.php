@@ -19,8 +19,8 @@
     </div>
   </nav>
     
-  <div class="container section-content">
-    <div class="container">
+  <div class="container-fluid section-content">
+    <div class="container-fluid">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -393,26 +393,26 @@
                                         <div class="box-body table-responsive">
                                             <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%; font-size:13px;">
                                                 <thead>
-                                                    <tr class="header-color">
+                                                    <tr class="header-color" style="box-sizing: border-box;">
                                                         <th style="width: 1px;"><input type='checkbox' onclick="$('input[name*=\'selected_search_history_items\']').prop('checked', this.checked);"></th>
-                                                        <th style="width: 15%;position: relative;">ITEM NAME
+                                                        <th style="width: 10%;">ITEM NAME
                                                           <div class="adjustment-has-search">
                                                             <input type="text" autocomplete="off" id="search_item_name" name="item_name" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
                                                           </div>
                                                         </th>
-                                                        <th style="width: 10%;position: relative;">SIZE
+                                                        <th style="width: 10%;">SIZE
                                                           <div class="adjustment-has-search">
                                                             <input type="text" autocomplete="off" id="search_size" name="size" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
                                                           </div>
                                                         </th>
 
-                                                        <th>SKU
+                                                        <th style="width:10%;">SKU
                                                           <div class="adjustment-has-search">
                                                             <input type="text" autocomplete="off" id="search_sku" name="barcode" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
                                                           </div>
                                                         </th>
 
-                                                        <th style="width: 22%;">PRICE
+                                                        <th style="width: 25%;">PRICE
                                                           <div class="adjustment-has-search">
                                                             
                                                             <select class='table-heading-fields' id='price_select_by' name='price_select_by' style='width:40%; padding-left: 5px;'>
