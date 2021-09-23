@@ -19,8 +19,8 @@
     </div>
   </nav>
     
-  <div class="container-fluid section-content">
-    <div class="container-fluid">
+  <div class="container section-content">
+    <div class="container">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -391,9 +391,9 @@
                                 <div class="row" id="div_item_listing">
                                     <div class="col-md-12">
                                         <div class="box-body table-responsive">
-                                            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%;">
+                                            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%; font-size:13px;">
                                                 <thead>
-                                                    <tr class="header-color" styel="font-size:5px;">
+                                                    <tr class="header-color">
                                                         <th style="width: 1px;"><input type='checkbox' onclick="$('input[name*=\'selected_search_history_items\']').prop('checked', this.checked);"></th>
                                                         <th style="width: 15%;position: relative;">ITEM NAME
                                                           <div class="adjustment-has-search">
@@ -479,9 +479,9 @@
                                 <div class='row'>
                                     <div class="col-md-12">
                                         
-                                        <div class="box-body table-responsive" id='divTbodyItemListing'  style="height: 400px; font-size:9px; width:100%;">
+                                        <div class="box-body table-responsive" id='divTbodyItemListing'  style="height: 400px; width:100%;">
                                             
-                                            <table id='tbodyItemListing' class='table table-striped table-hover promotionview' style="width:100%;">
+                                            <table id='tbodyItemListing' class='table table-striped table-hover promotionview' style="width:100%; font-size: 13px;">
                                                     
                                             </table>
                                             
@@ -539,7 +539,7 @@
                             <br>
                             <div class="row" <?php if(isset($estatus) && $estatus == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
                                 <div class="col-md-12" style="overflow-y:auto; font-size: 11px;">
-                                    <table class="table table-hover promotionview" style="width:100%;" id="po-items">
+                                    <table class="table table-hover promotionview" style="width:100%; font-size: 13px;" id="po-items">
                                         <thead>
                                             
                                           <tr class="header-color">
