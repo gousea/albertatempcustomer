@@ -3143,7 +3143,7 @@ $('.editable_text').focus(function() {
 
             $('tbody#history_items').append(search_table_html).show('slow');
             $('#rotating_logo').hide();
-            $('#sku').val('');
+            
             return false;
             
           }else{
@@ -3153,6 +3153,7 @@ $('.editable_text').focus(function() {
             $('#item_history_err').html('Sorry no data found! please search again');
             return false;
           }
+          $('#sku').val('');
         },
         error: function(xhr) { // if error occured
           $('#rotating_logo').hide();
