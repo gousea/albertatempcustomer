@@ -513,7 +513,7 @@ class HomeController extends Controller
             $output['news_update'] = DB::connection()->select($select_query);
 
             $sid = $request->session()->get('sid');
-            $trn_sales_query = "SELECT isalesid AS transaction_id, dtrandate as sales_timestamp, ntaxabletotal as sales_amount, vtendertype as tender_type, isalesid, dtrandate FROM u" . $sid . ".trn_sales ORDER BY dtrandate DESC limit 1000";
+            $trn_sales_query = "SELECT isalesid AS transaction_id, dtrandate as sales_timestamp, ntaxabletotal, nnettotal as sales_amount, vtendertype as tender_type, isalesid, dtrandate FROM u" . $sid . ".trn_sales ORDER BY dtrandate DESC limit 1000";
             $output['trn_sales_data'] = DB::connection()->select($trn_sales_query);
 
             $mst_item_query = "SELECT count(*) as totalitem from u" . $sid . ".mst_item where dcreated >= DATE_ADD(current_date(), INTERVAL -6 DAY)";
@@ -523,8 +523,6 @@ class HomeController extends Controller
             $output['total_item'] = $total_item[0];
             $output['date'] = $date;
         }
-
-
         return $output;
     }
 
