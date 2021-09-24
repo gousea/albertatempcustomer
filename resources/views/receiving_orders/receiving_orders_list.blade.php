@@ -11,11 +11,11 @@
                 <span class="font-weight-bold text-uppercase"> Receiving Order</span>
             </div>
             <div class="nav-submenu">
-              
-              <a type="button" href="<?php echo $data['add']; ?>" title="Add" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>  
-                          
+                <a type="button" href="{{route('quickInventoryUpdate')}}" title="QuickInventoryUpdate" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate">InventoryUpdate</a>
+              <a type="button" href="<?php echo $data['add']; ?>" title="Add" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>
+
               <button class="btn btn-dark headerwhite buttons_menu basic-button-small" data-toggle="modal" data-target="#myModalImportNew"><i class="fa fa-file"></i>&nbsp;&nbsp;Import EDI Invoice</button>
-            
+
               <button class="btn btn-dark headerwhite buttons_menu basic-button-medium" data-toggle="modal" data-target="#myModalImportMissingItem"><i class="fa fa-gift"></i>&nbsp;Import Missing Items</button>
               <?php if(isset($error_import_barcode) && !empty($error_import_barcode)){ ?>
                   <button class="btn btn-warning buttonred buttons_menu basic-button-small" data-toggle="modal" data-target="#error_import_modal"><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;Import Error Occurs</button>
@@ -25,7 +25,7 @@
         </div> <!-- navbar-collapse.// -->
     </div>
   </nav>
-  
+
   <section class="section-content py-6">
     <div class="container">
         @if ($data['error_warning'])
@@ -38,18 +38,18 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         @endif
-        
+
         <div class="panel panel-default">
-            
+
             <div class="panel-body">
-            
-                
+
+
                 <form action="" method="post" enctype="multipart/form-data" id="form-purchase-order">
-                
+
                     <div class="table-responsive col-xl-12 col-md-12">
-                      
+
                         <table id="receiving_order" class="table table-hover" data-classes="table table-hover promotionview">
-                        
+
                             <thead>
                                 <tr class="header-color">
                                     <th style="width: 1px;" class="text-center no-filter-checkbox"><input type="checkbox" id="main_checkbox" /></th>
@@ -95,13 +95,13 @@
                                     <th class="text-left text-uppercase no-filter">Action</th>
                                 </tr>
                             </thead>
-                        
-                        
+
+
                         </table>
-                    
+
                     </div>
                 </form>
-                
+
             </div>
         </div>
     </div>
@@ -132,7 +132,7 @@
                                 <span style="display:inline-block;width:15%;">File: </span> <span style="display:inline-block;width:75%;"><input type="file" name="import_invoice_file" id="import_edi_file" required></span>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-12">
                           <div class="form-group">
                             <span style="display:inline-block;width:15%;">Vendor: </span> <span style="display:inline-block;width:75%;">
@@ -148,7 +148,7 @@
                           </div>
                         </div>
                         <div class="col-md-12" id="display_vendor_options">
-                            
+
                         </div>
                         <div class="col-md-12 text-center">
                           <div class="form-group">
@@ -190,15 +190,15 @@
 
     $(document).on('submit', 'form#form_import_invoice_new', function(event) {
         event.preventDefault();
-    
+
         $("div#divLoading").addClass('show');
         $('#myModalImportNew').modal('hide');
-    
+
         var import_form_id = $('form#form_import_invoice_new');
         var import_form_action = import_form_id.attr('action');
-        
+
         var import_formdata = false;
-            
+
         if (window.FormData){
             import_formdata = new FormData(import_form_id[0]);
         }
@@ -214,25 +214,25 @@
             processData : false,
             type : 'POST',
         }).done(function(response){
-          
+
           var  response = $.parseJSON(response); //decode the response array
 
           if( response.code == 3 ) {//error
             $("div#divLoading").removeClass('show');
             // document.getElementById('edi_invoice_download').click();
             // alert(response.error);
-            bootbox.alert({ 
+            bootbox.alert({
               size: 'small',
-              title: "  ", 
-              message: response.error, 
+              title: "  ",
+              message: response.error,
               callback: function(){}
             });
-            
+
             return;
           }
-            
+
           if( response.code == 1 ) {//success
-            
+
             $("div#divLoading").removeClass('show');
             $('#successModal').modal('show');
             if(response.file_download == 1){
@@ -243,24 +243,24 @@
               window.location.reload();
               $("div#divLoading").addClass('show');
             }, 3000);
-            
+
           } else if( response.code == 0 ) {//error
             $("div#divLoading").removeClass('show');
             // alert(response.error);
-            bootbox.alert({ 
+            bootbox.alert({
               size: 'small',
-              title: "  ", 
-              message: response.error, 
+              title: "  ",
+              message: response.error,
               callback: function(){}
             });
             // return;
-            
+
             setTimeout(function(){
               window.location.reload();
               $("div#divLoading").addClass('show');
             }, 3000);
           }
-      
+
       });
   });
 </script>
@@ -359,8 +359,8 @@
         <h4 class="modal-title text-center">The following list of Barcodes items can not be import</h4>
       </div>
       <div class="modal-body">
-        
-          
+
+
           <div class="row">
             <div class="col-md-12">
               <div class="table-responsive" >
@@ -391,7 +391,7 @@
               </div>
             </div>
           </div>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -405,7 +405,7 @@
 
   $(document).on('keyup', '#itemsort_search', function(event) {
     event.preventDefault();
-    
+
     $('#missing_item_table tbody tr').hide();
     var txt = $(this).val();
 
@@ -424,13 +424,13 @@
     event.preventDefault();
 
     var url = $('form#form_import_missing_items').attr('action');
-    
+
     if($("input[name='selected_missing_items[]']:checked").length == 0){
       // alert('Please select items for import!');
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
-        title: "  ", 
-        message: "Please select items for import!", 
+        title: "  ",
+        message: "Please select items for import!",
         callback: function(){}
       });
       return false;
@@ -462,11 +462,11 @@
        window.location.reload();
        $("div#divLoading").addClass('show');
       }, 3000);
-      
+
     },
     error: function(xhr) { // if error occured
       var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-      
+
       var error_show = '';
 
       if(response_error.error){
@@ -503,7 +503,7 @@
 
 <script type="text/javascript">
   $(document).on('click', '#main_checkbox', function(event) {
-    if ($(this).prop('checked')==true){ 
+    if ($(this).prop('checked')==true){
       $('input[name="selected[]"]').not(":disabled").prop('checked', true);
     }else{
       $('input[name="selected[]"]').not(":disabled").prop('checked', false);
@@ -518,10 +518,10 @@
     var data = {};
 
     if($("input[name='selected[]']:checked").length == 0){
-      bootbox.alert({ 
+      bootbox.alert({
         size: 'small',
-        title: "  ", 
-        message: 'Please Select PO to Delete!', 
+        title: "  ",
+        message: 'Please Select PO to Delete!',
         callback: function(){}
       });
       return false;
@@ -531,7 +531,7 @@
     {
       data[i] = parseInt($(this).val());
     });
-    
+
     $("div#divLoading").addClass('show');
 
     $.ajax({
@@ -544,7 +544,7 @@
         contentType: "application/json",
         dataType: 'json',
       success: function(data) {
-       
+
         $('#success_msg').html('<strong>'+ data.success +'</strong>');
         $("div#divLoading").removeClass('show');
         $('#successModal').modal('show');
@@ -556,7 +556,7 @@
       },
       error: function(xhr) { // if error occured
         var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-        
+
         var error_show = '';
 
         if(response_error.error){
@@ -571,7 +571,7 @@
       }
     });
   });
-  
+
     $(document).on('change', '#vvendors', function(){
         var vendor = $('#vvendors').val();
         var url = '<?php echo $data["get_vendor_data"] ; ?>';
@@ -586,83 +586,83 @@
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
-                
+
                 let html =  "<h5>Selected Vendor Feture List</h5>";
                                 html += "<ul>";
-                                
+
                                 if(data.vendor_format == 'FEDWAY'){
                                     html += "<li>FEDWAY</li>";
-                                    
+
                                 }else if(data.vendor_format == 'ALLEN BROTHERS'){
                                     html += "<li>ALLEN BROTHERS</li>";
-                                    
+
                                 }else if(data.vendor_format == 'CORE MARK'){
                                     html += "<li>CORE MARK</li>";
-                                    
+
                                 }else if(data.vendor_format == 'RESNICK'){
                                     html += "<li>RESNICK</li>";
                                 }else{
                                     html += "<li>OTHERS</li>";
                                 }
-                                
+
                                 if(data.upc_convert == 'A'){
-                                    
+
                                     html += "<li>UPC-E to UPC-A</li>";
-                                    
+
                                     if(data.remove_first_digit == 'Y'){
-                                        
+
                                         html += "<li>Remove First Digit</li>";
-                                        
+
                                     }
-                                    
+
                                     if(data.remove_last_digit == 'Y'){
-                                        
+
                                         html += "<li>Remove Last Digit</li>";
-                                        
+
                                     }
-                                    
+
                                 }else if(data.upc_convert == 'E'){
-                                    
+
                                     html += "<li>UPC-A to UPC-E</li>";
-                                    
+
                                     if(data.check_digit == 'Y'){
-                                        
+
                                         html += "<li>With Check Digit</li>";
-                                        
+
                                     }
                                     if(data.remove_first_digit == 'Y'){
-                                        
+
                                         html += "<li>Remove First Digit</li>";
-                                        
+
                                     }
-                                    
+
                                     if(data.remove_last_digit == 'Y'){
-                                        
+
                                         html += "<li>Remove Last Digit</li>";
-                                        
+
                                     }
-                                    
+
                                 }else{
                                     html += "<li>NONE</li>";
-                                    
+
                                     if(data.check_digit == 'Y'){
-                                        
+
                                         html += "<li>With Check Digit</li>";
-                                        
+
                                     }
                                     if(data.remove_first_digit == 'Y'){
-                                        
+
                                         html += "<li>Remove First Digit</li>";
-                                        
+
                                     }
-                                    
+
                                     if(data.remove_last_digit == 'Y'){
-                                        
+
                                         html += "<li>Remove Last Digit</li>";
-                                        
+
                                     }
                                 }
-                                
+
                              html += "</ul>";
                 if(vendor == ''){
                     $('#display_vendor_options').html('');
@@ -672,15 +672,15 @@
             },
             error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-                
+
                 var error_show = '';
-                
+
                 if(response_error.error){
                   error_show = response_error.error;
                 }else if(response_error.validation_error){
                   error_show = response_error.validation_error[0];
                 }
-                
+
                 $('#error_msg').html('<strong>'+ error_show +'</strong>');
                 $('#errorModal').modal('show');
                 return false;
@@ -692,7 +692,7 @@
 
   <div class="modal fade" id="errorModal" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header" style="border-bottom:none;">
@@ -707,15 +707,15 @@
         <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
       </div>
       </div>
-      
+
     </div>
   </div>
-  
+
   <style>
       .floatBlock {
           margin: 0 1.81em 0 0;
         }
-        
+
     .checkdigitOptions {
     	border: none;
     	display: flex;
@@ -728,33 +728,33 @@
       line-height: 0.5;
       border-radius: 6px;
     }
-    
+
   </style>
 
 <script>
   var url = "<?php echo $data['current_url'];?>";
 
   $('#receiving_order thead tr th').each( function (i) {
-      
+
       $( this ).on( 'keyup', '.table-heading-fields', function () {
 
             var self = this;
             if ( table.column(i).search() !== self.value ) {
-                
-                
+
+
                 table
                     .column(i)
                     .search( self.value )
                     .draw();
-                    
+
                 $("div#divLoading").addClass('show');
-                
+
             }
       });
-      
+
   });
 
-  
+
 
   var showPaginationPrevNextButtons = false;
   var table =   $("#receiving_order").DataTable({
@@ -768,7 +768,7 @@
       "bLengthChange": false,
       "aoColumnDefs": [
           { "sWidth": "190px", "aTargets": [ 7 ] },
-          
+
       ],
       //"autoWidth": true,
 
@@ -777,9 +777,9 @@
           searchPlaceholder: "Search..."
       },
       // "fnPreDrawCallback": function( oSettings ) {
-      
+
       //     main_checkbox = $('#main_checkbox').is(":checked");
-  
+
       // },
       "dom": 't<"bottom col-md-12 row"<"col-md-3"i><"col-md-9"p>>',
       "ajax": {
@@ -789,27 +789,27 @@
       },
       "data": function(d){
           d["m_check"] = $('#main_checkbox').is(":checked");
-          
+
       },
       type: 'POST',
       "dataSrc": function ( json ) {
-              
+
               if(json.data.length != 0){
-              $(".bottom").show();  
-              
+              $(".bottom").show();
+
               } else {
-              $(".bottom").hide(); 
-              
+              $(".bottom").hide();
+
               }
-              
+
               return json.data;
-          } 
+          }
       },
-      
+
       columns :  [
                   {
                       data: "iroid", render: function(data, type, row){
-                          
+
                           return $("<input>").attr({
                                   // checked: !uncheckedBoxes[data],
                                   type: 'checkbox',
@@ -818,52 +818,52 @@
                                   name: "selected[]",
                                   "data-order": data,
                           })[0].outerHTML;
-                          
+
                       }
                   },
                   { "data": "estatus"},
-                  
+
                   { "data": "vponumber"},
                   { "data": "vinvoiceno"},
                   { "data": "nnettotal"},
                   { "data": "vvendorname"},
                   {"data": "vordertype"},
                   {"data": "dcreatedate"},
-                  
+
                   { "data": "view_edit", render: function(data, type, row){
                           return "<a href="+data+" data-toggle='tooltip' title='View' class='btn btn-sm btn-info edit_btn_rotate header-color ' ><i class='fa fa-eye'></i>&nbsp;&nbsp;View</a>";
                     }
                 },
-                  
+
           ],
           rowCallback: function(row, data, index){
-              
+
       },
       fnDrawCallback : function() {
               if ($(this).find('tbody tr').length<=1) {
                   $(this).find('.dataTables_empty').hide();
               }
-              
+
               // $(this).removeClass('promotionview');
               $(this).addClass('promotionview');
               console.log("check")
       }
   }).on('draw', function(){
               if($('#main_checkbox').prop("checked") == true){
-                  
+
                   $('.iitemid').prop('checked', true);
-              } else{ 
-                  $('.iitemid').prop('checked', false);   
+              } else{
+                  $('.iitemid').prop('checked', false);
               }
               // console.log($(this).find('tbody tr .iitemid').length);
           if ($(this).find('tbody tr .iitemid').length>0) {
               $('#buttonEditMultipleItems').prop('disabled', false);
           }
           $("div#divLoading").removeClass('show');
-          
+
   });
 
   $("#receiving_order_paginate").addClass("pull-right");
 </script>
-  
+
 @endsection
