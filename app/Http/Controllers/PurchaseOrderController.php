@@ -110,12 +110,6 @@ class PurchaseOrderController extends Controller
 		    $sort = 'LastUpdate';
 		}
 		
-		if(isset($input['order'])){
-		    $order = 'ORDER BY LastUpdate '.$input['order'];
-		}else{
-		    $order = 'ORDER BY LastUpdate DESC';
-		}
-
         $search_value = $input['columns'];
         
         $search_items = [];
@@ -154,8 +148,8 @@ class PurchaseOrderController extends Controller
             
             $start_from = ($input['start']);
 
-            $select_query = "SELECT * FROM trn_purchaseorder ".$order." LIMIT ". $input['start'].", ".$limit;
-
+            $select_query = "SELECT * FROM trn_purchaseorder ORDER BY estatus DESC, LastUpdate LIMIT ". $input['start'].", ".$limit;
+            
             $count_select_query = "SELECT COUNT(distinct ipoid) as count FROM trn_purchaseorder";
             $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
             $count_query = isset($count_query[0])?(array)$count_query[0]:[];
@@ -207,7 +201,7 @@ class PurchaseOrderController extends Controller
                 $check_condition = 1;
             }
             
-            $select_query = "SELECT * FROM trn_purchaseorder ".$condition." ".$order." LIMIT ". $input['start'].", ".$limit;
+            $select_query = "SELECT * FROM trn_purchaseorder ".$condition." ORDER BY estatus DESC, LastUpdate LIMIT ". $input['start'].", ".$limit;
 
             $count_select_query = "SELECT COUNT(distinct ipoid) as count FROM trn_purchaseorder ".$condition;
             $count_query = DB::connection('mysql_dynamic')->select($count_select_query);
