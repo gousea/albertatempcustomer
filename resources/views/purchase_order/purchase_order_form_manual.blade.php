@@ -629,11 +629,12 @@
                                           
                                         </thead>
                                         <tbody id="purchase_order_items">
-                                            <?php $total_amt = '0.00'; ?>
+                                            <?php $total_amt = '0.00'; $total_orderqty = 0; ?>
                                             <?php if(isset($data['items']) && count($data['items']) > 0){ ?>
                                                 <?php foreach($data['items'] as $k => $item){ 
                                                     $total_amt +=$item['nordextprice']; 
-                                                    ?>
+                                                    $total_orderqty += $item['nordqty'];
+                                                ?>
                                                     <tr id="tab_tr_<?php echo $item['vitemid']; ?>">
                                                         <td class="text-center">
                                                           <input type="checkbox" name="selected_purchase_item[]" value="<?php echo $item['ipodetid']; ?>"/>
@@ -689,7 +690,7 @@
                                                         </td>
                                                         
                                                         <td class="text-right">
-                                                            <input type="text" class="nordqty_class" name="items[<?php echo $k; ?>][nordqty]" id="" style="width:60px;text-align: right;" value="<?php echo $item['nordqty']; ?>">
+                                                            <input type="text" class="nordqty_class" name="items[<?php echo $k; ?>][nordqty]" id="" style="width:60px;text-align: right;" value="<?php echo (int)$item['nordqty']; ?>">
                                                             <input type="hidden" class="itotalunit_class" name="items[<?php echo $k; ?>][itotalunit]" id="" style="width:60px;text-align: right;" value="<?php echo $item['itotalunit']; ?>">
                                                             
                                                         </td>
@@ -720,8 +721,8 @@
                                               <td>&nbsp;</td>
                                               <td>&nbsp;</td>
                                               <td>&nbsp;</td>
-                                              <td>&nbsp;</td>
                                               <td class="text-right"><b>Total</b></td>
+                                              <td class="text-left text-uppercase"><b><span class="total_order_qty">&nbsp;&nbsp;<?= $total_orderqty; ?></span></b></td>
                                               <td class="text-right"><b><span class="total_suggested_amount"><?php // echo number_format((float)$total_suggted_amt, 2, '.', '') ;?></span></b></td>
                                               <td class="text-right"><b><span class="total_amount"><?php echo number_format((float)$total_amt, 2, '.', '') ;?></span></b></td>
                                             </tr>
@@ -2416,6 +2417,17 @@ $('.editable_text').focus(function() {
         $('span.total_amount').html('0.00');
     } else {
         $('span.total_amount').html(parseFloat(tot_amt).toFixed(2));
+    }
+    
+    var tot_order_qty = 0;
+    $(".nordqty_class").each(function(){
+      tot_order_qty = parseFloat(tot_order_qty) + parseFloat($(this).val());
+    });
+    
+    if(parseFloat(tot_order_qty).toFixed(2) === 'NaN'){
+        $('span.total_order_qty').html('0');
+    } else {
+        $('span.total_order_qty').html(tot_order_qty);
     }
   }
   
