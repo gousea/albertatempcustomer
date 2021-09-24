@@ -639,6 +639,11 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection','revalidate']], 
         Route::post('inventory/physicalInventroy/assign_inventory_users', 'PhysicalInventroyController@assign_inventory_users');
         //==============End Physical Inventroy Module Route==================
 
+        //=============Quick Inventory Update=================
+        Route::get('/quickInventoryUpdate', 'QuickInventoryUpdateController@getForm')->name('quickInventoryUpdate');
+
+        //=============End Quick Inventory Update==================
+
     });
 
     /*================= Adminstration Module Routes =========================*/
