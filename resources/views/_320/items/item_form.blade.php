@@ -607,7 +607,7 @@ if (!isset($data['vcategorycode'])) {
                                                                     <option value="<?php echo $supplier['vsuppliercode']; ?>"
                                                                         selected="selected"><?php echo $supplier['vcompanyname']; ?></option>
                                                                     <?php } else { ?>
-                                                                    <option value="{{ $supplier['vsuppliercode']}}" {{ $supplier['vsuppliercode'] == 204 ? 'selected="selected"': ''}}>{{ $supplier['vcompanyname']}}</option>
+                                                                    <option value="{{ $supplier['vsuppliercode']}}" {{ $supplier['vsuppliercode'] == 101 ? 'selected="selected"': ''}}>{{ $supplier['vcompanyname']}}</option>
 <!--                                                                    <option value="<?php echo $supplier['vsuppliercode']; ?>">
                                                                         <?php echo $supplier['vcompanyname']; ?></option>-->
                                                                     <?php } ?>
