@@ -79,6 +79,7 @@ class QuickInventoryUpdateController extends Controller
         }*/
 
         foreach ($input['vbarcode'] as $key => $datum){
+            $datum = trim($datum);
             Log::info('iitemid=> '. $key.' updated with new QTY =>'.$datum);
             $updatedResp[]=Item::where('iitemid', $key)->update(['iqtyonhand'=>DB::raw("`iqtyonhand` + $datum")]);
         }

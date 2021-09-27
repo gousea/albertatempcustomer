@@ -74,6 +74,9 @@
             <div class="table-wrapper-scroll-y my-custom-scrollbar divTop2">
                 <form action="{{route('quickInventoryUpdatePost')}}" method="POST" name="itemUpdate" id="itemUpdate">
                     @csrf
+                    <input type="hidden" name="newInvoice" id="updatedDate" value="">
+                    <input type="hidden" name="newInvoice" id="newInvoice" value="">
+                    <input type="hidden" name="newInvoice" id="newVendor" value="">
                 <table class="table table-bordered table-striped mb-0" id="itemTable">
                     <thead style="color: antiquewhite !important;">
                     <tr>
@@ -423,13 +426,18 @@
                $(this).closest('tr').remove();
            });
 
-           $('#finalizeBtn').click(function (){
-               console.log('finalizeBtn clicked');
-           });
-
            $('#finalizeBtn').click(function() {
                console.log('finalizeBtn clicked');
-               $('form#itemUpdate').submit();
+              var updatedDate = $( "#start_dt" ).datepicker({ dateFormat: 'yy-mm-dd' }).val();
+              var newVendor = $('#vendor').val();
+              var newInvoice =  $('#invoice').val();
+              console.log('updatedDate =>'+updatedDate+' newvendor=> '+newVendor+ ' invoice=> '+newInvoice);
+              $('#updatedDate').val(updatedDate);
+              $('#newVendor').val(newVendor);
+              $('#newInvoice').val(newInvoice);
+
+              //return false;
+              $('form#itemUpdate').submit();
            })
 /*End document ready*/
        });
