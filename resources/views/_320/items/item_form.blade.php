@@ -1004,7 +1004,7 @@ if (!isset($data['vcategorycode'])) {
                                             </div>
                                         </div>
 
-                                        <div class="row notLottery">
+<!--                                        <div class="row notLottery">
                                             <div class="col-md-12 mx-auto">
                                                 <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6">
@@ -1021,7 +1021,7 @@ if (!isset($data['vcategorycode'])) {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
 
                                         <div class="row Lottery" style="display:none">
                                             <div class="col-md-12 mx-auto">
