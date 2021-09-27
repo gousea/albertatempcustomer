@@ -76,8 +76,8 @@
       </div>
     </nav>
     
-  <div class="container-fluid section-content">
-    <div class="container-fluid">
+  <div class="container section-content">
+    <div class="container">
         @if ($data['error_warning'])
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ $data['error_warning'] }}
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -417,7 +417,7 @@
                             <div class="row" id="div_item_listing" style="height: 700px;">
                                 <div class="col-md-12">
                                     <div class="box-body table-responsive">
-                    		            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%; font-size:9px;">
+                    		            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%; font-size:13px;">
                     		                <thead>
                     		                    <tr class="header-color" style="font-size:12px;">
                     		                        <th style="width: 1px;"><input type='checkbox' onclick="$('input[name*=\'selected_search_history_items\']').prop('checked', this.checked);"></th>
@@ -490,7 +490,7 @@
                         
                         <div class='row'><!-- to leave a gap between the list of items and set of buttons --> &nbsp;</div>
                         
-                        <div class="tab-pane" id="item_tab">
+                        <div class="tab-pane" id="item_tab" style="margin-top: 190px;">
                           <div class="row" <?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
                             <div class="" style="display: none;">
                               <input type="text" placeholder="Add New Item" id="automplete-product" class="form-control">
@@ -499,8 +499,10 @@
                             <div class="col-md-6">
                               <button class="btn button-blue buttons_menu basic-button-small" id="add_selected_items" >Add Item</button>&nbsp;&nbsp;
                               <button class="btn btn-danger buttonred buttons_menu basic-button-small" style="<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
-                              <button type="button" class="btn btn-info buttons_menu basic-button-small" style="<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check" value="export">Export</button>
-                              
+                                <?php if(isset($data['ipoid'])){?>
+                                    <button type="button" class="btn btn-info buttons_menu basic-button-small" style="<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="export" value="export">Export</button>&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-info buttons_menu basic-button-small" style="<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check" value="transfer_to_ro">Transfer to RO</button>
+                                <?php } ?>
                               <span title="You can add more items even after exporting the data by clicking on Add Item" style="font-size:20px; color:red; cursor: pointer;">&#8505;</span>
                             </div>
 
@@ -542,10 +544,11 @@
                                   </tr>
                                 </thead>
                                 <tbody id="purchase_order_items">
-                                  <?php $total_amt = '0.00';?>
+                                  <?php $total_amt = '0.00'; $total_orderqty = 0;?>
                                   <?php if(isset($data['items']) && count($data['items']) > 0){?>
                                     <?php foreach($data['items'] as $k => $item){ 
-                                    $total_amt +=$item['nordextprice']; 
+                                        $total_amt +=$item['nordextprice'];
+                                        $total_orderqty += $item['nordqty'];
                                     ?>
                                       <tr id="tab_tr_<?php echo $item['vitemid']; ?>">
                                         <td class="text-center">
@@ -606,7 +609,7 @@
                                         
             
                                         <td class="text-right">
-                                          <input type="text" class="nordqty_class" name="items[<?php echo $k; ?>][nordqty]" id="" style="width:60px;text-align: right;" value="<?php echo $item['nordqty']; ?>">
+                                          <input type="text" class="nordqty_class" name="items[<?php echo $k; ?>][nordqty]" id="" style="width:60px;text-align: right;" value="<?php echo (int)$item['nordqty']; ?>">
                                             <input type="hidden" class="itotalunit_class" name="items[<?php echo $k; ?>][itotalunit]" id="" style="width:60px;text-align: right;" value="<?php echo $item['itotalunit']; ?>">
                                                             
                                         </td>
@@ -638,8 +641,9 @@
                                       <td>&nbsp;</td>
                                       <td>&nbsp;</td>
                                       <td>&nbsp;</td>
-                                      <td>&nbsp;</td>
+                                      
                                       <td class="text-right"><b>Total</b></td>
+                                      <td class="text-left text-uppercase"><b><span class="total_order_qty">&nbsp;&nbsp;<?= $total_orderqty; ?></span></b></td>
                                       <td class="text-right"><b><span class="total_suggested_amount"><?php // echo number_format((float)$total_suggted_amt, 2, '.', '') ;?></span></b></td>
                                       <td class="text-right"><b><span class="total_amount"><?php echo number_format((float)$total_amt, 2, '.', '') ;?></span></b></td>
                                     </tr>
@@ -2192,19 +2196,24 @@ $('.editable_text').focus(function() {
 </div>
 
 <script type="text/javascript">
+
+    $(document).on('click', '#export', function(){
+        $("#save_data").modal('show');
+    });
+  
   $(document).on('click', '#save_receive_check', function(event) {
     event.preventDefault();
     
     var btnVal = $(this).val();
 
-    if(btnVal === "export"){
+    // if(btnVal === "export"){
         
-        //display save data pop-up
-        $("#save_data").modal('show');
+    //     //display save data pop-up
+    //     $("#save_data").modal('show');
         
-        // $('#export_po_as').modal('show');
-        return false;
-    }
+    //     // $('#export_po_as').modal('show');
+    //     return false;
+    // }
 
     if($('input[name="vinvoiceno"]').val() == ''){
       // alert('Please Enter Invoice!');
@@ -2467,6 +2476,17 @@ $('.editable_text').focus(function() {
         $('span.total_amount').html('0.00');
     } else {
         $('span.total_amount').html(parseFloat(tot_amt).toFixed(2));
+    }
+    
+    var tot_order_qty = 0;
+    $(".nordqty_class").each(function(){
+      tot_order_qty = parseFloat(tot_order_qty) + parseFloat($(this).val());
+    });
+    
+    if(parseFloat(tot_order_qty).toFixed(2) === 'NaN'){
+        $('span.total_order_qty').html('0');
+    } else {
+        $('span.total_order_qty').html(tot_order_qty);
     }
   }
   
@@ -3573,19 +3593,27 @@ $('.editable_text').focus(function() {
     $(document).on('click', '#continue_export', function(event) {
     //
         $("#save_data").modal('hide');
-        var btnVal = $('#save_receive_check').val();
+        // var btnVal = $('#save_receive_check').val();
     
-        if(btnVal === "export"){
-            $('#export_po_as').modal('show');
+        // if(btnVal === "export"){
+        //     $('#export_po_as').modal('show');
             
-            $('#save_receive_check').val("transfer_to_ro");
-            $('#save_receive_check').html("Transfer to RO");
-            $("#meta_div").css('display','block');
-            $("#search_div").css('display','none');
+        //     $('#save_receive_check').val("transfer_to_ro");
+        //     $('#save_receive_check').html("Transfer to RO");
+        //     $("#meta_div").css('display','block');
+        //     $("#search_div").css('display','none');
             
-            $('#add_item_btn').addClass('btn-info');
-            $("#add_item_btn").attr('disabled',false);
-        }
+        //     $('#add_item_btn').addClass('btn-info');
+        //     $("#add_item_btn").attr('disabled',false);
+        // }
+        
+        $('#export_po_as').modal('show');
+        
+        $("#meta_div").css('display','block');
+        $("#search_div").css('display','none');
+        
+        $('#add_item_btn').addClass('btn-info');
+        $("#add_item_btn").attr('disabled',false);
     
     });
       

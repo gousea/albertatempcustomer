@@ -50,6 +50,24 @@ class PaidOutReportController extends Controller
         
         $data['report_paid_out'] = $Reports->paidOut($input['start_date'], $input['end_date'],$vendorid,$amounttype,$amount,$tender);
         
+              
+        //new report modification 
+         $preport=$Reports->newpaidOut($input['start_date'], $input['end_date'],$vendorid,$amounttype,$amount,$tender);
+         $data['printdata']=$preport;
+         
+         	  
+         $reportsdata = json_decode(json_encode($preport), true); 
+         $out=array();
+         foreach($reportsdata as  $x){
+             
+         $out[$x['Vendor']]['Vendorname']=$x['Vendor'];
+         $out[$x['Vendor']]['details'][]=array('Vendor'=>$x['Vendor'],'Amount'=>$x['Amount'], 'RegNo'=>$x['RegNo'], 'UserId'=>$x['UserId'], 'TenderType'=>$x['TenderType'], 'dt'=>$x['dt'], 'ttime'=>$x['ttime']);
+        
+         }           
+        //dd($out);
+        $data['out']=$out;
+        
+        
         
              
         $startdate= DateTime::createFromFormat('Y-m-d',$input['start_date']);
@@ -119,7 +137,7 @@ class PaidOutReportController extends Controller
         $data_row .= "Sl. No,Paid Date,Vendor Name,Amount,Tender Type,Register No,Time,User ID".PHP_EOL;
 
         $count = 0; 
-        foreach($data['report_paid_out'] as $v){
+        foreach($data['csv'] as $v){
             
             if($v->Vendor == "Total") {
                 continue;

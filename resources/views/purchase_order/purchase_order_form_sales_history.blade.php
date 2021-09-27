@@ -391,28 +391,28 @@
                                 <div class="row" id="div_item_listing">
                                     <div class="col-md-12">
                                         <div class="box-body table-responsive">
-                                            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%;">
+                                            <table id="item_listing" class="table table-striped table-hover promotionview" style="width: 100%; font-size:13px;">
                                                 <thead>
-                                                    <tr class="header-color" styel="font-size:5px;">
+                                                    <tr class="header-color" style="box-sizing: border-box;">
                                                         <th style="width: 1px;"><input type='checkbox' onclick="$('input[name*=\'selected_search_history_items\']').prop('checked', this.checked);"></th>
-                                                        <th style="width: 15%;position: relative;">ITEM NAME
+                                                        <th style="width: 10%;">ITEM NAME
                                                           <div class="adjustment-has-search">
                                                             <input type="text" autocomplete="off" id="search_item_name" name="item_name" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
                                                           </div>
                                                         </th>
-                                                        <th style="width: 10%;position: relative;">SIZE
+                                                        <th style="width: 10%;">SIZE
                                                           <div class="adjustment-has-search">
                                                             <input type="text" autocomplete="off" id="search_size" name="size" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
                                                           </div>
                                                         </th>
 
-                                                        <th>SKU
+                                                        <th style="width:10%;">SKU
                                                           <div class="adjustment-has-search">
                                                             <input type="text" autocomplete="off" id="search_sku" name="barcode" class="form-control table-heading-fields text-center search_text_box search_item_history" placeholder="SEARCH" style="padding-left: 0;">
                                                           </div>
                                                         </th>
 
-                                                        <th style="width: 22%;">PRICE
+                                                        <th style="width: 25%;">PRICE
                                                           <div class="adjustment-has-search">
                                                             
                                                             <select class='table-heading-fields' id='price_select_by' name='price_select_by' style='width:40%; padding-left: 5px;'>
@@ -479,9 +479,9 @@
                                 <div class='row'>
                                     <div class="col-md-12">
                                         
-                                        <div class="box-body table-responsive" id='divTbodyItemListing'  style="height: 400px; font-size:9px; width:100%;">
+                                        <div class="box-body table-responsive" id='divTbodyItemListing'  style="height: 400px; width:100%;">
                                             
-                                            <table id='tbodyItemListing' class='table table-striped table-hover promotionview' style="width:100%;">
+                                            <table id='tbodyItemListing' class='table table-striped table-hover promotionview' style="width:100%; font-size: 13px;">
                                                     
                                             </table>
                                             
@@ -511,8 +511,11 @@
                                 <div class="col-md-6">
                                     <button class="btn button-blue buttons_menu basic-button-small" id="add_selected_items">Add Item</button>&nbsp;&nbsp;
                                     <button class="btn btn-danger buttonred buttons_menu basic-button-small" id="remove_item_btn">Remove Item</button>&nbsp;&nbsp;
-                                 
-                                    <button type="button" class="btn btn-info buttons_menu basic-button-small" style="<?php if(isset($estatus) && $estatus == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check" value="export">Export</button>
+                                    
+                                    <?php if(isset($data['ipoid'])){?>
+                                        <button type="button" class="btn btn-info buttons_menu basic-button-small" style="<?php if(isset($data['estatus']) && $data['estatus'] == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="export" value="export">Export</button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-info buttons_menu basic-button-small" style="<?php if(isset($estatus) && $estatus == 'Close'){ ?> background-color: #ccc;border-color: #ccc; <?php } ?>" id="save_receive_check" value="transfer_to_ro">Transfer to RO</button>
+                                    <?php } ?>
                                     <span title="You can add more items even after exporting the data by clicking on Add Item" style="font-size:20px; color:red; cursor: pointer;">&#8505;</span>
                                 </div>
 
@@ -536,7 +539,7 @@
                             <br>
                             <div class="row" <?php if(isset($estatus) && $estatus == 'Close'){ ?> style="pointer-events:none;" <?php } ?>>
                                 <div class="col-md-12" style="overflow-y:auto; font-size: 11px;">
-                                    <table class="table table-hover promotionview" style="width:100%;" id="po-items">
+                                    <table class="table table-hover promotionview" style="width:100%; font-size: 13px;" id="po-items">
                                         <thead>
                                             
                                           <tr class="header-color">
@@ -2156,19 +2159,27 @@ $('.editable_text').focus(function() {
 $(document).on('click', '#continue_export', function(event) {
     
     $("#save_data").modal('hide');
-    var btnVal = $('#save_receive_check').val();
+    // var btnVal = $('#save_receive_check').val();
 
-    if(btnVal === "export"){
-        $('#export_po_as').modal('show');
+    // if(btnVal === "export"){
+    //     $('#export_po_as').modal('show');
         
-        $('#save_receive_check').val("transfer_to_ro");
-        $('#save_receive_check').html("Transfer to RO");
-        $("#meta_div").css('display','block');
-        $("#search_div").css('display','none');
+    //     $('#save_receive_check').val("transfer_to_ro");
+    //     $('#save_receive_check').html("Transfer to RO");
+    //     $("#meta_div").css('display','block');
+    //     $("#search_div").css('display','none');
         
-        $('#add_item_btn').addClass('btn-info');
-        $("#add_item_btn").attr('disabled',false);
-    }
+    //     $('#add_item_btn').addClass('btn-info');
+    //     $("#add_item_btn").attr('disabled',false);
+    // }
+    
+    $('#export_po_as').modal('show');
+    
+    $("#meta_div").css('display','block');
+    $("#search_div").css('display','none');
+    
+    $('#add_item_btn').addClass('btn-info');
+    $("#add_item_btn").attr('disabled',false);
 
   });
   
@@ -2190,19 +2201,23 @@ $(document).on('click', '#continue_export', function(event) {
     // }
 
   });
+  
+    $(document).on('click', '#export', function(){
+        $("#save_data").modal('show');
+    });
 
   $(document).on('click', '#save_receive_check', function(event) {
     event.preventDefault();
     
     var btnVal = $(this).val();
 
-    if(btnVal === "export"){
+    // if(btnVal === "export"){
         
-        //display save data pop-up
-        $("#save_data").modal('show');
+    //     //display save data pop-up
+    //     $("#save_data").modal('show');
         
-        return false;
-    }
+    //     return false;
+    // }
 
 
     if($('input[name="vinvoiceno"]').val() == ''){

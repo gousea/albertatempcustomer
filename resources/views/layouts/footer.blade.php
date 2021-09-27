@@ -3,7 +3,7 @@
 </footer> --}}
 
 <!-- Footer -->
-<footer class="page-footer font-small stylish-color-dark pt-4">
+<footer class="page-footer font-small stylish-color-dark pt-4" style="margin-top: 20px;">
 
     <!-- Footer Links -->
     <div class="container text-center text-md-left">

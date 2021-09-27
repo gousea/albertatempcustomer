@@ -44,6 +44,9 @@
         background-color: #ffffff;
     }
     
+    #itemgroup{
+        font-size: 13px !important;
+    }
     #unit_id{
         font-size: 13px !important;
     }
@@ -691,6 +694,7 @@
                                                         <th class="col-xs-1 headername text-uppercase text-light">ITEM NAME</th>
                                                         <th class="col-xs-1 headername text-uppercase text-light">SKU</th>
                                                         <th class="col-xs-1 headername text-uppercase text-light">PRICE</th>
+                                                        <th class="col-xs-1 headername text-uppercase text-light">Item Group</th>
                                                         <th class="col-xs-1 headername text-uppercase text-light">UNIT</th>
                                                         <th class="col-xs-1 headername text-uppercase text-light">SIZE</th>
                                                         <!--<th>TYPE</th>-->
@@ -1858,6 +1862,7 @@
         
         var url = '<?php echo $data['searchitem'];?>';
         url = url.replace(/&amp;/g, '&');
+        var itemgroups = "<?php echo $data['itemgroups'];?>";
         var departments = "<?php echo $data['departments'];?>";
         var suppliers = "<?php echo $data['suppliers'];?>";
         var manufacturers = "<?php echo $data['manufacturers'];?>";
@@ -1903,6 +1908,10 @@
             else if(title == "TYPE")
             {
                 $(this).html(item_types)
+            }
+            else if(title == "Item Group")
+            {
+                $(this).html(itemgroups)
             }
             else if(title == "CATEGORY")
             {
@@ -2051,6 +2060,7 @@
                     { "sWidth": "70px", "aTargets": [ 1 ] },
                     { "sWidth": "70px", "aTargets": [ 2 ] },
                     { "sWidth": "55px", "aTargets": [ 8 ] },
+                    { "sWidth": "55px", "aTargets": [ 10 ] },
                     { "sWidth": "50px", "aTargets": [ 4 ] },
                     { "sWidth": "50px", "aTargets": [ 5 ] },
                     { "sWidth": "85px", "aTargets": [ 6 ] },
@@ -2102,6 +2112,7 @@
                       },
                       { "data": "vbarcode"},
                       { "data": "dunitprice"},
+                      { "data": "vitemgroupname"},
                       { "data": "vunitname"},
                       { "data": "vsize"},
                       { "data": "vdepartmentname"},

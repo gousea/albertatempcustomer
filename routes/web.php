@@ -46,7 +46,7 @@ Route::get('/api/convertupce2upca', 'Admin\ProductController@convert_upce_2_upca
 
 
 
-Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
+Route::group(['middleware' => ['auth', 'StoreDatabaseSelection','revalidate']], function () {
 
 
 
@@ -638,6 +638,11 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection']], function () {
         Route::get('inventory/physicalInventroy/unset_session_inventory_count', 'PhysicalInventroyController@unset_session_inventory_count');
         Route::post('inventory/physicalInventroy/assign_inventory_users', 'PhysicalInventroyController@assign_inventory_users');
         //==============End Physical Inventroy Module Route==================
+
+        //=============Quick Inventory Update=================
+        Route::get('/quickInventoryUpdate', 'QuickInventoryUpdateController@getForm')->name('quickInventoryUpdate');
+
+        //=============End Quick Inventory Update==================
 
     });
 

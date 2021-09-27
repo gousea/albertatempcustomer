@@ -26,6 +26,16 @@
         </div>
     </div>
 </nav>
+<div id='errorDiv'>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <i class="fa fa-exclamation-circle"></i>{{ $error }}
+            @endforeach
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+    @endif
+</div>
 
 <section class="section-content menu">
     @if (session()->has('message'))

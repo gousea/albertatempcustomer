@@ -502,7 +502,7 @@
                             <br>
                               <div class="row">
                                   <div class="col-md-3" style="font-size: 13px;">
-                                      <ul style="color:#0000cc; display: inline-block; margin-left: -20px;">(Font Color)<li>If price required more than unit cost </li> <li>If unit cost is zero</li></ul>
+                                      <ul style="color:#dc3545; display: inline-block; margin-left: -20px;">(Font Color)<li>If price required more than unit cost </li> <li>If unit cost is zero</li></ul>
                                   </div>
                                   {{-- <div class="col-md-3" style="font-size: 13px;">
                                       <ul style="color:#FF0000; display: inline-block; margin-left: -20px;"> (Font Color)<li>If Suggested cost is less than Total amount</li></ul>
@@ -3143,6 +3143,7 @@ $('.editable_text').focus(function() {
 
             $('tbody#history_items').append(search_table_html).show('slow');
             $('#rotating_logo').hide();
+            
             return false;
             
           }else{
@@ -3152,6 +3153,7 @@ $('.editable_text').focus(function() {
             $('#item_history_err').html('Sorry no data found! please search again');
             return false;
           }
+          
         },
         error: function(xhr) { // if error occured
           $('#rotating_logo').hide();

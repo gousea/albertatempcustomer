@@ -270,7 +270,7 @@
 
                                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                                             <label for="inputVendor"
-                                                                class="p-2 float-right text-uppercase">Item Name</label>
+                                                                class="p-2 float-right text-uppercase">Item Names</label>
                                                         </div>
                                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6"
                                                             style="display: inline-table;">
@@ -607,8 +607,9 @@ if (!isset($data['vcategorycode'])) {
                                                                     <option value="<?php echo $supplier['vsuppliercode']; ?>"
                                                                         selected="selected"><?php echo $supplier['vcompanyname']; ?></option>
                                                                     <?php } else { ?>
-                                                                    <option value="<?php echo $supplier['vsuppliercode']; ?>">
-                                                                        <?php echo $supplier['vcompanyname']; ?></option>
+                                                                    <option value="{{ $supplier['vsuppliercode']}}" {{ $supplier['vsuppliercode'] == 101 ? 'selected="selected"': ''}}>{{ $supplier['vcompanyname']}}</option>
+<!--                                                                    <option value="<?php echo $supplier['vsuppliercode']; ?>">
+                                                                        <?php echo $supplier['vcompanyname']; ?></option>-->
                                                                     <?php } ?>
                                                                     <?php } ?>
                                                                     <?php } ?>
@@ -664,8 +665,10 @@ if (!isset($data['vcategorycode'])) {
                                                                 <option value="<?php echo $unit['vunitcode']; ?>" selected="selected">
                                                                     <?php echo $unit['vunitname']; ?></option>
                                                                 <?php } else { ?>
-                                                                <option value="<?php echo $unit['vunitcode']; ?>"><?php echo $unit['vunitname']; ?>
-                                                                </option>
+                                                               {{-- <option value="<?php echo $unit['vunitcode']; ?>"><?php echo $unit['vunitname']; ?>
+                                                                </option>--}}
+                                                                <option value="{{ $unit['vunitcode']}}" {{ $unit['vunitcode'] == 'UNT001' ? 'selected="selected"': ''}}>{{ $unit['vunitname']}}</option>
+
                                                                 <?php } ?>
                                                                 <?php } ?>
                                                                 <?php } ?>
@@ -998,6 +1001,25 @@ if (!isset($data['vcategorycode'])) {
                                                     </div>
                                                 </div>
 
+                                            </div>
+                                        </div>
+
+                                        <div class="row notLottery">
+                                            <div class="col-md-12 mx-auto">
+                                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+
+                                                        <label for="inputNumber"
+                                                               class="p-2 float-right text-uppercase">Envt
+                                                            Charge</label>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                                        <input name="envt_charge" id="envt_charge"
+                                                               value="<?php echo isset($data['envt_charge']) ? $data['envt_charge'] : '0.00'; ?>" type="text"
+                                                               class="form-control adjustment-fields">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -4346,6 +4368,9 @@ $adjvaluereset = 0;
         $(document).on('keypress', '#nbottledepositamt', function(event) {
             this.value = this.value.match(/^\d+\.?\d{0,2}/);
         });
+        $(document).on('keypress', '#envt_charge', function(event) {
+            this.value = this.value.match(/^\d+\.?\d{0,2}/);
+        });
 
         $(document).on('keyup', '#input-Selling_Price', function(event) {
 
@@ -5772,7 +5797,7 @@ $adjvaluereset = 0;
 
         });
 
-        $(document).on('keypress keyup blur', 'input[name="nbottledepositamt"], .slab_price_nprice,.input_npackprice',
+        $(document).on('keypress keyup blur', 'input[name="nbottledepositamt"], input[name="envt_charge"], .slab_price_nprice,.input_npackprice',
             function(event) {
 
                 if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {

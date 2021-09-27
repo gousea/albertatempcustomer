@@ -120,15 +120,15 @@
     </div>
     <div class="container section-content">
         <div class="row">
-            <div class="col-lg-8 col-md-8 col-xs-8 ">
-                <div class="box box-info">
+            <div class="col-lg-8 col-md-8 col-xs-8">
+                <div class="box box-info" style="height: 500px">
 
                     <!-- /.box-body -->
                     <div class="panel panel-default">
                         <div class="panel-body padding15">
                             <strong>
                                 <h2 class="md-title" align="center"><sup style="font-size: 20px">Last 7 Day
-                                        Customer</sup></h2>
+                                        Sales</sup></h2>
                             </strong>
                             <div class="box-body chart-responsive">
                                 <div class="chart" id="chart" style="height: 300px;"></div>
@@ -274,36 +274,40 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-8" style="bottom: 180px;">
-            <div class="table-responsive">
-                <div class="heading text-muted">
-                    <h6 class="text-uppercase">Latest Transactions</h6>
-                </div>
-                <table id="vendor" class="table table-hover promotionview" style="width: 100%">
-                    <thead>
-                        <tr class="header-color">
-                            <th class="col-xs-1 headername text-uppercase" style="width: 300px;">timestamp</th>
-                            <th class="col-xs-1 headername text-uppercase" style="width: 300px;">transaction id</th>
-                            <th class="col-xs-6 headername text-uppercase" style="width: 300px;">amount</th>
-                            <th class="col-xs-6 headername text-uppercase" style="width: 300px;">tender type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($output['trn_sales_data'] as $sales_data)
-                            <tr id="customer-row">
-                                <td><span>{{ $sales_data->sales_timestamp }}</span></td>
-                                <td><a class="print-sales" id="print" data-id="<?php echo $sales_data->isalesid;?>">{{ $sales_data->transaction_id }} </a></td>
-                                <!-- <td><span>{{ $sales_data->transaction_id }}</span></td> -->
-                                <td><span>{{ $sales_data->sales_amount }}</span></td>
-                                <td><span>{{ $sales_data->tender_type }}</span></td>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-8" style="top: 20px;">
+                <div class="table-responsive">
+                    <div class="heading text-muted">
+                        <h6 class="text-uppercase">Latest Transactions</h6>
+                    </div>
+                    <table id="vendor" class="table table-hover promotionview" style="width: 100%">
+                        <thead>
+                            <tr class="header-color">
+                                <th class="col-xs-1 headername text-uppercase" style="width: 300px;">timestamp</th>
+                                <th class="col-xs-1 headername text-uppercase" style="width: 300px;">transaction id</th>
+                                <th class="col-xs-6 headername text-uppercase" style="width: 300px;">amount</th>
+                                <th class="col-xs-6 headername text-uppercase" style="width: 300px;">tender type</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($output['trn_sales_data'] as $sales_data)
+                                <tr id="customer-row">
+                                    <td><span>{{ $sales_data->sales_timestamp }}</span></td>
+                                    <td><a class="print-sales" id="print" data-id="<?php echo $sales_data->isalesid;?>">{{ $sales_data->transaction_id }} </a></td>
+                                    <!-- <td><span>{{ $sales_data->transaction_id }}</span></td> -->
+                                    <td><span>{{ $sales_data->sales_amount }}</span></td>
+                                    <td><span>{{ $sales_data->tender_type }}</span></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+    
 
     <div class="modal fade" id="view_salesdetail_model" role="dialog">
     <div class="modal-dialog">

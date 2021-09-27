@@ -276,7 +276,7 @@
                                     @if($data[0]->HouseAcctCheck !=0)
                                         <tr>
                                             <td class="text-right bg_table">  HOUSE ACCT PAYMENT CHECK </td>
-                                            <td class="text-right bg_table"> <button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCheck}}</button></td>
+                                            <td class="text-right bg_table"> <button  class="list_total" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->HouseAcctCheck}}</button></td>
                                         </tr>
                                     @endif
                                     @if($data[0]->CashTender+$data[0]->CouponTender+$data[0]->CreditCardTender !=0)
@@ -383,6 +383,45 @@
                              
         </div>      
         
+        <!-- Lottery sales -->
+      @if($data[0]->LotterySales!=0 || $data[0]->instantSales!=0 || $data[0]->LotteryRedeem!=0 || $data[0]->InstantRedeem!=0)   
+        <div class="row">
+            <h6><span><i class="far fa-square"> &nbsp;&nbsp;&nbsp;</i>LOTTERY SALES DETAILS</span></h6>
+                            <div class="col-md-4  text-uppercase">
+                                  
+                                    <table class"tcolor">
+                                        <tr>
+                                           
+                                            <td class="text-right bg_table">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lottery Sales</td>
+                                            <td class="text-right bg_table"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->LotterySales}}</button></td>
+                                            
+                                        </tr>
+                                        
+                                           
+                                        <tr>
+                                            <td class="text-right bg_table">Instant Sales </td>
+                                           <td class="text-right bg_table"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->instantSales}}</button></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td class="text-right bg_table">Lottery Redeem</td>
+                                            <td class="text-right bg_table"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->LotteryRedeem}}</button></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td class="text-right bg_table">Instant Redeem </td>
+                                            <td class="text-right bg_table"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->InstantRedeem}}</button></td>
+                                            
+                                        </tr>
+                                       
+                                    </table> 
+                            </div>
+                            
+                             <div class="col-md-8  text-uppercase"></div>
+                    </div>  
+      @endif              
+                    
+        <!-- Lottery slae end-->            
         
                     <div class="row">
                             <div class="col-md-4  text-uppercase">

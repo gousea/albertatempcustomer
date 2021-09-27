@@ -16,6 +16,9 @@ use App\Model\WebAdminSetting;
 use Session;
 use Illuminate\Support\Facades\DB;
 
+use App\Model\ItemGroupDetail;
+use App\Model\ItemGroup;
+
 class PromotionController extends Controller
 {
     
@@ -113,6 +116,8 @@ class PromotionController extends Controller
 
         // dd($input['prom_id']);
         
+        
+        
         $departments = Department::orderBy('vdepartmentname', 'asc')->get()->toArray();
         $data['departments'] = $departments;
 
@@ -153,104 +158,120 @@ class PromotionController extends Controller
                 $departments_html .= "<option value='".$department['vdepcode']."'>".$department['vdepartmentname']."</option>";
             }
         }
-            $departments_html .="</select>";
-            
-            $data['departments'] = $departments_html;
-            
-            $item_types = ['Standard','Kiosk','Lot Matrix','Lottery'];
-            
-            $item_type_html ="";
-            $item_type_html = "<select class='form-control' name='dept_code' id='dept_code' style='width: 100px;'>'<option value='all'>All</option>";
-            foreach($item_types as $item_type){
-                $item_type_html .= "<option value='".$item_type."'>".$item_type."</option>";
+        $departments_html .="</select>";
+        
+        $data['departments'] = $departments_html;
+        
+        $itemgroups = ItemGroup::orderBy('vitemgroupname', 'asc')->get()->toArray();
+        $data['itemgroups'] = $itemgroups;
+        
+        $itemgroups_html ="";
+        $itemgroups_html = "<select class='form-control' name='itemgroup' id='itemgroup' style='width: 85px; padding: 0px; font-size: 9px;'>'<option value='all'>All</option>";
+        foreach($itemgroups as $itemgroup){
+            if(isset($vdepcode) && $vdepcode == $itemgroup['iitemgroupid']){
+                $itemgroups_html .= "<option value='".$itemgroup['iitemgroupid']."' selected='selected'>".$itemgroup['vitemgroupname']."</option>";
+            } else {
+                $itemgroups_html .= "<option value='".$itemgroup['iitemgroupid']."'>".$itemgroup['vitemgroupname']."</option>";
             }
-            $item_type_html .="</select>";
-            
-            $data['item_types'] = $item_type_html;
+        }
+        $itemgroups_html .="</select>";
+        
+        $data['itemgroups'] = $itemgroups_html;
+        
+        $item_types = ['Standard','Kiosk','Lot Matrix','Lottery'];
+        
+        $item_type_html ="";
+        $item_type_html = "<select class='form-control' name='dept_code' id='dept_code' style='width: 100px;'>'<option value='all'>All</option>";
+        foreach($item_types as $item_type){
+            $item_type_html .= "<option value='".$item_type."'>".$item_type."</option>";
+        }
+        $item_type_html .="</select>";
+        
+        $data['item_types'] = $item_type_html;
             
             
          //   $suppliers = $this->model_administration_items->getSuppliers();
-            $supplier_html ="";
-            $supplier_html = "<select class='form-control' name='supplier_code' id='supplier_code' style='width: 100px;'>'<option value='all'>All</option>";
-            // foreach($suppliers as $supplier){
-            //     $supplier_html .= "<option value='".$supplier['vsuppliercode']."'>".$supplier['vcompanyname']."</option>";
-            // }
-            $supplier_html .="</select>";
-            
-            $data['suppliers'] = $supplier_html;
+        $supplier_html ="";
+        $supplier_html = "<select class='form-control' name='supplier_code' id='supplier_code' style='width: 100px;'>'<option value='all'>All</option>";
+        // foreach($suppliers as $supplier){
+        //     $supplier_html .= "<option value='".$supplier['vsuppliercode']."'>".$supplier['vcompanyname']."</option>";
+        // }
+        $supplier_html .="</select>";
+        
+        $data['suppliers'] = $supplier_html;
             
          //   $manufacturers = $this->model_administration_items->getManufacturers();
-            $manufacturer_html ="";
-            $manufacturer_html = "<select class='form-control' name='manufacturer_id' id='manufacturer_id' style='width: 100px;'>'<option value='all'>All</option>";
-            // foreach($manufacturers as $manufacurer){
-            //     $manufacturer_html .= "<option value='".$manufacurer['mfr_id']."'>".$manufacurer['mfr_name']."</option>";
-            // }
-            $manufacturer_html .="</select>";
-            
-            $data['manufacturers'] = $manufacturer_html;
-            
-            // $units = $this->model_administration_items->getItemUnits();
-            $units = Unit::orderBy('vunitname', 'asc')->get()->toArray();
+        $manufacturer_html ="";
+        $manufacturer_html = "<select class='form-control' name='manufacturer_id' id='manufacturer_id' style='width: 100px;'>'<option value='all'>All</option>";
+        // foreach($manufacturers as $manufacurer){
+        //     $manufacturer_html .= "<option value='".$manufacurer['mfr_id']."'>".$manufacurer['mfr_name']."</option>";
+        // }
+        $manufacturer_html .="</select>";
+        
+        $data['manufacturers'] = $manufacturer_html;
+        
+        // $units = $this->model_administration_items->getItemUnits();
+        $units = Unit::orderBy('vunitname', 'asc')->get()->toArray();
         //            $data['units'] = $units;
 
-            $units_html ="";
-            $units_html = "<select class='form-control' name='unit_id' id='unit_id' style='width: 50px; padding: 0px; font-size: 9px;'>'<option value='all'>All</option>";
-            foreach($units as $unit){
-                $units_html .= "<option value='".$unit['vunitcode']."'>".$unit['vunitname']."</option>";
-            }
-            $units_html .="</select>";
-            
-            $data['units'] = $units_html;
-            
-            // $sizes = $this->model_administration_items->getItemSize();
-            $sizes = Size::orderBy('vsize','asc')->get()->toArray();
+        $units_html ="";
+        $units_html = "<select class='form-control' name='unit_id' id='1' style='width: 50px; padding: 0px; font-size: 9px;'>'<option value='all'>All</option>";
+        foreach($units as $unit){
+            $units_html .= "<option value='".$unit['vunitcode']."'>".$unit['vunitname']."</option>";
+        }
+        $units_html .="</select>";
+        
+        $data['units'] = $units_html;
+        
+        // $sizes = $this->model_administration_items->getItemSize();
+        $sizes = Size::orderBy('vsize','asc')->get()->toArray();
 
-            $size_html ="";
-            $size_html = "<select class='form-control' name='size_id' id='size_id' style='width: 50px; padding: 0px; font-size: 9px;'>'<option value='all'>All</option>";
-            foreach($sizes as $size){
-                $size_html .= "<option value='".addslashes($size['vsize'])."'>".addslashes($size['vsize'])."</option>";
-            }
-            $size_html .="</select>";
+        $size_html ="";
+        $size_html = "<select class='form-control' name='size_id' id='size_id' style='width: 50px; padding: 0px; font-size: 9px;'>'<option value='all'>All</option>";
+        foreach($sizes as $size){
+            $size_html .= "<option value='".$size['vsize']."'>".$size['vsize']."</option>";
+        }
+        $size_html .="</select>";
+        
+        $data['size'] = $size_html;
+        
+        
+        //==================================== for price filter ====================================================
+        
+        
+        $price_select_by_list = array(
+                                'greater'   => 'Greater than',
+                                'less'      => 'Less than',
+                                'equal'     => 'Equal to',
+                                'between'   => 'Between'
+                            );        
             
-            $data['size'] = $size_html;
+        $price_select_by_html = "<select class='' id='price_select_by' name='price_select_by' style='width:90px; color:#000000'>";
+        foreach($price_select_by_list as $k => $v){
+            $price_select_by_html .= "<option value='".$k."'";
             
-            
-            //==================================== for price filter ====================================================
-            
-            
-            $price_select_by_list = array(
-                                    'greater'   => 'Greater than',
-                                    'less'      => 'Less than',
-                                    'equal'     => 'Equal to',
-                                    'between'   => 'Between'
-                                );        
-                
-            $price_select_by_html = "<select class='' id='price_select_by' name='price_select_by' style='width:90px; color:#000000'>";
-            foreach($price_select_by_list as $k => $v){
-                $price_select_by_html .= "<option value='".$k."'";
-                
-                if(isset($data['price_select_by']) && $k === $data['price_select_by']){
-                    $price_select_by_html .= " selected";
-                }
-                
-                $price_select_by_html .= ">".$v."</option>";
-            }
-            $price_select_by_html .= "</select>";
-            $price_select_by_html .= "<span id='selectByValuesSpan'>";
-            
-            
-            if(isset($data['price_select_by']) && $data['price_select_by'] === 'between'){                
-                // $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Enter Amt' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$data['select_by_value_2']."'/></span>";
-                $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter' style='width:40px;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value=''/>";
-                $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Amt' style='width:40px;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value=''/>";
-            } else {
-                $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amt' style='width:70px;color:black;border-radius: 4px;height:28px;margin-left:5px;' value=''/>";
+            if(isset($data['price_select_by']) && $k === $data['price_select_by']){
+                $price_select_by_html .= " selected";
             }
             
-            $price_select_by_html .= "</span>"; 
-            
-            
-            $data['price'] = $price_select_by_html;  
+            $price_select_by_html .= ">".$v."</option>";
+        }
+        $price_select_by_html .= "</select>";
+        $price_select_by_html .= "<span id='selectByValuesSpan'>";
+        
+        
+        if(isset($data['price_select_by']) && $data['price_select_by'] === 'between'){                
+            // $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Enter Amt' style='width:56%;color:black;border-radius: 4px;height:28px;margin-left:5px;' value='".$data['select_by_value_2']."'/></span>";
+            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter' style='width:40px;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value=''/>";
+            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_2' id='select_by_value_2' class='search_text_box' placeholder='Amt' style='width:40px;color:black;border-radius: 4px;height:28px;padding-left: 1px;padding-right: 1px;margin-left:5px;' value=''/>";
+        } else {
+            $price_select_by_html .= "<input type='text' autocomplete='off' name='select_by_value_1' id='select_by_value_1' class='search_text_box' placeholder='Enter Amt' style='width:70px;color:black;border-radius: 4px;height:28px;margin-left:5px;' value=''/>";
+        }
+        
+        $price_select_by_html .= "</span>"; 
+        
+        
+        $data['price'] = $price_select_by_html;  
         
         /********************/
 
@@ -317,6 +338,21 @@ class PromotionController extends Controller
             
             $data['departments'] = $departments_html;
             
+            $itemgroups = ItemGroup::orderBy('vitemgroupname', 'asc')->get()->toArray();
+            $data['itemgroups'] = $itemgroups;
+            
+            $itemgroups_html ="";
+            $itemgroups_html = "<select class='form-control' name='itemgroup' id='itemgroup' style='width: 85px; padding: 0px; font-size: 9px;'>'<option value='all'>All</option>";
+            foreach($itemgroups as $itemgroup){
+                if(isset($vdepcode) && $vdepcode == $itemgroup['iitemgroupid']){
+                    $itemgroups_html .= "<option value='".$itemgroup['iitemgroupid']."' selected='selected'>".$itemgroup['vitemgroupname']."</option>";
+                } else {
+                    $itemgroups_html .= "<option value='".$itemgroup['iitemgroupid']."'>".$itemgroup['vitemgroupname']."</option>";
+                }
+            }
+            $itemgroups_html .="</select>";
+            
+            $data['itemgroups'] = $itemgroups_html;
             $item_types = ['Standard','Kiosk','Lot Matrix','Lottery'];
             
             $item_type_html ="";
@@ -368,7 +404,7 @@ class PromotionController extends Controller
             $size_html ="";
             $size_html = "<select class='form-control' name='size_id' id='size_id' style='width: 50px; padding: 0px; font-size: 9px;'>'<option value='all'>All</option>";
             foreach($sizes as $size){
-                $size_html .= "<option value='".addslashes($size['vsize'])."'>".addslashes($size['vsize'])."</option>";
+                $size_html .= "<option value='".$size['vsize']."'>".$size['vsize']."</option>";
             }
             $size_html .="</select>";
             
@@ -2427,6 +2463,10 @@ class PromotionController extends Controller
             {
                 $search_items['vbarcode'] = $value['search']['value'];
             }
+            else if($value["data"] == "vitemgroupname")
+            {
+                $search_items['vitemgroupname'] = $value['search']['value'];
+            }
             else if($value["data"] == "dunitprice")
             {
                 $search_items['dunitprice'] = $value['search']['value'];
@@ -2470,9 +2510,11 @@ class PromotionController extends Controller
             }
         }
         
+       
         //if(empty(trim($search_items['vitemname'])) && empty(trim($search_items['vbarcode'])) && empty(trim($search_items['dunitprice'])) && empty(trim($search_items['vcategoryname'])) &&  empty(trim($search_items['vdepartmentname'])) && empty(trim($search_items['subcat_name'])) && empty(trim($search_items['vcompanyname'])) && empty(trim($search_items['mfr_name'])) && empty(trim($search_items['vitemtype'])) && empty(trim($search_items['vunitname'])) && empty(trim($search_items['vsize'])) )
-        if(empty(trim($search_items['vitemname'])) && empty(trim($search_items['vbarcode'])) && empty(trim($search_items['dunitprice'])) && empty(trim($search_items['vcategoryname'])) &&  empty(trim($search_items['vdepartmentname'])) && empty(trim($search_items['subcat_name'])) && empty(trim($search_items['vunitname'])) && empty(trim($search_items['vsize'])) )
+        if(empty(trim($search_items['vitemname'])) && empty(trim($search_items['vbarcode'])) && empty(trim($search_items['dunitprice'])) && empty(trim($search_items['vcategoryname'])) &&  empty(trim($search_items['vdepartmentname'])) && empty(trim($search_items['subcat_name'])) && empty(trim($search_items['vunitname'])) && empty(trim($search_items['vsize'])) && empty(trim($search_items['vitemgroupname'])) )
         {
+            
             $limit = 20;
             
 
@@ -2480,7 +2522,10 @@ class PromotionController extends Controller
             
             $offset = $input['start']+$input['length'];
             $show_condition = "WHERE mi.iitemid=0";
-            $select_query = "SELECT DISTINCT(mi.iitemid),mi.vbarcode,mi.vitemname, mi.*, md.vdepartmentname, mc.vcategoryname,msc.subcat_name, msupp.vcompanyname, mi.manufacturer_id, mfr.mfr_name, unit.vunitname, mi.vunitcode, mi.dunitprice, (SELECT prom_id FROM trn_prom_details where barcode = mi.vbarcode limit 1) as prom_id FROM mst_item as mi LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode) LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode) LEFT JOIN mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id) LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) LEFT JOIN mst_manufacturer as mfr ON(mi.manufacturer_id = mfr.mfr_id) LEFT JOIN mst_unit as unit ON(mi.vunitcode = unit.vunitcode) LEFT JOIN mst_itemvendor as miv ON(mi.iitemid=miv.iitemid) LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) $show_condition ORDER BY $sort LIMIT ". $start_from.", ".$limit;
+            $select_query = "SELECT DISTINCT(mi.iitemid),mi.vbarcode,mi.vitemname, mi.*, md.vdepartmentname, mc.vcategoryname,msc.subcat_name, msupp.vcompanyname, mi.manufacturer_id, mfr.mfr_name, unit.vunitname, mi.vunitcode, mi.dunitprice,ig.vitemgroupname  as vitemgroupname, (SELECT prom_id FROM trn_prom_details where barcode = mi.vbarcode limit 1) as prom_id FROM mst_item as mi LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode) LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode) LEFT JOIN mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id) LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) LEFT JOIN mst_manufacturer as mfr ON(mi.manufacturer_id = mfr.mfr_id) LEFT JOIN mst_unit as unit ON(mi.vunitcode = unit.vunitcode) LEFT JOIN mst_itemvendor as miv ON(mi.iitemid=miv.iitemid) LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) LEFT JOIN itemgroupdetail as igd ON(mi.vbarcode=igd.vsku) LEFT JOIN itemgroup as ig ON(ig.iitemgroupid=igd.iitemgroupid)  $show_condition ORDER BY $sort LIMIT ". $start_from.", ".$limit;
+            
+            
+         
             
             // $select_query = "SELECT DISTINCT(mi.iitemid),mi.vbarcode,mi.vitemname, mi.*, md.vdepartmentname, mc.vcategoryname,msc.subcat_name, msupp.vcompanyname, mi.manufacturer_id, mfr.mfr_name, (SELECT prom_id FROM trn_prom_details where barcode = mi.vbarcode limit 1) as prom_id FROM mst_item as mi LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode) LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode) LEFT JOIN mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id) LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) LEFT JOIN mst_manufacturer as mfr ON(mi.manufacturer_id = mfr.mfr_id) LEFT JOIN mst_itemvendor as miv ON(mi.iitemid=miv.iitemid) LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) $show_condition ORDER BY $sort";
      
@@ -2529,6 +2574,7 @@ class PromotionController extends Controller
         }
         else
         {
+           
            $limit = 20;
             
             $start_from = ($input['start']);
@@ -2640,13 +2686,24 @@ class PromotionController extends Controller
                     $condition .= " AND mi.vsize ='".$search."'";
                 }
             }
+            if(isset($search_items['vitemgroupname']) && !empty($search_items['vitemgroupname'])){
+                $search = ($search_items['vitemgroupname']);
+                if($search != 'all')
+                {
+                    $condition .= "AND igd.iitemgroupid   ='".$search."'";
+                }
+            }
             
             
-            // echo $condition;exit;
+            
+            
+
             
             $sid = "u".session()->get('sid');
             
-            $select_query = "SELECT DISTINCT(mi.iitemid),mi.vbarcode,mi.vitemname, mi.vitemtype,mi.npack,mi.new_costprice, md.vdepartmentname, mc.vcategoryname,msc.subcat_name,msupp.vcompanyname, mi.nsaleprice, mi.iqtyonhand, mi.LastUpdate, mi.subcat_id,mi.manufacturer_id,mfr.mfr_name,unit.vunitname, mi.vunitcode, mi.dunitprice, (SELECT prom_id FROM ".$sid.".trn_prom_details where barcode = mi.vbarcode limit 1) as prom_id, mi.* FROM ".$sid.".mst_item as mi LEFT JOIN ".$sid.".mst_department as md ON(mi.vdepcode = md.vdepcode) LEFT JOIN ".$sid.".mst_category as mc ON(mi.vcategorycode = mc.vcategorycode) LEFT JOIN ".$sid.".mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id) LEFT JOIN ".$sid.".mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) LEFT JOIN ".$sid.".mst_manufacturer as mfr ON(mi.manufacturer_id = mfr.mfr_id) LEFT JOIN mst_unit as unit ON(mi.vunitcode = unit.vunitcode) LEFT JOIN ".$sid.".mst_itemvendor as miv ON(mi.iitemid=miv.iitemid) LEFT JOIN ".$sid.".mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) $show_condition "." $condition ORDER BY $sort LIMIT ". $input['start'].", ".$limit;
+            $select_query = "SELECT DISTINCT(mi.iitemid),mi.vbarcode,mi.vitemname, mi.vitemtype,mi.npack,mi.new_costprice, md.vdepartmentname, mc.vcategoryname,msc.subcat_name,msupp.vcompanyname, mi.nsaleprice, mi.iqtyonhand, mi.LastUpdate, mi.subcat_id,mi.manufacturer_id,mfr.mfr_name,unit.vunitname, mi.vunitcode, mi.dunitprice, ig.vitemgroupname  as vitemgroupname, (SELECT prom_id FROM ".$sid.".trn_prom_details where barcode = mi.vbarcode limit 1) as prom_id, mi.* FROM ".$sid.".mst_item as mi LEFT JOIN ".$sid.".mst_department as md ON(mi.vdepcode = md.vdepcode) LEFT JOIN ".$sid.".mst_category as mc ON(mi.vcategorycode = mc.vcategorycode) LEFT JOIN ".$sid.".mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id) LEFT JOIN ".$sid.".mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) LEFT JOIN ".$sid.".mst_manufacturer as mfr ON(mi.manufacturer_id = mfr.mfr_id) LEFT JOIN mst_unit as unit ON(mi.vunitcode = unit.vunitcode) LEFT JOIN ".$sid.".mst_itemvendor as miv ON(mi.iitemid=miv.iitemid) LEFT JOIN ".$sid.".mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode)  LEFT JOIN itemgroupdetail as igd ON(mi.vbarcode=igd.vsku) LEFT JOIN itemgroup as ig ON(ig.iitemgroupid=igd.iitemgroupid)   $show_condition "." $condition ORDER BY $sort LIMIT ". $input['start'].", ".$limit;
+            
+            
             
             // $select_query = "SELECT DISTINCT(mi.iitemid),mi.vbarcode,mi.vitemname, mi.vitemtype, md.vdepartmentname, mc.vcategoryname,msc.subcat_name,msupp.vcompanyname, mi.nsaleprice, mi.iqtyonhand, mi.LastUpdate, mi.subcat_id,mi.manufacturer_id,mfr.mfr_name, (SELECT prom_id FROM trn_prom_details where barcode = mi.vbarcode limit 1) as prom_id, mi.* FROM mst_item as mi LEFT JOIN mst_department as md ON(mi.vdepcode = md.vdepcode) LEFT JOIN mst_category as mc ON(mi.vcategorycode = mc.vcategorycode) LEFT JOIN mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id) LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode) LEFT JOIN mst_manufacturer as mfr ON(mi.manufacturer_id = mfr.mfr_id) LEFT JOIN mst_itemvendor as miv ON(mi.iitemid=miv.iitemid) LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) $show_condition "." $condition ORDER BY $sort";
             // echo $select_query;exit;
@@ -2659,10 +2716,10 @@ class PromotionController extends Controller
             LEFT JOIN ".$sid.".mst_department as md ON(mi.vdepcode = md.vdepcode)
             LEFT JOIN ".$sid.".mst_category as mc ON(mi.vcategorycode = mc.vcategorycode) 
             LEFT JOIN ".$sid.".mst_itemvendor as miv ON(mi.iitemid=miv.iitemid) 
-            LEFT JOIN ".$sid.".mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) $show_condition "." $condition";
+            LEFT JOIN ".$sid.".mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode) LEFT JOIN itemgroupdetail as igd ON(mi.vbarcode=igd.vsku)  $show_condition "." $condition";
             // dd($count_select_query);
             $count_query1 = \DB::connection('mysql_dynamic')->select($count_select_query);
-            //  dd($count_query1);
+             
             $count_records = $count_total = (int)$count_query1[0]->count;
                 
         }
@@ -2689,15 +2746,19 @@ class PromotionController extends Controller
         $query = array_map(function ($value) {
             return (array)$value;
         }, $query);
+        
+     
 
         if(count($query) > 0){
             foreach ($query as $key => $value) {
-
+              
                 $temp = array();
+             
                 $temp['iitemid'] = $value['iitemid'];
                 $temp['vitemname'] = $value['vitemname'];
                 $temp['vitemtype'] = $value['vitemtype'];
                 $temp['vbarcode'] = $value['vbarcode'];
+                $temp['vitemgroupname'] = $value['vitemgroupname'];
                 // if(count($itemListings) > 0){
                 //     foreach($itemListings as $m => $v){
                 //         if($m == 'vdepcode'){
@@ -2750,6 +2811,8 @@ class PromotionController extends Controller
         $return['recordsTotal'] = $count_total;
         $return['recordsFiltered'] = $count_records;
         $return['data'] = $datas;
+        
+        // dd($return);
 
         return response(json_encode($return), 200)
                   ->header('Content-Type', 'application/json');
