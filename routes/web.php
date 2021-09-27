@@ -641,6 +641,8 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection','revalidate']], 
 
         //=============Quick Inventory Update=================
         Route::get('/quickInventoryUpdate', 'QuickInventoryUpdateController@getForm')->name('quickInventoryUpdate');
+        Route::post('/quickInventoryUpdate', 'QuickInventoryUpdateController@quickInventoryUpdate')->name('quickInventoryUpdatePost');
+        Route::any('/quickSearchItem', 'QuickInventoryUpdateController@searchItems')->name('quickSearchItem');
 
         //=============End Quick Inventory Update==================
 
