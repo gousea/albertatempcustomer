@@ -88,8 +88,16 @@
                                                         INVENTORY </a>
                                                 <ul class="dropdown-menu main-dropdown">
                                                         @if (session()->get('hq_sid') != 1)
-                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('ReceivingOrder') }}"> Receiving Order</a></li>
-                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('PurchaseOrder') }}"> Purchase Order </a></li>
+                                                                @if(session()->has('version'))
+                                                                        @if( session()->get('version') == 330)
+                                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url(session()->get('version').'/ReceivingOrder') }}"> Receiving Order</a></li>
+                                                                        
+                                                                        @else
+                                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('ReceivingOrder') }}"> Receiving Order</a></li>
+                                                                        
+                                                                        @endif
+                                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('PurchaseOrder') }}"> Purchase Order </a></li>
+                                                                @endif
                                                         @endif
                                                         <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('department') }}"> Department </a></li>
                                                         <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('category') }}"> Category </a></li>
