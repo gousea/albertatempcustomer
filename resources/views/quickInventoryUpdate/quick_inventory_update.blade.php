@@ -78,9 +78,9 @@
                     <input type="hidden" name="newInvoice" id="newInvoice" value="">
                     <input type="hidden" name="newInvoice" id="newVendor" value="">
                 <table class="table table-bordered table-striped mb-0" id="itemTable">
-                    <thead style="color: antiquewhite !important;">
+                    <thead style="color: white !important; background-color: #286fb7">
                     <tr>
-<!--                        <th scope="col">#</th>-->
+<!--                 #286fb7       <th scope="col">#</th>-->
                         <th scope="col">BARCODE</th>
                         <th scope="col">NAME</th>
                         <th scope="col">NPACK</th>
@@ -307,7 +307,8 @@
             margin-left: auto;
             height: 312px;
             /*background: black;*/
-            background: rgb(71, 77, 83);
+            /*background: rgb(71, 77, 83);*/
+            /*background: #286fb7;*/
         }
     </style>
    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet" />
