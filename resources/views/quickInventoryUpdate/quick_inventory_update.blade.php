@@ -47,29 +47,30 @@
             <div class="col-md-5 divTop1">
                 <div class="py-3">
                     <div class="row form-inline">
-                        <input type="text" name="barcode"  class="form-control adjustment-fields" id="barcode">&nbsp&nbsp&nbsp&nbsp
+                        <input type="text" name="barcode"  class="form-control adjustment-fields" id="barcode" placeholder="Enter/Scan SKU/Barcode">&nbsp&nbsp&nbsp&nbsp
                         <button class="btn btn-primary button-blue buttons_menu basic-button-small" id="barcodeSearchBtn">Search UPC</button>
-                        <h5 id="barSearch" style="display: none;">searching..please wait</h5>
+                        <h5 id="barSearch" style="display: none;color: #495057;font-size: 1rem !important;">searching..please wait</h5>
                     </div>
                 </div>
                 <div class="py-3">
                     <div class="row form-inline">
                         <label class="form-control  adjustment-fields" style="width: auto;" > CURRENT QTY ON HAND</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                        <button class="btn btn-primary button-blue buttons_menu basic-button-small" style=" background-color: rgb(71, 77, 83);" id="qtyOnHandBtn">90</button>
+                        <button class="btn btn-primary button-blue buttons_menu basic-button-small" style=" background-color: rgb(71, 77, 83);" id="qtyOnHandBtn">0</button>
                     </div>
                 </div>
                 <div class="py-3">
                     <div class="row form-inline">
-                        <input type="text" name="appendQty" id="appendQty" class="form-control adjustment-fields">&nbsp&nbsp&nbsp&nbsp
+                        <input type="text" name="appendQty" id="appendQty" class="form-control adjustment-fields" placeholder="Enter Receive Quantity Here*"
+                               pattern="[0-9]{6}" maxlength="6">&nbsp&nbsp&nbsp&nbsp
                         <button class="btn btn-primary button-blue buttons_menu basic-button-small" id="appendQtyBtn">APPEND QTY</button>
                     </div>
                 </div>
-                <div class="py-3">
+<!--                <div class="py-3">
                     <div class="row form-inline">
                         <button class="btn btn-primary button-blue buttons_menu basic-button-small" id="nextItem" >NEXT ITEM</button>&nbsp&nbsp&nbsp&nbsp
                         <button class="btn btn-primary button-blue buttons_menu basic-button-small" style="background-color: #4adcdc !important;" id="doneBtn">DONE</button>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="table-wrapper-scroll-y my-custom-scrollbar divTop2">
                 <form action="{{route('quickInventoryUpdatePost')}}" method="POST" name="itemUpdate" id="itemUpdate">
@@ -80,8 +81,7 @@
                 <table class="table table-bordered table-striped mb-0" id="itemTable">
                     <thead style="color: white !important; background-color: #286fb7">
                     <tr>
-<!--                 #286fb7       <th scope="col">#</th>-->
-                        <th scope="col">BARCODE</th>
+                        <th scope="col">BARCODE/SKU</th>
                         <th scope="col">NAME</th>
                         <th scope="col">NPACK</th>
                         <th scope="col">QTY ON HAND</th>
@@ -91,97 +91,8 @@
                     </tr>
                     </thead>
                     <tbody>
+
 <!--                    <tr>
-
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>21</td>
-                    </tr>
-                    <tr>
-
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>21</td>
-                    </tr>
-                    <tr>
-
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>21</td>
-                    </tr>
-                    <tr>
-
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>21</td>
-                    </tr>
-                    <tr>
-
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>21</td>
-                    </tr>
-                    <tr>
-
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>21</td>
-                    </tr>
-                    <tr>
-
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>21</td>
-                    </tr>
-                    <tr>
-
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>21</td>
-                    </tr>
-                    <tr>
-
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>21</td>
-                    </tr>
-                    <tr>
-
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>11</td>
-                        <td>10</td>
-                        <td>21</td>
-                    </tr>-->
-                    <tr>
                         <td>Jacob</td>
                         <td>Thornton</td>
                         <td>@fat</td>
@@ -198,7 +109,8 @@
                         <td><input type="text" id="receivedQTYTest2" name="vbarcode[2]" value="11" readonly></td>
                         <td>21</td>
                         <td><button class="btnDelete">Delete</button></td>
-                    </tr>
+                    </tr>-->
+
                     </tbody>
                 </table>
                 </form>
@@ -305,10 +217,21 @@
 
         .divTop2 {
             margin-left: auto;
-            height: 312px;
+            height: 200px;
             /*background: black;*/
             /*background: rgb(71, 77, 83);*/
             /*background: #286fb7;*/
+        }
+        .removeOutline{
+            outline:none;
+            border-width:0px;
+            border:none;
+        }
+        .removeOutline input:focus {
+            outline:none;
+        }
+        .success{
+            color: #1d643b;
         }
     </style>
    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.css" rel="stylesheet" />
@@ -340,19 +263,43 @@
 
         $('#bactToItemBtn').click(function(){
            // $('.quickSection').fadeIn();
+            //alert('hey');
+            $('#barcode').focus();
         });
 
        $(document).ready(function () {
            let AQBID;
            let IQOH; //iqtyonhand
+           let SBID; //(search barcode item details) holds the search item details tobe listed in list after append click
            $.ajaxSetup({
                headers: {
                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                }
            });
+           $('#barcode').focus();
+
+           $('#appendQty').bind('keyup paste', function () {
+               this.value = this.value.replace(/[^0-9]/g, '');
+           });
 
        $('#barcodeSearchBtn').click(function(){
             var barcode = $('#barcode').val();
+                barcode = $.trim(barcode);
+                $('#barSearch').hide();
+           if(barcode==""){
+               $('#barSearch').text("Barcode should not be blank, please enter correct barcode/sku ");
+               $('#barSearch').show(); return false;
+           }
+           else if (barcode.length < 3) {
+               $('#barSearch').text("Barcode should not be less than 3 characters");
+               $('#barSearch').show();
+               return false;
+           }
+           else if (barcode.length > 20) {
+               $('#barSearch').text("Barcode should not more than 20 characters");
+               $('#barSearch').show();
+               return false;
+           }
             //alert('SB btn clikced '+ barcode);
           // $('#itemTable').append('<tr><td>my data</td><td>more data</td><td>more data</td><td>more data</td><td>more data</td><td>more data</td></tr>');
            //quickSearchItem
@@ -380,11 +327,13 @@
                        IQOH = value.iqtyonhand;
                        //$(this).removeClass('follow').addClass('unfollow');
                        $("#appendQtyBtn").addClass(value.iitemid);
-                       // $("#itemTable").append('<tr><td>' + value.vbarcode + '</td><td>' + value.vitemname + '</td><td>' + value.npack + '</td><td>' + value.iqtyonhand + '</td><td id="receivedQTY_' + value.iitemid + '" ></td><td id="updatedQTY_' + value.iitemid + '"></td><td><button class="btnDelete">Delete</button></td></tr>');
-                       $("#itemTable").append('<tr><td>' + value.vbarcode + '</td><td>' + value.vitemname + '</td><td>' + value.npack + '</td><td>' + value.iqtyonhand + '</td><td><input type="text" id="receivedQTY_' + value.iitemid + '" name="vbarcode[' + value.iitemid + ']" value="" readonly></td><td id="updatedQTY_' + value.iitemid + '"></td><td><button class="btnDelete">Delete</button></td></tr>');
+                       //   $("#itemTable").append('<tr><td>' + value.vbarcode + '</td><td>' + value.vitemname + '</td><td>' + value.npack + '</td><td>' + value.iqtyonhand + '</td><td><input type="text" id="receivedQTY_' + value.iitemid + '" name="vbarcode[' + value.iitemid + ']" value="" readonly></td><td id="updatedQTY_' + value.iitemid + '"></td><td><button class="btnDelete">Delete</button></td></tr>');
+                       SBID ='<tr><td>' + value.vbarcode + '</td><td>' + value.vitemname + '</td><td>' + value.npack + '</td><td>' + value.iqtyonhand + '</td><td><input type="text" id="receivedQTY_' + value.iitemid + '" name="vbarcode[' + value.iitemid + ']" value="" readonly class="removeOutline"></td><td id="updatedQTY_' + value.iitemid + '"></td><td><button class="btnDelete">Delete</button></td></tr>';
+                       $('#barSearch').text("Item Name: "+ value.vitemname);
+                       //$('#barSearch').addClass('success');
+                       $('#barSearch').show();
                    });
-                   //$('#city-dropdown-nominee').html('<option value="">Select State First</option>');
-                   /*$("#professionSelectionPageOk").trigger('click');*/
+
                }else{
                        //alert('no records');
                        $('#barSearch').text("No Record Found. Try another barcode.");
@@ -404,10 +353,29 @@
 
        $('#appendQtyBtn').click(function (){
           console.log('appendQtyBtn clicked');
+          if(SBID == ''){
+              $('#qtyOnHandBtn').text(0);
+              $('#barcode').val('');
+              $('#appendQty').val('');
+              $('#barSearch').hide();
+              alert('Please search new item to update');
+              return false;
+          }
           var newQty = $('#appendQty').val();
+          if(newQty == 0 || newQty.length < 1){
+              alert('Please enter some quantity to update');
+              return false;
+          }
           //$('#receivedQTY_'+AQBID).text(newQty);
-          $('#receivedQTY_'+AQBID).val(newQty);
-          $('#updatedQTY_'+AQBID).text((+newQty) + (+IQOH));
+           $("#itemTable").append(SBID);
+           $('#receivedQTY_'+AQBID).val(newQty);
+           $('#updatedQTY_'+AQBID).text((+newQty) + (+IQOH));
+
+           $('#qtyOnHandBtn').text(0);
+           $('#barcode').val('');
+           $('#appendQty').val('');
+           $('#barSearch').hide();
+           SBID = ''; // to unset the searched details
 
        });
        $('#nextItem').click(function (){
@@ -440,6 +408,16 @@
               //return false;
               $('form#itemUpdate').submit();
            })
+
+           $('#appendQty').unbind('change input paste').bind('change input paste', function (e) {
+               var $this = $(this);
+               var val = $this.val();
+               var valLength = val.length;
+               var maxCount = $this.attr('maxlength');
+               if (valLength > maxCount) {
+                   $this.val($this.val().substring(0, maxCount));
+               }
+           });
 /*End document ready*/
        });
 
