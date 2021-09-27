@@ -643,7 +643,7 @@
                                       <td>&nbsp;</td>
                                       
                                       <td class="text-right"><b>Total</b></td>
-                                      <td class="text-left text-uppercase"><b><span class="total_order_qty">&nbsp;&nbsp;<?= $total_orderqty; ?></span></b></td>
+                                      <td class="text-right text-uppercase"><b><span class="total_order_qty">&nbsp;&nbsp;<?= $total_orderqty; ?></span></b></td>
                                       <td class="text-right"><b><span class="total_suggested_amount"><?php // echo number_format((float)$total_suggted_amt, 2, '.', '') ;?></span></b></td>
                                       <td class="text-right"><b><span class="total_amount"><?php echo number_format((float)$total_amt, 2, '.', '') ;?></span></b></td>
                                     </tr>
