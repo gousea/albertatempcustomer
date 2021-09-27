@@ -11,7 +11,7 @@
                 <span class="font-weight-bold text-uppercase"> Receiving Order</span>
             </div>
             <div class="nav-submenu">
-                <a type="button" href="{{route('quickInventoryUpdate')}}" title="QuickInventoryUpdate" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate">InventoryUpdate</a>
+<!--                <a type="button" href="{{route('quickInventoryUpdate')}}" title="QuickInventoryUpdate" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate">Inventory Update</a>-->
               <a type="button" href="<?php echo $data['add']; ?>" title="Add" class="btn btn-gray headerblack  buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>
 
               <button class="btn btn-dark headerwhite buttons_menu basic-button-small" data-toggle="modal" data-target="#myModalImportNew"><i class="fa fa-file"></i>&nbsp;&nbsp;Import EDI Invoice</button>
