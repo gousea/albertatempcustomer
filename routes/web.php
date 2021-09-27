@@ -590,6 +590,29 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection','revalidate']], 
         Route::get('/ReceivingOrder/get_vendor_data', 'ReceivingOrderController@get_vendor_data');
         Route::post('/ReceivingOrder/get_search_item_history', 'ReceivingOrderController@get_search_item_history');
 
+        Route::group(['prefix' => '330', 'namespace' => '\App\_330\Http\Controllers'], function () {
+            
+            Route::get('/ReceivingOrder', 'ReceivingOrderController@getList')->name('ReceivingOrder');
+            Route::post('/ReceivingOrder', 'ReceivingOrderController@getSearchList');
+            Route::get('/ReceivingOrder/edit', 'ReceivingOrderController@edit_form');
+            Route::get('/ReceivingOrder/add', 'ReceivingOrderController@edit_form');
+            Route::post('/ReceivingOrder/add_receiving_order_item', 'ReceivingOrderController@add_receiving_order_item');
+            Route::post('/ReceivingOrder/transfer/check_invoice', 'ReceivingOrderController@check_invoice_transfer');
+            Route::post('/ReceivingOrder/check_invoice', 'ReceivingOrderController@check_invoice');
+            Route::post('/ReceivingOrder/add_post', 'ReceivingOrderController@add_post');
+            Route::post('/ReceivingOrder/edit_post', 'ReceivingOrderController@edit_post');
+            Route::post('/ReceivingOrder/delete_receiving_order_item', 'ReceivingOrderController@delete_receiving_order_item');
+            Route::post('/ReceivingOrder/save_receive_item', 'ReceivingOrderController@save_receive_item');
+            Route::get('/ReceivingOrder/get_receiving_history', 'ReceivingOrderController@get_receiving_history');
+            Route::get('/ReceivingOrder/get_item_history', 'ReceivingOrderController@get_item_history');
+            Route::get('/ReceivingOrder/get_item_history_date', 'ReceivingOrderController@get_item_history_date');
+            Route::post('/ReceivingOrder/import_invoice_new', 'ReceivingOrderController@import_invoice_new');
+            Route::post('/ReceivingOrder/import_missing_items', 'ReceivingOrderController@import_missing_items');
+            Route::post('/ReceivingOrder/delete', 'ReceivingOrderController@delete');
+            Route::get('/ReceivingOrder/get_vendor_data', 'ReceivingOrderController@get_vendor_data');
+            Route::post('/ReceivingOrder/get_search_item_history', 'ReceivingOrderController@get_search_item_history');
+        });
+
 
         //==============Physical Inventroy Module Route==================
         Route::get('inventory/physicalInventroy', 'PhysicalInventroyController@index')->name('inventory.physicalInventroy');
