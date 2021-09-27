@@ -936,9 +936,8 @@ class ItemController extends Controller
             $data = $this->getForm($input);
             $check = true;
             $new_database = session()->get('new_database');
-            $envt_charge = $input['envt_charge'] ?? '0.00';
-            $envt_charge = (float)$envt_charge;
-            Log::info('Envt charge at '.__LINE__.'=>'.$envt_charge);
+
+
             if($new_database === false){
                 // =============================================================== OLD DATABASE ====================================
 
@@ -1464,11 +1463,10 @@ class ItemController extends Controller
                                         "parentid" => "0",
                                         "parentmasterid" => "0",
                                         "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
-                                        "options_data" => $options_data,
-                                        "envt_charge" => $envt_charge,
+                                        "options_data" => $options_data
 
                                     );
-                        Log::info('Envt charge at '.__LINE__.'=>'.$envt_charge.' query =>'.json_encode($temp_arr));
+
                         $olditem = new Olditem();
                         $check_error = $olditem->addItems($temp_arr);
                     }
@@ -1745,11 +1743,10 @@ class ItemController extends Controller
                                         "parentid" => "0",
                                         "parentmasterid" => "0",
                                         "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
-                                        "options_data" => $options_data,
-                                        "envt_charge" => $envt_charge,
+                                        "options_data" => $options_data
 
                                     );
-                        Log::info('Envt charge at '.__LINE__.'=>'.$envt_charge.' query =>'.json_encode($temp_arr));
+
                         $item = new Item();
                         $check_error = $item->addItems($temp_arr);
                     }
@@ -1860,8 +1857,7 @@ class ItemController extends Controller
             $data = $this->getForm($input, $iitemid);
             $check = true;
             $new_database = session()->get('new_database');
-            $envt_charge = $input['envt_charge'] ?? '0.00';
-            $envt_charge = (float)$envt_charge;
+
             if($new_database === false){
                 // =============================================================== OLD DATABASE ====================================
 
@@ -2444,8 +2440,7 @@ class ItemController extends Controller
                                     "parentid" => $input['parentid'],
                                     "parentmasterid" => $input['parentmasterid'],
                                     "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
-                                    "options_data" => $options_data,
-                                    "envt_charge" => $envt_charge,
+                                    "options_data" => $options_data
                                 );
 
                     $olditems = new Olditem;
@@ -2729,8 +2724,7 @@ class ItemController extends Controller
                                     "parentid" => $input['parentid'],
                                     "parentmasterid" => $input['parentmasterid'],
                                     "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
-                                    "options_data" => $options_data,
-                                    "envt_charge" => $envt_charge,
+                                    "options_data" => $options_data
                                 );
                     // dd($temp_arr);
                     $item = new Item();
@@ -2968,14 +2962,6 @@ class ItemController extends Controller
     		if (isset($this->request->get['iitemid']) && ($this->request->server['REQUEST_METHOD'] == 'POST')) {
     			$data['edit_page'] = 'edit_page';
     		}
-
-            if (isset($input['envt_charge'])) {
-                $data['envt_charge'] = $input['envt_charge'];
-            } elseif (!empty($item_info)) {
-                $data['envt_charge'] = $item_info['envt_charge'];
-            } else {
-                $data['envt_charge'] = '';
-            }
 
     		if (isset($input['iitemid'])) {
     			$data['iitemid'] = $input['iitemid'];
@@ -3711,7 +3697,7 @@ class ItemController extends Controller
             $data['itemchilditems'] = $item_info['itemchilditems'];
             $data['itemparentitems'] = $item_info['itemparentitems'];
             $data['remove_parent_item'] = $item_info['remove_parent_item'];
-            $data['envt_charge'] = $item_info['envt_charge'];
+
 
 
             $unit_data = $item->getItemUnitData($iitemid);
@@ -3723,13 +3709,7 @@ class ItemController extends Controller
             $data['edit_page'] = 'edit_page';
         }
 
-        if (isset($input['envt_charge'])) {
-            $data['envt_charge'] = $input['envt_charge'];
-        } elseif (!empty($item_info)) {
-            $data['envt_charge'] = $item_info['envt_charge'];
-        } else {
-            $data['envt_charge'] = '';
-        }
+
 
         if (isset($input['iitemid'])) {
             $data['iitemid'] = $input['iitemid'];
