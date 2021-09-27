@@ -8,43 +8,43 @@
 <div id="content">
     <style>
      span.select2-container{
-        width: 90% !important;  
+        width: 90% !important;
         min-width:110px; !important;
       }
       .headerwhite{
           margin-left:10px;
       }
-      
+
         .select2-selection{
             border-radius: 7px !important;
         }
-        
+
         .select2-container .select2-selection--single{
             height:33px !important;
         }
-      
+
       .fa-search{
           font-size:10px;
       }
-      
-      
+
+
       #items_status + span.select2-container{
-          max-width: 20%;  
+          max-width: 20%;
       }
       thead input {
           width: 100%;
       }
-          
+
       .table.table-bordered.table-striped.table-hover thead > tr{
         background: #03a9f4 none repeat scroll 0 0 !important;
       }
-      
+
       table tbody tr:nth-child(even) td{
           background-color: #f05a2814;
       }
-    
+
     </style>
-  
+
   <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
     <div class="container">
         <div class="collapse navbar-collapse" id="main_nav">
@@ -52,7 +52,7 @@
                 <span class="font-weight-bold text-uppercase"> Items</span>
             </div>
             <div class="nav-submenu d-flex">
-                <b style="top: 9px; position: relative; right: 7px; text-transform: uppercase; font-weight: 800">Show &nbsp</b> 
+                <b style="top: 9px; position: relative; right: 7px; text-transform: uppercase; font-weight: 800">Show &nbsp</b>
                 <select name="items_status" id="items_status">
                     <option value="All" <?php echo ($data['show_items']=='ALL')? "selected" : "";?>>All</option>
                     <option value="Active" <?php echo ($data['show_items']=='Active')? "selected" : "";?>>Active</option>
@@ -61,14 +61,14 @@
               <?php if(session()->get('hq_sid') != 1){ ?>
                 <button type="button" class="btn btn-dark headerwhite buttons_menu basic-button-small" data-toggle="modal" data-target="#importItemModal"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Import Items</button>
               <?php } ?>
-              <a type="button" href="{{ $data['add'] }}" title="Add New Item" class="btn btn-gray headerblack buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a> 
-                            
+              <a type="button" href="{{ $data['add'] }}" title="Add New Item" class="btn btn-gray headerblack buttons_menu add_new_btn_rotate"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>
+
               <button type="button" class="btn btn-danger buttonred buttons_menu basic-button-small" id="delete_btn" style="border-radius: 0px;"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Delete Items</button>
             </div>
         </div> <!-- navbar-collapse.// -->
     </div>
 </nav>
-  
+
   <section class="section-content py-6">
     <div class="container">
       @if ($data['error_warning'])
@@ -82,7 +82,7 @@
       </div>
       @endif
       <div class="panel panel-default itemsData">
-        
+
         <div class="panel-body">
           <div class="box-body table-responsive">
                   <table id="item_listing" class="table table-hover promotionview" style="font-size:11px; width:100%;">
@@ -94,7 +94,7 @@
                                   <th>SKU</th>
                                   <th>DEPT.</th>
                                   <th>CATEGORY</th>
-                                  <th>PRICE</th>
+                                     <th>PRICE</th>
                                   <th>QTY. ON HAND</th>
                               </tr>-->
                               <?php $dynamic_data = [];?>
@@ -117,11 +117,11 @@
                                 </th>
                                 <?php $dynamic_data[] = "vbarcode";?>
 
-                                
+
                                 <?php if(isset($data['itemListings'])){ ?>
-                                
+
                                   <?php foreach($data['itemListings'] as $m => $itemListing){ ?>
-                                    
+
                                           <?php if($m == 'vcategorycode'){
                                             $dynamic_data[] = "vcategoryname";
                                           ?>
@@ -129,7 +129,7 @@
                                                 <div class="adjustment-has-search">
                                                   <select class='table-heading-fields' name="category_code" id="category_code">
                                                     <option value='all'>All</option>
-                                                    
+
                                                   </select>
                                                 </div>
                                               </th>
@@ -141,9 +141,9 @@
                                                 <div class="adjustment-has-search" style="width:80%;">
                                                   <select class='table-heading-fields'  name='dept_code' id='dept_code'>
                                                     <option value='all'>All</option>";
-                                                        <?php 
+                                                        <?php
                                                           foreach($data['departments'] as $department){
-                                                        ?>  
+                                                        ?>
                                                             <option value='<?=$department['vdepcode']?>'><?=$department['vdepartmentname'] ?></option>;
                                                         <?php } ?>
                                                   </select>
@@ -152,7 +152,7 @@
                                           <?php continue;
                                           }else if($m ==  'subcat_id'){
                                               $dynamic_data[] = "subcat_name";
-                                          
+
                                           }else if($m ==  'vsuppliercode'){
                                               $dynamic_data[] = "vcompanyname";
                                           ?>
@@ -181,12 +181,12 @@
                                           } ?>
 
                                           <th class="text-left text-uppercase no-filter no-sort"><?php echo $data['title_arr'][$m];?></th>
-                                
+
                                   <?php } ?>
                                 <?php } else { ?>
                                   <th class="text-left text-uppercase no-sort">Dept.</th>
                                   <?php $dynamic_data[] = "vdepartmentname";?>
-                                  
+
                                   <th class="text-left text-uppercase">Category</th>
                                   <?php $dynamic_data[] = "vcategoryname";?>
                                   <th class="text-left text-uppercase">Supplier</th>
@@ -196,12 +196,12 @@
                                   <th class="text-right text-uppercase no-sort no-filter">Qty. on Hand</th>
                                   <?php $dynamic_data[] = "iqtyonhand";?>
                                 <?php } ?>
-                                    
-                                    
+
+
                               </tr>
                           </thead>
-                          
-                        
+
+
                   </table>
               </div><!-- /.box-body -->
                   <input type="hidden" id = "sorting_value" value="">
@@ -281,12 +281,12 @@
 <script src="{{ asset('javascript/select2/js/select2.min.js') }}" type="text/javascript"></script>
 
 <script>
-    
+
     $(document).ready(function() {
-        
+
         var sorting_count = 0;
         var sorting_value = 'asc';
-        
+
         $(document).on("change","#dept_code",function(){
             var get_category_ajax;
             if($(this).val() != "")
@@ -294,15 +294,15 @@
                 $('#category_code').attr("placeholder", "Loading...");
                 var get_categories_url = "<?php echo $data['get_categories_url']; ?>";
                 get_categories_url = get_categories_url.replace(/&amp;/g, '&');
-                
+
                 var get_department_items_url = "<?php echo $data['get_department_items_url']; ?>";
                 // get_department_items_url = get_department_items_url.replace(/&amp;/g, '&');
                 var dep_code = [$(this).val()];
-                
+
                 if(get_category_ajax && get_category_ajax.readyState != 4 ){
                     get_category_ajax.abort();
                 }
-                
+
                 get_category_ajax = $.ajax({
                     url: get_categories_url,
                     headers: {
@@ -322,22 +322,22 @@
                             $( '#category_code' ).html( '' );
                             $('#category_code').prop("disabled", true);
                         }
-                        
+
                     }
                 })
             }
         });
-        
+
         var url = "<?php echo $data['searchitem']; ?>";
         url = url.replace(/&amp;/g, '&');
-        
+
         var edit_url = "<?php echo $data['edit']; ?>";
         edit_url = edit_url.replace(/&amp;/g, '&');
-        
+
         $('#item_listing thead tr th').each( function (i) {
             var title = $(this).text();
-            
-     
+
+
             // $( '.search_text_box', this ).on( 'keyup change', function () {
             //     if ( table.column(i).search() !== this.value ) {
             //         table
@@ -346,17 +346,17 @@
             //             .draw();
             //     }
             // } );
-            
-            
+
+
             var timer;
-            
+
             $( '.search_text_box', this ).on( 'keyup change', function () {  //=====for correct working order this should be work on "onchange" only==
-                
+
                 var self = this;
-                
+
                 if(self.value != ''){
                     $(this).closest('div').find('.fa-search').hide();
-                    
+
                 }else{
                     $(this).closest('div').find('.fa-search').show();
                 }
@@ -374,9 +374,9 @@
                 sorting_value = 'asc';
                 $('#sorting_value').val('default');
             } );
-            
+
             $( 'select', this ).on( 'change', function () {
-                
+
                 if(i == 4)
                 {
                     table
@@ -394,12 +394,12 @@
                 sorting_value = 'asc';
                 $('#sorting_value').val('default');
             } );
-            
+
         } );
-        
+
         //======1st click - asc, 2nd click - desc, 3rd click - default ==========
         $('#sorting').on('click', function() {
-            
+
             sorting_count = sorting_count + 1; console.log(sorting_count % 3 != 0);
             if(sorting_count % 3 != 0){
                 $('#sorting_value').val(sorting_value);
@@ -412,27 +412,27 @@
                     // .order([1, 'default'])
                     .draw();
             }
-            
+
             if(sorting_value == 'asc'){
                 sorting_value = 'desc';
             }else{
                 sorting_value = 'asc';
             }
-            
+
             if(sorting_count % 3 == 0){
                 sorting_value = 'asc';
             }
         });
-            
+
         $("#dept_code").select2({closeOnSelect:true,placeholder: 'Select Department'});
         $("#category_code").select2({closeOnSelect:true,placeholder: 'Select Category'});
         $("#items_status").select2();
-            
+
         var dynamic_data = JSON.parse('<?php echo json_encode($dynamic_data);?>');
         var data_array = [];
-        $.each(dynamic_data, function(key,value) {    
+        $.each(dynamic_data, function(key,value) {
              data_array.push({ "data": value });
-          });  
+          });
          data_array.unshift({data: "iitemid", render: function(data, type, row){
                                 return $("<input>").attr({
                                     type: 'checkbox',
@@ -476,18 +476,18 @@
                       "dataSrc": function ( json ) {
                             $("div#divLoading").removeClass('show');
                             return json.data;
-                        } 
+                        }
                     },
                     columns : data_array,
-                    
+
                 });
-            
+
         $("#item_listing_processing").remove();
         $("#item_listing_filter").hide();
         $("#item_listing_paginate").addClass("pull-right");
     });
 
-    
+
 </script>
 
 <!-- Modal -->
@@ -560,7 +560,7 @@
         <div class="alert alert-danger text-center">
           <p id="error_msg"><strong>Items Imported Successfully!</strong></p>
         </div>
-       
+
       </div>
     </div>
   </div>
@@ -575,13 +575,13 @@
 
     var import_form_id = $('form#form_item_import');
     var import_form_action = import_form_id.attr('action');
-    
+
     var import_formdata = false;
-        
+
     if (window.FormData){
         import_formdata = new FormData(import_form_id[0]);
     }
-    
+
     $.ajax({
             url : import_form_action,
             headers: {
@@ -592,24 +592,24 @@
             contentType : false,
             processData : false,
             type : 'POST',
-        }).done(function(response){ 
+        }).done(function(response){
         //   var  response = $.parseJSON(response); //decode the response array
           if( response.code == 1 ) {//success
-            
+
             $("div#divLoading").removeClass('show');
             $('#successModal').modal('show');
             $('#status_file')[0].click();
-            
+
             setTimeout(function(){
                 window.location.reload();
             }, 3000);
-            
+
           } else if( response.code == 0 ) {//error
             $("div#divLoading").removeClass('show');
             alert(response.error);
             return;
           }
-      
+
       });
   });
 
@@ -617,12 +617,12 @@
 $('#items_status').change(function() {
       var current_url = "<?php echo $data['current_url']; ?>";
       current_url = current_url.replace(/&amp;/g, '&');
-      
+
       var val = $(this).val();
           current_url = current_url+'/'+val+'/DESC';
           window.location.href = current_url;
           $("div#divLoading").addClass('show');
-        
+
     });
 
   $(document).on('keyup, keypress', '#automplete-product', function(event) {
@@ -654,7 +654,7 @@ $('#items_status').change(function() {
       return false;
 
     }
-    
+
   });
 
   $(function() { $('[name="automplete-search-box"]').focus(); });
@@ -663,15 +663,15 @@ $('#items_status').change(function() {
 
 <script type="text/javascript">
     // $(document).on('click', 'input[name=deleteItems]', function(){
-        
+
     //     var dataItemOrders = [];
-        
+
     //      $('.iitemid').filter(':checked').each(function(){
     //          dataItemOrders.push($(this).parents('td').data('order'));
     //      })
     //     // console.log(dataItemOrders);
     // })
- 
+
 </script>
 
 
@@ -680,10 +680,10 @@ $('#items_status').change(function() {
     event.preventDefault();
 
     if($("input[name='selected[]']:checked").length == 0){
-          bootbox.alert({ 
+          bootbox.alert({
               size: 'small',
-              title: "  ", 
-              message: 'Please Select Item to Delete!', 
+              title: "  ",
+              message: 'Please Select Item to Delete!',
               callback: function(){}
           });
           return false;
@@ -769,7 +769,7 @@ $('#items_status').change(function() {
                                                     '<td class="checks_content" style="color:grey"><span>{{ $stores->name }} [{{ $stores->id }}] (Item does not exist)</span></td>'+
                                                 '</tr>';
                                             $('#selectAllCheckbox').attr('disabled', true);
-                                      
+
                                 } else {
                                     var data = '<tr>'+
                                                     '<td>'+
@@ -789,7 +789,7 @@ $('#items_status').change(function() {
         <?php } else{ ?>
             var delete_url = "<?php echo $data['delete']; ?>";
             delete_url = delete_url.replace(/&amp;/g, '&');
-            
+
             $('#deleteItemModal').modal('hide');
             $("div#divLoading").addClass('show');
              var d = JSON.stringify({ itemid: dataItemOrders});
@@ -812,7 +812,7 @@ $('#items_status').change(function() {
                     if(data.error){
                         $('#error_msg').html('<strong>'+ data.error +'</strong>');
                         $('#errorModal').modal('show');
-                        
+
                     }
                     setTimeout(function(){
                      $('#successModal').modal('hide');
@@ -821,31 +821,31 @@ $('#items_status').change(function() {
                 },
                 error: function(xhr) { // if error occured
                 var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-                
+
                 var error_show = '';
-        
+
                 if(response_error.error){
                   error_show = response_error.error;
                 }else if(response_error.validation_error){
                   error_show = response_error.validation_error[0];
                 }
-        
+
                 $('#error_msg').html('<strong>'+ error_show +'</strong>');
                 $('#errorModal').modal('show');
                 return false;
               }
             });
-            
+
         <?php } ?>
     });
     $(document).on('click', '#calculateROP', function(event) {
         event.preventDefault();
         var ROP_url = "<?php echo $data['reorder_point_url']; ?>";
         ROP_url = ROP_url.replace(/&amp;/g, '&');
-        
+
         $('#calculateReorderPointModal').modal('hide');
         // $("div#divLoading").addClass('show');
-        
+
          $.ajax({
             url : ROP_url,
             headers: {
@@ -853,15 +853,15 @@ $('#items_status').change(function() {
             },
             type : 'POST',
             success: function(data) {
-                
+
             },
         });
     });
 </script>
 
 <script>
-        var stores = []; 
-        
+        var stores = [];
+
         $(document).on('change', '.stores',  function(){
             if ($('.stores:checked').length == $('.stores').length) {
                 $('#selectAllCheckbox').prop( "checked", true );
@@ -869,7 +869,7 @@ $('#items_status').change(function() {
                 $('#selectAllCheckbox').prop( "checked", false );
             }
         });
-        
+
         stores.push("{{ session()->get('sid') }}");
         $('#selectAllCheckbox').click(function(){
             if($('#selectAllCheckbox').is(":checked")){
@@ -878,22 +878,22 @@ $('#items_status').change(function() {
                 $( ".stores" ).prop("checked", false );
             }
         });
-        
+
         $("#save_btn").click(function(){
             $("div#divLoading").addClass('show');
-            $.each($("input[name='stores']:checked"), function(){            
+            $.each($("input[name='stores']:checked"), function(){
                 stores.push($(this).val());
             });
             $("#hidden_store_hq_val").val(stores.join(","));
             var hq_stores = stores.join(",");
             var delete_url = "<?php echo $data['delete']; ?>";
             delete_url = delete_url.replace(/&amp;/g, '&');
-            
+
             // dataItemOrders.push(hq_stores);
              var d = JSON.stringify({ itemid: dataItemOrders, stores_hq:stores});
             $('#deleteItemModal').modal('hide');
             $("div#divLoading").addClass('show');
-            
+
             $.ajax({
                 url : delete_url,
                 headers: {
@@ -913,7 +913,7 @@ $('#items_status').change(function() {
                     if(data.error){
                         $('#error_msg').html('<strong>'+ data.error +'</strong>');
                         $('#errorModal').modal('show');
-                        
+
                     }
                     setTimeout(function(){
                      $('#successModal').modal('hide');
@@ -922,26 +922,26 @@ $('#items_status').change(function() {
                   },
                   error: function(xhr) { // if error occured
                     var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-                    
+
                     var error_show = '';
-            
+
                     if(response_error.error){
                       error_show = response_error.error;
                     }else if(response_error.validation_error){
                       error_show = response_error.validation_error[0];
                     }
-            
+
                     $('#error_msg').html('<strong>'+ error_show +'</strong>');
                     $('#errorModal').modal('show');
                     return false;
                   }
             });
         });
-      
+
     </script>
 <div class="modal fade" id="deleteItemSuccessModal" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog modal-sm">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header" style="border-bottom:none;">
@@ -953,12 +953,12 @@ $('#items_status').change(function() {
           </div>
         </div>
       </div>
-      
+
     </div>
 </div>
 <!-- Delete items -->
 <script type="text/javascript">
-  
+
     $("#closeBtn").click(function(){
         $("div#divLoading").removeClass('show');
     })
