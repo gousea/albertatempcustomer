@@ -1075,7 +1075,7 @@ class PromotionController extends Controller
             $prom_id = $promotion->prom_id;
            //echo $prom_id." inserted successfully";
             
-       //echo $prom_id." inserted successfully";
+            //echo $prom_id." inserted successfully";
 
             if(!empty($input['added_promotion_items_text']) && strlen($prom_id)>0)
             {
@@ -1156,7 +1156,7 @@ class PromotionController extends Controller
         
 
         
-        if(count($input['added_promotion_items_text']) > 2000){
+        if(isset($input['added_promotion_items_text']) &&  count($input['added_promotion_items_text']) > 2000){
             $req->session()->flash('message','You can not add more than 2000 items!');
                 return redirect('/promotion');
         }
