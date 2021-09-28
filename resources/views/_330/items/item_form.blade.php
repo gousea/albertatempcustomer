@@ -3,6 +3,7 @@
 @section('title', 'Items')
 
 @section('main-content')
+
     <style>
         .page-footer {
             margin-top: 30px;
@@ -16,7 +17,7 @@
             padding-right: 50px;
             padding-left: 20px;
         }
- 
+
     </style>
 
     <div id="content">
@@ -157,7 +158,7 @@
                                             <div class="col-md-12 mx-auto">
 
                                                 <div class="form-group row ">
-                                                    
+
                                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6">
 
@@ -223,7 +224,7 @@
 
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
                                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6 required">
                                                             <label for="inputFirstname"
@@ -750,7 +751,7 @@
                                                                     $npack = 0;
                                                                 }
                                                             ?>
-                                                            
+
                                                             <?php if($data['vitemtype'] == 'Lot Matrix'){ ?>
                                                                 <input type="text" name="lot_npack" value="<?php echo $npack; ?>" placeholder="Unit Per Case" id="input-lotunitpercase" class="form-control adjustment-fields" />
                                                             <?php }else{ ?>
@@ -772,7 +773,7 @@
                                                                 if ($data['iqtyonhand'] != 0 && $data['iqtyonhand'] != '' && $data['npack'] != 0) {
                                                                     $quotient = (int) ($data['iqtyonhand'] / $data['npack']);
                                                                     $remainder = $data['iqtyonhand'] % $data['npack'];
-    
+
                                                                     $qty_on_hand = '' . $quotient . ' (' . $remainder . ')';
                                                                 } else {
                                                                     $qty_on_hand = 'Case: 0 [0]';
@@ -780,11 +781,11 @@
                                                                 if (isset($data['itemparentitems']->IQTYONHAND)) {
                                                                     $qty_on_hand = $data['itemparentitems']->IQTYONHAND % $data['npack'];
                                                                 }
-                                                                
+
                                                                 if($data['vitemtype'] == 'Lot Matrix'){
                                                                     $qty_on_hand = (int)$data['parrent_qoh'].'('.(int)$data['balance_pack_qoh'].')';
                                                                 }
-                                                            
+
                                                             ?>
                                                             <input type="text" value="<?php echo isset($data['QOH']) ? $qty_on_hand : ''; ?>"
                                                                 class="form-control" readonly>
@@ -1529,17 +1530,17 @@
                                 </div>
 
                             </div>
-                            
+
                             <input type="hidden" name="packname" id="vpacknameValue" value="<?php echo isset($data['packname']) ? $data['packname'] : ''; ?>">
                             <input type="hidden" name="pack" id="vpackValue" value="<?php echo isset($data['pack']) ? $data['pack'] : ''; ?>">
                             <input type="hidden" name="desc" id="vdescValue" value="<?php echo isset($data['desc']) ? $data['desc'] : ''; ?>">
                             <input type="hidden" name="packprice" id="npackpriceValue" value="<?php echo isset($data['packprice']) ? $data['packprice'] : ''; ?>">
                             <input type="hidden" name="sequence" id="isequenceValue" value="<?php echo isset($data['sequence']) ? $data['sequence'] : ''; ?>">
                             <input type="hidden" name="lot_child_limit" id="lot_child_limit" value="<?php echo isset($data['lot_child_limit']) ? $data['lot_child_limit'] : ''; ?>">
-                            
+
                         </form>
                         <br>
-                        
+
                         <div class="row" id="save_btn_row">
                             <div class="col-md-12 text-center">
                                 <input type="button" title="Save"
@@ -1554,7 +1555,7 @@
                                 <?php } ?>
                             </div>
                         </div>
-                        
+
                         <div class="tab-pane" id="alias_code_tab">
                             <form action="<?php echo $data['add_alias_code']; ?>" method="post" enctype="multipart/form-data"
                                 id="form-item-alias-code" class="form-horizontal">
@@ -1656,10 +1657,10 @@
                                 </div>
                             </form>
                         </div>
-                        
+
                         <div class="tab-pane" id="lot_matrix_tab">
-                            
-                            <?php if(isset($data['itempacks']) && count((array)$data['itempacks']) > 0){ 
+
+                            <?php if(isset($data['itempacks']) && count((array)$data['itempacks']) > 0){
                                 $total_parent_unit = (int)$data['iqtyonhand'];
                             ?>
                                 <div class="row">
@@ -1672,15 +1673,15 @@
                                   </div>
                                 </div>
                                 <br><br>
-                            
+
                                 <form action="<?php echo $data['lot_matrix_editlist']; ?>" method="post" enctype="multipart/form-data" id="form-item-lot-matrix-list1" class="form-horizontal">
                                     @csrf
-                                    
+
                                     <?php if(session()->get('hq_sid') == 1) { ?>
                                         <input type="hidden" id="store_hq_for_edit" name="store_hq_for_edit" value="" >
                                     <?php } ?>
                                   <div class="row">
-                                    
+
                                     <div class="col-md-12">
                                         <input type="text" class="adjustment-fields" value="<?php echo 'Total QOH->'.((int)$data['iqtyonhand']) ; ?>" readonly style="width:130px;">
                                       <table class="table table-hover promotionview" style="width: 100%;">
@@ -1700,19 +1701,19 @@
                                           </tr>
                                         </thead>
                                         <tbody>
-                                            
-                                            
+
+
                                               <?php foreach($data['itempacks'] as $k => $itempack) { ?>
                                                 <tr>
                                                   <input type="hidden" name="itempacks[<?php echo $k; ?>][iitemid]" value="<?php echo $itempack['iitemid'] ?>">
                                                   <input type="hidden" name="itempacks[<?php echo $k; ?>][idetid]" value="<?php echo $itempack['idetid'] ?>">
-                                                    
+
                                                     <?php if($itempack['iparentid'] == 1){ ?>
                                                         <td><input type="checkbox" name="selected_lot_matrix[]" value="<?php echo $itempack['idetid']; ?>" class="selected_lot_matrix_checkbox" /></td>
                                                     <?php } else { ?>
                                                         <td><input type="checkbox" class="selected_lot_matrix_checkbox" name="selected_lot_matrix[]" value="<?php echo $itempack['idetid']; ?>" /></td>
                                                     <?php } ?>
-                                                    
+
                                                   <td>
                                                     <input type="text" class="editable adjustment-fields input_vpackname" name="itempacks[<?php echo $k; ?>][vpackname]" value="<?php echo $itempack['vpackname'];?>" />
                                                   </td>
@@ -1726,7 +1727,7 @@
                                                   <td class="text-left"><?php echo number_format($data['nunitcost'], 2);?></td>
                                                   <td class="text-left"><?php echo $itempack['ipack'];?></td>
                                                   <td class="text-left">
-                                                    
+
                                                     <input type="text" class="editable adjustment-fields input_npackcost" id="input_npackcost" name="itempacks[<?php echo $k; ?>][npackcost]" value="<?php echo number_format($itempack['npackcost'], 2);?>" />
                                                     <input type="hidden" class="input_npackcost" value="<?php echo $itempack['npackcost'];?>">
                                                   </td>
@@ -1738,12 +1739,12 @@
                                                     <span class="npackmargins"><?php echo $itempack['npackmargin'];?></span>
                                                     <input class="input_npackmargins" type="hidden" name="itempacks[<?php echo $k; ?>][npackmargin]" value="<?php echo $itempack['npackmargin']; ?>" />
                                                   </td>
-                                                    
+
                                                     <td><?php echo $itempack['pack_qoh'];?></td>
-                                                  
+
                                                 </tr>
                                               <?php } ?>
-                                            
+
                                         </tbody>
                                       </table>
                                     </div>
@@ -1757,9 +1758,9 @@
                                 </form>
                             <?php }else{ ?>
                                 <div class="row">
-                                    
+
                                     <div class="col-md-12">
-                                        
+
                                       <table class="table table-hover promotionview" style="width: 100%;">
                                         <thead>
                                           <tr class="header-color">
@@ -1770,13 +1771,13 @@
                                             <th class="text-left">Pack Qty</th>
                                             <th class="text-left">Price</th>
                                             <th class="text-left">Sequence</th>
-                                            
+
                                           </tr>
                                         </thead>
                                         <tbody>
-                                            
+
                                             <!--<tr>-->
-                                                  
+
                                             <!--    <td>-->
                                             <!--        <input type="text" class="editable adjustment-fields input_vpackname" value="" name="vpackname[]" value="" readonly />-->
                                             <!--    </td>-->
@@ -1796,11 +1797,11 @@
                                             <!--    <td class="text-left">-->
                                             <!--        <input type="text" class="editable input_isequence adjustment-fields" id='input_isequence' name="isequence[]" value="1" style="text-align: right;" readonly />-->
                                             <!--    </td>-->
-                                                
+
                                             <!--</tr>-->
-                                            
+
                                             <tr>
-                                                  
+
                                                 <td>
                                                     <input type="text" class="editable adjustment-fields input_vpackname" value="" name="vpackname" value="<?php echo isset($data['packname']) ? $data['packname'] : ''; ?>" placeholder="Pack Name" />
                                                 </td>
@@ -1820,13 +1821,13 @@
                                                 <td class="text-left">
                                                     <input type="text" class="editable input_isequence adjustment-fields" id='input_isequence' name="isequence" value="Sequence" placeholder="" />
                                                 </td>
-                                                
+
                                             </tr>
-                                            
+
                                         </tbody>
                                       </table>
                                       <button class="btn btn-danger buttonred basic-button-small" id="itempack_done">DONE</button>
-                                      
+
                                     </div>
                                   </div>
                             <?php } ?>
@@ -4308,39 +4309,39 @@ $adjvaluereset = 0;
             let vdescValue = $('input[name="vdesc"]').val();
             let npackpriceValue = $('input[name="npackprice"]').val();
             let isequenceValue = $('input[name="isequence"]').val();
-            
+
             $('#vpacknameValue').val(vpacknameValue);
             $('#vpackValue').val(vpackValue);
             $('#vdescValue').val(vdescValue);
             $('#npackpriceValue').val(npackpriceValue);
             $('#isequenceValue').val(isequenceValue);
-            
+
             $('#lot_matrix_tab_li').prop('checked', false);
             $('#lot_matrix_tab').hide();
             $('#item_tab_li').prop('checked', true);
             $('#item_tab').show();
             $('#save_btn_row').show();
         });
-    
+
         $(document).on('change, keyup', 'input[name="vpack"], input[name="npackprice"], input[name="isequence"]', function(){
-            
+
             let vpacknameValue = $('input[name="vpackname"]').val();
             let vpackValue = $('input[name="vpack"]').val();
             let vdescValue = $('input[name="vdesc"]').val();
             let npackpriceValue = $('input[name="npackprice"]').val();
             let isequenceValue = $('input[name="isequence"]').val();
-            
+
             $('#vpacknameValue').val(vpacknameValue);
             $('#vpackValue').val(vpackValue);
             $('#vdescValue').val(vdescValue);
             $('#npackpriceValue').val(npackpriceValue);
             $('#isequenceValue').val(isequenceValue);
-            
+
             $('#input-Selling_Price').val(npackpriceValue);
         });
-        
+
         $(document).on('change', 'select[name="vitemtype"]', function(event) {
-          event.preventDefault(); 
+          event.preventDefault();
           if($(this).val() == 'Lot Matrix'){
               $('#input-sellingunit').attr('readonly', 'readonly');
               $('.notLottery').show();
@@ -4349,20 +4350,20 @@ $adjvaluereset = 0;
                 $('input[name="vpackname"]').val(input_itemname);
                 $('input[name="vdesc"]').val(input_itemname);
                 $('input[name="isequence"]').val(0);
-                
+
                 $('#input-sellingunit').val('According to Lot Matrix');
-                
+
                 $('#lot_matrix_tab_li').prop('checked', true);
                 $('#lot_matrix_tab').show();
                 $('#item_tab_li').prop('checked', false);
                 $('#item_tab').hide();
                 $('#save_btn_row').hide();
-                
+
           }else if($(this).val() == 'Instant'){
               // console.log($(this).val());
               $('.notLottery').hide();
               $('.Lottery').show();
-              
+
               let sellingunit = $('#input-unitpercase').val();
               $('#input-sellingunit').val(sellingunit);
           }else{
@@ -4446,7 +4447,7 @@ $adjvaluereset = 0;
             var level3_gross_profit;
             var level4_gross_profit;
             var sellingunit = $('#input-sellingunit').val();
-            
+
             var itemtype = $('select[name="vitemtype"]').val();
             if(itemtype == 'Lot Matrix'){
                 sellingunit = 1;
@@ -4516,7 +4517,7 @@ $adjvaluereset = 0;
             var level4_gross_profit;
 
             var sellingunit = $('#input-sellingunit').val();
-            
+
             var itemtype = $('select[name="vitemtype"]').val();
             if(itemtype == 'Lot Matrix'){
                 sellingunit = 1;
@@ -5408,7 +5409,7 @@ $adjvaluereset = 0;
                     contentType: "application/json",
                     dataType: 'json',
                     success: function(data) {
-    
+
                         $('#success_alias').html('<strong>' + data.success + '</strong>');
                         $('#successAliasModal').modal('show');
                         $.cookie("tab_selected", 'lot_matrix_tab');
@@ -5416,19 +5417,19 @@ $adjvaluereset = 0;
                             window.location.reload();
                             $("div#divLoading").addClass('show');
                         }, 3000);
-                        
+
                     },
                     error: function(xhr) {
                         var response_error = $.parseJSON(xhr.responseText);
-                        
+
                         var error_show = '';
-                        
+
                         if (response_error.error) {
                             error_show = response_error.error;
                         } else if (response_error.validation_error) {
                             error_show = response_error.validation_error[0];
                         }
-                        
+
                         $('#error_alias').html('<strong>' + error_show + '</strong>');
                         $('#errorAliasModal').modal('show');
                         return false;
@@ -5749,7 +5750,7 @@ $adjvaluereset = 0;
             var level4_gross_profit;
 
             var sellingunit = $('#input-sellingunit').val();
-            
+
             var itemtype = $('select[name="vitemtype"]').val();
             if(itemtype == 'Lot Matrix'){
                 sellingunit = 1;
@@ -8671,7 +8672,7 @@ $adjvaluereset = 0;
                 var level4_selling_price = $('#input-level4price').val();
 
                 var sellingunit = $('#input-sellingunit').val();
-                
+
                 var itemtype = $('select[name="vitemtype"]').val();
                 if(itemtype == 'Lot Matrix'){
                     sellingunit = 1;
@@ -9025,7 +9026,7 @@ $adjvaluereset = 0;
             var level4_selling_price = $('#input-level4price').val();
 
             var sellingunit = $('#input-sellingunit').val();
-            
+
             var itemtype = $('select[name="vitemtype"]').val();
             if(itemtype == 'Lot Matrix'){
                 sellingunit = 1;
@@ -9083,7 +9084,7 @@ $adjvaluereset = 0;
             var level4_selling_price = $('#tab_input_level4price').val();
 
             var sellingunit = $('#input-sellingunit').val();
-            
+
             var itemtype = $('select[name="vitemtype"]').val();
             if(itemtype == 'Lot Matrix'){
                 sellingunit = 1;

@@ -78,6 +78,11 @@ class QuickInventoryUpdateController extends Controller
             return view('quickInventoryUpdate.quick_inventory_update');
         }*/
 
+        $updatedDate = $input['updatedDate'] ?? '';
+        $updatedDate = date("Y-m-d H:i:s", strtotime($updatedDate));
+        dd($updatedDate);
+        $newInvoice = $input['newInvoice'] ?? now();
+        $newVendor = $input['newVendor'] ?? 'General Vendor';
         foreach ($input['vbarcode'] as $key => $datum){
             $datum = trim($datum);
             Log::info('iitemid=> '. $key.' updated with new QTY =>'.$datum);
