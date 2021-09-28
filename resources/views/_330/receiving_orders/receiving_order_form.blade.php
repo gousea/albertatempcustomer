@@ -1108,570 +1108,600 @@
 </script>
 
 <script type="text/javascript">
-  $(document).on('keyup', '.nordqty_class', function(event) {
-    event.preventDefault();
+    $(document).on('keyup', '.nordqty_class', function(event) {
+      event.preventDefault();
+      
+      var nordqty = $(this).val();
+      var npackqty = $(this).closest('tr').find('.npackqty_class').val();
+      
+      var nordextprice = $(this).closest('tr').find('.nordextprice_class').val();
+      var nunitcost = $(this).closest('tr').find('.nunitcost_class').val();
+      var po_order_by = $(this).closest('tr').find('.po_order_by_class').val();
+      var last_costprice = $(this).closest('tr').find('.nlastunitprice_class').val();
+      var nunitprice = $(this).closest('tr').find('.nnewunitprice_class').val();
+      var new_costprice = $(this).closest('tr').find('.newcostprice_class').val();
+      var nsellunit = $(this).closest('tr').find('.nsellunit_class').val();
+      let old_unitcost = $(this).closest('tr').find('.oldunitcost_class').val();
+      
+      let vitemtype = $(this).closest('tr').find('.vitemtype_class').val();
+      let lotmatrix_npack = $(this).closest('tr').find('.lotmatrix_npack').val();
+      
+      let row = $(this).closest('tr').index() + 1;
+      
+      if(npackqty != ''){
+        npackqty = npackqty;
+      }else{
+      //   npackqty = 0;
+          npackqty = 1
+      }
+      
+      // $('.itotalunit_class').text(nordqty*npackqty);
+      
+      var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
+      itotalunit = itotalunit.trim();
+      
+      if(itotalunit != '' || itotalunit != 'NAN'){
+        itotalunit = itotalunit;
+      }else{
+        itotalunit = 0;
+      }
 
-    var nordqty = $(this).val();
-    var npackqty = $(this).closest('tr').find('.npackqty_class').val();
+      if(nordextprice != ''){
+        nordextprice = nordextprice;
+      }else{
+        nordextprice = 0.00;
+      }
 
-    var nordextprice = $(this).closest('tr').find('.nordextprice_class').val();
-    var nunitcost = $(this).closest('tr').find('.nunitcost_class').val();
-    var po_order_by = $(this).closest('tr').find('.po_order_by_class').val();
-    var last_costprice = $(this).closest('tr').find('.nlastunitprice_class').val();
-    var nunitprice = $(this).closest('tr').find('.nnewunitprice_class').val();
-    var new_costprice = $(this).closest('tr').find('.newcostprice_class').val();
-    var nsellunit = $(this).closest('tr').find('.nsellunit_class').val();
-    let old_unitcost = $(this).closest('tr').find('.oldunitcost_class').val();
+      if(nunitcost != ''){
+        nunitcost = nunitcost;
+      }else{
+        nunitcost = 0.0000;
+      }
+      
+      var closest_itotalunit = 0;
+      var closest_nunitcost = 0;
+      if(vitemtype == 'Lot Matrix'){
+          
+          if(po_order_by == 'case'){
+              closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+          } else {
+              closest_itotalunit = nordqty*lotmatrix_npack;
+          }
+          
+          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
+      }else{
+          if(po_order_by == 'case'){
+              closest_itotalunit = nordqty * npackqty;
+          } else {
+              closest_itotalunit = nordqty;
+          }
+          closest_nunitcost = nordextprice / closest_itotalunit;
+      }
+      
+      if(isNaN(closest_nunitcost)) {
+        closest_nunitcost = 0.0000;
+      }else{
+        closest_nunitcost = closest_nunitcost.toFixed(2);
+      }
 
-    let vitemtype = $(this).closest('tr').find('.vitemtype_class').val();
-    var lotmatrix_npack = $(this).closest('tr').find('.lotmatrix_npack').val();
+      var closest_nordextprice = closest_itotalunit * closest_nunitcost;
 
-    let row = $(this).closest('tr').index() + 1;
+      if(isNaN(closest_nordextprice)) {
+        closest_nordextprice = 0.00;
+      }else{
+        closest_nordextprice = closest_nordextprice.toFixed(2);
+      }
+      
+      if(isFinite(closest_nunitcost)) {
+          closest_nunitcost = closest_nunitcost;
+      }else{
+        closest_nunitcost = 0.0000;
+      }
+      
+      
+      // suggested_cost = (new_costprice/nsellunit) * closest_itotalunit;
+      
+      
+      // if(isNaN(suggested_cost)) {
+      //   suggested_cost = 0.00;
+      // }else{
+      //   suggested_cost = parseFloat(suggested_cost).toFixed(2);
+      // }
+      
+      let profit = nunitprice - closest_nunitcost;
+      let gross_profit = (profit/nunitprice) * 100;
+      
+      if(isNaN(gross_profit)) {
+        gross_profit = 0.00;
+      }else{
+        gross_profit = gross_profit.toFixed(2);
+      }
+      
+      if(isFinite(gross_profit)) {
+        gross_profit = gross_profit;
+      }else{
+        gross_profit = 0.00;
+      }
+      
+      $(this).closest('tr').find('.gp_class').val(gross_profit);
+      
+      $(this).closest('tr').find('.itotalunit_span_class').html(closest_itotalunit);
+      $(this).closest('tr').find('.itotalunit_class').val(closest_itotalunit);
+      $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
+      
+      if(parseFloat(nunitcost) == 0 || parseFloat(nunitprice) <  parseFloat(nunitcost)){
+          
+          $(this).closest('tr').children('td').css('color', '#0000cc');
+          $(this).closest('tr').children('td.noInput').css('color', '#0000cc');
+      } else {
+          
+          $(this).closest('tr').children('td').css('color', 'black');
+          $(this).closest('tr').children('td.noInput').css('color', 'black');
+      }
+      nettotal();
+      
+      total_suggested_amount();
+      total_order_unit();
+    });
 
-    if(npackqty != ''){
-      npackqty = npackqty;
-    }else{
-    //   npackqty = 0;
-        npackqty = 1
-    }
 
-    // $('.itotalunit_class').text(nordqty*npackqty);
 
-    var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
-    itotalunit = itotalunit.trim();
+    $(document).on('keyup', '.npackqty_class', function(event) {
+      event.preventDefault();
+      
+      var npackqty = $(this).val();
+      var nordqty = $(this).closest('tr').find('.nordqty_class').val();
+      var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
+      var nordextprice = $(this).closest('tr').find('.nordextprice_class').val();
+      var nunitcost = $(this).closest('tr').find('.nunitcost_class').val();
+      var nunitprice = $(this).closest('tr').find('.nnewunitprice_class').val();
+      let old_unitcost = $(this).closest('tr').find('.oldunitcost_class').val();
+      let row = $(this).closest('tr').index() + 1;
+      var po_order_by = $(this).closest('tr').find('.po_order_by_class').val();
+      
+      let vitemtype = $(this).closest('tr').find('.vitemtype_class').val();
+      let lotmatrix_npack = $(this).closest('tr').find('.lotmatrix_npack').val();
+      
+      if(nordqty != ''){
+        nordqty = nordqty;
+      }else{
+        nordqty = 0;
+      }
 
-    if(itotalunit != '' || itotalunit != 'NAN'){
-      itotalunit = itotalunit;
-    }else{
-      itotalunit = 0;
-    }
+      if(itotalunit != ''){
+        itotalunit = itotalunit;
+      }else{
+        itotalunit = 0;
+      }
 
-    if(nordextprice != ''){
-      nordextprice = nordextprice;
-    }else{
-      nordextprice = 0.00;
-    }
+      if(nordextprice != ''){
+        nordextprice = nordextprice;
+      }else{
+        nordextprice = 0.00;
+      }
 
-    if(nunitcost != ''){
-      nunitcost = nunitcost;
-    }else{
-      nunitcost = 0.0000;
-    }
+      if(nunitcost != ''){
+        nunitcost = nunitcost;
+      }else{
+        nunitcost = 0.0000;
+      }
 
-    if(vitemtype == 'Lot Matrix'){
+      var closest_itotalunit = 0;
+      var closest_nunitcost = 0;
+      if(vitemtype == 'Lot Matrix'){
+          
+          if(po_order_by == 'case'){
+              closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+          } else {
+              closest_itotalunit = nordqty*lotmatrix_npack;
+          }
+          
+          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
+      }else{
+          if(po_order_by == 'case'){
+              closest_itotalunit = nordqty * npackqty;
+          } else {
+              closest_itotalunit = nordqty;
+          }
+          closest_nunitcost = nordextprice / closest_itotalunit;
+      }
+      
+      if(isNaN(closest_nunitcost)) {
+        closest_nunitcost = 0.0000;
+      }else{
+        closest_nunitcost = closest_nunitcost.toFixed(2);
+      }
 
-        if(po_order_by == 'case'){
-            var closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+      var closest_nordextprice = closest_itotalunit * closest_nunitcost;
+
+      if(isNaN(closest_nordextprice)) {
+        closest_nordextprice = 0.00;
+      }else{
+        closest_nordextprice = closest_nordextprice.toFixed(2);
+      }
+      
+      if(isFinite(closest_nunitcost)) {
+          closest_nunitcost = closest_nunitcost;
+      }else{
+        closest_nunitcost = 0.0000;
+      }
+
+      $(this).closest('tr').find('.itotalunit_span_class').html(closest_itotalunit);
+      $(this).closest('tr').find('.itotalunit_class').val(closest_itotalunit);
+      $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
+      $(this).closest('tr').find('.nordextprice_class').val(closest_nordextprice);
+      
+      if(parseFloat(nunitcost) == 0 || parseFloat(nunitprice) <  parseFloat(nunitcost)){
+          
+          $(this).closest('tr').children('td').css('color', '#0000cc');
+          $(this).closest('tr').children('td.noInput').css('color', '#0000cc');
+      } else {
+          
+          $(this).closest('tr').children('td').css('color', 'black');
+          $(this).closest('tr').children('td.noInput').css('color', 'black');
+      }
+      
+
+    });
+  
+
+
+    $(document).on('keyup', '.nordextprice_class', function(event) {
+      event.preventDefault();
+      
+      var nordextprice = $(this).val();
+      var npackqty = $(this).closest('tr').find('.npackqty_class').val();
+      var nordqty = $(this).closest('tr').find('.nordqty_class').val();
+      var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
+      var nunitcost = $(this).closest('tr').find('.nunitcost_class').val();
+      
+      var nunitprice = $(this).closest('tr').find('.nnewunitprice_class').val();
+      
+      var po_order_by = $(this).closest('tr').find('.po_order_by_class').val();
+      let old_unitcost = $(this).closest('tr').find('.oldunitcost_class').val();
+      let row = $(this).closest('tr').index() + 1; 
+      
+      let vitemtype = $(this).closest('tr').find('.vitemtype_class').val();
+      let lotmatrix_npack = $(this).closest('tr').find('.lotmatrix_npack').val();
+
+      if(npackqty != ''){
+        npackqty = npackqty;
+      }else{
+        npackqty = 0;
+      }
+
+      if(nordqty != ''){
+        nordqty = nordqty;
+      }else{
+        nordqty = 0;
+      }
+
+      if(itotalunit != ''){
+        itotalunit = itotalunit;
+      }else{
+        itotalunit = 0;
+      }
+
+      if(nunitcost != ''){
+        nunitcost = nunitcost;
+      }else{
+        nunitcost = 0.0000;
+      }
+
+      if(nordextprice != ''){
+        nordextprice = nordextprice;
+      }else{
+        nordextprice = 0.0000;
+      }
+
+      var closest_itotalunit = 0;
+      var closest_nunitcost = 0;
+      if(vitemtype == 'Lot Matrix'){
+          
+          if(po_order_by == 'case'){
+              closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+          } else {
+              closest_itotalunit = nordqty*lotmatrix_npack;
+          }
+          
+          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
+      }else{
+          if(po_order_by == 'case'){
+              closest_itotalunit = nordqty * npackqty;
+          } else {
+              closest_itotalunit = nordqty;
+          }
+          closest_nunitcost = nordextprice / closest_itotalunit;
+      }
+      
+      if(isNaN(closest_nunitcost)) {
+        closest_nunitcost = 0.0000;
+      }else{
+        closest_nunitcost = closest_nunitcost.toFixed(2);
+      }
+      
+      if(isFinite(closest_nunitcost)) {
+          closest_nunitcost = closest_nunitcost;
+      }else{
+        closest_nunitcost = 0.0000;
+      }
+      
+      // suggested_cost = parseFloat(suggested_cost).toFixed(2);
+      
+      let profit = nunitprice - closest_nunitcost;
+      let gross_profit = (profit/nunitprice) * 100;
+      
+      if(isNaN(gross_profit)) {
+        gross_profit = 0.00;
+      }else{
+        gross_profit = gross_profit.toFixed(2);
+      }
+      
+      if(isFinite(gross_profit)) {
+        gross_profit = gross_profit;
+      }else{
+        gross_profit = 0.00;
+      }
+      
+      $(this).closest('tr').find('.gp_class').val(gross_profit);
+
+      if(parseFloat(nunitcost) == 0 || parseFloat(nunitprice) <  parseFloat(nunitcost)){
+          // $(this).closest('tr').children('td').css('background-color', '#ff9999');
+          $(this).closest('tr').children('td').css('color', '#0000cc');
+          $(this).closest('tr').children('td.noInput').css('color', '#0000cc');
+      } else {
+          
+          $(this).closest('tr').children('td').css('color', 'black');
+          $(this).closest('tr').children('td.noInput').css('color', 'black');
+      }
+      
+      $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
+      
+      nettotal();
+      total_amount();
+
+    });
+
+
+
+    $(document).on('keyup', '.nunitcost_class', function(event) {
+        event.preventDefault();
+        
+        var nunitcost = $(this).val();
+        var nordextprice = $(this).closest('tr').find('.nordextprice_class').val();
+        var npackqty = $(this).closest('tr').find('.npackqty_class').val();
+        var nordqty = $(this).closest('tr').find('.nordqty_class').val();
+        var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
+        
+        var nunitprice = $(this).closest('tr').find('.nnewunitprice_class').val();
+        // var suggested_cost = $(this).closest('tr').find('.sggtdqty_class').val();
+        
+        var order_by = $(this).closest('tr').find('.po_order_by_class').val();
+        let old_unitcost = $(this).closest('tr').find('.oldunitcost_class').val();
+        let row = $(this).closest('tr').index() + 1;  
+    
+        /*if(parseFloat(suggested_cost) < parseFloat(nordextprice)){
+            $(this).closest('tr').children('td').css('background-color', '#CC0000');
+            $(this).closest('tr').children('td.noInput').css('color', '#FFFFFF');
         } else {
-            var closest_itotalunit = nordqty*lotmatrix_npack;
+            $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
+            $(this).closest('tr').children('td.noInput').css('color', '#666666');
+        }*/
+    
+        if(npackqty != ''){
+          npackqty = npackqty;
+        }else{
+          npackqty = 0;
         }
-    }else{
-        if(po_order_by == 'case'){
+    
+        if(nordqty != ''){
+          nordqty = nordqty;
+        }else{
+          nordqty = 0;
+        }
+    
+        if(itotalunit != ''){
+          itotalunit = itotalunit;
+        }else{
+          itotalunit = 0;
+        }
+    
+        if(nunitcost != ''){
+          nunitcost = nunitcost;
+        }else{
+          nunitcost = 0.0000;
+        }
+    
+        if(nordextprice != ''){
+          nordextprice = nordextprice;
+        }else{
+          nordextprice = 0.00;
+        }
+        
+        if(order_by == 'case'){
             var closest_itotalunit = nordqty * npackqty;
         } else {
             var closest_itotalunit = nordqty;
         }
-    }
-
-    var closest_nunitcost = nordextprice / closest_itotalunit;
-
-    if(isNaN(closest_nunitcost)) {
-      closest_nunitcost = 0.0000;
-    }else{
-      closest_nunitcost = closest_nunitcost.toFixed(2);
-    }
-
-    var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-
-    if(isNaN(closest_nordextprice)) {
-      closest_nordextprice = 0.00;
-    }else{
-      closest_nordextprice = closest_nordextprice.toFixed(2);
-    }
-
-    if(isFinite(closest_nunitcost)) {
-        closest_nunitcost = closest_nunitcost;
-    }else{
-      closest_nunitcost = 0.0000;
-    }
-
-
-    // suggested_cost = (new_costprice/nsellunit) * closest_itotalunit;
-
-
-    // if(isNaN(suggested_cost)) {
-    //   suggested_cost = 0.00;
-    // }else{
-    //   suggested_cost = parseFloat(suggested_cost).toFixed(2);
-    // }
-
-    let profit = nunitprice - closest_nunitcost;
-    let gross_profit = (profit/nunitprice) * 100;
-
-    if(isNaN(gross_profit)) {
-      gross_profit = 0.00;
-    }else{
-      gross_profit = gross_profit.toFixed(2);
-    }
-
-    if(isFinite(gross_profit)) {
-      gross_profit = gross_profit;
-    }else{
-      gross_profit = 0.00;
-    }
-
-    $(this).closest('tr').find('.gp_class').val(gross_profit);
-
-    $(this).closest('tr').find('.itotalunit_span_class').html(closest_itotalunit);
-    $(this).closest('tr').find('.itotalunit_class').val(closest_itotalunit);
-    $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
-
-    if(parseFloat(nunitcost) == 0 || parseFloat(nunitprice) <  parseFloat(nunitcost)){
-
-        $(this).closest('tr').children('td').css('color', '#0000cc');
-        $(this).closest('tr').children('td.noInput').css('color', '#0000cc');
-    } else {
-
-        $(this).closest('tr').children('td').css('color', 'black');
-        $(this).closest('tr').children('td.noInput').css('color', 'black');
-    }
-    nettotal();
-
-    total_suggested_amount();
-    total_order_unit();
-  });
-
-
-
-  $(document).on('keyup', '.npackqty_class', function(event) {
-    event.preventDefault();
-
-    var npackqty = $(this).val();
-    var nordqty = $(this).closest('tr').find('.nordqty_class').val();
-    var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
-    var nordextprice = $(this).closest('tr').find('.nordextprice_class').val();
-    var nunitcost = $(this).closest('tr').find('.nunitcost_class').val();
-    var nunitprice = $(this).closest('tr').find('.nnewunitprice_class').val();
-    let old_unitcost = $(this).closest('tr').find('.oldunitcost_class').val();
-    let row = $(this).closest('tr').index() + 1;
-
-    if(nordqty != ''){
-      nordqty = nordqty;
-    }else{
-      nordqty = 0;
-    }
-
-    if(itotalunit != ''){
-      itotalunit = itotalunit;
-    }else{
-      itotalunit = 0;
-    }
-
-    if(nordextprice != ''){
-      nordextprice = nordextprice;
-    }else{
-      nordextprice = 0.00;
-    }
-
-    if(nunitcost != ''){
-      nunitcost = nunitcost;
-    }else{
-      nunitcost = 0.0000;
-    }
-
-    var closest_itotalunit = nordqty * npackqty;
-    var closest_nunitcost = nordextprice / closest_itotalunit;
-
-    if(isNaN(closest_nunitcost)) {
-      closest_nunitcost = 0.0000;
-    }else{
-      closest_nunitcost = closest_nunitcost.toFixed(2);
-    }
-
-    var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-
-    if(isNaN(closest_nordextprice)) {
-      closest_nordextprice = 0.00;
-    }else{
-      closest_nordextprice = closest_nordextprice.toFixed(2);
-    }
-
-    if(isFinite(closest_nunitcost)) {
-        closest_nunitcost = closest_nunitcost;
-    }else{
-      closest_nunitcost = 0.0000;
-    }
-
-    $(this).closest('tr').find('.itotalunit_span_class').html(closest_itotalunit);
-    $(this).closest('tr').find('.itotalunit_class').val(closest_itotalunit);
-    $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
-    $(this).closest('tr').find('.nordextprice_class').val(closest_nordextprice);
-
-    if(parseFloat(nunitcost) == 0 || parseFloat(nunitprice) <  parseFloat(nunitcost)){
-
-        $(this).closest('tr').children('td').css('color', '#0000cc');
-        $(this).closest('tr').children('td.noInput').css('color', '#0000cc');
-    } else {
-
-        $(this).closest('tr').children('td').css('color', 'black');
-        $(this).closest('tr').children('td.noInput').css('color', 'black');
-    }
-
-
-  });
-
-
-
-  $(document).on('keyup', '.nordextprice_class', function(event) {
-    event.preventDefault();
-
-
-    var nordextprice = $(this).val();
-    var npackqty = $(this).closest('tr').find('.npackqty_class').val();
-    var nordqty = $(this).closest('tr').find('.nordqty_class').val();
-    var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
-    var nunitcost = $(this).closest('tr').find('.nunitcost_class').val();
-
-    var nunitprice = $(this).closest('tr').find('.nnewunitprice_class').val();
-
-    var order_by = $(this).closest('tr').find('.po_order_by_class').val();
-    let old_unitcost = $(this).closest('tr').find('.oldunitcost_class').val();
-    let row = $(this).closest('tr').index() + 1;
-
-    if(npackqty != ''){
-      npackqty = npackqty;
-    }else{
-      npackqty = 0;
-    }
-
-    if(nordqty != ''){
-      nordqty = nordqty;
-    }else{
-      nordqty = 0;
-    }
-
-    if(itotalunit != ''){
-      itotalunit = itotalunit;
-    }else{
-      itotalunit = 0;
-    }
-
-    if(nunitcost != ''){
-      nunitcost = nunitcost;
-    }else{
-      nunitcost = 0.0000;
-    }
-
-    if(nordextprice != ''){
-      nordextprice = nordextprice;
-    }else{
-      nordextprice = 0.0000;
-    }
-
-    if(order_by == 'case'){
-        var closest_itotalunit = nordqty * npackqty;
-    } else {
-        var closest_itotalunit = nordqty;
-    }
-
-
-    var closest_nunitcost = nordextprice / closest_itotalunit;
-
-    if(isNaN(closest_nunitcost)) {
-      closest_nunitcost = 0.0000;
-    }else{
-      closest_nunitcost = closest_nunitcost.toFixed(2);
-    }
-
-    if(isFinite(closest_nunitcost)) {
-        closest_nunitcost = closest_nunitcost;
-    }else{
-      closest_nunitcost = 0.0000;
-    }
-
-    // suggested_cost = parseFloat(suggested_cost).toFixed(2);
-
-    let profit = nunitprice - closest_nunitcost;
-    let gross_profit = (profit/nunitprice) * 100;
-
-    if(isNaN(gross_profit)) {
-      gross_profit = 0.00;
-    }else{
-      gross_profit = gross_profit.toFixed(2);
-    }
-
-    if(isFinite(gross_profit)) {
-      gross_profit = gross_profit;
-    }else{
-      gross_profit = 0.00;
-    }
-
-    $(this).closest('tr').find('.gp_class').val(gross_profit);
-
-    if(parseFloat(nunitcost) == 0 || parseFloat(nunitprice) <  parseFloat(nunitcost)){
-        // $(this).closest('tr').children('td').css('background-color', '#ff9999');
-        $(this).closest('tr').children('td').css('color', '#0000cc');
-        $(this).closest('tr').children('td.noInput').css('color', '#0000cc');
-    } else {
-
-        $(this).closest('tr').children('td').css('color', 'black');
-        $(this).closest('tr').children('td.noInput').css('color', 'black');
-    }
-
-    $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
-
-    // if(parseFloat(old_unitcost) > parseFloat(closest_nunitcost)){
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#66ff66');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', '#ff8566');
-    // }else if(parseFloat(old_unitcost) < parseFloat(closest_nunitcost)){
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#ff8566');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', '#66ff66');
-    // }else{
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', 'white');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', 'white');
-    // }
-
-    nettotal();
-    total_amount();
-
-  });
-
-
-
-$(document).on('keyup', '.nunitcost_class', function(event) {
-    event.preventDefault();
-
-    var nunitcost = $(this).val();
-    var nordextprice = $(this).closest('tr').find('.nordextprice_class').val();
-    var npackqty = $(this).closest('tr').find('.npackqty_class').val();
-    var nordqty = $(this).closest('tr').find('.nordqty_class').val();
-    var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
-
-    var nunitprice = $(this).closest('tr').find('.nnewunitprice_class').val();
-    // var suggested_cost = $(this).closest('tr').find('.sggtdqty_class').val();
-
-    var order_by = $(this).closest('tr').find('.po_order_by_class').val();
-    let old_unitcost = $(this).closest('tr').find('.oldunitcost_class').val();
-    let row = $(this).closest('tr').index() + 1;
-
-    /*if(parseFloat(suggested_cost) < parseFloat(nordextprice)){
-        $(this).closest('tr').children('td').css('background-color', '#CC0000');
-        $(this).closest('tr').children('td.noInput').css('color', '#FFFFFF');
-    } else {
-        $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
-        $(this).closest('tr').children('td.noInput').css('color', '#666666');
-    }*/
-
-    if(npackqty != ''){
-      npackqty = npackqty;
-    }else{
-      npackqty = 0;
-    }
-
-    if(nordqty != ''){
-      nordqty = nordqty;
-    }else{
-      nordqty = 0;
-    }
-
-    if(itotalunit != ''){
-      itotalunit = itotalunit;
-    }else{
-      itotalunit = 0;
-    }
-
-    if(nunitcost != ''){
-      nunitcost = nunitcost;
-    }else{
-      nunitcost = 0.0000;
-    }
-
-    if(nordextprice != ''){
-      nordextprice = nordextprice;
-    }else{
-      nordextprice = 0.00;
-    }
-
-    if(order_by == 'case'){
-        var closest_itotalunit = nordqty * npackqty;
-    } else {
-        var closest_itotalunit = nordqty;
-    }
-
-
-    var closest_nordextprice = nunitcost * closest_itotalunit;
-
-    if(isNaN(closest_nordextprice)) {
-      closest_nordextprice = 0.00;
-    }else{
-      closest_nordextprice = closest_nordextprice.toFixed(2);
-    }
-
-    if(isFinite(closest_nunitcost)) {
-        closest_nunitcost = closest_nunitcost;
-    }else{
-      closest_nunitcost = 0.0000;
-    }
-    // console.log('Order By: '+order_by+' Order Qty: '+nordqty+' Total Unit: '+closest_itotalunit+' Unit Cost: '+nunitcost+' Total Cost: '+closest_nordextprice);
-
-    let profit = nunitprice - closest_nunitcost;
-    let gross_profit = (profit/nunitprice) * 100;
-
-    if(isNaN(gross_profit)) {
-      gross_profit = 0.00;
-    }else{
-      gross_profit = gross_profit.toFixed(2);
-    }
-
-    if(isFinite(gross_profit)) {
-      gross_profit = gross_profit;
-    }else{
-      gross_profit = 0.00;
-    }
-
-    $(this).closest('tr').find('.gp_class').val(gross_profit);
-
-    $(this).closest('tr').find('.nordextprice_class').val(closest_nordextprice);
-
-    // if(parseFloat(suggested_cost) < parseFloat(closest_nordextprice)){
-    //     // $(this).closest('tr').children('td').css('background-color', '#ff9999');
-    //     $(this).closest('tr').children('td').css('color', '#FF0000');
-    //     $(this).closest('tr').children('td.noInput').css('color', '#FF0000');
-    // } else {
-    //     $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
-    //     $(this).closest('tr').children('td.noInput').css('color', '#666666');
-    // }
-
-    // if(parseFloat(old_unitcost) > parseFloat(closest_nunitcost)){
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#66ff66');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', '#ff8566');
-    // }else if(parseFloat(old_unitcost) < parseFloat(closest_nunitcost)){
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#ff8566');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', '#66ff66');
-    // }else{
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', 'white');
-    //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', 'white');
-    // }
-
-
-    // var subtotal = 0.00;
-    // $('.nordextprice_class').each(function() {
-    //   subtotal = parseFloat(subtotal) + parseFloat($(this).val());
-    // });
-    // $('input[name="nsubtotal"]').val(subtotal.toFixed(2));
-
-    //net total value;
-    // nettotal();
-    // total_amount();
-
-  });
-
-  $(document).on('change', '.po_order_by_class', function(event) {
-    event.preventDefault();
-
-    var nordqty = $(this).closest('tr').find('.nordqty_class').val();
-    var npackqty = $(this).closest('tr').find('.npackqty_class').val();
-    var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
-    var nordextprice = $(this).closest('tr').find('.nordextprice_class').val();
-    var nunitcost = $(this).closest('tr').find('.nunitcost_class').val();
-    var po_order_by = $(this).val();
-    var last_costprice = $(this).closest('tr').find('.nlastunitprice_class').val();
-    // var new_costprice = $(this).closest('tr').find('.nnewcosttprice_class').val();
-    var new_costprice = $(this).closest('tr').find('.newcostprice_class').val();
-    var nsellunit = $(this).closest('tr').find('.nsellunit_class').val();
-
-    if(npackqty != ''){
-      npackqty = npackqty;
-    }else{
-      npackqty = 0;
-    }
-
-    if(itotalunit != ''){
-      itotalunit = itotalunit;
-    }else{
-      itotalunit = 0;
-    }
-
-    if(nordextprice != ''){
-      nordextprice = nordextprice;
-    }else{
-      nordextprice = 0.00;
-    }
-
-    if(nunitcost != ''){
-      nunitcost = nunitcost;
-    }else{
-      nunitcost = 0.0000;
-    }
-
-
-    if(po_order_by == 'case'){
-        var closest_itotalunit = nordqty * npackqty;
-    } else {
-        var closest_itotalunit = nordqty;
-    }
-
-    var closest_nunitcost = nordextprice / closest_itotalunit;
-
-    if(isNaN(closest_nunitcost)) {
-      closest_nunitcost = 0.0000;
-    }else{
-      closest_nunitcost = closest_nunitcost.toFixed(2);
-    }
-
-    if(isFinite(closest_nunitcost)) {
-        closest_nunitcost = closest_nunitcost;
-    }else{
-      closest_nunitcost = 0.0000;
-    }
-
-    var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-
-    if(isNaN(closest_nordextprice)) {
-      closest_nordextprice = 0.00;
-    }else{
-      closest_nordextprice = closest_nordextprice.toFixed(2);
-    }
-
-    // if()
-
-    // to get suggested cost
-    // suggested_cost = last_costprice * closest_itotalunit;
-    // suggested_cost = (new_costprice/nsellunit) * closest_itotalunit;
-
-
-    $(this).closest('tr').find('.itotalunit_span_class').html(closest_itotalunit);
-    $(this).closest('tr').find('.itotalunit_class').val(closest_itotalunit);
-
-    $(this).closest('tr').find('.nordextprice_class').val(closest_nordextprice);
-    $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
-
-    $(this).closest('tr').find('.sggtdqty_class').val(suggested_cost);
-
-    // if(parseFloat(suggested_cost) < parseFloat(nordextprice)){
-    //     // $(this).closest('tr').children('td').css('background-color', '#FF0000');
-    //     $(this).closest('tr').children('td').css('color', '#FF0000');
-    //     $(this).closest('tr').children('td.noInput').css('color', '#FF0000');
-    // } else {
-    //     $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
-    //     $(this).closest('tr').children('td').css('color', '#000000');
-    //     $(this).closest('tr').children('td.noInput').css('color', '#666666');
-    // }
-
-    var subtotal = 0.00;
-    $('.nordextprice_class').each(function() {
-
-      subtotal = parseFloat(subtotal) + parseFloat($(this).val());
+        
+        
+        var closest_nordextprice = nunitcost * closest_itotalunit;
+        
+        if(isNaN(closest_nordextprice)) {
+          closest_nordextprice = 0.00;
+        }else{
+          closest_nordextprice = closest_nordextprice.toFixed(2);
+        }
+        
+        if(isFinite(closest_nunitcost)) {
+            closest_nunitcost = closest_nunitcost;
+        }else{
+          closest_nunitcost = 0.0000;
+        }
+        // console.log('Order By: '+order_by+' Order Qty: '+nordqty+' Total Unit: '+closest_itotalunit+' Unit Cost: '+nunitcost+' Total Cost: '+closest_nordextprice);
+    
+        let profit = nunitprice - closest_nunitcost;
+        let gross_profit = (profit/nunitprice) * 100;
+        
+        if(isNaN(gross_profit)) {
+          gross_profit = 0.00;
+        }else{
+          gross_profit = gross_profit.toFixed(2);
+        }
+         
+        if(isFinite(gross_profit)) {
+          gross_profit = gross_profit;
+        }else{
+          gross_profit = 0.00;
+        }
+        
+        $(this).closest('tr').find('.gp_class').val(gross_profit);
+        
+        $(this).closest('tr').find('.nordextprice_class').val(closest_nordextprice);
+        
+        // if(parseFloat(suggested_cost) < parseFloat(closest_nordextprice)){
+        //     // $(this).closest('tr').children('td').css('background-color', '#ff9999');
+        //     $(this).closest('tr').children('td').css('color', '#FF0000');
+        //     $(this).closest('tr').children('td.noInput').css('color', '#FF0000');
+        // } else {
+        //     $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
+        //     $(this).closest('tr').children('td.noInput').css('color', '#666666');
+        // }
+        
+        // if(parseFloat(old_unitcost) > parseFloat(closest_nunitcost)){
+        //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#66ff66');
+        //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', '#ff8566');
+        // }else if(parseFloat(old_unitcost) < parseFloat(closest_nunitcost)){
+        //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', '#ff8566');
+        //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', '#66ff66');
+        // }else{
+        //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(7)`).css('background-color', 'white');
+        //     $(`#receiving_order_items tr:nth-child(${row}) td:nth-child(13)`).css('background-color', 'white');   
+        // }
+    
     });
-    $('input[name="nsubtotal"]').val(subtotal.toFixed(2));
+  
+    $(document).on('change', '.po_order_by_class', function(event) {
+      event.preventDefault();
+      
+      var nordqty = $(this).closest('tr').find('.nordqty_class').val();
+      var npackqty = $(this).closest('tr').find('.npackqty_class').val();
+      var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
+      var nordextprice = $(this).closest('tr').find('.nordextprice_class').val();
+      var nunitcost = $(this).closest('tr').find('.nunitcost_class').val();
+      var po_order_by = $(this).val();
+      var last_costprice = $(this).closest('tr').find('.nlastunitprice_class').val();
+      // var new_costprice = $(this).closest('tr').find('.nnewcosttprice_class').val();
+      var new_costprice = $(this).closest('tr').find('.newcostprice_class').val();
+      var nsellunit = $(this).closest('tr').find('.nsellunit_class').val();
+      
+      let vitemtype = $(this).closest('tr').find('.vitemtype_class').val();
+      let lotmatrix_npack = $(this).closest('tr').find('.lotmatrix_npack').val();
 
-    //net total value;
-    nettotal();
-    total_amount();
-    total_suggested_amount();
-    total_order_unit();
-  });
+      if(npackqty != ''){
+        npackqty = npackqty;
+      }else{
+        npackqty = 0;
+      }
 
+      if(itotalunit != ''){
+        itotalunit = itotalunit;
+      }else{
+        itotalunit = 0;
+      }
+
+      if(nordextprice != ''){
+        nordextprice = nordextprice;
+      }else{
+        nordextprice = 0.00;
+      }
+
+      if(nunitcost != ''){
+        nunitcost = nunitcost;
+      }else{
+        nunitcost = 0.0000;
+      }
+      
+      
+      var closest_itotalunit = 0;
+      var closest_nunitcost = 0;
+      if(vitemtype == 'Lot Matrix'){
+          
+          if(po_order_by == 'case'){
+              closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+          } else {
+              closest_itotalunit = nordqty*lotmatrix_npack;
+          }
+          
+          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
+      }else{
+          if(po_order_by == 'case'){
+              closest_itotalunit = nordqty * npackqty;
+          } else {
+              closest_itotalunit = nordqty;
+          }
+          closest_nunitcost = nordextprice / closest_itotalunit;
+      }
+      
+      if(isNaN(closest_nunitcost)) {
+        closest_nunitcost = 0.0000;
+      }else{
+        closest_nunitcost = closest_nunitcost.toFixed(2);
+      }
+      
+      if(isFinite(closest_nunitcost)) {
+          closest_nunitcost = closest_nunitcost;
+      }else{
+        closest_nunitcost = 0.0000;
+      }
+      
+      var closest_nordextprice = closest_itotalunit * closest_nunitcost;
+
+      if(isNaN(closest_nordextprice)) {
+        closest_nordextprice = 0.00;
+      }else{
+        closest_nordextprice = closest_nordextprice.toFixed(2);
+      }
+      
+      // if()
+      
+      // to get suggested cost
+      // suggested_cost = last_costprice * closest_itotalunit;
+      // suggested_cost = (new_costprice/nsellunit) * closest_itotalunit;
+      
+
+      $(this).closest('tr').find('.itotalunit_span_class').html(closest_itotalunit);
+      $(this).closest('tr').find('.itotalunit_class').val(closest_itotalunit);
+      
+      $(this).closest('tr').find('.nordextprice_class').val(closest_nordextprice);
+      $(this).closest('tr').find('.nunitcost_class').val(closest_nunitcost);
+
+      $(this).closest('tr').find('.sggtdqty_class').val(suggested_cost);
+      
+      // if(parseFloat(suggested_cost) < parseFloat(nordextprice)){
+      //     // $(this).closest('tr').children('td').css('background-color', '#FF0000');
+      //     $(this).closest('tr').children('td').css('color', '#FF0000');
+      //     $(this).closest('tr').children('td.noInput').css('color', '#FF0000');
+      // } else {
+      //     $(this).closest('tr').children('td').css('background-color', '#FFFFFF');
+      //     $(this).closest('tr').children('td').css('color', '#000000');
+      //     $(this).closest('tr').children('td.noInput').css('color', '#666666');
+      // }
+
+      var subtotal = 0.00;
+      $('.nordextprice_class').each(function() {
+          
+        subtotal = parseFloat(subtotal) + parseFloat($(this).val());
+      });
+      $('input[name="nsubtotal"]').val(subtotal.toFixed(2));
+
+      //net total value;
+      nettotal();
+      total_amount();
+      total_suggested_amount();
+      total_order_unit();
+    });
+    
     $(document).on('keyup', '.nnewunitprice_class', function(event) {
         event.preventDefault();
 
@@ -1779,6 +1809,7 @@ $(document).on('keyup', '.nunitcost_class', function(event) {
         total_suggested_amount();
         total_order_unit();
     });
+
   //venkat: for sub total caluculations replacement in 4 places------
   $("#save_receive_check").click(function(){
     var subtotal = 0.00;

@@ -396,6 +396,14 @@
                         </tr>
                         <?php }?>
                         
+                        
+                         <?php if(isset($report_sale_new[0]->EnvtFee) && $report_sale_new[0]->EnvtFee!=0){ ?> 
+                        <tr>
+                            <td style="padding: 0px 10px;"> Enveronment Fee</td>
+                           <td style="padding: 0px 10px;" class="text-right"><?php echo $report_sale_new[0]->EnvtFee; ?></td>
+                        </tr>
+                        <?php }?>
+                        
                          
                          
                         <tr > 
