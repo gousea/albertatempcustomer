@@ -91,7 +91,7 @@
                                                                 @if(session()->has('version'))
                                                                         @if( session()->get('version') == 330)
                                                                         <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url(session()->get('version').'/ReceivingOrder') }}"> Receiving Order</a></li>
-                                                                        
+                                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url(session()->get('version').'/PurchaseOrder') }}"> Purchase Order </a></li>
                                                                         @else
                                                                                 @php
                                                                                         $url_ro = route('ReceivingOrder');
