@@ -3506,7 +3506,6 @@ $('.editable_text').focus(function() {
             
         // });
         
-        // console.log(transfer_to_po);
         if($('#head_checkbox').prop('checked') == true){
             data_add_items = {};
             $("input[name='selected_search_history_items[]']:checked").each(function (i) {
@@ -3567,17 +3566,21 @@ $('.editable_text').focus(function() {
                 html_receiving_item += 'selected ';
                 qty_unit_case = transfer_to_po[index]['order_qty']*item.npack;
                 
+                if(item.vitemtype == 'Lot Matrix'){
+                    qty_unit_case = qty_unit_case*item.lot_npack;
+                    
+                }
+                
             }
                 
             if(transfer_to_po[index]['order_by'] == 'unit'){
                 html_receiving_item += 'selected ';
                 qty_unit_case = transfer_to_po[index]['order_qty'];
-            }
-            
-            if(item.vitemtype == 'Lot Matrix'){
-                qty_unit_case = transfer_to_po[index]['order_qty']*item.npack;
-                // item.npack = item.lot_npack;
                 
+                if(item.vitemtype == 'Lot Matrix'){
+                    qty_unit_case = qty_unit_case*item.npack;
+                    
+                }
             }
             
             unitCost = transfer_to_po[index]['amount'] / qty_unit_case;
