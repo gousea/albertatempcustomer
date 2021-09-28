@@ -2650,8 +2650,15 @@ class ItemController extends Controller
                     $lotData['vdesc'] = $input['desc'];
                     $lotData['npackprice'] = $input['packprice'];
                     $lotData['isequence'] = $input['sequence'];
-                    $lot_child_limit = $input['pack'];
-                    $npack = $input['pack'];
+                    
+                    if(!empty($input['pack']) && $input['pack'] == 0){
+                        
+                        $lot_child_limit = $input['pack'];
+                        $npack = $input['pack'];
+                    }else{
+                        $lot_child_limit = $input['lot_child_limit'];
+                        $npack = $input['lot_child_limit'];
+                    }
                     
                     if(isset($input['lot_npack'])){
                         

@@ -16,7 +16,7 @@
             padding-right: 50px;
             padding-left: 20px;
         }
-
+ 
     </style>
 
     <div id="content">
@@ -434,11 +434,11 @@
                                                                 <select name="vcategorycode"
                                                                     class="form-control adjustment-fields"
                                                                     id="category_code" <?php
-if (!isset($data['vcategorycode'])) {
-    echo "disabled='true'";
-}
+                                                                        if (!isset($data['vcategorycode'])) {
+                                                                            echo "disabled='true'";
+                                                                        }
 
-?>>
+                                                                        ?>>
                                                                     <option value="">Select Category</option>
 
                                                                     <?php if(isset($data['categories']) && count($data['categories']) > 0 && isset($data['vcategorycode'])){?>
@@ -1418,10 +1418,10 @@ if (!isset($data['vcategorycode'])) {
                                     </div>
 
                                     <div id="plcb_options_checkbox_div" style="<?php if ($data['plcb_options_checkbox']) {
-    echo 'display: block';
-} else {
-    echo 'display: none';
-} ?>">
+                                                echo 'display: block';
+                                            } else {
+                                                echo 'display: none';
+                                            } ?>">
                                         <input type="hidden" name="plcb_options_checkbox" id="plcb_options_checkbox"
                                             value='<?= $data['plcb_options_checkbox'] ?>'>
                                         <div class="py-3">
@@ -1516,9 +1516,7 @@ if (!isset($data['vcategorycode'])) {
                                                             </div>
                                                             <div class="col-6 col-md-6 col-sm-6 col-lg-6">
                                                                 <input style="margin-top: 10px;" type="checkbox" class=""
-                                                                    name="malt" value="1" <?php if ($data['malt']) {
-    echo 'checked';
-} ?>>
+                                                                    name="malt" value="1" <?php if ($data['malt']) { echo 'checked';} ?>>
                                                             </div>
                                                         </div>
 
@@ -1537,6 +1535,7 @@ if (!isset($data['vcategorycode'])) {
                             <input type="hidden" name="desc" id="vdescValue" value="<?php echo isset($data['desc']) ? $data['desc'] : ''; ?>">
                             <input type="hidden" name="packprice" id="npackpriceValue" value="<?php echo isset($data['packprice']) ? $data['packprice'] : ''; ?>">
                             <input type="hidden" name="sequence" id="isequenceValue" value="<?php echo isset($data['sequence']) ? $data['sequence'] : ''; ?>">
+                            <input type="hidden" name="lot_child_limit" id="lot_child_limit" value="<?php echo isset($data['lot_child_limit']) ? $data['lot_child_limit'] : ''; ?>">
                             
                         </form>
                         <br>
