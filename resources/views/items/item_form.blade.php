@@ -540,8 +540,9 @@ if (!isset($data['vcategorycode'])) {
                                                                     <option value="<?php echo $supplier['vsuppliercode']; ?>"
                                                                         selected="selected"><?php echo $supplier['vcompanyname']; ?></option>
                                                                     <?php } else { ?>
-                                                                    <option value="<?php echo $supplier['vsuppliercode']; ?>">
-                                                                        <?php echo $supplier['vcompanyname']; ?></option>
+                                                                    <option value="{{ $supplier['vsuppliercode']}}" {{ $supplier['vsuppliercode'] == 101 ? 'selected="selected"': ''}}>{{ $supplier['vcompanyname']}}</option>
+<!--                                                                    <option value="<?php echo $supplier['vsuppliercode']; ?>">
+                                                                        <?php echo $supplier['vcompanyname']; ?></option>-->
                                                                     <?php } ?>
                                                                     <?php } ?>
                                                                     <?php } ?>
@@ -597,8 +598,9 @@ if (!isset($data['vcategorycode'])) {
                                                                 <option value="<?php echo $unit['vunitcode']; ?>" selected="selected">
                                                                     <?php echo $unit['vunitname']; ?></option>
                                                                 <?php } else { ?>
-                                                                <option value="<?php echo $unit['vunitcode']; ?>"><?php echo $unit['vunitname']; ?>
-                                                                </option>
+                                                                <option value="{{ $unit['vunitcode']}}" {{ $unit['vunitcode'] == 'UNT001' ? 'selected="selected"': ''}}>{{ $unit['vunitname']}}</option>
+                                                               {{-- <option value="<?php echo $unit['vunitcode']; ?>"><?php echo $unit['vunitname']; ?>
+                                                                </option>--}}
                                                                 <?php } ?>
                                                                 <?php } ?>
                                                                 <?php } ?>
