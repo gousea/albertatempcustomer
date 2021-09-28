@@ -394,6 +394,14 @@
                         </tr>
                           @endif
                           
+                          
+                        @if(isset($data['EnvtFee']) && $data['EnvtFee']!=0)
+                        <tr>
+                            <th>Enveronment Fee</th>
+                           <td class="text-right">{{'$'}}{{$data['EnvtFee']}}</td>
+                        </tr>
+                          @endif
+                          
                         <tr>
                             <th>&nbsp;</th>
                             <td><?php echo ""; ?></td>
