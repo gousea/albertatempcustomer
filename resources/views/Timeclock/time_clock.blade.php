@@ -49,18 +49,18 @@
                   </thead>
               </table>
           </div>
-          
+
           <input type="hidden" value="" id="week_number" name='week_number'/>
-          
+
           <input type="hidden"  value=""  id="Year" name='Year' />
-              
+
           <div>
                 <table class="table" style="width:100%; margin-top: 10px; border-collapse: separate; border-spacing:0 5px !important;" >
                     <thead style="background-color: #286fb7!important;">
                         <tr>
                             <th class="col-xs-1 headername text-uppercase text-light">Employee</th>
                             <th class="col-xs-1 headername text-uppercase text-light">Sunday <span id="s"></span></th>
-                            <th class="col-xs-1 headername text-uppercase text-light">Monday <span id="m"></span></th> 
+                            <th class="col-xs-1 headername text-uppercase text-light">Monday <span id="m"></span></th>
                             <th class="col-xs-1 headername text-uppercase text-light">Tuesday <span id="t"></span></th>
                             <th class="col-xs-1 headername text-uppercase text-light">Wednesday <span id="w"></span></th>
                             <th class="col-xs-1 headername text-uppercase text-light">Thursday <span id="th"></span></th>
@@ -70,11 +70,11 @@
                         </tr>
                       <!-- </thead>  -->
                       <thead id="history_items" >
-                      </thead> 
+                      </thead>
                 </table>
           </div>
         </div>
-      
+
     </div>
   </section>
   </form>
@@ -121,33 +121,33 @@ var dayOfWeekOffset = today.getDay();
 
 function getWeek(offset) {
   offset = offset || 0; // if the function did not supply a new offset, the offset is 0
-  
+
   var firstDay = new Date();
- 
+
   firstDay.setDate(firstDay.getDate() - dayOfWeekOffset + (offset * 7));
-  
+
   var lastDay = new Date(firstDay);
   lastDay.setDate(lastDay.getDate() + 6);
- 
- 
-  
+
+
+
   var fri=new Date(firstDay);
   fri.setDate(fri.getDate() + 5);
-  
+
   var thur=new Date(firstDay);
   thur.setDate(thur.getDate() + 4);
-  
+
   var wed=new Date(firstDay);
   wed.setDate(wed.getDate() + 3);
-  
+
   var tue=new Date(firstDay);
   tue.setDate(tue.getDate() + 2);
-  
+
   var mon=new Date(firstDay);
   mon.setDate(mon.getDate() + 1);
-  
-  
-  
+
+
+
   var sunday=makeDateString_for_dy(firstDay);
   var monday=makeDateString_for_dy(mon);
   var tuesday=makeDateString_for_dy(tue);
@@ -155,7 +155,7 @@ function getWeek(offset) {
   var thursday=makeDateString_for_dy(thur);
   var friday=makeDateString_for_dy(fri);
   var saturday=makeDateString_for_dy(lastDay);
-  
+
   var sunday_date=convert(firstDay);
   var monday_date=convert(mon);
   var tuesday_date=convert(tue);
@@ -163,14 +163,14 @@ function getWeek(offset) {
   var thursday_date=convert(thur);
   var friday_date=convert(fri);
   var saturday_date=convert(lastDay);
-  
+
   var data=call_ajax(sunday_date,saturday_date)
     function call_ajax(date1,date2){
         var start_date=date1;
         var end_date=date2;
         var time_clock_url = "{{route('time_clock_data_week')}}";
         time_clock_url = time_clock_url.replace(/&amp;/g, '&');
-       
+
         $.ajax({
             url : time_clock_url,
             headers: {
@@ -194,11 +194,11 @@ function getWeek(offset) {
             }
 
         });
-  
+
     }
-  
-  
-  
+
+
+
 //   document.getElementById('sunday_date').value=sunday_date;
 //   document.getElementById('monday_date').value=monday_date;
 //   document.getElementById('tuesday_date').value=tuesday_date;
@@ -206,9 +206,9 @@ function getWeek(offset) {
 //   document.getElementById('thursday_date').value=thursday_date;
 //   document.getElementById('friday_date').value=friday_date;
 //   document.getElementById('saturday_date').value=saturday_date;
- 
-  
-  
+
+
+
   range.innerHTML = 'week of ' + makeDateString(firstDay) + ' - ' + makeDateString(lastDay);
   m.innerHTML = monday;
   t.innerHTML = tuesday;
@@ -217,8 +217,8 @@ function getWeek(offset) {
   f.innerHTML = friday;
   sa.innerHTML = saturday;
   s.innerHTML = sunday;
-  
-  
+
+
   Date.prototype.getWeek = function () {
     var onejan = new Date(this.getFullYear(), 0, 1);
     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
@@ -229,68 +229,68 @@ function getWeek(offset) {
     document.getElementById('Year').value=firstDay.getFullYear();
 
 
-  
+
 }
 
 
 function makeDateString(date) {
   var dd = date.getDate();
   var mm = date.getMonth() + 1;
-  
+
   var y = date.getFullYear();
-  
+
   if(mm==1){
         var mm="January";
   }
   if(mm==2 ){
-      
+
     var mm="February";
-    
+
   }
-  
+
   if(mm==3){
         var mm="March";
   }
   if(mm==4 ){
-      
+
     var mm="April";
-    
+
   }
 
  if(mm==5){
         var mm="May";
   }
   if(mm==6 ){
-      
+
     var mm="June";
-    
+
   }
 
  if(mm==7){
         var mm="July";
   }
   if(mm==8 ){
-      
+
     var mm="August";
-    
+
   }
 
  if(mm==9){
         var mm="September";
   }
   if(mm==10 ){
-      
+
     var mm="October";
-    
+
   }
 
  if(mm==11){
         var mm="November";
   }
   if(mm==12 ){
-      
+
     var mm="December";
-    
+
   }
 
 
@@ -303,61 +303,61 @@ function makeDateString(date) {
 function makeDateString_for_dy(date) {
   var dd = date.getDate();
   var mm = date.getMonth() + 1;
-  
+
   var y = date.getFullYear();
-  
+
   if(mm==1){
         var mm="Jan";
   }
   if(mm==2 ){
-      
+
     var mm="Feb";
-    
+
   }
-  
+
   if(mm==3){
         var mm="Mar";
   }
   if(mm==4 ){
-      
+
     var mm="Apr";
-    
+
   }
 
  if(mm==5){
         var mm="May";
   }
   if(mm==6 ){
-      
+
     var mm="June";
-    
+
   }
 
  if(mm==7){
         var mm="July";
   }
   if(mm==8 ){
-      
+
     var mm="Aug";
-    
+
   }
 
  if(mm==9){
         var mm="Sept";
   }
   if(mm==10 ){
-      
+
     var mm="Oct";
-    
+
   }
 
  if(mm==11){
         var mm="Nov";
   }
   if(mm==12 ){
-      
+
     var mm="Dec";
-    
+
   }
 
 
@@ -384,7 +384,7 @@ window.onload = function() {
   <style>
     .disabled {
     pointer-events:none; //This makes it not clickable
- 
+
     }
 
 </style>
@@ -403,10 +403,10 @@ window.onload = function() {
 </style>
 <style>
 table td {
-    
+
      text-align: center;
      font-size: 10px;
-   
+
 }
 .alignleft {
 	float: left;
@@ -415,35 +415,35 @@ table td {
 	float: right;
 }
 .span_class{
-    
+
 }
 th{
     font-weight: normal;
-    
+
 }
 .td_heder{
     font-weight: normal;
-    
+
 }
 
 .normal_text{
     font-weight: normal;
-  
+
 }
 
 
 .working{
     background:#75feac;
     color: black;
-    
-    
+
+
 }
 .log_hours{
     font-size: 8px;
     color:#708b81;
     text-align: center;
     font-weight: normal;
-    
+
 }
 .not_log_hours_color{
     background:#fb8383;
@@ -461,7 +461,7 @@ th{
     width:125px;
 }
 .bordr_set{
-  border-right: 15px solid white;  
+  border-right: 15px solid white;
 }
 .datetimepicker3{
  outline: none;
@@ -471,16 +471,19 @@ th{
  border:none;
  color: black;
 }
+.loggedInT1{
+    border-left: 1px solid;
+}
 </style>
-  
+
 <script>
-    
+
  $('.datetimepicker3').datetimepicker({
-                   
+
                      format: 'LT'
 });
-          
-            
+
+
 </script>
 <script>
     function convert(str) {
@@ -498,7 +501,7 @@ th{
     $("div#divLoading").addClass('show');
 
     var pdf_export_url = "{{route('time_clock_pdf')}}";
-  
+
     pdf_export_url = pdf_export_url.replace(/&amp;/g, '&');
 
     var req = new XMLHttpRequest();
@@ -525,7 +528,7 @@ th{
       $("div#divLoading").removeClass('show');
     };
     req.send();
-    
+
   });
 </script>
 
