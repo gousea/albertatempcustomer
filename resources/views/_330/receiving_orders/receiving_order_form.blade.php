@@ -1168,7 +1168,7 @@
               closest_itotalunit = nordqty*lotmatrix_npack;
           }
           
-          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack;);
+          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
       }else{
           if(po_order_by == 'case'){
               closest_itotalunit = nordqty * npackqty;
@@ -1296,7 +1296,7 @@
               closest_itotalunit = nordqty*lotmatrix_npack;
           }
           
-          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack;);
+          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
       }else{
           if(po_order_by == 'case'){
               closest_itotalunit = nordqty * npackqty;
@@ -1404,7 +1404,7 @@
               closest_itotalunit = nordqty*lotmatrix_npack;
           }
           
-          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack;);
+          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
       }else{
           if(po_order_by == 'case'){
               closest_itotalunit = nordqty * npackqty;
@@ -1633,7 +1633,7 @@
               closest_itotalunit = nordqty*lotmatrix_npack;
           }
           
-          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack;);
+          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
       }else{
           if(po_order_by == 'case'){
               closest_itotalunit = nordqty * npackqty;

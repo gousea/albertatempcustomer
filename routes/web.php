@@ -657,6 +657,7 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection','revalidate']], 
         Route::get('/ReceivingOrder/get_vendor_data', 'ReceivingOrderController@get_vendor_data');
         Route::post('/ReceivingOrder/get_search_item_history', 'ReceivingOrderController@get_search_item_history');
 
+        //========Version 330 RO and PO ==================
         Route::group(['prefix' => '330', 'namespace' => '\App\_330\Http\Controllers'], function () {
             
             Route::get('/ReceivingOrder', 'ReceivingOrderController@getList')->name('ReceivingOrder');
@@ -678,6 +679,48 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection','revalidate']], 
             Route::post('/ReceivingOrder/delete', 'ReceivingOrderController@delete');
             Route::get('/ReceivingOrder/get_vendor_data', 'ReceivingOrderController@get_vendor_data');
             Route::post('/ReceivingOrder/get_search_item_history', 'ReceivingOrderController@get_search_item_history');
+
+                //=================PURCHASE ORDER=================
+            Route::get('/PurchaseOrder', 'PurchaseOrderController@getList')->name('PurchaseOrder');
+            Route::post('/PurchaseOrder', 'PurchaseOrderController@getSearchList');
+            Route::get('/PurchaseOrder/edit', 'PurchaseOrderController@edit_form');
+            Route::get('/PurchaseOrder/get_purchase_history', 'PurchaseOrderController@get_purchase_history');
+            Route::get('/PurchaseOrder/get_item_history', 'PurchaseOrderController@get_item_history');
+            Route::get('/PurchaseOrder/get_item_history_date', 'PurchaseOrderController@get_item_history_date');
+            Route::post('/PurchaseOrder/get_search_item_history', 'PurchaseOrderController@get_search_item_history');
+            Route::post('/PurchaseOrder/search_vendor_item_code', 'PurchaseOrderController@search_vendor_item_code');
+            Route::post('/PurchaseOrder/add_purchase_order_item', 'PurchaseOrderController@add_purchase_order_item');
+            Route::get('/PurchaseOrder/get_vendor', 'PurchaseOrderController@get_vendor');
+            Route::post('/PurchaseOrder/check_invoice', 'PurchaseOrderController@check_invoice');
+            Route::post('/PurchaseOrder/delete_purchase_order_item', 'PurchaseOrderController@delete_purchase_order_item');
+
+            Route::post('/PurchaseOrder/edit_post', 'PurchaseOrderController@edit_post');
+            Route::post('/PurchaseOrder/save_receive_item', 'PurchaseOrderController@save_receive_item');
+
+            Route::get('/PurchaseOrder/export_as_pdf', 'PurchaseOrderController@export_as_pdf');
+            Route::get('/PurchaseOrder/export_as_csv', 'PurchaseOrderController@export_as_csv');
+            Route::get('/PurchaseOrder/export_as_email', 'PurchaseOrderController@export_as_email');
+            Route::get('/PurchaseOrder/export_as_excel', 'PurchaseOrderController@export_as_excel');
+
+            Route::get('/PurchaseOrder/add_manual', 'PurchaseOrderController@add_manual');
+            Route::post('/PurchaseOrder/add_manual_post', 'PurchaseOrderController@add_manual_post');
+            Route::post('/PurchaseOrder/delete', 'PurchaseOrderController@delete');
+            Route::get('/PurchaseOrder/redirect_edit_manual', 'PurchaseOrderController@edit_form');
+
+            Route::get('/PurchaseOrder/add_po_sales_history', 'PurchaseOrderController@add_po_sales_history');
+            // Route::post('/PurchaseOrder/sales_history/get_item_names', 'PurchaseOrderController@get_item_names');
+            Route::post('/PurchaseOrder/sales_history/get_item_names', 'SalesHistoryReportController@get_item_names');
+            Route::post('/PurchaseOrder/sales_history/get_sizes', 'SalesHistoryReportController@get_sizes');
+            Route::post('/PurchaseOrder/post_po_sales_history', 'PurchaseOrderController@post_po_sales_history');
+            Route::get('/PurchaseOrder/redirect_edit_sales_history', 'PurchaseOrderController@add_po_sales_history');
+
+            Route::get('/PurchaseOrder/add_po_par_level', 'PurchaseOrderController@add_po_par_level');
+            Route::post('/PurchaseOrder/search', 'PurchaseOrderController@search');
+            Route::get('/PurchaseOrder/redirect_edit_par_level', 'PurchaseOrderController@add_po_par_level');
+            Route::post('/PurchaseOrder/sales_history/get_categories', 'SalesHistoryReportController@get_categories');
+            Route::post('/PurchaseOrder/sales_history/get_subcategories', 'SalesHistoryReportController@get_subcategories');
+            Route::post('/PurchaseOrder/sales_history/get_barcodes', 'SalesHistoryReportController@get_barcodes');
+            Route::post('/PurchaseOrder/sales_history/get_skus', 'SalesHistoryReportController@get_skus');
         });
 
 
