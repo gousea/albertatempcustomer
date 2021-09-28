@@ -323,6 +323,15 @@
                             </tr>
                             <?php } ?>
                             
+                             <?php if(isset($data['EnvtFee']) && $data['EnvtFee'] !=0){ ?>
+                            <tr>
+                                <td>#ENVIRONMENT FEE</td>
+                                <td class="text-right"><?php echo "$", $data['EnvtFee'];?></td>
+                            </tr>
+                            <?php } ?>
+                            
+                            
+                            
                             
                               </tbody>
                         </table>
