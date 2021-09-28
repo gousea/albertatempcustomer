@@ -54,7 +54,7 @@
                                                 <a class="nav-link dropdown-toggle sub text-uppercase" href="{{ url('/item/item_list/Active/DESC') }}" data-toggle="dropdown"> PRODUCTS
                                                 </a>
                                                 <ul class="dropdown-menu main-dropdown">
-                                                        @if (session()->get('version') == 320)
+                                                        @if (session()->get('version') == 320 || session()->get('version') == 330)
 
                                                         <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url(session()->get('version') . '/item/item_list/Active/DESC') }}">Items</a>
                                                         </li>
