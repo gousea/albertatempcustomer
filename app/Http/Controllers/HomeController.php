@@ -513,7 +513,8 @@ class HomeController extends Controller
             $output['news_update'] = DB::connection()->select($select_query);
 
             $sid = $request->session()->get('sid');
-            $trn_sales_query = "SELECT isalesid AS transaction_id, dtrandate as sales_timestamp, ntaxabletotal, nnettotal as sales_amount, vtendertype as tender_type, isalesid, dtrandate FROM u" . $sid . ".trn_sales ORDER BY dtrandate DESC limit 1000";
+            // $trn_sales_query = "SELECT isalesid AS transaction_id, dtrandate as sales_timestamp, ntaxabletotal, nnettotal as sales_amount, vtendertype as tender_type, isalesid, dtrandate FROM u" . $sid . ".trn_sales ORDER BY dtrandate DESC limit 1000";
+            $trn_sales_query = "SELECT isalesid AS transaction_id, dtrandate as sales_timestamp, ntaxabletotal, nnettotal as sales_amount, vtendertype as tender_type, isalesid, dtrandate FROM u" . $sid . ".trn_sales where nnettotal > 0.00 ORDER BY dtrandate DESC limit 1000";
             $output['trn_sales_data'] = DB::connection()->select($trn_sales_query);
 
             $mst_item_query = "SELECT count(*) as totalitem from u" . $sid . ".mst_item where dcreated >= DATE_ADD(current_date(), INTERVAL -6 DAY)";
@@ -560,12 +561,47 @@ class HomeController extends Controller
 
 
         if (count($sales_customer) > 0) {
-            $c_name = $sales_customer['vfname'] . ' ' . $sales_customer['vlname'];
-            $c_address = $sales_customer['vaddress1'];
-            $c_city = $sales_customer['vcity'] . ',';
-            $c_state = $sales_customer['vstate'];
-            $c_zip = $sales_customer['vzip'];
-            $c_phone = 'Phone: ' . $sales_customer['vphone'];
+            // $c_name = $sales_customer['vfname'] . ' ' . $sales_customer['vlname'];
+            // $c_address = $sales_customer['vaddress1'];
+            // $c_city = $sales_customer['vcity'] . ',';
+            // $c_state = $sales_customer['vstate'];
+            // $c_zip = $sales_customer['vzip'];
+            // $c_phone = 'Phone: ' . $sales_customer['vphone'];
+            if(empty($sales_customer['vfname'])){
+                $c_name = '';
+            }else{
+                $c_name = $sales_customer['vfname'] . ' ' . $sales_customer['vlname'];
+            }
+            
+            if(empty($sales_customer['vaddress1'])){
+                $c_address = '';
+            }else{
+                $c_address = $sales_customer['vaddress1'];
+            }
+            
+            if(empty($sales_customer['vcity'])){
+                $c_city = '';
+            }else{
+                $c_city = $sales_customer['vcity'] . ',';
+            }
+            
+            if(empty($sales_customer['vstate'])){
+                $c_state = '';
+            }else{
+                $c_state = $sales_customer['vstate'];
+            }
+            
+            if(empty($sales_customer['vzip'])){
+                $c_zip = '';
+            }else{
+                $c_zip = $sales_customer['vzip'];
+            }
+            
+            if(empty($sales_customer['vphone'])){
+                $c_phone = '';
+            }else{
+                $c_phone = 'Phone: ' . $sales_customer['vphone'];
+            }
         } else {
             $c_name = '';
             $c_address = '';
