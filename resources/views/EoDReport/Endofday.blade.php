@@ -376,6 +376,13 @@
                                     </tr>
                                     @endif
                                     
+                                    @if(isset($data[0]->EnvtFee) && $data[0]->EnvtFee!=0)
+                                        <tr>
+                                      <td class="text-right bg_table">Environment Fee</td>
+                                        <td class="text-right bg_table"><button  class="data_list" style="height: 30px;width:150px ">{{'$'}}{{$data[0]->EnvtFee}}</button></td>
+                                    </tr>
+                                    @endif
+                                    
                                     
                                   </table>
                              </div>
