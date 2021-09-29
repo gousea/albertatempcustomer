@@ -35,18 +35,11 @@ class TimeClockController extends Controller
     public function update(Request $request){
 
         $input = $request->all();
-
-
         $id=$input['emp_id'];
-
         $start=$input['start'];
-
         $end=$input['end'];
         $tc_login_id_list=$input['tc_login_id'];
-
-
-
-
+        $statusClosed ='';
         foreach($id   as $key=>$id_val){
 
             $emp_id=$id[$key];
@@ -59,18 +52,26 @@ class TimeClockController extends Controller
 
               $login = date("H:i:s", strtotime($start_time));
               $logout = date("H:i:s", strtotime($end_time));
-
+              //logout_time = CONCAT_WS(' ',DATE(login_time), '".$logout."'),
               $update_time_clock= "UPDATE time_clock_login  SET
               login_time = CONCAT_WS(' ',DATE(login_time), '".$login."'),
-              logout_time = CONCAT_WS(' ',DATE(logout_time), '".$logout."')
-              WHERE user_id=$emp_id AND tc_login_id= $tc_login_id_user ";
+              final_logout_time = CONCAT_WS(' ',DATE(login_time), '".$logout."'), status = 'Closed'
+              WHERE user_id=$emp_id AND tc_login_id= $tc_login_id_user  AND status = 'Active' ";
 
-              DB::connection('mysql_dynamic')->update($update_time_clock);
+                $updateCheck = DB::connection('mysql_dynamic')->update($update_time_clock);
+                $updatedResp[] = $updateCheck;
+               /* // have to update 'status' = 'Closed' when update check return true  ,
+                if($updateCheck){
+                    $statusClosed ="UPDATE time_clock_login  SET status = 'Closed'
+                                        WHERE user_id=$emp_id AND tc_login_id= $tc_login_id_user  AND status = 'Active' ";
+                    DB::connection('mysql_dynamic')->update($statusClosed);
+                }*/
 
 
             }
 
         }
+
         $data['msg']="Time clock Updated";
         return view('Timeclock.time_clock',$data);
 
@@ -100,7 +101,7 @@ class TimeClockController extends Controller
     public function time_clock_data_week(Request $request){
         $input = $request->all();
 
-        $sql="select user_id,mu.vfname empname,
+        /*$sql="select user_id,mu.vfname empname,
             max(case when DAYNAME(login_time) = 'Sunday' then login_time else null end) sun_login,
             max(case when DAYNAME(logout_time) = 'Sunday' then logout_time else DATE_FORMAT(login_time, '%Y-%m-%d 23:59:59') end) sun_logout,
             max(case when DAYNAME(login_time) = 'Sunday' then tc_login_id else null end) sun_logid,
@@ -134,7 +135,44 @@ class TimeClockController extends Controller
             from time_clock_login tc
             LEFT JOIN mst_user mu ON mu.iuserid=tc.user_id
             Where login_time between '".$input['start_date']."' and '".$input['end_date']."'
+            group by user_id ";*/
+
+        $sql="select user_id,mu.vfname empname,
+            max(case when DAYNAME(login_time) = 'Sunday' then login_time else null end) sun_login,
+            max(case when DAYNAME(login_time) = 'Sunday' then ifnull(final_logout_time, logout_time) else null end) sun_logout,
+            max(case when DAYNAME(login_time) = 'Sunday' then tc_login_id else null end) sun_logid,
+
+
+            max(case when DAYNAME(login_time) = 'Monday' then login_time else null end) mon_login,
+            max(case when DAYNAME(login_time) = 'Monday' then ifnull(final_logout_time, logout_time) else null end) mon_logout,
+            max(case when DAYNAME(login_time) = 'Monday' then tc_login_id else null end) mon_logid,
+
+            max(case when DAYNAME(login_time) = 'Tuesday' then login_time else null end) tue_login,
+            max(case when DAYNAME(login_time) = 'Tuesday' then ifnull(final_logout_time, logout_time) else null end) tue_logout,
+            max(case when DAYNAME(login_time) = 'Tuesday' then tc_login_id else null end) tue_logid,
+
+            max(case when DAYNAME(login_time) = 'Wednesday' then login_time else null end) wed_login,
+            max(case when DAYNAME(login_time) = 'Wednesday' then ifnull(final_logout_time, logout_time) else null end) wed_logout,
+            max(case when DAYNAME(login_time) = 'Wednesday' then tc_login_id else null end) wed_logid,
+
+            max(case when DAYNAME(login_time) = 'Thursday' then login_time else null end) thu_login,
+            max(case when DAYNAME(login_time) = 'Thursday' then ifnull(final_logout_time, logout_time) else null end) thu_logout,
+            max(case when DAYNAME(login_time) = 'Thursday' then tc_login_id else null end) thu_logid,
+
+            max(case when DAYNAME(login_time) = 'Friday' then login_time else null end) fri_login,
+            max(case when DAYNAME(login_time) = 'Friday' then ifnull(final_logout_time, logout_time) else null end) fri_logout,
+            max(case when DAYNAME(login_time) = 'Friday' then tc_login_id else null end) fri_logid,
+
+
+            max(case when DAYNAME(login_time) = 'Saturday' then login_time else null end) sat_login,
+            max(case when DAYNAME(login_time) = 'Saturday' then ifnull(final_logout_time, logout_time) else null end) sat_logout,
+            max(case when DAYNAME(login_time) = 'Saturday' then tc_login_id else null end) sat_logid
+
+            from time_clock_login tc
+            LEFT JOIN mst_user mu ON mu.iuserid=tc.user_id
+            Where login_time between '".$input['start_date']."' and '".$input['end_date']."'
             group by user_id ";
+
 
 
           $data['week_list']= DB::connection('mysql_dynamic')->select($sql);
@@ -152,10 +190,19 @@ class TimeClockController extends Controller
 
                  <td> <span class="normal_text">  '.$week_list->empname.'</span> <input type="hidden"  name="emp_id[]" value="'.$week_list->user_id.'"  ></span></td></td>';
                 if(isset($week_list->sun_logid)){
-                     $datetime1 = new DateTime($week_list->sun_login);$datetime2 = new DateTime($week_list->sun_logout);$interval = $datetime1->diff($datetime2);
+                     $datetime1 = new DateTime($week_list->sun_login);$datetime2 = new DateTime($week_list->sun_logout);
+                    if($week_list->sun_logout == Null || $week_list->sun_logout =='')
+                    {
+                        $newDate = date('Y-m-d', strtotime($week_list->sun_login));
+                        $newDate = date("Y-m-d H:i:s", strtotime("+23 hours 59 minutes",strtotime($newDate)));
+                        $datetime2 = new DateTime($newDate);
+                    }else{
+                        $newDate = date('Y-m-d H:i:s', strtotime($week_list->sun_logout));
+                    }
+                     $interval = $datetime1->diff($datetime2);
                     $now    = new DateTime();
                     $show= '';
-                    $logoutTime = date('h:i A', strtotime($week_list->sun_logout));
+                    $logoutTime = date('h:i A', strtotime($newDate));
                     if($datetime2 > $now){
                         if($logoutTime == '11:59 PM'){
                             $show='Not Logged Out';
@@ -164,7 +211,7 @@ class TimeClockController extends Controller
                             $interval = $datetime1->diff($datetime2);
                         }else{
                             $show='';
-                            $logoutTime =date('h:i A', strtotime($week_list->sun_logout));
+                            $logoutTime =date('h:i A', strtotime($newDate));
                             $interval = $datetime1->diff($datetime2);
                         }
                     }
@@ -174,10 +221,20 @@ class TimeClockController extends Controller
 
                 }
                 if(isset($week_list->mon_login)){
-                     $datetime1 = new DateTime($week_list->mon_login);$datetime2 = new DateTime($week_list->mon_logout);$interval_mon = $datetime1->diff($datetime2);
+                     $datetime1 = new DateTime($week_list->mon_login);
+                     $datetime2 = new DateTime($week_list->mon_logout);
+                    if($week_list->mon_logout == Null || $week_list->mon_logout =='')
+                    {
+                        $newDate = date('Y-m-d', strtotime($week_list->mon_login));
+                        $newDate = date("Y-m-d H:i:s", strtotime("+23 hours 59 minutes",strtotime($newDate)));
+                        $datetime2 = new DateTime($newDate);
+                    }else{
+                        $newDate = date('Y-m-d H:i:s', strtotime($week_list->mon_logout));
+                    }
+                     $interval_mon = $datetime1->diff($datetime2);
                     $now    = new DateTime();
                     $show= '';
-                    $logoutTime = date('h:i A', strtotime($week_list->mon_logout));
+                    $logoutTime = date('h:i A', strtotime($newDate));
                     if($datetime2 > $now){
                         if($logoutTime == '11:59 PM'){
                             $show='Not Logged Out';
@@ -186,7 +243,7 @@ class TimeClockController extends Controller
                             $interval_mon = $datetime1->diff($datetime2);
                         }else{
                             $show='';
-                            $logoutTime =date('h:i A', strtotime($week_list->mon_logout));
+                            $logoutTime =date('h:i A', strtotime($newDate));
                             $interval_mon = $datetime1->diff($datetime2);
                         }
                     }
@@ -198,10 +255,19 @@ class TimeClockController extends Controller
                 }
 
                  if(isset($week_list->tue_login)){
-                     $datetime1 = new DateTime($week_list->tue_login);$datetime2 = new DateTime($week_list->tue_logout);$interval_tue = $datetime1->diff($datetime2);
+                     $datetime1 = new DateTime($week_list->tue_login);$datetime2 = new DateTime($week_list->tue_logout);
+                     if($week_list->tue_logout == Null || $week_list->tue_logout =='')
+                     {
+                         $newDate = date('Y-m-d', strtotime($week_list->tue_login));
+                         $newDate = date("Y-m-d H:i:s", strtotime("+23 hours 59 minutes",strtotime($newDate)));
+                         $datetime2 = new DateTime($newDate);
+                     }else{
+                         $newDate = date('Y-m-d H:i:s', strtotime($week_list->tue_logout));
+                     }
+                     $interval_tue = $datetime1->diff($datetime2);
                      $now    = new DateTime();
                      $show= '';
-                     $logoutTime = date('h:i A', strtotime($week_list->tue_logout));
+                     $logoutTime = date('h:i A', strtotime($newDate));
                      if($datetime2 > $now){
                          if($logoutTime == '11:59 PM'){
                              $show='Not Logged Out';
@@ -210,7 +276,7 @@ class TimeClockController extends Controller
                              $interval_tue = $datetime1->diff($datetime2);
                          }else{
                              $show='';
-                             $logoutTime =date('h:i A', strtotime($week_list->tue_logout));
+                             $logoutTime =date('h:i A', strtotime($newDate));
                              $interval_tue = $datetime1->diff($datetime2);
                          }
                      }
@@ -221,10 +287,19 @@ class TimeClockController extends Controller
                 }
 
                   if(isset($week_list->wed_login)){
-                     $datetime1 = new DateTime($week_list->wed_login);$datetime2 = new DateTime($week_list->wed_logout);$interval_wed = $datetime1->diff($datetime2);
+                     $datetime1 = new DateTime($week_list->wed_login);$datetime2 = new DateTime($week_list->wed_logout);
+                      if($week_list->wed_logout == Null || $week_list->wed_logout =='')
+                      {
+                          $newDate = date('Y-m-d', strtotime($week_list->wed_login));
+                          $newDate = date("Y-m-d H:i:s", strtotime("+23 hours 59 minutes",strtotime($newDate)));
+                          $datetime2 = new DateTime($newDate);
+                      }else{
+                          $newDate = date('Y-m-d H:i:s', strtotime($week_list->wed_logout));
+                      }
+                     $interval_wed = $datetime1->diff($datetime2);
                       $now    = new DateTime();
                       $show= '';
-                      $logoutTime = date('h:i A', strtotime($week_list->wed_logout));
+                      $logoutTime = date('h:i A', strtotime($newDate));
                       if($datetime2 > $now){
                           if($logoutTime == '11:59 PM'){
                               $show='Not Logged Out';
@@ -233,7 +308,7 @@ class TimeClockController extends Controller
                               $interval_wed = $datetime1->diff($datetime2);
                           }else{
                               $show='';
-                              $logoutTime =date('h:i A', strtotime($week_list->wed_logout));
+                              $logoutTime =date('h:i A', strtotime($newDate));
                               $interval_wed = $datetime1->diff($datetime2);
                           }
                       }
@@ -245,10 +320,20 @@ class TimeClockController extends Controller
 
 
                  if(isset($week_list->thu_login)){
-                     $datetime1 = new DateTime($week_list->thu_login);$datetime2 = new DateTime($week_list->thu_logout);$interval_thu = $datetime1->diff($datetime2);
+                     $datetime1 = new DateTime($week_list->thu_login);$datetime2 = new DateTime($week_list->thu_logout);
+                     if($week_list->thu_logout == Null || $week_list->thu_logout =='')
+                     {
+                         $newDate = date('Y-m-d', strtotime($week_list->thu_login));
+                         $newDate = date("Y-m-d H:i:s", strtotime("+23 hours 59 minutes",strtotime($newDate)));
+                         $datetime2 = new DateTime($newDate);
+                     }else{
+                         $newDate = date('Y-m-d H:i:s', strtotime($week_list->thu_logout));
+                     }
+
+                     $interval_thu = $datetime1->diff($datetime2);
                      $now    = new DateTime();
                      $show= '';
-                     $logoutTime = date('h:i A', strtotime($week_list->thu_logout));
+                     $logoutTime = date('h:i A', strtotime($newDate));
                      if($datetime2 > $now){
                          if($logoutTime == '11:59 PM'){
                              $show='Not Logged Out';
@@ -257,7 +342,7 @@ class TimeClockController extends Controller
                              $interval_thu = $datetime1->diff($datetime2);
                          }else{
                              $show='';
-                             $logoutTime =date('h:i A', strtotime($week_list->thu_logout));
+                             $logoutTime =date('h:i A', strtotime($newDate));
                              $interval_thu = $datetime1->diff($datetime2);
                          }
                      }
@@ -268,10 +353,19 @@ class TimeClockController extends Controller
                 }
 
                 if(isset($week_list->fri_login)){
-                     $datetime1 = new DateTime($week_list->fri_login);$datetime2 = new DateTime($week_list->fri_logout);$interval_fri = $datetime1->diff($datetime2);
+                     $datetime1 = new DateTime($week_list->fri_login);$datetime2 = new DateTime($week_list->fri_logout);
+                    if($week_list->fri_logout == Null || $week_list->fri_logout =='')
+                    {
+                        $newDate = date('Y-m-d', strtotime($week_list->fri_login));
+                        $newDate = date("Y-m-d H:i:s", strtotime("+23 hours 59 minutes",strtotime($newDate)));
+                        $datetime2 = new DateTime($newDate);
+                    }else{
+                        $newDate = date('Y-m-d H:i:s', strtotime($week_list->fri_logout));
+                    }
+                     $interval_fri = $datetime1->diff($datetime2);
                     $now    = new DateTime();
                     $show= '';
-                    $logoutTime = date('h:i A', strtotime($week_list->fri_logout));
+                    $logoutTime = date('h:i A', strtotime($newDate));
                     if($datetime2 > $now){
                         if($logoutTime == '11:59 PM'){
                             $show='Not Logged Out';
@@ -280,7 +374,7 @@ class TimeClockController extends Controller
                             $interval_fri = $datetime1->diff($datetime2);
                         }else{
                             $show='';
-                            $logoutTime =date('h:i A', strtotime($week_list->fri_logout));
+                            $logoutTime =date('h:i A', strtotime($newDate));
                             $interval_fri = $datetime1->diff($datetime2);
                         }
                     }
@@ -291,10 +385,19 @@ class TimeClockController extends Controller
                 }
 
                  if(isset($week_list->sat_login)){
-                     $datetime1 = new DateTime($week_list->sat_login);$datetime2 = new DateTime($week_list->sat_logout);$interval_sat = $datetime1->diff($datetime2);
+                     $datetime1 = new DateTime($week_list->sat_login);$datetime2 = new DateTime($week_list->sat_logout);
+                     if($week_list->sat_logout == Null || $week_list->sat_logout =='')
+                     {
+                         $newDate = date('Y-m-d', strtotime($week_list->sat_login));
+                         $newDate = date("Y-m-d H:i:s", strtotime("+23 hours 59 minutes",strtotime($newDate)));
+                         $datetime2 = new DateTime($newDate);
+                     }else{
+                         $newDate = date('Y-m-d H:i:s', strtotime($week_list->sat_logout));
+                     }
+                     $interval_sat = $datetime1->diff($datetime2);
                      $now    = new DateTime();
                      $show= '';
-                     $logoutTime = date('h:i A', strtotime($week_list->sat_logout));
+                     $logoutTime = date('h:i A', strtotime($newDate));
                      if($datetime2 > $now){
                          if($logoutTime == '11:59 PM'){
                              $show='Not Logged Out';
@@ -303,7 +406,7 @@ class TimeClockController extends Controller
                              $interval_sat = $datetime1->diff($datetime2);
                          }else{
                              $show='';
-                             $logoutTime =date('h:i A', strtotime($week_list->sat_logout));
+                             $logoutTime =date('h:i A', strtotime($newDate));
                              $interval_sat = $datetime1->diff($datetime2);
                          }
                      }
