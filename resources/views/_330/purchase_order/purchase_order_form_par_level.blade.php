@@ -559,6 +559,7 @@
                                           <input type="hidden" name="items[<?php echo $k; ?>][vunitcode]" value="<?php echo $item['vunitcode']; ?>">
                                           <input type="hidden" name="items[<?php echo $k; ?>][vunitname]" value="<?php echo $item['vunitname']; ?>">
                                           <input type="hidden" name="items[<?php echo $k; ?>][ipodetid]" value="<?php echo $item['ipodetid']; ?>">
+                                          <input type="hidden" class="vitemtype_class" name="items[<?php echo $k; ?>][vitemtype]" value="<?php echo $item['vitemtype']; ?>">
                                         </td>
                                         
                                         
@@ -596,7 +597,10 @@
                                         </td>
                                         
                                         <td class="text-right">
-                                          <input type="text" class="npackqty_class" name="items[<?php echo $k; ?>][npack]" value="<?php echo $item['npack']; ?>" id="" style="width:60px;text-align: right;">
+                                            <input type="text" class="npackqty_class" name="items[<?php echo $k; ?>][npack]" value="<?php echo $item['npack']; ?>" id="" style="width:60px;text-align: right;">
+                                            @if($item['vitemtype'] == 'Lot Matrix')
+                                                <input type="hidden" class="lotmatrix_npack" value="<?php echo $item['lotmatrix_npack']; ?>">
+                                            @endif
                                         </td>
                                         
                                         

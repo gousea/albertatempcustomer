@@ -23,7 +23,7 @@ class PurchaseOrder extends Model
         $return = $query;
         
         $sql_query = "SELECT ms.vcompanyname vendor_name, mi.vsize, mi.new_costprice, tpod.*,mi.last_costprice,mi.iqtyonhand as iqtyonhand,mi.dcostprice as dcostprice,
-                        mi.dunitprice as dunitprice,mi.ireorderpoint as ireorderpoint, tpod.npackqty as npack, 
+                        mi.dunitprice as dunitprice,mi.ireorderpoint as ireorderpoint, tpod.npackqty as npack, mi.vitemtype, mi.lot_child_limit, mi.lot_npack, mi.npack as lotmatrix_npack,
                         case WHEN (mi.iqtyonhand <= 0 and mi.ireorderpoint <=0 or mi.ireorderpoint=null) then 0 
                         WHEN (mi.iqtyonhand<=0 and mi.ireorderpoint > 0 or mi.ireorderpoint!=null) then mi.ireorderpoint 
                         WHEN (mi.iqtyonhand>0 and mi.ireorderpoint > 0 and mi.iqtyonhand > mi.ireorderpoint) then mi.iqtyonhand-mi.ireorderpoint 
