@@ -644,6 +644,7 @@
                                                           <input type="hidden" name="items[<?php echo $k; ?>][vunitcode]" value="<?php echo $item['vunitcode']; ?>">
                                                           <input type="hidden" name="items[<?php echo $k; ?>][vunitname]" value="<?php echo $item['vunitname']; ?>">
                                                           <input type="hidden" name="items[<?php echo $k; ?>][ipodetid]" value="<?php echo $item['ipodetid']; ?>">
+                                                          <input type="hidden" class="vitemtype_class" name="items[<?php echo $k; ?>][vitemtype]" value="<?php echo $item['vitemtype']; ?>">
                                                         </td>
                                                         
                                                         <td style="width:20%;" class="vendor_class">
@@ -678,7 +679,10 @@
                                                         </td>
                                                         
                                                         <td class="text-right">
-                                                          <input type="text" class="npackqty_class" name="items[<?php echo $k; ?>][npack]" value="<?php echo $item['npack']; ?>" id="" style="width:60px;text-align: right;">
+                                                            <input type="text" class="npackqty_class" name="items[<?php echo $k; ?>][npack]" value="<?php echo $item['npack']; ?>" id="" style="width:60px;text-align: right;">
+                                                            @if($item['vitemtype'] == 'Lot Matrix')
+                                                                <input type="hidden" class="lotmatrix_npack" value="<?php echo $item['lotmatrix_npack']; ?>">
+                                                            @endif
                                                         </td>
                                                         
                                                         
@@ -1070,8 +1074,6 @@
   $(document).on('keyup', '.nordqty_class', function(event) {
     event.preventDefault();
     
-    
-    
     var nordqty = $(this).val();
     var npackqty = $(this).closest('tr').find('.npackqty_class').val();
     var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
@@ -1079,6 +1081,9 @@
     var nunitcost = $(this).closest('tr').find('.new_costprice_class').val();
     var po_order_by = $(this).closest('tr').find('.po_order_by_class').val();
     var last_costprice = $(this).closest('tr').find('.nlastunitprice_class').val();
+    
+    let vitemtype = $(this).closest('tr').find('.vitemtype_class').val();
+    let lotmatrix_npack = $(this).closest('tr').find('.lotmatrix_npack').val();
 
     if(npackqty != ''){
       npackqty = npackqty;
@@ -1104,15 +1109,26 @@
       nunitcost = 0.0000;
     }
     
-    
-    if(po_order_by == 'case'){
-        var closest_itotalunit = nordqty * npackqty;
-    } else {
-        var closest_itotalunit = nordqty;
+    var closest_itotalunit = 0;
+    var closest_nunitcost = 0;
+    if(vitemtype == 'Lot Matrix'){
+        
+        if(po_order_by == 'case'){
+            closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+        } else {
+            closest_itotalunit = nordqty*lotmatrix_npack;
+        }
+        
+        closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
+    }else{
+        if(po_order_by == 'case'){
+            closest_itotalunit = nordqty * npackqty;
+        } else {
+            closest_itotalunit = nordqty;
+        }
+        closest_nunitcost = nordextprice / closest_itotalunit;
     }
     
-    var closest_nunitcost = nordextprice / closest_itotalunit;
-
     if(isNaN(closest_nunitcost)) {
       closest_nunitcost = 0.0000;
     }else{
@@ -1160,13 +1176,14 @@
   $(document).on('keyup', '.npackqty_class', function(event) {
     event.preventDefault();
     
-    
-    
     var npackqty = $(this).val();
     var nordqty = $(this).closest('tr').find('.nordqty_class').val();
     var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
     var nordextprice = $(this).closest('tr').find('.nordextprice_class').val();
     var nunitcost = $(this).closest('tr').find('.new_costprice_class').val();
+    
+    let vitemtype = $(this).closest('tr').find('.vitemtype_class').val();
+    let lotmatrix_npack = $(this).closest('tr').find('.lotmatrix_npack').val();
 
     if(nordqty != ''){
       nordqty = nordqty;
@@ -1192,9 +1209,26 @@
       nunitcost = 0.0000;
     }
 
-    var closest_itotalunit = nordqty * npackqty;
-    var closest_nunitcost = nordextprice / closest_itotalunit;
-
+    var closest_itotalunit = 0;
+    var closest_nunitcost = 0;
+    if(vitemtype == 'Lot Matrix'){
+        
+        if(po_order_by == 'case'){
+            closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+        } else {
+            closest_itotalunit = nordqty*lotmatrix_npack;
+        }
+        
+        closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
+    }else{
+        if(po_order_by == 'case'){
+            closest_itotalunit = nordqty * npackqty;
+        } else {
+            closest_itotalunit = nordqty;
+        }
+        closest_nunitcost = nordextprice / closest_itotalunit;
+    }
+    
     if(isNaN(closest_nunitcost)) {
       closest_nunitcost = 0.0000;
     }else{
@@ -1231,16 +1265,8 @@
   $(document).on('keypress', '.nordextprice_class', function(event) {
     // event.preventDefault();
         
-        // var character = String.fromCharCode(event.keyCode)
-        // var newValue = this.value + character; 
-        // if (isNaN(newValue) || parseFloat(newValue) * 100 % 1 > 0) {
-        //     event.preventDefault();
-        //     return false;
-        // }
         this.value = this.value.match(/^\d+\.?\d{0,2}/);
         
-        
-    
         var nordextprice = $(this).val();
         var npackqty = $(this).closest('tr').find('.npackqty_class').val();
         var nordqty = $(this).closest('tr').find('.nordqty_class').val();
@@ -1251,7 +1277,9 @@
         var suggested_cost = $(this).closest('tr').find('.sggtdqty_class').val();
         var order_by = $(this).closest('tr').find('.po_order_by_class').val();
         
-    
+        let vitemtype = $(this).closest('tr').find('.vitemtype_class').val();
+        let lotmatrix_npack = $(this).closest('tr').find('.lotmatrix_npack').val();
+        
         if(npackqty != ''){
           npackqty = npackqty;
         }else{
@@ -1279,27 +1307,39 @@
         }else{
           itotalunit = 0;
         }
-    
+        
         if(nunitcost != ''){
           nunitcost = nunitcost;
         }else{
           nunitcost = 0.0000;
         }
-    
+        
         if(nordextprice != ''){
           nordextprice = nordextprice;
         }else{
           nordextprice = 0.0000;
         }
-    
-        if(order_by == 'case'){
-            var closest_itotalunit = nordqty * npackqty;
-        } else {
-            var closest_itotalunit = nordqty;
+        
+        var closest_itotalunit = 0;
+        var closest_nunitcost = 0;
+        if(vitemtype == 'Lot Matrix'){
+            
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+            } else {
+                closest_itotalunit = nordqty*lotmatrix_npack;
+            }
+            
+            closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
+        }else{
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty;
+            } else {
+                closest_itotalunit = nordqty;
+            }
+            closest_nunitcost = nordextprice / closest_itotalunit;
         }
         
-        var closest_nunitcost = nordextprice / closest_itotalunit;
-    
         if(isNaN(closest_nunitcost)) {
           closest_nunitcost = 0.0000;
         }else{
@@ -2713,6 +2753,10 @@ $('.editable_text').focus(function() {
               search_table_html += '<select class="adjustment-fields orderBy"><option value="case">Case</option><option value="unit">Unit</option></select>';
               search_table_html += '</td>';
               
+                if(value.vitemtype == 'Lot Matrix'){
+                    value.npack = value.lot_npack;
+                }
+              
               search_table_html += '<td class="">'+value.npack+'</td>';
               
               search_table_html += '<td class="tdOrderQty">';
@@ -2784,138 +2828,6 @@ $('.editable_text').focus(function() {
 
   });
 
-//   $(document).on('keyup', '#search_vendor_item_code', function(event) {
-//     $('tbody#history_items').empty();
-//     $('#search_item_history').val('');
-//     $('#item_history_err_div').hide();
-//     $('#rotating_logo').show();
-//     var search_vendor_item_code_url = "<?php echo $data['search_vendor_item_code']; ?>";
-//     var item_search = $(this).val();
-//     var ivendorid = $('input[name="vvendorid"]').val();
-//     search_vendor_item_code_url = search_vendor_item_code_url.replace(/&amp;/g, '&');
-
-//     $('#item_history_section').hide();
-//     $('#rotating_logo_item_history').hide();
-    
-//     if(item_search != ''){
-//       var pre_items_id = {};
-//     //   $('tbody#purchase_order_items > tr').not(':last').each(function(index_val, val) {
-//       $('tbody#purchase_order_items > tr').each(function(index_val, val) {          
-//         pre_items_id[index_val] = $('input[name^="items['+index_val+'][vitemid]"]').val();
-//       });
-
-//       $.ajax({
-//         url : search_vendor_item_code_url+'?search_item='+item_search+'&ivendorid='+ivendorid,
-//         headers: {
-//                 'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-//         },
-//         data : JSON.stringify(pre_items_id),
-//         type : 'POST',
-//         contentType: "application/json",
-//         dataType: 'json',
-//         success: function(data) {
-          
-//           $('tbody#history_items').empty();
-//           if(data.items.length > 0){
-            
-//             var search_table_html = '';
-//             $.each(data.items, function(i, value) {
-                
-//                   search_table_html += '<tr>';
-//                   search_table_html += '<td><input type="checkbox" name="selected_search_history_items[]" value="'+ value.iitemid +'"></td>';
-//                   search_table_html += '<td>';
-//                   search_table_html += value.vbarcode;
-//                   search_table_html += '</td>';
-//                   search_table_html += '<td>';
-//                   search_table_html += value.vitemname;
-//                   search_table_html += '</td>';
-//                   search_table_html += '<td>';
-//                   if(value.vsize != null){
-//                     search_table_html += value.vsize;
-//                   }else{
-//                     search_table_html += '';
-//                   }
-//                   search_table_html += '</td>';
-//                   search_table_html += '<td class="text-right">';
-//                   search_table_html += value.QOH;
-//                   search_table_html += '</td>';
-                  
-//                   search_table_html += '<td class="text-right nunitcost">';
-//                 //   search_table_html += value.dcostprice;
-//                   search_table_html += value.nunitcost;
-//                   search_table_html += '</td>';
-                  
-//                   search_table_html += '<td class="tdOrderBy">';
-//                   search_table_html += '<select class="orderBy"><option value="case">Case</option><option value="unit">Unit</option></select>';
-//                   search_table_html += '</td>';
-                  
-//                   search_table_html += '<td class="">'+value.npack+'</td>';
-                  
-//                   search_table_html += '<td class="tdOrderQty">';
-//                   search_table_html += '<input type="text"  class="orderQty" style="width:35px;">';
-//                   search_table_html += '</td>';
-                  
-//                   search_table_html += '<td class="tdAmount">';
-//                   search_table_html += '<input type="hidden" class="npack" value="'+value.npack+'">';
-//                   search_table_html += '<input type="text"   class="amount" style="width:60px;" value=0.00 readonly>';
-//                   search_table_html += '</td>';
-                  
-//                   search_table_html += '<td class="text-right">';
-//                   search_table_html += value.dunitprice;
-//                   search_table_html += '</td>';
-//                   search_table_html += '<td>';
-//                   search_table_html += '<button data-vitemcode="'+ value.vitemcode +'" data-vitemname="'+ value.vitemname +'" data-iitemid="'+ value.iitemid +'" class="btn btn-info btn-sm item_history_btn">Item History</button>';
-//                   search_table_html += '</td>';
-    
-//                   search_table_html += '</tr>';                
-                
-                
-//             });
-
-//             $('tbody#history_items').append(search_table_html).show('slow');
-//             $('#rotating_logo').hide();
-//             return false;
-            
-//           }else{ 
-//             $('tbody#history_items').empty();
-//             $('#rotating_logo').hide();
-//             $('#item_history_err').html('Sorry no data found! please search again');
-//             $('#item_history_err_div').show();
-            
-//             return false;
-//           }
-//         },
-//         error: function(xhr) { // if error occured
-//           $('#rotating_logo').hide();
-//           var  response_error = $.parseJSON(xhr.responseText); //decode the response array
-          
-//           var error_show = '';
-
-//           if(response_error.error){
-//             error_show = response_error.error;
-//           }else if(response_error.validation_error){
-//             error_show = response_error.validation_error[0];
-//           }
-
-//           // alert(error_show);
-//           bootbox.alert({ 
-//             size: 'small',
-//             title: "Attention", 
-//             message: error_show, 
-//             callback: function(){}
-//           });
-//           return false;
-//         }
-//       });
-//     }else{
-//       $('#rotating_logo').hide();
-//       $('tbody#history_items').empty();
-//       $('#item_history_err_div').show();
-//       $('#item_history_err').html('Sorry no data found! please search again');
-//       return false;
-//     }
-
-//   });
 
  $(document).on('keyup', '#search_vendor_item_code', function(event) {
     $('tbody#history_items').empty();
@@ -3146,7 +3058,7 @@ $('.editable_text').focus(function() {
         send_post_data['items_id'] = data_add_items;
         send_post_data['pre_items_id'] = pre_items_id;
         send_post_data['ivendorid'] = ivendorid;
-
+        
       }else{
         var add_purchase_order_item_url = "<?php echo $data['add_purchase_order_item']; ?>";
         
@@ -3177,7 +3089,7 @@ $('.editable_text').focus(function() {
       }
       
       var transfer_to_po = {};
-
+        
       
       $("input[name='selected_search_history_items[]']:checked").each(function (i) {
           data_add_items[i] = parseInt($(this).val());
@@ -3214,21 +3126,24 @@ $('.editable_text').focus(function() {
                 html_purchase_item += '<td class="text-center noInput"><input type="checkbox" name="selected_purchase_item[]" value="0"/><input type="hidden" name="items['+window.index_item+'][vitemid]" value="'+item.iitemid+'"><input type="hidden" name="items['+window.index_item+'][nordunitprice]" value="'+item.dunitprice+'"><input type="hidden" name="items['+window.index_item+'][vunitcode]" value="'+item.vunitcode+'"><input type="hidden" name="items['+window.index_item+'][vunitname]" value="'+item.vunitname+'"><input type="hidden" name="items['+window.index_item+'][ipodetid]" value="0"><input type="hidden" name="selected_added_item[]" value="'+item.iitemid+'"/></td>';
                 html_purchase_item += '<td style="width:20%;" class="vbarcode_class noInput">'+item.vendor_name+'<input type="hidden" name="items['+window.index_item+'][vendor_name]" value="'+item.vendor_name+'"></td>';
                 html_purchase_item += '<td style="width:10%;" class="vbarcode_class noInput">'+item.vbarcode+'<input type="hidden" name="items['+window.index_item+'][vbarcode]" value="'+item.vbarcode+'"></td>';
-                html_purchase_item += '<td style="width:20%;" class="vitemname_class noInput">'+item.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+item.vitemname+'"></td>';
-    
+                
+                html_purchase_item += '<td style="width:20%;" class="vitemname_class noInput">'+item.vitemname+'<input type="hidden" name="items['+window.index_item+'][vitemname]" value="'+item.vitemname+'"><input type="hidden" class="vitemtype_class" name="items['+window.index_item+'][vitemtype]" value="'+ item.vitemtype +'"></td>';
+                
                 if(item.vsize != null){
                   html_purchase_item += '<td class="noInput" style="width:5%;">'+item.vsize+'<input type="hidden" class="vsize_class" name="items['+window.index_item+'][vsize]" value="'+item.vsize+'" id="" ></td>';
                 }else{
                   html_purchase_item += '<td class="noInput" style="width:5%;">'+item.vsize+'<input type="hidden" class="vsize_class" name="items['+window.index_item+'][vsize]" value="" id="" ></td>';
                 }
-    
+                
                 //Considering the new_costprice as unit cost
                 html_purchase_item += '<td class="text-right">'+item.new_costprice+'<input type="hidden" class="new_costprice_class" name="items['+window.index_item+'][new_costprice]" value="'+item.new_costprice+'" id="" style="width:60px;text-align:right;"></td>';
-    
-    
-                html_purchase_item += '<td class="text-right"><input type="text" class="npackqty_class" name="items['+window.index_item+'][npackqty]" value="'+item.npack+'" id="" style="width:60px;text-align:right;"></td>';
                 
-                // html_purchase_item += '<td class="text-right"><input type="text" class="npackqty_class" name="items['+window.index_item+'][npackqty]" value="'+item.npack+'" id="" style="width:60px;text-align:right;"></td>';
+                
+                if(item.vitemtype == 'Lot Matrix'){
+                    html_purchase_item += '<td class="text-right"><input type="text" class="npackqty_class adjustment-fields" name="items['+window.index_item+'][npackqty]" value="'+item.lot_npack+'" id="" style="width:60px;text-align:right;"><input type="hidden" class="lotmatrix_npack" value="'+item.npack+'"></td>';
+                }else{
+                    html_purchase_item += '<td class="text-right"><input type="text" class="npackqty_class adjustment-fields" name="items['+window.index_item+'][npackqty]" value="'+item.npack+'" id="" style="width:60px;text-align:right;"></td>';
+                }
                 
                 html_purchase_item += '<td class="text-right"><select class="po_order_by_class" name="items['+window.index_item+'][po_order_by]"><option value="case"';
                 
@@ -3236,8 +3151,10 @@ $('.editable_text').focus(function() {
                     html_purchase_item += 'selected ';
                     qty_unit_case = transfer_to_po[index]['order_qty']*item.npack;
                     
-                    // console.log('Ordr Qty: '+transfer_to_po[index]['order_qty']+' npack: '+item.npack);
-                    // nordqty = transfer_to_po[index]['order_qty'];
+                    if(item.vitemtype == 'Lot Matrix'){
+                        qty_unit_case = qty_unit_case*item.lot_npack;
+                        
+                    }
                 }
                 
                 html_purchase_item += '>Case</option><option value="unit"';
@@ -3245,16 +3162,17 @@ $('.editable_text').focus(function() {
                 if(transfer_to_po[index]['order_by'] == 'unit'){
                     html_purchase_item += 'selected ';
                     qty_unit_case = transfer_to_po[index]['order_qty'];
+                    
+                    if(item.vitemtype == 'Lot Matrix'){
+                        qty_unit_case = qty_unit_case*item.npack;
+                        
+                    }
                 }
                 
                 html_purchase_item += '>Unit</option></select></td>';
                 
-                // suggested_cost = qty_unit_case * item.last_costprice;
-    
+                
                 suggested_cost = qty_unit_case * item.new_costprice;
-                
-                // <input type="text" class="orderBy" name="items['+window.index_item+'][dunitprice]" id="" style="width:60px;text-align:right;" value="'+  transfer_to_po[index]['order_by'] +'">
-                
                 
                 html_purchase_item += '<td class="text-right"><input type="text" class="nordqty_class" name="items['+window.index_item+'][nordqty]" id="" style="width:60px;text-align:right;" value="'+ transfer_to_po[index]['order_qty'] +'"><input type="hidden" class="itotalunit_class" name="items['+window.index_item+'][itotalunit]" value="'+ qty_unit_case +'" id="" style="width:80px;text-align:right;"></td>';
                 // html_purchase_item += '<td class="text-right noInput"><span class="itotalunit_span_class">'+ qty_unit_case +'</span><input type="hidden" class="itotalunit_class" name="items['+window.index_item+'][itotalunit]" value="'+ qty_unit_case +'" id="" style="width:80px;text-align:right;"></td>';
@@ -3265,13 +3183,6 @@ $('.editable_text').focus(function() {
                 
                 html_purchase_item += '<td class="text-right"><input type="text" class="nordextprice_class" name="items['+window.index_item+'][nordextprice]" value="' + transfer_to_po[index]['amount'] + '" id="" style="width:80px;text-align:right;"><input type="hidden" class="nunitcost_class" name="items['+window.index_item+'][nunitcost]" value="' + unitCost.toFixed(4) + '" id="" style="width:80px;text-align:right;" readonly></td>';
                 
-                /*unitCost = transfer_to_po[index]['amount'] / qty_unit_case;
-                
-                if(isNaN(unitCost)){
-                  unitCost='0.00';
-                }else{
-                  unitCost = unitCost.toFixed(4)  
-                }*/
                 
                 html_purchase_item += '</tr>';
                 window.index_item++;
@@ -3727,21 +3638,6 @@ $('.editable_text').focus(function() {
     }
   }
 
-  // $(document).on('click', '#advance_btn', function(event) {
-  //   event.preventDefault();
-
-  //   if($(this).attr('data-check') == 'unchecked'){
-  //     $("#advance_update").prop( "checked", true );
-  //     $("#advance_update").trigger('change');
-  //     $('#advance_btn').attr('data-check', 'checked');
-  //   }else{
-  //     $("#advance_update").prop( "checked", false );
-  //     $("#advance_update").trigger('change');
-  //     $('#advance_btn').attr('data-check', 'unchecked');
-  //   }
-    
-  // });
-
   $(document).on('click', '.vvendoritemcode_class, .nnewunitprice_class, .nordqty_class, .npackqty_class, .sggtdqty_class, .nordextprice_class, .new_costprice_class, .nripamount_class', function(event) {
     event.preventDefault();
     $(this).select();
@@ -3789,8 +3685,6 @@ $('.editable_text').focus(function() {
 
         event.preventDefault();
         
-        
-        
         var nordqty = $(this).closest('tr').find('.nordqty_class').val();
         var npackqty = $(this).closest('tr').find('.npackqty_class').val();
         var itotalunit = $(this).closest('tr').find('.itotalunit_class').val();
@@ -3798,25 +3692,28 @@ $('.editable_text').focus(function() {
         var nunitcost = $(this).closest('tr').find('.new_costprice_class').val();
         var po_order_by = $(this).val();
         var last_costprice = $(this).closest('tr').find('.nlastunitprice_class').val();
-    
+        
+        let vitemtype = $(this).closest('tr').find('.vitemtype_class').val();
+        let lotmatrix_npack = $(this).closest('tr').find('.lotmatrix_npack').val();
+        
         if(npackqty != ''){
           npackqty = npackqty;
         }else{
           npackqty = 0;
         }
-    
+        
         if(itotalunit != ''){
           itotalunit = itotalunit;
         }else{
           itotalunit = 0;
         }
-    
+        
         if(nordextprice != ''){
           nordextprice = nordextprice;
         }else{
           nordextprice = 0.00;
         }
-    
+        
         if(nunitcost != ''){
           nunitcost = nunitcost;
         }else{
@@ -3824,14 +3721,26 @@ $('.editable_text').focus(function() {
         }
         
         
-        if(po_order_by == 'case'){
-            var closest_itotalunit = nordqty * npackqty;
-        } else {
-            var closest_itotalunit = nordqty;
+        var closest_itotalunit = 0;
+        var closest_nunitcost = 0;
+        if(vitemtype == 'Lot Matrix'){
+            
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+            } else {
+                closest_itotalunit = nordqty*lotmatrix_npack;
+            }
+            
+            closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
+        }else{
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty;
+            } else {
+                closest_itotalunit = nordqty;
+            }
+            closest_nunitcost = nordextprice / closest_itotalunit;
         }
         
-        var closest_nunitcost = nordextprice / closest_itotalunit;
-    
         if(isNaN(closest_nunitcost)) {
           closest_nunitcost = 0.0000;
         }else{

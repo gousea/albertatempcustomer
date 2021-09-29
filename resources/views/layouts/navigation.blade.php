@@ -54,7 +54,7 @@
                                                 <a class="nav-link dropdown-toggle sub text-uppercase" href="{{ url('/item/item_list/Active/DESC') }}" data-toggle="dropdown"> PRODUCTS
                                                 </a>
                                                 <ul class="dropdown-menu main-dropdown">
-                                                        @if (session()->get('version') == 320)
+                                                        @if (session()->get('version') == 320 || session()->get('version') == 330)
 
                                                         <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url(session()->get('version') . '/item/item_list/Active/DESC') }}">Items</a>
                                                         </li>
@@ -88,8 +88,26 @@
                                                         INVENTORY </a>
                                                 <ul class="dropdown-menu main-dropdown">
                                                         @if (session()->get('hq_sid') != 1)
-                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('ReceivingOrder') }}"> Receiving Order</a></li>
-                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('PurchaseOrder') }}"> Purchase Order </a></li>
+                                                                @if(session()->has('version'))
+                                                                        @if( session()->get('version') == 330)
+                                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url(session()->get('version').'/ReceivingOrder') }}"> Receiving Order</a></li>
+                                                                        <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ url(session()->get('version').'/PurchaseOrder') }}"> Purchase Order </a></li>
+                                                                        @else
+                                                                                @php
+                                                                                        $url_ro = route('ReceivingOrder');
+                                                                                        if(strpos($url_ro, '/330') !== false){
+                                                                                        $url_ro = str_replace("/330","",$url_ro);
+                                                                                        }
+                                                                                        
+                                                                                        $url_po = route('PurchaseOrder');
+                                                                                        if(strpos($url_po, '/330') !== false){
+                                                                                        $url_po = str_replace("/330","",$url_po);
+                                                                                        }
+                                                                                @endphp
+                                                                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ $url_ro }}"> Receiving Order</a></li>
+                                                                                <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ $url_po }}"> Purchase Order </a></li>
+                                                                        @endif
+                                                                @endif
                                                         @endif
                                                         <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('department') }}"> Department </a></li>
                                                         <li><a class="dropdown-item sub-dropdown text-uppercase" href="{{ route('category') }}"> Category </a></li>

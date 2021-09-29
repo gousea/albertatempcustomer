@@ -1,7 +1,7 @@
 <?php
 
 // namespace App\Http\Controllers\Item;
-namespace App\_320\Http\Controllers\Item;
+namespace App\_330\Http\Controllers\Item;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,10 +9,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Log;
 
-use App\_320\Model\Item;
-use App\Model\{Olditem,WebAdminSetting,Department,Category,Manufacturer,Unit,Supplier,Size,SubCategory,ItemGroup,AgeVerification,ItemMovement };
+use App\_330\Model\Item;
+use App\Model\Olditem;
+use App\Model\WebAdminSetting;
+use App\Model\Department;
+use App\Model\Category;
+use App\Model\Manufacturer;
+use App\Model\Unit;
+use App\Model\Supplier;
+use App\Model\Size;
+use App\Model\SubCategory;
+use App\Model\ItemGroup;
+use App\Model\AgeVerification;
+use App\Model\ItemMovement;
+
 
 class ItemController extends Controller
 {
@@ -66,19 +77,20 @@ class ItemController extends Controller
             $sort_items = 'DESC';
         }
 
-        $data['add'] = url('/320/item/add');
-        $data['edit'] = url('/320/item/edit');
-        $data['delete'] = url('/320/item/delete');
+        $data['add'] = url('/330/item/add');
+        $data['edit'] = url('/330/item/edit');
+        $data['delete'] = url('/330/item/delete');
         // $data['edit_list'] = url('/items/edit_list');
-        $data['searchitem'] = url('/320/item/search/'.$disable_items.'/'.$sort_items);
+        $data['searchitem'] = url('/330/item/search/'.$disable_items.'/'.$sort_items);
         // $data['parent_child_search'] = url('/items/parent_child_search');
-        $data['current_url'] = url('/320/item/item_list');
-        $data['import_items'] = url('/320/item/import_items');
-        $data['get_barcode'] = url('/320/item/get_barcode');
-        $data['reorder_point_url'] = url('/320/item/calculateROP');
+        $data['current_url'] = url('/330/item/item_list');
+        $data['import_items'] = url('/330/item/import_items');
+        $data['get_barcode'] = url('/330/item/get_barcode');
+        $data['reorder_point_url'] = url('/330/item/calculateROP');
 
-        $data['get_categories_url'] = url('/320/item/get_department_categories');
-        $data['get_department_items_url'] = url('/320/item/get_department_items');
+        $data['get_categories_url'] = url('/330/item/get_department_categories');
+        $data['get_department_items_url'] = url('/330/item/get_department_items');
+        $data['check_lot_child_items'] = url('/330/item/check_lot_child_items');
 
         if(isset($sort_items) && $sort_items != ''){
             // if($sort_items == 'DESC'){
@@ -92,7 +104,7 @@ class ItemController extends Controller
         }
 
         // dd($disable_items);
-        $data['item_sorting'] = url('/320/item/item_list/'.$disable_items.'/'.$sort_items);
+        $data['item_sorting'] = url('/330/item/item_list/'.$disable_items.'/'.$sort_items);
 
 
         $data['title_arr'] = array(
@@ -109,8 +121,7 @@ class ItemController extends Controller
                                 'vsuppliercode' => 'Supplier',
                                 'iqtyonhand' => 'Qty. on Hand',
                                 'ireorderpoint' => 'Reorder Point',
-                                'dcostprice' => 'Avg. Case Cost',
-                                'case_cost' => 'Case Cost',
+                                'dcostprice' => 'Case Cost',
                                 'dunitprice' => 'Price',
                                 'nsaleprice' => 'Sale Price',
                                 'nlevel2' => 'Level 2 Price',
@@ -175,6 +186,7 @@ class ItemController extends Controller
                                 'parentmasterid' => 'parent master id',
                                 'wicitem' => 'wic item',
                                 'gross_profit'=>'Gross Profit',
+                                'last_costprice' => 'Last CostPrice',
                                 );
 
         $error_warning = session()->get('warning');
@@ -196,7 +208,7 @@ class ItemController extends Controller
         }
 
 
-        return view('_320.items.item_list',compact('data'));
+        return view('_330.items.item_list',compact('data'));
 
     }
 
@@ -366,7 +378,7 @@ class ItemController extends Controller
             if(isset($search_items['vbarcode']) && !empty(trim($search_items['vbarcode']))){
 
                 $search = $search_items['vbarcode'];
-                $condition .= " AND mi.vbarcode LIKE  '%" . $search . "%' OR mia.valiassku LIKE '%" . $search . "%' OR miv.vvendoritemcode LIKE  '%" . $search . "%'";
+                $condition .= " AND mi.vbarcode LIKE  '%" . $search . "%' OR mia.valiassku LIKE '%" . $search . "%' OR miv.vvendoritemcode LIKE  '%" . $search . "%' OR mip.vpackbarcode LIKE  '%" . $search . "%'";
 
             }
              if(isset($search_items['iitemid_v']) && !empty(trim($search_items['iitemid_v']))){
@@ -453,7 +465,7 @@ class ItemController extends Controller
                             LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode)
                             LEFT JOIN mst_subcategory as msc ON(mi.subcat_id = msc.subcat_id)
                             LEFT JOIN mst_item p ON mi.parentid = p.iitemid
-
+                            LEFT JOIN mst_itempackdetail as mip ON(mi.vbarcode = mip.vbarcode)
 
                             $show_condition "." $condition
                             group by mi.iitemid
@@ -468,6 +480,7 @@ class ItemController extends Controller
             LEFT JOIN mst_itemvendor as miv ON(mi.iitemid=miv.iitemid)
             LEFT JOIN mst_itemalias as mia ON(mi.vitemcode=mia.vitemcode)
             LEFT JOIN mst_supplier as msupp ON(mi.vsuppliercode = msupp.vsuppliercode)
+            LEFT JOIN mst_itempackdetail as mip ON(mi.vbarcode = mip.vbarcode)
 
             $show_condition "." $condition group by mi.iitemid";
 
@@ -499,7 +512,9 @@ class ItemController extends Controller
                 $temp = array();
                 $temp['iitemid'] = $value['iitemid'];
                 $temp['iitemid_v'] = $value['vvendoritemcode'];
+
                 $temp['vitemname'] = $value['VITEMNAME'];
+
                 $temp['vitemtype'] = $value['vitemtype'];
                 $temp['vbarcode'] = $value['vbarcode'];
 
@@ -567,11 +582,39 @@ class ItemController extends Controller
                 $temp['nsaleprice'] = $value['nsaleprice'];
                 $temp['dunitprice'] = $value['dunitprice'];
                 $temp['subcat_name'] = $value['subcat_name'];
-                //$temp['iqtyonhand'] = $value['iqtyonhand'];
-                // if($value['npack']==0){
-                //     dd($value['iitemid']);
-                // }
-                if($value['PQOH'] !='NULL' && isset($value['PQOH'])){
+
+                if($value['vitemtype'] == 'Lot Matrix'){
+
+                    $total_pack_qoh = (int)$value['iqtyonhand'];
+
+                    $result = DB::connection('mysql_dynamic')->select("SELECT *, 0 as pack_qoh FROM mst_itempackdetail WHERE iitemid = '".(int)($value['iitemid'])."' ORDER BY ipack DESC");
+
+                    $result = array_map(function ($value) {
+                        return (array)$value;
+                    }, $result);
+
+                    $total_pack = array_sum(array_column($result, 'ipack'));
+
+                    if(empty($value['lot_child_limit']) && !empty($result)){
+                        $value['lot_child_limit'] = $result[0]['ipack'];
+                    }elseif(empty($value['lot_child_limit']) && empty($result)){
+                        $value['lot_child_limit'] = 1;
+                    }
+
+                    $total_pack = $total_pack - $value['lot_child_limit'];
+
+                    $total_pack_qoh = $total_pack_qoh - $total_pack;
+
+                    $parrent_pack_qoh = (int)($total_pack_qoh/$value['lot_child_limit']);
+                    $balance_pack_qoh = ((int)$value['iqtyonhand']) - ($parrent_pack_qoh * $value['lot_child_limit']);
+
+                    $data['parrent_qoh'] = $parrent_pack_qoh;
+
+                    $qty_on_hand = ''.$data['parrent_qoh'] .' ('.$balance_pack_qoh.')';
+
+                    $temp['iqtyonhand'] = $qty_on_hand;
+
+                }elseif($value['PQOH'] !='NULL' && isset($value['PQOH'])){
                  $temp['iqtyonhand'] = ($value['PQOH'] % $value['npack']);
                 }
                 else{
@@ -599,10 +642,10 @@ class ItemController extends Controller
                     $temp['iqtyonhand'] = $qty_on_hand;
                     //$temp['iqtyonhand'] = $value['iqtyonhand'];
                 }
+
                 // $temp['dcostprice']=number_format(($value['new_costprice']*$value['npack']),2);
                 $temp['dcostprice']=number_format(($value['nunitcost']*$value['npack']),2);
-                // $temp['dcostprice'] = $value['dcostprice'];
-                $temp['case_cost'] = $value['case_cost'];
+
                 // $temp['nunitcost']=number_format($value['nunitcost'],2);
                 if($value['nsellunit']!=0){
                 $temp['nunitcost']=number_format(($value['new_costprice']/$value['nsellunit']),2);
@@ -922,7 +965,7 @@ class ItemController extends Controller
 
         $data = $this->getForm($input);
 
-        return view('_320.items.item_form',compact('data'));
+        return view('_330.items.item_form',compact('data'));
     }
 
     public function add(Request $request)
@@ -932,12 +975,10 @@ class ItemController extends Controller
         if ($request->isMethod('post')) {
 
             $input = $request->all();
-            // dd($input);
+
             $data = $this->getForm($input);
             $check = true;
             $new_database = session()->get('new_database');
-
-
             if($new_database === false){
                 // =============================================================== OLD DATABASE ====================================
 
@@ -1077,13 +1118,8 @@ class ItemController extends Controller
                 }
 
 
-                // if ($this->error && !isset($this->error['warning'])) {
-                //     $this->error['warning'] = $this->language->get('error_warning');
-                // }
 
-
-            }
-            else {
+            } else {
                 // =============================================================== NEW DATABASE ====================================
 
                 // if (!$this->user->hasPermission('modify', 'administration/items')) {
@@ -1234,13 +1270,11 @@ class ItemController extends Controller
             }
 
             if($check == false){
-                // print_r("aa");
-                // dd($data);
-                return view('_320.items.item_form',compact('data'));
+
+                return view('_330.items.item_form',compact('data'));
 
             }elseif($check == true){
-                // print_r("bb");
-                // dd($data);
+
                 $new_database = session()->get('new_database');
 
                 if($new_database === false){
@@ -1376,6 +1410,7 @@ class ItemController extends Controller
                         $dcostprice = $input['new_costprice'];
                         // $nunitcost = $dcostprice/$npack;
                         $nunitcost = $dcostprice/$nsellunit;
+
                         $temp_arr = array(
                                         // "iitemgroupid" => $input['iitemgroupid'],''
                                         "stores_hq" => isset($input['stores_hq']) ? $input['stores_hq'] : session()->get('sid'),
@@ -1437,8 +1472,7 @@ class ItemController extends Controller
                                         "vsize" => $input['vsize'],
                                         "npack" => $npack,
                                         "nunitcost" => $nunitcost,
-                                        "case_cost" => $nunitcost*$npack,
-                                        "case_price" => $input['dunitprice']*$npack,
+
                                         "ionupload" => "0",
                                         "nsellunit" => $nsellunit,
                                         "ilotterystartnum" => "0",
@@ -1463,9 +1497,10 @@ class ItemController extends Controller
                                         "parentid" => "0",
                                         "parentmasterid" => "0",
                                         "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
-                                        "options_data" => $options_data
+                                        "options_data" => $options_data,
 
                                     );
+
 
                         $olditem = new Olditem();
                         $check_error = $olditem->addItems($temp_arr);
@@ -1477,7 +1512,7 @@ class ItemController extends Controller
                         // echo 1525; die;
                         $data = $this->getForm($input);
 
-                        return view('_320.items.item_form',compact('data'));
+                        return view('_330.items.item_form',compact('data'));
                     }else{
                         session()->put('success', 'Successfully Added Item');
                     }
@@ -1488,9 +1523,9 @@ class ItemController extends Controller
                         // echo 1525; die;
                         $data = $this->getForm($input);
 
-                        return view('_320.items.item_form',compact('data'));
+                        return view('_330.items.item_form',compact('data'));
                     }else{
-                        $url = '/320/item/item_list/Active/DESC';
+                        $url = '/330/item/item_list/Active/DESC';
                         return redirect($url);
                     }
 
@@ -1544,7 +1579,7 @@ class ItemController extends Controller
 
                     if(isset($input['npack']) && $input['npack'] == ''){
                         $npack = '1';
-                    }else{
+                    }elseif(isset($input['npack'])){
                         $npack = $input['npack'];
                     }
 
@@ -1579,6 +1614,31 @@ class ItemController extends Controller
                     }
 
                     $check_error='';
+
+                    if($input['vitemtype'] == 'Lot Matrix'){
+                        $lotData['vpackname'] = $input['packname'];
+                        $lotData['vpack'] = $input['pack'];
+                        $lotData['vdesc'] = $input['desc'];
+                        $lotData['npackprice'] = $input['packprice'];
+                        $lotData['isequence'] = $input['sequence'];
+                        $lot_child_limit = $input['pack'];
+                        $npack = $input['pack'];
+
+                        if(isset($input['lot_npack'])){
+
+                            $lot_npack = $input['lot_npack'];
+                        }elseif(isset($input['npack'])){
+                            $lot_npack = $input['npack'];
+                        }else{
+                            $lot_npack = 1;
+                        }
+
+                        $nsellunit = 1;
+                    }else{
+                        $lot_child_limit = 0;
+                        $lot_npack = 1;
+                        $lotData = array();
+                    }
 
                     if($input['vitemtype'] == 'Instant'){
 
@@ -1743,10 +1803,12 @@ class ItemController extends Controller
                                         "parentid" => "0",
                                         "parentmasterid" => "0",
                                         "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
-                                        "options_data" => $options_data
-
+                                        "options_data" => $options_data,
+                                        "lot_child_limit" => $lot_child_limit,
+                                        "lotData" => $lotData,
+                                        "lot_npack" => $lot_npack,
                                     );
-
+                        // dd($temp_arr);
                         $item = new Item();
                         $check_error = $item->addItems($temp_arr);
                     }
@@ -1758,7 +1820,7 @@ class ItemController extends Controller
                         // echo 1525; die;
                         $data = $this->getForm($input);
 
-                        return view('_320.items.item_form',compact('data'));
+                        return view('_330.items.item_form',compact('data'));
                     }elseif(isset($check_error['error'])){
                         session()->put('warning', $check_error['error']);
 
@@ -1772,9 +1834,9 @@ class ItemController extends Controller
 
                         $data = $this->getForm($input);
 
-                        return view('_320.items.item_form',compact('data'));
+                        return view('_330.items.item_form',compact('data'));
                     }else{
-                        $url = '/320/item/item_list/Active/DESC';
+                        $url = '/330/item/item_list/Active/DESC';
 
                         return redirect($url);
                     }
@@ -1794,7 +1856,7 @@ class ItemController extends Controller
             $check_itemid = Item::where('iitemid', $iitemid)->count();
             if($check_itemid < 1){
 
-                $url = '/320/item/item_list/Active/DESC';
+                $url = '/330/item/item_list/Active/DESC';
                 return redirect($url);
             }
         }
@@ -1804,7 +1866,7 @@ class ItemController extends Controller
         $input = $request->all();
 
         $data = $this->getForm($input, $iitemid);
-         //dd($data);
+        // dd($data);
         session()->forget('error_warning');
 
         $get_input = DB::connection('mysql_dynamic')->select("select iitemid as search_iitemid , vbarcode as search_vbarcode from mst_item where iitemid='". $iitemid ."'" );
@@ -1843,7 +1905,7 @@ class ItemController extends Controller
         }
        //------------------------------------
 
-        return view('_320.items.item_form',compact('data', 'reports', 'childreports', 'parentreports'));
+        return view('_330.items.item_form',compact('data', 'reports', 'childreports', 'parentreports'));
     }
 
     public function edit($iitemid, Request $request)
@@ -1857,7 +1919,6 @@ class ItemController extends Controller
             $data = $this->getForm($input, $iitemid);
             $check = true;
             $new_database = session()->get('new_database');
-
             if($new_database === false){
                 // =============================================================== OLD DATABASE ====================================
 
@@ -2193,16 +2254,14 @@ class ItemController extends Controller
             }
 
             if($check == false){
-                // print_r("aa");
-                // dd($data);
-                return view('_320.items.item_form',compact('data'));
-                // return redirect('/item/edit/'.$iitemid, compact('data'));
+
+                return view('_330.items.item_form',compact('data'));
 
             }elseif($check == true){
-                // print_r("bb");
-                // dd($data);
+
                 $new_database = session()->get('new_database');
             }
+
             if($new_database === false){
 
                 // =================================================== OLD DATABASE ==========================================
@@ -2456,18 +2515,18 @@ class ItemController extends Controller
     			if(isset($item_page_search)){
                     session()->put('item_page_search_id', $input['iitemid']);
 
-                    $url = '/320/item/item_list/Active/DESC';
+                    $url = '/330/item/item_list/Active/DESC';
                     return redirect($url);
                     session()->forget('item_page_search');
     			}else{
                     if(isset($input['visited_zero_movement_report'])){
-                        $url = '/320/item/edit/'.$iitemid.'?visited_zero_movement_report=Yes';
+                        $url = '/330/item/edit/'.$iitemid.'?visited_zero_movement_report=Yes';
 
                     }elseif(isset($input['visited_below_cost_report'])){
-                        $url = '/320/item/edit/'.$iitemid.'?visited_below_cost_report=Yes';
+                        $url = '/330/item/edit/'.$iitemid.'?visited_below_cost_report=Yes';
 
                     }else{
-                        $url = '/320/item/edit/'.$iitemid;
+                        $url = '/330/item/edit/'.$iitemid;
                     }
 
                     return redirect($url);
@@ -2525,8 +2584,12 @@ class ItemController extends Controller
 
                 if(isset($input['npack']) && $input['npack'] == ''){
                     $npack = '1';
-                }else{
+                }elseif(isset($input['npack'])){
                     $npack = $input['npack'];
+                }elseif(isset($input['lot_npack'])){
+                    $npack = $input['lot_npack'];
+                }else{
+                    $npack = 1;
                 }
 
                 if(isset($input['nsellunit']) && $input['nsellunit'] == ''){
@@ -2535,6 +2598,9 @@ class ItemController extends Controller
                     $nsellunit = $input['nsellunit'];
                 }
 
+                if(empty($nsellunit)){
+                    $nsellunit = 1;
+                }
                 // if(isset($input['visinventory']) && $input['visinventory'] == 'No'){
                 //     $iqtyonhand = '0';
                 // }else{
@@ -2578,6 +2644,37 @@ class ItemController extends Controller
                 }
 
                 $reorderPoint = ($input['ireorderpoint'] > 0) ? $input['ireorderpoint'] : $reorderPoint ;
+
+                if($input['vitemtype'] == 'Lot Matrix'){
+                    $lotData['vpackname'] = $input['packname'];
+                    $lotData['vpack'] = $input['pack'];
+                    $lotData['vdesc'] = $input['desc'];
+                    $lotData['npackprice'] = $input['packprice'];
+                    $lotData['isequence'] = $input['sequence'];
+
+                    if(!empty($input['pack']) && $input['pack'] == 0){
+
+                        $lot_child_limit = $input['pack'];
+                        $npack = $input['pack'];
+                    }else{
+                        $lot_child_limit = $input['lot_child_limit'];
+                        $npack = $input['lot_child_limit'];
+                    }
+
+                    if(isset($input['lot_npack'])){
+
+                        $lot_npack = $input['lot_npack'];
+                    }elseif(isset($input['npack'])){
+                        $lot_npack = $input['npack'];
+                    }else{
+                        $lot_npack = 1;
+                    }
+                    $nsellunit = 1;
+                }else{
+                    $lot_child_limit = 0;
+                    $lot_npack = 1;
+                    $lotData = array();
+                }
 
                 if($input['vitemtype'] == 'Instant'){
 
@@ -2724,7 +2821,10 @@ class ItemController extends Controller
                                     "parentid" => $input['parentid'],
                                     "parentmasterid" => $input['parentmasterid'],
                                     "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
-                                    "options_data" => $options_data
+                                    "options_data" => $options_data,
+                                    "lot_child_limit" => $lot_child_limit,
+                                    "lotData" => $lotData,
+                                    "lot_npack" => $lot_npack,
                                 );
                     // dd($temp_arr);
                     $item = new Item();
@@ -2737,7 +2837,7 @@ class ItemController extends Controller
 
                     $data = $this->getForm($input);
 
-                    return view('_320.items.item_form',compact('data'));
+                    return view('_330.items.item_form',compact('data'));
                     // echo 1525;
                 }else{
                     session()->put('success', 'Successfully Updated');
@@ -2752,19 +2852,19 @@ class ItemController extends Controller
     				$url = '';
                     session()->forget('item_page_search');
 
-                    $url = '/320/item/item_list/Active/DESC';
+                    $url = '/330/item/item_list/Active/DESC';
 
                     return redirect($url);
 
                 }else{
                     if(isset($input['visited_zero_movement_report'])){
-                        $url = '/320/item/edit/'.$iitemid.'?visited_zero_movement_report=Yes';
+                        $url = '/330/item/edit/'.$iitemid.'?visited_zero_movement_report=Yes';
 
                     }elseif(isset($input['visited_below_cost_report'])){
-                        $url = '/320/item/edit/'.$iitemid.'?visited_below_cost_report=Yes';
+                        $url = '/330/item/edit/'.$iitemid.'?visited_below_cost_report=Yes';
 
                     }else{
-                        $url = '/320/item/edit/'.$iitemid;
+                        $url = '/330/item/edit/'.$iitemid;
                     }
 
                     return redirect($url);
@@ -2850,14 +2950,13 @@ class ItemController extends Controller
 
             $data['breadcrumbs'][] = array(
                 'text' => 'Items',
-                'href' => url('/320/items/item_list')
+                'href' => url('/330/items/item_list')
             );
 
             if (!isset($this->request->get['iitemid'])) {
-                $data['action'] = url('/320/item/add');
+                $data['action'] = url('/330/item/add');
             	$data['clone_item'] = '';
-            }
-            else {
+            } else {
 
                 $visited_zero_movement_report = session()->get('visited_zero_movement_report');
                 $visited_below_cost_report = session()->get('visited_below_cost_report');
@@ -2866,70 +2965,70 @@ class ItemController extends Controller
                     $data['zero_movement_item_link']= url('/zeromovementreport?visited_zero_movement_report=Yes');
                     session()->put('visited_zero_movement_report', 'Yes');
                     $data['visited_zero_movement_report'] = session()->get('visited_zero_movement_report');
-                    $data['action'] = url('/320/item/edit/'. $iitemid.'?visited_zero_movement_report=Yes');
+                    $data['action'] = url('/330/item/edit/'. $iitemid.'?visited_zero_movement_report=Yes');
 
                 }elseif(isset($visited_below_cost_report) || ( isset($input['visited_below_cost_report']) && $input['visited_below_cost_report'] =='Yes' )){
 
-                    $data['below_cost_item_link']= url('/320/belowcostreport/getlist_belowcostreport?visited_below_cost_report=Yes');
+                    $data['below_cost_item_link']= url('/330/belowcostreport/getlist_belowcostreport?visited_below_cost_report=Yes');
                     $visited_below_cost_report = 'Yes';
                     $data['visited_below_cost_report'] = $visited_below_cost_report;
-                    $data['action'] = url('/320/item/edit/'. $iitemid.'?visited_below_cost_report=Yes');
+                    $data['action'] = url('/330/item/edit/'. $iitemid.'?visited_below_cost_report=Yes');
 
                 }else{
-                    $data['action'] = url('/320/item/edit/'. $iitemid);
+                    $data['action'] = url('/330/item/edit/'. $iitemid);
                 }
 
-    			$data['clone_item'] = url('/320/item/clone_item/'.$iitemid);
+    			$data['clone_item'] = url('/330/item/clone_item/'.$iitemid);
     		}
 
-    		$data['unset_visited_below_zero'] = url('/320/item/unset_visited_below_zero');
-            $data['reorder_point_calculate_url'] = url('/320/item/calculateReorderPointAjax');
+    		$data['unset_visited_below_zero'] = url('/330/item/unset_visited_below_zero');
+            $data['reorder_point_calculate_url'] = url('/330/item/calculateReorderPointAjax');
 
-            $data['delete'] = url('/320/item/delete');
-            $data['delete_vendor_code'] = url('/320/item/delete_vendor_code');
-            $data['current_url'] = url('/320/item');
+            $data['delete'] = url('/330/item/delete');
+            $data['delete_vendor_code'] = url('/330/item/delete_vendor_code');
+            $data['current_url'] = url('/330/item');
 
-            $data['action_vendor'] = url('/320/item/action_vendor');
-            $data['action_vendor_editlist'] = url('/320/item/action_vendor_editlist');
-            $data['add_alias_code'] = url('/320/item/add_alias_code');
-            $data['alias_code_deletelist'] = url('/320/item/delete_alias_code');
-            $data['add_lot_matrix'] = url('/320/item/add_lot_matrix');
-            $data['lot_matrix_editlist'] = url('/320/item/lot_matrix_editlist');
-            $data['lot_matrix_deletelist'] = url('/320/item/delete_lot_matrix');
+            $data['action_vendor'] = url('/330/item/action_vendor');
+            $data['action_vendor_editlist'] = url('/330/item/action_vendor_editlist');
+            $data['add_alias_code'] = url('/330/item/add_alias_code');
+            $data['alias_code_deletelist'] = url('/330/item/delete_alias_code');
+            $data['add_lot_matrix'] = url('/330/item/add_lot_matrix');
+            $data['lot_matrix_editlist'] = url('/330/item/lot_matrix_editlist');
+            $data['lot_matrix_deletelist'] = url('/330/item/delete_lot_matrix');
 
-            $data['check_vendor_item_code'] = url('/320/item/check_vendor_item_code');
-            $data['get_categories'] = url('/320/item/get_categories');
-            $data['get_subcategories_url'] = url('/320/item/get_subcategories');
+            $data['check_vendor_item_code'] = url('/330/item/check_vendor_item_code');
+            $data['get_categories'] = url('/330/item/get_categories');
+            $data['get_subcategories_url'] = url('/330/item/get_subcategories');
 
             // $data['searchitem'] = url('/item/search');
-            $data['parent_child_search'] = url('/320/item/parent_child_search');
+            $data['parent_child_search'] = url('/330/item/parent_child_search');
     		// urls for adding category, dept, etc
     		$data['Sales'] = 'Sales';
             $data['MISC'] = 'MISC';
 
-    		$data['add_new_category'] = url('/320/item/category/add');
+    		$data['add_new_category'] = url('/330/item/category/add');
 
-            $data['add_new_department'] = url('/320/item/department/add');
-            $data['get_new_department'] = url('/320/item/department');
+            $data['add_new_department'] = url('/330/item/department/add');
+            $data['get_new_department'] = url('/330/item/department');
 
-            $data['add_new_subcategory'] = url('/320/item/sub_category/add');
+            $data['add_new_subcategory'] = url('/330/item/sub_category/add');
 
-            $data['add_new_size'] = url('/320/item/size/add');
-            $data['get_new_size'] = url('/320/item/size');
+            $data['add_new_size'] = url('/330/item/size/add');
+            $data['get_new_size'] = url('/330/item/size');
 
-            $data['add_new_group'] = url('/320/item/group/add');
-            $data['get_new_group'] = url('/320/item/group');
+            $data['add_new_group'] = url('/330/item/group/add');
+            $data['get_new_group'] = url('/330/item/group');
 
-            $data['add_new_supplier'] = url('/320/item/supplier/add');
-            $data['get_new_supplier'] = url('/320/item/supplier');
+            $data['add_new_supplier'] = url('/330/item/supplier/add');
+            $data['get_new_supplier'] = url('/330/item/supplier');
 
-            $data['add_new_manufacturer'] = url('/320/item/manufacturer/add_manufacturer');
-            $data['get_new_manufacturer'] = url('/320item/manufacturer/get_manufacturer');
+            $data['add_new_manufacturer'] = url('/330/item/manufacturer/add_manufacturer');
+            $data['get_new_manufacturer'] = url('/330item/manufacturer/get_manufacturer');
     		// urls for adding category, dept, etc
 
             $data['sid'] = session()->get('sid');
 
-            $data['cancel'] = url('/320/item/item_list/Active/DESC');
+            $data['cancel'] = url('/330/item/item_list/Active/DESC');
 
             if (isset($iitemid)) {
     			$olditem = new Olditem();
@@ -3510,6 +3609,7 @@ class ItemController extends Controller
         //============================================== OLD DATABASE ENDS ========================================
         // $tax_info = $this->model_api_items->gettaxinfo();
         // $data['tax_info']=$tax_info;
+
         $tab_selected = session()->get('tab_selected');
         if(isset($tab_selected)){
             $data['tab_selected'] = session()->get('tab_selected');
@@ -3565,7 +3665,6 @@ class ItemController extends Controller
         }
 
 
-
         $session_success = session()->get('success');
         if (isset($session_success)) {
             $data['success'] = session()->get('success');
@@ -3586,12 +3685,12 @@ class ItemController extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => 'Items',
-            'href' => url('/320/items/item_list')
+            'href' => url('/330/items/item_list')
         );
 
 
         if (!isset($iitemid)) {
-            $data['action'] = url('/320/item/add');
+            $data['action'] = url('/330/item/add');
 
             $data['clone_item'] = '';
         } else {
@@ -3599,77 +3698,77 @@ class ItemController extends Controller
             $visited_below_cost_report = session()->get('visited_below_cost_report');
             if(isset($visited_zero_movement_report) || ( isset($input['visited_zero_movement_report']) && $input['visited_zero_movement_report'] =='Yes' )){
 
-                $data['zero_movement_item_link']= url('/320/zeromovementreport?visited_zero_movement_report=Yes');
+                $data['zero_movement_item_link']= url('/330/zeromovementreport?visited_zero_movement_report=Yes');
                 session()->put('visited_zero_movement_report', 'Yes');
                 $data['visited_zero_movement_report'] = session()->get('visited_zero_movement_report');
-                $data['action'] = url('/320/item/edit/'. $iitemid.'?visited_zero_movement_report=Yes');
+                $data['action'] = url('/330/item/edit/'. $iitemid.'?visited_zero_movement_report=Yes');
 
             }elseif(isset($visited_below_cost_report) || ( isset($input['visited_below_cost_report']) && $input['visited_below_cost_report'] =='Yes' )){
 
-                $data['below_cost_item_link']= url('/320/belowcostreport/getlist_belowcostreport?visited_below_cost_report=Yes');
+                $data['below_cost_item_link']= url('/330/belowcostreport/getlist_belowcostreport?visited_below_cost_report=Yes');
                 $visited_below_cost_report = 'Yes';
                 $data['visited_below_cost_report'] = $visited_below_cost_report;
-                $data['action'] = url('/320/item/edit/'. $iitemid.'?visited_below_cost_report=Yes');
+                $data['action'] = url('/330/item/edit/'. $iitemid.'?visited_below_cost_report=Yes');
 
             }else{
-			    $data['action'] = url('/320/item/edit/'. $iitemid);
+			    $data['action'] = url('/330/item/edit/'. $iitemid);
             }
-            $data['clone_item'] = url('/320/item/clone_item/'.$iitemid);
+            $data['clone_item'] = url('/330/item/clone_item/'.$iitemid);
         }
 
-        $data['unset_visited_below_zero'] = url('/320/item/unset_visited_below_zero');
-        $data['reorder_point_calculate_url'] = url('/320/item/calculateReorderPointAjax');
+        $data['unset_visited_below_zero'] = url('/330/item/unset_visited_below_zero');
+        $data['reorder_point_calculate_url'] = url('/330/item/calculateReorderPointAjax');
 
         $data['delete'] = url('/item/delete');
-        $data['delete_vendor_code'] = url('/320/item/delete_vendor_code');
-        $data['current_url'] = url('/320/item/item_list/Active/DESC');
+        $data['delete_vendor_code'] = url('/330/item/delete_vendor_code');
+        $data['current_url'] = url('/330/item/item_list/Active/DESC');
 
-        $data['action_vendor'] = url('/320/item/action_vendor');
-        $data['action_vendor_editlist'] = url('/320/item/action_vendor_editlist');
-        $data['add_alias_code'] = url('/320/item/add_alias_code');
-        $data['alias_code_deletelist'] = url('/320/item/delete_alias_code');
-        $data['add_lot_matrix'] = url('/320/item/add_lot_matrix');
-        $data['lot_matrix_editlist'] = url('/320/item/lot_matrix_editlist');
-        $data['lot_matrix_deletelist'] = url('/320/item/delete_lot_matrix');
+        $data['action_vendor'] = url('/330/item/action_vendor');
+        $data['action_vendor_editlist'] = url('/330/item/action_vendor_editlist');
+        $data['add_alias_code'] = url('/330/item/add_alias_code');
+        $data['alias_code_deletelist'] = url('/330/item/delete_alias_code');
+        $data['add_lot_matrix'] = url('/330/item/add_lot_matrix');
+        $data['lot_matrix_editlist'] = url('/330/item/lot_matrix_editlist');
+        $data['lot_matrix_deletelist'] = url('/330/item/delete_lot_matrix');
         // $data['add_slab_price'] = url('api/items/add_slab_price');
         // $data['slab_price_editlist'] = url('/item/slab_price_editlist');
         // $data['slab_price_deletelist'] = url('api/items/slab_price_deletelist');
         // $data['add_parent_item'] = url('api/items/add_parent_item');
         // $data['action_remove_parent_item'] = url('api/items/remove_parent_item');
-        $data['check_vendor_item_code'] = url('/320/item/check_vendor_item_code');
-        $data['get_categories'] = url('/320/item/get_categories');
-        $data['get_subcategories_url'] = url('/320/item/get_subcategories');
+        $data['check_vendor_item_code'] = url('/330/item/check_vendor_item_code');
+        $data['get_categories'] = url('/330/item/get_categories');
+        $data['get_subcategories_url'] = url('/330/item/get_subcategories');
 
         // $data['searchitem'] = url('/item/search');
-        $data['parent_child_search'] = url('/320/item/parent_child_search');
+        $data['parent_child_search'] = url('/330/item/parent_child_search');
 
         // urls for adding category, dept, etc
         $data['Sales'] = 'Sales';
         $data['MISC'] = 'MISC';
-        $data['add_new_category'] = url('/320/item/category/add');
+        $data['add_new_category'] = url('/330/item/category/add');
 
-        $data['add_new_department'] = url('/320/item/department/add');
-        $data['get_new_department'] = url('/320/item/department');
+        $data['add_new_department'] = url('/330/item/department/add');
+        $data['get_new_department'] = url('/330/item/department');
 
-        $data['add_new_subcategory'] = url('/320/item/sub_category/add');
+        $data['add_new_subcategory'] = url('/330/item/sub_category/add');
 
-        $data['add_new_size'] = url('/320/item/size/add');
-        $data['get_new_size'] = url('/320/item/size');
+        $data['add_new_size'] = url('/330/item/size/add');
+        $data['get_new_size'] = url('/330/item/size');
 
-        $data['add_new_group'] = url('/320/item/group/add');
-        $data['get_new_group'] = url('/320/item/group');
+        $data['add_new_group'] = url('/330/item/group/add');
+        $data['get_new_group'] = url('/330/item/group');
 
-        $data['add_new_supplier'] = url('/320/item/supplier/add');
-        $data['get_new_supplier'] = url('/320/item/supplier');
+        $data['add_new_supplier'] = url('/330/item/supplier/add');
+        $data['get_new_supplier'] = url('/330/item/supplier');
 
-        $data['add_new_manufacturer'] = url('/320/item/manufacturer/add_manufacturer');
-        $data['get_new_manufacturer'] = url('/320/item/manufacturer/get_manufacturer');
+        $data['add_new_manufacturer'] = url('/330/item/manufacturer/add_manufacturer');
+        $data['get_new_manufacturer'] = url('/330/item/manufacturer/get_manufacturer');
 
         // urls for adding category, dept, etc
 
         $data['sid'] = session()->get('sid');
 
-        $data['cancel'] = url('/320/item/item_list/Active/DESC');
+        $data['cancel'] = url('/330/item/item_list/Active/DESC');
 
         $data['item_movement_data'] = url('/item/item_movement_report/item_movement_data');
 
@@ -3677,7 +3776,6 @@ class ItemController extends Controller
 
             $item = new Item();
             $item_info = $item->getItem($iitemid);
-            //return $item_info;
             // $item_info = Item::where('iitemid', $iitemid)->get()->toArray();
             // dd($item_info);
 
@@ -3699,7 +3797,6 @@ class ItemController extends Controller
             $data['remove_parent_item'] = $item_info['remove_parent_item'];
 
 
-
             $unit_data = $item->getItemUnitData($iitemid);
             $bucket_data = $item->getItemBucketData($iitemid);
         }
@@ -3708,7 +3805,6 @@ class ItemController extends Controller
         if (isset($iitemid)) {
             $data['edit_page'] = 'edit_page';
         }
-
 
 
         if (isset($input['iitemid'])) {
@@ -3867,8 +3963,6 @@ class ItemController extends Controller
                 $data['ireorderpoint'] = '';
             }
         }
-
-        // dd($item_info['vitemtype']);
 
 
         $data['manufacturers'] = [];
@@ -4328,6 +4422,110 @@ class ItemController extends Controller
             $data['case_cost'] = '';
         }
 
+        if (isset($input['lot_child_limit'])) {
+            $data['lot_child_limit'] = $input['lot_child_limit'];
+        } elseif (!empty($item_info['lot_child_limit']) ) {
+            $data['lot_child_limit'] = $item_info['lot_child_limit'];
+        } else {
+            $data['lot_child_limit'] = '1';
+        }
+
+        if (isset($input['packname'])) {
+            $data['packname'] = $input['packname'];
+        }else {
+            $data['packname'] = '';
+        }
+
+        if (isset($input['pack'])) {
+            $data['pack'] = $input['pack'];
+        }else {
+            $data['pack'] = '';
+        }
+
+        if (isset($input['desc'])) {
+            $data['desc'] = $input['desc'];
+        }else {
+            $data['desc'] = '';
+        }
+
+        if (isset($input['packprice'])) {
+            $data['packprice'] = $input['packprice'];
+        }else {
+            $data['packprice'] = '';
+        }
+
+        if (isset($input['sequence'])) {
+            $data['sequence'] = $input['sequence'];
+        }else {
+            $data['sequence'] = '';
+        }
+
+        if(isset($data['itempacks']) && !empty($data['itempacks'])){
+
+
+            $total_pack_qoh = (int)$data['iqtyonhand'];
+
+            $total_pack = array_sum(array_column($data['itempacks'], 'ipack'));
+
+
+            $total_pack = $total_pack - $data['lot_child_limit'];
+
+            $total_pack_qoh = $total_pack_qoh - $total_pack;
+
+            $parrent_pack_qoh = (int)($total_pack_qoh/$data['lot_child_limit']);
+            $balance_pack_qoh = ((int)$data['iqtyonhand']) - ($parrent_pack_qoh * $data['lot_child_limit']);
+
+            $data['parrent_qoh'] = $parrent_pack_qoh;
+            $data['balance_pack_qoh'] = $balance_pack_qoh;
+
+            $itempacks = array();
+            $filter_itempacks = array();
+
+            $data['itempacks'] = array_map(function ($value) {
+                return (array)$value;
+            }, $data['itempacks']);
+
+            foreach($data['itempacks'] as $itempack){
+
+                if($itempack['ipack'] != $data['lot_child_limit']){
+                    $itempack['pack_qoh'] = 1;
+                    $balance_pack_qoh = $balance_pack_qoh - $itempack['ipack'];
+                }else{
+                    $itempack['pack_qoh'] = $parrent_pack_qoh;
+                }
+
+                $itempacks[] = $itempack;
+
+            }
+
+            foreach($itempacks as $itempack){
+
+                if($itempack['ipack'] != $data['lot_child_limit'] &&  $balance_pack_qoh >= $itempack['ipack']){
+                    $itempack['pack_qoh'] =  $itempack['pack_qoh'] + (int)($balance_pack_qoh / $itempack['ipack']);
+                    $balance_pack_qoh = $balance_pack_qoh - ((int)($balance_pack_qoh / $itempack['ipack']) * $itempack['ipack']);
+                }
+                $filter_itempacks[] = $itempack;
+            }
+
+            //  dd($filter_itempacks);
+            $data['itempacks'] = $filter_itempacks;
+        }elseif($data['vitemtype'] == 'Lot Matrix'){
+            $data['parrent_qoh'] = '';
+            $data['balance_pack_qoh'] = '';
+            $data['itempacks'] = array();
+        }else{
+            $data['parrent_qoh'] = '';
+            $data['balance_pack_qoh'] = '';
+        }
+
+        if (isset($input['lot_npack'])) {
+            $data['lot_npack'] = $input['lot_npack'];
+        } elseif (!empty($item_info['lot_npack']) ) {
+            $data['lot_npack'] = $item_info['lot_npack'];
+        } else {
+            $data['lot_npack'] = '1';
+        }
+
         $departments = Department::orderBy('vdepartmentname', 'ASC')->get()->toArray();
 
         $data['departments'] = $departments;
@@ -4402,7 +4600,7 @@ class ItemController extends Controller
 
         $data = $this->getCloneForm($input, $iitemid);
 
-        return view('_320.items.clone_item_form',compact('data'));
+        return view('_330.items.clone_item_form',compact('data'));
 
     }
 
@@ -4411,7 +4609,7 @@ class ItemController extends Controller
         if ($request->isMethod('post')) {
 
             $input = $request->all();
-            // dd($input);
+
             $data = $this->getCloneForm($input, $input['clone_item_id']);
             $check = true;
             $new_database = session()->get('new_database');
@@ -4978,7 +5176,7 @@ class ItemController extends Controller
 
                     DB::connection('mysql_dynamic')->insert("INSERT INTO trn_webadmin_history SET  itemid = '" . $last_iitemid['iitemid'] . "',userid = '" . Auth::user()->id . "',barcode = '" . ($new_item_values['vbarcode']) . "', type = 'Clone', oldamount = '0', newamount = '0',general = '" . $x_general . "', source = 'CloneItem', historydatetime = NOW(),SID = '" . (int)(session()->get('sid'))."'");
 
-                    $url = '/320/item/item_list/Active/DESC';
+                    $url = '/330/item/item_list/Active/DESC';
 
                     return redirect($url);
 
@@ -5032,11 +5230,14 @@ class ItemController extends Controller
                         $vtax3 = 'N';
                     }
 
-
                     if(isset($input['npack']) && $input['npack'] == ''){
                         $npack = '1';
-                    }else{
+                    }elseif(isset($input['npack'])){
                         $npack = $input['npack'];
+                    }elseif(isset($input['lot_npack'])){
+                        $npack = $input['lot_npack'];
+                    }else{
+                        $npack = 1;
                     }
 
                     if(isset($input['nsellunit']) && $input['nsellunit'] == ''){
@@ -5045,6 +5246,9 @@ class ItemController extends Controller
                         $nsellunit = $input['nsellunit'];
                     }
 
+                    if(empty($nsellunit)){
+                        $nsellunit = 1;
+                    }
 
                     if(isset($input['nbottledepositamt']) && ($input['nbottledepositamt'] == '0.00' || $input['nbottledepositamt'] == '')){
                         $nbottledepositamt = '0.00';
@@ -5070,6 +5274,27 @@ class ItemController extends Controller
                     }
 
                     $check_error='';
+
+                    if($input['vitemtype'] == 'Lot Matrix'){
+
+                        $lot_child_limit = $input['lot_child_limit'];
+                        $npack = $input['lot_child_limit'];
+
+                        if(isset($input['lot_npack'])){
+
+                            $lot_npack = $input['lot_npack'];
+                        }elseif(isset($input['npack'])){
+                            $lot_npack = $input['npack'];
+                        }else{
+                            $lot_npack = 1;
+                        }
+
+                        $nsellunit = 1;
+                    }else{
+                        $lot_child_limit = 0;
+                        $lot_npack = 1;
+                        $lotData = array();
+                    }
 
                     if($input['vitemtype'] == 'Instant'){
 
@@ -5236,6 +5461,8 @@ class ItemController extends Controller
                                         "parentmasterid" => "0",
                                         "wicitem" => $input['wicitem'] == 'Y' ? 1 : 0,
                                         "options_data" => $options_data,
+                                        "lot_child_limit" => $lot_child_limit,
+                                        "lot_npack" => $lot_npack,
 
                                     );
                         $item = new Item();
@@ -5280,10 +5507,17 @@ class ItemController extends Controller
 
                                 $insert_query = "INSERT INTO mst_itempackdetail SET  iitemid = '" . (int)$last_iitemid['iitemid'] . "',`vbarcode` = '" . $input['vbarcode'] . "',`vpackname` = '" . $itempack->vpackname . "',`vdesc` = '" . $itempack->vdesc . "',`ipack` = '" . (int)$itempack->ipack . "',`iparentid` = '" . (int)$itempack->iparentid . "',`npackcost` = '" . $itempack->npackcost . "',`npackprice` = '" . $itempack->npackprice . "',`npackmargin` = '" . $itempack->npackmargin . "', SID = '" . (int)(session()->get('sid')) . "'";
                                 DB::connection('mysql_dynamic')->insert($insert_query);
+
+                                $return = DB::connection('mysql_dynamic')->select("SELECT idetid FROM mst_itempackdetail ORDER BY idetid DESC LIMIT 1");
+                                $idetid = $return[0]->idetid;
+
+                                $vbarcode = ($input['vbarcode']).'-'.$idetid;
+                                DB::connection('mysql_dynamic')->update("UPDATE mst_itempackdetail SET `vpackbarcode` = '".$vbarcode."' WHERE idetid = '".(int)$idetid."' ");
+
                             }
                         }
                     }
-                    $url = '/320/item/item_list/Active/DESC';
+                    $url = '/330/item/item_list/Active/DESC';
 
                     return redirect($url);
 
@@ -5366,61 +5600,61 @@ class ItemController extends Controller
 
             $data['breadcrumbs'][] = array(
                 'text' => 'Home',
-                'href' => url('/320/dashboard')
+                'href' => url('/330/dashboard')
             );
 
             $data['breadcrumbs'][] = array(
                 'text' => 'Items',
-                'href' => url('/320/items/item_list')
+                'href' => url('/330/items/item_list')
             );
 
-            $data['action_vendor'] = url('/320/item/action_vendor');
-            $data['action_vendor_editlist'] = url('/320/item/action_vendor_editlist');
-            $data['add_alias_code'] = url('/320/item/add_alias_code');
-            $data['alias_code_deletelist'] = url('/320/item/delete_alias_code');
-            $data['add_lot_matrix'] = url('/320/item/add_lot_matrix');
-            $data['lot_matrix_editlist'] = url('/320/item/lot_matrix_editlist');
-            $data['lot_matrix_deletelist'] = url('/320/item/delete_lot_matrix');
+            $data['action_vendor'] = url('/330/item/action_vendor');
+            $data['action_vendor_editlist'] = url('/330/item/action_vendor_editlist');
+            $data['add_alias_code'] = url('/330/item/add_alias_code');
+            $data['alias_code_deletelist'] = url('/330/item/delete_alias_code');
+            $data['add_lot_matrix'] = url('/330/item/add_lot_matrix');
+            $data['lot_matrix_editlist'] = url('/330/item/lot_matrix_editlist');
+            $data['lot_matrix_deletelist'] = url('/330/item/delete_lot_matrix');
             // $data['add_slab_price'] = url('api/items/add_slab_price');
             // $data['slab_price_editlist'] = url('/item/slab_price_editlist');
             // $data['slab_price_deletelist'] = url('api/items/slab_price_deletelist');
             // $data['add_parent_item'] = url('api/items/add_parent_item');
             // $data['action_remove_parent_item'] = url('api/items/remove_parent_item');
-            $data['check_vendor_item_code'] = url('/320/item/check_vendor_item_code');
-            $data['get_categories'] = url('/320/item/get_categories');
-            $data['get_subcategories_url'] = url('/320/item/get_subcategories');
+            $data['check_vendor_item_code'] = url('/330/item/check_vendor_item_code');
+            $data['get_categories'] = url('/330/item/get_categories');
+            $data['get_subcategories_url'] = url('/330/item/get_subcategories');
 
             // $data['searchitem'] = url('/item/search');
-            $data['parent_child_search'] = url('/320/item/parent_child_search');
+            $data['parent_child_search'] = url('/330/item/parent_child_search');
 
 
-            $data['action'] = url('/320/item/clone_item');
+            $data['action'] = url('/330/item/clone_item');
 
             // urls for adding category, dept, etc
             $data['Sales'] = 'Sales';
             $data['MISC'] = 'MISC';
-            $data['add_new_category'] = url('/320/item/category/add');
+            $data['add_new_category'] = url('/330/item/category/add');
 
-            $data['add_new_department'] = url('/320/item/department/add');
-            $data['get_new_department'] = url('/320/item/department');
+            $data['add_new_department'] = url('/330/item/department/add');
+            $data['get_new_department'] = url('/330/item/department');
 
 
-            $data['add_new_size'] = url('/320/item/size/add');
-            $data['get_new_size'] = url('/320/item/size');
+            $data['add_new_size'] = url('/330/item/size/add');
+            $data['get_new_size'] = url('/330/item/size');
 
-            $data['add_new_group'] = url('/320/item/group/add');
-            $data['get_new_group'] = url('/320/item/group');
+            $data['add_new_group'] = url('/330/item/group/add');
+            $data['get_new_group'] = url('/330/item/group');
 
-            $data['add_new_supplier'] = url('/320/item/vendor/add');
-            $data['get_new_supplier'] = url('/320/api/vendor');
+            $data['add_new_supplier'] = url('/330/item/vendor/add');
+            $data['get_new_supplier'] = url('/330/api/vendor');
 
-            $data['add_new_manufacturer'] = url('/320/item/manufacturer/add_manufacturer');
-            $data['get_new_manufacturer'] = url('/320/item/manufacturer/get_manufacturer');
+            $data['add_new_manufacturer'] = url('/330/item/manufacturer/add_manufacturer');
+            $data['get_new_manufacturer'] = url('/330/item/manufacturer/get_manufacturer');
             // urls for adding category, dept, etc
 
             $data['sid'] = session()->get('sid');
 
-            $data['cancel'] = url('/320/item/item_list/Active/DESC');
+            $data['cancel'] = url('/330/item/item_list/Active/DESC');
 
             $this->load->model('api/olditems');
 
@@ -6002,64 +6236,64 @@ class ItemController extends Controller
 
             $data['breadcrumbs'][] = array(
                 'text' => 'Home',
-                'href' => url('/320/dashboard')
+                'href' => url('/330/dashboard')
             );
 
             $data['breadcrumbs'][] = array(
                 'text' => 'Items',
-                'href' => url('/320/items/item_list')
+                'href' => url('/330/items/item_list')
             );
 
-            $data['action_vendor'] = url('/320/item/action_vendor');
-            $data['action_vendor_editlist'] = url('/320/item/action_vendor_editlist');
-            $data['add_alias_code'] = url('/320/item/add_alias_code');
-            $data['alias_code_deletelist'] = url('/320/item/delete_alias_code');
-            $data['add_lot_matrix'] = url('/320/item/add_lot_matrix');
-            $data['lot_matrix_editlist'] = url('/320/item/lot_matrix_editlist');
-            $data['lot_matrix_deletelist'] = url('/320/item/delete_lot_matrix');
+            $data['action_vendor'] = url('/330/item/action_vendor');
+            $data['action_vendor_editlist'] = url('/330/item/action_vendor_editlist');
+            $data['add_alias_code'] = url('/330/item/add_alias_code');
+            $data['alias_code_deletelist'] = url('/330/item/delete_alias_code');
+            $data['add_lot_matrix'] = url('/330/item/add_lot_matrix');
+            $data['lot_matrix_editlist'] = url('/330/item/lot_matrix_editlist');
+            $data['lot_matrix_deletelist'] = url('/330/item/delete_lot_matrix');
             // $data['add_slab_price'] = url('api/items/add_slab_price');
             // $data['slab_price_editlist'] = url('/item/slab_price_editlist');
             // $data['slab_price_deletelist'] = url('api/items/slab_price_deletelist');
             // $data['add_parent_item'] = url('api/items/add_parent_item');
             // $data['action_remove_parent_item'] = url('api/items/remove_parent_item');
-            $data['check_vendor_item_code'] = url('/320/item/check_vendor_item_code');
-            $data['get_categories'] = url('/320/item/get_categories');
-            $data['get_subcategories_url'] = url('/320/item/get_subcategories');
+            $data['check_vendor_item_code'] = url('/330/item/check_vendor_item_code');
+            $data['get_categories'] = url('/330/item/get_categories');
+            $data['get_subcategories_url'] = url('/330/item/get_subcategories');
 
             // $data['searchitem'] = url('/item/search');
-            $data['parent_child_search'] = url('/320/item/parent_child_search');
+            $data['parent_child_search'] = url('/330/item/parent_child_search');
 
 
-            $data['action'] = url('/320/item/clone_item');
+            $data['action'] = url('/330/item/clone_item');
 
             // urls for adding category, dept, etc
             $data['Sales'] = 'Sales';
             $data['MISC'] = 'MISC';
 
-            $data['get_new_category'] = url('/320/item/category');
-            $data['add_new_category'] = url('/320/item/category/add');
+            $data['get_new_category'] = url('/330/item/category');
+            $data['add_new_category'] = url('/330/item/category/add');
 
-            $data['add_new_department'] = url('/320/item/department/add');
-            $data['get_new_department'] = url('/320/item/department');
+            $data['add_new_department'] = url('/330/item/department/add');
+            $data['get_new_department'] = url('/330/item/department');
 
-            $data['add_new_subcategory'] = url('/320/item/sub_category/add');
+            $data['add_new_subcategory'] = url('/330/item/sub_category/add');
 
-            $data['add_new_size'] = url('/320/item/size/add');
-            $data['get_new_size'] = url('/320/item/size');
+            $data['add_new_size'] = url('/330/item/size/add');
+            $data['get_new_size'] = url('/330/item/size');
 
-            $data['add_new_group'] = url('/320/item/group/add');
-            $data['get_new_group'] = url('/320/item/group');
+            $data['add_new_group'] = url('/330/item/group/add');
+            $data['get_new_group'] = url('/330/item/group');
 
-            $data['add_new_supplier'] = url('/320/item/vendor/add');
-            $data['get_new_supplier'] = url('/320/api/vendor');
+            $data['add_new_supplier'] = url('/330/item/vendor/add');
+            $data['get_new_supplier'] = url('/330/api/vendor');
 
-            $data['add_new_manufacturer'] = url('/320/item/manufacturer/add_manufacturer');
-            $data['get_new_manufacturer'] = url('/320/item/manufacturer/get_manufacturer');
+            $data['add_new_manufacturer'] = url('/330/item/manufacturer/add_manufacturer');
+            $data['get_new_manufacturer'] = url('/330/item/manufacturer/get_manufacturer');
             // urls for adding category, dept, etc
 
             $data['sid'] = session()->get('sid');
 
-            $data['cancel'] = url('/320/item/item_list/Active/DESC');
+            $data['cancel'] = url('/330/item/item_list/Active/DESC');
 
             if(isset($input['clone_item_id'])){
                 $clone_item_id = $input['clone_item_id'];
@@ -6078,11 +6312,15 @@ class ItemController extends Controller
 
             $data['itemvendors'] = array();
             $data['itemalias'] = array();
-            $data['itempacks'] = array();
+            $data['itempacks'] = $item_info['itempacks'];
             $data['itemslabprices'] = array();
             $data['itemchilditems'] = array();
             $data['itemparentitems'] = array();
             $data['remove_parent_item'] = array();
+
+            $data['itempacks'] = array_map(function ($value) {
+                return (array)$value;
+            }, $data['itempacks']);
 
             $data['iitemid'] = '';
 
@@ -6592,6 +6830,21 @@ class ItemController extends Controller
                 $data['last_costprice'] = '';
             }
 
+            if (isset($input['lot_child_limit'])) {
+                $data['lot_child_limit'] = $input['lot_child_limit'];
+            } elseif (!empty($item_info['lot_child_limit']) ) {
+                $data['lot_child_limit'] = $item_info['lot_child_limit'];
+            } else {
+                $data['lot_child_limit'] = '1';
+            }
+
+            if (isset($input['lot_npack'])) {
+                $data['lot_npack'] = $input['lot_npack'];
+            } elseif (!empty($item_info['lot_npack']) ) {
+                $data['lot_npack'] = $item_info['lot_npack'];
+            } else {
+                $data['lot_npack'] = '1';
+            }
 
             $data['isparentchild'] = '';
 
@@ -6667,7 +6920,7 @@ class ItemController extends Controller
 
 		$data = array();
 		$input = $request->all();
-        // dd($input);
+
 		if($request->isMethod('post')) {
 
 
@@ -6755,7 +7008,7 @@ class ItemController extends Controller
     public function action_vendor(Request $request) {
 
         $input = $request->all();
-        // dd($input);
+
         if ($request->isMethod('post')) {
 
             $new_database = session()->get('new_database');
@@ -6776,7 +7029,7 @@ class ItemController extends Controller
                 }
                 session()->put('tab_selected', 'vendor_tab');
 
-                $url = '/320/item/edit/'.$input['iitemid'];
+                $url = '/330/item/edit/'.$input['iitemid'];
 
                 return redirect($url);
 
@@ -6801,7 +7054,7 @@ class ItemController extends Controller
 
                 session()->put('tab_selected', 'vendor_tab');
 
-                $url = '/320/item/edit/'.$input['iitemid'];
+                $url = '/330/item/edit/'.$input['iitemid'];
 
                 return redirect($url);
             }
@@ -6837,7 +7090,7 @@ class ItemController extends Controller
 
     public function action_vendor_editlist(Request $request) {
         $input = $request->all();
-        // dd($input);
+
         $stores_hq = isset($input['vendor_update_stores']) ? $input['vendor_update_stores'] : [session()->get('sid')];
         if ($request->isMethod('post')) {
             $new_database = session()->get('new_database');
@@ -6861,7 +7114,7 @@ class ItemController extends Controller
 
                 session()->put('tab_selected', 'vendor_tab');
 
-                $url = '/320/item/edit/'.$iitemid;
+                $url = '/330/item/edit/'.$iitemid;
 
                 return redirect($url);
 
@@ -6891,7 +7144,7 @@ class ItemController extends Controller
 	            }
                 session()->put('tab_selected', 'vendor_tab');
 
-                $url = '/320/item/edit/'.$iitemid;
+                $url = '/330/item/edit/'.$iitemid;
 
                 return redirect($url);
 	        }
@@ -6951,7 +7204,7 @@ class ItemController extends Controller
 
     public function delete_alias_code(Request $request) {
         $input = $request->all();
-        // dd($input);
+
 		$data = array();
 		if ($request->isMethod('post')) {
 			$temp_arr = json_decode(file_get_contents('php://input'), true);
@@ -6960,7 +7213,7 @@ class ItemController extends Controller
 
 				$item = new Item();
 				$data = $item->deleteItemAliasCode($temp_arr);
-// dd($data);
+
 				if(array_key_exists("success",$data)){
 					http_response_code(200);
 				}else{
@@ -6987,7 +7240,7 @@ class ItemController extends Controller
 
 		if ($request->isMethod('post')) {
 			$temp_arr = $request->all();
-            // 			dd($temp_arr);
+
 			if (($temp_arr['iitemid'] == '')) {
 				$data['validation_error'][] = 'Item id Required';
 			}
@@ -7069,7 +7322,7 @@ class ItemController extends Controller
 
                         session()->put('tab_selected', 'lot_matrix_tab');
 
-                        $url = '/320/item/edit/'.$iitemid;
+                        $url = '/330/item/edit/'.$iitemid;
 
                         return redirect($url);
 
@@ -7087,12 +7340,17 @@ class ItemController extends Controller
                         }else{
                             $result = $item->editlistLotMatrixItems($lots);
                         }
+                        if(isset($result['success'])){
+                            session()->put('success', $result['success']);
 
-                        session()->put('success', $result['success']);
+                            session()->put('tab_selected', 'lot_matrix_tab');
+                        }elseif(isset($result['error'])){
+                            session()->put('error_warning', $result['error']);
 
-                        session()->put('tab_selected', 'lot_matrix_tab');
+                            session()->put('tab_selected', 'lot_matrix_tab');
+                        }
 
-                        $url = '/320/item/edit/'.$iitemid;
+                        $url = '/330/item/edit/'.$iitemid;
 
                         return redirect($url);
                     }
@@ -7114,10 +7372,16 @@ class ItemController extends Controller
 			if(!array_key_exists("validation_error",$data)){
 
                 $item = new Item();
-				$data = $item->deleteItemLotmatrix($temp_arr);
+				$data = $item->deleteItemLotmatrix($temp_arr,$input['data_iitemid']);
 
 				if(array_key_exists("success",$data)){
-					http_response_code(200);
+					return response(json_encode($data), 200)
+                        ->header('Content-Type', 'application/json');
+
+				}elseif(array_key_exists("error",$data)){
+				    return response(json_encode($data), 401)
+                        ->header('Content-Type', 'application/json');
+
 				}else{
 					http_response_code(401);
 				}
@@ -7125,9 +7389,6 @@ class ItemController extends Controller
 			}else{
 				http_response_code(401);
 			}
-
-			return response(json_encode($data))
-                  ->header('Content-Type', 'application/json');
 
 		}else{
 			$data['error'] = 'Something went wrong missing token or sid';
@@ -7204,7 +7465,7 @@ class ItemController extends Controller
 
 			$temp_arr = json_decode(file_get_contents('php://input'), true);
 
-            // dd($temp_arr[0]['vcategoryname']);
+
 			foreach ($temp_arr as $key => $value) {
 				if($value['vcategoryname'] == ''){
 					$data['validation_error'][] = 'Category Name Required';
@@ -7296,7 +7557,6 @@ class ItemController extends Controller
 
 			$temp_arr = json_decode(file_get_contents('php://input'), true);
 
-            // dd($temp_arr[0]);
 			foreach ($temp_arr as $key => $value) {
 				if($value['vdepartmentname'] == ''){
 					$data['validation_error'][] = 'Department Name Required';
@@ -7386,7 +7646,6 @@ class ItemController extends Controller
 
 			$temp_arr = json_decode(file_get_contents('php://input'), true);
 
-            // dd($temp_arr[0]);
 			foreach ($temp_arr as $key => $value) {
 				if($value['subcat_name'] == ''){
 					$data['validation_error'][] = 'Sub Category Name Required';
@@ -7475,7 +7734,6 @@ class ItemController extends Controller
 
 			$temp_arr = json_decode(file_get_contents('php://input'), true);
 
-            // dd($temp_arr[0]);
 			foreach ($temp_arr as $key => $value) {
 				if($value['vsize'] == ''){
 					$data['validation_error'][] = 'Size Name Required';
@@ -7556,7 +7814,6 @@ class ItemController extends Controller
 
 			$temp_arr = json_decode(file_get_contents('php://input'), true);
 
-            // dd($temp_arr[0]);
 			foreach ($temp_arr as $key => $value) {
 				if($value['mfr_name'] == ''){
 					$data['validation_error'][] = 'Manufacturer Name Required';
@@ -8176,6 +8433,82 @@ class ItemController extends Controller
               'Content-Type' => 'application/text',
            ];
         return response()->download($file_path, 'import-item-status-report.txt', $headers);
+    }
+
+    public function check_lot_child_items(Request $request){
+        $input = $request->all();
+        if(isset($input['itemid']) && !empty($input['itemid'])){
+
+            $item_data = DB::connection('mysql_dynamic')->select("select * from mst_item where iitemid = '" . (int)($input['itemid']) ."' ");
+
+            $item_data = array_map(function ($value) {
+                return (array)$value;
+            }, $item_data);
+            $item_data = $item_data[0];
+
+            $total_parent_unit = (int)$item_data['iqtyonhand'];
+
+            $result = DB::connection('mysql_dynamic')->select("SELECT *, 0 as pack_qoh FROM mst_itempackdetail WHERE iitemid = '".(int)($input['itemid'])."' ORDER BY ipack DESC");
+
+            $total_pack_qoh = (int)$item_data['iqtyonhand'];
+
+            $total_pack = array_sum(array_column($result, 'ipack'));
+
+            if(empty($item_data['lot_child_limit']) && !empty($result)){
+                $item_data['lot_child_limit'] = $result[0]['ipack'];
+            }elseif(empty($item_data['lot_child_limit']) && empty($result)){
+                $item_data['lot_child_limit'] = 1;
+            }
+
+            $total_pack = $total_pack - $item_data['lot_child_limit'];
+
+            $total_pack_qoh = $total_pack_qoh - $total_pack;
+
+            $parrent_pack_qoh = (int)($total_pack_qoh/$item_data['lot_child_limit']);
+            $balance_pack_qoh = ((int)$item_data['iqtyonhand']) - ($parrent_pack_qoh * $item_data['lot_child_limit']);
+
+            $itempacks = array();
+            $filter_itempacks = array();
+
+            $result = array_map(function ($value) {
+                return (array)$value;
+            }, $result);
+
+            foreach($result as $itempack){
+
+                if($itempack['ipack'] != $item_data['lot_child_limit']){
+                    $itempack['pack_qoh'] = 1;
+                    $balance_pack_qoh = $balance_pack_qoh - $itempack['ipack'];
+                }else{
+                    $itempack['pack_qoh'] = $parrent_pack_qoh;
+                }
+
+                $itempacks[] = $itempack;
+
+            }
+
+            foreach($itempacks as $itempack){
+
+                if($itempack['ipack'] != $item_data['lot_child_limit'] &&  $balance_pack_qoh >= $itempack['ipack']){
+                    $itempack['pack_qoh'] =  $itempack['pack_qoh'] + (int)($balance_pack_qoh / $itempack['ipack']);
+                    $balance_pack_qoh = $balance_pack_qoh - ((int)($balance_pack_qoh / $itempack['ipack']) * $itempack['ipack']);
+                }
+                $filter_itempacks[] = $itempack;
+            }
+
+            if(count($result) > 0){
+
+                $data['total_parent_unit'] = $total_parent_unit;
+                $data['unitcost'] = $item_data['nunitcost'];
+                $data['items'] = $filter_itempacks;
+                return response(json_encode($data), 200)
+                  ->header('Content-Type', 'application/json');
+            }else{
+                $data['error'] = 'No data Found';
+                return response(json_encode($data), 401)
+                  ->header('Content-Type', 'application/json');
+            }
+        }
     }
 
 }
