@@ -283,6 +283,10 @@ class EndShiftController extends Controller
                if(isset($value['EbtTaxExempted'] ) && $value['EbtTaxExempted'] !=0){
                 $data_row .= '#EBT Tax Exempted'.',' .'$'.$value['EbtTaxExempted'].PHP_EOL;
                 } 
+
+                if(isset($value['EnvtFee'] ) && $value['EnvtFee'] !=0){
+                  $data_row .= '#Enveronment Fee'.',' .'$'.$value['EnvtFee'].PHP_EOL;
+                  } 
               
               $data_row .= PHP_EOL;
               
