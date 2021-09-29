@@ -332,6 +332,8 @@ Route::group(['middleware' => ['auth', 'StoreDatabaseSelection','revalidate']], 
 
             Route::get('/item/get_status_import', 'Item\ItemController@get_status_import');
             Route::get('/item/checkforduplicateBarcode', 'Item\ItemController@checkforduplicateBarcode');
+
+            Route::get('/item/check_lot_child_items', 'Item\ItemController@check_lot_child_items');
         });
 
         //=====END ITEMS related routes========
