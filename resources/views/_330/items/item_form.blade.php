@@ -4962,7 +4962,7 @@ $adjvaluereset = 0;
                             </div>
                             <div class="col-md-5">
                                 <input class="form-control adjustment-fields" type="text" id="npackcost" name="npackcost"
-                                    required value="<?php echo isset($data['nunitcost']) ? number_format((float) $data['nunitcost'], 2, '.', '') : ''; ?>" readonly>
+                                    required value="<?php echo isset($data['nunitcost']) ? number_format((float) ($data['nunitcost']/$data['lot_child_limit']), 2, '.', '') : ''; ?>" readonly>
                             </div>
                             <div class="col-md-3"></div>
                         </div>
@@ -5018,7 +5018,7 @@ $adjvaluereset = 0;
             event.preventDefault();
 
             <?php if(isset($data['nunitcost'])){ ?>
-            var unitcost = '<?php echo $data['nunitcost']; ?>';
+            var unitcost = '<?php echo ($data['nunitcost']/$data['lot_child_limit']); ?>';
             <?php }else{ ?>
             var unitcost = 0;
             <?php } ?>
