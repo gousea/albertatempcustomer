@@ -661,7 +661,11 @@ class ReceivingOrder extends Model
                     if(isset($data['advance_update']) && $data['advance_update'] == 'Yes'){ 
                         $npack = $item['npackqty'];
                     }else{
-                        $npack = $current_item['npack'];
+                        if($current_item['vitemtype'] == 'Lot Matrix'){
+                            $npack = $current_item['lot_npack'];
+                        }else{
+                            $npack = $current_item['npack'];
+                        }
                     }
                     
                     //=====added on 15-05-2020=======
