@@ -74,6 +74,14 @@ class ItemListDisplaysController extends Controller{
         if (($key = array_search('case_price', $data['defualt_items_listings'])) !== false) {
             unset($data['defualt_items_listings'][$key]);
         }
+
+        if (($key = array_search('lot_child_limit', $data['defualt_items_listings'])) !== false) {
+            unset($data['defualt_items_listings'][$key]);
+        }
+        
+        if (($key = array_search('lot_npack', $data['defualt_items_listings'])) !== false) {
+            unset($data['defualt_items_listings'][$key]);
+        }
         
 		$data['title_arr'] = array(
             'webstore' => 'Web Store',
