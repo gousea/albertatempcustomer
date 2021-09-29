@@ -627,11 +627,6 @@ class ReceivingOrder extends Model
                     
                     
                     $total_qty = $current_item['iqtyonhand'];
-                    // if($total_qty == 0 || $total_qty == '0'){
-                    //     $new_nunitcost = $total_cost;
-                    // }else{
-                    //     $new_nunitcost = $total_cost / $total_qty;
-                    // }
                     
                     
                     if($data['receive_po'] == 'POtoWarehouse'){
@@ -644,15 +639,6 @@ class ReceivingOrder extends Model
                     $overallqty = $current_item['iqtyonhand']+ $item['itotalunit'];
                     
                     
-                    // if($total_qty == 0 || $total_qty == '0'){
-                    //     $new_nunitcost = $total_cost;
-                    // }else{
-                    //     $new_nunitcost = $total_cost / $overallqty;
-                    // }
-                    
-                    // if($new_nunitcost < 0){
-                    //     $new_nunitcost = $item['nunitcost'];
-                    // }
                     $new_nunitcost = $item['nunitcost'];
                     
                     $new_nunitcost = number_format((float)$new_nunitcost, 4, '.', '');
@@ -673,12 +659,6 @@ class ReceivingOrder extends Model
                     $nsellunit = isset($nsellunit[0])?(array)$nsellunit[0]:[];
                     
                     $new_dcostprice = ($item['nordextprice'] / $item['itotalunit']) * $nsellunit['nsellunit'];
-                    // $new_dcostprice = $npack * $new_nunitcost;
-                    
-                    /*if($current_item['dcostprice'] > 0)
-                    {
-                        $new_dcostprice = ($new_dcostprice + $current_item['dcostprice']) / 2;
-                    }*/
                     
                     $new_dcostprice = number_format((float)$new_dcostprice, 4, '.', '');
                     
@@ -694,8 +674,7 @@ class ReceivingOrder extends Model
                     
                     //update dcostprice,npack and nunitcost
                     if(count($current_item) > 0 && $data['receive_po'] == 'receivetostore'){
-                        if($current_item['isparentchild'] == 1){
-                            // DB::connection('mysql_dynamic')->select("UPDATE mst_item SET dcostprice = '" . $new_dcostprice . "',npack = '" . $npack . "',iqtyonhand = '0',nunitcost = '" . $new_nunitcost . "' WHERE iitemid='" . (int)($item['vitemid']) . "' ");
+                        if($current_item['isparentchild'] == 1 && $current_item['vitemtype'] != 'Lot Matrix'){
                             
                             $get_purchase_details = DB::connection('mysql_dynamic')->select("SELECT nunitcost FROM trn_receivingorderdetail WHERE vitemid='". (int)$item['vitemid'] ."' ORDER BY LastUpdate DESC LIMIT 2");
                             //====converting object data into array=====
@@ -704,11 +683,6 @@ class ReceivingOrder extends Model
                             }, $get_purchase_details);
                             //=====added on 15-05-2020=======
                             
-                            // if(count($get_purchase_details) == 2){
-                            //     $new_costprice = $get_purchase_details[1]['nunitcost'];
-                            // } else {
-                            //     $new_costprice = $get_purchase_details[0]['nunitcost'];
-                            // }
                             $new_costprice =  $new_dcostprice;
                             
                             if($sid == 100247 || $sid == 100636 || $sid == 100154 ){
@@ -878,14 +852,11 @@ class ReceivingOrder extends Model
                             //==============Update before_rece_qoh column in trn_receivingorderdetail table================
                             DB::connection('mysql_dynamic')->update("UPDATE trn_receivingorderdetail SET before_rece_qoh = '".$current_item['iqtyonhand']."' WHERE iroid = '".$trn_receivingorder_id."' AND vitemid = '".(int)($item['vitemid'])."' ");
                             
-                            $query_new_costprice = "UPDATE mst_item SET dcostprice = '" . $new_dcostprice . "',npack = '" . $npack . "',iqtyonhand = '".$total_qty."',nunitcost = '" . $new_nunitcost . "',last_costprice='" . $current_item['nunitcost'] . "',new_costprice= '". $new_costprice ."' WHERE iitemid='" . (int)($item['vitemid']) . "' ";
+                            if($current_item['vitemtype'] != 'Lot Matrix'){
+                                $query_new_costprice = "UPDATE mst_item SET dcostprice = '" . $new_dcostprice . "',npack = '" . $npack . "',iqtyonhand = '".$total_qty."',nunitcost = '" . $new_nunitcost . "',last_costprice='" . $current_item['nunitcost'] . "',new_costprice= '". $new_costprice ."' WHERE iitemid='" . (int)($item['vitemid']) . "' ";
+                                $a = DB::connection('mysql_dynamic')->update($query_new_costprice);
                             
-                            
-                            
-                            $a = DB::connection('mysql_dynamic')->update($query_new_costprice);
-                            
-                                // existing
-                                //   DB::connection('mysql_dynamic')->select("UPDATE mst_item SET dcostprice = '" . $new_dcostprice . "',npack = '" . $npack . "',iqtyonhand = '".$total_qty."',nunitcost = '" . $new_nunitcost . "' WHERE iitemid='" . (int)($item['vitemid']) . "' ");
+                            }
                             
                             //============================== New query to insert last cost: Written by Adarsh --- Ends ============================================================
                             
@@ -938,16 +909,13 @@ class ReceivingOrder extends Model
                                 $not_updated_items[] = 'iitemid:'. $item['vitemid'] .'  previous:'.$current_item['iqtyonhand'].'  new:'.$total_qty;
                             }
                             //email
-
                         }
                         
                     }
                     
                     /* venkat: This else block is closed to stop updating the dcost price when po send to wherehouse */
                     else{
-                        //old query
-                        // DB::connection('mysql_dynamic')->select("UPDATE mst_item SET dcostprice = '" . $new_dcostprice . "',npack = '" . $npack . "',iqtyonhand = '" . $total_qty . "',nunitcost = '" . $new_nunitcost . "' WHERE iitemid='" . (int)($item['vitemid']) . "' ");
-                        //end old query
+                        
                         $get_purchase_details = DB::connection('mysql_dynamic')->select("SELECT nunitcost FROM trn_receivingorderdetail WHERE vitemid='". (int)($item['vitemid']) ."' ORDER BY LastUpdate DESC LIMIT 2");
                         $get_purchase_details = array_map(function ($value) {
                                 return (array)$value;
@@ -964,7 +932,9 @@ class ReceivingOrder extends Model
                         //==============Update before_rece_qoh column in trn_receivingorderdetail table================
                             DB::connection('mysql_dynamic')->update("UPDATE trn_receivingorderdetail SET before_rece_qoh = '".$current_item['iqtyonhand']."' WHERE iroid = '".$trn_receivingorder_id."' AND vitemid = '".(int)($item['vitemid'])."' ");
                         
-                        DB::connection('mysql_dynamic')->update("UPDATE mst_item SET dcostprice = '" . $new_dcostprice . "',npack = '" . $npack . "',iqtyonhand = '" . $total_qty . "',nunitcost = '" . $new_nunitcost . "', last_costprice='" . $current_item['nunitcost'] . "',new_costprice= '". $new_costprice ."'  WHERE iitemid='" . (int)($item['vitemid']) . "' ");
+                        if($current_item['vitemtype'] != 'Lot Matrix'){
+                            DB::connection('mysql_dynamic')->update("UPDATE mst_item SET dcostprice = '" . $new_dcostprice . "',npack = '" . $npack . "',iqtyonhand = '" . $total_qty . "',nunitcost = '" . $new_nunitcost . "', last_costprice='" . $current_item['nunitcost'] . "',new_costprice= '". $new_costprice ."'  WHERE iitemid='" . (int)($item['vitemid']) . "' ");
+                        }
                         
                         //==============Update after_rece_qoh column in trn_receivingorderdetail table================
                             $item_qoh = DB::connection('mysql_dynamic')->select("SELECT iqtyonhand FROM  mst_item WHERE iitemid='" . (int)($item['vitemid']) . "'");
@@ -976,72 +946,25 @@ class ReceivingOrder extends Model
                     }
                     
                     
-                    
-                    //update dcostprice,npack and nunitcost
-
                     //update child item dcostprice,npack and nunitcost
                     $isParentCheck = DB::connection('mysql_dynamic')->select("SELECT * FROM  mst_item WHERE iitemid='" . (int)($item['vitemid']) . "'");
                     $isParentCheck = isset($isParentCheck[0])?(array)$isParentCheck[0]:[];
                     
-            
-                    
-                    //=======commented on 23/06/2020 because issue raise in jira AP-470======
-                    // if((count($isParentCheck) > 0) && ($isParentCheck['isparentchild'] == 2)){
-                    //     $child_items = DB::connection('mysql_dynamic')->select("SELECT `iitemid`,`dcostprice` FROM mst_item WHERE parentmasterid= '". (int)($item['vitemid']) ."' ");
-                        
-                    //     if(count($child_items) > 0){
-                    //         foreach($child_items as $chi_item){
-                    
-                    //             $old_item_values = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid= '". (int)($chi_item['iitemid']) ."' ");
-                                
-                    //             $update_query = "UPDATE mst_item SET dcostprice=(npack*". ($isParentCheck['nunitcost']) ."),nunitcost='". ($isParentCheck['nunitcost']) ."' WHERE iitemid= '". (int)($chi_item['iitemid']) ."'";
-                                
-                 
-                    //             $a = DB::connection('mysql_dynamic')->select($update_query);
-                                
-                    //             //trn_itempricecosthistory
-                    //             $new_update_values = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid= '". (int)$chi_item['iitemid'] ."' ");
-                    //             if($chi_item['dcostprice'] != $new_update_values['dcostprice']){
-
-                    //                 DB::connection('mysql_dynamic')->select("INSERT INTO trn_itempricecosthistory SET  iitemid = '" . $new_update_values['iitemid'] . "',vbarcode = '" . ($new_update_values['vbarcode']) . "', vtype = 'POCost', noldamt = '" . ($current_item['dcostprice']) . "', nnewamt = '" . ($new_update_values['dcostprice']) . "', iuserid = '" . Auth::user()->iuserid . "', dhistorydate = CURDATE(), thistorytime = CURTIME(),SID = '" . (int)(session()->get('sid'))."'");
-                    //             }
-
-                    //             //trn_itempricecosthistory
-
-                    //             $new_item_values = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_item WHERE iitemid= '". (int)($chi_item['iitemid']) ."' ");
-
-                    //             if($old_item_values['dcostprice'] != $new_item_values['dcostprice']){
-
-                    //                 unset($old_item_values['itemimage']);
-                    //                 unset($new_item_values['itemimage']);
-                    //                 $x_general = new stdClass();
-                    //                 $x_general->trn_receivingorder_id = $trn_receivingorder_id;
-                    //                 $x_general->is_child = 'Yes';
-                    //                 $x_general->parentmasterid = $new_item_values['parentmasterid'];
-                    //                 $x_general->current_po_item_values = $item;
-                    //                 $x_general->old_item_values = $old_item_values;
-                    //                 $x_general->new_item_values = $new_item_values;
-
-                    //                 $x_general = addslashes(json_encode($x_general));
-                    //                 if(DB::connection('mysql_dynamic')->select(" SHOW tables LIKE 'trn_webadmin_history'")->num_rows){
-                    //                     try{
-
-                    //                 DB::connection('mysql_dynamic')->select("INSERT INTO trn_webadmin_history SET  itemid = '" . $new_item_values['iitemid'] . "',userid = '" . Auth::user()->iuserid . "',barcode = '" . ($new_item_values['vbarcode']) . "', type = 'Cost', oldamount = '" . ($old_item_values['dcostprice']) . "', newamount = '". ($new_item_values['dcostprice']) ."', general = '" . $x_general . "', source = 'PO', historydatetime = NOW(),SID = '" . (int)(session()->get('sid'))."'");
-                    //                     }
-                    //                     catch (Exception $e) {
-                    //                         $this->log->write($e);
-                    //                     }
-                    //                 }
-                    //             }
-                    //         }
-                    //     }
-                    // }
-                    //update child item dcostprice,npack and nunitcost
-
                     //update into mst_itempackdetail
                     if($isParentCheck['vitemtype'] == 'Lot Matrix'){
                         
-                        DB::connection('mysql_dynamic')->statement("UPDATE mst_item SET lot_npack = '".$npack."' WHERE iitemid = '".(int)$isParentCheck['iitemid'] ."' ");
+                        $new_dcostprice = ($item['nordextprice'] / ($item['itotalunit']/$isParentCheck['npack'])) * $nsellunit['nsellunit'];
+                        
+                        $new_dcostprice = number_format((float)$new_dcostprice, 4, '.', '');
+                        
+                        DB::connection('mysql_dynamic')->statement("UPDATE mst_item SET dcostprice = '" . $new_dcostprice . "', iqtyonhand = '" . $total_qty . "',nunitcost = '" . $new_nunitcost . "', last_costprice='" . $current_item['nunitcost'] . "',new_costprice= '". $new_dcostprice ."', lot_npack = '".$npack."' WHERE iitemid = '".(int)$isParentCheck['iitemid'] ."' ");
+                        
+                        //==============Update after_rece_qoh column in trn_receivingorderdetail table================
+                            $item_qoh = DB::connection('mysql_dynamic')->select("SELECT iqtyonhand FROM  mst_item WHERE iitemid='" . (int)$isParentCheck['iitemid'] . "'");
+                            $item_qoh = isset($item_qoh[0])?(array)$item_qoh[0]:[];
+                            
+                            DB::connection('mysql_dynamic')->update("UPDATE trn_receivingorderdetail SET after_rece_qoh = '".$item_qoh['iqtyonhand']."' WHERE iroid = '".$trn_receivingorder_id."' AND vitemid = '".(int)$isParentCheck['iitemid']."' ");
+                        //========================END=================================
                             
                         $itempackexists = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_itempackdetail WHERE vbarcode='". ($isParentCheck['vbarcode']) ."' AND iitemid='". (int)$isParentCheck['iitemid'] ."'");
                         //====converting object data into array=====

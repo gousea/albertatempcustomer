@@ -7,7 +7,7 @@
 
     <nav class="navbar navbar-expand-lg sub_menu_navbar navbar-dark bg-primary headermenublue">
       <div class="container">
-          <div class="collapse navbar-collapse" id="main_nav">
+          <div class="collapse navbar-collapse" id="main_nav"> 
               <div class="menu">
                   <span class="font-weight-bold text-uppercase"> Receiving Order</span>
               </div>
@@ -1158,34 +1158,37 @@
         nunitcost = 0.0000;
       }
       
-      var closest_itotalunit = 0;
-      var closest_nunitcost = 0;
-      if(vitemtype == 'Lot Matrix'){
-          
-          if(po_order_by == 'case'){
-              closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
-          } else {
-              closest_itotalunit = nordqty*lotmatrix_npack;
-          }
-          
-          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
-      }else{
-          if(po_order_by == 'case'){
-              closest_itotalunit = nordqty * npackqty;
-          } else {
-              closest_itotalunit = nordqty;
-          }
-          closest_nunitcost = nordextprice / closest_itotalunit;
-      }
+        var closest_itotalunit = 0;
+        var closest_nunitcost = 0;
+        var closest_nordextprice = 0;
+        if(vitemtype == 'Lot Matrix'){
+            
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty*npackqty);
+                closest_nordextprice = (nordqty * npackqty) * closest_nunitcost;
+            } else {
+                closest_itotalunit = nordqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty);
+                closest_nordextprice = nordqty * closest_nunitcost;
+            }
+            
+        }else{
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty;
+            } else {
+                closest_itotalunit = nordqty;
+            }
+            closest_nunitcost = nordextprice / closest_itotalunit;
+            closest_nordextprice = closest_itotalunit * closest_nunitcost;
+        }
       
       if(isNaN(closest_nunitcost)) {
         closest_nunitcost = 0.0000;
       }else{
         closest_nunitcost = closest_nunitcost.toFixed(2);
       }
-
-      var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-
+        
       if(isNaN(closest_nordextprice)) {
         closest_nordextprice = 0.00;
       }else{
@@ -1245,7 +1248,6 @@
     });
 
 
-
     $(document).on('keyup', '.npackqty_class', function(event) {
       event.preventDefault();
       
@@ -1286,34 +1288,37 @@
         nunitcost = 0.0000;
       }
 
-      var closest_itotalunit = 0;
-      var closest_nunitcost = 0;
-      if(vitemtype == 'Lot Matrix'){
-          
-          if(po_order_by == 'case'){
-              closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
-          } else {
-              closest_itotalunit = nordqty*lotmatrix_npack;
-          }
-          
-          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
-      }else{
-          if(po_order_by == 'case'){
-              closest_itotalunit = nordqty * npackqty;
-          } else {
-              closest_itotalunit = nordqty;
-          }
-          closest_nunitcost = nordextprice / closest_itotalunit;
-      }
+        var closest_itotalunit = 0;
+        var closest_nunitcost = 0;
+        var closest_nordextprice = 0;
+        if(vitemtype == 'Lot Matrix'){
+            
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty*npackqty);
+                closest_nordextprice = (nordqty * npackqty) * closest_nunitcost;
+            } else {
+                closest_itotalunit = nordqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty);
+                closest_nordextprice = nordqty * closest_nunitcost;
+            }
+            
+        }else{
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty;
+            } else {
+                closest_itotalunit = nordqty;
+            }
+            closest_nunitcost = nordextprice / closest_itotalunit;
+            closest_nordextprice = closest_itotalunit * closest_nunitcost;
+        }
       
       if(isNaN(closest_nunitcost)) {
         closest_nunitcost = 0.0000;
       }else{
         closest_nunitcost = closest_nunitcost.toFixed(2);
       }
-
-      var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-
+        
       if(isNaN(closest_nordextprice)) {
         closest_nordextprice = 0.00;
       }else{
@@ -1344,7 +1349,6 @@
 
     });
   
-
 
     $(document).on('keyup', '.nordextprice_class', function(event) {
       event.preventDefault();
@@ -1394,25 +1398,26 @@
         nordextprice = 0.0000;
       }
 
-      var closest_itotalunit = 0;
-      var closest_nunitcost = 0;
-      if(vitemtype == 'Lot Matrix'){
+        var closest_itotalunit = 0;
+        var closest_nunitcost = 0;
+        if(vitemtype == 'Lot Matrix'){
           
-          if(po_order_by == 'case'){
-              closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
-          } else {
-              closest_itotalunit = nordqty*lotmatrix_npack;
-          }
-          
-          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
-      }else{
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty*npackqty);
+            } else {
+                closest_itotalunit = nordqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty);
+            }
+            
+        }else{
           if(po_order_by == 'case'){
               closest_itotalunit = nordqty * npackqty;
           } else {
               closest_itotalunit = nordqty;
           }
           closest_nunitcost = nordextprice / closest_itotalunit;
-      }
+        }
       
       if(isNaN(closest_nunitcost)) {
         closest_nunitcost = 0.0000;
@@ -1461,7 +1466,6 @@
       total_amount();
 
     });
-
 
 
     $(document).on('keyup', '.nunitcost_class', function(event) {
@@ -1623,25 +1627,30 @@
       }
       
       
-      var closest_itotalunit = 0;
-      var closest_nunitcost = 0;
-      if(vitemtype == 'Lot Matrix'){
-          
-          if(po_order_by == 'case'){
-              closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
-          } else {
-              closest_itotalunit = nordqty*lotmatrix_npack;
-          }
-          
-          closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
-      }else{
-          if(po_order_by == 'case'){
-              closest_itotalunit = nordqty * npackqty;
-          } else {
-              closest_itotalunit = nordqty;
-          }
-          closest_nunitcost = nordextprice / closest_itotalunit;
-      }
+        var closest_itotalunit = 0;
+        var closest_nunitcost = 0;
+        var closest_nordextprice = 0;
+        if(vitemtype == 'Lot Matrix'){
+            
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty*npackqty);
+                closest_nordextprice = (nordqty * npackqty) * closest_nunitcost;
+            } else {
+                closest_itotalunit = nordqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty);
+                closest_nordextprice = nordqty * closest_nunitcost;
+            }
+            
+        }else{
+            if(po_order_by == 'case'){
+                closest_itotalunit = nordqty * npackqty;
+            } else {
+                closest_itotalunit = nordqty;
+            }
+            closest_nunitcost = nordextprice / closest_itotalunit;
+            closest_nordextprice = closest_itotalunit * closest_nunitcost;
+        }
       
       if(isNaN(closest_nunitcost)) {
         closest_nunitcost = 0.0000;
@@ -1655,8 +1664,6 @@
         closest_nunitcost = 0.0000;
       }
       
-      var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-
       if(isNaN(closest_nordextprice)) {
         closest_nordextprice = 0.00;
       }else{
@@ -3597,27 +3604,31 @@ $('.editable_text').focus(function() {
             if(transfer_to_po[index]['order_by'] == 'case'){
                 html_receiving_item += 'selected ';
                 qty_unit_case = transfer_to_po[index]['order_qty']*item.npack;
-
+                
+                unitCost = transfer_to_po[index]['amount'] / qty_unit_case;
+                
                 if(item.vitemtype == 'Lot Matrix'){
                     qty_unit_case = qty_unit_case*item.lot_npack;
-
+                    unitCost = transfer_to_po[index]['amount'] / (transfer_to_po[index]['order_qty']*item.lot_npack);
                 }
-
+                
             }
-
+                
             if(transfer_to_po[index]['order_by'] == 'unit'){
                 html_receiving_item += 'selected ';
                 qty_unit_case = transfer_to_po[index]['order_qty'];
-
+                
+                unitCost = transfer_to_po[index]['amount'] / qty_unit_case;
+                
                 if(item.vitemtype == 'Lot Matrix'){
                     qty_unit_case = qty_unit_case*item.npack;
-
+                    
                 }
             }
-
-            unitCost = transfer_to_po[index]['amount'] / qty_unit_case;
+            
+            
             unitCost = (isNaN(unitCost)) ? 0 : unitCost;
-
+            
             html_receiving_item += '<td class="text-right"><input type="text" class="nnewcosttprice_class adjustment-fields" name="items['+window.index_item+'][nunitcost]" value="' + unitCost.toFixed(4) + '" id="" style="width:80px;text-align:right;" readonly></td>';
 
             html_receiving_item += '<td class="text-right noInput" nowrap="nowrap">'+ item.iqtyonhand +'<input type="hidden" name="items['+window.index_item+'][nitemqoh]" value="'+ item.iqtyonhand +'"></td>';
