@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Log;
 
 use App\_330\Model\Item;
 use App\Model\Olditem;
@@ -1612,9 +1613,13 @@ class ItemController extends Controller
                     }else{
                         $options_data = array();
                     }
-
+                    
+                    $envt_charge = $input['envt_charge'] ?? '0.00';
+                    $envt_charge = (float)$envt_charge;
+                    Log::info('Envt charge at '.__LINE__.'=>'.$envt_charge);
+                    
                     $check_error='';
-
+                    
                     if($input['vitemtype'] == 'Lot Matrix'){
                         $lotData['vpackname'] = $input['packname'];
                         $lotData['vpack'] = $input['pack'];
@@ -1807,6 +1812,7 @@ class ItemController extends Controller
                                         "lot_child_limit" => $lot_child_limit,
                                         "lotData" => $lotData,
                                         "lot_npack" => $lot_npack,
+                                        "envt_charge" => $envt_charge,
                                     );
                         // dd($temp_arr);
                         $item = new Item();
@@ -2644,6 +2650,9 @@ class ItemController extends Controller
                 }
 
                 $reorderPoint = ($input['ireorderpoint'] > 0) ? $input['ireorderpoint'] : $reorderPoint ;
+                
+                $envt_charge = $input['envt_charge'] ?? '0.00';
+                $envt_charge = (float)$envt_charge;
 
                 if($input['vitemtype'] == 'Lot Matrix'){
                     $lotData['vpackname'] = $input['packname'];
@@ -2825,6 +2834,7 @@ class ItemController extends Controller
                                     "lot_child_limit" => $lot_child_limit,
                                     "lotData" => $lotData,
                                     "lot_npack" => $lot_npack,
+                                    "envt_charge" => $envt_charge,
                                 );
                     // dd($temp_arr);
                     $item = new Item();
@@ -3805,8 +3815,15 @@ class ItemController extends Controller
         if (isset($iitemid)) {
             $data['edit_page'] = 'edit_page';
         }
-
-
+        
+        if (isset($input['envt_charge'])) {
+            $data['envt_charge'] = $input['envt_charge'];
+        } elseif (!empty($item_info)) {
+            $data['envt_charge'] = $item_info['envt_charge'];
+        } else {
+            $data['envt_charge'] = 0.00;
+        }
+        
         if (isset($input['iitemid'])) {
             $data['iitemid'] = $input['iitemid'];
         } elseif (!empty($item_info)) {

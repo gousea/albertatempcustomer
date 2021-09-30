@@ -531,9 +531,9 @@
                                                         </div>
                                                         <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required"
                                                             style="display: inline-table;">
-
+                                                            
                                                             <span style="display: inline-block;width: 79%;">
-                                                            <select name="vsuppliercode"
+                                                                <select name="vsuppliercode"
                                                                     class="form-control adjustment-fields">
                                                                     <option value="">Select Supplier</option>
                                                                     <?php if(isset($data['suppliers']) && count($data['suppliers']) > 0){?>
@@ -549,6 +549,7 @@
                                                                     <?php } ?>
                                                                 </select>
                                                             </span>
+                                                            
                                                             <!--<span style="display: inline-block;width: 10%" title="Add Supplier" id="add_new_supplier"><button class="btn btn-success btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i></button></span>-->
                                                             <button class="btn btn-success btn-sm"
                                                                 style="display: inline-block;width: 21%"
@@ -558,7 +559,7 @@
                                                             <?php if (isset($data['error_vsuppliercode'])) { ?>
                                                             <div class="text-danger"><?php echo $data['error_vsuppliercode']; ?></div>
                                                             <?php } ?>
-
+                                                            
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
@@ -941,6 +942,25 @@
                                                     </div>
                                                 </div>
 
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row notLottery">
+                                            <div class="col-md-12 mx-auto">
+                                                <div class="col-12 col-md-4 col-sm-2 col-lg-4 p-form">
+                                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6">
+
+                                                        <label for="inputNumber"
+                                                               class="p-2 float-right text-uppercase">Envt
+                                                            Charge</label>
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
+
+                                                        <input name="envt_charge" id="envt_charge"
+                                                               value="<?php echo isset($data['envt_charge']) ? $data['envt_charge'] : '0.00'; ?>" type="text"
+                                                               class="form-control adjustment-fields">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -4962,7 +4982,7 @@ $adjvaluereset = 0;
                             </div>
                             <div class="col-md-5">
                                 <input class="form-control adjustment-fields" type="text" id="npackcost" name="npackcost"
-                                    required value="<?php echo isset($data['nunitcost']) ? number_format((float) ($data['nunitcost']/$data['lot_child_limit']), 2, '.', '') : ''; ?>" readonly>
+                                    required value="<?php echo isset($data['nunitcost']) ? number_format((float) ((float)$data['nunitcost']/(int)$data['lot_child_limit']), 2, '.', '') : ''; ?>" readonly>
                             </div>
                             <div class="col-md-3"></div>
                         </div>
@@ -5018,7 +5038,7 @@ $adjvaluereset = 0;
             event.preventDefault();
 
             <?php if(isset($data['nunitcost'])){ ?>
-            var unitcost = '<?php echo ($data['nunitcost']/$data['lot_child_limit']); ?>';
+            var unitcost = '<?php echo ((float)$data['nunitcost']/(int)$data['lot_child_limit']); ?>';
             <?php }else{ ?>
             var unitcost = 0;
             <?php } ?>
@@ -5859,7 +5879,7 @@ $adjvaluereset = 0;
 
         });
 
-        $(document).on('keypress keyup blur', 'input[name="nbottledepositamt"], .slab_price_nprice,.input_npackprice',
+        $(document).on('keypress keyup blur', 'input[name="nbottledepositamt"], input[name="envt_charge"], .slab_price_nprice,.input_npackprice',
             function(event) {
 
                 if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
@@ -9606,6 +9626,10 @@ $adjvaluereset = 0;
 
                 $('#item_movement_by_date_selection_table #first_th').hide();
             }
+        });
+        
+        $(document).on('keypress', '#envt_charge', function(event) {
+            this.value = this.value.match(/^\d+\.?\d{0,2}/);
         });
     </script>
 
