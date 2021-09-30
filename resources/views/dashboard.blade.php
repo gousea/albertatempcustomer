@@ -295,7 +295,7 @@
                             @foreach ($output['trn_sales_data'] as $sales_data)
                                 <tr id="customer-row">
                                     <td><span>{{ $sales_data->sales_timestamp }}</span></td>
-                                    <td><a class="print-sales" id="print" data-id="<?php echo $sales_data->isalesid;?>">{{ $sales_data->transaction_id }} </a></td>
+                                    <td><a class="print-sales" id="print" data-id="<?php echo $sales_data->transaction_id;?>">{{ $sales_data->transaction_id }} </a></td>
                                     <!-- <td><span>{{ $sales_data->transaction_id }}</span></td> -->
                                     <td><span>{{ $sales_data->sales_amount }}</span></td>
                                     <td><span>{{ $sales_data->tender_type }}</span></td>
