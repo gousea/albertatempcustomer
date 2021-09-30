@@ -1111,15 +1111,19 @@
     
     var closest_itotalunit = 0;
     var closest_nunitcost = 0;
+    var closest_nordextprice = 0;
     if(vitemtype == 'Lot Matrix'){
         
         if(po_order_by == 'case'){
             closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+            closest_nunitcost = nordextprice / (nordqty*npackqty);
+            closest_nordextprice = (nordqty * npackqty) * closest_nunitcost;
         } else {
             closest_itotalunit = nordqty*lotmatrix_npack;
+            closest_nunitcost = nordextprice / (nordqty);
+            closest_nordextprice = nordqty * closest_nunitcost;
         }
         
-        closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
     }else{
         if(po_order_by == 'case'){
             closest_itotalunit = nordqty * npackqty;
@@ -1127,6 +1131,7 @@
             closest_itotalunit = nordqty;
         }
         closest_nunitcost = nordextprice / closest_itotalunit;
+        closest_nordextprice = closest_itotalunit * closest_nunitcost;
     }
     
     if(isNaN(closest_nunitcost)) {
@@ -1134,9 +1139,7 @@
     }else{
       closest_nunitcost = closest_nunitcost.toFixed(4);
     }
-
-    var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-
+    
     if(isNaN(closest_nordextprice)) {
       closest_nordextprice = 0.00;
     }else{
@@ -1211,15 +1214,19 @@
 
     var closest_itotalunit = 0;
     var closest_nunitcost = 0;
+    var closest_nordextprice = 0;
     if(vitemtype == 'Lot Matrix'){
         
         if(po_order_by == 'case'){
             closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+            closest_nunitcost = nordextprice / (nordqty*npackqty);
+            closest_nordextprice = (nordqty * npackqty) * closest_nunitcost;
         } else {
             closest_itotalunit = nordqty*lotmatrix_npack;
+            closest_nunitcost = nordextprice / (nordqty);
+            closest_nordextprice = nordqty * closest_nunitcost;
         }
         
-        closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
     }else{
         if(po_order_by == 'case'){
             closest_itotalunit = nordqty * npackqty;
@@ -1227,6 +1234,7 @@
             closest_itotalunit = nordqty;
         }
         closest_nunitcost = nordextprice / closest_itotalunit;
+        closest_nordextprice = closest_itotalunit * closest_nunitcost;
     }
     
     if(isNaN(closest_nunitcost)) {
@@ -1234,9 +1242,7 @@
     }else{
       closest_nunitcost = closest_nunitcost.toFixed(4);
     }
-
-    var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-
+    
     if(isNaN(closest_nordextprice)) {
       closest_nordextprice = 0.00;
     }else{
@@ -1322,15 +1328,19 @@
         
         var closest_itotalunit = 0;
         var closest_nunitcost = 0;
+        
         if(vitemtype == 'Lot Matrix'){
             
             if(po_order_by == 'case'){
                 closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty*npackqty);
+                
             } else {
                 closest_itotalunit = nordqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty);
+               
             }
             
-            closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
         }else{
             if(po_order_by == 'case'){
                 closest_itotalunit = nordqty * npackqty;
@@ -1338,6 +1348,7 @@
                 closest_itotalunit = nordqty;
             }
             closest_nunitcost = nordextprice / closest_itotalunit;
+            
         }
         
         if(isNaN(closest_nunitcost)) {
@@ -3151,8 +3162,11 @@ $('.editable_text').focus(function() {
                     html_purchase_item += 'selected ';
                     qty_unit_case = transfer_to_po[index]['order_qty']*item.npack;
                     
+                    unitCost = transfer_to_po[index]['amount'] / qty_unit_case;
+                    
                     if(item.vitemtype == 'Lot Matrix'){
                         qty_unit_case = qty_unit_case*item.lot_npack;
+                        unitCost = transfer_to_po[index]['amount'] / (transfer_to_po[index]['order_qty']*item.lot_npack);
                         
                     }
                 }
@@ -3162,6 +3176,8 @@ $('.editable_text').focus(function() {
                 if(transfer_to_po[index]['order_by'] == 'unit'){
                     html_purchase_item += 'selected ';
                     qty_unit_case = transfer_to_po[index]['order_qty'];
+                    
+                    unitCost = transfer_to_po[index]['amount'] / qty_unit_case;
                     
                     if(item.vitemtype == 'Lot Matrix'){
                         qty_unit_case = qty_unit_case*item.npack;
@@ -3178,7 +3194,7 @@ $('.editable_text').focus(function() {
                 // html_purchase_item += '<td class="text-right noInput"><span class="itotalunit_span_class">'+ qty_unit_case +'</span><input type="hidden" class="itotalunit_class" name="items['+window.index_item+'][itotalunit]" value="'+ qty_unit_case +'" id="" style="width:80px;text-align:right;"></td>';
                 html_purchase_item += '<td class="text-right"><input type="text" class="sggtdqty_class" name="items['+window.index_item+'][po_total_suggested_cost]" id="" style="width:60px;text-align:right;" value="'+ suggested_cost +'" readonly></td>';
                 
-                unitCost = transfer_to_po[index]['amount'] / qty_unit_case;
+                // unitCost = transfer_to_po[index]['amount'] / qty_unit_case;
                 unitCost = (isNaN(unitCost)) ? 0 : unitCost;
                 
                 html_purchase_item += '<td class="text-right"><input type="text" class="nordextprice_class" name="items['+window.index_item+'][nordextprice]" value="' + transfer_to_po[index]['amount'] + '" id="" style="width:80px;text-align:right;"><input type="hidden" class="nunitcost_class" name="items['+window.index_item+'][nunitcost]" value="' + unitCost.toFixed(4) + '" id="" style="width:80px;text-align:right;" readonly></td>';
@@ -3723,15 +3739,19 @@ $('.editable_text').focus(function() {
         
         var closest_itotalunit = 0;
         var closest_nunitcost = 0;
+        var closest_nordextprice = 0;
         if(vitemtype == 'Lot Matrix'){
             
             if(po_order_by == 'case'){
                 closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty*npackqty);
+                closest_nordextprice = (nordqty * npackqty) * closest_nunitcost;
             } else {
                 closest_itotalunit = nordqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty);
+                closest_nordextprice = nordqty * closest_nunitcost;
             }
             
-            closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
         }else{
             if(po_order_by == 'case'){
                 closest_itotalunit = nordqty * npackqty;
@@ -3739,6 +3759,7 @@ $('.editable_text').focus(function() {
                 closest_itotalunit = nordqty;
             }
             closest_nunitcost = nordextprice / closest_itotalunit;
+            closest_nordextprice = closest_itotalunit * closest_nunitcost;
         }
         
         if(isNaN(closest_nunitcost)) {
@@ -3746,9 +3767,7 @@ $('.editable_text').focus(function() {
         }else{
           closest_nunitcost = closest_nunitcost.toFixed(4);
         }
-    
-        var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-    
+        
         if(isNaN(closest_nordextprice)) {
           closest_nordextprice = 0.00;
         }else{

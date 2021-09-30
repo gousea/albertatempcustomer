@@ -607,7 +607,7 @@
                                                         </td>
                                                         
                                                         <td class="text-right">
-                                                            <input type="text" class="npackqty_class" name="items[<?php echo $k; ?>][npack]" value="<?php echo $item['npack']; ?>" id="" style="width:60px;text-align: right;">
+                                                          <input type="text" class="npackqty_class" name="items[<?php echo $k; ?>][npack]" value="<?php echo $item['npack']; ?>" id="" style="width:60px;text-align: right;">
                                                             @if($item['vitemtype'] == 'Lot Matrix')
                                                                 <input type="hidden" class="lotmatrix_npack" value="<?php echo $item['lotmatrix_npack']; ?>">
                                                             @endif
@@ -1434,15 +1434,19 @@
     
     var closest_itotalunit = 0;
     var closest_nunitcost = 0;
+    var closest_nordextprice = 0;
     if(vitemtype == 'Lot Matrix'){
         
         if(po_order_by == 'case'){
             closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+            closest_nunitcost = nordextprice / (nordqty*npackqty);
+            closest_nordextprice = (nordqty * npackqty) * closest_nunitcost;
         } else {
             closest_itotalunit = nordqty*lotmatrix_npack;
+            closest_nunitcost = nordextprice / (nordqty);
+            closest_nordextprice = nordqty * closest_nunitcost;
         }
         
-        closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
     }else{
         if(po_order_by == 'case'){
             closest_itotalunit = nordqty * npackqty;
@@ -1450,6 +1454,7 @@
             closest_itotalunit = nordqty;
         }
         closest_nunitcost = nordextprice / closest_itotalunit;
+        closest_nordextprice = closest_itotalunit * closest_nunitcost;
     }
 
     if(isNaN(closest_nunitcost)) {
@@ -1457,9 +1462,7 @@
     }else{
       closest_nunitcost = closest_nunitcost.toFixed(4);
     }
-
-    var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-
+    
     if(isNaN(closest_nordextprice)) {
       closest_nordextprice = 0.00;
     }else{
@@ -1522,15 +1525,19 @@
 
     var closest_itotalunit = 0;
     var closest_nunitcost = 0;
+    var closest_nordextprice = 0;
     if(vitemtype == 'Lot Matrix'){
         
         if(po_order_by == 'case'){
             closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+            closest_nunitcost = nordextprice / (nordqty*npackqty);
+            closest_nordextprice = (nordqty * npackqty) * closest_nunitcost;
         } else {
             closest_itotalunit = nordqty*lotmatrix_npack;
+            closest_nunitcost = nordextprice / (nordqty);
+            closest_nordextprice = nordqty * closest_nunitcost;
         }
         
-        closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
     }else{
         if(po_order_by == 'case'){
             closest_itotalunit = nordqty * npackqty;
@@ -1538,6 +1545,7 @@
             closest_itotalunit = nordqty;
         }
         closest_nunitcost = nordextprice / closest_itotalunit;
+        closest_nordextprice = closest_itotalunit * closest_nunitcost;
     }
 
     if(isNaN(closest_nunitcost)) {
@@ -1545,9 +1553,7 @@
     }else{
       closest_nunitcost = closest_nunitcost.toFixed(4);
     }
-
-    var closest_nordextprice = closest_itotalunit * closest_nunitcost;
-
+    
     if(isNaN(closest_nordextprice)) {
       closest_nordextprice = 0.00;
     }else{
@@ -1638,22 +1644,27 @@
         
         var closest_itotalunit = 0;
         var closest_nunitcost = 0;
+        
         if(vitemtype == 'Lot Matrix'){
             
-            if(order_by == 'case'){
+            if(po_order_by == 'case'){
                 closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty*npackqty);
+                
             } else {
                 closest_itotalunit = nordqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty);
+               
             }
             
-            closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
         }else{
-            if(order_by == 'case'){
+            if(po_order_by == 'case'){
                 closest_itotalunit = nordqty * npackqty;
             } else {
                 closest_itotalunit = nordqty;
             }
             closest_nunitcost = nordextprice / closest_itotalunit;
+            
         }
         
         if(isNaN(closest_nunitcost)) {
@@ -3911,15 +3922,19 @@ $(document).on('click', '#continue_export', function(event) {
         
         var closest_itotalunit = 0;
         var closest_nunitcost = 0;
+        var closest_nordextprice = 0;
         if(vitemtype == 'Lot Matrix'){
             
             if(po_order_by == 'case'){
                 closest_itotalunit = nordqty * npackqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty*npackqty);
+                closest_nordextprice = (nordqty * npackqty) * closest_nunitcost;
             } else {
                 closest_itotalunit = nordqty*lotmatrix_npack;
+                closest_nunitcost = nordextprice / (nordqty);
+                closest_nordextprice = nordqty * closest_nunitcost;
             }
             
-            closest_nunitcost = nordextprice / (nordqty*lotmatrix_npack);
         }else{
             if(po_order_by == 'case'){
                 closest_itotalunit = nordqty * npackqty;
@@ -3927,6 +3942,7 @@ $(document).on('click', '#continue_export', function(event) {
                 closest_itotalunit = nordqty;
             }
             closest_nunitcost = nordextprice / closest_itotalunit;
+            closest_nordextprice = closest_itotalunit * closest_nunitcost;
         }
         
         if(isNaN(closest_nunitcost)) {
@@ -3934,8 +3950,6 @@ $(document).on('click', '#continue_export', function(event) {
         }else{
           closest_nunitcost = closest_nunitcost.toFixed(4);
         }
-        
-        var closest_nordextprice = closest_itotalunit * closest_nunitcost;
         
         if(isNaN(closest_nordextprice)) {
           closest_nordextprice = 0.00;
