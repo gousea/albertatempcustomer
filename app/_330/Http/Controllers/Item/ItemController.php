@@ -1614,9 +1614,9 @@ class ItemController extends Controller
                         $options_data = array();
                     }
                     
-                    $envt_charge = $input['envt_charge'] ?? '0.00';
-                    $envt_charge = (float)$envt_charge;
-                    Log::info('Envt charge at '.__LINE__.'=>'.$envt_charge);
+                    $envt_fee = $input['envt_fee'] ?? '0.00';
+                    $envt_fee = (float)$envt_fee;
+                    Log::info('Envt charge at '.__LINE__.'=>'.$envt_fee);
                     
                     $check_error='';
                     
@@ -1812,7 +1812,7 @@ class ItemController extends Controller
                                         "lot_child_limit" => $lot_child_limit,
                                         "lotData" => $lotData,
                                         "lot_npack" => $lot_npack,
-                                        "envt_charge" => $envt_charge,
+                                        "envt_fee" => $envt_fee,
                                     );
                         // dd($temp_arr);
                         $item = new Item();
@@ -2651,8 +2651,8 @@ class ItemController extends Controller
 
                 $reorderPoint = ($input['ireorderpoint'] > 0) ? $input['ireorderpoint'] : $reorderPoint ;
                 
-                $envt_charge = $input['envt_charge'] ?? '0.00';
-                $envt_charge = (float)$envt_charge;
+                $envt_fee = $input['envt_fee'] ?? '0.00';
+                $envt_fee = (float)$envt_fee;
 
                 if($input['vitemtype'] == 'Lot Matrix'){
                     $lotData['vpackname'] = $input['packname'];
@@ -2834,7 +2834,7 @@ class ItemController extends Controller
                                     "lot_child_limit" => $lot_child_limit,
                                     "lotData" => $lotData,
                                     "lot_npack" => $lot_npack,
-                                    "envt_charge" => $envt_charge,
+                                    "envt_fee" => $envt_fee,
                                 );
                     // dd($temp_arr);
                     $item = new Item();
@@ -3816,12 +3816,12 @@ class ItemController extends Controller
             $data['edit_page'] = 'edit_page';
         }
         
-        if (isset($input['envt_charge'])) {
-            $data['envt_charge'] = $input['envt_charge'];
+        if (isset($input['envt_fee'])) {
+            $data['envt_fee'] = $input['envt_fee'];
         } elseif (!empty($item_info)) {
-            $data['envt_charge'] = $item_info['envt_charge'];
+            $data['envt_fee'] = $item_info['envt_fee'];
         } else {
-            $data['envt_charge'] = 0.00;
+            $data['envt_fee'] = 0.00;
         }
         
         if (isset($input['iitemid'])) {

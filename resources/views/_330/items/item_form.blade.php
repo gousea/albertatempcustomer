@@ -952,12 +952,12 @@
 
                                                         <label for="inputNumber"
                                                                class="p-2 float-right text-uppercase">Envt
-                                                            Charge</label>
+                                                            Fee</label>
                                                     </div>
                                                     <div class="col-6 col-md-6 col-sm-6 col-lg-6 form-group required">
 
-                                                        <input name="envt_charge" id="envt_charge"
-                                                               value="<?php echo isset($data['envt_charge']) ? $data['envt_charge'] : '0.00'; ?>" type="text"
+                                                        <input name="envt_fee" id="envt_fee"
+                                                               value="<?php echo isset($data['envt_fee']) ? $data['envt_fee'] : '0.00'; ?>" type="text"
                                                                class="form-control adjustment-fields">
                                                     </div>
                                                 </div>
@@ -5879,7 +5879,7 @@ $adjvaluereset = 0;
 
         });
 
-        $(document).on('keypress keyup blur', 'input[name="nbottledepositamt"], input[name="envt_charge"], .slab_price_nprice,.input_npackprice',
+        $(document).on('keypress keyup blur', 'input[name="nbottledepositamt"], input[name="envt_fee"], .slab_price_nprice,.input_npackprice',
             function(event) {
 
                 if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
@@ -9628,7 +9628,7 @@ $adjvaluereset = 0;
             }
         });
         
-        $(document).on('keypress', '#envt_charge', function(event) {
+        $(document).on('keypress', '#envt_fee', function(event) {
             this.value = this.value.match(/^\d+\.?\d{0,2}/);
         });
     </script>
