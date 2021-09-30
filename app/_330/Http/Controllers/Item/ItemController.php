@@ -4483,50 +4483,71 @@ class ItemController extends Controller
 
             $total_pack_qoh = (int)$data['iqtyonhand'];
 
-            $total_pack = array_sum(array_column($data['itempacks'], 'ipack'));
-
-
-            $total_pack = $total_pack - $data['lot_child_limit'];
-
-            $total_pack_qoh = $total_pack_qoh - $total_pack;
-
-            $parrent_pack_qoh = (int)($total_pack_qoh/$data['lot_child_limit']);
-            $balance_pack_qoh = ((int)$data['iqtyonhand']) - ($parrent_pack_qoh * $data['lot_child_limit']);
-
-            $data['parrent_qoh'] = $parrent_pack_qoh;
-            $data['balance_pack_qoh'] = $balance_pack_qoh;
-
-            $itempacks = array();
-            $filter_itempacks = array();
-
-            $data['itempacks'] = array_map(function ($value) {
-                return (array)$value;
-            }, $data['itempacks']);
-
-            foreach($data['itempacks'] as $itempack){
-
-                if($itempack['ipack'] != $data['lot_child_limit']){
-                    $itempack['pack_qoh'] = 1;
-                    $balance_pack_qoh = $balance_pack_qoh - $itempack['ipack'];
-                }else{
-                    $itempack['pack_qoh'] = $parrent_pack_qoh;
+            if($total_pack_qoh == 0){
+                
+                $data['itempacks'] = array_map(function ($value) {
+                    return (array)$value;
+                }, $data['itempacks']);
+                
+                foreach($data['itempacks'] as $itempack){
+                    
+                    $itempack['pack_qoh'] = 0;
+                        
+                    $itempacks[] = $itempack;
+                    
                 }
-
-                $itempacks[] = $itempack;
-
-            }
-
-            foreach($itempacks as $itempack){
-
-                if($itempack['ipack'] != $data['lot_child_limit'] &&  $balance_pack_qoh >= $itempack['ipack']){
-                    $itempack['pack_qoh'] =  $itempack['pack_qoh'] + (int)($balance_pack_qoh / $itempack['ipack']);
-                    $balance_pack_qoh = $balance_pack_qoh - ((int)($balance_pack_qoh / $itempack['ipack']) * $itempack['ipack']);
+                
+                $data['parrent_qoh'] = 0;
+                $data['balance_pack_qoh'] = 0;
+                
+                $data['itempacks'] = $itempacks;
+            }else{
+                
+                $total_pack = array_sum(array_column($data['itempacks'], 'ipack'));
+                
+                
+                $total_pack = $total_pack - $data['lot_child_limit'];
+                
+                $total_pack_qoh = $total_pack_qoh - $total_pack;
+                
+                $parrent_pack_qoh = (int)($total_pack_qoh/$data['lot_child_limit']);
+                $balance_pack_qoh = ((int)$data['iqtyonhand']) - ($parrent_pack_qoh * $data['lot_child_limit']);
+                
+                $data['parrent_qoh'] = $parrent_pack_qoh;
+                $data['balance_pack_qoh'] = $balance_pack_qoh;
+                
+                $itempacks = array();
+                $filter_itempacks = array();
+                
+                $data['itempacks'] = array_map(function ($value) {
+                    return (array)$value;
+                }, $data['itempacks']);
+                
+                foreach($data['itempacks'] as $itempack){
+                    
+                    if($itempack['ipack'] != $data['lot_child_limit']){
+                        $itempack['pack_qoh'] = 1;
+                        $balance_pack_qoh = $balance_pack_qoh - $itempack['ipack'];
+                    }else{
+                        $itempack['pack_qoh'] = $parrent_pack_qoh;
+                    }
+                    
+                    $itempacks[] = $itempack;
+                    
                 }
-                $filter_itempacks[] = $itempack;
+                
+                foreach($itempacks as $itempack){
+                    
+                    if($itempack['ipack'] != $data['lot_child_limit'] &&  $balance_pack_qoh >= $itempack['ipack']){
+                        $itempack['pack_qoh'] =  $itempack['pack_qoh'] + (int)($balance_pack_qoh / $itempack['ipack']);
+                        $balance_pack_qoh = $balance_pack_qoh - ((int)($balance_pack_qoh / $itempack['ipack']) * $itempack['ipack']);
+                    }
+                    $filter_itempacks[] = $itempack;
+                }
+                                        
+                //  dd($filter_itempacks);
+                $data['itempacks'] = $filter_itempacks;
             }
-
-            //  dd($filter_itempacks);
-            $data['itempacks'] = $filter_itempacks;
         }elseif($data['vitemtype'] == 'Lot Matrix'){
             $data['parrent_qoh'] = '';
             $data['balance_pack_qoh'] = '';
