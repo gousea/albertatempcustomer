@@ -1586,7 +1586,7 @@ class Item extends Model
                     }
 
                     try {
-                        $item_lotmatrix = DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_itempackdetail WHERE iitemid = '".(int)($iitem_id)."' and vpackname= '". ($data['vpackname']) ."' and ipack = '".(int)$data['ipack']."' ");
+                        $item_lotmatrix = DB::connection('mysql')->select("SELECT * FROM u".$store.".mst_itempackdetail WHERE iitemid = '".(int)($iitem_id)."' and (vpackname= '". ($data['vpackname']) ."' or ipack = '".(int)$data['ipack']."') ");
                         // $item_lotmatrix = isset($item_lotmatrix[0])?(array)$item_lotmatrix[0]:[];
 
                         if(count($item_lotmatrix) > 0){
@@ -1609,7 +1609,7 @@ class Item extends Model
 
             }else{
                 try {
-                    $item_lotmatrix = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_itempackdetail WHERE iitemid = '".(int)($data['iitemid'])."' and vpackname= '". ($data['vpackname']) ."' and ipack = '".(int)$data['ipack']."' ");
+                    $item_lotmatrix = DB::connection('mysql_dynamic')->select("SELECT * FROM mst_itempackdetail WHERE iitemid = '".(int)($data['iitemid'])."' and (vpackname= '". ($data['vpackname']) ."' or ipack = '".(int)$data['ipack']."') ");
                     // $item_lotmatrix = isset($item_lotmatrix[0])?(array)$item_lotmatrix[0]:[];
 
                     if(count($item_lotmatrix) > 0){
