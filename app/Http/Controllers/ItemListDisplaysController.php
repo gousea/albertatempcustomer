@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -8,48 +8,48 @@ use Illuminate\Support\Facades\Schema;
 use Session;
 
 class ItemListDisplaysController extends Controller{
-    
+
     public function index(Request $request){
         $webadminsettings = new web_admin_setting();
         $url = '';
-        
+
 		$data['settings'] = array();
-		
-		
+
+
 		$data['sid'] = $request->session()->get('sid');
-        
+
 		$data['defualt_items_listings'] = array();
 		$data['pre_items_listings'] = array();
 		$not_displays = array('iitemid', 'vitemname', 'vitemtype', 'vbarcode', 'itemimage', 'LastUpdate', 'SID');
-       
+
         //         $input = $request->request->all();
         // 		echo "<pre>";
         // 		print_r($input);
         // 		die;
-        		
+
         // 		echo $request->request->get('module_name');die;
         // 		echo $request->post('module_name');die;
         $data['module_name'] = $request->get('module_name') ? $request->get('module_name') : 'ItemListing';
-        
+
 		$defualt_items_listings = $webadminsettings->defaultListings();
-		
+
         $pre_items_listing = $webadminsettings->getItemListings($data['module_name']);
-        
+
         if(!empty($pre_items_listing)){
             $pre_items_listings = $pre_items_listing[0];
         }
-        
+
         if(isset($pre_items_listings)){
             if(count($pre_items_listings) > 0){
                 $pre_items_listings = json_decode($pre_items_listings['variablevalue']);
                 $data['pre_items_listings'] = $pre_items_listings;
-                
+
                 foreach ($pre_items_listings as $keys => $pre_items_listing) {
                 	array_push($not_displays, $keys);
                 }
             }
         }
-        
+
 		if(count($defualt_items_listings) > 0){
 			foreach ($defualt_items_listings as $defualt_items_listing) {
 				if(!in_array($defualt_items_listing['Field'], $not_displays)){
@@ -57,17 +57,17 @@ class ItemListDisplaysController extends Controller{
 				}
 			}
 		}
-        
+
         //===Added gross profit column by hard column because gross_profit column is not present in mst_item table(Jira ticket AP-706)=====
         if(!in_array('gross_profit', $not_displays)){
             $data['defualt_items_listings'][] = 'gross_profit';
         }
-        
+
         //========remove iquantity column from display===
         if (($key = array_search('iquantity', $data['defualt_items_listings'])) !== false) {
             unset($data['defualt_items_listings'][$key]);
         }
-        
+
         if (($key = array_search('dcostprice', $data['defualt_items_listings'])) !== false) {
             unset($data['defualt_items_listings'][$key]);
         }
@@ -78,11 +78,11 @@ class ItemListDisplaysController extends Controller{
         if (($key = array_search('lot_child_limit', $data['defualt_items_listings'])) !== false) {
             unset($data['defualt_items_listings'][$key]);
         }
-        
+
         if (($key = array_search('lot_npack', $data['defualt_items_listings'])) !== false) {
             unset($data['defualt_items_listings'][$key]);
         }
-        
+
 		$data['title_arr'] = array(
             'webstore' => 'Web Store',
             'vitemtype' => 'Item Type',
@@ -167,46 +167,47 @@ class ItemListDisplaysController extends Controller{
             'parentmasterid' => 'Parent Master Id',
             'wicitem' => 'WIC Item',
             'gross_profit'=>'Gross Profit',
-            
+            'envt_fee'=>'Envt Fee',
+
         );
-        // echo "dsafsdf";
-        // echo "<pre>";
-        // print_r($data);
-        // die;
+
+         /*echo "<pre>";
+         print_r($data);
+         die;*/
         return view('itemlistdisplays.itemlistdisplay')->with($data);
     }
 
     public function edit(Request $request){
         $input = $request->request->all();
         $webadminsettings = new web_admin_setting();
-        
+
         $sid = $request->session()->get('sid');
 			if(count($request->post('itemListings')) > 0 ){
 				$webadminsettings->editlistSettings($request->post(), $sid);
-			}	
+			}
         $url = '';
-        
+
 		$data['settings'] = array();
 		$data['sid'] = $request->session()->get('sid');
-		
+
 		$data['defualt_items_listings'] = array();
 		$data['pre_items_listings'] = array();
 		$not_displays = array('iitemid', 'vitemname', 'vitemtype', 'vbarcode', 'itemimage', 'LastUpdate', 'SID');
-       
+
         $data['module_name'] = $request->get('module_name') ? $request->get('module_name') : 'ItemListing';
 
 		$defualt_items_listings = $webadminsettings->defaultListings();
         $pre_items_listing = $webadminsettings->getItemListings($data['module_name']);
-        
+
         if(!empty($pre_items_listing)){
             $pre_items_listings = $pre_items_listing[0];
         }
-        
+
         if(isset($pre_items_listings)){
     		if(count($pre_items_listings) > 0){
     			$pre_items_listings = json_decode($pre_items_listings['variablevalue']);
     			$data['pre_items_listings'] = $pre_items_listings;
-    
+
     			foreach ($pre_items_listings as $keys => $pre_items_listing) {
     				array_push($not_displays, $keys);
     			}
@@ -220,24 +221,31 @@ class ItemListDisplaysController extends Controller{
 				}
 			}
 		}
-		
+
 		//===Added gross profit column by hard column because gross_profit column is not present in mst_item table(Jira ticket AP-706)=====
         if(!in_array('gross_profit', $not_displays)){
             $data['defualt_items_listings'][] = 'gross_profit';
         }
-        
+
         //========remove iquantity column from display===
         if (($key = array_search('iquantity', $data['defualt_items_listings'])) !== false) {
             unset($data['defualt_items_listings'][$key]);
         }
-        
+
         if (($key = array_search('dcostprice', $data['defualt_items_listings'])) !== false) {
             unset($data['defualt_items_listings'][$key]);
         }
         if (($key = array_search('case_price', $data['defualt_items_listings'])) !== false) {
             unset($data['defualt_items_listings'][$key]);
         }
-        
+        if (($key = array_search('lot_child_limit', $data['defualt_items_listings'])) !== false) {
+            unset($data['defualt_items_listings'][$key]);
+        }
+
+        if (($key = array_search('lot_npack', $data['defualt_items_listings'])) !== false) {
+            unset($data['defualt_items_listings'][$key]);
+        }
+
 		$data['title_arr'] = array(
             'webstore' => 'Web Store',
             'vitemtype' => 'Item Type',
@@ -322,6 +330,7 @@ class ItemListDisplaysController extends Controller{
             'parentmasterid' => 'Parent Master Id',
             'wicitem' => 'WIC Item',
             'gross_profit'=>'Gross Profit',
+            'envt_fee' =>'Envt Fee',
         );
 
         Session::flash('message', 'Success: You have modified Settings!');

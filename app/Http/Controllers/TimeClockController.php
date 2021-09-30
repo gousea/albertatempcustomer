@@ -14,6 +14,7 @@ use Illuminate\Auth\Access\Gate;
 use App\Model\Reports;
 use PDF;
 use DateTime;
+use Illuminate\Support\Facades\Session;
 
 
 class TimeClockController extends Controller
@@ -100,6 +101,8 @@ class TimeClockController extends Controller
     }
     public function time_clock_data_week(Request $request){
         $input = $request->all();
+        $sessionData = session()->all();
+        //dd($sessionData);
 
         /*$sql="select user_id,mu.vfname empname,
             max(case when DAYNAME(login_time) = 'Sunday' then login_time else null end) sun_login,
@@ -139,33 +142,47 @@ class TimeClockController extends Controller
 
         $sql="select user_id,mu.vfname empname,
             max(case when DAYNAME(login_time) = 'Sunday' then login_time else null end) sun_login,
-            max(case when DAYNAME(login_time) = 'Sunday' then ifnull(final_logout_time, logout_time) else null end) sun_logout,
+            max(case when DAYNAME(login_time) = 'Sunday' then
+                 if(login_time < ifnull(final_logout_time, logout_time),ifnull(final_logout_time, logout_time),DATE_FORMAT(login_time, '%Y-%m-%d 23:59:59'))
+                else null end) sun_logout,
             max(case when DAYNAME(login_time) = 'Sunday' then tc_login_id else null end) sun_logid,
 
 
             max(case when DAYNAME(login_time) = 'Monday' then login_time else null end) mon_login,
-            max(case when DAYNAME(login_time) = 'Monday' then ifnull(final_logout_time, logout_time) else null end) mon_logout,
+            max(case when DAYNAME(login_time) = 'Monday' then
+                 if(login_time < ifnull(final_logout_time, logout_time),ifnull(final_logout_time, logout_time),DATE_FORMAT(login_time, '%Y-%m-%d 23:59:59'))
+                else null end) mon_logout,
             max(case when DAYNAME(login_time) = 'Monday' then tc_login_id else null end) mon_logid,
 
             max(case when DAYNAME(login_time) = 'Tuesday' then login_time else null end) tue_login,
-            max(case when DAYNAME(login_time) = 'Tuesday' then ifnull(final_logout_time, logout_time) else null end) tue_logout,
+            max(case when DAYNAME(login_time) = 'Tuesday' then
+                 if(login_time < ifnull(final_logout_time, logout_time),ifnull(final_logout_time, logout_time),DATE_FORMAT(login_time, '%Y-%m-%d 23:59:59'))
+                else null end) tue_logout,
             max(case when DAYNAME(login_time) = 'Tuesday' then tc_login_id else null end) tue_logid,
 
             max(case when DAYNAME(login_time) = 'Wednesday' then login_time else null end) wed_login,
-            max(case when DAYNAME(login_time) = 'Wednesday' then ifnull(final_logout_time, logout_time) else null end) wed_logout,
+            max(case when DAYNAME(login_time) = 'Wednesday' then
+                 if(login_time < ifnull(final_logout_time, logout_time),ifnull(final_logout_time, logout_time),DATE_FORMAT(login_time, '%Y-%m-%d 23:59:59'))
+                else null end) wed_logout,
             max(case when DAYNAME(login_time) = 'Wednesday' then tc_login_id else null end) wed_logid,
 
-            max(case when DAYNAME(login_time) = 'Thursday' then login_time else null end) thu_login,
-            max(case when DAYNAME(login_time) = 'Thursday' then ifnull(final_logout_time, logout_time) else null end) thu_logout,
+            min(case when DAYNAME(login_time) = 'Thursday' then login_time else null end) thu_login,
+            max(case when DAYNAME(login_time) = 'Thursday' then
+                            if(login_time < ifnull(final_logout_time, logout_time),ifnull(final_logout_time, logout_time),DATE_FORMAT(login_time, '%Y-%m-%d 23:59:59'))
+                else null end) thu_logout,
             max(case when DAYNAME(login_time) = 'Thursday' then tc_login_id else null end) thu_logid,
 
             max(case when DAYNAME(login_time) = 'Friday' then login_time else null end) fri_login,
-            max(case when DAYNAME(login_time) = 'Friday' then ifnull(final_logout_time, logout_time) else null end) fri_logout,
+            max(case when DAYNAME(login_time) = 'Friday' then
+                 if(login_time < ifnull(final_logout_time, logout_time),ifnull(final_logout_time, logout_time),DATE_FORMAT(login_time, '%Y-%m-%d 23:59:59'))
+                else null end) fri_logout,
             max(case when DAYNAME(login_time) = 'Friday' then tc_login_id else null end) fri_logid,
 
 
             max(case when DAYNAME(login_time) = 'Saturday' then login_time else null end) sat_login,
-            max(case when DAYNAME(login_time) = 'Saturday' then ifnull(final_logout_time, logout_time) else null end) sat_logout,
+            max(case when DAYNAME(login_time) = 'Saturday' then
+                 if(login_time < ifnull(final_logout_time, logout_time),ifnull(final_logout_time, logout_time),DATE_FORMAT(login_time, '%Y-%m-%d 23:59:59'))
+                else null end) sat_logout,
             max(case when DAYNAME(login_time) = 'Saturday' then tc_login_id else null end) sat_logid
 
             from time_clock_login tc

@@ -188,6 +188,7 @@ class ItemController extends Controller
                                 'wicitem' => 'wic item',
                                 'gross_profit'=>'Gross Profit',
                                 'last_costprice' => 'Last CostPrice',
+                                'envt_fee' => 'Envt Fee'
                                 );
 
         $error_warning = session()->get('warning');
@@ -1613,13 +1614,13 @@ class ItemController extends Controller
                     }else{
                         $options_data = array();
                     }
-                    
+
                     $envt_fee = $input['envt_fee'] ?? '0.00';
                     $envt_fee = (float)$envt_fee;
                     Log::info('Envt charge at '.__LINE__.'=>'.$envt_fee);
-                    
+
                     $check_error='';
-                    
+
                     if($input['vitemtype'] == 'Lot Matrix'){
                         $lotData['vpackname'] = $input['packname'];
                         $lotData['vpack'] = $input['pack'];
@@ -2650,7 +2651,7 @@ class ItemController extends Controller
                 }
 
                 $reorderPoint = ($input['ireorderpoint'] > 0) ? $input['ireorderpoint'] : $reorderPoint ;
-                
+
                 $envt_fee = $input['envt_fee'] ?? '0.00';
                 $envt_fee = (float)$envt_fee;
 
@@ -3815,7 +3816,7 @@ class ItemController extends Controller
         if (isset($iitemid)) {
             $data['edit_page'] = 'edit_page';
         }
-        
+
         if (isset($input['envt_fee'])) {
             $data['envt_fee'] = $input['envt_fee'];
         } elseif (!empty($item_info)) {
@@ -3823,7 +3824,7 @@ class ItemController extends Controller
         } else {
             $data['envt_fee'] = 0.00;
         }
-        
+
         if (isset($input['iitemid'])) {
             $data['iitemid'] = $input['iitemid'];
         } elseif (!empty($item_info)) {
