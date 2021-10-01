@@ -56,14 +56,14 @@
                         <div class="form-group row">
                             
                        
-                                     <div class="col-sm-6">
+                                     <div class="col-sm-6 col-xs-6">
                                                  <input type="text" name="barcode" class="form-control" id="barcode"
                                        placeholder="ENTER SKU" style="font-size: 12px;">
                                 
                                 <h5 id="barSearch" style="display: none;color: #495057;font-size: font-size: 12px; !important;">
                                     searching..please wait</h5>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-2 col-sm-2">
                                         <button class="btn btn-primary button-blue buttons_menu basic-button-small"
                                         id="barcodeSearchBtn" style="font-size: 12px;">Search UPC
                                 </button>
@@ -168,7 +168,7 @@
           <!--   <div class="panel-body padding-left-right"> -->
                 <div class="divTop padding-left-right">
                      <div class="form-group row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <label for="start_dt" class="col-form-label">DATE</label>
                             </div>
                             <div class="col-sm-4">
@@ -178,7 +178,7 @@
 
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <label for="invoice" class="col-form-label">INVOICE</label>
                             </div>
                             <div class="col-sm-4">
@@ -188,7 +188,7 @@
 
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <label for="vendor" class="col-form-label">VENDOR</label>
                             </div>
                             <div class="col-sm-4">
@@ -198,7 +198,7 @@
 
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                <button class="btn btn-primary button-blue buttons_menu basic-button-small"
                                         id="bactToItemBtn" style="font-size: 12px;">BACK TO UPC SEARCH
                                 </button>
