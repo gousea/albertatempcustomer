@@ -222,7 +222,7 @@ class TimeClockController extends Controller
                     $logoutTime = date('h:i A', strtotime($newDate));
                     if($datetime2 > $now){
                         if($logoutTime == '11:59 PM'){
-                            $show='Not Logged Out';
+                            $show='-Not Logged Out';
                             $logoutTime =date('h:i A', strtotime($week_list->sun_login));
                             $datetime2 = new DateTime($week_list->sun_login);
                             $interval = $datetime1->diff($datetime2);
@@ -232,7 +232,7 @@ class TimeClockController extends Controller
                             $interval = $datetime1->diff($datetime2);
                         }
                     }
-                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->sun_login)).'" name="start[]" class="datetimepicker3"> <input type="text" value="'.date('h:i A', strtotime($week_list->sun_logout)).'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br><sapn class="normal_text">'.$interval->format('%h').' Hours '.$interval->format('%i').' Minutes<br>'.$show.'</sapn><input type="hidden" value="'.$week_list->sun_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
+                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->sun_login)).'" name="start[]" class="datetimepicker3"> <input type="text" value="'.date('h:i A', strtotime($week_list->sun_logout)).'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br><sapn class="normal_text">'.$interval->format('%h').' Hours '.$interval->format('%i').' Minutes'.$show.'</sapn><input type="hidden" value="'.$week_list->sun_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
                 } else{
                     $html.=  '<td class="not_log_hours_color"><sapn class="log_hours" > Hours logged </sapn><br> <br><sapn class="log_hours" >Total Hours</sapn> <br> </td> <input type="hidden" value="" id="saturday_date" name="saturday_date" />';
 
@@ -254,7 +254,7 @@ class TimeClockController extends Controller
                     $logoutTime = date('h:i A', strtotime($newDate));
                     if($datetime2 > $now){
                         if($logoutTime == '11:59 PM'){
-                            $show='Not Logged Out';
+                            $show='-Not Logged Out';
                             $logoutTime =date('h:i A', strtotime($week_list->mon_login));
                             $datetime2 = new DateTime($week_list->mon_login);
                             $interval_mon = $datetime1->diff($datetime2);
@@ -264,8 +264,7 @@ class TimeClockController extends Controller
                             $interval_mon = $datetime1->diff($datetime2);
                         }
                     }
-                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->mon_login)).'" name="start[]" class="datetimepicker3"> <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text">'.$interval_mon->format('%h').' Hours '.$interval_mon->format('%i').' Minutes
-        </br>'.$show.'</sapn><input type="hidden" value="'.$week_list->mon_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
+                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->mon_login)).'" name="start[]" class="datetimepicker3"> <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text">'.$interval_mon->format('%h').' Hours '.$interval_mon->format('%i').' Minutes'.$show.'</sapn><input type="hidden" value="'.$week_list->mon_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
                 } else{
                     $html.=  '<td class="not_log_hours_color"><sapn class="log_hours" > Hours logged </sapn><br> <br><sapn class="log_hours" >Total Hours</sapn> <br> </td> <input type="hidden" value="" id="saturday_date" name="saturday_date" />';
 
@@ -287,7 +286,7 @@ class TimeClockController extends Controller
                      $logoutTime = date('h:i A', strtotime($newDate));
                      if($datetime2 > $now){
                          if($logoutTime == '11:59 PM'){
-                             $show='Not Logged Out';
+                             $show='-Not Logged Out';
                              $logoutTime =date('h:i A', strtotime($week_list->tue_login));
                              $datetime2 = new DateTime($week_list->tue_login);
                              $interval_tue = $datetime1->diff($datetime2);
@@ -297,7 +296,7 @@ class TimeClockController extends Controller
                              $interval_tue = $datetime1->diff($datetime2);
                          }
                      }
-                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->tue_login)).'" name="start[]" class="datetimepicker3" > <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text">'.$interval_tue->format('%h').' Hours '.$interval_tue->format('%i').' Minutes<br>'.$show.'</sapn><input type="hidden" value="'.$week_list->tue_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
+                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->tue_login)).'" name="start[]" class="datetimepicker3" > <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text">'.$interval_tue->format('%h').' Hours '.$interval_tue->format('%i').' Minutes'.$show.'</sapn><input type="hidden" value="'.$week_list->tue_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
                 } else{
                     $html.=  '<td class="not_log_hours_color"><sapn class="log_hours" > Hours logged </sapn><br> <br><sapn class="log_hours" >Total Hours</sapn> <br> </td> <input type="hidden" value="" id="saturday_date" name="saturday_date" />';
 
@@ -319,7 +318,7 @@ class TimeClockController extends Controller
                       $logoutTime = date('h:i A', strtotime($newDate));
                       if($datetime2 > $now){
                           if($logoutTime == '11:59 PM'){
-                              $show='Not Logged Out';
+                              $show='-Not Logged Out';
                               $logoutTime =date('h:i A', strtotime($week_list->wed_login));
                               $datetime2 = new DateTime($week_list->wed_login);
                               $interval_wed = $datetime1->diff($datetime2);
@@ -329,7 +328,7 @@ class TimeClockController extends Controller
                               $interval_wed = $datetime1->diff($datetime2);
                           }
                       }
-                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->wed_login)).'" name="start[]" class="datetimepicker3" > <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text"> '.$interval_wed->format('%h').' Hours '.$interval_wed->format('%i').' Minutes<br>'.$show.'</sapn><input type="hidden" value="'.$week_list->wed_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
+                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->wed_login)).'" name="start[]" class="datetimepicker3" > <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text"> '.$interval_wed->format('%h').' Hours '.$interval_wed->format('%i').' Minutes'.$show.'</sapn><input type="hidden" value="'.$week_list->wed_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
                 } else{
                     $html.=  '<td class="not_log_hours_color"><sapn class="log_hours" > Hours logged </sapn><br> <br><sapn class="log_hours" >Total Hours</sapn> <br> </td> <input type="hidden" value="" id="saturday_date" name="saturday_date" />';
 
@@ -353,7 +352,7 @@ class TimeClockController extends Controller
                      $logoutTime = date('h:i A', strtotime($newDate));
                      if($datetime2 > $now){
                          if($logoutTime == '11:59 PM'){
-                             $show='Not Logged Out';
+                             $show='-Not Logged Out';
                              $logoutTime =date('h:i A', strtotime($week_list->thu_login));
                              $datetime2 = new DateTime($week_list->thu_login);
                              $interval_thu = $datetime1->diff($datetime2);
@@ -363,7 +362,7 @@ class TimeClockController extends Controller
                              $interval_thu = $datetime1->diff($datetime2);
                          }
                      }
-                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->thu_login)).'" name="start[]" class="datetimepicker3" > <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text">'.$interval_thu->format('%h').' Hours '.$interval_thu->format('%i').' Minutes<br>'.$show.'</sapn><input type="hidden" value="'.$week_list->thu_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
+                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->thu_login)).'" name="start[]" class="datetimepicker3" > <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text">'.$interval_thu->format('%h').' Hours '.$interval_thu->format('%i').' Minutes'.$show.'</sapn><input type="hidden" value="'.$week_list->thu_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
                 } else{
                     $html.=  '<td class="not_log_hours_color"><sapn class="log_hours" > Hours logged </sapn><br> <br><sapn class="log_hours" >Total Hours</sapn> <br> </td> <input type="hidden" value="" id="saturday_date" name="saturday_date" />';
 
@@ -385,7 +384,7 @@ class TimeClockController extends Controller
                     $logoutTime = date('h:i A', strtotime($newDate));
                     if($datetime2 > $now){
                         if($logoutTime == '11:59 PM'){
-                            $show='Not Logged Out';
+                            $show='-Not Logged Out';
                             $logoutTime =date('h:i A', strtotime($week_list->fri_login));
                             $datetime2 = new DateTime($week_list->fri_login);
                             $interval_fri = $datetime1->diff($datetime2);
@@ -395,7 +394,7 @@ class TimeClockController extends Controller
                             $interval_fri = $datetime1->diff($datetime2);
                         }
                     }
-                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->fri_login)).'" name="start[]" class="datetimepicker3" > <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text">'.$interval_fri->format('%h').' Hours '.$interval_fri->format('%i').' Minutes<br>'.$show.'</sapn><input type="hidden" value="'.$week_list->fri_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
+                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->fri_login)).'" name="start[]" class="datetimepicker3" > <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text">'.$interval_fri->format('%h').' Hours '.$interval_fri->format('%i').' Minutes'.$show.'</sapn><input type="hidden" value="'.$week_list->fri_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
                 } else{
                     $html.=  '<td class="not_log_hours_color"><sapn class="log_hours" > Hours logged </sapn><br> <br><sapn class="log_hours" >Total Hours</sapn> <br> </td> <input type="hidden" value="" id="saturday_date" name="saturday_date" />';
 
@@ -417,7 +416,7 @@ class TimeClockController extends Controller
                      $logoutTime = date('h:i A', strtotime($newDate));
                      if($datetime2 > $now){
                          if($logoutTime == '11:59 PM'){
-                             $show='Not Logged Out';
+                             $show='-Not Logged Out';
                              $logoutTime =date('h:i A', strtotime($week_list->sat_login));
                              $datetime2 = new DateTime($week_list->sat_login);
                              $interval_sat = $datetime1->diff($datetime2);
@@ -427,7 +426,7 @@ class TimeClockController extends Controller
                              $interval_sat = $datetime1->diff($datetime2);
                          }
                      }
-                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->sat_login)).'" name="start[]" class="datetimepicker3" > <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text">'.$interval_sat->format('%h').' Hours '.$interval_sat->format('%i').' Minutes<br>'.$show.'</sapn><input type="hidden" value="'.$week_list->sat_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
+                     $html.=  '<td class="loggedInT1"><sapn class="log_hours" > Hours logged </sapn><br> <span class="normal_text"><input type="text" value="'.date('h:i A', strtotime($week_list->sat_login)).'" name="start[]" class="datetimepicker3" > <input type="text" value="'.$logoutTime.'" class="datetimepicker3" name="end[]"> </span><br><sapn class="log_hours" >Total Hours</sapn> <br> <sapn class="normal_text">'.$interval_sat->format('%h').' Hours '.$interval_sat->format('%i').' Minutes'.$show.'</sapn><input type="hidden" value="'.$week_list->sat_logid.' " id=""   name="tc_login_id[]"  /></td>' ;
                 } else{
                     $html.=  '<td class="not_log_hours_color"><sapn class="log_hours" > Hours logged </sapn><br> <br><sapn class="log_hours" >Total Hours</sapn> <br> </td> <input type="hidden" value="" id="saturday_date" name="saturday_date" />';
 
