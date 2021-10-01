@@ -21,7 +21,10 @@
                 </div> <!-- navbar-collapse.// -->
             </div>
         </nav>
-        <div id="upper" class="quickSection">
+        <div class="container section-content">
+        <div class="row row-m-t">
+            <div class="col-lg-4 col-md-4 col-xs-4">
+                <!-- <div id="upper" class="quickSection"> -->
             @if(session()->has('error_warning'))
                 <div class="alert alert-danger"><i
                         class="fa fa-exclamation-circle"></i> {{ session()->get('error_warning') }}
@@ -46,47 +49,61 @@
                 </div>
             </div>
 
-            <div class="panel-body padding-left-right">
+            <!-- <div class="panel-body padding-left-right"> -->
                 <div class="divTop">
-                    <div class="col-md-5 divTop1">
-                        <div class="py-3">
-                            <div class="row form-inline">
-                                <input type="text" name="barcode" class="form-control adjustment-fields" id="barcode"
-                                       placeholder="Enter/Scan SKU/Barcode">&nbsp&nbsp&nbsp&nbsp
-                                <button class="btn btn-primary button-blue buttons_menu basic-button-small"
-                                        id="barcodeSearchBtn">Search UPC
-                                </button>
-                                <h5 id="barSearch" style="display: none;color: #495057;font-size: 1rem !important;">
+                    <!-- divTop1 -->
+                   
+                        <div class="form-group row">
+                            
+                       
+                                     <div class="col-sm-6">
+                                                 <input type="text" name="barcode" class="form-control" id="barcode"
+                                       placeholder="ENTER SKU" style="font-size: 12px;">
+                                
+                                <h5 id="barSearch" style="display: none;color: #495057;font-size: font-size: 12px; !important;">
                                     searching..please wait</h5>
-                            </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary button-blue buttons_menu basic-button-small"
+                                        id="barcodeSearchBtn" style="font-size: 12px;">Search UPC
+                                </button>
+                                    </div>
+                            
                         </div>
-                        <div class="py-3">
-                            <div class="row form-inline">
-                                <label class="form-control  adjustment-fields" style="width: auto;"> CURRENT QTY ON
-                                    HAND</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                <button class="btn btn-primary button-blue buttons_menu basic-button-small"
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                            <label for="qtyOnHandBtn" class="col-form-label" style="font-size: 12px;">CURRENT QTY ON
+                                    HAND</label>
+                                </div>
+                                <div class="col-sm-2">
+                            <button class="btn btn-primary button-blue buttons_menu basic-button-small"
                                         style=" background-color: rgb(71, 77, 83);" id="qtyOnHandBtn">0
                                 </button>
                             </div>
+                           
                         </div>
-                        <div class="py-3">
-                            <div class="row form-inline">
+                        <div class="form-group row">
+                            <div class="col-sm-6">
                                 <input type="text" name="appendQty" id="appendQty"
-                                       class="form-control adjustment-fields" placeholder="Enter Receive Quantity Here*"
-                                       pattern="[0-9]{6}" maxlength="6">&nbsp&nbsp&nbsp&nbsp
+                                       class="form-control" placeholder="ENTER NEW QTY*"
+                                       pattern="[0-9]{6}" maxlength="6" style="font-size: 12px;">
+                            </div>         
+                            <div class="col-sm-2">
                                 <button class="btn btn-primary button-blue buttons_menu basic-button-small"
-                                        id="appendQtyBtn">APPEND QTY
+                                        id="appendQtyBtn" style="font-size: 12px;">APPEND QTY
                                 </button>
                             </div>
+                          
                         </div>
-                        <!--                <div class="py-3">
-                                            <div class="row form-inline">
-                                                <button class="btn btn-primary button-blue buttons_menu basic-button-small" id="nextItem" >NEXT ITEM</button>&nbsp&nbsp&nbsp&nbsp
-                                                <button class="btn btn-primary button-blue buttons_menu basic-button-small" style="background-color: #4adcdc !important;" id="doneBtn">DONE</button>
-                                            </div>
-                                        </div>-->
-                    </div>
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar divTop2">
+                    
+                </div>
+                
+           <!--  </div> -->
+              <!--   </div> -->
+            </div>
+
+            <div class="col-lg-8 col-md-8 col-xs8">
+                <div class="table-wrapper-scroll-y my-custom-scrollbar divTop2">
                         <form action="{{route('quickInventoryUpdatePost')}}" method="POST" name="itemUpdate"
                               id="itemUpdate">
                             @csrf
@@ -130,15 +147,13 @@
                             </table>
                         </form>
                     </div>
-                </div>
-                <div class="col-md-7">
-
-                </div>
             </div>
         </div>
-        <div id="lower" class="quickSection1">
+        <div class="row row-m-t">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+            <!--  <div id="lower" class="quickSection1"> -->
             <div class="container-fluid section-content">
-                <div class="panel-body padding-left-right">
+                <div class="panel-body ">
 
                     <div class="mytextdiv">
                         <div class="mytexttitle font-weight-bold text-uppercase">
@@ -150,28 +165,73 @@
                 </div>
             </div>
 
-            <div class="panel-body padding-left-right">
-                <div class="col-md-5">
-                    <div class="mb-3 row">
-                        <label for="staticEmail" class="col-sm-2 col-form-label">DATE</label>
+          <!--   <div class="panel-body padding-left-right"> -->
+                <div class="divTop padding-left-right">
+                     <div class="form-group row">
+                            <div class="col-sm-4">
+                                <label for="start_dt" class="col-form-label">DATE</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" name="start_dt" maxlength="25" value="" placeholder="DATE" id="start_dt"
+                                   class="form-control " style="width: 163px;font-size: 12px;" required="">
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-4">
+                                <label for="invoice" class="col-form-label">INVOICE</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" name="invoice" maxlength="25" value="" placeholder="ENTER INVOICE" id="invoice"
+                                   class="form-control " style="width: 163px;font-size: 12px;" required="">
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-4">
+                                <label for="vendor" class="col-form-label">VENDOR</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" name="vendor" maxlength="25" value="" placeholder="ENTER VENDOR" id="vendor"
+                                   class="form-control " style="width: 163px;font-size: 12px;" required="">
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-4">
+                               <button class="btn btn-primary button-blue buttons_menu basic-button-small"
+                                        id="bactToItemBtn" style="font-size: 12px;">BACK TO UPC SEARCH
+                                </button>
+                            </div>         
+                            <div class="col-sm-4">
+                                <button class="btn btn-primary button-blue buttons_menu basic-button-small"
+                                        id="finalizeBtn" style="font-size: 12px;">FINALIZE
+                                </button>
+                            </div>
+                          
+                        </div>
+
+                    <!-- <div class="mb-3 row">
+                        <label for="start_dt" class="col-form-label">DATE</label>
                         <div class="col-sm-10">
                             <input type="text" name="start_dt" maxlength="25" value="" placeholder="DATE" id="start_dt"
                                    class="form-control " style="width: 163px;" required="">
                         </div>
-                    </div>
-                    <div class="mb-3 row">
+                    </div> -->
+                    <!-- <div class="mb-3 row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">INVOICE #</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="invoice">
                         </div>
-                    </div>
-                    <div class="mb-3 row">
+                    </div> -->
+                    <!-- <div class="mb-3 row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">VENDOR</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="vendor">
                         </div>
-                    </div>
-                    <div class="py-3">
+                    </div> -->
+
+                   <!--  <div class="py-3">
                         <div class="row form-inline">
                             <button class="btn btn-primary button-blue buttons_menu basic-button-small"
                                     style="width: 44%;" id="bactToItemBtn">BACK TO ITEM SECTION
@@ -181,15 +241,16 @@
                                     id="finalizeBtn">FINALIZE
                             </button>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-md-7">
+                    </div> -->
 
                 </div>
+                
+           <!--  </div>    -->         
+         <!--        </div> -->
             </div>
         </div>
 
+        </div>
     </div>
 
 @endsection
@@ -223,7 +284,7 @@
         }
 
         .divTop {
-            width: 90%;
+            width: 95%;
             /*height: 500px;*/
             /*background: aqua;*/
             height: auto;
