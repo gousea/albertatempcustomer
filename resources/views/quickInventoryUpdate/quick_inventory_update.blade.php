@@ -301,7 +301,7 @@
 
         .divTop2 {
             margin-left: auto;
-            height: 200px;
+            height: 300px;
             /*background: black;*/
             /*background: rgb(71, 77, 83);*/
             /*background: #286fb7;*/
@@ -311,6 +311,7 @@
             outline: none;
             border-width: 0px;
             border: none;
+            background-color: transparent;
         }
 
         .removeOutline input:focus {
